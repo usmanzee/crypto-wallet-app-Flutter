@@ -1,4 +1,4 @@
-import 'package:crypto_template/screen/AnotherTemplate/Template1/tab_WALLET/T1_lrm.dart';
+import 'package:crypto_template/screen/AnotherTemplate/Template1/tab_wallet/T1_lrm.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:crypto_template/component/style.dart';

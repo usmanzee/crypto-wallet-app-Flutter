@@ -5,11 +5,11 @@ import 'package:crypto_template/screen/setting/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/component/style.dart';
 
-class onBoarding extends StatefulWidget {
+class OnBoarding extends StatefulWidget {
   ThemeBloc themeBloc;
-  onBoarding({this.themeBloc});
+  OnBoarding({this.themeBloc});
   @override
-  _onBoardingState createState() => _onBoardingState(themeBloc);
+  _OnBoardingState createState() => _OnBoardingState(themeBloc);
 }
 
 ///
@@ -84,9 +84,9 @@ final pages = [
       )),
 ];
 
-class _onBoardingState extends State<onBoarding> {
+class _OnBoardingState extends State<OnBoarding> {
   ThemeBloc _themeBloc;
-  _onBoardingState(this._themeBloc);
+  _OnBoardingState(this._themeBloc);
   @override
   Widget build(BuildContext context) {
     return IntroViewsFlutter(
@@ -108,7 +108,7 @@ class _onBoardingState extends State<onBoarding> {
       ),
       onTapDoneButton: () {
         Navigator.of(context).pushReplacement(PageRouteBuilder(
-            pageBuilder: (_, __, ___) => new login(themeBloc: _themeBloc)));
+            pageBuilder: (_, __, ___) => new Login(themeBloc: _themeBloc)));
       },
     );
   }

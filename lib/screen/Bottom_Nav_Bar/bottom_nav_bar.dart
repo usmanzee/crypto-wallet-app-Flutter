@@ -23,8 +23,9 @@ class _bottomNavBarState extends State<bottomNavBar> {
  ThemeBloc _themeBloc;
  _bottomNavBarState(this._themeBloc);
   int currentIndex = 0;
-  bool _color =true;
+  bool _color = true;
   Widget callPage(int current){
+    print("current $current");
     switch (current) {
        case 0:
         return new home();
@@ -42,7 +43,7 @@ class _bottomNavBarState extends State<bottomNavBar> {
      return new setting(themeBloc :_themeBloc);
         break;
       default: 
-      return new home();
+      return new wallet();
     }
   }
 

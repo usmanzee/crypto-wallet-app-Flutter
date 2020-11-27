@@ -6,16 +6,16 @@ import 'package:crypto_template/screen/setting/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/component/style.dart';
 
-class login extends StatefulWidget {
+class Login extends StatefulWidget {
   ThemeBloc themeBloc;
-  login({this.themeBloc});
+  Login({this.themeBloc});
   @override
-  _loginState createState() => _loginState(themeBloc);
+  _LoginState createState() => _LoginState(themeBloc);
 }
 
-class _loginState extends State<login> {
+class _LoginState extends State<Login> {
   ThemeBloc _themeBloc;
-  _loginState(this._themeBloc);
+  _LoginState(this._themeBloc);
   @override
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -46,7 +46,8 @@ class _loginState extends State<login> {
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage("assets/image/loginHeader.png"),
-                        fit: BoxFit.cover)),
+                        fit: BoxFit.cover)
+                ),
               ),
               Container(
                 height: double.infinity,
@@ -173,7 +174,9 @@ class _loginState extends State<login> {
                                     child: TextFormField(
                                       validator: (input) {
                                         if (input.isEmpty) {
-                                          return 'Please typle an password';
+                                          return 'Please type an password';
+                                        } else {
+                                          return null;
                                         }
                                       },
                                       onSaved: (input) => _pass = input,

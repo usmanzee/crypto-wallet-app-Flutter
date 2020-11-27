@@ -114,7 +114,7 @@ class _forgetPasswordState extends State<forgetPassword> {
                         onTap: () {
                           Navigator.of(context)
                               .pushReplacement(PageRouteBuilder(
-                                  pageBuilder: (_, __, ___) => new login(
+                                  pageBuilder: (_, __, ___) => new Login(
                                         themeBloc: _themeBloc,
                                       )));
                         },

@@ -5,21 +5,22 @@ import 'package:crypto_template/screen/setting/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:crypto_template/screen/setting/setting.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Run first apps open
 void main() {
-  runApp(myApp());
+  runApp(MyApp());
 }
 
-class myApp extends StatefulWidget {
+class MyApp extends StatefulWidget {
   final Widget child;
 
-  myApp({Key key, this.child}) : super(key: key);
+  MyApp({Key key, this.child}) : super(key: key);
 
-  _myAppState createState() => _myAppState();
+  _MyAppState createState() => _MyAppState();
 }
 
-class _myAppState extends State<myApp> {
+class _MyAppState extends State<MyApp> {
   /// Create _themeBloc for double theme (Dark and White theme)
   ThemeBloc _themeBloc;
 
@@ -56,7 +57,7 @@ class _myAppState extends State<myApp> {
           ///
           routes: <String, WidgetBuilder>{
             "onBoarding": (BuildContext context) =>
-                new onBoarding(themeBloc: _themeBloc)
+                new OnBoarding(themeBloc: _themeBloc)
           },
         );
       },
@@ -76,16 +77,31 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   ThemeBloc themeBloc;
   _SplashScreenState(this.themeBloc);
+
   @override
 
   /// Setting duration in splash screen
   startTime() async {
-    return new Timer(Duration(milliseconds: 4500), NavigatorPage);
+    return new Timer(Duration(milliseconds: 4500), checkFirstSeen);
   }
 
   /// To navigate layout change
   void NavigatorPage() {
     Navigator.of(context).pushReplacementNamed("onBoarding");
+  }
+
+  Future checkFirstSeen() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool _seen = (prefs.getBool('seen') ?? false);
+    print("_seen1 ${_seen}");
+    if (_seen) {
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => new OnBoarding()));
+    } else {
+      await prefs.setBool('seen', true);
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => new OnBoarding()));
+    }
   }
 
   /// Declare startTime to InitState
