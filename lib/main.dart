@@ -67,7 +67,7 @@ class _MyAppState extends State<MyApp> {
 
 /// Component UI
 class SplashScreen extends StatefulWidget {
-  ThemeBloc themeBloc;
+  final ThemeBloc themeBloc;
   SplashScreen({this.themeBloc});
   @override
   _SplashScreenState createState() => _SplashScreenState(themeBloc);
@@ -78,25 +78,22 @@ class _SplashScreenState extends State<SplashScreen> {
   ThemeBloc themeBloc;
   _SplashScreenState(this.themeBloc);
 
-  @override
-
   /// Setting duration in splash screen
   startTime() async {
     return new Timer(Duration(milliseconds: 4500), checkFirstSeen);
   }
 
   /// To navigate layout change
-  void NavigatorPage() {
+  void navigatorPage() {
     Navigator.of(context).pushReplacementNamed("onBoarding");
   }
 
   Future checkFirstSeen() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool _seen = (prefs.getBool('seen') ?? false);
-    print("_seen1 ${_seen}");
     if (_seen) {
       Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(builder: (context) => new OnBoarding()));
+          new MaterialPageRoute(builder: (context) => new bottomNavBar()));
     } else {
       await prefs.setBool('seen', true);
       Navigator.of(context).pushReplacement(

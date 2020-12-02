@@ -5,6 +5,7 @@ import 'package:crypto_template/screen/intro/signup.dart';
 import 'package:crypto_template/screen/setting/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/component/style.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 
 class Login extends StatefulWidget {
   ThemeBloc themeBloc;
@@ -24,9 +25,19 @@ class _LoginState extends State<Login> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  final passwordValidator = MultiValidator([
+    PatternValidator(r'((?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*\W)\w.{6,18}\w)', errorText: 'passwords must be 8 characters long and must contain alphanumeric')
+  ]);
+
+  final emailValidator = MultiValidator([
+    EmailValidator(errorText: 'Please type a valid email'),
+  ]);
+
+
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
     return Form(
+      // autovalidate: true,
       key: _formKey,
       child: Scaffold(
         body: Container(
@@ -105,11 +116,7 @@ class _LoginState extends State<Login> {
                                   child: Padding(
                                     padding: const EdgeInsets.only(left: 10.0),
                                     child: TextFormField(
-                                      validator: (input) {
-                                        if (input.isEmpty) {
-                                          return 'Please typle an email';
-                                        }
-                                      },
+                                      validator: emailValidator,
                                       onSaved: (input) => _email = input,
                                       style: new TextStyle(color: Colors.white),
                                       textAlign: TextAlign.start,
@@ -172,13 +179,7 @@ class _LoginState extends State<Login> {
                                   child: Padding(
                                     padding: const EdgeInsets.only(left: 10.0),
                                     child: TextFormField(
-                                      validator: (input) {
-                                        if (input.isEmpty) {
-                                          return 'Please type an password';
-                                        } else {
-                                          return null;
-                                        }
-                                      },
+                                      validator: passwordValidator,
                                       onSaved: (input) => _pass = input,
                                       style: new TextStyle(color: Colors.white),
                                       textAlign: TextAlign.start,
@@ -248,6 +249,7 @@ class _LoginState extends State<Login> {
                             final formState = _formKey.currentState;
                             if (formState.validate()) {
                               formState.save();
+                              return null;
                               Navigator.of(context).pushReplacement(
                                   PageRouteBuilder(
                                       pageBuilder: (_, __, ___) =>

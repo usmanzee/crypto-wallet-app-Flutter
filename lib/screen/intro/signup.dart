@@ -9,12 +9,12 @@ class signUp extends StatefulWidget {
   ThemeBloc themeBloc;
   signUp({this.themeBloc});
   @override
-  _signUpState createState() => _signUpState(themeBloc);
+  _SignUpState createState() => _SignUpState(themeBloc);
 }
 
-class _signUpState extends State<signUp> {
+class _SignUpState extends State<signUp> {
   ThemeBloc _themeBloc;
-  _signUpState(this._themeBloc);
+  _SignUpState(this._themeBloc);
   @override
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();

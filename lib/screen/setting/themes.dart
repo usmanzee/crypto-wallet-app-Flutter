@@ -40,4 +40,3 @@ class ThemeBloc {
             textSelectionHandleColor: colorStyle.fontColorDarkTitle));
   }
 }
-

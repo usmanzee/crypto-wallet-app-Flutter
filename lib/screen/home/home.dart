@@ -14,10 +14,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shimmer/shimmer.dart';
 
 class home extends StatefulWidget {
-  _homeState createState() => _homeState();
+  _HomeState createState() => _HomeState();
 }
 
-class _homeState extends State<home> {
+class _HomeState extends State<home> {
   ///
   /// Get image data dummy from firebase server
   ///
@@ -32,11 +32,10 @@ class _homeState extends State<home> {
   @override
   @override
   void initState() {
-  
-  Timer(Duration(seconds: 3),(){
-setState(() {
-  loadCard=false;
-});
+    Timer(Duration(seconds: 3), () {
+      setState(() {
+        loadCard = false;
+      });
     });
     // TODO: implement initState
     super.initState();
