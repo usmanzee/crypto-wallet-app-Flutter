@@ -1,204 +1,191 @@
+import 'dart:convert';
+
+User userFromJson(String str) => User.fromJson(json.decode(str));
+
+String userToJson(User data) => json.encode(data.toJson());
+
 class User {
+  User({
+    this.email,
+    this.uid,
+    this.role,
+    this.level,
+    this.otp,
+    this.state,
+    this.referralUid,
+    this.csrfToken,
+    this.data,
+    this.createdAt,
+    this.updatedAt,
+    this.labels,
+    this.phones,
+    this.profiles,
+    this.dataStorages,
+  });
+
   String email;
   String uid;
   String role;
   int level;
   bool otp;
   String state;
-  Null referralUid;
+  dynamic referralUid;
+  String csrfToken;
   String data;
-  String createdAt;
-  String updatedAt;
-  List<Labels> labels;
-  List<Phones> phones;
-  List<Profiles> profiles;
-  // List<Null> dataStorages;
+  DateTime createdAt;
+  DateTime updatedAt;
+  List<Label> labels;
+  List<Phone> phones;
+  List<Profile> profiles;
+  List<dynamic> dataStorages;
 
-  User({
-        this.email,
-        this.uid,
-        this.role,
-        this.level,
-        this.otp,
-        this.state,
-        this.referralUid,
-        this.data,
-        this.createdAt,
-        this.updatedAt,
-        this.labels,
-        this.phones,
-        this.profiles,
-        // this.dataStorages
-      });
+  factory User.fromJson(Map<String, dynamic> json) => User(
+        email: json["email"],
+        uid: json["uid"],
+        role: json["role"],
+        level: json["level"],
+        otp: json["otp"],
+        state: json["state"],
+        referralUid: json["referral_uid"],
+        csrfToken: json["csrf_token"],
+        data: json["data"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+        labels: List<Label>.from(json["labels"].map((x) => Label.fromJson(x))),
+        phones: List<Phone>.from(json["phones"].map((x) => Phone.fromJson(x))),
+        profiles: List<Profile>.from(
+            json["profiles"].map((x) => Profile.fromJson(x))),
+        dataStorages: List<dynamic>.from(json["data_storages"].map((x) => x)),
+      );
 
-  User.fromJson(Map<String, dynamic> json) {
-    email = json['email'];
-    uid = json['uid'];
-    role = json['role'];
-    level = json['level'];
-    otp = json['otp'];
-    state = json['state'];
-    referralUid = json['referral_uid'];
-    data = json['data'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    if (json['labels'] != null) {
-      labels = new List<Labels>();
-      json['labels'].forEach((v) {
-        labels.add(new Labels.fromJson(v));
-      });
-    }
-    if (json['phones'] != null) {
-      phones = new List<Phones>();
-      json['phones'].forEach((v) {
-        phones.add(new Phones.fromJson(v));
-      });
-    }
-    if (json['profiles'] != null) {
-      profiles = new List<Profiles>();
-      json['profiles'].forEach((v) {
-        profiles.add(new Profiles.fromJson(v));
-      });
-    }
-    // if (json['data_storages'] != null) {
-    //   dataStorages = new List<Null>();
-    //   json['data_storages'].forEach((v) {
-    //     dataStorages.add(new Null.fromJson(v));
-    //   });
-    // }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['email'] = this.email;
-    data['uid'] = this.uid;
-    data['role'] = this.role;
-    data['level'] = this.level;
-    data['otp'] = this.otp;
-    data['state'] = this.state;
-    data['referral_uid'] = this.referralUid;
-    data['data'] = this.data;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    if (this.labels != null) {
-      data['labels'] = this.labels.map((v) => v.toJson()).toList();
-    }
-    if (this.phones != null) {
-      data['phones'] = this.phones.map((v) => v.toJson()).toList();
-    }
-    if (this.profiles != null) {
-      data['profiles'] = this.profiles.map((v) => v.toJson()).toList();
-    }
-    // if (this.dataStorages != null) {
-    //   data['data_storages'] = this.dataStorages.map((v) => v.toJson()).toList();
-    // }
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "email": email,
+        "uid": uid,
+        "role": role,
+        "level": level,
+        "otp": otp,
+        "state": state,
+        "referral_uid": referralUid,
+        "csrf_token": csrfToken,
+        "data": data,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+        "labels": List<dynamic>.from(labels.map((x) => x.toJson())),
+        "phones": List<dynamic>.from(phones.map((x) => x.toJson())),
+        "profiles": List<dynamic>.from(profiles.map((x) => x.toJson())),
+        "data_storages": List<dynamic>.from(dataStorages.map((x) => x)),
+      };
 }
 
-class Labels {
+class Label {
+  Label({
+    this.key,
+    this.value,
+    this.scope,
+    this.createdAt,
+    this.updatedAt,
+  });
+
   String key;
   String value;
   String scope;
-  String createdAt;
-  String updatedAt;
+  DateTime createdAt;
+  DateTime updatedAt;
 
-  Labels({this.key, this.value, this.scope, this.createdAt, this.updatedAt});
+  factory Label.fromJson(Map<String, dynamic> json) => Label(
+        key: json["key"],
+        value: json["value"],
+        scope: json["scope"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+      );
 
-  Labels.fromJson(Map<String, dynamic> json) {
-    key = json['key'];
-    value = json['value'];
-    scope = json['scope'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['key'] = this.key;
-    data['value'] = this.value;
-    data['scope'] = this.scope;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "key": key,
+        "value": value,
+        "scope": scope,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+      };
 }
 
-class Phones {
+class Phone {
+  Phone({
+    this.country,
+    this.number,
+    this.validatedAt,
+  });
+
   String country;
   String number;
-  String validatedAt;
+  DateTime validatedAt;
 
-  Phones({this.country, this.number, this.validatedAt});
+  factory Phone.fromJson(Map<String, dynamic> json) => Phone(
+        country: json["country"],
+        number: json["number"],
+        validatedAt: DateTime.parse(json["validated_at"]),
+      );
 
-  Phones.fromJson(Map<String, dynamic> json) {
-    country = json['country'];
-    number = json['number'];
-    validatedAt = json['validated_at'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['country'] = this.country;
-    data['number'] = this.number;
-    data['validated_at'] = this.validatedAt;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "country": country,
+        "number": number,
+        "validated_at": validatedAt.toIso8601String(),
+      };
 }
 
-class Profiles {
+class Profile {
+  Profile({
+    this.firstName,
+    this.lastName,
+    this.dob,
+    this.address,
+    this.postcode,
+    this.city,
+    this.country,
+    this.state,
+    this.metadata,
+    this.createdAt,
+    this.updatedAt,
+  });
+
   String firstName;
   String lastName;
-  String dob;
+  DateTime dob;
   String address;
   String postcode;
   String city;
   String country;
   String state;
   String metadata;
-  String createdAt;
-  String updatedAt;
+  DateTime createdAt;
+  DateTime updatedAt;
 
-  Profiles(
-      {this.firstName,
-        this.lastName,
-        this.dob,
-        this.address,
-        this.postcode,
-        this.city,
-        this.country,
-        this.state,
-        this.metadata,
-        this.createdAt,
-        this.updatedAt});
+  factory Profile.fromJson(Map<String, dynamic> json) => Profile(
+        firstName: json["first_name"],
+        lastName: json["last_name"],
+        dob: DateTime.parse(json["dob"]),
+        address: json["address"],
+        postcode: json["postcode"],
+        city: json["city"],
+        country: json["country"],
+        state: json["state"],
+        metadata: json["metadata"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+      );
 
-  Profiles.fromJson(Map<String, dynamic> json) {
-    firstName = json['first_name'];
-    lastName = json['last_name'];
-    dob = json['dob'];
-    address = json['address'];
-    postcode = json['postcode'];
-    city = json['city'];
-    country = json['country'];
-    state = json['state'];
-    metadata = json['metadata'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    data['dob'] = this.dob;
-    data['address'] = this.address;
-    data['postcode'] = this.postcode;
-    data['city'] = this.city;
-    data['country'] = this.country;
-    data['state'] = this.state;
-    data['metadata'] = this.metadata;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "first_name": firstName,
+        "last_name": lastName,
+        "dob":
+            "${dob.year.toString().padLeft(4, '0')}-${dob.month.toString().padLeft(2, '0')}-${dob.day.toString().padLeft(2, '0')}",
+        "address": address,
+        "postcode": postcode,
+        "city": city,
+        "country": country,
+        "state": state,
+        "metadata": metadata,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+      };
 }

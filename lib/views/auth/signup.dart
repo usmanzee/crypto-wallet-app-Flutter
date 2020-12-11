@@ -1,38 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:crypto_template/screen/Bottom_Nav_Bar/bottom_nav_bar.dart';
-import 'package:crypto_template/screen/home/home.dart';
-import 'package:crypto_template/screen/intro/login.dart';
-import 'package:crypto_template/screen/setting/themes.dart';
+import 'package:get/get.dart';
+import 'package:crypto_template/views/auth/login.dart';
+import 'package:crypto_template/views/setting/themes.dart';
 import 'package:crypto_template/component/style.dart';
+import 'package:crypto_template/controllers/RegisterController.dart';
 
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:crypto_template/repository/auth_repository.dart';
-import 'package:crypto_template/network/api_provider.dart';
-import 'package:crypto_template/models/user.dart';
-import 'package:crypto_template/component/shared_pref.dart';
 
-class SignUp extends StatefulWidget {
+class SignUp extends StatelessWidget {
   final ThemeBloc themeBloc;
   SignUp({this.themeBloc});
-  @override
-  _SignUpState createState() => _SignUpState(themeBloc);
-}
 
-class _SignUpState extends State<SignUp> {
-  ThemeBloc _themeBloc;
-  bool isLoading = false;
-  bool isFailure = false;
-  User user;
-  _SignUpState(this._themeBloc);
-
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
-  final TextEditingController _referralCodeController = TextEditingController();
-
-  dynamic registerObject;
-  String _email, _password, _confirmPassword, _referralCode = '';
+  final RegisterController _registerController = Get.put(RegisterController());
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -49,37 +28,7 @@ class _SignUpState extends State<SignUp> {
     final _formState = _formKey.currentState;
     if (_formState.validate()) {
       _formState.save();
-      _email = _emailController.text;
-      _password = _passwordController.text;
-      registerObject = {
-        'email': _email,
-        'password': _password,
-      };
-      if (_referralCode != null && _referralCode != '') {
-        registerObject['refid'] = _referralCode;
-      }
-
-      try {
-        AuthRepository _authRepository = new AuthRepository();
-        user = await _authRepository.register(registerObject);
-        SharedPref sharedPref = SharedPref();
-        sharedPref.saveBool('isLoggedIn', true);
-        sharedPref.save('user', user);
-        setState(() {
-          isLoading = false;
-          isFailure = false;
-        });
-        Navigator.of(context).pushReplacement(PageRouteBuilder(
-            pageBuilder: (_, __, ___) => new BottomNavBar(
-                  themeBloc: _themeBloc,
-                )));
-      } catch (e) {
-        print(e);
-        setState(() {
-          isFailure = true;
-          isLoading = false;
-        });
-      }
+      _registerController.register();
     }
   }
 
@@ -90,6 +39,13 @@ class _SignUpState extends State<SignUp> {
       // autovalidate: true,
       key: _formKey,
       child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.white),
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          automaticallyImplyLeading: true,
+        ),
         body: Container(
           height: double.infinity,
           width: double.infinity,
@@ -101,14 +57,14 @@ class _SignUpState extends State<SignUp> {
               ///
               /// Set image in top
               ///
-              Container(
-                height: 129.0,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("assets/image/signupHeader.png"),
-                        fit: BoxFit.cover)),
-              ),
+              // Container(
+              //   height: 129.0,
+              //   width: double.infinity,
+              //   decoration: BoxDecoration(
+              //       image: DecorationImage(
+              //           image: AssetImage("assets/image/signupHeader.png"),
+              //           fit: BoxFit.cover)),
+              // ),
               Container(
                 height: double.infinity,
                 width: double.infinity,
@@ -119,8 +75,8 @@ class _SignUpState extends State<SignUp> {
                     children: <Widget>[
                       /// Animation text marketplace to choose Login with Hero Animation (Click to open code)
                       Padding(
-                        padding: EdgeInsets.only(
-                            top: mediaQuery.padding.top + 130.0),
+                        padding:
+                            EdgeInsets.only(top: mediaQuery.padding.top + 80.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -151,8 +107,8 @@ class _SignUpState extends State<SignUp> {
                               size: 20,
                             ),
                             validator: emailValidator,
-                            onChanged: (input) => _email = input,
-                            controller: _emailController,
+                            // onChanged: (input) => _email = input,
+                            controller: _registerController.emailTextController,
                             hint: 'Email',
                             obscure: false,
                             keyboardType: TextInputType.emailAddress,
@@ -168,8 +124,9 @@ class _SignUpState extends State<SignUp> {
                               color: colorStyle.primaryColor,
                             ),
                             validator: _passwordValidator,
-                            onChanged: (input) => _password = input,
-                            controller: _passwordController,
+                            // onChanged: (input) => _password = input,
+                            controller:
+                                _registerController.passwordTextController,
                             hint: 'Password',
                             obscure: true,
                             keyboardType: TextInputType.text,
@@ -184,11 +141,15 @@ class _SignUpState extends State<SignUp> {
                               size: 20,
                               color: colorStyle.primaryColor,
                             ),
-                            controller: _confirmPasswordController,
+                            controller: _registerController
+                                .confirmPasswordTextController,
                             validator: (val) => MatchValidator(
                                     errorText: 'passwords do not match')
-                                .validateMatch(val, _password),
-                            onChanged: (input) => _confirmPassword = input,
+                                .validateMatch(
+                                    val,
+                                    _registerController
+                                        .confirmPasswordTextController.text),
+                            // onChanged: (input) => _confirmPassword = input,
                             hint: 'Confirm Password',
                             obscure: true,
                             keyboardType: TextInputType.text,
@@ -203,8 +164,9 @@ class _SignUpState extends State<SignUp> {
                               size: 20,
                               color: colorStyle.primaryColor,
                             ),
-                            onChanged: (input) => _referralCode = input,
-                            controller: _referralCodeController,
+                            // onChanged: (input) => _referralCode = input,
+                            controller:
+                                _registerController.referralCodeController,
                             hint: 'Referral Code',
                             obscure: false,
                             keyboardType: TextInputType.text,
@@ -254,7 +216,7 @@ class _SignUpState extends State<SignUp> {
                             Navigator.of(context)
                                 .pushReplacement(PageRouteBuilder(
                                     pageBuilder: (_, __, ___) => new Login(
-                                          themeBloc: _themeBloc,
+                                          themeBloc: themeBloc,
                                         )));
                           },
                           child: Container(

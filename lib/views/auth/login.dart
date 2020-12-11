@@ -1,85 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:crypto_template/screen/Bottom_Nav_Bar/bottom_nav_bar.dart';
-import 'package:crypto_template/screen/home/home.dart';
-import 'package:crypto_template/screen/intro/login.dart';
-import 'package:crypto_template/screen/setting/themes.dart';
+import 'package:crypto_template/views/auth/forget_password.dart';
+import 'package:crypto_template/views/auth/signup.dart';
+import 'package:crypto_template/views/setting/themes.dart';
 import 'package:crypto_template/component/style.dart';
-
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:crypto_template/repository/auth_repository.dart';
-import 'package:crypto_template/network/api_provider.dart';
-import 'package:crypto_template/models/user.dart';
-import 'package:crypto_template/component/shared_pref.dart';
 
-class SignUp extends StatefulWidget {
+import 'package:get/get.dart';
+import 'package:crypto_template/controllers/LoginController.dart';
+
+class Login extends StatelessWidget {
   final ThemeBloc themeBloc;
-  SignUp({this.themeBloc});
-  @override
-  _SignUpState createState() => _SignUpState(themeBloc);
-}
+  Login({this.themeBloc});
 
-class _SignUpState extends State<SignUp> {
-  ThemeBloc _themeBloc;
-  bool isLoading = false;
-  bool isFailure = false;
-  User user;
-  _SignUpState(this._themeBloc);
-
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
-  final TextEditingController _referralCodeController = TextEditingController();
-
-  dynamic registerObject;
-  String _email, _password, _confirmPassword, _referralCode = '';
+  final LoginController _loginController = Get.put(LoginController());
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  final emailValidator = MultiValidator([
-    EmailValidator(errorText: 'Please type a valid email'),
-  ]);
 
   final _passwordValidator = MultiValidator([
     PatternValidator(r'((?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*\W)\w.{6,18}\w)',
         errorText: 'passwords must be 8 characters with uppercase letters')
   ]);
 
-  _onSignFormSubmit() async {
+  final _emailValidator = MultiValidator([
+    EmailValidator(errorText: 'Please type a valid email'),
+  ]);
+
+  _onLoginFormSubmit() {
     final _formState = _formKey.currentState;
     if (_formState.validate()) {
       _formState.save();
-      _email = _emailController.text;
-      _password = _passwordController.text;
-      registerObject = {
-        'email': _email,
-        'password': _password,
-      };
-      if (_referralCode != null && _referralCode != '') {
-        registerObject['refid'] = _referralCode;
-      }
-
-      try {
-        AuthRepository _authRepository = new AuthRepository();
-        user = await _authRepository.register(registerObject);
-        SharedPref sharedPref = SharedPref();
-        sharedPref.saveBool('isLoggedIn', true);
-        sharedPref.save('user', user);
-        setState(() {
-          isLoading = false;
-          isFailure = false;
-        });
-        Navigator.of(context).pushReplacement(PageRouteBuilder(
-            pageBuilder: (_, __, ___) => new BottomNavBar(
-                  themeBloc: _themeBloc,
-                )));
-      } catch (e) {
-        print(e);
-        setState(() {
-          isFailure = true;
-          isLoading = false;
-        });
-      }
+      _loginController.authenticate(1);
     }
   }
 
@@ -87,9 +37,16 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
     return Form(
-      // autovalidate: true,
+      autovalidate: true,
       key: _formKey,
       child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.white),
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          automaticallyImplyLeading: true,
+        ),
         body: Container(
           height: double.infinity,
           width: double.infinity,
@@ -100,15 +57,15 @@ class _SignUpState extends State<SignUp> {
             children: <Widget>[
               ///
               /// Set image in top
-              ///
-              Container(
-                height: 129.0,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("assets/image/signupHeader.png"),
-                        fit: BoxFit.cover)),
-              ),
+              //
+              // Container(
+              //   height: 219.0,
+              //   width: double.infinity,
+              //   decoration: BoxDecoration(
+              //       image: DecorationImage(
+              //           image: AssetImage("assets/image/loginHeader.png"),
+              //           fit: BoxFit.cover)),
+              // ),
               Container(
                 height: double.infinity,
                 width: double.infinity,
@@ -117,10 +74,9 @@ class _SignUpState extends State<SignUp> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      /// Animation text marketplace to choose Login with Hero Animation (Click to open code)
                       Padding(
-                        padding: EdgeInsets.only(
-                            top: mediaQuery.padding.top + 130.0),
+                        padding:
+                            EdgeInsets.only(top: mediaQuery.padding.top + 80.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -143,16 +99,15 @@ class _SignUpState extends State<SignUp> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 20.0, right: 20.0, top: 20.0),
+                            left: 20.0, right: 20.0, top: 80.0),
                         child: _buildTextFeild(
                             widgetIcon: Icon(
                               Icons.email,
                               color: colorStyle.primaryColor,
                               size: 20,
                             ),
-                            validator: emailValidator,
-                            onChanged: (input) => _email = input,
-                            controller: _emailController,
+                            validator: _emailValidator,
+                            controller: _loginController.emailTextController,
                             hint: 'Email',
                             obscure: false,
                             keyboardType: TextInputType.emailAddress,
@@ -168,60 +123,43 @@ class _SignUpState extends State<SignUp> {
                               color: colorStyle.primaryColor,
                             ),
                             validator: _passwordValidator,
-                            onChanged: (input) => _password = input,
-                            controller: _passwordController,
+                            controller: _loginController.passwordTextController,
                             hint: 'Password',
                             obscure: true,
                             keyboardType: TextInputType.text,
                             textAlign: TextAlign.start),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 20.0, right: 20.0, top: 20.0),
-                        child: _buildTextFeild(
-                            widgetIcon: Icon(
-                              Icons.vpn_key,
-                              size: 20,
-                              color: colorStyle.primaryColor,
-                            ),
-                            controller: _confirmPasswordController,
-                            validator: (val) => MatchValidator(
-                                    errorText: 'passwords do not match')
-                                .validateMatch(val, _password),
-                            onChanged: (input) => _confirmPassword = input,
-                            hint: 'Confirm Password',
-                            obscure: true,
-                            keyboardType: TextInputType.text,
-                            textAlign: TextAlign.start),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 20.0, right: 20.0, top: 20.0),
-                        child: _buildTextFeild(
-                            widgetIcon: Icon(
-                              Icons.group_add,
-                              size: 20,
-                              color: colorStyle.primaryColor,
-                            ),
-                            onChanged: (input) => _referralCode = input,
-                            controller: _referralCodeController,
-                            hint: 'Referral Code',
-                            obscure: false,
-                            keyboardType: TextInputType.text,
-                            textAlign: TextAlign.start),
-                      ),
 
+                      ///
+                      /// forgot password
+                      ///
+                      Padding(
+                        padding: const EdgeInsets.only(right: 23.0, top: 9.0),
+                        child: InkWell(
+                            onTap: () {
+                              Navigator.of(context).pushReplacement(
+                                  PageRouteBuilder(
+                                      pageBuilder: (_, __, ___) =>
+                                          forgetPassword(
+                                            themeBloc: themeBloc,
+                                          )));
+                            },
+                            child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  "Forget Password ?",
+                                  style: TextStyle(
+                                    color: Colors.white70,
+                                    fontSize: 12.0,
+                                  ),
+                                ))),
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(
                             left: 20.0, right: 20.0, top: 40.0),
                         child: GestureDetector(
                           onTap: () {
-                            _onSignFormSubmit();
-                            // Navigator.of(context)
-                            //     .pushReplacement(PageRouteBuilder(
-                            //         pageBuilder: (_, __, ___) => bottomNavBar(
-                            //               themeBloc: _themeBloc,
-                            //             )));
+                            _onLoginFormSubmit();
                           },
                           child: Container(
                             height: 50.0,
@@ -233,7 +171,7 @@ class _SignUpState extends State<SignUp> {
                             ),
                             child: Center(
                               child: Text(
-                                "Register",
+                                "Sign In",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w400,
@@ -251,11 +189,7 @@ class _SignUpState extends State<SignUp> {
                         padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.of(context)
-                                .pushReplacement(PageRouteBuilder(
-                                    pageBuilder: (_, __, ___) => new Login(
-                                          themeBloc: _themeBloc,
-                                        )));
+                            Get.toNamed('/register');
                           },
                           child: Container(
                             height: 50.0,
@@ -270,17 +204,22 @@ class _SignUpState extends State<SignUp> {
                             ),
                             child: Center(
                               child: Text(
-                                "Sign In",
+                                "Create Account",
                                 style: TextStyle(
                                     color: Colors.white,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 17.5,
-                                    letterSpacing: 1.9),
+                                    fontWeight: FontWeight.w100,
+                                    fontSize: 16.5,
+                                    letterSpacing: 1.2),
                               ),
                             ),
                           ),
                         ),
                       ),
+//                  Padding(
+//                    padding: const EdgeInsets.only(left:20.0,right: 20.0,bottom: 15.0),
+//                    child: Container(width: double.infinity,height: 0.15,color: colorStyle.primaryColor,),
+//                  ),
+//                  Text("Register",style: TextStyle(color: colorStyle.primaryColor,fontSize: 17.0,fontWeight: FontWeight.w800),),
                     ],
                   ),
                 ),
@@ -294,7 +233,6 @@ class _SignUpState extends State<SignUp> {
 
   Widget _buildTextFeild({
     String hint,
-    FormFieldSetter onSaved,
     ValueChanged onChanged,
     FormFieldValidator validator,
     TextEditingController controller,
