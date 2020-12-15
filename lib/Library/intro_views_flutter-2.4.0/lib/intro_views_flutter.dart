@@ -15,7 +15,6 @@ import 'package:crypto_template/Library/intro_views_flutter-2.4.0/lib/UI/pager_i
 
 import 'UI/page.dart';
 
-
 /// This is the IntroViewsFlutter widget of app which is a stateful widget as its state is dynamic and updates asynchronously.
 class IntroViewsFlutter extends StatefulWidget {
   /// List of [PageViewModel] to display

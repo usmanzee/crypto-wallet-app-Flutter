@@ -174,20 +174,19 @@ class _waveBodyState extends State<waveBody> with TickerProviderStateMixin {
                 curve: Curves.easeInOut,
               ),
               builder: (context, child) => new ClipPath(
-                    child: widget.color == null
-                        ? new Container(
-                            width: widget.size.width,
-                            height: widget.size.height,
-                            color: Colors.white.withOpacity(0.25),
-                          )
-                        : new Container(
-                            width: widget.size.width,
-                            height: widget.size.height,
-                            color: Colors.white.withOpacity(0.9),
-                          ),
-                    clipper:
-                        new WaveClipper(animationController.value, animList1),
-                  ),
+                child: widget.color == null
+                    ? new Container(
+                        width: widget.size.width,
+                        height: widget.size.height,
+                        color: Colors.white.withOpacity(0.25),
+                      )
+                    : new Container(
+                        width: widget.size.width,
+                        height: widget.size.height,
+                        color: Colors.white.withOpacity(0.9),
+                      ),
+                clipper: new WaveClipper(animationController.value, animList1),
+              ),
             ),
           ),
         ),

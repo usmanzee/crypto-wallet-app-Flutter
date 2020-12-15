@@ -1,4 +1,4 @@
-import 'package:crypto_template/screen/AnotherTemplate/Template1/tab_WALLET/T1_lrm.dart';
+import 'package:crypto_template/screen/AnotherTemplate/Template1/tab_wallet/T1_lrm.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:crypto_template/component/style.dart';
@@ -12,16 +12,14 @@ class T3_HomeScreen extends StatefulWidget {
 class _T3_HomeScreenState extends State<T3_HomeScreen> {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-
             ///
             /// Header here until the transfer,scan,profile box
-            /// 
+            ///
             header(),
 
             ///
