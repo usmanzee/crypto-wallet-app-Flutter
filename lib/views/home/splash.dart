@@ -1,52 +1,24 @@
 import 'dart:async';
+import 'package:crypto_template/controllers/SplashController.dart';
 import 'package:flutter/material.dart';
-import 'package:crypto_template/views/Bottom_Nav_Bar/bottom_nav_bar.dart';
-import 'package:crypto_template/views/home/on_Boarding.dart';
 import 'package:crypto_template/views/setting/themes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get/get.dart';
 
 // Component UI
-class SplashScreen extends StatefulWidget {
-  final ThemeBloc themeBloc;
-  SplashScreen({this.themeBloc});
-  @override
-  _SplashScreenState createState() => _SplashScreenState(themeBloc);
-}
+// class SplashScreen extends StatefulWidget {
+//   final ThemeBloc themeBloc;
+//   SplashScreen({this.themeBloc});
+//   @override
+//   _SplashScreenState createState() => _SplashScreenState(themeBloc);
+// }
 
 /// Component UI
-class _SplashScreenState extends State<SplashScreen> {
-  ThemeBloc themeBloc;
-  _SplashScreenState(this.themeBloc);
+class SplashScreen extends StatelessWidget {
+  final ThemeBloc themeBloc;
+  SplashScreen({this.themeBloc});
 
-  /// Setting duration in splash screen
-  startTime() async {
-    return new Timer(Duration(milliseconds: 4500), checkFirstSeen);
-  }
-
-  /// To navigate layout change
-  void navigatorPage() {
-    Navigator.of(context).pushReplacementNamed("onBoarding");
-  }
-
-  Future checkFirstSeen() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool _seen = (prefs.getBool('seen') ?? false);
-    if (_seen) {
-      Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(builder: (context) => new BottomNavBar()));
-    } else {
-      await prefs.setBool('seen', true);
-      Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(builder: (context) => new OnBoarding()));
-    }
-  }
-
-  /// Declare startTime to InitState
-  @override
-  void initState() {
-    super.initState();
-    startTime();
-  }
+  final splashController = Get.put(SplashController());
 
   /// Code Create UI Splash Screen
   Widget build(BuildContext context) {

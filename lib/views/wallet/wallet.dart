@@ -1,7 +1,10 @@
 import 'dart:math';
 import 'dart:ui' as ui;
 import 'package:crypto_template/component/AssetsWallet/assetsModel.dart';
+import 'package:crypto_template/controllers/MarketController.dart';
+import 'package:crypto_template/controllers/WalletController.dart';
 import 'package:crypto_template/screen/wallet/walletDetail.dart';
+import 'package:crypto_template/views/wallet/wallet_detail.dart';
 import 'package:flutter/services.dart';
 import 'package:vector_math/vector_math.dart' as Vector;
 import 'package:flutter/foundation.dart';
@@ -10,22 +13,28 @@ import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:crypto_template/component/style.dart';
+import 'package:crypto_template/models/wallet.dart' as WalletClass;
+import 'package:get/get.dart';
 
-class wallet extends StatefulWidget {
-  @override
-  _walletState createState() => new _walletState();
+// class wallet extends StatefulWidget {
+//   @override
+//   _walletState createState() => new _walletState();
 
-  ///
-  /// time for wave header wallet
-  ///
-  wallet() {
+//   ///
+//   /// time for wave header wallet
+//   ///
+//   wallet() {
+//     timeDilation = 1.0;
+//   }
+// }
+
+class Wallet extends StatelessWidget {
+  final assetsWallet item;
+  final walletController = Get.put(WalletController());
+  Wallet({this.item}) {
     timeDilation = 1.0;
   }
-}
-
-class _walletState extends State<wallet> {
   @override
-  assetsWallet item;
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     Size size = new Size(MediaQuery.of(context).size.width, 200.0);
@@ -38,16 +47,22 @@ class _walletState extends State<wallet> {
             ///
             /// Create card list
             ///
-            child: Container(
-                child: ListView.builder(
-              shrinkWrap: true,
-              primary: false,
-              padding: EdgeInsets.only(top: 0.0),
-              itemBuilder: (ctx, i) {
-                return card(assetsWalletList[i], ctx);
-              },
-              itemCount: assetsWalletList.length,
-            )),
+            child: Obx(() {
+              if (walletController.isLoading.value)
+                return Container();
+              else
+                return Container(
+                    child: ListView.builder(
+                  shrinkWrap: true,
+                  primary: false,
+                  padding: EdgeInsets.only(top: 0.0),
+                  itemBuilder: (ctx, i) {
+                    return card(assetsWalletList[i],
+                        walletController.walletsList[i], ctx);
+                  },
+                  itemCount: walletController.walletsList.length,
+                ));
+            }),
           ),
           Column(
             children: <Widget>[
@@ -78,14 +93,15 @@ class _walletState extends State<wallet> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "Coin Type",
+                      "Coin",
                       style: TextStyle(
                           color: Theme.of(context).hintColor,
                           fontFamily: "Popins",
                           fontSize: 14.0),
                     ),
                     Text(
-                      "Value (USDT)",
+                      "Total",
+                      // "Value (USDT)",
                       style: TextStyle(
                           color: Theme.of(context).hintColor,
                           fontFamily: "Popins",
@@ -212,7 +228,7 @@ class _waveBodyState extends State<waveBody> with TickerProviderStateMixin {
           alignment: Alignment.topCenter,
           child: Column(children: <Widget>[
             Text(
-              "Total Asseets (USDT)",
+              "Estimated Balance (USDT)",
               style: TextStyle(fontFamily: "Popins", color: Colors.white),
             ),
             SizedBox(
@@ -257,15 +273,16 @@ class WaveClipper extends CustomClipper<Path> {
       animation != oldClipper.animation;
 }
 
-Widget card(assetsWallet item, BuildContext ctx) {
+Widget card(assetsWallet item, WalletClass.Wallet wallet, BuildContext ctx) {
   return Padding(
     padding: const EdgeInsets.only(top: 7.0),
     child: Column(
       children: <Widget>[
         InkWell(
           onTap: () {
-            Navigator.of(ctx).push(PageRouteBuilder(
-                pageBuilder: (_, __, ___) => new walletDetail()));
+            Get.to(WalletDetail(wallet));
+            // Navigator.of(ctx).push(PageRouteBuilder(
+            //     pageBuilder: (_, __, ___) => new walletDetail()));
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -279,8 +296,14 @@ Widget card(assetsWallet item, BuildContext ctx) {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(left: 5.0, right: 12.0),
-                      child: Image.asset(
-                        item.icon,
+                      // child: Image.asset(
+                      //   item.icon,
+                      //   height: 25.0,
+                      //   fit: BoxFit.contain,
+                      //   width: 22.0,
+                      // ),
+                      child: Image.network(
+                        wallet.iconUrl,
                         height: 25.0,
                         fit: BoxFit.contain,
                         width: 22.0,
@@ -293,12 +316,12 @@ Widget card(assetsWallet item, BuildContext ctx) {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            item.name,
+                            wallet.currency.toUpperCase(),
                             style:
                                 TextStyle(fontFamily: "Popins", fontSize: 16.5),
                           ),
                           Text(
-                            item.pairValue,
+                            wallet.balance,
                             style: TextStyle(
                                 fontFamily: "Popins",
                                 fontSize: 11.5,
@@ -318,7 +341,9 @@ Widget card(assetsWallet item, BuildContext ctx) {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        item.priceValue,
+                        (double.parse(wallet.balance) +
+                                double.parse(wallet.locked))
+                            .toStringAsFixed(wallet.precision),
                         style: TextStyle(
                             fontFamily: "Popins",
                             fontSize: 14.5,

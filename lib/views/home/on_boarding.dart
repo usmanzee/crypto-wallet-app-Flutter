@@ -4,12 +4,35 @@ import 'package:crypto_template/Library/intro_views_flutter-2.4.0/lib/intro_view
 import 'package:crypto_template/views/auth/login.dart';
 import 'package:crypto_template/views/setting/themes.dart';
 import 'package:crypto_template/component/style.dart';
+import 'package:get/get.dart';
 
-class OnBoarding extends StatefulWidget {
+class OnBoarding extends StatelessWidget {
   final ThemeBloc themeBloc;
   OnBoarding({this.themeBloc});
   @override
-  _OnBoardingState createState() => _OnBoardingState(themeBloc);
+  Widget build(BuildContext context) {
+    return IntroViewsFlutter(
+      pages,
+      pageButtonsColor: Colors.black45,
+      skipText: Text(
+        "SKIP",
+        style: txtStyle.descriptionStyle.copyWith(
+            color: Color(0xFF45C2DA),
+            fontWeight: FontWeight.w800,
+            letterSpacing: 1.0),
+      ),
+      doneText: Text(
+        "DONE",
+        style: txtStyle.descriptionStyle.copyWith(
+            color: Color(0xFF45C2DA),
+            fontWeight: FontWeight.w800,
+            letterSpacing: 1.0),
+      ),
+      onTapDoneButton: () {
+        Get.offNamed('/home');
+      },
+    );
+  }
 }
 
 ///
@@ -83,33 +106,3 @@ final pages = [
         alignment: Alignment.center,
       )),
 ];
-
-class _OnBoardingState extends State<OnBoarding> {
-  ThemeBloc _themeBloc;
-  _OnBoardingState(this._themeBloc);
-  @override
-  Widget build(BuildContext context) {
-    return IntroViewsFlutter(
-      pages,
-      pageButtonsColor: Colors.black45,
-      skipText: Text(
-        "SKIP",
-        style: txtStyle.descriptionStyle.copyWith(
-            color: Color(0xFF45C2DA),
-            fontWeight: FontWeight.w800,
-            letterSpacing: 1.0),
-      ),
-      doneText: Text(
-        "DONE",
-        style: txtStyle.descriptionStyle.copyWith(
-            color: Color(0xFF45C2DA),
-            fontWeight: FontWeight.w800,
-            letterSpacing: 1.0),
-      ),
-      onTapDoneButton: () {
-        Navigator.of(context).pushReplacement(PageRouteBuilder(
-            pageBuilder: (_, __, ___) => new Login(themeBloc: _themeBloc)));
-      },
-    );
-  }
-}

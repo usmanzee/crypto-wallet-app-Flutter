@@ -119,13 +119,13 @@ class BottomNavBar extends StatelessWidget {
         return new market();
         break;
       case 2:
-        return new news();
-        break;
-      case 3:
         return new setting();
         break;
+      case 3:
+        return new news();
+        break;
       case 4:
-        return new wallet();
+        return new Wallet();
         break;
       default:
         return new Home();

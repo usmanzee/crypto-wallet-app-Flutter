@@ -30,11 +30,10 @@ class _newsState extends State<news> {
 
   @override
   void initState() {
-    
-  Timer(Duration(seconds: 3),(){
-setState(() {
-  loadImage=false;
-});
+    Timer(Duration(seconds: 3), () {
+      setState(() {
+        loadImage = false;
+      });
     });
     // TODO: implement initState
     super.initState();

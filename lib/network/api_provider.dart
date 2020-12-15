@@ -5,8 +5,8 @@ import 'package:crypto_template/network/app_exception.dart';
 import 'dart:async';
 
 class ApiProvider {
-  // final String _baseUrl = "http://172.16.12.77:9002/api/v2/";
-  final String _baseUrl = "https://ewallet.b4uwallet.com/api/v2/";
+  final String _baseUrl = "http://172.16.12.77:9002/api/v2/";
+  // final String _baseUrl = "https://ewallet.b4uwallet.com/api/v2/";
 
   Future<dynamic> get(String url) async {
     var responseJson;

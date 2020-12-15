@@ -1,17 +1,19 @@
-import 'package:crypto_template/screen/wallet/tabs/deposit.dart';
-import 'package:crypto_template/screen/wallet/tabs/withdraw.dart';
+import 'package:crypto_template/views/wallet/tabs/deposit.dart';
+import 'package:crypto_template/views/wallet/tabs/withdraw.dart';
+import 'package:crypto_template/models/wallet.dart' as WalletClass;
 import 'package:flutter/material.dart';
 
-class walletDetail extends StatefulWidget {
-  final Widget child;
+// class walletDetail extends StatefulWidget {
+//   final Widget child;
 
-  walletDetail({Key key, this.child}) : super(key: key);
+//   walletDetail({Key key, this.child}) : super(key: key);
 
-  _walletDetailState createState() => _walletDetailState();
-}
+//   _walletDetailState createState() => _walletDetailState();
+// }
 
-class _walletDetailState extends State<walletDetail>
-    with SingleTickerProviderStateMixin {
+class WalletDetail extends StatelessWidget {
+  final WalletClass.Wallet wallet;
+  WalletDetail(this.wallet);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +21,7 @@ class _walletDetailState extends State<walletDetail>
         brightness: Brightness.dark,
         centerTitle: true,
         title: Text(
-          "Market",
+          wallet.currency.toUpperCase(),
           style: TextStyle(
               color: Theme.of(context).textSelectionColor,
               fontFamily: "Gotik",
@@ -94,7 +96,7 @@ class _walletDetailState extends State<walletDetail>
                     Padding(
                       padding: const EdgeInsets.only(
                           left: 20.0, right: 20.0, top: 20.0),
-                      child: deposit(),
+                      child: Deposit(wallet: wallet),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(

@@ -66,16 +66,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:crypto_template/utils/router.dart' as RouterFile;
 import 'package:crypto_template/views/setting/themes.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   runApp(
     GetMaterialApp(
       title: 'B4U App',
       debugShowCheckedModeBanner: false,
       defaultTransition: Transition.rightToLeft,
       getPages: RouterFile.Router.route,
-      initialRoute: '/home',
+      initialRoute: '/splash',
       theme: Themes.theme,
       // theme: ThemeData(
       //   primarySwatch: Colors.deepOrange,

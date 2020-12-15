@@ -12,55 +12,28 @@ import 'package:crypto_template/component/style.dart';
 import 'package:flutter_sparkline/flutter_sparkline.dart';
 import 'package:shimmer/shimmer.dart';
 
-// class Home extends StatefulWidget {
-//   _HomeState createState() => _HomeState();
-// }
-
 class Home extends StatelessWidget {
-  ///
-  /// Get image data dummy from firebase server
-  ///
-  final imageNetwork = NetworkImage(
-      "https://firebasestorage.googleapis.com/v0/b/beauty-look.appspot.com/o/Screenshot_20181005-213938.png?alt=media&token=8c1abb09-4acf-45cf-9383-2f94d93f4ec9");
-
-  ///
-  /// check the condition is right or wrong for image loaded or no
-  ///
-  final bool loadCard = false;
-  // final MarketController marketController = new MarketController();
-
   final marketController = Get.put(MarketController());
-
-  // @override
-  // void initState() {
-  //   Timer(Duration(seconds: 3), () {
-  //     setState(() {
-  //       loadCard = false;
-  //     });
-  //   });
-  //   // TODO: implement initState
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // extendBodyBehindAppBar: true,
       appBar: AppBar(
-        elevation: 0,
-        backgroundColor: colorStyle.grayBackground,
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        automaticallyImplyLeading: true,
         title: Row(
-          // mainAxisAlignment: MainAxisAlignment.end,
           children: [
             IconButton(
               icon: Icon(Icons.account_circle),
-              color: Theme.of(context).hintColor,
+              color: colorStyle.fontColorDark,
               tooltip: 'Profile settings',
               onPressed: () {},
             ),
             Spacer(flex: 1),
             IconButton(
               icon: Icon(Icons.notifications_none),
-              color: Theme.of(context).hintColor,
+              color: colorStyle.fontColorDark,
               tooltip: 'Notification',
               onPressed: () {},
             ),
@@ -97,12 +70,6 @@ class Home extends StatelessWidget {
                 )),
             SizedBox(height: 10.0),
 
-            ///
-            ///
-            /// check the condition if image data from server firebase loaded or no
-            /// if image loaded true (image still downloading from server)
-            /// Card to set card loading animation
-            ///
             Obx(() {
               if (marketController.isLoading.value)
                 return _loadingCardAnimation(context);
@@ -110,7 +77,6 @@ class Home extends StatelessWidget {
                 return _cardLoaded(
                     context, marketController.formatedMarketsList);
             }),
-            // loadCard ? _loadingCardAnimation(context) : _cardLoaded(context),
 
             ///
             /// Tab bar custom
@@ -315,8 +281,8 @@ class Card extends StatelessWidget {
 }
 
 class CardLoading extends StatelessWidget {
-  final gridHome item;
-  CardLoading(this.item);
+  // final gridHome item;
+  // CardLoading(this.item);
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
@@ -412,8 +378,9 @@ Widget _loadingCardAnimation(BuildContext context) {
       crossAxisCount: 2,
       primary: false,
       children: List.generate(
-        listGridHome.length,
-        (index) => CardLoading(listGridHome[index]),
+        4,
+        // (index) => CardLoading(listGridHome[index]),
+        (index) => CardLoading(),
       ));
 }
 
@@ -424,16 +391,18 @@ Widget _loadingCardAnimation(BuildContext context) {
 ///
 Widget _cardLoaded(
     BuildContext context, List<FormatedMarket> formatedMarketList) {
-  return GridView.count(
-      shrinkWrap: true,
-      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
-      crossAxisSpacing: 12.0,
-      mainAxisSpacing: 12.0,
-      childAspectRatio: 1.745,
-      crossAxisCount: 2,
-      primary: false,
-      children: List.generate(
-        4,
-        (index) => Card(listGridHome[index], formatedMarketList[index]),
-      ));
+  return formatedMarketList.isEmpty
+      ? Container()
+      : GridView.count(
+          shrinkWrap: true,
+          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
+          crossAxisSpacing: 12.0,
+          mainAxisSpacing: 12.0,
+          childAspectRatio: 1.745,
+          crossAxisCount: 2,
+          primary: false,
+          children: List.generate(
+            listGridHome.length,
+            (index) => Card(listGridHome[index], formatedMarketList[index]),
+          ));
 }
