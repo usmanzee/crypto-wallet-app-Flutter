@@ -32,7 +32,6 @@ dependencies:
   http: ^0.12.2
   flushbar: ^1.10.4
   get: ^3.22.2
-  get_storage: ^1.3.2
   qr_flutter: ^3.1.0
 
 dev_dependencies:
@@ -129,6 +128,8 @@ flutter:
     - assets/image/splash_screen.png
     - assets/image/loginHeader.png
     - assets/image/logo.png
+    - assets/image/b4u_logo.png
+    - assets/image/b4u_wallet_logo.png
     - assets/image/signupHeader.png
     - assets/image/gainers.png
     - assets/image/losers.png

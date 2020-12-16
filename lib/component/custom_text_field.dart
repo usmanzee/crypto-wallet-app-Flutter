@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:crypto_template/component/style.dart';
 
 class CustomTextField extends StatelessWidget {
   final String label;
@@ -32,7 +33,7 @@ class CustomTextField extends StatelessWidget {
           child: TextFormField(
             onChanged: onChanged,
             // onSaved: onSaved,
-            style: new TextStyle(color: Colors.white),
+            style: new TextStyle(color: Theme.of(context).textSelectionColor),
             textAlign: textAlign,
             obscureText: obscure,
             validator: validator,
@@ -49,9 +50,9 @@ class CustomTextField extends StatelessWidget {
                 fillColor: Colors.transparent,
                 labelText: label,
                 hintText: hint,
-                hintStyle: TextStyle(color: Colors.white),
+                hintStyle: TextStyle(color: colorStyle.fontColorDarkTitle),
                 labelStyle: TextStyle(
-                  color: Colors.white70,
+                  color: colorStyle.fontColorDarkTitle,
                 ),
                 border:
                     OutlineInputBorder(borderRadius: BorderRadius.circular(5))),

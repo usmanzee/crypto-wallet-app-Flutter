@@ -45,7 +45,7 @@ class Ticker {
   String sell;
   String low;
   String high;
-  String open;
+  dynamic open;
   String last;
   String volume;
   String avgPrice;

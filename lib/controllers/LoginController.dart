@@ -1,7 +1,6 @@
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:crypto_template/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:crypto_template/repository/auth_repository.dart';
@@ -9,7 +8,6 @@ import 'package:crypto_template/controllers/SnackbarController.dart';
 
 class LoginController extends GetxController {
   SnackbarController snackbarController;
-  HomeController homeController;
   TextEditingController emailTextController;
   TextEditingController passwordTextController;
   TextEditingController confirmPasswordTextController;
@@ -42,14 +40,19 @@ class LoginController extends GetxController {
           loginScreenType == 2) {
         requestObject['otp_code'] = twoFATextController.text;
       }
-      user.value = await _authRepository.authenticate(requestObject);
+      var userData = await _authRepository.authenticate(requestObject);
+      user.value = userData;
       Get.back();
       if (user.value.state == 'pending') {
         Get.toNamed('/email-verification');
       } else {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setBool('loggedIn', true);
-        Get.offAndToNamed('/wallets');
+        final HomeController homeController = Get.find();
+        homeController.isLoggedIn = true;
+        homeController.user.value = userData;
+        // Get.offAllNamed('/wallets');
+        Get.back();
       }
     } catch (error) {
       Get.back();

@@ -95,13 +95,13 @@ class WalletDetail extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(
-                          left: 20.0, right: 20.0, top: 20.0),
+                          left: 8.0, right: 8.0, top: 8.0),
                       child: Deposit(wallet: wallet),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
-                          left: 20.0, right: 20.0, top: 20.0),
-                      child: withDraw(),
+                          left: 8.0, right: 8.0, top: 8.0),
+                      child: WithDraw(),
                     ),
                   ],
                 ),

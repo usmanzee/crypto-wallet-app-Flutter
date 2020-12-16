@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class colorStyle {
-  static final primaryColor = Color(0xFF45C2DA);
+  // static final primaryColor = Color(0xFF45C2DA);
+  static final primaryColor = Color(0xFF6F2158);
   // static final background = Color(0xFF191B2A);
   static final background = Color(0xFF0F233D);
   static final cardColorLight = Colors.white;

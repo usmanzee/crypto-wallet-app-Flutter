@@ -34,6 +34,7 @@ class MarketController extends GetxController {
 
       isLoading(false);
     } catch (error) {
+      print(error);
       isLoading(false);
       var errorResponseObj = error.errorResponse();
       snackbarController = new SnackbarController(
@@ -51,7 +52,9 @@ class MarketController extends GetxController {
       if (tickers[market.id] != null) {
         bool isPositiveChange = true;
         double marketLast = double.parse(tickers[market.id].ticker.last);
-        double marketOpen = double.parse(tickers[market.id].ticker.open);
+        double marketOpen = tickers[market.id].ticker.open.runtimeType != double
+            ? double.parse(tickers[market.id].ticker.open)
+            : tickers[market.id].ticker.open;
         String marketPriceChangePercent =
             tickers[market.id].ticker.priceChangePercent;
         double marketHigh = double.parse(tickers[market.id].ticker.high);
@@ -90,9 +93,9 @@ class MarketController extends GetxController {
         marketsFormatedData.add(formatedMarket);
       }
 
-      formatedMarketsList.value = marketsFormatedData;
-      positiveMarketsList.value = positivemarketsFormatedData;
-      negativeMarketsList.value = negativemarketsFormatedData;
+      formatedMarketsList.assignAll(marketsFormatedData);
+      positiveMarketsList.assignAll(positivemarketsFormatedData);
+      negativeMarketsList.assignAll(negativemarketsFormatedData);
     }
   }
 

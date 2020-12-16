@@ -10,13 +10,13 @@
 // import 'package:crypto_template/views/setting/themes.dart';
 // import 'package:crypto_template/views/wallet/wallet.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:crypto_template/controllers/homeController.dart';
+// import 'package:crypto_template/controllers/HomeController.dart';
 
 // class BottomNavBar extends StatelessWidget {
 //   final ThemeBloc themeBloc;
 //   BottomNavBar({this.themeBloc});
 
-//   final homeController homeController = Get.put(homeController());
+//   final HomeController homeController = Get.put(HomeController());
 //   Widget callPage(int current) {
 //     switch (current) {
 //       case 0:
@@ -26,7 +26,7 @@
 //         return new market();
 //         break;
 //       case 2:
-//         return new wallet();
+//         return new Wallet();
 //         break;
 //       case 3:
 //         return new news();
@@ -35,7 +35,7 @@
 //         return new setting(themeBloc: themeBloc);
 //         break;
 //       default:
-//         return new wallet();
+//         return new Wallet();
 //     }
 //   }
 
@@ -44,7 +44,7 @@
 //     return Scaffold(
 //       body: Obx(
 //         () => Center(
-//           child: callPage(homeController.selectedIndex),
+//           child: callPage(homeController.selectedNavIndex),
 //         ),
 //       ),
 //       bottomNavigationBar: Obx(() {
@@ -53,11 +53,11 @@
 //             items: <BottomNavigationDotBarItem>[
 //               BottomNavigationDotBarItem(
 //                 icon: Icons.home,
-//                 onTap: () => homeController.selectedIndex = 0,
+//                 onTap: () => homeController.selectedNavIndex = 0,
 //               ),
 //               BottomNavigationDotBarItem(
 //                 icon: Icons.account_balance,
-//                 onTap: () => homeController.selectedIndex = 1,
+//                 onTap: () => homeController.selectedNavIndex = 1,
 //               ),
 //               BottomNavigationDotBarItem(
 //                   icon: Icons.account_balance_wallet,
@@ -65,18 +65,18 @@
 //                     if (true) {
 //                       Get.toNamed('/login');
 //                     } else {
-//                       homeController.selectedIndex = 2;
+//                       homeController.selectedNavIndex = 2;
 //                     }
 //                   }),
 //               BottomNavigationDotBarItem(
 //                   icon: Icons.library_books,
 //                   onTap: () {
-//                     homeController.selectedIndex = 3;
+//                     homeController.selectedNavIndex = 3;
 //                   }),
 //               BottomNavigationDotBarItem(
 //                   icon: Icons.settings,
 //                   onTap: () {
-//                     homeController.selectedIndex = 4;
+//                     homeController.selectedNavIndex = 4;
 //                   }),
 //             ]);
 //       }),
@@ -84,21 +84,16 @@
 //   }
 // }
 
-import 'dart:async';
-import 'package:crypto_template/controllers/LoginController.dart';
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/views/Bottom_Nav_Bar/custom_nav_bar.dart';
 import 'package:crypto_template/views/home/home.dart';
-import 'package:crypto_template/views/auth/login.dart';
 import 'package:crypto_template/views/market/markets.dart';
 import 'package:crypto_template/views/news/news_home.dart';
 import 'package:crypto_template/views/setting/setting.dart';
-import 'package:crypto_template/views/setting/themes.dart';
 import 'package:crypto_template/views/wallet/wallet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:get_storage/get_storage.dart';
 
 class BottomNavBar extends StatelessWidget {
   final HomeController homeController = Get.put(new HomeController());
@@ -106,7 +101,7 @@ class BottomNavBar extends StatelessWidget {
   // final List<Widget> bodyContent = [
   //   Home(),
   //   market(),
-  //   wallet(),
+  //   Wallet(),
   //   news(),
   //   setting(),
   // ];
@@ -119,7 +114,7 @@ class BottomNavBar extends StatelessWidget {
         return new market();
         break;
       case 2:
-        return new setting();
+        return new news();
         break;
       case 3:
         return new news();
@@ -132,20 +127,13 @@ class BottomNavBar extends StatelessWidget {
     }
   }
 
-  void isUserLoggedIn() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool loggedIn = (prefs.getBool('loggedIn') ?? false);
-    homeController.isLoggedIn = loggedIn != null ? loggedIn : false;
-  }
-
   @override
   Widget build(BuildContext context) {
-    isUserLoggedIn();
     return Scaffold(
       body: Obx(
         () => Center(
           child: callPage(homeController.selectedNavIndex),
-          // child: bodyContent.elementAt(homeController.selectedIndex),
+          // child: bodyContent.elementAt(homeController.selectedNavIndex),
         ),
       ),
       bottomNavigationBar: Obx(
@@ -186,7 +174,7 @@ class BottomNavBar extends StatelessWidget {
                 homeController.selectedNavIndex = index;
               }
             }
-            // onTap: (index) => homeController.selectedIndex = index,
+            // onTap: (index) => homeController.selectedNavIndex = index,
             ),
       ),
     );

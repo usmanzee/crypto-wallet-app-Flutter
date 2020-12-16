@@ -1,10 +1,11 @@
+import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/views/auth/forget_password.dart';
 import 'package:crypto_template/views/auth/signup.dart';
 import 'package:crypto_template/views/setting/themes.dart';
 import 'package:crypto_template/component/style.dart';
+import 'package:crypto_template/component/custom_text_field.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-
 import 'package:get/get.dart';
 import 'package:crypto_template/controllers/LoginController.dart';
 
@@ -13,6 +14,7 @@ class Login extends StatelessWidget {
   Login({this.themeBloc});
 
   final LoginController _loginController = Get.put(LoginController());
+  final HomeController homeController = Get.find();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -42,7 +44,7 @@ class Login extends StatelessWidget {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.white),
+          iconTheme: IconThemeData(color: colorStyle.fontColorDarkTitle),
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           automaticallyImplyLeading: true,
@@ -52,7 +54,7 @@ class Login extends StatelessWidget {
           width: double.infinity,
 
           /// Set Background image in splash screen layout (Click to open code)
-          decoration: BoxDecoration(color: colorStyle.background),
+          decoration: BoxDecoration(color: colorStyle.whiteBacground),
           child: Stack(
             children: <Widget>[
               ///
@@ -80,27 +82,28 @@ class Login extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Image.asset("assets/image/logo.png", height: 35.0),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 17.0, top: 7.0),
-                              child: Text(
-                                "Crypto",
-                                style: TextStyle(
-                                    fontFamily: "Sans",
-                                    color: Colors.white,
-                                    fontSize: 27.0,
-                                    fontWeight: FontWeight.w300,
-                                    letterSpacing: 3.5),
-                              ),
-                            ),
+                            Image.asset("assets/image/b4u_wallet_logo.png",
+                                height: 50.0),
+                            // Padding(
+                            //   padding:
+                            //       const EdgeInsets.only(left: 5.0, top: 0.0),
+                            //   child: Text(
+                            //     "B4U Wallet",
+                            //     style: TextStyle(
+                            //         fontFamily: "Sans",
+                            //         color: colorStyle.fontColorDarkTitle,
+                            //         fontSize: 27.0,
+                            //         fontWeight: FontWeight.w300,
+                            //         letterSpacing: 3.5),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 20.0, right: 20.0, top: 80.0),
-                        child: _buildTextFeild(
+                            left: 16.0, right: 16.0, top: 40.0),
+                        child: CustomTextField(
                             widgetIcon: Icon(
                               Icons.email,
                               color: colorStyle.primaryColor,
@@ -108,15 +111,15 @@ class Login extends StatelessWidget {
                             ),
                             validator: _emailValidator,
                             controller: _loginController.emailTextController,
-                            hint: 'Email',
+                            label: 'Email',
                             obscure: false,
                             keyboardType: TextInputType.emailAddress,
                             textAlign: TextAlign.start),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 20.0, right: 20.0, top: 20.0),
-                        child: _buildTextFeild(
+                            left: 16.0, right: 16.0, top: 24.0),
+                        child: CustomTextField(
                             widgetIcon: Icon(
                               Icons.vpn_key,
                               size: 20,
@@ -124,7 +127,7 @@ class Login extends StatelessWidget {
                             ),
                             validator: _passwordValidator,
                             controller: _loginController.passwordTextController,
-                            hint: 'Password',
+                            label: 'Password',
                             obscure: true,
                             keyboardType: TextInputType.text,
                             textAlign: TextAlign.start),
@@ -134,29 +137,30 @@ class Login extends StatelessWidget {
                       /// forgot password
                       ///
                       Padding(
-                        padding: const EdgeInsets.only(right: 23.0, top: 9.0),
+                        padding: const EdgeInsets.only(right: 16.0, top: 9.0),
                         child: InkWell(
                             onTap: () {
-                              Navigator.of(context).pushReplacement(
-                                  PageRouteBuilder(
-                                      pageBuilder: (_, __, ___) =>
-                                          forgetPassword(
-                                            themeBloc: themeBloc,
-                                          )));
+                              Get.to(forgetPassword());
+                              // Navigator.of(context).pushReplacement(
+                              //     PageRouteBuilder(
+                              //         pageBuilder: (_, __, ___) =>
+                              //             forgetPassword(
+                              //               themeBloc: themeBloc,
+                              //             )));
                             },
                             child: Align(
                                 alignment: Alignment.centerRight,
                                 child: Text(
                                   "Forget Password ?",
                                   style: TextStyle(
-                                    color: Colors.white70,
+                                    // color: Colors.white70,
                                     fontSize: 12.0,
                                   ),
                                 ))),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 20.0, right: 20.0, top: 40.0),
+                            left: 16.0, right: 16.0, top: 24.0),
                         child: GestureDetector(
                           onTap: () {
                             _onLoginFormSubmit();
@@ -186,7 +190,7 @@ class Login extends StatelessWidget {
                         height: 20.0,
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                         child: GestureDetector(
                           onTap: () {
                             Get.toNamed('/register');
@@ -206,8 +210,8 @@ class Login extends StatelessWidget {
                               child: Text(
                                 "Create Account",
                                 style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w100,
+                                    color: colorStyle.primaryColor,
+                                    fontWeight: FontWeight.w400,
                                     fontSize: 16.5,
                                     letterSpacing: 1.2),
                               ),
@@ -215,11 +219,6 @@ class Login extends StatelessWidget {
                           ),
                         ),
                       ),
-//                  Padding(
-//                    padding: const EdgeInsets.only(left:20.0,right: 20.0,bottom: 15.0),
-//                    child: Container(width: double.infinity,height: 0.15,color: colorStyle.primaryColor,),
-//                  ),
-//                  Text("Register",style: TextStyle(color: colorStyle.primaryColor,fontSize: 17.0,fontWeight: FontWeight.w800),),
                     ],
                   ),
                 ),
@@ -228,51 +227,6 @@ class Login extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildTextFeild({
-    String hint,
-    ValueChanged onChanged,
-    FormFieldValidator validator,
-    TextEditingController controller,
-    TextInputType keyboardType,
-    bool obscure,
-    String icon,
-    TextAlign textAlign,
-    Widget widgetIcon,
-  }) {
-    return Column(
-      children: <Widget>[
-        Container(
-          child: TextFormField(
-            onChanged: onChanged,
-            // onSaved: onSaved,
-            style: new TextStyle(color: Colors.white),
-            textAlign: textAlign,
-            obscureText: obscure,
-            validator: validator,
-            controller: controller,
-            keyboardType: keyboardType,
-            autocorrect: false,
-            autofocus: false,
-            decoration: InputDecoration(
-                errorStyle: TextStyle(
-                  fontSize: 13.5,
-                ),
-                errorMaxLines: 3,
-                filled: true,
-                fillColor: Colors.transparent,
-                labelText: hint,
-                hintStyle: TextStyle(color: Colors.white),
-                labelStyle: TextStyle(
-                  color: Colors.white70,
-                ),
-                border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
-          ),
-        ),
-      ],
     );
   }
 }

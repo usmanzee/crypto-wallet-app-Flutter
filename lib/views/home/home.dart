@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:crypto_template/models/formated_market.dart';
+import 'package:crypto_template/views/setting/setting.dart';
 import 'package:get/get.dart';
 import 'package:crypto_template/controllers/MarketController.dart';
 import 'package:flutter/material.dart';
@@ -21,19 +22,21 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
-        automaticallyImplyLeading: true,
+        // automaticallyImplyLeading: true,
         title: Row(
           children: [
             IconButton(
               icon: Icon(Icons.account_circle),
-              color: colorStyle.fontColorDark,
+              color: colorStyle.fontColorDarkTitle,
               tooltip: 'Profile settings',
-              onPressed: () {},
+              onPressed: () {
+                Get.to(Setting());
+              },
             ),
             Spacer(flex: 1),
             IconButton(
               icon: Icon(Icons.notifications_none),
-              color: colorStyle.fontColorDark,
+              color: colorStyle.fontColorDarkTitle,
               tooltip: 'Notification',
               onPressed: () {},
             ),
@@ -46,28 +49,28 @@ class Home extends StatelessWidget {
             // /
             // / Header image slider
             // /
-            SizedBox(
-                height: 210.0,
-                width: double.infinity,
-                child: new Carousel(
-                  boxFit: BoxFit.cover,
-                  dotColor: Colors.white.withOpacity(0.8),
-                  dotSize: 5.5,
-                  dotSpacing: 16.0,
-                  dotBgColor: Colors.transparent,
-                  showIndicator: true,
-                  overlayShadow: true,
-                  overlayShadowColors: Theme.of(context)
-                      .scaffoldBackgroundColor
-                      .withOpacity(0.9),
-                  overlayShadowSize: 0.25,
-                  images: [
-                    AssetImage("assets/image/banner/banner2.png"),
-                    AssetImage("assets/image/banner/banner3.jpg"),
-                    AssetImage("assets/image/banner/banner2.png"),
-                    AssetImage("assets/image/banner/banner3.jpg"),
-                  ],
-                )),
+            // SizedBox(
+            //     height: 210.0,
+            //     width: double.infinity,
+            //     child: new Carousel(
+            //       boxFit: BoxFit.cover,
+            //       dotColor: Colors.white.withOpacity(0.8),
+            //       dotSize: 5.5,
+            //       dotSpacing: 16.0,
+            //       dotBgColor: Colors.transparent,
+            //       showIndicator: true,
+            //       overlayShadow: true,
+            //       overlayShadowColors: Theme.of(context)
+            //           .scaffoldBackgroundColor
+            //           .withOpacity(0.9),
+            //       overlayShadowSize: 0.25,
+            //       images: [
+            //         AssetImage("assets/image/banner/banner2.png"),
+            //         AssetImage("assets/image/banner/banner3.jpg"),
+            //         AssetImage("assets/image/banner/banner2.png"),
+            //         AssetImage("assets/image/banner/banner3.jpg"),
+            //       ],
+            //     )),
             SizedBox(height: 10.0),
 
             Obx(() {

@@ -26,10 +26,10 @@ class SplashScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Container(
         /// Set Background image in splash screen layout (Click to open code)
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('assets/image/splash_screen.png'),
-                fit: BoxFit.cover)),
+        // decoration: BoxDecoration(
+        //     image: DecorationImage(
+        //         image: AssetImage('assets/image/splash_screen.png'),
+        //         fit: BoxFit.cover)),
         child: Container(
           /// Set gradient black in image splash screen (Click to open code)
           decoration: BoxDecoration(
@@ -48,19 +48,20 @@ class SplashScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Image.asset("assets/image/logo.png", height: 35.0),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 17.0, top: 7.0),
-                        child: Text(
-                          "Crypto",
-                          style: TextStyle(
-                              fontFamily: "Sans",
-                              color: Colors.white,
-                              fontSize: 32.0,
-                              fontWeight: FontWeight.w300,
-                              letterSpacing: 3.9),
-                        ),
-                      ),
+                      Image.asset("assets/image/b4u_wallet_logo.png",
+                          height: 50.0),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 10.0, top: 0.0),
+                      //   child: Text(
+                      //     "B4U",
+                      //     style: TextStyle(
+                      //         fontFamily: "Sans",
+                      //         // color: Colors.white,
+                      //         fontSize: 32.0,
+                      //         fontWeight: FontWeight.w300,
+                      //         letterSpacing: 3.9),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ],

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:crypto_template/views/auth/login.dart';
 import 'package:crypto_template/views/setting/themes.dart';
 import 'package:crypto_template/component/style.dart';
+import 'package:crypto_template/component/custom_text_field.dart';
 import 'package:crypto_template/controllers/RegisterController.dart';
 
 import 'package:form_field_validator/form_field_validator.dart';
@@ -36,12 +37,12 @@ class SignUp extends StatelessWidget {
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
     return Form(
-      // autovalidate: true,
+      autovalidate: true,
       key: _formKey,
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.white),
+          iconTheme: IconThemeData(color: colorStyle.fontColorDarkTitle),
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           automaticallyImplyLeading: true,
@@ -51,7 +52,7 @@ class SignUp extends StatelessWidget {
           width: double.infinity,
 
           /// Set Background image in splash screen layout (Click to open code)
-          decoration: BoxDecoration(color: colorStyle.background),
+          decoration: BoxDecoration(color: colorStyle.whiteBacground),
           child: Stack(
             children: <Widget>[
               ///
@@ -80,27 +81,28 @@ class SignUp extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Image.asset("assets/image/logo.png", height: 35.0),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 17.0, top: 7.0),
-                              child: Text(
-                                "Crypto",
-                                style: TextStyle(
-                                    fontFamily: "Sans",
-                                    color: Colors.white,
-                                    fontSize: 27.0,
-                                    fontWeight: FontWeight.w300,
-                                    letterSpacing: 3.5),
-                              ),
-                            ),
+                            Image.asset("assets/image/b4u_wallet_logo.png",
+                                height: 50.0),
+                            // Padding(
+                            //   padding:
+                            //       const EdgeInsets.only(left: 17.0, top: 7.0),
+                            //   child: Text(
+                            //     "Crypto",
+                            //     style: TextStyle(
+                            //         fontFamily: "Sans",
+                            //         color: Colors.white,
+                            //         fontSize: 27.0,
+                            //         fontWeight: FontWeight.w300,
+                            //         letterSpacing: 3.5),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 20.0, right: 20.0, top: 20.0),
-                        child: _buildTextFeild(
+                            left: 16.0, right: 16.0, top: 32.0),
+                        child: CustomTextField(
                             widgetIcon: Icon(
                               Icons.email,
                               color: colorStyle.primaryColor,
@@ -109,15 +111,15 @@ class SignUp extends StatelessWidget {
                             validator: emailValidator,
                             // onChanged: (input) => _email = input,
                             controller: _registerController.emailTextController,
-                            hint: 'Email',
+                            label: 'Email',
                             obscure: false,
                             keyboardType: TextInputType.emailAddress,
                             textAlign: TextAlign.start),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 20.0, right: 20.0, top: 20.0),
-                        child: _buildTextFeild(
+                            left: 16.0, right: 16.0, top: 16.0),
+                        child: CustomTextField(
                             widgetIcon: Icon(
                               Icons.vpn_key,
                               size: 20,
@@ -127,15 +129,15 @@ class SignUp extends StatelessWidget {
                             // onChanged: (input) => _password = input,
                             controller:
                                 _registerController.passwordTextController,
-                            hint: 'Password',
+                            label: 'Password',
                             obscure: true,
                             keyboardType: TextInputType.text,
                             textAlign: TextAlign.start),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 20.0, right: 20.0, top: 20.0),
-                        child: _buildTextFeild(
+                            left: 16.0, right: 16.0, top: 16.0),
+                        child: CustomTextField(
                             widgetIcon: Icon(
                               Icons.vpn_key,
                               size: 20,
@@ -150,15 +152,15 @@ class SignUp extends StatelessWidget {
                                     _registerController
                                         .confirmPasswordTextController.text),
                             // onChanged: (input) => _confirmPassword = input,
-                            hint: 'Confirm Password',
+                            label: 'Confirm Password',
                             obscure: true,
                             keyboardType: TextInputType.text,
                             textAlign: TextAlign.start),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 20.0, right: 20.0, top: 20.0),
-                        child: _buildTextFeild(
+                            left: 16.0, right: 16.0, top: 16.0),
+                        child: CustomTextField(
                             widgetIcon: Icon(
                               Icons.group_add,
                               size: 20,
@@ -167,7 +169,7 @@ class SignUp extends StatelessWidget {
                             // onChanged: (input) => _referralCode = input,
                             controller:
                                 _registerController.referralCodeController,
-                            hint: 'Referral Code',
+                            label: 'Referral Code',
                             obscure: false,
                             keyboardType: TextInputType.text,
                             textAlign: TextAlign.start),
@@ -175,15 +177,10 @@ class SignUp extends StatelessWidget {
 
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 20.0, right: 20.0, top: 40.0),
+                            left: 16.0, right: 16.0, top: 24.0),
                         child: GestureDetector(
                           onTap: () {
                             _onSignFormSubmit();
-                            // Navigator.of(context)
-                            //     .pushReplacement(PageRouteBuilder(
-                            //         pageBuilder: (_, __, ___) => bottomNavBar(
-                            //               themeBloc: _themeBloc,
-                            //             )));
                           },
                           child: Container(
                             height: 50.0,
@@ -210,14 +207,10 @@ class SignUp extends StatelessWidget {
                         height: 20.0,
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.of(context)
-                                .pushReplacement(PageRouteBuilder(
-                                    pageBuilder: (_, __, ___) => new Login(
-                                          themeBloc: themeBloc,
-                                        )));
+                            Get.offNamed('/login');
                           },
                           child: Container(
                             height: 50.0,
@@ -234,7 +227,7 @@ class SignUp extends StatelessWidget {
                               child: Text(
                                 "Sign In",
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    color: colorStyle.primaryColor,
                                     fontWeight: FontWeight.w400,
                                     fontSize: 17.5,
                                     letterSpacing: 1.9),

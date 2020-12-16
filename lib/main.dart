@@ -81,7 +81,7 @@ void main() {
       defaultTransition: Transition.rightToLeft,
       getPages: RouterFile.Router.route,
       initialRoute: '/splash',
-      theme: Themes.theme,
+      theme: Themes.lightTheme,
       // theme: ThemeData(
       //   primarySwatch: Colors.deepOrange,
       //   appBarTheme: AppBarTheme(

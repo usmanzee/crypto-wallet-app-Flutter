@@ -45,7 +45,7 @@ class Wallet extends StatelessWidget {
             padding: const EdgeInsets.only(top: 225.0),
 
             ///
-            /// Create card list
+            /// Create wallet list
             ///
             child: Obx(() {
               if (walletController.isLoading.value)
@@ -57,7 +57,7 @@ class Wallet extends StatelessWidget {
                   primary: false,
                   padding: EdgeInsets.only(top: 0.0),
                   itemBuilder: (ctx, i) {
-                    return card(assetsWalletList[i],
+                    return walletList(assetsWalletList[i],
                         walletController.walletsList[i], ctx);
                   },
                   itemCount: walletController.walletsList.length,
@@ -71,11 +71,11 @@ class Wallet extends StatelessWidget {
                   ///
                   /// Create wave header
                   ///
-                  new waveBody(
+                  new WaveBody(
                       size: size, xOffset: 0, yOffset: 0, color: Colors.red),
                   new Opacity(
                     opacity: 0.9,
-                    child: new waveBody(
+                    child: new WaveBody(
                       size: size,
                       xOffset: 60,
                       yOffset: 10,
@@ -118,23 +118,23 @@ class Wallet extends StatelessWidget {
   }
 }
 
-class waveBody extends StatefulWidget {
+class WaveBody extends StatefulWidget {
   final Size size;
   final int xOffset;
   final int yOffset;
   final Color color;
 
-  waveBody(
+  WaveBody(
       {Key key, @required this.size, this.xOffset, this.yOffset, this.color})
       : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return new _waveBodyState();
+    return new _WaveBodyState();
   }
 }
 
-class _waveBodyState extends State<waveBody> with TickerProviderStateMixin {
+class _WaveBodyState extends State<WaveBody> with TickerProviderStateMixin {
   AnimationController animationController;
   List<Offset> animList1 = [];
 
@@ -180,7 +180,7 @@ class _waveBodyState extends State<waveBody> with TickerProviderStateMixin {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   tileMode: TileMode.repeated,
-                  colors: [Color(0xFF15EDED), Color(0xFF029CF5)])),
+                  colors: [Color(0xFF6F2158), Color(0xFF6F2158)])),
           child: new Container(
             margin: EdgeInsets.only(top: 75.0),
             height: 20.0,
@@ -273,7 +273,8 @@ class WaveClipper extends CustomClipper<Path> {
       animation != oldClipper.animation;
 }
 
-Widget card(assetsWallet item, WalletClass.Wallet wallet, BuildContext ctx) {
+Widget walletList(
+    assetsWallet item, WalletClass.Wallet wallet, BuildContext ctx) {
   return Padding(
     padding: const EdgeInsets.only(top: 7.0),
     child: Column(

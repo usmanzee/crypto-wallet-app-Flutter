@@ -25,7 +25,7 @@ class SplashController extends GetxController {
       Get.offNamed('/home');
     } else {
       await prefs.setBool('seen_on_boarding', true);
-      Get.offNamed('/on_bording');
+      Get.offNamed('/on_boarding');
     }
   }
 

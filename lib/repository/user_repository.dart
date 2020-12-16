@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:crypto_template/network/api_provider.dart';
 import 'package:crypto_template/models/user.dart';
 

@@ -1,5 +1,4 @@
 import 'package:crypto_template/controllers/SnackbarController.dart';
-import 'package:crypto_template/models/DepositAddress.dart';
 import 'package:crypto_template/models/balance.dart';
 import 'package:crypto_template/models/currency.dart';
 import 'package:crypto_template/repository/wallet_repository.dart';
@@ -35,6 +34,8 @@ class WalletController extends GetxController {
 
       isLoading(false);
     } catch (error) {
+      print(error);
+      print(error.errorResponse());
       isLoading(false);
       var errorResponseObj = error.errorResponse();
       snackbarController = new SnackbarController(
@@ -86,24 +87,6 @@ class WalletController extends GetxController {
       wallets.add(walletsData);
     }
     walletsList.value = wallets;
-  }
-
-  fetchDepositAddress(currency) async {
-    WalletRepository _walletRepository = new WalletRepository();
-    try {
-      isAddressLoading(true);
-      var depositAddressResponse =
-          await _walletRepository.fetchDepositAddress(currency);
-      depositAddress.value = depositAddressResponse.address;
-      isAddressLoading(false);
-    } catch (error) {
-      print(error);
-      isAddressLoading(false);
-      // var errorResponseObj = error.errorResponse();
-      // snackbarController = new SnackbarController(
-      //     title: 'Error', message: errorResponseObj['message']);
-      // snackbarController.showSnackbar();
-    }
   }
 
   @override

@@ -1,84 +1,219 @@
+import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/views/setting/SeeAllTemplate.dart';
 import 'package:crypto_template/views/setting/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:crypto_template/component/style.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class setting extends StatefulWidget {
+class Setting extends StatefulWidget {
   ///
   /// Get data bloc from
   ///
-  ThemeBloc themeBloc;
+  final ThemeBloc themeBloc;
 
-  setting({Key key, this.themeBloc}) : super(key: key);
+  Setting({Key key, this.themeBloc}) : super(key: key);
 
-  _settingState createState() => _settingState(themeBloc);
+  _SettingState createState() => _SettingState(themeBloc);
 }
 
-class _settingState extends State<setting> {
+class _SettingState extends State<Setting> {
   ///
   /// Bloc for double theme
   ///
+  final HomeController homeController = Get.find();
   ThemeBloc themeBloc;
-  _settingState(this.themeBloc);
+  _SettingState(this.themeBloc);
   bool theme = true;
   String _img = "assets/image/setting/lightMode.png";
   @override
+  void initState() {
+    super.initState();
+  }
+
+  void _handleLogoutClick() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('loggedIn');
+    homeController.isLoggedIn = false;
+    Get.offAllNamed('/home');
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        brightness: Brightness.dark,
+        centerTitle: true,
+        title: Text(
+          'Account',
+          style: TextStyle(
+              color: Theme.of(context).textSelectionColor,
+              fontFamily: "Gotik",
+              fontWeight: FontWeight.w600,
+              fontSize: 18.5),
+        ),
+        iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
+        elevation: 0.8,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 40.0),
-              child: Center(
-                  child: Text(
-                "Settings",
-                style: TextStyle(
-                    fontFamily: "Sans",
-                    fontSize: 19.5,
-                    fontWeight: FontWeight.w700),
-              )),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 40.0),
+            //   child: Center(
+            //       child: Text(
+            //     "Settings",
+            //     style: TextStyle(
+            //         fontFamily: "Sans",
+            //         fontSize: 19.5,
+            //         fontWeight: FontWeight.w700),
+            //   )),
+            // ),
+            // SizedBox(
+            //   height: 20.0,
+            // ),
 
             ///
             /// Image header
             ///
-            InkWell(
-              onTap: () {
-                ///
-                /// Change image header and theme color if user click image
-                ///
-                if (theme == true) {
-                  setState(() {
-                    _img = "assets/image/setting/nightMode.png";
-                    theme = false;
-                  });
-                  themeBloc.selectedTheme.add(_buildLightTheme());
-                } else {
-                  themeBloc.selectedTheme.add(_buildDarkTheme());
-                  setState(() {
-                    theme = true;
-                    _img = "assets/image/setting/lightMode.png";
-                  });
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                child: Container(
-                  height: 125.0,
+            // InkWell(
+            //   onTap: () {
+            //     ///
+            //     /// Change image header and theme color if user click image
+            //     ///
+            //     if (theme == true) {
+            //       setState(() {
+            //         _img = "assets/image/setting/nightMode.png";
+            //         theme = false;
+            //       });
+            //       themeBloc.selectedTheme.add(_buildLightTheme());
+            //     } else {
+            //       themeBloc.selectedTheme.add(_buildDarkTheme());
+            //       setState(() {
+            //         theme = true;
+            //         _img = "assets/image/setting/lightMode.png";
+            //       });
+            //     }
+            //   },
+            //   child: Padding(
+            //     padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+            //     child: Container(
+            //       height: 125.0,
+            //       width: double.infinity,
+            //       decoration: BoxDecoration(
+            //           borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            //           image: DecorationImage(
+            //               image: AssetImage(_img), fit: BoxFit.cover)),
+            //     ),
+            //   ),
+            // ),
+            Obx(() {
+              if (homeController.isLoggedIn) {
+                return Container(
                   width: double.infinity,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      image: DecorationImage(
-                          image: AssetImage(_img), fit: BoxFit.cover)),
-                ),
-              ),
-            ),
+                  padding: EdgeInsets.all(16),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Icon(
+                                Icons.account_circle,
+                                size: 32.0,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 4.0),
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        homeController.user.value.email,
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w300,
+                                          fontFamily: "Popins",
+                                          letterSpacing: 1.5,
+                                        ),
+                                      ),
+                                      Text(
+                                        'ID: ' + homeController.user.value.uid,
+                                        style: TextStyle(
+                                          color: Theme.of(context)
+                                              .hintColor
+                                              .withOpacity(0.5),
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w100,
+                                          fontFamily: "Popins",
+                                          letterSpacing: 1.5,
+                                        ),
+                                      ),
+                                    ]),
+                              ),
+                            ])
+                        // line()
+                      ]),
+                );
+              } else {
+                return Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.all(16),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Get.toNamed('/login');
+                          },
+                          child: Row(
+                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(
+                                  Icons.account_circle,
+                                  size: 32.0,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 4.0),
+                                  child: Text(
+                                    'Login/Register',
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w300,
+                                      fontFamily: "Popins",
+                                      letterSpacing: 1.5,
+                                    ),
+                                  ),
+                                ),
+                                Spacer(flex: 1),
+                                Icon(
+                                  Icons.keyboard_arrow_right,
+                                ),
+                              ]),
+                        ),
+                        // line()
+                      ]),
+                );
+              }
+            }),
             SizedBox(
-              height: 20.0,
+              height: 10.0,
+            ),
+            listSetting("", "Security"),
+            SizedBox(
+              height: 10.0,
+            ),
+            listSetting("", "Notifications"),
+            SizedBox(
+              height: 10.0,
+            ),
+            listSetting("", "Help & Support"),
+            SizedBox(
+              height: 10.0,
+            ),
+            listSetting("", "Share The App"),
+            SizedBox(
+              height: 10.0,
             ),
             listSetting("PASSCODE LOCK", "Disable"),
             SizedBox(
@@ -102,6 +237,43 @@ class _settingState extends State<setting> {
                       pageBuilder: (_, __, ___) => new seeAllTemplate()));
                 },
                 child: listSetting("UI KIT WALLET", "See all template")),
+            SizedBox(
+              height: 32.0,
+            ),
+            Obx(() {
+              if (homeController.isLoggedIn)
+                return Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      _handleLogoutClick();
+                    },
+                    child: Container(
+                      height: 50.0,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(0.0)),
+                        border: Border.all(
+                          color: colorStyle.primaryColor,
+                          width: 0.35,
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Logout",
+                          style: TextStyle(
+                              color: colorStyle.primaryColor,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16.5,
+                              letterSpacing: 1.2),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              else
+                return Container();
+            })
           ],
         ),
       ),

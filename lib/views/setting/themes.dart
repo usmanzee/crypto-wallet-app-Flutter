@@ -42,7 +42,7 @@ class ThemeBloc {
 }
 
 class Themes {
-  static final theme = ThemeData(
+  static final darkTheme = ThemeData(
       brightness: Brightness.dark,
       scaffoldBackgroundColor: colorStyle.background,
       backgroundColor: colorStyle.blackBackground,
@@ -55,4 +55,17 @@ class Themes {
       cardColor: colorStyle.grayBackground,
       textSelectionColor: colorStyle.fontColorDark,
       textSelectionHandleColor: colorStyle.fontColorDarkTitle);
+
+  static final lightTheme = ThemeData(
+    brightness: Brightness.light,
+    accentColor: colorStyle.primaryColor,
+    primaryColor: colorStyle.primaryColor,
+    buttonColor: colorStyle.primaryColor,
+    cardColor: colorStyle.cardColorLight,
+    textSelectionColor: colorStyle.fontColorLight,
+    scaffoldBackgroundColor: Color(0xFFFDFDFD),
+    canvasColor: colorStyle.whiteBacground,
+    dividerColor: colorStyle.iconColorLight,
+    hintColor: colorStyle.fontSecondaryColorLight,
+  );
 }
