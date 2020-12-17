@@ -5,6 +5,8 @@ import 'package:crypto_template/models/user.dart';
 import 'package:crypto_template/repository/user_repository.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get_mac/get_mac.dart';
+import 'package:flutter/services.dart';
 
 class HomeController extends GetxController {
   final _isLoggedIn = false.obs;
@@ -12,9 +14,11 @@ class HomeController extends GetxController {
   var marketList = List<Market>().obs;
   SnackbarController snackbarController;
   var user = new User().obs;
+  var deviceMacAddress = 'unknown'.obs;
 
   @override
   void onInit() async {
+    fetchMacAddress();
     bool isLoggedIn = await isUserLoggedIn();
     if (isLoggedIn) {
       fetchUser();
@@ -27,6 +31,14 @@ class HomeController extends GetxController {
 
   get isLoggedIn => this._isLoggedIn.value;
   set isLoggedIn(value) => this._isLoggedIn.value = value;
+
+  void fetchMacAddress() async {
+    try {
+      deviceMacAddress.value = await GetMac.macAddress;
+    } on PlatformException {
+      deviceMacAddress.value = 'Failed to get Device MAC Address.';
+    }
+  }
 
   Future<bool> isUserLoggedIn() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();

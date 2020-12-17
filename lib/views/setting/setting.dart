@@ -111,7 +111,7 @@ class _SettingState extends State<Setting> {
               if (homeController.isLoggedIn) {
                 return Container(
                   width: double.infinity,
-                  padding: EdgeInsets.all(16),
+                  padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -151,6 +151,16 @@ class _SettingState extends State<Setting> {
                                       ),
                                     ]),
                               ),
+                              Text(
+                                'Mac Address: ' +
+                                    homeController.deviceMacAddress.value,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w300,
+                                  fontFamily: "Popins",
+                                  letterSpacing: 1.5,
+                                ),
+                              ),
                             ])
                         // line()
                       ]),
@@ -158,7 +168,7 @@ class _SettingState extends State<Setting> {
               } else {
                 return Container(
                   width: double.infinity,
-                  padding: EdgeInsets.all(16),
+                  padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -191,13 +201,23 @@ class _SettingState extends State<Setting> {
                                 ),
                               ]),
                         ),
+                        Text(
+                          'Mac Address: ' +
+                              homeController.deviceMacAddress.value,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w300,
+                            fontFamily: "Popins",
+                            letterSpacing: 1.5,
+                          ),
+                        ),
                         // line()
                       ]),
                 );
               }
             }),
             SizedBox(
-              height: 10.0,
+              height: 0.0,
             ),
             listSetting("", "Security"),
             SizedBox(
@@ -215,31 +235,31 @@ class _SettingState extends State<Setting> {
             SizedBox(
               height: 10.0,
             ),
-            listSetting("PASSCODE LOCK", "Disable"),
-            SizedBox(
-              height: 10.0,
-            ),
-            listSetting("SIGNAL NOTIFICATION", "Enabled"),
-            SizedBox(
-              height: 10.0,
-            ),
-            listSetting("LANGUAGE", "English"),
-            SizedBox(
-              height: 10.0,
-            ),
+            // listSetting("PASSCODE LOCK", "Disable"),
+            // SizedBox(
+            //   height: 10.0,
+            // ),
+            // listSetting("SIGNAL NOTIFICATION", "Enabled"),
+            // SizedBox(
+            //   height: 10.0,
+            // ),
+            // listSetting("LANGUAGE", "English"),
+            // SizedBox(
+            //   height: 10.0,
+            // ),
 
             ///
             /// Navigate to theme screen
             ///
-            InkWell(
-                onTap: () {
-                  Navigator.of(context).push(PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => new seeAllTemplate()));
-                },
-                child: listSetting("UI KIT WALLET", "See all template")),
-            SizedBox(
-              height: 32.0,
-            ),
+            // InkWell(
+            //     onTap: () {
+            //       Navigator.of(context).push(PageRouteBuilder(
+            //           pageBuilder: (_, __, ___) => new seeAllTemplate()));
+            //     },
+            //     child: listSetting("UI KIT WALLET", "See all template")),
+            // SizedBox(
+            //   height: 32.0,
+            // ),
             Obx(() {
               if (homeController.isLoggedIn)
                 return Padding(
