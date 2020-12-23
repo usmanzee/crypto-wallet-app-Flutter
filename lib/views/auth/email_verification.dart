@@ -3,7 +3,7 @@ import 'package:crypto_template/component/style.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:crypto_template/component/custom_text_field.dart';
 import 'package:get/get.dart';
-import 'package:crypto_template/controllers/LoginController.dart';
+import 'package:crypto_template/controllers/login_controller.dart';
 
 class EmailVerification extends StatelessWidget {
   @override
@@ -23,7 +23,7 @@ class EmailVerification extends StatelessWidget {
           width: double.infinity,
 
           /// Set Background image in splash screen layout (Click to open code)
-          decoration: BoxDecoration(color: colorStyle.background),
+          // decoration: BoxDecoration(color: colorStyle.background),
           child: Stack(
             children: <Widget>[
               ///
@@ -51,20 +51,21 @@ class EmailVerification extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Image.asset("assets/image/logo.png", height: 35.0),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 17.0, top: 7.0),
-                              child: Text(
-                                "Crypto",
-                                style: TextStyle(
-                                    fontFamily: "Sans",
-                                    color: Colors.white,
-                                    fontSize: 27.0,
-                                    fontWeight: FontWeight.w300,
-                                    letterSpacing: 3.5),
-                              ),
-                            ),
+                            Image.asset("assets/image/b4u_wallet_logo.png",
+                                height: 50.0),
+                            // Padding(
+                            //   padding:
+                            //       const EdgeInsets.only(left: 17.0, top: 7.0),
+                            //   child: Text(
+                            //     "Crypto",
+                            //     style: TextStyle(
+                            //         fontFamily: "Sans",
+                            //         color: Colors.white,
+                            //         fontSize: 27.0,
+                            //         fontWeight: FontWeight.w300,
+                            //         letterSpacing: 3.5),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),

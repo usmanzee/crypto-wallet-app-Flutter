@@ -1,11 +1,9 @@
-import 'package:crypto_template/controllers/SnackbarController.dart';
+import 'package:crypto_template/controllers/error_controller.dart';
 import 'package:crypto_template/models/formated_market.dart';
 import 'package:crypto_template/models/market.dart';
 import 'package:crypto_template/models/market_ticker.dart';
 import 'package:crypto_template/repository/market_repository.dart';
-import 'package:crypto_template/screen/market/markets.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class MarketController extends GetxController {
   var isLoading = true.obs;
@@ -14,7 +12,7 @@ class MarketController extends GetxController {
   var formatedMarketsList = List<FormatedMarket>().obs;
   var positiveMarketsList = List<FormatedMarket>().obs;
   var negativeMarketsList = List<FormatedMarket>().obs;
-  SnackbarController snackbarController;
+  ErrorController errorController = new ErrorController();
 
   @override
   void onInit() {
@@ -36,10 +34,7 @@ class MarketController extends GetxController {
     } catch (error) {
       print(error);
       isLoading(false);
-      var errorResponseObj = error.errorResponse();
-      snackbarController = new SnackbarController(
-          title: 'Error', message: errorResponseObj['message']);
-      snackbarController.showSnackbar();
+      errorController.handleError(error);
     }
   }
 

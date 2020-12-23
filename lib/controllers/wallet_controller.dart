@@ -1,10 +1,9 @@
-import 'package:crypto_template/controllers/SnackbarController.dart';
+import 'package:crypto_template/controllers/error_controller.dart';
 import 'package:crypto_template/models/balance.dart';
 import 'package:crypto_template/models/currency.dart';
 import 'package:crypto_template/repository/wallet_repository.dart';
 import 'package:crypto_template/models/wallet.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class WalletController extends GetxController {
   var isLoading = true.obs;
@@ -14,7 +13,8 @@ class WalletController extends GetxController {
   var walletsList = List<Wallet>().obs;
   // var depositAddress = <DepositAddress>[].obs;
   var depositAddress = ''.obs;
-  SnackbarController snackbarController;
+  ErrorController errorController = new ErrorController();
+  var iconC = 'BTC'.obs;
 
   @override
   void onInit() {
@@ -34,13 +34,8 @@ class WalletController extends GetxController {
 
       isLoading(false);
     } catch (error) {
-      print(error);
-      print(error.errorResponse());
       isLoading(false);
-      var errorResponseObj = error.errorResponse();
-      snackbarController = new SnackbarController(
-          title: 'Error', message: errorResponseObj['message']);
-      snackbarController.showSnackbar();
+      errorController.handleError(error);
     }
   }
 

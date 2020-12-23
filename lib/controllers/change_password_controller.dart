@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import 'package:crypto_template/repository/auth_repository.dart';
 import 'package:crypto_template/models/user.dart';
 
-class RegisterController extends GetxController {
-  TextEditingController emailTextController;
+class ChangePasswordController extends GetxController {
+  TextEditingController oldPasswordTextController;
   TextEditingController passwordTextController;
   TextEditingController confirmPasswordTextController;
   TextEditingController referralCodeController;
@@ -16,22 +16,22 @@ class RegisterController extends GetxController {
 
   @override
   void onInit() {
-    emailTextController = TextEditingController();
+    oldPasswordTextController = TextEditingController();
     passwordTextController = TextEditingController();
     confirmPasswordTextController = TextEditingController();
     referralCodeController = TextEditingController();
     super.onInit();
   }
 
-  void register() async {
+  void changePassword() async {
     Get.dialog(Center(child: CircularProgressIndicator()),
         barrierDismissible: false);
     AuthRepository _authRepository = new AuthRepository();
 
     try {
       var requestObject = {
-        'email': emailTextController.text,
-        'password': passwordTextController.text,
+        'old_password': oldPasswordTextController.text,
+        'new_password': passwordTextController.text,
       };
       if (referralCodeController.text != null &&
           referralCodeController.text != '') {
@@ -48,7 +48,7 @@ class RegisterController extends GetxController {
 
   @override
   void onClose() {
-    emailTextController?.dispose();
+    oldPasswordTextController?.dispose();
     passwordTextController?.dispose();
     confirmPasswordTextController?.dispose();
     referralCodeController?.dispose();

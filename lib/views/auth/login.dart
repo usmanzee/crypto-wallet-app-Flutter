@@ -1,13 +1,12 @@
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/views/auth/forget_password.dart';
-import 'package:crypto_template/views/auth/signup.dart';
 import 'package:crypto_template/views/setting/themes.dart';
 import 'package:crypto_template/component/style.dart';
 import 'package:crypto_template/component/custom_text_field.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
-import 'package:crypto_template/controllers/LoginController.dart';
+import 'package:crypto_template/controllers/login_controller.dart';
 
 class Login extends StatelessWidget {
   final ThemeBloc themeBloc;
@@ -39,7 +38,7 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
     return Form(
-      autovalidate: true,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       key: _formKey,
       child: Scaffold(
         extendBodyBehindAppBar: true,
@@ -140,7 +139,7 @@ class Login extends StatelessWidget {
                         padding: const EdgeInsets.only(right: 16.0, top: 9.0),
                         child: InkWell(
                             onTap: () {
-                              Get.to(forgetPassword());
+                              Get.to(ForgetPassword());
                               // Navigator.of(context).pushReplacement(
                               //     PageRouteBuilder(
                               //         pageBuilder: (_, __, ___) =>
@@ -160,7 +159,7 @@ class Login extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 16.0, right: 16.0, top: 24.0),
+                            left: 16.0, right: 16.0, top: 40.0),
                         child: GestureDetector(
                           onTap: () {
                             _onLoginFormSubmit();

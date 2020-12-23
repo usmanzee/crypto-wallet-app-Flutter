@@ -34,10 +34,20 @@ dependencies:
   get: ^3.22.2
   qr_flutter: ^3.1.0
   get_mac: ^0.0.1
+  webview_flutter: ^1.0.7
+  crypto: ^2.1.5
+  crypto_font_icons: ^0.1.0+1
 
-dev_dependencies:
+dev_dependencies: 
   flutter_test:
     sdk: flutter
+
+  flutter_launcher_icons: "^0.8.1"
+
+flutter_icons:
+  image_path: "assets/image/b4u_logo.png" 
+  android: true
+  ios: true
 
 
 # For information on the generic Dart part of this file, see the
@@ -115,6 +125,10 @@ flutter:
     - family : Pragmatica
       fonts:
         - asset: assets/font/pragmatica_bold.ttf
+          weight: 500
+    - family: CryptoFont
+      fonts:
+        - asset: assets/font/cryptofont-webfont.ttf
           weight: 500
 
   assets:
@@ -229,6 +243,7 @@ flutter:
     - assets/image/Template_5/noTransaction.png
     - assets/image/Template_5/alarm.png
     - assets/image/Template_5/creditCard.png
+    - assets/image/google_authenticator.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

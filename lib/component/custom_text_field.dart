@@ -50,10 +50,10 @@ class CustomTextField extends StatelessWidget {
                 fillColor: Colors.transparent,
                 labelText: label,
                 hintText: hint,
-                hintStyle: TextStyle(color: colorStyle.fontColorDarkTitle),
+                /* hintStyle: TextStyle(color: colorStyle.fontColorDarkTitle),
                 labelStyle: TextStyle(
                   color: colorStyle.fontColorDarkTitle,
-                ),
+                ), */
                 border:
                     OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
           ),

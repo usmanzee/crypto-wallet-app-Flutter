@@ -1,46 +1,45 @@
 import 'package:crypto_template/controllers/HomeController.dart';
+import 'package:crypto_template/views/security/security.dart';
 import 'package:crypto_template/views/setting/SeeAllTemplate.dart';
 import 'package:crypto_template/views/setting/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:crypto_template/component/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
-class Setting extends StatefulWidget {
-  ///
-  /// Get data bloc from
-  ///
-  final ThemeBloc themeBloc;
+// class Setting extends StatefulWidget {
+//   ///
+//   /// Get data bloc from
+//   ///
+//   final ThemeBloc themeBloc;
 
-  Setting({Key key, this.themeBloc}) : super(key: key);
+//   Setting({Key key, this.themeBloc}) : super(key: key);
 
-  _SettingState createState() => _SettingState(themeBloc);
-}
+//   _SettingState createState() => _SettingState(themeBloc);
+// }
 
-class _SettingState extends State<Setting> {
+class Setting extends StatelessWidget {
   ///
   /// Bloc for double theme
   ///
   final HomeController homeController = Get.find();
   ThemeBloc themeBloc;
-  _SettingState(this.themeBloc);
+  Setting({Key key, this.themeBloc}) : super(key: key);
   bool theme = true;
-  String _img = "assets/image/setting/lightMode.png";
-  @override
-  void initState() {
-    super.initState();
-  }
+  // String _img = "assets/image/setting/lightMode.png";
 
   void _handleLogoutClick() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('loggedIn');
     homeController.isLoggedIn = false;
-    Get.offAllNamed('/home');
+    Get.back();
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).canvasColor,
         brightness: Brightness.dark,
         centerTitle: true,
         title: Text(
@@ -53,7 +52,6 @@ class _SettingState extends State<Setting> {
         ),
         iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
         elevation: 0.8,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -111,7 +109,7 @@ class _SettingState extends State<Setting> {
               if (homeController.isLoggedIn) {
                 return Container(
                   width: double.infinity,
-                  padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+                  padding: EdgeInsets.all(16),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -151,17 +149,17 @@ class _SettingState extends State<Setting> {
                                       ),
                                     ]),
                               ),
-                              Text(
-                                'Mac Address: ' +
-                                    homeController.deviceMacAddress.value,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w300,
-                                  fontFamily: "Popins",
-                                  letterSpacing: 1.5,
-                                ),
-                              ),
-                            ])
+                            ]),
+                        // Text(
+                        //   'Mac Address: ' +
+                        //       homeController.deviceMacAddress.value,
+                        //   style: TextStyle(
+                        //     fontSize: 16,
+                        //     fontWeight: FontWeight.w300,
+                        //     fontFamily: "Popins",
+                        //     letterSpacing: 1.5,
+                        //   ),
+                        // ),
                         // line()
                       ]),
                 );
@@ -201,69 +199,111 @@ class _SettingState extends State<Setting> {
                                 ),
                               ]),
                         ),
-                        Text(
-                          'Mac Address: ' +
-                              homeController.deviceMacAddress.value,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w300,
-                            fontFamily: "Popins",
-                            letterSpacing: 1.5,
-                          ),
-                        ),
+                        // Text(
+                        //   'Mac Address: ' +
+                        //       homeController.deviceMacAddress.value,
+                        //   style: TextStyle(
+                        //     fontSize: 16,
+                        //     fontWeight: FontWeight.w300,
+                        //     fontFamily: "Popins",
+                        //     letterSpacing: 1.5,
+                        //   ),
+                        // ),
                         // line()
                       ]),
                 );
               }
             }),
-            SizedBox(
-              height: 0.0,
-            ),
-            listSetting("", "Security"),
-            SizedBox(
-              height: 10.0,
-            ),
-            listSetting("", "Notifications"),
-            SizedBox(
-              height: 10.0,
-            ),
-            listSetting("", "Help & Support"),
-            SizedBox(
-              height: 10.0,
-            ),
-            listSetting("", "Share The App"),
-            SizedBox(
-              height: 10.0,
-            ),
-            // listSetting("PASSCODE LOCK", "Disable"),
-            // SizedBox(
-            //   height: 10.0,
-            // ),
-            // listSetting("SIGNAL NOTIFICATION", "Enabled"),
-            // SizedBox(
-            //   height: 10.0,
-            // ),
-            // listSetting("LANGUAGE", "English"),
-            // SizedBox(
-            //   height: 10.0,
-            // ),
+            InkWell(
+                onTap: () {
+                  // Get.to(Security());
+                },
+                child: listSetting(
+                    context,
+                    "",
+                    Icon(
+                      Icons.event_note,
+                      size: 24.0,
+                    ),
+                    "Fee Schedule")),
+            Obx(() {
+              return (homeController.isLoggedIn)
+                  ? InkWell(
+                      onTap: () {
+                        // Get.to(Security());
+                      },
+                      child: listSetting(
+                          context,
+                          "",
+                          Icon(
+                            Icons.group_add,
+                            size: 24.0,
+                          ),
+                          "Referral ID"))
+                  : Container();
+            }),
 
-            ///
-            /// Navigate to theme screen
-            ///
-            // InkWell(
-            //     onTap: () {
-            //       Navigator.of(context).push(PageRouteBuilder(
-            //           pageBuilder: (_, __, ___) => new seeAllTemplate()));
-            //     },
-            //     child: listSetting("UI KIT WALLET", "See all template")),
-            // SizedBox(
-            //   height: 32.0,
-            // ),
+            Obx(() {
+              return (homeController.isLoggedIn)
+                  ? InkWell(
+                      onTap: () {
+                        // Get.to(Security());
+                      },
+                      child: listSetting(
+                          context,
+                          "",
+                          Icon(
+                            Icons.notifications_active,
+                            size: 24.0,
+                          ),
+                          "Notifications"))
+                  : Container();
+            }),
+            Obx(() {
+              return (homeController.isLoggedIn)
+                  ? InkWell(
+                      onTap: () {
+                        Get.to(Security());
+                      },
+                      child: listSetting(
+                          context,
+                          "",
+                          Icon(
+                            Icons.security,
+                            size: 24.0,
+                          ),
+                          "Security"))
+                  : Container();
+            }),
+            InkWell(
+                onTap: () {
+                  // Get.to(Security());
+                },
+                child: listSetting(
+                    context,
+                    "",
+                    Icon(
+                      Icons.live_help,
+                      size: 24.0,
+                    ),
+                    "Help & Support")),
+            InkWell(
+                onTap: () {
+                  // Get.to(Security());
+                },
+                child: listSetting(
+                    context,
+                    "",
+                    Icon(
+                      Icons.share,
+                      size: 24.0,
+                    ),
+                    "Share The App")),
             Obx(() {
               if (homeController.isLoggedIn)
                 return Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  padding:
+                      const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0),
                   child: GestureDetector(
                     onTap: () {
                       _handleLogoutClick();
@@ -293,16 +333,19 @@ class _SettingState extends State<Setting> {
                 );
               else
                 return Container();
-            })
+            }),
+            SizedBox(
+              height: 24.0,
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget listSetting(String header, String title) {
+  Widget listSetting(context, String header, Widget icon, String title) {
     return Padding(
-      padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
+      padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 0.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -318,26 +361,30 @@ class _SettingState extends State<Setting> {
             height: 9.0,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(
-                title,
-                style: TextStyle(
-                    fontSize: 17.0,
-                    fontFamily: "Popins",
-                    letterSpacing: 1.5,
-                    fontWeight: FontWeight.w300),
+              icon,
+              Padding(
+                padding: EdgeInsets.only(left: 4.0),
+                child: Text(
+                  title,
+                  style: TextStyle(
+                      fontSize: 17.0,
+                      fontFamily: "Popins",
+                      letterSpacing: 1.5,
+                      fontWeight: FontWeight.w300),
+                ),
               ),
-              Icon(Icons.keyboard_arrow_right)
+              Spacer(flex: 1),
             ],
           ),
-          line()
+          line(context)
         ],
       ),
     );
   }
 
-  Widget line() {
+  Widget line(context) {
     return Padding(
       padding: const EdgeInsets.only(top: 10.0),
       child: Container(

@@ -12,6 +12,7 @@ class User {
     this.level,
     this.otp,
     this.state,
+    this.token,
     this.referralUid,
     this.csrfToken,
     this.data,
@@ -29,9 +30,10 @@ class User {
   int level;
   bool otp;
   String state;
+  String token;
   dynamic referralUid;
   String csrfToken;
-  String data;
+  dynamic data;
   DateTime createdAt;
   DateTime updatedAt;
   List<Label> labels;
@@ -46,6 +48,7 @@ class User {
         level: json["level"],
         otp: json["otp"],
         state: json["state"],
+        token: json["token"],
         referralUid: json["referral_uid"],
         csrfToken: json["csrf_token"],
         data: json["data"],
@@ -65,6 +68,7 @@ class User {
         "level": level,
         "otp": otp,
         "state": state,
+        "token": token,
         "referral_uid": referralUid,
         "csrf_token": csrfToken,
         "data": data,

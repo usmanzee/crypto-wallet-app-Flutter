@@ -20,7 +20,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       // extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Theme.of(context).canvasColor,
         elevation: 0.0,
         // automaticallyImplyLeading: true,
         title: Row(

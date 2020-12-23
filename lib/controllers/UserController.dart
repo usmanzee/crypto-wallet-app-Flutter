@@ -11,20 +11,10 @@ class UserController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchUser();
   }
 
-  void fetchUser() async {
-    try {
-      isLoading(true);
-      user.value = await _userRepository.fetchUser();
-    } catch (error) {
-      isLoading(false);
-      var errorResponseObj = error.errorResponse();
-      Get.snackbar('Error', errorResponseObj['message'],
-          snackPosition: SnackPosition.BOTTOM,
-          colorText: Colors.white,
-          backgroundColor: Colors.grey[900]);
-    }
+  @override
+  void onClose() {
+    super.onClose();
   }
 }

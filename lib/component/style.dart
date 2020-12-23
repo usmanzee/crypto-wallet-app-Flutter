@@ -26,7 +26,7 @@ class txtStyle {
       fontFamily: "Popins",
       fontSize: 21.0,
       fontWeight: FontWeight.w800,
-      color: Color(0xFF45C2DA),
+      color: colorStyle.primaryColor,
       letterSpacing: 1.5);
 
   static final descriptionStyle = TextStyle(

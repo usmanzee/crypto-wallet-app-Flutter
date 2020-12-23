@@ -4,7 +4,7 @@ import 'package:crypto_template/component/style.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:crypto_template/component/custom_text_field.dart';
 import 'package:get/get.dart';
-import 'package:crypto_template/controllers/LoginController.dart';
+import 'package:crypto_template/controllers/login_controller.dart';
 
 class TwoFA extends StatelessWidget {
   final ThemeBloc themeBloc;
@@ -15,7 +15,6 @@ class TwoFA extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final _twoFAValidator = MultiValidator([
-    // RequiredValidator(errorText: 'password is required'),
     LengthRangeValidator(
         min: 6, max: 6, errorText: 'Please enter a valid 2FA code')
   ]);
@@ -32,7 +31,7 @@ class TwoFA extends StatelessWidget {
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
     return Form(
-      autovalidate: true,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       key: _formKey,
       child: Scaffold(
         extendBodyBehindAppBar: true,

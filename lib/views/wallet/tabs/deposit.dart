@@ -1,147 +1,71 @@
 import 'package:crypto_template/controllers/deposit_controller.dart';
-import 'package:crypto_template/screen/wallet/wallet.dart';
+import 'package:crypto_template/views/wallet/tabs/wallet_amount_header.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:crypto_template/models/wallet.dart' as WalletClass;
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter/services.dart';
 
-class Deposit extends StatefulWidget {
+class Deposit extends StatelessWidget {
   final WalletClass.Wallet wallet;
-
-  Deposit({this.wallet});
-
+  final DepositController depositController;
+  Deposit({this.wallet})
+      : depositController =
+            Get.put(DepositController(currency: wallet.currency));
   @override
-  _DepositState createState() => _DepositState();
-}
-
-class _DepositState extends State<Deposit> {
-  DepositController depositController;
-  @override
-  void initState() {
-    depositController =
-        Get.put(DepositController(currency: widget.wallet.currency));
-    super.initState();
-  }
-
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
-          Container(
-            width: double.infinity,
-            // height: 140.0,
-            padding: const EdgeInsets.only(
-                left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
-            decoration: BoxDecoration(
-                color: Theme.of(context).canvasColor,
-                borderRadius: BorderRadius.all(Radius.circular(10.0))),
-            child: Column(
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      "Total",
-                      style: TextStyle(
-                          color: Theme.of(context).hintColor.withOpacity(0.5),
-                          fontFamily: "Popins",
-                          fontSize: 15.5),
-                    ),
-                    Text(
-                      (double.parse(widget.wallet.balance) +
-                              double.parse(widget.wallet.locked))
-                          .toStringAsFixed(widget.wallet.precision),
-                      style: TextStyle(fontFamily: "Popins"),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      "Available",
-                      style: TextStyle(
-                          color: Theme.of(context).hintColor.withOpacity(0.5),
-                          fontFamily: "Popins",
-                          fontSize: 15.5),
-                    ),
-                    Text(
-                      widget.wallet.balance,
-                      style: TextStyle(fontFamily: "Popins"),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      "Locked",
-                      style: TextStyle(
-                          color: Theme.of(context).hintColor.withOpacity(0.5),
-                          fontFamily: "Popins",
-                          fontSize: 15.5),
-                    ),
-                    Text(
-                      widget.wallet.locked,
-                      style: TextStyle(
-                        fontFamily: "Popins",
-                        color: Theme.of(context).hintColor.withOpacity(0.5),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
+          WalletAmountHeader(wallet: wallet),
           SizedBox(
-            height: 8.0,
+            height: 16.0,
           ),
           Obx(() {
             if (depositController.isAddressLoading.value) {
-              return _loadingAddressAnimation();
+              return _loadingAddressAnimation(context);
             } else {
               if (depositController.depositAddress.value == '')
-                return _addressNotFound();
+                return _addressNotFound(context);
               else
                 return Column(
                   children: [
                     (depositController.depositTag.value != '')
                         ? Column(children: [
-                            _showTagDepositInstruction(),
+                            _showTagDepositInstruction(context),
                             SizedBox(
-                              height: 8.0,
+                              height: 16.0,
                             ),
                           ])
                         : Container(),
                     Column(children: [
-                      _showAddress(),
+                      _showAddress(context),
                       SizedBox(
-                        height: 8.0,
+                        height: 16.0,
                       ),
                     ]),
                     (depositController.depositTag.value != '')
                         ? Column(children: [
-                            _showTag(),
+                            _showTag(context),
                             SizedBox(
-                              height: 8.0,
+                              height: 16.0,
                             ),
                           ])
                         : Container(),
-                    _showQRCode()
+                    _showQRCode(context)
                   ],
                 );
             }
           }),
           SizedBox(
-            height: 8.0,
+            height: 16.0,
           )
         ],
       ),
     );
   }
 
-  Widget _loadingAddressAnimation() {
+  Widget _loadingAddressAnimation(context) {
     return Container(
       padding: EdgeInsets.all(8.0),
       // height: 125.0,
@@ -153,7 +77,7 @@ class _DepositState extends State<Deposit> {
     );
   }
 
-  Widget _addressNotFound() {
+  Widget _addressNotFound(context) {
     return Container(
       padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
       // height: 125.0,
@@ -171,7 +95,7 @@ class _DepositState extends State<Deposit> {
           color: Theme.of(context).primaryColor,
           child: GestureDetector(
             onTap: () {
-              depositController.fetchDepositAddress(widget.wallet.balance);
+              depositController.fetchDepositAddress(wallet.currency);
             },
             child: Center(
               child: Text(
@@ -188,7 +112,7 @@ class _DepositState extends State<Deposit> {
     );
   }
 
-  Widget _showAddress() {
+  Widget _showAddress(context) {
     return Container(
       padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
       // height: 125.0,
@@ -201,7 +125,7 @@ class _DepositState extends State<Deposit> {
         children: <Widget>[
           Row(
             children: <Widget>[
-              Text(widget.wallet.currency.toUpperCase() + ' Address'),
+              Text(wallet.currency.toUpperCase() + ' Address'),
               Spacer(flex: 1),
               FlatButton(
                 height: 30.0,
@@ -240,7 +164,7 @@ class _DepositState extends State<Deposit> {
     );
   }
 
-  Widget _showQRCode() {
+  Widget _showQRCode(context) {
     return Column(children: [
       QrImage(
           data: depositController.depositAddress.value,
@@ -248,7 +172,7 @@ class _DepositState extends State<Deposit> {
           size: 160.0,
           backgroundColor: Colors.white),
       SizedBox(
-        height: 8.0,
+        height: 16.0,
       ),
       FlatButton(
         height: 40.0,
@@ -271,7 +195,7 @@ class _DepositState extends State<Deposit> {
     ]);
   }
 
-  Widget _showTagDepositInstruction() {
+  Widget _showTagDepositInstruction(context) {
     return Container(
       padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
       // height: 125.0,
@@ -291,7 +215,7 @@ class _DepositState extends State<Deposit> {
             padding: EdgeInsets.only(left: 8.0),
             child: Text(
               'Please enter both Tag and Address data, which are required to deposit ' +
-                  widget.wallet.currency.toUpperCase() +
+                  wallet.currency.toUpperCase() +
                   ' to your B4U account successfully.',
               style: TextStyle(
                 color: Theme.of(context).errorColor,
@@ -305,7 +229,7 @@ class _DepositState extends State<Deposit> {
     );
   }
 
-  Widget _showTag() {
+  Widget _showTag(context) {
     return Container(
       padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
       // height: 125.0,
@@ -317,7 +241,7 @@ class _DepositState extends State<Deposit> {
         children: <Widget>[
           Row(
             children: <Widget>[
-              Text(widget.wallet.currency.toUpperCase() + ' Tag'),
+              Text(wallet.currency.toUpperCase() + ' Tag'),
               Spacer(flex: 1),
               FlatButton(
                 height: 30.0,
@@ -352,10 +276,5 @@ class _DepositState extends State<Deposit> {
         ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 }

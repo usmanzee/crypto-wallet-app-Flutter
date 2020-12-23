@@ -1,4 +1,5 @@
 import 'package:crypto_template/controllers/SnackbarController.dart';
+import 'package:crypto_template/controllers/error_controller.dart';
 import 'package:crypto_template/repository/wallet_repository.dart';
 import 'package:get/get.dart';
 
@@ -11,6 +12,7 @@ class DepositController extends GetxController {
   var depositAddress = ''.obs;
   var depositTag = ''.obs;
   SnackbarController snackbarController;
+  ErrorController errorController = new ErrorController();
 
   @override
   void onInit() {
@@ -36,10 +38,7 @@ class DepositController extends GetxController {
     } catch (error) {
       print(error);
       isAddressLoading(false);
-      var errorResponseObj = error.errorResponse();
-      snackbarController = new SnackbarController(
-          title: 'Error', message: errorResponseObj['message']);
-      snackbarController.showSnackbar();
+      errorController.handleError(error);
     }
   }
 

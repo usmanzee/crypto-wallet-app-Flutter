@@ -16,7 +16,7 @@ import 'package:crypto_template/component/flashbar/FlashBar.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:crypto_template/controllers/LoginController.dart';
+import 'package:crypto_template/controllers/login_controller.dart';
 
 // class Login extends StatelessWidget {
 //   final ThemeBloc themeBloc;

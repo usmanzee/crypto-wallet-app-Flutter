@@ -37,7 +37,7 @@ class SignUp extends StatelessWidget {
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
     return Form(
-      autovalidate: true,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       key: _formKey,
       child: Scaffold(
         extendBodyBehindAppBar: true,
@@ -150,7 +150,7 @@ class SignUp extends StatelessWidget {
                                 .validateMatch(
                                     val,
                                     _registerController
-                                        .confirmPasswordTextController.text),
+                                        .passwordTextController.text),
                             // onChanged: (input) => _confirmPassword = input,
                             label: 'Confirm Password',
                             obscure: true,
@@ -177,7 +177,7 @@ class SignUp extends StatelessWidget {
 
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 16.0, right: 16.0, top: 24.0),
+                            left: 16.0, right: 16.0, top: 40.0),
                         child: GestureDetector(
                           onTap: () {
                             _onSignFormSubmit();
@@ -210,7 +210,7 @@ class SignUp extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                         child: GestureDetector(
                           onTap: () {
-                            Get.offNamed('/login');
+                            Get.back();
                           },
                           child: Container(
                             height: 50.0,

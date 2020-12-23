@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:crypto_template/controllers/SnackbarController.dart';
+import 'package:crypto_template/controllers/error_controller.dart';
 import 'package:crypto_template/models/market.dart';
 import 'package:crypto_template/models/user.dart';
 import 'package:crypto_template/repository/user_repository.dart';
@@ -12,9 +12,11 @@ class HomeController extends GetxController {
   final _isLoggedIn = false.obs;
   final _selectedNavIndex = 0.obs;
   var marketList = List<Market>().obs;
-  SnackbarController snackbarController;
   var user = new User().obs;
   var deviceMacAddress = 'unknown'.obs;
+  var authApiKey = 'unknown'.obs;
+  var authSecret = 'unknown'.obs;
+  ErrorController errorController = new ErrorController();
 
   @override
   void onInit() async {
@@ -43,15 +45,21 @@ class HomeController extends GetxController {
   Future<bool> isUserLoggedIn() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     isLoggedIn = prefs.getBool('loggedIn' ?? false);
+    authApiKey.value = prefs.getString('authApiKey');
+    authSecret.value = prefs.getString('authSecret');
     isLoggedIn = isLoggedIn != null ? isLoggedIn : false;
-    print('user checked:$isLoggedIn');
+    print('user loggedIn: $isLoggedIn');
     return isLoggedIn;
   }
 
   void fetchUser() async {
-    UserRepository _userRepository = new UserRepository();
-    var userData = await _userRepository.fetchUser();
-    user.value = userData;
+    try {
+      UserRepository _userRepository = new UserRepository();
+      var userData = await _userRepository.fetchUser();
+      user.value = userData;
+    } catch (error) {
+      errorController.handleError(error);
+    }
   }
 
   @override

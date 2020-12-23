@@ -1,9 +1,7 @@
 import 'dart:math';
-import 'dart:ui' as ui;
+import 'package:crypto_font_icons/crypto_font_icon_data.dart';
 import 'package:crypto_template/component/AssetsWallet/assetsModel.dart';
-import 'package:crypto_template/controllers/MarketController.dart';
-import 'package:crypto_template/controllers/WalletController.dart';
-import 'package:crypto_template/screen/wallet/walletDetail.dart';
+import 'package:crypto_template/controllers/wallet_controller.dart';
 import 'package:crypto_template/views/wallet/wallet_detail.dart';
 import 'package:flutter/services.dart';
 import 'package:vector_math/vector_math.dart' as Vector;
@@ -12,21 +10,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
-import 'package:crypto_template/component/style.dart';
 import 'package:crypto_template/models/wallet.dart' as WalletClass;
 import 'package:get/get.dart';
-
-// class wallet extends StatefulWidget {
-//   @override
-//   _walletState createState() => new _walletState();
-
-//   ///
-//   /// time for wave header wallet
-//   ///
-//   wallet() {
-//     timeDilation = 1.0;
-//   }
-// }
+import 'package:crypto_font_icons/crypto_font_icons.dart';
 
 class Wallet extends StatelessWidget {
   final assetsWallet item;
@@ -273,6 +259,14 @@ class WaveClipper extends CustomClipper<Path> {
       animation != oldClipper.animation;
 }
 
+// takes in an object and color and returns a circle avatar with first letter and required color
+CircleAvatar _getLeadingWidget(String name, Color color) {
+  return new CircleAvatar(
+    backgroundColor: color,
+    child: new Text(name[0]),
+  );
+}
+
 Widget walletList(
     assetsWallet item, WalletClass.Wallet wallet, BuildContext ctx) {
   return Padding(
@@ -296,20 +290,24 @@ Widget walletList(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.only(left: 5.0, right: 12.0),
-                      // child: Image.asset(
-                      //   item.icon,
-                      //   height: 25.0,
-                      //   fit: BoxFit.contain,
-                      //   width: 22.0,
-                      // ),
-                      child: Image.network(
-                        wallet.iconUrl,
-                        height: 25.0,
-                        fit: BoxFit.contain,
-                        width: 22.0,
-                      ),
-                    ),
+                        padding: const EdgeInsets.only(left: 5.0, right: 12.0),
+                        // child: Image.asset(
+                        //   item.icon,
+                        //   height: 25.0,
+                        //   fit: BoxFit.contain,
+                        //   width: 22.0,
+                        // ),
+                        child: wallet.iconUrl != null
+                            ? Image.network(
+                                wallet.iconUrl,
+                                height: 25.0,
+                                fit: BoxFit.contain,
+                                width: 22.0,
+                              )
+                            : IconButton(
+                                onPressed: () {},
+                                icon: new Icon(CryptoFontIconData(0xf000)),
+                              )),
                     Container(
                       width: 95.0,
                       child: Column(

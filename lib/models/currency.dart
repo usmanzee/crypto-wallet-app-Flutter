@@ -46,14 +46,14 @@ class Currency {
   String minWithdrawAmount;
   String withdrawLimit24H;
   String withdrawLimit72H;
-  double baseFactor;
+  int baseFactor;
   int precision;
   int position;
   String iconUrl;
   int minConfirmations;
-  double swapFee;
-  double minSwapAmount;
-  int maxSwapAmount;
+  String swapFee;
+  String minSwapAmount;
+  String maxSwapAmount;
 
   factory Currency.fromJson(Map<String, dynamic> json) => Currency(
         id: json["id"],
@@ -74,15 +74,18 @@ class Currency {
         minWithdrawAmount: json["min_withdraw_amount"],
         withdrawLimit24H: json["withdraw_limit_24h"],
         withdrawLimit72H: json["withdraw_limit_72h"],
-        baseFactor: json["base_factor"].toDouble(),
+        // baseFactor: json["base_factor"].toDouble(),
+        baseFactor: json["base_factor"],
         precision: json["precision"],
         position: json["position"],
         iconUrl: json["icon_url"],
         minConfirmations: json["min_confirmations"] == null
             ? null
             : json["min_confirmations"],
-        swapFee: json["swap_fee"].toDouble(),
-        minSwapAmount: json["min_swap_amount"].toDouble(),
+        // swapFee: json["swap_fee"].toDouble(),
+        // minSwapAmount: json["min_swap_amount"].toDouble(),
+        swapFee: json["swap_fee"],
+        minSwapAmount: json["min_swap_amount"],
         maxSwapAmount: json["max_swap_amount"],
       );
 
