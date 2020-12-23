@@ -1,45 +1,44 @@
 import 'package:crypto_template/controllers/SnackbarController.dart';
 import 'package:crypto_template/controllers/error_controller.dart';
+import 'package:crypto_template/repository/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:crypto_template/repository/auth_repository.dart';
-import 'package:crypto_template/models/user.dart';
 
 class ChangePasswordController extends GetxController {
   TextEditingController oldPasswordTextController;
   TextEditingController passwordTextController;
   TextEditingController confirmPasswordTextController;
-  TextEditingController referralCodeController;
   SnackbarController snackbarController;
   ErrorController errorController = new ErrorController();
-  var user = new User().obs;
+  UserRepository _userRepository;
 
   @override
   void onInit() {
     oldPasswordTextController = TextEditingController();
     passwordTextController = TextEditingController();
     confirmPasswordTextController = TextEditingController();
-    referralCodeController = TextEditingController();
     super.onInit();
   }
 
   void changePassword() async {
     Get.dialog(Center(child: CircularProgressIndicator()),
         barrierDismissible: false);
-    AuthRepository _authRepository = new AuthRepository();
 
     try {
-      var requestObject = {
+      _userRepository = new UserRepository();
+      var dataObject = {
+        'confirm_password': confirmPasswordTextController.text,
         'old_password': oldPasswordTextController.text,
         'new_password': passwordTextController.text,
       };
-      if (referralCodeController.text != null &&
-          referralCodeController.text != '') {
-        requestObject['refid'] = referralCodeController.text;
-      }
-      user.value = await _authRepository.register(requestObject);
+      print(dataObject);
+      var response = await _userRepository.changePassword(dataObject);
       Get.back();
-      Get.toNamed('/email-verification');
+      Get.back();
+      Get.back();
+      snackbarController = new SnackbarController(
+          title: 'Success', message: 'success.password.forgot');
+      snackbarController.showSnackbar();
     } catch (error) {
       Get.back();
       errorController.handleError(error);
@@ -51,7 +50,6 @@ class ChangePasswordController extends GetxController {
     oldPasswordTextController?.dispose();
     passwordTextController?.dispose();
     confirmPasswordTextController?.dispose();
-    referralCodeController?.dispose();
     super.onClose();
   }
 }

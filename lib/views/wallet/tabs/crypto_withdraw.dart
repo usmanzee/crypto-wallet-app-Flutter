@@ -1,28 +1,35 @@
 import 'package:crypto_template/component/custom_button.dart';
 import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/controllers/withdraw_controller.dart';
-import 'package:crypto_template/screen/wallet/tabs/withdraw.dart';
+import 'package:crypto_template/controllers/crypto_withdraw_controller.dart';
 import 'package:crypto_template/views/security/enable_otp.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:crypto_template/models/wallet.dart' as WalletClass;
 import 'package:flutter/services.dart';
 import 'package:crypto_template/views/wallet/tabs/wallet_amount_header.dart';
-import 'package:crypto_template/component/custom_text_field.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:get/get.dart';
 
-class WithDraw extends StatelessWidget {
+class CryptoWithDraw extends StatelessWidget {
   final WalletClass.Wallet wallet;
   final HomeController homeController = Get.find();
-  WithDraw({this.wallet});
+  final CryptoWithdrawController withdrawController;
 
-  final WithdrawController withdrawController = Get.put(WithdrawController());
+  CryptoWithDraw({this.wallet})
+      : withdrawController = Get.put(CryptoWithdrawController(wallet: wallet));
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final _withDrawAddressValidator = MultiValidator([
     RequiredValidator(errorText: 'Withdrawl Address is required'),
+  ]);
+  final _withDrawTagValidator = MultiValidator([
+    RequiredValidator(errorText: 'Withdrawl Tag is required'),
+  ]);
+
+  final _twoFAValidator = MultiValidator([
+    RequiredValidator(errorText: '2FA code is required'),
+    LengthRangeValidator(
+        min: 6, max: 6, errorText: 'Please enter a valid 2FA code')
   ]);
 
   void isFormValid() {}
@@ -31,7 +38,7 @@ class WithDraw extends StatelessWidget {
     final _formState = _formKey.currentState;
     if (_formState.validate()) {
       _formState.save();
-      // _registerController.register();
+      withdrawController.withdraw(_formKey);
     }
   }
 
@@ -77,6 +84,8 @@ class WithDraw extends StatelessWidget {
                               padding: const EdgeInsets.only(
                                   right: 5.0, bottom: 35.0),
                               child: TextFormField(
+                                controller: withdrawController
+                                    .withdrawAddressController,
                                 validator: _withDrawAddressValidator,
                                 obscureText: false,
                                 keyboardType: TextInputType.text,
@@ -104,7 +113,9 @@ class WithDraw extends StatelessWidget {
                                     padding: const EdgeInsets.only(
                                         right: 5.0, bottom: 35.0),
                                     child: TextFormField(
-                                      validator: _withDrawAddressValidator,
+                                      controller: withdrawController
+                                          .withdrawTagController,
+                                      validator: _withDrawTagValidator,
                                       obscureText: false,
                                       keyboardType: TextInputType.text,
                                       decoration: InputDecoration(
@@ -129,11 +140,25 @@ class WithDraw extends StatelessWidget {
                             TextFormField(
                               obscureText: false,
                               keyboardType: TextInputType.number,
+                              validator: (amount) {
+                                if (withdrawController
+                                        .totalWithdrawlAmount.value >
+                                    double.parse(wallet.balance)) {
+                                  return 'Please enter a valid amount';
+                                } else {
+                                  return null;
+                                }
+                              },
                               controller:
                                   withdrawController.withdrawAmountController,
-                              onChanged: (text) {
-                                withdrawController
-                                    .withdrawAmountController.text = text;
+                              onChanged: (amount) {
+                                var validAmount = amount != null && amount != ''
+                                    ? amount
+                                    : '0.0';
+                                withdrawController.amount.value = validAmount;
+                                withdrawController.totalWithdrawlAmount.value =
+                                    double.parse(validAmount) +
+                                        double.parse(wallet.fee);
                               },
                               decoration: InputDecoration(
                                   hintText: "0.0",
@@ -145,16 +170,16 @@ class WithDraw extends StatelessWidget {
                             SizedBox(
                               height: 5.0,
                             ),
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: Text(
-                                "24H Withdrawal Limit: 2 BTC",
-                                style: TextStyle(
-                                    color: Theme.of(context).hintColor,
-                                    fontFamily: "Popins",
-                                    fontSize: 12.0),
-                              ),
-                            ),
+                            // Align(
+                            //   alignment: Alignment.topRight,
+                            //   child: Text(
+                            //     "24H Withdrawal Limit: 2 BTC",
+                            //     style: TextStyle(
+                            //         color: Theme.of(context).hintColor,
+                            //         fontFamily: "Popins",
+                            //         fontSize: 12.0),
+                            //   ),
+                            // ),
                             SizedBox(
                               height: 15.0,
                             ),
@@ -167,9 +192,12 @@ class WithDraw extends StatelessWidget {
                                 fontFamily: "Popins",
                               ),
                             ),
-                            TextField(
+                            TextFormField(
                               obscureText: false,
                               keyboardType: TextInputType.number,
+                              controller:
+                                  withdrawController.withdrawOtpController,
+                              validator: _twoFAValidator,
                               decoration: InputDecoration(
                                   hintText:
                                       "Enter 2FA code from authenticator app",
@@ -224,9 +252,8 @@ class WithDraw extends StatelessWidget {
                                         .withOpacity(0.5)),
                               ),
                               Text(
-                                withdrawController
-                                    .withdrawAmountController.text,
-                                // "-0.001 BCH",
+                                (withdrawController.totalWithdrawlAmount.value)
+                                    .toString(),
                                 style: TextStyle(
                                     color: Theme.of(context)
                                         .hintColor
@@ -253,22 +280,6 @@ class WithDraw extends StatelessWidget {
                           Theme.of(context).primaryColor.withOpacity(0.5),
                       disabled: false,
                     ),
-                    // MaterialButton(
-                    //   height: 50.0,
-                    //   minWidth: double.infinity,
-                    //   color: Theme.of(context).primaryColor,
-                    //   // disabledColor: Colors.grey,
-                    //   // disabledTextColor: Colors.black,
-                    //   textColor: Colors.white,
-                    //   child: Text(
-                    //     "Withdraw",
-                    //   ),
-                    //   onPressed: () {
-                    //     _onWithdrawFormSubmit();
-                    //   },
-                    //   splashColor:
-                    //       Theme.of(context).primaryColor.withOpacity(0.5),
-                    // ),
                     SizedBox(
                       height: 20.0,
                     )

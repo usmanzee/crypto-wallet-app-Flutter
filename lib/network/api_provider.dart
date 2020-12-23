@@ -137,6 +137,8 @@ dynamic _returnResponse(http.Response response) {
       return responseJson;
     case 400:
       var errorResponse = makeErrorResponse(response);
+
+      print(errorResponse);
       throw BadRequestException(errorResponse);
     case 401:
       var errorResponse = makeErrorResponse(response);

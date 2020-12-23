@@ -3,6 +3,7 @@ import 'package:crypto_font_icons/crypto_font_icon_data.dart';
 import 'package:crypto_template/component/AssetsWallet/assetsModel.dart';
 import 'package:crypto_template/controllers/wallet_controller.dart';
 import 'package:crypto_template/views/wallet/wallet_detail.dart';
+import 'package:crypto_template/views/wallet/wallet_loading_animation.dart';
 import 'package:flutter/services.dart';
 import 'package:vector_math/vector_math.dart' as Vector;
 import 'package:flutter/foundation.dart';
@@ -35,7 +36,7 @@ class Wallet extends StatelessWidget {
             ///
             child: Obx(() {
               if (walletController.isLoading.value)
-                return Container();
+                return WalletLoadingAnimation(context: context);
               else
                 return Container(
                     child: ListView.builder(
@@ -340,9 +341,12 @@ Widget walletList(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Text(
+                        // (double.parse(wallet.balance) +
+                        //         double.parse(wallet.locked))
+                        //     .toStringAsFixed(wallet.precision),
                         (double.parse(wallet.balance) +
                                 double.parse(wallet.locked))
-                            .toStringAsFixed(wallet.precision),
+                            .toString(),
                         style: TextStyle(
                             fontFamily: "Popins",
                             fontSize: 14.5,

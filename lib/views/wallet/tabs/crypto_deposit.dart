@@ -1,17 +1,35 @@
-import 'package:crypto_template/controllers/deposit_controller.dart';
+import 'package:crypto_template/controllers/crypto_deposit_controller.dart';
 import 'package:crypto_template/views/wallet/tabs/wallet_amount_header.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:crypto_template/models/wallet.dart' as WalletClass;
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter/services.dart';
+import 'package:share/share.dart';
 
-class Deposit extends StatelessWidget {
+class CryptoDeposit extends StatelessWidget {
   final WalletClass.Wallet wallet;
-  final DepositController depositController;
-  Deposit({this.wallet})
+  final CryptoDepositController depositController;
+  CryptoDeposit({this.wallet})
       : depositController =
-            Get.put(DepositController(currency: wallet.currency));
+            Get.put(CryptoDepositController(currency: wallet.currency));
+
+  share(BuildContext context) {
+    final _shareAddress = wallet.currency == 'xrp'
+        ? depositController.depositAddress.value +
+            '?dt=' +
+            depositController.depositTag.value
+        : depositController.depositAddress.value;
+    final RenderBox box = context.findRenderObject();
+    Share.share(
+        wallet.name +
+            ' Address: ' +
+            _shareAddress +
+            "\n\nhttps://ewallet.b4uwallet.com/",
+        subject: 'B4U Wallet',
+        sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -181,14 +199,7 @@ class Deposit extends StatelessWidget {
         textColor: Colors.white,
         child: new Text("Share"),
         onPressed: () {
-          Clipboard.setData(new ClipboardData(
-                  text: depositController.depositAddress.value))
-              .then((value) {
-            Get.snackbar('Success', 'Copied to clipboard',
-                snackPosition: SnackPosition.BOTTOM,
-                colorText: Colors.white,
-                backgroundColor: Colors.grey[900]);
-          });
+          share(context);
         },
         splashColor: Theme.of(context).primaryColor.withOpacity(0.5),
       )

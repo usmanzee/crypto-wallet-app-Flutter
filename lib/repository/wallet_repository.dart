@@ -26,4 +26,9 @@ class WalletRepository {
         await apiProvider.get('peatio/account/deposit_address/$currency');
     return depositAddressFromJson(response);
   }
+
+  Future<dynamic> withdrawCrypto(data) async {
+    final response = await apiProvider.post('peatio/account/withdraws', data);
+    return response;
+  }
 }

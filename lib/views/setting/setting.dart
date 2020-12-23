@@ -6,27 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:crypto_template/component/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:webview_flutter/webview_flutter.dart';
-
-// class Setting extends StatefulWidget {
-//   ///
-//   /// Get data bloc from
-//   ///
-//   final ThemeBloc themeBloc;
-
-//   Setting({Key key, this.themeBloc}) : super(key: key);
-
-//   _SettingState createState() => _SettingState(themeBloc);
-// }
+import 'package:share/share.dart';
 
 class Setting extends StatelessWidget {
-  ///
-  /// Bloc for double theme
-  ///
   final HomeController homeController = Get.find();
-  ThemeBloc themeBloc;
+  final ThemeBloc themeBloc;
   Setting({Key key, this.themeBloc}) : super(key: key);
-  bool theme = true;
+  final bool theme = true;
   // String _img = "assets/image/setting/lightMode.png";
 
   void _handleLogoutClick() async {
@@ -34,6 +20,14 @@ class Setting extends StatelessWidget {
     prefs.remove('loggedIn');
     homeController.isLoggedIn = false;
     Get.back();
+  }
+
+  void share(BuildContext context) {
+    final _shareLink = 'Play store link';
+    final RenderBox box = context.findRenderObject();
+    Share.share(_shareLink,
+        subject: 'B4U Wallet',
+        sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
   }
 
   Widget build(BuildContext context) {
@@ -289,7 +283,7 @@ class Setting extends StatelessWidget {
                     "Help & Support")),
             InkWell(
                 onTap: () {
-                  // Get.to(Security());
+                  share(context);
                 },
                 child: listSetting(
                     context,
@@ -299,6 +293,9 @@ class Setting extends StatelessWidget {
                       size: 24.0,
                     ),
                     "Share The App")),
+            SizedBox(
+              height: 24.0,
+            ),
             Obx(() {
               if (homeController.isLoggedIn)
                 return Padding(

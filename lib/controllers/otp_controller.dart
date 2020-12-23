@@ -81,8 +81,10 @@ class OTPController extends GetxController {
       snackbarController =
           new SnackbarController(title: 'Success', message: 'Otp Enabled');
       snackbarController.showSnackbar();
+
       disablingOTP(false);
     } catch (error) {
+      Get.back();
       disablingOTP(false);
       errorController.handleError(error);
     }

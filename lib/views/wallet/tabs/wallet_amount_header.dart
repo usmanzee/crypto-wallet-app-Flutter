@@ -10,8 +10,8 @@ class WalletAmountHeader extends StatelessWidget {
     return Container(
       width: double.infinity,
       // height: 140.0,
-      padding: const EdgeInsets.only(
-          left: 16.0, right: 16.0, top: 16.0, bottom: 8.0),
+      padding:
+          const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0, bottom: 8.0),
       decoration: BoxDecoration(
           color: Theme.of(context).canvasColor,
           borderRadius: BorderRadius.all(Radius.circular(10.0))),

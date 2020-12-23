@@ -38,4 +38,11 @@ class UserRepository {
         await apiProvider.post('barong/resource/otp/disable', data);
     return response;
   }
+
+  Future<dynamic> changePassword(dynamic data) async {
+    apiProvider = new ApiProvider();
+    final response =
+        await apiProvider.put('barong/resource/users/password', data);
+    return response;
+  }
 }

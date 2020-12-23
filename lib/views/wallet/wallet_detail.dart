@@ -1,6 +1,7 @@
-import 'package:crypto_template/views/wallet/tabs/deposit.dart';
-import 'package:crypto_template/views/wallet/tabs/withdraw.dart';
+import 'package:crypto_template/views/wallet/tabs/crypto_deposit.dart';
+import 'package:crypto_template/views/wallet/tabs/crypto_withdraw.dart';
 import 'package:crypto_template/models/wallet.dart' as WalletClass;
+import 'package:crypto_template/views/wallet/tabs/fiat_deposit.dart';
 import 'package:flutter/material.dart';
 
 // class walletDetail extends StatefulWidget {
@@ -96,12 +97,14 @@ class WalletDetail extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(
                           left: 8.0, right: 8.0, top: 16.0),
-                      child: Deposit(wallet: wallet),
+                      child: wallet.type == 'coin'
+                          ? CryptoDeposit(wallet: wallet)
+                          : FiatDeposit(wallet: wallet),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
                           left: 8.0, right: 8.0, top: 16.0),
-                      child: WithDraw(wallet: wallet),
+                      child: CryptoWithDraw(wallet: wallet),
                     ),
                   ],
                 ),

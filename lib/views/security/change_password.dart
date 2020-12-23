@@ -1,4 +1,3 @@
-import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/controllers/change_password_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,8 +6,6 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:crypto_template/component/style.dart';
 
 class ChangePassword extends StatelessWidget {
-  final HomeController homeController = Get.find();
-
   final ChangePasswordController _changePasswordController =
       Get.put(ChangePasswordController());
 
@@ -19,10 +16,11 @@ class ChangePassword extends StatelessWidget {
         errorText: 'passwords must be 8 characters with uppercase letters')
   ]);
 
-  _onSignFormSubmit() async {
+  _handleFormSubmit() async {
     final _formState = _formKey.currentState;
     if (_formState.validate()) {
       _formState.save();
+      _changePasswordController.changePassword();
     }
   }
 
@@ -107,7 +105,6 @@ class ChangePassword extends StatelessWidget {
                                     val,
                                     _changePasswordController
                                         .passwordTextController.text),
-                        // onChanged: (input) => _confirmPassword = input,
                         label: 'Confirm New Password',
                         obscure: true,
                         keyboardType: TextInputType.text,
@@ -118,7 +115,7 @@ class ChangePassword extends StatelessWidget {
                         left: 16.0, right: 16.0, top: 40.0),
                     child: GestureDetector(
                       onTap: () {
-                        _onSignFormSubmit();
+                        _handleFormSubmit();
                       },
                       child: Container(
                         height: 50.0,
@@ -148,17 +145,6 @@ class ChangePassword extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget line(context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10.0),
-      child: Container(
-        width: double.infinity,
-        height: 0.5,
-        decoration: BoxDecoration(color: Theme.of(context).hintColor),
       ),
     );
   }

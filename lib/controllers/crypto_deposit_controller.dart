@@ -3,9 +3,9 @@ import 'package:crypto_template/controllers/error_controller.dart';
 import 'package:crypto_template/repository/wallet_repository.dart';
 import 'package:get/get.dart';
 
-class DepositController extends GetxController {
+class CryptoDepositController extends GetxController {
   final String currency;
-  DepositController({this.currency});
+  CryptoDepositController({this.currency});
 
   var isLoading = true.obs;
   var isAddressLoading = true.obs;

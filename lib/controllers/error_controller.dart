@@ -2,7 +2,8 @@ import 'package:crypto_template/controllers/SnackbarController.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-class ErrorController extends GetxController {
+// class ErrorController extends GetxController {
+class ErrorController {
   SnackbarController snackbarController;
 
   // ErrorController({this.errorObj});
