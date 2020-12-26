@@ -9,9 +9,6 @@ import 'package:get/get.dart';
 import 'package:crypto_template/controllers/login_controller.dart';
 
 class Login extends StatelessWidget {
-  final ThemeBloc themeBloc;
-  Login({this.themeBloc});
-
   final LoginController _loginController = Get.put(LoginController());
   final HomeController homeController = Get.find();
 
@@ -43,7 +40,7 @@ class Login extends StatelessWidget {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          iconTheme: IconThemeData(color: colorStyle.fontColorDarkTitle),
+          iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           automaticallyImplyLeading: true,
@@ -53,7 +50,7 @@ class Login extends StatelessWidget {
           width: double.infinity,
 
           /// Set Background image in splash screen layout (Click to open code)
-          decoration: BoxDecoration(color: colorStyle.whiteBacground),
+          // decoration: BoxDecoration(color: colorStyle.whiteBacground),
           child: Stack(
             children: <Widget>[
               ///
@@ -140,12 +137,6 @@ class Login extends StatelessWidget {
                         child: InkWell(
                             onTap: () {
                               Get.to(ForgetPassword());
-                              // Navigator.of(context).pushReplacement(
-                              //     PageRouteBuilder(
-                              //         pageBuilder: (_, __, ___) =>
-                              //             forgetPassword(
-                              //               themeBloc: themeBloc,
-                              //             )));
                             },
                             child: Align(
                                 alignment: Alignment.centerRight,

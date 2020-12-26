@@ -1,31 +1,45 @@
-import 'package:crypto_template/component/gainersModel.dart';
+import 'package:crypto_template/component/modelGridHome.dart';
 import 'package:crypto_template/screen/crypto_detail_card_homeScreen/DetailCryptoValue/openOrders.dart';
 import 'package:crypto_template/screen/crypto_detail_card_homeScreen/DetailCryptoValue/orderHistory.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sparkline/flutter_sparkline.dart';
 import 'package:crypto_template/component/style.dart';
+import 'package:flutter_sparkline/flutter_sparkline.dart';
 
-class gainersDetail extends StatefulWidget {
-  final gainers item;
+class cardDetailHome extends StatefulWidget {
+  final gridHome item;
 
-  gainersDetail({Key key, this.item}) : super(key: key);
+  cardDetailHome({Key key, this.item}) : super(key: key);
 
-  _gainersDetailState createState() => _gainersDetailState(item: item);
+  _cardDetailHomeState createState() => _cardDetailHomeState(item);
 }
 
-class _gainersDetailState extends State<gainersDetail> {
-  gainers item;
-  _gainersDetailState({this.item});
+class _cardDetailHomeState extends State<cardDetailHome> {
+  gridHome item;
+  _cardDetailHomeState(this.item);
   @override
   Widget build(BuildContext context) {
+    var grayText = TextStyle(
+        color: Theme.of(context).hintColor,
+        fontFamily: "Popins",
+        fontSize: 12.5);
+
+    var styleValueChart = TextStyle(
+        color: Theme.of(context).hintColor,
+        fontFamily: "Popins",
+        fontSize: 11.5);
+
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+
+      ///
+      /// Appbar
+      ///
       appBar: AppBar(
         brightness: Brightness.dark,
         elevation: 0.0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(
-          item.pair,
+          item.name,
           style: TextStyle(color: Theme.of(context).textSelectionColor),
         ),
         centerTitle: true,
@@ -33,6 +47,7 @@ class _gainersDetailState extends State<gainersDetail> {
           color: Theme.of(context).hintColor,
         ),
       ),
+
       body: Column(
         children: <Widget>[
           Flexible(
@@ -49,7 +64,6 @@ class _gainersDetailState extends State<gainersDetail> {
                       /// Calling header value
                       ///
                       _headerValue(),
-
                       SizedBox(
                         height: 35.0,
                       ),
@@ -83,6 +97,10 @@ class _gainersDetailState extends State<gainersDetail> {
                 SizedBox(
                   height: 20.0,
                 ),
+
+                ///
+                /// Container for tab bar (open orders) and body value
+                ///
                 Container(
                   height: 470.0,
                   child: Column(
@@ -112,7 +130,7 @@ class _gainersDetailState extends State<gainersDetail> {
               ],
             ),
           ),
-          _buttonBottom(),
+          _buttonBottom()
         ],
       ),
     );
@@ -195,11 +213,43 @@ class _gainersDetailState extends State<gainersDetail> {
     );
   }
 
-  Widget _line() {
-    return Container(
-      height: 0.2,
-      width: double.infinity,
-      color: Theme.of(context).hintColor,
+  Widget _tabBarCustomButton() {
+    return PreferredSize(
+      preferredSize: Size.fromHeight(53.0), // here the desired height
+      child: new AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        elevation: 0.0,
+        centerTitle: true,
+        flexibleSpace: SafeArea(
+          child: Container(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 100.0),
+              child: new TabBar(
+                // labelColor: Theme.of(context).primaryColor,
+                indicatorColor: colorStyle.primaryColor,
+                labelColor: Theme.of(context).primaryColor,
+                unselectedLabelColor: Theme.of(context).textSelectionColor,
+                indicatorSize: TabBarIndicatorSize.label,
+                tabs: [
+                  new Tab(
+                    child: Text(
+                      "Open Orders",
+                      style: TextStyle(fontFamily: "Sans"),
+                    ),
+                  ),
+                  new Tab(
+                    child: Text(
+                      "Order History",
+                      style: TextStyle(fontFamily: "Sans"),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+        automaticallyImplyLeading: false,
+      ),
     );
   }
 
@@ -210,10 +260,10 @@ class _gainersDetailState extends State<gainersDetail> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
-              item.lastPrice,
+              item.valueMarket,
               style: TextStyle(
-                  color: Colors.greenAccent,
-                  fontSize: 34.0,
+                  color: item.chartColor,
+                  fontSize: 36.0,
                   fontFamily: "Sans",
                   fontWeight: FontWeight.w700),
             ),
@@ -228,7 +278,7 @@ class _gainersDetailState extends State<gainersDetail> {
                         style: TextStyle(
                             color: Theme.of(context).hintColor,
                             fontFamily: "Popins",
-                            fontSize: 12.5),
+                            fontSize: 11.5),
                       ),
                     ),
                     SizedBox(
@@ -246,7 +296,7 @@ class _gainersDetailState extends State<gainersDetail> {
                         style: TextStyle(
                             color: Theme.of(context).hintColor,
                             fontFamily: "Popins",
-                            fontSize: 12.5),
+                            fontSize: 11.5),
                       ),
                     ),
                     Text("60.0300")
@@ -266,13 +316,13 @@ class _gainersDetailState extends State<gainersDetail> {
                   style: TextStyle(
                       color: Theme.of(context).hintColor,
                       fontFamily: "Popins",
-                      fontSize: 12.5),
+                      fontSize: 11.5),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 10.0),
                   child: Text(
-                    item.chg,
-                    style: TextStyle(color: Colors.greenAccent),
+                    item.valuePercent,
+                    style: TextStyle(color: item.chartColor),
                   ),
                 ),
               ],
@@ -286,7 +336,7 @@ class _gainersDetailState extends State<gainersDetail> {
                     style: TextStyle(
                         color: Theme.of(context).hintColor,
                         fontFamily: "Popins",
-                        fontSize: 12.5),
+                        fontSize: 11.5),
                   ),
                 ),
                 Text("906.8")
@@ -297,6 +347,79 @@ class _gainersDetailState extends State<gainersDetail> {
       ],
     );
   }
+
+  Widget _sparkLineGrafic() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
+      child: new Sparkline(
+        data: item.data,
+        lineWidth: 0.3,
+        fillMode: FillMode.below,
+        lineColor: item.chartColor,
+        fillGradient: new LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: item.chartColorGradient,
+        ),
+      ),
+    );
+  }
+
+  Widget _horizontalValueGrafik() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(
+            "50.0000",
+            style: TextStyle(
+                color: Theme.of(context).hintColor,
+                fontFamily: "Popins",
+                fontSize: 11.5),
+          ),
+          Text(
+            "40.0000",
+            style: TextStyle(
+                color: Theme.of(context).hintColor,
+                fontFamily: "Popins",
+                fontSize: 11.5),
+          ),
+          Text(
+            "30.0000",
+            style: TextStyle(
+                color: Theme.of(context).hintColor,
+                fontFamily: "Popins",
+                fontSize: 11.5),
+          ),
+          Text(
+            "20.0000",
+            style: TextStyle(
+                color: Theme.of(context).hintColor,
+                fontFamily: "Popins",
+                fontSize: 11.5),
+          ),
+          Text(
+            "10.0000",
+            style: TextStyle(
+                color: Theme.of(context).hintColor,
+                fontFamily: "Popins",
+                fontSize: 11.5),
+          ),
+          Text(
+            "0.0000",
+            style: TextStyle(
+                color: Theme.of(context).hintColor,
+                fontFamily: "Popins",
+                fontSize: 11.5),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+
 
   Widget _verticalValueGrafik() {
     return Padding(
@@ -400,37 +523,13 @@ class _gainersDetailState extends State<gainersDetail> {
     );
   }
 
-  Widget _sparkLineGrafic() {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10.0),
-      child: new Sparkline(
-        data: [
-          0.0,
-          0.5,
-          0.9,
-          1.4,
-          2.2,
-          1.0,
-          3.3,
-          0.0,
-          -0.5,
-          -1.0,
-          -0.5,
-          0.0,
-          0.0
-        ],
-        lineWidth: 0.3,
-        fillMode: FillMode.below,
-        lineColor: Colors.greenAccent,
-        fillGradient: new LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Colors.greenAccent.withOpacity(0.2),
-            Colors.greenAccent.withOpacity(0.01)
-          ],
-        ),
-      ),
+
+
+  Widget _line() {
+    return Container(
+      height: 0.2,
+      width: double.infinity,
+      color: Theme.of(context).hintColor,
     );
   }
 
@@ -441,96 +540,5 @@ class _gainersDetailState extends State<gainersDetail> {
         color: Theme.of(context).canvasColor);
   }
 
-  Widget _horizontalValueGrafik() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text(
-            "50.0000",
-            style: TextStyle(
-                color: Theme.of(context).hintColor,
-                fontFamily: "Popins",
-                fontSize: 11.5),
-          ),
-          Text(
-            "40.0000",
-            style: TextStyle(
-                color: Theme.of(context).hintColor,
-                fontFamily: "Popins",
-                fontSize: 11.5),
-          ),
-          Text(
-            "30.0000",
-            style: TextStyle(
-                color: Theme.of(context).hintColor,
-                fontFamily: "Popins",
-                fontSize: 11.5),
-          ),
-          Text(
-            "20.0000",
-            style: TextStyle(
-                color: Theme.of(context).hintColor,
-                fontFamily: "Popins",
-                fontSize: 11.5),
-          ),
-          Text(
-            "10.0000",
-            style: TextStyle(
-                color: Theme.of(context).hintColor,
-                fontFamily: "Popins",
-                fontSize: 11.5),
-          ),
-          Text(
-            "0.0000",
-            style: TextStyle(
-                color: Theme.of(context).hintColor,
-                fontFamily: "Popins",
-                fontSize: 11.5),
-          ),
-        ],
-      ),
-    );
-  }
 
-  Widget _tabBarCustomButton() {
-    return PreferredSize(
-      preferredSize: Size.fromHeight(53.0), // here the desired height
-      child: new AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        elevation: 0.0,
-        centerTitle: true,
-        flexibleSpace: SafeArea(
-          child: Container(
-            child: Padding(
-              padding: const EdgeInsets.only(right: 100.0),
-              child: new TabBar(
-                // labelColor: Theme.of(context).primaryColor,
-                indicatorColor: colorStyle.primaryColor,
-                labelColor: Theme.of(context).primaryColor,
-                unselectedLabelColor: Theme.of(context).textSelectionColor,
-                indicatorSize: TabBarIndicatorSize.label,
-                tabs: [
-                  new Tab(
-                    child: Text(
-                      "Open Orders",
-                      style: TextStyle(fontFamily: "Sans"),
-                    ),
-                  ),
-                  new Tab(
-                    child: Text(
-                      "Order History",
-                      style: TextStyle(fontFamily: "Sans"),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
-        automaticallyImplyLeading: false,
-      ),
-    );
-  }
 }

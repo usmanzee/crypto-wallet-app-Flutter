@@ -82,19 +82,6 @@ void main() {
       getPages: RouterFile.Router.route,
       initialRoute: '/splash',
       theme: Themes.lightTheme,
-      // theme: ThemeData(
-      //   primarySwatch: Colors.deepOrange,
-      //   appBarTheme: AppBarTheme(
-      //     color: Colors.deepOrange,
-      //     textTheme: TextTheme(
-      //       headline6: GoogleFonts.exo2(
-      //         color: Colors.white,
-      //         fontSize: 18,
-      //         fontWeight: FontWeight.bold,
-      //       ),
-      //     ),
-      //   ),
-      // ),
     ),
   );
 }

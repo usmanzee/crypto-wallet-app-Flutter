@@ -28,8 +28,8 @@ class WalletController extends GetxController {
       isLoading(true);
       var balances = await _walletRepository.fetchBalances();
       var currencies = await _walletRepository.fetchCurrencies();
-      balancesList.value = balances;
-      currenciesList.value = currencies;
+      balancesList.assignAll(balances);
+      currenciesList.assignAll(currencies);
       formateWallets(balances, currencies);
 
       isLoading(false);

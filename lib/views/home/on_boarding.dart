@@ -61,9 +61,9 @@ final pages = [
         alignment: Alignment.center,
       )),
   new PageViewModel(
-      pageColor: colorStyle.background,
-      iconColor: Colors.black,
-      bubbleBackgroundColor: Colors.black,
+      // pageColor: colorStyle.darkBackground,
+      // iconColor: Colors.black,
+      // bubbleBackgroundColor: Colors.black,
       title: Text(
         'Crypto Template',
         style: txtStyle.headerStyle,
@@ -83,9 +83,9 @@ final pages = [
         alignment: Alignment.center,
       )),
   new PageViewModel(
-      pageColor: colorStyle.background,
-      iconColor: Colors.black,
-      bubbleBackgroundColor: Colors.black,
+      // pageColor: colorStyle.background,
+      // iconColor: Colors.black,
+      // bubbleBackgroundColor: Colors.black,
       title: Text(
         'Crypto Template',
         style: txtStyle.headerStyle,

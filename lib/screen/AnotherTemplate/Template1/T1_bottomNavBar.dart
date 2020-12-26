@@ -17,9 +17,9 @@ class T1_bottomNav extends StatefulWidget {
 class _T1_bottomNavState extends State<T1_bottomNav> {
   int currentIndex = 0;
   bool _color = true;
-
+  
   ///
-  /// Switch case for bottomNav
+  /// Switch case for bottomNav 
   ///
   Widget callPage(int current) {
     switch (current) {

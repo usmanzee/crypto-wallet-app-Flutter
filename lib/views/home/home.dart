@@ -27,7 +27,7 @@ class Home extends StatelessWidget {
           children: [
             IconButton(
               icon: Icon(Icons.account_circle),
-              color: colorStyle.fontColorDarkTitle,
+              color: Theme.of(context).hintColor,
               tooltip: 'Profile settings',
               onPressed: () {
                 Get.to(Setting());
@@ -36,7 +36,7 @@ class Home extends StatelessWidget {
             Spacer(flex: 1),
             IconButton(
               icon: Icon(Icons.notifications_none),
-              color: colorStyle.fontColorDarkTitle,
+              color: Theme.of(context).hintColor,
               tooltip: 'Notification',
               onPressed: () {},
             ),
@@ -49,28 +49,28 @@ class Home extends StatelessWidget {
             // /
             // / Header image slider
             // /
-            // SizedBox(
-            //     height: 210.0,
-            //     width: double.infinity,
-            //     child: new Carousel(
-            //       boxFit: BoxFit.cover,
-            //       dotColor: Colors.white.withOpacity(0.8),
-            //       dotSize: 5.5,
-            //       dotSpacing: 16.0,
-            //       dotBgColor: Colors.transparent,
-            //       showIndicator: true,
-            //       overlayShadow: true,
-            //       overlayShadowColors: Theme.of(context)
-            //           .scaffoldBackgroundColor
-            //           .withOpacity(0.9),
-            //       overlayShadowSize: 0.25,
-            //       images: [
-            //         AssetImage("assets/image/banner/banner2.png"),
-            //         AssetImage("assets/image/banner/banner3.jpg"),
-            //         AssetImage("assets/image/banner/banner2.png"),
-            //         AssetImage("assets/image/banner/banner3.jpg"),
-            //       ],
-            //     )),
+            SizedBox(
+                height: 100.0,
+                width: double.infinity,
+                child: new Carousel(
+                  boxFit: BoxFit.cover,
+                  dotColor: Colors.white.withOpacity(0.8),
+                  dotSize: 5.5,
+                  dotSpacing: 16.0,
+                  dotBgColor: Colors.transparent,
+                  showIndicator: true,
+                  // overlayShadow: true,
+                  // overlayShadowColors: Theme.of(context)
+                  //     .scaffoldBackgroundColor
+                  //     .withOpacity(0.9),
+                  // overlayShadowSize: 0.25,
+                  images: [
+                    AssetImage("assets/image/banner/banner2.png"),
+                    AssetImage("assets/image/banner/banner3.jpg"),
+                    AssetImage("assets/image/banner/banner2.png"),
+                    AssetImage("assets/image/banner/banner3.jpg"),
+                  ],
+                )),
             SizedBox(height: 10.0),
 
             Obx(() {
@@ -85,7 +85,7 @@ class Home extends StatelessWidget {
             /// Tab bar custom
             ///
             Container(
-              height: 700.0,
+              height: 500.0,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,7 +107,8 @@ class Home extends StatelessWidget {
                                 child: Padding(
                                   padding: const EdgeInsets.only(right: 100.0),
                                   child: new TabBar(
-                                    indicatorColor: colorStyle.primaryColor,
+                                    indicatorColor:
+                                        Theme.of(context).primaryColor,
                                     labelColor: Theme.of(context).primaryColor,
                                     unselectedLabelColor:
                                         Theme.of(context).textSelectionColor,
@@ -152,7 +153,7 @@ class Home extends StatelessWidget {
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 8.0),
-                                              child: Text("Loser"),
+                                              child: Text("Losers"),
                                             )
                                           ],
                                         ),
@@ -266,11 +267,14 @@ class Card extends StatelessWidget {
                     data: item.data,
                     lineWidth: 0.3,
                     fillMode: FillMode.below,
-                    lineColor: item.chartColor,
+                    lineColor: Theme.of(context).accentColor,
                     fillGradient: new LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: item.chartColorGradient,
+                      colors: [
+                        Theme.of(context).accentColor.withOpacity(0.2),
+                        Theme.of(context).accentColor.withOpacity(0.01)
+                      ],
                     ),
                   ),
                 ),

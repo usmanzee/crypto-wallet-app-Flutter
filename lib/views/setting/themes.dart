@@ -58,12 +58,13 @@ class Themes {
 
   static final lightTheme = ThemeData(
     brightness: Brightness.light,
-    accentColor: colorStyle.primaryColor,
+    accentColor: colorStyle.secondaryColor,
     primaryColor: colorStyle.primaryColor,
     buttonColor: colorStyle.primaryColor,
     cardColor: colorStyle.cardColorLight,
     textSelectionColor: colorStyle.fontColorLight,
-    scaffoldBackgroundColor: Color(0xFFFDFDFD),
+    // scaffoldBackgroundColor: Color(0xFFFDFDFD),
+    scaffoldBackgroundColor: Colors.white,
     canvasColor: colorStyle.whiteBacground,
     dividerColor: colorStyle.iconColorLight,
     hintColor: colorStyle.fontSecondaryColorLight,

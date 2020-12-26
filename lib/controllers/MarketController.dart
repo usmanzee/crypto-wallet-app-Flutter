@@ -26,8 +26,8 @@ class MarketController extends GetxController {
       isLoading(true);
       var markets = await _marketRepository.fetchMarkets();
       var marketsTickers = await _marketRepository.fetchMarketsTickers();
-      marketList.value = markets;
-      marketTickerList.value = marketsTickers;
+      marketList.assignAll(markets);
+      marketTickerList.assignAll(marketsTickers);
       formateMarkets(markets, marketsTickers);
 
       isLoading(false);

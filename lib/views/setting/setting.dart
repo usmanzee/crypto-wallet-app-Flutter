@@ -1,6 +1,6 @@
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/views/security/security.dart';
-import 'package:crypto_template/views/setting/SeeAllTemplate.dart';
+// import 'package:crypto_template/views/setting/SeeAllTemplate.dart';
 import 'package:crypto_template/views/setting/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -144,17 +144,6 @@ class Setting extends StatelessWidget {
                                     ]),
                               ),
                             ]),
-                        // Text(
-                        //   'Mac Address: ' +
-                        //       homeController.deviceMacAddress.value,
-                        //   style: TextStyle(
-                        //     fontSize: 16,
-                        //     fontWeight: FontWeight.w300,
-                        //     fontFamily: "Popins",
-                        //     letterSpacing: 1.5,
-                        //   ),
-                        // ),
-                        // line()
                       ]),
                 );
               } else {
@@ -193,17 +182,6 @@ class Setting extends StatelessWidget {
                                 ),
                               ]),
                         ),
-                        // Text(
-                        //   'Mac Address: ' +
-                        //       homeController.deviceMacAddress.value,
-                        //   style: TextStyle(
-                        //     fontSize: 16,
-                        //     fontWeight: FontWeight.w300,
-                        //     fontFamily: "Popins",
-                        //     letterSpacing: 1.5,
-                        //   ),
-                        // ),
-                        // line()
                       ]),
                 );
               }
@@ -214,10 +192,9 @@ class Setting extends StatelessWidget {
                 },
                 child: listSetting(
                     context,
-                    "",
                     Icon(
                       Icons.event_note,
-                      size: 24.0,
+                      size: 20.0,
                     ),
                     "Fee Schedule")),
             Obx(() {
@@ -228,10 +205,9 @@ class Setting extends StatelessWidget {
                       },
                       child: listSetting(
                           context,
-                          "",
                           Icon(
                             Icons.group_add,
-                            size: 24.0,
+                            size: 20.0,
                           ),
                           "Referral ID"))
                   : Container();
@@ -245,10 +221,9 @@ class Setting extends StatelessWidget {
                       },
                       child: listSetting(
                           context,
-                          "",
                           Icon(
                             Icons.notifications_active,
-                            size: 24.0,
+                            size: 20.0,
                           ),
                           "Notifications"))
                   : Container();
@@ -261,10 +236,9 @@ class Setting extends StatelessWidget {
                       },
                       child: listSetting(
                           context,
-                          "",
                           Icon(
                             Icons.security,
-                            size: 24.0,
+                            size: 20.0,
                           ),
                           "Security"))
                   : Container();
@@ -275,10 +249,9 @@ class Setting extends StatelessWidget {
                 },
                 child: listSetting(
                     context,
-                    "",
                     Icon(
                       Icons.live_help,
-                      size: 24.0,
+                      size: 20.0,
                     ),
                     "Help & Support")),
             InkWell(
@@ -287,14 +260,13 @@ class Setting extends StatelessWidget {
                 },
                 child: listSetting(
                     context,
-                    "",
                     Icon(
                       Icons.share,
-                      size: 24.0,
+                      size: 20.0,
                     ),
                     "Share The App")),
             SizedBox(
-              height: 24.0,
+              height: 16.0,
             ),
             Obx(() {
               if (homeController.isLoggedIn)
@@ -340,33 +312,28 @@ class Setting extends StatelessWidget {
     );
   }
 
-  Widget listSetting(context, String header, Widget icon, String title) {
+  Widget listSetting(context, Widget icon, String title) {
     return Padding(
       padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 0.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            header,
-            style: TextStyle(
-                color: Theme.of(context).hintColor,
-                fontFamily: "Sans",
-                fontSize: 13.0),
-          ),
           SizedBox(
-            height: 9.0,
+            height: 12.0,
           ),
           Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               icon,
+              SizedBox(
+                width: 12,
+              ),
               Padding(
                 padding: EdgeInsets.only(left: 4.0),
                 child: Text(
                   title,
                   style: TextStyle(
-                      fontSize: 17.0,
+                      fontSize: 15.0,
                       fontFamily: "Popins",
                       letterSpacing: 1.5,
                       fontWeight: FontWeight.w300),
@@ -374,6 +341,9 @@ class Setting extends StatelessWidget {
               ),
               Spacer(flex: 1),
             ],
+          ),
+          SizedBox(
+            height: 12.0,
           ),
           line(context)
         ],
@@ -383,7 +353,7 @@ class Setting extends StatelessWidget {
 
   Widget line(context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10.0),
+      padding: const EdgeInsets.only(top: 0.0),
       child: Container(
         width: double.infinity,
         height: 0.5,

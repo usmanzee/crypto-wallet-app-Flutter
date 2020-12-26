@@ -9,9 +9,9 @@ import 'package:crypto/crypto.dart';
 import 'package:get/get.dart';
 
 class ApiProvider {
-  // final String _baseUrl = "http://192.168.18.7:9002/api/v2/";
+  final String _baseUrl = "http://192.168.18.7:9002/api/v2/";
   // final String _baseUrl = "http://www.app.local/api/v2/";
-  final String _baseUrl = "https://www.coinee.cf/api/v2/";
+  // final String _baseUrl = "https://www.coinee.cf/api/v2/";
   // final String _baseUrl = "https://ewallet.b4uwallet.com/api/v2/";
 
   dynamic headers;

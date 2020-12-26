@@ -4,6 +4,7 @@ class colorStyle {
   // static final primaryColor = Color(0xFF45C2DA);
   static final primaryColor = Color(0xFF6F2158);
   // static final background = Color(0xFF191B2A);
+  static final secondaryColor = Color(0xFFF58220);
   static final background = Color(0xFF0F233D);
   static final cardColorLight = Colors.white;
   static final cardColorDark = Colors.black;
@@ -26,7 +27,7 @@ class txtStyle {
       fontFamily: "Popins",
       fontSize: 21.0,
       fontWeight: FontWeight.w800,
-      color: colorStyle.primaryColor,
+      color: Color(0xFF45C2DA),
       letterSpacing: 1.5);
 
   static final descriptionStyle = TextStyle(

@@ -12,16 +12,14 @@ class T3_HomeScreen extends StatefulWidget {
 class _T3_HomeScreenState extends State<T3_HomeScreen> {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-
             ///
             /// Header here until the transfer,scan,profile box
-            /// 
+            ///
             header(),
 
             ///
