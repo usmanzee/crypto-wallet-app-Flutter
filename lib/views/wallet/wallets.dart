@@ -1,18 +1,13 @@
-import 'package:crypto_template/component/AssetsWallet/assetsModel.dart';
 import 'package:crypto_template/controllers/wallet_controller.dart';
 import 'package:crypto_template/views/wallet/wallet_detail.dart';
 import 'package:crypto_template/views/wallet/wallet_loading_animation.dart';
+import 'package:crypto_template/views/wallet/wallet_search.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:crypto_template/models/wallet.dart' as WalletClass;
 import 'package:get/get.dart';
 
 class Wallets extends StatelessWidget {
-  final assetsWallet item;
   final walletController = Get.put(WalletController());
-  Wallets({this.item}) {
-    timeDilation = 1.0;
-  }
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -35,75 +30,89 @@ class Wallets extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
           child: Column(
             children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                child: Column(
-                  children: [
-                    Text('Equity Value(BTC)',
-                        style: Theme.of(context).textTheme.bodyText1,
-                        textAlign: TextAlign.left),
-                    SizedBox(
-                      height: 4,
-                    ),
-                    Text('0.00000',
-                        style: Theme.of(context).textTheme.headline4,
-                        textAlign: TextAlign.left),
-                    Text('≈ \$00000',
-                        style: Theme.of(context).textTheme.bodyText2,
-                        textAlign: TextAlign.left),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+              Obx(() {
+                if (walletController.isLoading.value) {
+                  return ExtimatedPriceLoadingAnimation(
+                    context: context,
+                  );
+                } else {
+                  return Container(
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                    child: Column(
                       children: [
-                        FlatButton(
-                          height: 32.0,
-                          minWidth: 120.0,
-                          textColor: Theme.of(context).accentColor,
-                          child: Text(
-                            "Deposit",
-                            style: TextStyle(fontSize: 12),
-                          ),
-                          onPressed: () {},
-                          shape: RoundedRectangleBorder(
-                              side: BorderSide(
-                                  color: Theme.of(context).accentColor,
-                                  width: 1,
-                                  style: BorderStyle.solid),
-                              borderRadius: BorderRadius.circular(10)),
-                          splashColor:
-                              Theme.of(context).accentColor.withOpacity(0.5),
-                        ),
+                        Text('Equity Value(BTC)',
+                            style: Theme.of(context).textTheme.bodyText1,
+                            textAlign: TextAlign.left),
                         SizedBox(
-                          width: 8.0,
+                          height: 4,
                         ),
-                        FlatButton(
-                          height: 32.0,
-                          minWidth: 120.0,
-                          textColor: Theme.of(context).accentColor,
-                          child: Text(
-                            "Withdraw",
-                            style: TextStyle(fontSize: 12),
-                          ),
-                          onPressed: () {},
-                          shape: RoundedRectangleBorder(
-                              side: BorderSide(
-                                  color: Theme.of(context).accentColor,
-                                  width: 1,
-                                  style: BorderStyle.solid),
-                              borderRadius: BorderRadius.circular(10)),
-                          splashColor:
-                              Theme.of(context).accentColor.withOpacity(0.5),
+                        Text('0.00000',
+                            style: Theme.of(context).textTheme.headline4,
+                            textAlign: TextAlign.left),
+                        Text('≈ \$00000',
+                            style: Theme.of(context).textTheme.bodyText2,
+                            textAlign: TextAlign.left),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            FlatButton(
+                              height: 32.0,
+                              minWidth: 120.0,
+                              textColor: Theme.of(context).accentColor,
+                              child: Text(
+                                "Deposit",
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              onPressed: () {
+                                Get.to(WalletSearch(searchFrom: 'deposit'));
+                              },
+                              shape: RoundedRectangleBorder(
+                                  side: BorderSide(
+                                      color: Theme.of(context).accentColor,
+                                      width: 1,
+                                      style: BorderStyle.solid),
+                                  borderRadius: BorderRadius.circular(5)),
+                              splashColor: Theme.of(context)
+                                  .accentColor
+                                  .withOpacity(0.5),
+                            ),
+                            SizedBox(
+                              width: 8.0,
+                            ),
+                            FlatButton(
+                              height: 32.0,
+                              minWidth: 120.0,
+                              textColor: Theme.of(context).accentColor,
+                              child: Text(
+                                "Withdraw",
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              onPressed: () {
+                                Get.to(WalletSearch(searchFrom: 'withdraw'));
+                              },
+                              shape: RoundedRectangleBorder(
+                                  side: BorderSide(
+                                      color: Theme.of(context).accentColor,
+                                      width: 1,
+                                      style: BorderStyle.solid),
+                                  borderRadius: BorderRadius.circular(5)),
+                              splashColor: Theme.of(context)
+                                  .accentColor
+                                  .withOpacity(0.5),
+                            )
+                          ],
                         )
                       ],
-                    )
-                  ],
-                ),
-              ),
+                    ),
+                  );
+                }
+              }),
               Container(
                 color: Theme.of(context).canvasColor,
                 child: Padding(
@@ -145,8 +154,8 @@ class Wallets extends StatelessWidget {
                       ),
                       Obx(() {
                         if (walletController.isLoading.value)
-                          // return WalletLoadingAnimation(context: context);
-                          return Text('Loading...');
+                          return WalletLoadingAnimation(context: context);
+                        // return Text('Loading...');
                         else
                           return Container(
                               height: 400.0,
@@ -156,7 +165,7 @@ class Wallets extends StatelessWidget {
                                 physics: AlwaysScrollableScrollPhysics(),
                                 padding: EdgeInsets.only(top: 0.0),
                                 itemBuilder: (ctx, i) {
-                                  return walletList(assetsWalletList[i],
+                                  return walletList(
                                       walletController.walletsList[i], ctx);
                                 },
                                 itemCount: walletController.walletsList.length,
@@ -175,8 +184,7 @@ class Wallets extends StatelessWidget {
   }
 }
 
-Widget walletList(
-    assetsWallet item, WalletClass.Wallet wallet, BuildContext ctx) {
+Widget walletList(WalletClass.Wallet wallet, BuildContext ctx) {
   return Padding(
     padding: const EdgeInsets.only(top: 7.0),
     child: Column(

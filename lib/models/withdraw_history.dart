@@ -43,13 +43,17 @@ class WithdrawHistory {
         type: json["type"],
         amount: json["amount"],
         fee: json["fee"],
-        blockchainTxid: json["blockchain_txid"],
+        blockchainTxid:
+            json["blockchain_txid"] == null ? null : json["blockchain_txid"],
         rid: json["rid"],
         state: json["state"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
-        completedAt: DateTime.parse(json["completed_at"]),
-        doneAt: DateTime.parse(json["done_at"]),
+        completedAt: json["completed_at"] == null
+            ? null
+            : DateTime.parse(json["completed_at"]),
+        doneAt:
+            json["done_at"] == null ? null : DateTime.parse(json["done_at"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -58,12 +62,13 @@ class WithdrawHistory {
         "type": type,
         "amount": amount,
         "fee": fee,
-        "blockchain_txid": blockchainTxid,
+        "blockchain_txid": blockchainTxid == null ? null : blockchainTxid,
         "rid": rid,
         "state": state,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
-        "completed_at": completedAt.toIso8601String(),
-        "done_at": doneAt.toIso8601String(),
+        "completed_at":
+            completedAt == null ? null : completedAt.toIso8601String(),
+        "done_at": doneAt == null ? null : doneAt.toIso8601String(),
       };
 }

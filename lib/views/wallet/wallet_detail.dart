@@ -1,4 +1,7 @@
 import 'package:crypto_template/controllers/transaction_history_controller.dart';
+import 'package:crypto_template/models/deposit_histroy.dart';
+import 'package:crypto_template/models/withdraw_history.dart';
+import 'package:crypto_template/screen/wallet/tabs/deposit.dart';
 import 'package:crypto_template/views/wallet/deposit/crypto.dart';
 import 'package:crypto_template/views/wallet/deposit/fiat.dart';
 import 'package:crypto_template/views/wallet/withdraw/crypto.dart';
@@ -159,14 +162,10 @@ class _WalletDetailState extends State<WalletDetail> {
                                             // physics: AlwaysScrollableScrollPhysics(),
                                             padding: EdgeInsets.only(top: 0.0),
                                             itemBuilder: (ctx, i) {
-                                              return _card(
-                                                  Colors.redAccent
-                                                      .withOpacity(0.75),
-                                                  "06/03/2018",
-                                                  "Confirming",
-                                                  "- 0.010",
-                                                  "BTC",
-                                                  Icons.mobile_screen_share);
+                                              return _depositHistoryList(
+                                                transactionHistoryController
+                                                    .depositHistory[i],
+                                              );
                                             },
                                             itemCount:
                                                 transactionHistoryController
@@ -186,14 +185,17 @@ class _WalletDetailState extends State<WalletDetail> {
                                             // physics: AlwaysScrollableScrollPhysics(),
                                             padding: EdgeInsets.only(top: 0.0),
                                             itemBuilder: (ctx, i) {
-                                              return _card(
-                                                  Colors.redAccent
-                                                      .withOpacity(0.75),
-                                                  "06/03/2018",
-                                                  "Confirming",
-                                                  "- 0.010",
-                                                  "BTC",
-                                                  Icons.mobile_screen_share);
+                                              return _withdrawHistoryList(
+                                                transactionHistoryController
+                                                    .withdrawHistory[i],
+                                                // Colors.redAccent
+                                                //     .withOpacity(0.75),
+                                                // "06/03/2018",
+                                                // "Confirming",
+                                                // "- 0.010",
+                                                // "BTC",
+                                                // Icons.mobile_screen_share
+                                              );
                                             },
                                             itemCount:
                                                 transactionHistoryController
@@ -220,7 +222,7 @@ class _WalletDetailState extends State<WalletDetail> {
                 children: <Widget>[
                   Container(
                     height: 40.0,
-                    width: 180.0,
+                    width: 150.0,
                     child: MaterialButton(
                       splashColor: Colors.black12,
                       highlightColor: Colors.black12,
@@ -249,7 +251,7 @@ class _WalletDetailState extends State<WalletDetail> {
                   ),
                   Container(
                     height: 40.0,
-                    width: 180.0,
+                    width: 150.0,
                     child: MaterialButton(
                       splashColor: Colors.black12,
                       highlightColor: Colors.black12,
@@ -283,8 +285,28 @@ class _WalletDetailState extends State<WalletDetail> {
   ///
   /// Widget card transaction
   ///
-  Widget _card(Color _color, String _time, String _info, String _value,
-      String _crypto, IconData _icon) {
+  Widget _depositHistoryList(DepositHistory depositHistoryItem) {
+    Color _color;
+    IconData _icon;
+    if (depositHistoryItem.state == 'canceled' ||
+        depositHistoryItem.state == 'rejected') {
+      _color = Colors.redAccent.withOpacity(0.75);
+      _icon = Icons.close;
+    } else if (depositHistoryItem.state == 'accepted' ||
+        depositHistoryItem.state == 'skipped' ||
+        depositHistoryItem.state == 'collected') {
+      _color = Color(0xFF2ebd85);
+      _icon = Icons.check;
+    }
+    DateTime createdAt = depositHistoryItem.createdAt;
+    String formatedDate = '';
+    if (createdAt != null) {
+      formatedDate = createdAt.year.toString() +
+          '-' +
+          createdAt.month.toString() +
+          '-' +
+          createdAt.day.toString();
+    }
     return Padding(
       padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 20.0),
       child: Row(
@@ -313,17 +335,15 @@ class _WalletDetailState extends State<WalletDetail> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      _time,
+                      formatedDate,
                       style: TextStyle(
                         fontSize: 16.5,
                         letterSpacing: 1.2,
                         fontFamily: "Sans",
-                        // color: Colors.white70
                       ),
                     ),
-                    Text(_info,
+                    Text(depositHistoryItem.state,
                         style: TextStyle(
-                            // color: Colors.white24,
                             letterSpacing: 1.1,
                             fontFamily: "Popins",
                             fontSize: 13.0))
@@ -337,7 +357,7 @@ class _WalletDetailState extends State<WalletDetail> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               Text(
-                _value,
+                depositHistoryItem.amount,
                 style: TextStyle(
                     fontSize: 19.5,
                     letterSpacing: 1.6,
@@ -345,9 +365,106 @@ class _WalletDetailState extends State<WalletDetail> {
                     fontWeight: FontWeight.w600,
                     color: _color),
               ),
-              Text(_crypto,
+              Text(depositHistoryItem.currency.toUpperCase(),
                   style: TextStyle(
-                      color: Colors.white24,
+                      letterSpacing: 1.1, fontFamily: "Popins", fontSize: 13.0))
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _withdrawHistoryList(WithdrawHistory withdrawHistoryItem) {
+    Color _color;
+    IconData _icon;
+    if (withdrawHistoryItem.state == 'canceled' ||
+        withdrawHistoryItem.state == 'rejected' ||
+        withdrawHistoryItem.state == 'failed' ||
+        withdrawHistoryItem.state == 'errored') {
+      _color = Colors.redAccent.withOpacity(0.75);
+      _icon = Icons.close;
+    } else if (withdrawHistoryItem.state == 'accepted' ||
+        withdrawHistoryItem.state == 'skipped' ||
+        withdrawHistoryItem.state == 'collected' ||
+        withdrawHistoryItem.state == 'succeed' ||
+        withdrawHistoryItem.state == 'confirming') {
+      _color = Color(0xFF2ebd85);
+      _icon = Icons.check;
+    } else {
+      _color = Theme.of(context).accentColor;
+      _icon = Icons.autorenew;
+    }
+    DateTime createdAt = withdrawHistoryItem.createdAt;
+    String formatedDate = '';
+    if (createdAt != null) {
+      formatedDate = createdAt.year.toString() +
+          '-' +
+          createdAt.month.toString() +
+          '-' +
+          createdAt.day.toString();
+    }
+    return Padding(
+      padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 20.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Container(
+                height: 44.0,
+                width: 44.0,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(70.0)),
+                  border: Border.all(color: _color),
+                ),
+                child: Center(
+                  child: Icon(
+                    _icon,
+                    color: _color,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 12.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      formatedDate,
+                      style: TextStyle(
+                        fontSize: 16.5,
+                        letterSpacing: 1.2,
+                        fontFamily: "Sans",
+                      ),
+                    ),
+                    Text(withdrawHistoryItem.state,
+                        style: TextStyle(
+                            letterSpacing: 1.1,
+                            fontFamily: "Popins",
+                            fontSize: 13.0))
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Text(
+                withdrawHistoryItem.amount,
+                style: TextStyle(
+                    fontSize: 19.5,
+                    letterSpacing: 1.6,
+                    fontFamily: "Sans",
+                    fontWeight: FontWeight.w600,
+                    color: _color),
+              ),
+              Text(withdrawHistoryItem.currency.toUpperCase(),
+                  style: TextStyle(
+                      // color: Colors.white24,
                       letterSpacing: 1.1,
                       fontFamily: "Popins",
                       fontSize: 13.0))

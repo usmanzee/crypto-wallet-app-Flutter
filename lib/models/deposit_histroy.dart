@@ -36,9 +36,13 @@ class DepositHistory {
         amount: json["amount"],
         fee: json["fee"],
         txid: json["txid"],
-        createdAt: DateTime.parse(json["created_at"]),
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
         confirmations: json["confirmations"],
-        completedAt: DateTime.parse(json["completed_at"]),
+        completedAt: json["completed_at"] == null
+            ? null
+            : DateTime.parse(json["completed_at"]),
         state: json["state"],
       );
 
@@ -48,9 +52,10 @@ class DepositHistory {
         "amount": amount,
         "fee": fee,
         "txid": txid,
-        "created_at": createdAt.toIso8601String(),
+        "created_at": createdAt == null ? null : createdAt.toIso8601String(),
         "confirmations": confirmations,
-        "completed_at": completedAt.toIso8601String(),
+        "completed_at":
+            completedAt == null ? null : completedAt.toIso8601String(),
         "state": state,
       };
 }

@@ -9,7 +9,11 @@ import 'package:crypto/crypto.dart';
 import 'package:get/get.dart';
 
 class ApiProvider {
-  final String _baseUrl = "http://192.168.18.7:9002/api/v2/";
+  bool isPublicData = false;
+  ApiProvider({this.isPublicData});
+
+  final String _homeUrl = "http://10.121.121.113:3000/";
+  final String _baseUrl = "http://10.121.121.113:9002/api/v2/";
   // final String _baseUrl = "http://www.app.local/api/v2/";
   // final String _baseUrl = "https://www.coinee.cf/api/v2/";
   // final String _baseUrl = "https://ewallet.b4uwallet.com/api/v2/";
@@ -38,11 +42,12 @@ class ApiProvider {
     if (includeAuthHeaders) {
       setHeaders();
     }
+    var baseURL = isPublicData == null || !isPublicData ? _baseUrl : _homeUrl;
     var responseJson;
     try {
-      print(_baseUrl + url);
+      print(baseURL + url);
       print(headers);
-      final response = await http.get(_baseUrl + url, headers: headers);
+      final response = await http.get(baseURL + url, headers: headers);
       responseJson = _returnResponse(response);
     } on SocketException {
       throw FetchDataException(
@@ -61,11 +66,12 @@ class ApiProvider {
     if (includeAuthHeaders) {
       setHeaders();
     }
+    var baseURL = isPublicData == null || !isPublicData ? _baseUrl : _homeUrl;
     var responseJson;
     try {
-      print(_baseUrl + url);
+      print(baseURL + url);
       final response =
-          await http.post(_baseUrl + url, body: body, headers: headers);
+          await http.post(baseURL + url, body: body, headers: headers);
       responseJson = _returnResponse(response);
     } on SocketException {
       throw FetchDataException(
@@ -84,10 +90,11 @@ class ApiProvider {
     if (includeAuthHeaders) {
       setHeaders();
     }
+    var baseURL = isPublicData == null || !isPublicData ? _baseUrl : _homeUrl;
     var responseJson;
     try {
       final response =
-          await http.put(_baseUrl + url, body: body, headers: headers);
+          await http.put(baseURL + url, body: body, headers: headers);
       responseJson = _returnResponse(response);
     } on SocketException {
       throw FetchDataException(
@@ -106,9 +113,10 @@ class ApiProvider {
     if (includeAuthHeaders) {
       setHeaders();
     }
+    var baseURL = isPublicData == null || !isPublicData ? _baseUrl : _homeUrl;
     var apiResponse;
     try {
-      final response = await http.delete(_baseUrl + url, headers: headers);
+      final response = await http.delete(baseURL + url, headers: headers);
       apiResponse = _returnResponse(response);
     } on SocketException {
       throw FetchDataException(

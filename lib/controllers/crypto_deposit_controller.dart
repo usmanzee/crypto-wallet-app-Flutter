@@ -17,10 +17,13 @@ class CryptoDepositController extends GetxController {
   @override
   void onInit() {
     fetchDepositAddress(currency);
-    // if (currency == 'xrp') {
-    //   Get.defaultDialog(title: 'This is title');
-    // }
     super.onInit();
+  }
+
+  @override
+  void onReady() {
+    print('currency: $currency');
+    super.onReady();
   }
 
   fetchDepositAddress(currency) async {
