@@ -53,7 +53,7 @@ class WalletRepository {
   }
 
   Future<List<FiatDepositDetails>> fetchFiatDepositDetail() async {
-    apiProvider = new ApiProvider(isPublicData: true);
+    apiProvider = new ApiProvider();
     final response = await apiProvider.get('public_data/bank_details.json');
     return fiatDepositDetailsFromJson(response);
   }

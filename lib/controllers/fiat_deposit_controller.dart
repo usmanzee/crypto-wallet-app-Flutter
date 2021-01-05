@@ -16,7 +16,7 @@ class FiatDepositController extends GetxController {
 
   @override
   void onInit() {
-    fetchDepositBankDetails(currency);
+    // fetchDepositBankDetails(currency);
 
     super.onInit();
   }

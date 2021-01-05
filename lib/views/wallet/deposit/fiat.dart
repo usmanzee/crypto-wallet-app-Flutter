@@ -52,8 +52,16 @@ class _DepositFiatState extends State<DepositFiat> {
   void initState() {
     depositController =
         Get.put(FiatDepositController(currency: wallet.currency));
-    getDepositDetails();
+    // getDepositDetails();
     print('widget init');
+    var allbanks = bankCurrencies[0]['banks'];
+    for (var bank in allbanks) {
+      var data = bank as Map;
+      for (var item in data.keys) {
+        final value = data[item];
+        print('$item , $value');
+      }
+    }
     super.initState();
   }
 
@@ -201,34 +209,35 @@ class _DepositFiatState extends State<DepositFiat> {
 
                   Column(
                     // padding: EdgeInsets.all(12.0),
-                    children: depositDetails.map<Widget>((depositDetail) {
+                    children: bankCurrencies.map<Widget>((depositDetail) {
                       if (depositDetail['title'] == wallet.currency) {
                         return Column(
-                          children: depositDetail['banks'].map<Widget>((bank) {
-                            print(bank);
-                            return Text('abc');
-                            // return Card(
-                            //   child: ListTile(
-                            //     title: Text('Bank Name'),
-                            //     subtitle: Text('TransferWise'),
-                            //     trailing: Container(
-                            //       width: 30.0,
-                            //       padding: EdgeInsets.all(0),
-                            //       child: IconButton(
-                            //         icon: Icon(
-                            //           Icons.content_copy,
-                            //           size: 20.0,
-                            //           color: Colors.brown[900],
-                            //         ),
-                            //         onPressed: () {
-                            //           _copyToClipboard('TransferWise');
-                            //         },
-                            //       ),
-                            //     ),
-                            //   ),
-                            // );
-                          }).toList(),
-                        );
+
+                            // children: depositDetail['banks'].map<Widget>((bank) {
+                            //   print(bank);
+                            //   return Text('abc');
+                            //   // return Card(
+                            //   //   child: ListTile(
+                            //   //     title: Text('Bank Name'),
+                            //   //     subtitle: Text('TransferWise'),
+                            //   //     trailing: Container(
+                            //   //       width: 30.0,
+                            //   //       padding: EdgeInsets.all(0),
+                            //   //       child: IconButton(
+                            //   //         icon: Icon(
+                            //   //           Icons.content_copy,
+                            //   //           size: 20.0,
+                            //   //           color: Colors.brown[900],
+                            //   //         ),
+                            //   //         onPressed: () {
+                            //   //           _copyToClipboard('TransferWise');
+                            //   //         },
+                            //   //       ),
+                            //   //     ),
+                            //   //   ),
+                            //   // );
+                            // }).toList(),
+                            );
                       } else {
                         return Container();
                       }
@@ -386,3 +395,66 @@ class _DepositFiatState extends State<DepositFiat> {
     );
   }
 }
+
+const bankCurrencies = [
+  {
+    "id": '1',
+    "title": 'eur',
+    "banks": [
+      {
+        "Bank Name": 'TransferWise',
+        "Account holder": 'B4U Group of Companies, S.L',
+        "IBAN": 'BE79 9670 5851 7133',
+        "SWIFT/BIC": 'TRWIBEB1XXX',
+        "Address":
+            'TransferWise Europe SA \nAvenue Louise 54, Room S52\n Brussels\n 1050\n Belgium',
+      },
+      {
+        "Bank Name": 'TransferWise1',
+        "Account holder": 'B4U Group of Companies, S.L',
+        "IBAN": 'BE79 9670 5851 7133',
+        "SWIFT/BIC": 'TRWIBEB1XXX',
+        "Address":
+            'TransferWise Europe SA \nAvenue Louise 54, Room S52\n Brussels\n 1050\n Belgium',
+      }
+    ]
+  },
+  {
+    "id": '2',
+    "title": 'myr',
+    "banks": [
+      {
+        "Bank Name": 'OCBC Bank',
+        "Account holder": 'BRAVO Tech Trading',
+        "Account Number": '704-128-334-9',
+      }
+    ]
+  },
+  {
+    "id": '3',
+    "title": 'usd',
+    "banks": [
+      {
+        "Bank Name": 'TransferWise',
+        "Account holder": 'B4U Group of Companies, S.L.',
+        "ACH routing number": '026073150',
+        "Wire routing number": '026073008',
+        "Account number": '8310615550',
+        "Account type": 'Checking',
+        "Address":
+            'TransferWise 19 W 24th Street \nNew York NY 10010\n United States',
+      }
+    ]
+  },
+  {
+    "id": '4',
+    "title": 'sgd',
+    "banks": [
+      {
+        "Account holder": 'BRAVO Tech Trading',
+        "Bank Name": 'OCBC Bank',
+        "Account Number": '704-128-335-7',
+      }
+    ]
+  }
+];

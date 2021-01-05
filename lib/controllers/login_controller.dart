@@ -56,7 +56,6 @@ class LoginController extends GetxController {
         var userToken = userData.token.split('\n')[0];
         print(userToken);
         String decoded = stringToBase64.decode(userToken);
-        // String decoded = stringToBase64.decode(userData.token);
         // String decoded = '89c36ca76662b371:6157bd6085f83466f4a5f7386d0f';
         var decodedStrArr = decoded.split(':');
         print(decodedStrArr);

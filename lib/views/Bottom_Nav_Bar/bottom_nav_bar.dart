@@ -75,7 +75,7 @@
 //     });
 //   }
 // }
-
+import 'dart:async';
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -83,9 +83,7 @@ import 'package:crypto_template/views/Bottom_Nav_Bar/custom_nav_bar.dart';
 import 'package:crypto_template/views/home/home.dart';
 import 'package:crypto_template/views/market/markets.dart';
 import 'package:crypto_template/views/news/news_home.dart';
-import 'package:crypto_template/views/setting/setting.dart';
 import 'package:crypto_template/views/wallet/wallets.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class BottomNavBar extends StatelessWidget {
   final HomeController homeController = Get.put(new HomeController());
@@ -97,25 +95,33 @@ class BottomNavBar extends StatelessWidget {
   //   news(),
   //   setting(),
   // ];
-  Widget callPage(int current) {
-    switch (current) {
-      case 0:
-        return new Home();
-        break;
-      case 1:
-        return new market();
-        break;
-      case 2:
-        return new news();
-        break;
-      case 3:
-        return new news();
-        break;
-      case 4:
-        return new Wallets();
-        break;
-      default:
-        return new Home();
+
+  Widget callPage(int current, bool hasConnection) {
+    if (hasConnection) {
+      switch (current) {
+        case 0:
+          return RefreshIndicator(
+              onRefresh: homeController.refreshHomePage, child: new Home());
+          break;
+        case 1:
+          return new Market();
+          break;
+        case 2:
+          return new News();
+          break;
+        case 3:
+          return new News();
+          break;
+        case 4:
+          return RefreshIndicator(
+              onRefresh: homeController.refreshWalletsPage,
+              child: new Wallets());
+          break;
+        default:
+          return new Home();
+      }
+    } else {
+      return Text('No internet connection');
     }
   }
 
@@ -124,7 +130,8 @@ class BottomNavBar extends StatelessWidget {
     return Scaffold(
       body: Obx(
         () => Center(
-          child: callPage(homeController.selectedNavIndex),
+          child: callPage(
+              homeController.selectedNavIndex, homeController.hasConnection),
           // child: bodyContent.elementAt(homeController.selectedNavIndex),
         ),
       ),

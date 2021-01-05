@@ -74,14 +74,19 @@ void main() {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  runApp(
-    GetMaterialApp(
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
       title: 'B4U App',
       debugShowCheckedModeBanner: false,
       defaultTransition: Transition.rightToLeft,
       getPages: RouterFile.Router.route,
       initialRoute: '/splash',
       theme: Themes.lightTheme,
-    ),
-  );
+    );
+  }
 }

@@ -5,10 +5,15 @@ import 'package:crypto_template/models/user.dart';
 import 'package:crypto_template/repository/user_repository.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:crypto_template/controllers/MarketController.dart';
+import 'package:crypto_template/controllers/wallet_controller.dart';
 // import 'package:get_mac/get_mac.dart';
 import 'package:flutter/services.dart';
+import 'package:connectivity/connectivity.dart';
 
 class HomeController extends GetxController {
+  final _hasConnection = true.obs;
+  final _previousConnection = false.obs;
   final _isLoggedIn = false.obs;
   final _selectedNavIndex = 0.obs;
   var marketList = List<Market>().obs;
@@ -18,6 +23,22 @@ class HomeController extends GetxController {
   var authSecret = 'unknown'.obs;
   ErrorController errorController = new ErrorController();
 
+  bool isChanged = false;
+  Connectivity connectivity;
+  StreamSubscription<ConnectivityResult> subscription;
+
+  get selectedNavIndex => this._selectedNavIndex.value;
+  set selectedNavIndex(index) => this._selectedNavIndex.value = index;
+
+  get isLoggedIn => this._isLoggedIn.value;
+  set isLoggedIn(value) => this._isLoggedIn.value = value;
+
+  get hasConnection => this._hasConnection.value;
+  set hasConnection(value) => this._hasConnection.value = value;
+
+  get previousConnection => this._previousConnection.value;
+  set previousConnection(value) => this._previousConnection.value = value;
+
   @override
   void onInit() async {
     // fetchMacAddress();
@@ -26,13 +47,24 @@ class HomeController extends GetxController {
       fetchUser();
     }
     super.onInit();
+
+    connectivity = new Connectivity();
+    subscription = connectivity.onConnectivityChanged.listen(_connectionChange);
   }
 
-  get selectedNavIndex => this._selectedNavIndex.value;
-  set selectedNavIndex(index) => this._selectedNavIndex.value = index;
-
-  get isLoggedIn => this._isLoggedIn.value;
-  set isLoggedIn(value) => this._isLoggedIn.value = value;
+  void _connectionChange(ConnectivityResult result) {
+    print('change');
+    previousConnection = hasConnection;
+    if (result == ConnectivityResult.wifi ||
+        result == ConnectivityResult.mobile) {
+      hasConnection = true;
+    } else {
+      hasConnection = false;
+    }
+    if (!previousConnection) {
+      refreshHomePage();
+    }
+  }
 
   // void fetchMacAddress() async {
   //   try {
@@ -52,6 +84,21 @@ class HomeController extends GetxController {
     return isLoggedIn;
   }
 
+  Future<Null> refreshHomePage() async {
+    // await Future.delayed(Duration(seconds: 2));
+    MarketController marketController = Get.find<MarketController>();
+    marketController.fetchMarkets();
+    if (isLoggedIn) {
+      fetchUser();
+    }
+  }
+
+  Future<Null> refreshWalletsPage() async {
+    // await Future.delayed(Duration(seconds: 2));
+    WalletController walletController = Get.find<WalletController>();
+    walletController.fetchWallets();
+  }
+
   void fetchUser() async {
     try {
       UserRepository _userRepository = new UserRepository();
@@ -65,5 +112,6 @@ class HomeController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+    subscription.cancel();
   }
 }

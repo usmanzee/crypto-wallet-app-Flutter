@@ -121,7 +121,9 @@ class Setting extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        homeController.user.value.email,
+                                        homeController.user.value.email != null
+                                            ? homeController.user.value.email
+                                            : '---',
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w300,
@@ -130,7 +132,10 @@ class Setting extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        'ID: ' + homeController.user.value.uid,
+                                        homeController.user.value.uid != null
+                                            ? 'ID: ' +
+                                                homeController.user.value.uid
+                                            : '---',
                                         style: TextStyle(
                                           color: Theme.of(context)
                                               .hintColor

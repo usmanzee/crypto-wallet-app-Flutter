@@ -18,16 +18,15 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).canvasColor,
-        elevation: 0.0,
-        // automaticallyImplyLeading: true,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        elevation: 1.0,
+        iconTheme: IconThemeData(
+            color: Theme.of(context).textSelectionColor.withOpacity(0.6)),
         title: Row(
           children: [
             IconButton(
               icon: Icon(Icons.account_circle),
-              color: Theme.of(context).hintColor,
               tooltip: 'Profile settings',
               onPressed: () {
                 Get.to(Setting());
@@ -36,9 +35,10 @@ class Home extends StatelessWidget {
             Spacer(flex: 1),
             IconButton(
               icon: Icon(Icons.notifications_none),
-              color: Theme.of(context).hintColor,
               tooltip: 'Notification',
-              onPressed: () {},
+              onPressed: () {
+                Get.to(Setting());
+              },
             ),
           ],
         ),
@@ -49,28 +49,28 @@ class Home extends StatelessWidget {
             // /
             // / Header image slider
             // /
-            SizedBox(
-                height: 100.0,
-                width: double.infinity,
-                child: new Carousel(
-                  boxFit: BoxFit.cover,
-                  dotColor: Colors.white.withOpacity(0.8),
-                  dotSize: 5.5,
-                  dotSpacing: 16.0,
-                  dotBgColor: Colors.transparent,
-                  showIndicator: true,
-                  // overlayShadow: true,
-                  // overlayShadowColors: Theme.of(context)
-                  //     .scaffoldBackgroundColor
-                  //     .withOpacity(0.9),
-                  // overlayShadowSize: 0.25,
-                  images: [
-                    AssetImage("assets/image/banner/banner2.png"),
-                    AssetImage("assets/image/banner/banner3.jpg"),
-                    AssetImage("assets/image/banner/banner2.png"),
-                    AssetImage("assets/image/banner/banner3.jpg"),
-                  ],
-                )),
+            // SizedBox(
+            //     height: 100.0,
+            //     width: double.infinity,
+            //     child: new Carousel(
+            //       boxFit: BoxFit.cover,
+            //       dotColor: Colors.white.withOpacity(0.8),
+            //       dotSize: 5.5,
+            //       dotSpacing: 16.0,
+            //       dotBgColor: Colors.transparent,
+            //       showIndicator: true,
+            //       // overlayShadow: true,
+            //       // overlayShadowColors: Theme.of(context)
+            //       //     .scaffoldBackgroundColor
+            //       //     .withOpacity(0.9),
+            //       // overlayShadowSize: 0.25,
+            //       images: [
+            //         AssetImage("assets/image/banner/banner2.png"),
+            //         AssetImage("assets/image/banner/banner3.jpg"),
+            //         AssetImage("assets/image/banner/banner2.png"),
+            //         AssetImage("assets/image/banner/banner3.jpg"),
+            //       ],
+            //     )),
             SizedBox(height: 10.0),
 
             Obx(() {

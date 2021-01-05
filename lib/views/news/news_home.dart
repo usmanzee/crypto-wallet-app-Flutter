@@ -8,15 +8,15 @@ import 'package:crypto_template/screen/news/news_list_detail/news_list_detail.da
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class news extends StatefulWidget {
+class News extends StatefulWidget {
   final Widget child;
 
-  news({Key key, this.child}) : super(key: key);
+  News({Key key, this.child}) : super(key: key);
 
-  _newsState createState() => _newsState();
+  _NewsState createState() => _NewsState();
 }
 
-class _newsState extends State<news> {
+class _NewsState extends State<News> {
   ///
   /// Get image data dummy from firebase server
   ///
@@ -30,6 +30,7 @@ class _newsState extends State<news> {
 
   @override
   void initState() {
+    print('hello news');
     Timer(Duration(seconds: 3), () {
       setState(() {
         loadImage = false;
