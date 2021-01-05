@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:crypto_template/controllers/HomeController.dart';
+import 'package:crypto_template/models/Beneficiary.dart';
 import 'package:crypto_template/models/DepositAddress.dart';
 import 'package:crypto_template/models/fiat_deposit_details.dart';
 import 'package:crypto_template/models/withdraw_history.dart';
@@ -56,5 +57,11 @@ class WalletRepository {
     apiProvider = new ApiProvider();
     final response = await apiProvider.get('public_data/bank_details.json');
     return fiatDepositDetailsFromJson(response);
+  }
+
+  Future<List<Beneficiary>> fetchBeneficiaries() async {
+    apiProvider = new ApiProvider();
+    final response = await apiProvider.get('peatio/account/beneficiaries');
+    return beneficiaryFromJson(response);
   }
 }

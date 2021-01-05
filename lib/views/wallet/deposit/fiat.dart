@@ -24,17 +24,25 @@ class _DepositFiatState extends State<DepositFiat> {
   FiatDepositController depositController;
 
   var depositDetails;
+  var loading = true;
 
   Future<void> getDepositDetails() async {
     try {
+      setState(() {
+        loading = true;
+      });
       var response =
-          await get('http://10.121.121.113:3000/public_data/bank_details.json');
+          await get('http://10.121.121.203:3000/public_data/bank_details.json');
       var data = jsonDecode(response.body);
-      print(data);
+      // print(data);
       setState(() {
         depositDetails = data;
+        loading = false;
       });
     } catch (e) {
+      setState(() {
+        loading = false;
+      });
       print('caught error: $e');
     }
   }
@@ -52,16 +60,16 @@ class _DepositFiatState extends State<DepositFiat> {
   void initState() {
     depositController =
         Get.put(FiatDepositController(currency: wallet.currency));
-    // getDepositDetails();
+    getDepositDetails();
     print('widget init');
-    var allbanks = bankCurrencies[0]['banks'];
-    for (var bank in allbanks) {
-      var data = bank as Map;
-      for (var item in data.keys) {
-        final value = data[item];
-        print('$item , $value');
-      }
-    }
+    // var allbanks = depositDetails[0]['banks'];
+    // for (var bank in allbanks) {
+    //   var data = bank as Map;
+    //   for (var item in data.keys) {
+    //     final value = data[item];
+    //     print('$item , $value');
+    //   }
+    // }
     super.initState();
   }
 
@@ -75,323 +83,522 @@ class _DepositFiatState extends State<DepositFiat> {
           wallet: wallet,
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 16.0,
-            ),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.only(
-                  left: 8.0, right: 8.0, top: 16.0, bottom: 8.0),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0))),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      body: Column(children: [
+        Flexible(
+          child: Container(
+              // height: 500,
+              padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
+              child: ListView(
                 children: <Widget>[
-                  Text(
-                    'Deposit using bank transfer',
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
                   SizedBox(
-                    height: 8.0,
+                    height: 16.0,
                   ),
-                  Text(
-                      'Please use the following credentials to initiate your bank transfer. Your deposit will be reflected in your account in minimum 2 hours.',
-                      style: Theme.of(context).textTheme.bodyText2),
-                  SizedBox(
-                    height: 8.0,
-                  ),
-                  Container(
-                    width: double.infinity,
+                  Padding(
                     padding: const EdgeInsets.only(
-                        left: 8.0, right: 8.0, top: 8.0, bottom: 8.0),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            color:
-                                Theme.of(context).hintColor.withOpacity(0.9)),
-                        borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                        left: 8.0, right: 8.0, top: 16.0, bottom: 8.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
+                        Text(
+                          'Deposit using bank transfer',
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        SizedBox(
+                          height: 8.0,
+                        ),
+                        Text(
+                            'Please use the following credentials to initiate your bank transfer. Your deposit will be reflected in your account in minimum 2 hours.',
+                            style: Theme.of(context).textTheme.bodyText2),
+                        SizedBox(
+                          height: 8.0,
+                        ),
                         Container(
                           width: double.infinity,
+                          padding: const EdgeInsets.only(
+                              left: 8.0, right: 8.0, top: 8.0, bottom: 8.0),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Theme.of(context)
+                                      .hintColor
+                                      .withOpacity(0.9)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0))),
                           child: Column(
-                            children: [
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                width: double.infinity,
+                                child: Column(
                                   children: [
-                                    Icon(
-                                      Icons.emoji_objects,
-                                      size: 15.0,
-                                      color: Theme.of(context).errorColor,
-                                    ),
-                                    Flexible(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(left: 8.0),
-                                        child: Text(
-                                          'PLEASE USE THE BELOW REFERENCE CODE IN YOUR PAYMENT REFERENCE.',
-                                          style: TextStyle(
+                                    Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Icon(
+                                            Icons.emoji_objects,
+                                            size: 15.0,
                                             color: Theme.of(context).errorColor,
-                                            fontSize: 10,
-                                            fontFamily: "Popins",
+                                          ),
+                                          Flexible(
+                                            child: Padding(
+                                              padding:
+                                                  EdgeInsets.only(left: 8.0),
+                                              child: Text(
+                                                'PLEASE USE THE BELOW REFERENCE CODE IN YOUR PAYMENT REFERENCE.',
+                                                style: TextStyle(
+                                                  color: Theme.of(context)
+                                                      .errorColor,
+                                                  fontSize: 10,
+                                                  fontFamily: "Popins",
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ]),
+                                    SizedBox(
+                                      height: 8.0,
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        Text(
+                                          "Reference code",
+                                          style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .hintColor
+                                                  .withOpacity(0.5),
+                                              fontFamily: "Popins",
+                                              fontSize: 15.5),
+                                        ),
+                                        Spacer(
+                                          flex: 1,
+                                        ),
+                                        Text(
+                                          'ID0D2741FBCA',
+                                          style:
+                                              TextStyle(fontFamily: "Popins"),
+                                        ),
+                                        Container(
+                                          padding: const EdgeInsets.all(0.0),
+                                          width: 30.0,
+                                          child: IconButton(
+                                            icon: Icon(Icons.content_copy),
+                                            tooltip: 'Copy Referance Id',
+                                            onPressed: () {
+                                              _copyToClipboard('ID0D2741FBCA');
+                                            },
                                           ),
                                         ),
-                                      ),
+                                      ],
                                     ),
-                                  ]),
-                              SizedBox(
-                                height: 8.0,
-                              ),
-                              Row(
-                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Text(
-                                    "Reference code",
-                                    style: TextStyle(
-                                        color: Theme.of(context)
-                                            .hintColor
-                                            .withOpacity(0.5),
-                                        fontFamily: "Popins",
-                                        fontSize: 15.5),
-                                  ),
-                                  Spacer(
-                                    flex: 1,
-                                  ),
-                                  Text(
-                                    'ID0D2741FBCA',
-                                    style: TextStyle(fontFamily: "Popins"),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.all(0.0),
-                                    width: 30.0,
-                                    child: IconButton(
-                                      icon: Icon(Icons.content_copy),
-                                      tooltip: 'Copy Referance Id',
-                                      onPressed: () {
-                                        _copyToClipboard('ID0D2741FBCA');
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                  ],
+                                ),
+                              )
                             ],
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
+                  if (!loading)
+                    Column(
+                      children: depositDetails.map<Widget>((depositDetail) {
+                        if (depositDetail['title'] == wallet.currency) {
+                          return Container(
+                            height: 650.0,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Expanded(
+                                  child: DefaultTabController(
+                                    length: depositDetail['banks'].length,
+                                    child: Scaffold(
+                                      appBar: PreferredSize(
+                                        preferredSize: Size.fromHeight(
+                                            40.0), // here the desired height
+                                        child: AppBar(
+                                          backgroundColor:
+                                              Theme.of(context).canvasColor,
+                                          elevation: 2,
+                                          centerTitle: true,
+                                          flexibleSpace: SafeArea(
+                                            child: Container(
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 50.0),
+                                                child: new TabBar(
+                                                  indicatorColor:
+                                                      Theme.of(context)
+                                                          .primaryColor,
+                                                  labelColor: Theme.of(context)
+                                                      .primaryColor,
+                                                  unselectedLabelColor:
+                                                      Theme.of(context)
+                                                          .textSelectionColor,
+                                                  indicatorSize:
+                                                      TabBarIndicatorSize.label,
+                                                  tabs: depositDetail['banks']
+                                                      .map<Widget>((bank) {
+                                                    var index =
+                                                        depositDetail['banks']
+                                                                .indexOf(bank) +
+                                                            1;
+                                                    return Tab(
+                                                      child:
+                                                          Text('Bank $index'),
+                                                    );
+                                                  }).toList(),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          automaticallyImplyLeading: false,
+                                        ),
+                                      ),
+                                      body: Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 10.0),
+                                        child: new TabBarView(
+                                          children: depositDetail['banks']
+                                              .map<Widget>((bank) {
+                                            return Column(
+                                                children: bank.keys
+                                                    .map<Widget>((item) {
+                                              return Card(
+                                                child: ListTile(
+                                                  title: Text(item.toString()),
+                                                  subtitle: Text(
+                                                      bank[item].toString()),
+                                                  trailing: Container(
+                                                    width: 30.0,
+                                                    padding: EdgeInsets.all(0),
+                                                    child: IconButton(
+                                                      icon: Icon(
+                                                        Icons.content_copy,
+                                                        size: 20.0,
+                                                        color:
+                                                            Colors.brown[900],
+                                                      ),
+                                                      onPressed: () {
+                                                        _copyToClipboard(
+                                                            bank[item]
+                                                                .toString());
+                                                      },
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            }).toList());
+                                          }).toList(),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return Container();
+                        }
+                      }).toList(),
+                    ),
                 ],
-              ),
-            ),
-            SizedBox(
-              height: 8.0,
-            ),
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                color: Theme.of(context).canvasColor,
-                // borderRadius: BorderRadius.all(Radius.circular(10.0))
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(left: 8),
-                    child: Text('Bank Details',
-                        style: Theme.of(context).textTheme.headline6),
-                  ),
-                  SizedBox(
-                    height: 8.0,
-                  ),
-
-                  Column(
-                    // padding: EdgeInsets.all(12.0),
-                    children: bankCurrencies.map<Widget>((depositDetail) {
-                      if (depositDetail['title'] == wallet.currency) {
-                        return Column(
-
-                            // children: depositDetail['banks'].map<Widget>((bank) {
-                            //   print(bank);
-                            //   return Text('abc');
-                            //   // return Card(
-                            //   //   child: ListTile(
-                            //   //     title: Text('Bank Name'),
-                            //   //     subtitle: Text('TransferWise'),
-                            //   //     trailing: Container(
-                            //   //       width: 30.0,
-                            //   //       padding: EdgeInsets.all(0),
-                            //   //       child: IconButton(
-                            //   //         icon: Icon(
-                            //   //           Icons.content_copy,
-                            //   //           size: 20.0,
-                            //   //           color: Colors.brown[900],
-                            //   //         ),
-                            //   //         onPressed: () {
-                            //   //           _copyToClipboard('TransferWise');
-                            //   //         },
-                            //   //       ),
-                            //   //     ),
-                            //   //   ),
-                            //   // );
-                            // }).toList(),
-                            );
-                      } else {
-                        return Container();
-                      }
-                    }).toList(),
-                  ),
-
-                  // Obx(() {
-                  //   if (depositController.isDepositDetailLoading.value) {
-                  //     return Text('Loading...');
-                  //   } else {
-                  //     return Column(
-                  //       // padding: EdgeInsets.all(12.0),
-                  //       children: depositController.depositDetails
-                  //           .map((depositDetail) {
-                  //         if (depositDetail.title == wallet.currency) {
-                  //           return Column(
-                  //             // padding: EdgeInsets.all(12.0),
-                  //             children: depositDetail.banks.map((bank) {
-                  //               print(bank.accountHolder);
-                  //               return Card(
-                  //                 child: ListTile(
-                  //                   title: Text('Bank Name'),
-                  //                   subtitle: Text('TransferWise'),
-                  //                   trailing: Container(
-                  //                     width: 30.0,
-                  //                     padding: EdgeInsets.all(0),
-                  //                     child: IconButton(
-                  //                       icon: Icon(
-                  //                         Icons.content_copy,
-                  //                         size: 20.0,
-                  //                         color: Colors.brown[900],
-                  //                       ),
-                  //                       onPressed: () {
-                  //                         _copyToClipboard('TransferWise');
-                  //                       },
-                  //                     ),
-                  //                   ),
-                  //                 ),
-                  //               );
-                  //             }).toList(),
-                  //           );
-                  //           // return Card(
-                  //           //   child: InkWell(
-                  //           //     onTap: () {},
-                  //           //     child: ListTile(
-                  //           //       title: Text('Title'),
-                  //           //     ),
-                  //           //   ),
-                  //           // );
-                  //         } else {
-                  //           return Container();
-                  //           // return Card(
-                  //           //   child: InkWell(
-                  //           //     onTap: () {},
-                  //           //     child: ListTile(
-                  //           //       title: Text('Empty'),
-                  //           //     ),
-                  //           //   ),
-                  //           // );
-                  //         }
-                  //       }).toList(),
-                  //     );
-                  //   }
-                  // }),
-                  Card(
-                    child: ListTile(
-                      title: Text('Bank Name'),
-                      subtitle: Text('TransferWise'),
-                      trailing: Container(
-                        width: 30.0,
-                        padding: EdgeInsets.all(0),
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.content_copy,
-                            size: 20.0,
-                            color: Colors.brown[900],
-                          ),
-                          onPressed: () {
-                            _copyToClipboard('TransferWise');
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                  Card(
-                    child: ListTile(
-                      title: Text('Account Holder'),
-                      subtitle: Text('B4U Group of Companies, S.L.'),
-                      trailing: Container(
-                        width: 30.0,
-                        padding: EdgeInsets.all(0),
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.content_copy,
-                            size: 20.0,
-                            color: Colors.brown[900],
-                          ),
-                          onPressed: () {
-                            _copyToClipboard('TransferWise');
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                  Card(
-                    child: ListTile(
-                      title: Text('Ach Routing Number'),
-                      subtitle: Text('026073150'),
-                      trailing: Container(
-                        width: 30.0,
-                        padding: EdgeInsets.all(0),
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.content_copy,
-                            size: 20.0,
-                            color: Colors.brown[900],
-                          ),
-                          onPressed: () {
-                            _copyToClipboard('TransferWise');
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                  Card(
-                    child: ListTile(
-                      title: Text('Address'),
-                      subtitle: Text(
-                          'TransferWise 19 W 24th Street New York NY 10010 United States'),
-                      trailing: Container(
-                        width: 30.0,
-                        padding: EdgeInsets.all(0),
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.content_copy,
-                            size: 20.0,
-                            color: Colors.brown[900],
-                          ),
-                          onPressed: () {
-                            _copyToClipboard('TransferWise');
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 16.0,
-            )
-          ],
+              )),
         ),
-      ),
+        // children: <Widget>[
+        //   SizedBox(
+        //     height: 16.0,
+        //   ),
+        //   Padding(
+        //     padding: const EdgeInsets.only(
+        //         left: 8.0, right: 8.0, top: 16.0, bottom: 8.0),
+        //     child: Column(
+        //       crossAxisAlignment: CrossAxisAlignment.start,
+        //       children: <Widget>[
+        //         Text(
+        //           'Deposit using bank transfer',
+        //           style: Theme.of(context).textTheme.headline6,
+        //         ),
+        //         SizedBox(
+        //           height: 8.0,
+        //         ),
+        //         Text(
+        //             'Please use the following credentials to initiate your bank transfer. Your deposit will be reflected in your account in minimum 2 hours.',
+        //             style: Theme.of(context).textTheme.bodyText2),
+        //         SizedBox(
+        //           height: 8.0,
+        //         ),
+        //         Container(
+        //           width: double.infinity,
+        //           padding: const EdgeInsets.only(
+        //               left: 8.0, right: 8.0, top: 8.0, bottom: 8.0),
+        //           decoration: BoxDecoration(
+        //               border: Border.all(
+        //                   color: Theme.of(context).hintColor.withOpacity(0.9)),
+        //               borderRadius: BorderRadius.all(Radius.circular(5.0))),
+        //           child: Column(
+        //             crossAxisAlignment: CrossAxisAlignment.start,
+        //             children: <Widget>[
+        //               Container(
+        //                 width: double.infinity,
+        //                 child: Column(
+        //                   children: [
+        //                     Row(
+        //                         mainAxisAlignment: MainAxisAlignment.start,
+        //                         children: [
+        //                           Icon(
+        //                             Icons.emoji_objects,
+        //                             size: 15.0,
+        //                             color: Theme.of(context).errorColor,
+        //                           ),
+        //                           Flexible(
+        //                             child: Padding(
+        //                               padding: EdgeInsets.only(left: 8.0),
+        //                               child: Text(
+        //                                 'PLEASE USE THE BELOW REFERENCE CODE IN YOUR PAYMENT REFERENCE.',
+        //                                 style: TextStyle(
+        //                                   color: Theme.of(context).errorColor,
+        //                                   fontSize: 10,
+        //                                   fontFamily: "Popins",
+        //                                 ),
+        //                               ),
+        //                             ),
+        //                           ),
+        //                         ]),
+        //                     SizedBox(
+        //                       height: 8.0,
+        //                     ),
+        //                     Row(
+        //                       children: <Widget>[
+        //                         Text(
+        //                           "Reference code",
+        //                           style: TextStyle(
+        //                               color: Theme.of(context)
+        //                                   .hintColor
+        //                                   .withOpacity(0.5),
+        //                               fontFamily: "Popins",
+        //                               fontSize: 15.5),
+        //                         ),
+        //                         Spacer(
+        //                           flex: 1,
+        //                         ),
+        //                         Text(
+        //                           'ID0D2741FBCA',
+        //                           style: TextStyle(fontFamily: "Popins"),
+        //                         ),
+        //                         Container(
+        //                           padding: const EdgeInsets.all(0.0),
+        //                           width: 30.0,
+        //                           child: IconButton(
+        //                             icon: Icon(Icons.content_copy),
+        //                             tooltip: 'Copy Referance Id',
+        //                             onPressed: () {
+        //                               _copyToClipboard('ID0D2741FBCA');
+        //                             },
+        //                           ),
+        //                         ),
+        //                       ],
+        //                     ),
+        //                   ],
+        //                 ),
+        //               )
+        //             ],
+        //           ),
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        //   SizedBox(
+        //     height: 8.0,
+        //   ),
+        //   Container(
+        //     width: double.infinity,
+        //     height: 470.0,
+        //     padding: EdgeInsets.all(8.0),
+        //     decoration: BoxDecoration(
+        //       color: Theme.of(context).canvasColor,
+        //       // borderRadius: BorderRadius.all(Radius.circular(10.0))
+        //     ),
+        //     child: Column(
+        //       crossAxisAlignment: CrossAxisAlignment.start,
+        //       children: <Widget>[
+        //         Padding(
+        //           padding: EdgeInsets.only(left: 8),
+        //           child: Text('Bank Details',
+        //               style: Theme.of(context).textTheme.headline6),
+        //         ),
+        //         SizedBox(
+        //           height: 8.0,
+        //         ),
+
+        //         DefaultTabController(
+        //           length: 3,
+        //           child: Scaffold(
+        //             appBar: AppBar(
+        //               bottom: TabBar(
+        //                 tabs: [
+        //                   Tab(icon: Icon(Icons.directions_car)),
+        //                   Tab(icon: Icon(Icons.directions_transit)),
+        //                   Tab(icon: Icon(Icons.directions_bike)),
+        //                 ],
+        //               ),
+        //               title: Text('Tabs Demo'),
+        //             ),
+        //             body: TabBarView(
+        //               children: [
+        //                 Icon(Icons.directions_car),
+        //                 Icon(Icons.directions_transit),
+        //                 Icon(Icons.directions_bike),
+        //               ],
+        //             ),
+        //           ),
+        //         ),
+
+        // Column(
+        //   children: depositDetails.map<Widget>((depositDetail) {
+        //     if (depositDetail['title'] == wallet.currency) {
+        //       return DefaultTabController(
+        //         length: 2,
+        //         child: Scaffold(
+        //           appBar: PreferredSize(
+        //             preferredSize: Size.fromHeight(40.0),
+        //             child: AppBar(
+        //               bottom: TabBar(
+        //                 tabs: depositDetail['banks']
+        //                     .map<Widget>((bank) {
+        //                   return Tab(
+        //                     child: Text('Tab'),
+        //                   );
+        //                 }).toList(),
+        //               ),
+        //               title: Text('Tabs Demo'),
+        //             ),
+        //           ),
+        //           body: TabBarView(
+        //             children:
+        //                 depositDetail['banks'].map<Widget>((bank) {
+        //               return Column(
+        //                   children: bank.keys.map<Widget>((item) {
+        //                 return Card(
+        //                   child: ListTile(
+        //                     title: Text(item.toString()),
+        //                     subtitle: Text(bank[item].toString()),
+        //                     trailing: Container(
+        //                       width: 30.0,
+        //                       padding: EdgeInsets.all(0),
+        //                       child: IconButton(
+        //                         icon: Icon(
+        //                           Icons.content_copy,
+        //                           size: 20.0,
+        //                           color: Colors.brown[900],
+        //                         ),
+        //                         onPressed: () {
+        //                           _copyToClipboard('TransferWise');
+        //                         },
+        //                       ),
+        //                     ),
+        //                   ),
+        //                 );
+        //               }).toList());
+        //             }).toList(),
+        //           ),
+        //         ),
+        //       );
+        //     } else {
+        //       return Container();
+        //     }
+        //   }).toList(),
+        // ),
+        // Card(
+        //   child: ListTile(
+        //     title: Text('Bank Name'),
+        //     subtitle: Text('TransferWise'),
+        //     trailing: Container(
+        //       width: 30.0,
+        //       padding: EdgeInsets.all(0),
+        //       child: IconButton(
+        //         icon: Icon(
+        //           Icons.content_copy,
+        //           size: 20.0,
+        //           color: Colors.brown[900],
+        //         ),
+        //         onPressed: () {
+        //           _copyToClipboard('TransferWise');
+        //         },
+        //       ),
+        //     ),
+        //   ),
+        // ),
+        // Card(
+        //   child: ListTile(
+        //     title: Text('Account Holder'),
+        //     subtitle: Text('B4U Group of Companies, S.L.'),
+        //     trailing: Container(
+        //       width: 30.0,
+        //       padding: EdgeInsets.all(0),
+        //       child: IconButton(
+        //         icon: Icon(
+        //           Icons.content_copy,
+        //           size: 20.0,
+        //           color: Colors.brown[900],
+        //         ),
+        //         onPressed: () {
+        //           _copyToClipboard('TransferWise');
+        //         },
+        //       ),
+        //     ),
+        //   ),
+        // ),
+        // Card(
+        //   child: ListTile(
+        //     title: Text('Ach Routing Number'),
+        //     subtitle: Text('026073150'),
+        //     trailing: Container(
+        //       width: 30.0,
+        //       padding: EdgeInsets.all(0),
+        //       child: IconButton(
+        //         icon: Icon(
+        //           Icons.content_copy,
+        //           size: 20.0,
+        //           color: Colors.brown[900],
+        //         ),
+        //         onPressed: () {
+        //           _copyToClipboard('TransferWise');
+        //         },
+        //       ),
+        //     ),
+        //   ),
+        // ),
+        // Card(
+        //   child: ListTile(
+        //     title: Text('Address'),
+        //     subtitle: Text(
+        //         'TransferWise 19 W 24th Street New York NY 10010 United States'),
+        //     trailing: Container(
+        //       width: 30.0,
+        //       padding: EdgeInsets.all(0),
+        //       child: IconButton(
+        //         icon: Icon(
+        //           Icons.content_copy,
+        //           size: 20.0,
+        //           color: Colors.brown[900],
+        //         ),
+        //         onPressed: () {
+        //           _copyToClipboard('TransferWise');
+        //         },
+        //       ),
+        //     ),
+        //   ),
+        // ),
+        //       ],
+        //     ),
+        //   ),
+        //   SizedBox(
+        //     height: 16.0,
+        //   )
+        // ],
+      ]),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:crypto_template/controllers/fiat_withdraw_controller.dart';
 import 'package:crypto_template/views/wallet/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/models/wallet.dart' as WalletClass;
@@ -5,33 +6,27 @@ import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 import 'package:crypto_template/component/custom_button.dart';
 import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/controllers/crypto_withdraw_controller.dart';
 import 'package:crypto_template/views/security/enable_otp.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
-class WithdrawCrypto extends StatefulWidget {
+class WithdrawFiat extends StatefulWidget {
   final WalletClass.Wallet wallet;
-  WithdrawCrypto({Key key, this.wallet}) : super(key: key);
+  WithdrawFiat({Key key, this.wallet}) : super(key: key);
 
   @override
-  _WithdrawCryptoState createState() => _WithdrawCryptoState(wallet: wallet);
+  _WithdrawFiatState createState() => _WithdrawFiatState(wallet: wallet);
 }
 
-class _WithdrawCryptoState extends State<WithdrawCrypto> {
+class _WithdrawFiatState extends State<WithdrawFiat> {
   final WalletClass.Wallet wallet;
-  _WithdrawCryptoState({this.wallet});
+  _WithdrawFiatState({this.wallet});
+
+  String dropdownValue = 'One';
 
   final HomeController homeController = Get.find();
-  CryptoWithdrawController withdrawController;
+  FiatWithdrawController withdrawController;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  final _withDrawAddressValidator = MultiValidator([
-    RequiredValidator(errorText: 'Withdrawl Address is required'),
-  ]);
-  final _withDrawTagValidator = MultiValidator([
-    RequiredValidator(errorText: 'Withdrawl Tag is required'),
-  ]);
 
   final _twoFAValidator = MultiValidator([
     RequiredValidator(errorText: '2FA code is required'),
@@ -51,7 +46,7 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
 
   @override
   void initState() {
-    withdrawController = Get.put(CryptoWithdrawController(wallet: wallet));
+    withdrawController = Get.put(FiatWithdrawController(wallet: wallet));
     print('widget init');
     super.initState();
   }
@@ -75,87 +70,62 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
                   key: _formKey,
                   child: Column(
                     children: <Widget>[
-                      // WalletAmountHeader(wallet: wallet),
-                      SizedBox(
-                        height: 16.0,
-                      ),
                       Container(
-                        // height: 355.0,
-                        // padding: EdgeInsets.fromLTRB(0.0, 24, 0.0, 24.0),
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            // color: Theme.of(context).canvasColor,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10.0))),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(
-                              "Withdrawal Address",
-                              style: TextStyle(
-                                color: Theme.of(context)
-                                    .hintColor
-                                    .withOpacity(0.7),
-                                fontFamily: "Popins",
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 16.0),
-                              child: TextFormField(
-                                controller: withdrawController
-                                    .withdrawAddressController,
-                                validator: _withDrawAddressValidator,
-                                obscureText: false,
-                                keyboardType: TextInputType.text,
-                                decoration: InputDecoration(
-                                    errorStyle: TextStyle(
-                                      fontSize: 13.5,
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CustomButton(
+                                    height: 30.0,
+                                    width: 40.0,
+                                    color: Theme.of(context).accentColor,
+                                    textColor: Colors.white,
+                                    label: 'Add Beneficiary',
+                                    onPressed: () {
+                                      // _onWithdrawFormSubmit();
+                                    },
+                                    splashColor: Theme.of(context)
+                                        .accentColor
+                                        .withOpacity(0.5),
+                                    disabled: false,
+                                  ),
+                                  DropdownButton<String>(
+                                    value: dropdownValue,
+                                    icon: Icon(Icons.arrow_downward),
+                                    iconSize: 24,
+                                    elevation: 16,
+                                    // style: TextStyle(color: Colors.deepPurple),
+                                    underline: Container(
+                                      height: 2,
+                                      // color: Colors.deepPurpleAccent,
                                     ),
-                                    errorMaxLines: 3,
-                                    filled: true,
-                                    fillColor: Colors.transparent,
-                                    labelText: 'Address',
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(5))),
-                              ),
-                            ),
-                            wallet.currency == 'xrp'
-                                ? Text(
-                                    "Withdrawal Tag",
-                                    style: TextStyle(
-                                      color: Theme.of(context)
-                                          .hintColor
-                                          .withOpacity(0.7),
-                                      fontFamily: "Popins",
-                                    ),
-                                  )
-                                : Container(width: 0, height: 0),
-                            wallet.currency == 'xrp'
-                                ? Padding(
-                                    padding:
-                                        const EdgeInsets.only(bottom: 16.0),
-                                    child: TextFormField(
-                                      controller: withdrawController
-                                          .withdrawTagController,
-                                      validator: _withDrawTagValidator,
-                                      obscureText: false,
-                                      keyboardType: TextInputType.text,
-                                      decoration: InputDecoration(
-                                          errorStyle: TextStyle(
-                                            fontSize: 13.5,
-                                          ),
-                                          errorMaxLines: 3,
-                                          filled: true,
-                                          fillColor: Colors.transparent,
-                                          labelText: 'Tag',
-                                          border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(5))),
-                                    ),
-                                  )
-                                : Container(width: 0, height: 0),
+                                    onChanged: (String newValue) {
+                                      setState(() {
+                                        dropdownValue = newValue;
+                                      });
+                                    },
+                                    items: <String>[
+                                      'One',
+                                      'Two',
+                                      'Free',
+                                      'Four'
+                                    ].map<DropdownMenuItem<String>>(
+                                        (String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ]),
                             Text(
                               "Withdrawal Amount",
                               style: TextStyle(
@@ -295,29 +265,9 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
                               decoration: BoxDecoration(
                                   color: Theme.of(context).hintColor),
                             ),
-                            SizedBox(
-                              height: 16.0,
-                            ),
-                            Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '* Do not withdraw directly to a crowdfund or ICO address, as your account will not be credited with tokens from such sales.',
-                                    style:
-                                        Theme.of(context).textTheme.bodyText2,
-                                  ),
-                                  SizedBox(height: 8.0),
-                                  Text(
-                                    '* When withdrawing to the B4U user\'s address, the handling fee will be returned to the Current Account by default.',
-                                    style:
-                                        Theme.of(context).textTheme.bodyText2,
-                                  ),
-                                ]),
                           ],
                         ),
                       ),
-
                       SizedBox(
                         height: 16.0,
                       ),

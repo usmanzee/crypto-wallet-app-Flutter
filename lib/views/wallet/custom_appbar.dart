@@ -12,7 +12,7 @@ class WalletCustomAppbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(
-        'Deposit',
+        title,
         style: TextStyle(
             color: Theme.of(context).textSelectionColor,
             fontFamily: "Gotik",

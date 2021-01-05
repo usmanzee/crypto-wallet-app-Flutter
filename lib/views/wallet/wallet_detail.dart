@@ -5,6 +5,7 @@ import 'package:crypto_template/screen/wallet/tabs/deposit.dart';
 import 'package:crypto_template/views/wallet/deposit/crypto.dart';
 import 'package:crypto_template/views/wallet/deposit/fiat.dart';
 import 'package:crypto_template/views/wallet/withdraw/crypto.dart';
+import 'package:crypto_template/views/wallet/withdraw/fiat.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/models/wallet.dart' as WalletClass;
 import 'package:get/get.dart';
@@ -257,9 +258,11 @@ class _WalletDetailState extends State<WalletDetail> {
                       highlightColor: Colors.black12,
                       color: Colors.redAccent.withOpacity(0.8),
                       onPressed: () {
-                        Get.to(WithdrawCrypto(
-                          wallet: wallet,
-                        ));
+                        if (wallet.type == 'coin') {
+                          Get.to(WithdrawCrypto(wallet: wallet));
+                        } else {
+                          Get.to(WithdrawFiat(wallet: wallet));
+                        }
                       },
                       child: Center(
                           child: Text(

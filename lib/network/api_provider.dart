@@ -9,9 +9,9 @@ import 'package:crypto/crypto.dart';
 import 'package:get/get.dart';
 
 class ApiProvider {
-  // final String _baseUrl = "http://10.121.121.113:9002/api/v2/";
+  final String _baseUrl = "http://10.121.121.203:9002/api/v2/";
   // final String _baseUrl = "http://www.app.local/api/v2/";
-  final String _baseUrl = "https://www.coinee.cf/api/v2/";
+  // final String _baseUrl = "https://www.coinee.cf/api/v2/";
   // final String _baseUrl = "https://ewallet.b4uwallet.com/api/v2/";
 
   dynamic headers;
@@ -143,13 +143,13 @@ dynamic _returnResponse(http.Response response) {
       throw BadRequestException(errorResponse);
     case 401:
       var errorResponse = makeErrorResponse(response);
-      throw BadRequestException(errorResponse);
-    case 422:
-      var errorResponse = makeErrorResponse(response);
-      throw BadRequestException(errorResponse);
+      throw UnauthorisedException(errorResponse);
     case 403:
       var errorResponse = makeErrorResponse(response);
       throw UnauthorisedException(errorResponse);
+    case 422:
+      var errorResponse = makeErrorResponse(response);
+      throw BadRequestException(errorResponse);
     case 500:
       var errorResponse = makeErrorResponse(response);
       throw UnauthorisedException(errorResponse);
