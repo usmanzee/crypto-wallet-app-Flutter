@@ -10,7 +10,7 @@ class Wallets extends StatelessWidget {
   final walletController = Get.put(WalletController());
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(
@@ -25,160 +25,163 @@ class Wallets extends StatelessWidget {
         elevation: 1.0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
-          child: Column(
-            children: <Widget>[
-              Obx(() {
-                if (walletController.isLoading.value) {
-                  return ExtimatedPriceLoadingAnimation(
-                    context: context,
-                  );
-                } else {
-                  return Container(
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    child: Column(
-                      children: [
-                        Text('Equity Value(BTC)',
-                            style: Theme.of(context).textTheme.bodyText1,
-                            textAlign: TextAlign.left),
-                        SizedBox(
-                          height: 4,
-                        ),
-                        Text('0.00000',
-                            style: Theme.of(context).textTheme.headline4,
-                            textAlign: TextAlign.left),
-                        Text('≈ \$00000',
-                            style: Theme.of(context).textTheme.bodyText2,
-                            textAlign: TextAlign.left),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            FlatButton(
-                              height: 32.0,
-                              minWidth: 120.0,
-                              textColor: Theme.of(context).accentColor,
-                              child: Text(
-                                "Deposit",
-                                style: TextStyle(fontSize: 12),
-                              ),
-                              onPressed: () {
-                                Get.to(WalletSearch(searchFrom: 'deposit'));
-                              },
-                              shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                      color: Theme.of(context).accentColor,
-                                      width: 1,
-                                      style: BorderStyle.solid),
-                                  borderRadius: BorderRadius.circular(5)),
-                              splashColor: Theme.of(context)
-                                  .accentColor
-                                  .withOpacity(0.5),
-                            ),
-                            SizedBox(
-                              width: 8.0,
-                            ),
-                            FlatButton(
-                              height: 32.0,
-                              minWidth: 120.0,
-                              textColor: Theme.of(context).accentColor,
-                              child: Text(
-                                "Withdraw",
-                                style: TextStyle(fontSize: 12),
-                              ),
-                              onPressed: () {
-                                Get.to(WalletSearch(searchFrom: 'withdraw'));
-                              },
-                              shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                      color: Theme.of(context).accentColor,
-                                      width: 1,
-                                      style: BorderStyle.solid),
-                                  borderRadius: BorderRadius.circular(5)),
-                              splashColor: Theme.of(context)
-                                  .accentColor
-                                  .withOpacity(0.5),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  );
-                }
-              }),
-              Container(
-                color: Theme.of(context).canvasColor,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 0.0, right: 0.0, top: 7.0, bottom: 7.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      resizeToAvoidBottomInset: false,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            width: double.infinity,
+            child: Stack(
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Column(
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(left: 12.0),
-                        child: Text(
-                          "Currency",
-                          style: TextStyle(
-                              color: Theme.of(context).hintColor,
-                              fontFamily: "Popins"),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 10.0),
-                        child: Text(
-                          "Amount",
-                          style: TextStyle(
-                              color: Theme.of(context).hintColor,
-                              fontFamily: "Popins"),
-                        ),
-                      ),
+                      Obx(() {
+                        if (walletController.isLoading.value) {
+                          return ExtimatedPriceLoadingAnimation(
+                            context: context,
+                          );
+                        } else {
+                          return Padding(
+                            padding: EdgeInsets.all(8),
+                            child: Column(
+                              children: [
+                                Text('Equity Value(BTC)',
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1,
+                                    textAlign: TextAlign.left),
+                                SizedBox(
+                                  height: 4,
+                                ),
+                                Text('0.00000',
+                                    style:
+                                        Theme.of(context).textTheme.headline4,
+                                    textAlign: TextAlign.left),
+                                Text('≈ \$00000',
+                                    style:
+                                        Theme.of(context).textTheme.bodyText2,
+                                    textAlign: TextAlign.left),
+                                SizedBox(
+                                  height: 4,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    FlatButton(
+                                      height: 32.0,
+                                      minWidth: 120.0,
+                                      textColor: Theme.of(context).accentColor,
+                                      child: Text(
+                                        "Deposit",
+                                        style: TextStyle(fontSize: 12),
+                                      ),
+                                      onPressed: () {
+                                        Get.to(WalletSearch(
+                                            searchFrom: 'deposit'));
+                                      },
+                                      shape: RoundedRectangleBorder(
+                                          side: BorderSide(
+                                              color:
+                                                  Theme.of(context).accentColor,
+                                              width: 1,
+                                              style: BorderStyle.solid),
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
+                                      splashColor: Theme.of(context)
+                                          .accentColor
+                                          .withOpacity(0.5),
+                                    ),
+                                    SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    FlatButton(
+                                      height: 32.0,
+                                      minWidth: 120.0,
+                                      textColor: Theme.of(context).accentColor,
+                                      child: Text(
+                                        "Withdraw",
+                                        style: TextStyle(fontSize: 12),
+                                      ),
+                                      onPressed: () {
+                                        Get.to(WalletSearch(
+                                            searchFrom: 'withdraw'));
+                                      },
+                                      shape: RoundedRectangleBorder(
+                                          side: BorderSide(
+                                              color:
+                                                  Theme.of(context).accentColor,
+                                              width: 1,
+                                              style: BorderStyle.solid),
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
+                                      splashColor: Theme.of(context)
+                                          .accentColor
+                                          .withOpacity(0.5),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          );
+                        }
+                      }),
                     ],
                   ),
                 ),
-              ),
-              Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Obx(() {
-                        if (walletController.isLoading.value)
-                          return WalletLoadingAnimation(context: context);
-                        // return Text('Loading...');
-                        else
-                          return Container(
-                              height: 400.0,
-                              child: ListView.builder(
-                                shrinkWrap: true,
-                                // primary: false,
-                                physics: AlwaysScrollableScrollPhysics(),
-                                padding: EdgeInsets.only(top: 0.0),
-                                itemBuilder: (ctx, i) {
-                                  return walletList(
-                                      walletController.walletsList[i], ctx);
-                                },
-                                itemCount: walletController.walletsList.length,
-                              ));
-                      }),
-                      SizedBox(
-                        height: 16,
-                      ),
-                    ],
-                  )),
-            ],
+              ],
+            ),
           ),
-        ),
+          Container(
+            color: Theme.of(context).canvasColor,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  left: 0.0, right: 0.0, top: 8.0, bottom: 8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12.0),
+                    child: Text(
+                      "Currency",
+                      style: TextStyle(
+                          color: Theme.of(context).hintColor,
+                          fontFamily: "Popins"),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: Text(
+                      "Amount",
+                      style: TextStyle(
+                          color: Theme.of(context).hintColor,
+                          fontFamily: "Popins"),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            child: Obx(() {
+              if (walletController.isLoading.value)
+                return WalletLoadingAnimation(context: context);
+              else
+                return Container(
+                  width: double.infinity,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemBuilder: (ctx, i) {
+                      return walletList(walletController.walletsList[i], ctx);
+                    },
+                    itemCount: walletController.walletsList.length,
+                  ),
+                );
+            }),
+          )
+        ],
       ),
     );
   }
@@ -205,12 +208,6 @@ Widget walletList(WalletClass.Wallet wallet, BuildContext ctx) {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(left: 5.0, right: 12.0),
-                      // child: Image.asset(
-                      //   item.icon,
-                      //   height: 25.0,
-                      //   fit: BoxFit.contain,
-                      //   width: 22.0,
-                      // ),
                       child: wallet.iconUrl != null
                           ? Image.network(
                               wallet.iconUrl,
@@ -225,27 +222,23 @@ Widget walletList(WalletClass.Wallet wallet, BuildContext ctx) {
                               width: 22.0,
                             ),
                     ),
-                    Container(
-                      width: 95.0,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            wallet.currency.toUpperCase(),
-                            style:
-                                TextStyle(fontFamily: "Popins", fontSize: 16.5),
-                          ),
-                          Text(
-                            wallet.name,
-                            // wallet.balance,
-                            style: TextStyle(
-                                fontFamily: "Popins",
-                                fontSize: 11.5,
-                                color: Theme.of(ctx).hintColor),
-                          )
-                        ],
-                      ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          wallet.currency.toUpperCase(),
+                          style:
+                              TextStyle(fontFamily: "Popins", fontSize: 16.5),
+                        ),
+                        Text(
+                          wallet.name,
+                          style: TextStyle(
+                              fontFamily: "Popins",
+                              fontSize: 11.5,
+                              color: Theme.of(ctx).hintColor),
+                        )
+                      ],
                     ),
                   ],
                 ),
@@ -258,9 +251,6 @@ Widget walletList(WalletClass.Wallet wallet, BuildContext ctx) {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        // (double.parse(wallet.balance) +
-                        //         double.parse(wallet.locked))
-                        //     .toStringAsFixed(wallet.precision),
                         (double.parse(wallet.balance) +
                                 double.parse(wallet.locked))
                             .toStringAsFixed(2),

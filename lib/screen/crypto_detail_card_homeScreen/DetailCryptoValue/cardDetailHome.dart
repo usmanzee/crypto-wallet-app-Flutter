@@ -418,9 +418,6 @@ class _cardDetailHomeState extends State<cardDetailHome> {
     );
   }
 
-
-
-
   Widget _verticalValueGrafik() {
     return Padding(
       padding: const EdgeInsets.only(right: 8.0),
@@ -523,8 +520,6 @@ class _cardDetailHomeState extends State<cardDetailHome> {
     );
   }
 
-
-
   Widget _line() {
     return Container(
       height: 0.2,
@@ -539,6 +534,4 @@ class _cardDetailHomeState extends State<cardDetailHome> {
         width: double.infinity,
         color: Theme.of(context).canvasColor);
   }
-
-
 }

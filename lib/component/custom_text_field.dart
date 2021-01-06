@@ -12,6 +12,8 @@ class CustomTextField extends StatelessWidget {
   final String icon;
   final TextAlign textAlign;
   final Widget widgetIcon;
+  final int maxLines;
+  final int maxLength;
 
   CustomTextField(
       {this.label,
@@ -23,7 +25,9 @@ class CustomTextField extends StatelessWidget {
       this.obscure,
       this.icon,
       this.textAlign,
-      this.widgetIcon});
+      this.widgetIcon,
+      this.maxLines,
+      this.maxLength});
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +45,8 @@ class CustomTextField extends StatelessWidget {
             keyboardType: keyboardType,
             autocorrect: false,
             autofocus: false,
+            maxLines: maxLines,
+            maxLength: maxLength,
             decoration: InputDecoration(
                 errorStyle: TextStyle(
                   fontSize: 13.5,

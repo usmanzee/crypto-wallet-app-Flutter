@@ -30,7 +30,7 @@ class WalletController extends GetxController {
       var currencies = await _walletRepository.fetchCurrencies();
       balancesList.assignAll(balances);
       currenciesList.assignAll(currencies);
-      formateWallets(balances, currencies);
+      await formateWallets(balances, currencies);
 
       isLoading(false);
     } catch (error) {
@@ -39,7 +39,8 @@ class WalletController extends GetxController {
     }
   }
 
-  void formateWallets(List<Balance> balances, List<Currency> currencies) async {
+  Future<void> formateWallets(
+      List<Balance> balances, List<Currency> currencies) async {
     var wallets = new List<Wallet>();
 
     for (Currency currency in currencies) {

@@ -49,28 +49,28 @@ class Home extends StatelessWidget {
             // /
             // / Header image slider
             // /
-            // SizedBox(
-            //     height: 100.0,
-            //     width: double.infinity,
-            //     child: new Carousel(
-            //       boxFit: BoxFit.cover,
-            //       dotColor: Colors.white.withOpacity(0.8),
-            //       dotSize: 5.5,
-            //       dotSpacing: 16.0,
-            //       dotBgColor: Colors.transparent,
-            //       showIndicator: true,
-            //       // overlayShadow: true,
-            //       // overlayShadowColors: Theme.of(context)
-            //       //     .scaffoldBackgroundColor
-            //       //     .withOpacity(0.9),
-            //       // overlayShadowSize: 0.25,
-            //       images: [
-            //         AssetImage("assets/image/banner/banner2.png"),
-            //         AssetImage("assets/image/banner/banner3.jpg"),
-            //         AssetImage("assets/image/banner/banner2.png"),
-            //         AssetImage("assets/image/banner/banner3.jpg"),
-            //       ],
-            //     )),
+            SizedBox(
+                height: 100.0,
+                width: double.infinity,
+                child: new Carousel(
+                  boxFit: BoxFit.cover,
+                  dotColor: Colors.white.withOpacity(0.8),
+                  dotSize: 5.5,
+                  dotSpacing: 16.0,
+                  dotBgColor: Colors.transparent,
+                  showIndicator: true,
+                  // overlayShadow: true,
+                  // overlayShadowColors: Theme.of(context)
+                  //     .scaffoldBackgroundColor
+                  //     .withOpacity(0.9),
+                  // overlayShadowSize: 0.25,
+                  images: [
+                    AssetImage("assets/image/banner/banner2.png"),
+                    AssetImage("assets/image/banner/banner3.jpg"),
+                    AssetImage("assets/image/banner/banner2.png"),
+                    AssetImage("assets/image/banner/banner3.jpg"),
+                  ],
+                )),
             SizedBox(height: 10.0),
 
             Obx(() {

@@ -7,11 +7,9 @@ class WalletLoadingAnimation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 400.0,
+      width: double.infinity,
       child: ListView.builder(
-        physics: AlwaysScrollableScrollPhysics(),
         shrinkWrap: true,
-        // primary: false,
         itemCount: 10,
         itemBuilder: (ctx, i) {
           return loadingData(ctx);
