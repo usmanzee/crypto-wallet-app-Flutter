@@ -73,7 +73,7 @@ class FiatWithdrawController extends GetxController {
     try {
       withdrawingFiat(true);
       var requestData = {
-        // 'rid': withdrawBeneficiaryController.text,
+        'beneficiary_id': selectedWithdrawBeneficiary.value.id.toString(),
         'amount': withdrawAmountController.text,
         'currency': wallet.currency,
         'otp': withdrawOtpController.text

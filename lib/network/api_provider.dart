@@ -9,7 +9,7 @@ import 'package:crypto/crypto.dart';
 import 'package:get/get.dart';
 
 class ApiProvider {
-  final String _baseUrl = "http://10.121.121.203:9002/api/v2/";
+  final String _baseUrl = "http://10.121.121.112:9002/api/v2/";
   // final String _baseUrl = "http://www.app.local/api/v2/";
   // final String _baseUrl = "https://www.coinee.cf/api/v2/";
   // final String _baseUrl = "https://ewallet.b4uwallet.com/api/v2/";

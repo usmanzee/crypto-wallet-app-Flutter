@@ -4,21 +4,41 @@ import 'package:get/get.dart';
 import 'package:crypto_template/component/custom_text_field.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:crypto_template/component/style.dart';
+import 'package:crypto_template/models/wallet.dart' as WalletClass;
 
-class AddBeneficiary extends StatelessWidget {
-  final BeneficiaryController beneficiaryController =
-      Get.put(BeneficiaryController());
+class AddBeneficiary extends StatefulWidget {
+  final WalletClass.Wallet wallet;
+  AddBeneficiary({this.wallet});
+
+  @override
+  _AddBeneficiaryState createState() => _AddBeneficiaryState(wallet: wallet);
+}
+
+class _AddBeneficiaryState extends State<AddBeneficiary> {
+  final WalletClass.Wallet wallet;
+  _AddBeneficiaryState({this.wallet});
+
+  BeneficiaryController beneficiaryController;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final requiredValidator =
       RequiredValidator(errorText: 'this field is required');
 
+  @override
+  void initState() {
+    beneficiaryController = Get.put(BeneficiaryController(wallet: wallet));
+    super.initState();
+  }
+
   _handleFormSubmit() async {
     final _formState = _formKey.currentState;
     if (_formState.validate()) {
       _formState.save();
+      print('if');
       beneficiaryController.addBeneficiary();
+    } else {
+      print('else');
     }
   }
 
@@ -133,7 +153,7 @@ class AddBeneficiary extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(
-                        left: 16.0, right: 16.0, top: 40.0),
+                        left: 16.0, right: 16.0, top: 16.0),
                     child: GestureDetector(
                       onTap: () {
                         _handleFormSubmit();

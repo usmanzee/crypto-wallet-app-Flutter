@@ -45,8 +45,8 @@ class CustomTextField extends StatelessWidget {
             keyboardType: keyboardType,
             autocorrect: false,
             autofocus: false,
-            maxLines: maxLines,
-            maxLength: maxLength,
+            // maxLines: maxLines,
+            // maxLength: maxLength,
             decoration: InputDecoration(
                 errorStyle: TextStyle(
                   fontSize: 13.5,

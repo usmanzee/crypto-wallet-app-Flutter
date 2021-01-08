@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:crypto_template/models/wallet.dart' as WalletClass;
 import 'package:get/get.dart';
 import 'package:crypto_template/views/wallet/wallet_amount_header.dart';
+import 'package:crypto_template/views/webview_container.dart';
+import 'package:flutter/services.dart';
 
 class WalletDetail extends StatefulWidget {
   final WalletClass.Wallet wallet;
@@ -23,6 +25,11 @@ class _WalletDetailState extends State<WalletDetail> {
   final WalletClass.Wallet wallet;
   _WalletDetailState({this.wallet});
   TransactionHistoryController transactionHistoryController;
+
+  void _handleURLButtonPress(String url) {
+    Get.to(WebViewContainer(url));
+  }
+
   @override
   void initState() {
     transactionHistoryController =
@@ -51,7 +58,6 @@ class _WalletDetailState extends State<WalletDetail> {
         children: [
           Flexible(
             child: Container(
-                // height: 500,
                 padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
                 child: ListView(
                   children: <Widget>[
@@ -59,36 +65,36 @@ class _WalletDetailState extends State<WalletDetail> {
                       padding: const EdgeInsets.only(top: 5.0),
                       child: _cardHeader(context, widget.wallet),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 0.0, right: 0.0, top: 0.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text("Transactions History",
-                              style: TextStyle(
-                                  letterSpacing: 1.1, fontFamily: "Sans")),
-                          FlatButton(
-                            height: 32.0,
-                            minWidth: 120.0,
-                            textColor: Theme.of(context).accentColor,
-                            child: Text(
-                              "view All",
-                              style: TextStyle(fontSize: 12),
-                            ),
-                            onPressed: () {},
-                            shape: RoundedRectangleBorder(
-                                side: BorderSide(
-                                    color: Theme.of(context).accentColor,
-                                    width: 1,
-                                    style: BorderStyle.solid),
-                                borderRadius: BorderRadius.circular(10)),
-                            splashColor:
-                                Theme.of(context).accentColor.withOpacity(0.5),
-                          )
-                        ],
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(
+                    //       left: 0.0, right: 0.0, top: 0.0),
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //     children: <Widget>[
+                    //       Text("Transactions History",
+                    //           style: TextStyle(
+                    //               letterSpacing: 1.1, fontFamily: "Sans")),
+                    //       FlatButton(
+                    //         height: 32.0,
+                    //         minWidth: 120.0,
+                    //         textColor: Theme.of(context).accentColor,
+                    //         child: Text(
+                    //           "view All",
+                    //           style: TextStyle(fontSize: 12),
+                    //         ),
+                    //         onPressed: () {},
+                    //         shape: RoundedRectangleBorder(
+                    //             side: BorderSide(
+                    //                 color: Theme.of(context).accentColor,
+                    //                 width: 1,
+                    //                 style: BorderStyle.solid),
+                    //             borderRadius: BorderRadius.circular(10)),
+                    //         splashColor:
+                    //             Theme.of(context).accentColor.withOpacity(0.5),
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
                     Container(
                       height: 470.0,
                       child: Column(
@@ -247,9 +253,6 @@ class _WalletDetailState extends State<WalletDetail> {
                       )),
                     ),
                   ),
-                  SizedBox(
-                    width: 0.0,
-                  ),
                   Container(
                     height: 40.0,
                     width: 150.0,
@@ -303,79 +306,309 @@ class _WalletDetailState extends State<WalletDetail> {
     }
     DateTime createdAt = depositHistoryItem.createdAt;
     String formatedDate = '';
+    String formatedTime = '';
     if (createdAt != null) {
       formatedDate = createdAt.year.toString() +
           '-' +
           createdAt.month.toString() +
           '-' +
           createdAt.day.toString();
+
+      formatedTime = createdAt.hour.toString() +
+          ':' +
+          createdAt.minute.toString() +
+          ':' +
+          createdAt.second.toString();
     }
-    return Padding(
-      padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 20.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Container(
-                height: 44.0,
-                width: 44.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(70.0)),
-                  border: Border.all(color: _color),
-                ),
-                child: Center(
-                  child: Icon(
-                    _icon,
-                    color: _color,
+    return InkWell(
+      onTap: () {
+        _settingModalBottomSheet(context, depositHistoryItem, _color, _icon,
+            formatedDate, formatedTime);
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 20.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Container(
+                  height: 44.0,
+                  width: 44.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(70.0)),
+                    border: Border.all(color: _color),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      _icon,
+                      color: _color,
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 12.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      formatedDate,
-                      style: TextStyle(
-                        fontSize: 16.5,
-                        letterSpacing: 1.2,
-                        fontFamily: "Sans",
-                      ),
-                    ),
-                    Text(depositHistoryItem.state,
+                Padding(
+                  padding: const EdgeInsets.only(left: 12.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        formatedDate,
                         style: TextStyle(
-                            letterSpacing: 1.1,
-                            fontFamily: "Popins",
-                            fontSize: 13.0))
-                  ],
+                          fontSize: 16.5,
+                          letterSpacing: 1.2,
+                          fontFamily: "Sans",
+                        ),
+                      ),
+                      Text(
+                        formatedTime,
+                        style: TextStyle(
+                          fontSize: 12.5,
+                          letterSpacing: 1.2,
+                          fontFamily: "Sans",
+                        ),
+                      ),
+                      Text(depositHistoryItem.state,
+                          style: TextStyle(
+                              letterSpacing: 1.1,
+                              fontFamily: "Popins",
+                              fontSize: 13.0))
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-              Text(
-                depositHistoryItem.amount,
-                style: TextStyle(
-                    fontSize: 19.5,
-                    letterSpacing: 1.6,
-                    fontFamily: "Sans",
-                    fontWeight: FontWeight.w600,
-                    color: _color),
-              ),
-              Text(depositHistoryItem.currency.toUpperCase(),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                Text(
+                  depositHistoryItem.amount,
                   style: TextStyle(
-                      letterSpacing: 1.1, fontFamily: "Popins", fontSize: 13.0))
-            ],
-          ),
-        ],
+                      fontSize: 19.5,
+                      letterSpacing: 1.6,
+                      fontFamily: "Sans",
+                      fontWeight: FontWeight.w600,
+                      color: _color),
+                ),
+                Text(depositHistoryItem.currency.toUpperCase(),
+                    style: TextStyle(
+                        letterSpacing: 1.1,
+                        fontFamily: "Popins",
+                        fontSize: 13.0))
+              ],
+            ),
+          ],
+        ),
       ),
     );
+  }
+
+  void _settingModalBottomSheet(context, DepositHistory depositHistoryItem,
+      Color _color, IconData _icon, String formatedDate, String formatedTime) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return Container(
+            padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
+            child: new Wrap(
+              children: <Widget>[
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 4.0),
+                      child: wallet.iconUrl != null
+                          ? Image.network(
+                              wallet.iconUrl,
+                              height: 25.0,
+                              fit: BoxFit.contain,
+                              width: 25.0,
+                            )
+                          : Image.asset(
+                              'assets/image/market/BCH.png',
+                              height: 25.0,
+                              fit: BoxFit.contain,
+                              width: 25.0,
+                            ),
+                    ),
+                    Text(
+                      wallet.currency.toUpperCase(),
+                      style: TextStyle(
+                        fontFamily: "Sans",
+                        fontWeight: FontWeight.w800,
+                        fontSize: 20.0,
+                        letterSpacing: 1.5,
+                        // color: Colors.white
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 32,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Amount",
+                      style: TextStyle(
+                          color: Theme.of(context).hintColor.withOpacity(0.5),
+                          fontFamily: "Popins",
+                          fontSize: 15.5),
+                    ),
+                    Text(
+                      depositHistoryItem.amount,
+                      style: TextStyle(fontFamily: "Popins"),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Status",
+                      style: TextStyle(
+                          color: Theme.of(context).hintColor.withOpacity(0.5),
+                          fontFamily: "Popins",
+                          fontSize: 15.5),
+                    ),
+                    Text(
+                      depositHistoryItem.state,
+                      style: TextStyle(fontFamily: "Popins"),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 16.0),
+                  child: Container(
+                    width: double.infinity,
+                    height: 0.5,
+                    decoration:
+                        BoxDecoration(color: Theme.of(context).hintColor),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Address",
+                      style: TextStyle(
+                          color: Theme.of(context).hintColor.withOpacity(0.5),
+                          fontFamily: "Popins",
+                          fontSize: 15.5),
+                    ),
+                    Text(
+                      depositHistoryItem.confirmations.toString(),
+                      style: TextStyle(fontFamily: "Popins"),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Transaction Fee",
+                      style: TextStyle(
+                          color: Theme.of(context).hintColor.withOpacity(0.5),
+                          fontFamily: "Popins",
+                          fontSize: 15.5),
+                    ),
+                    Text(
+                      depositHistoryItem.fee,
+                      style: TextStyle(fontFamily: "Popins"),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Flexible(
+                      child: Text(
+                        "TxID",
+                        style: TextStyle(
+                            color: Theme.of(context).hintColor.withOpacity(0.5),
+                            fontFamily: "Popins",
+                            fontSize: 15.5),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        depositHistoryItem.txid,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontFamily: "Popins"),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Date",
+                      style: TextStyle(
+                          color: Theme.of(context).hintColor.withOpacity(0.5),
+                          fontFamily: "Popins",
+                          fontSize: 15.5),
+                    ),
+                    Text(
+                      formatedDate + ' ' + formatedTime,
+                      style: TextStyle(fontFamily: "Popins"),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      MaterialButton(
+                        color: Theme.of(context).canvasColor,
+                        onPressed: () {
+                          Clipboard.setData(
+                                  ClipboardData(text: depositHistoryItem.txid))
+                              .then((value) {
+                            Get.snackbar('Success', 'Copied to clipboard',
+                                snackPosition: SnackPosition.BOTTOM,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.grey[900]);
+                          });
+                        },
+                        child: Center(
+                            child: Text(
+                          "Copy TxID",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontFamily: "Popins",
+                              letterSpacing: 1.3,
+                              fontSize: 16.0),
+                        )),
+                      ),
+                      MaterialButton(
+                        color: Theme.of(context).accentColor,
+                        onPressed: () {
+                          _handleURLButtonPress('www.google.com');
+                        },
+                        child: Center(
+                            child: Text(
+                          "Check Explorer",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: "Popins",
+                              letterSpacing: 1.3,
+                              fontSize: 16.0),
+                        )),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
   }
 
   Widget _withdrawHistoryList(WithdrawHistory withdrawHistoryItem) {
@@ -485,12 +718,7 @@ class _WalletDetailState extends State<WalletDetail> {
     return Stack(
       children: <Widget>[
         Container(
-          // height: 200.0,
           width: double.infinity,
-          decoration: BoxDecoration(
-            // color: Theme.of(context).canvasColor,
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          ),
           child: Padding(
             padding: const EdgeInsets.only(left: 0.0, right: 0.0),
             child: Column(

@@ -96,7 +96,7 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
                                   textColor: Colors.white,
                                   label: 'Add Beneficiary',
                                   onPressed: () {
-                                    Get.to(AddBeneficiary());
+                                    Get.to(AddBeneficiary(wallet: wallet));
                                   },
                                   splashColor: Theme.of(context)
                                       .accentColor
@@ -123,7 +123,8 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
                                             errorStyle: TextStyle(
                                                 color: Colors.redAccent,
                                                 fontSize: 16.0),
-                                            hintText: 'Please select expense',
+                                            hintText:
+                                                'Please select beneficiary',
                                             border: OutlineInputBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(
@@ -150,7 +151,7 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
                                                   .selectedWithdrawBeneficiary
                                                   .value = newOption;
                                               setState(() {
-                                                // state.didChange(newValue);
+                                                state.didChange(newOptionValue);
                                               });
                                             },
                                             items: withdrawController

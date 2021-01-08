@@ -2,6 +2,7 @@ import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/controllers/SnackbarController.dart';
 import 'package:crypto_template/controllers/error_controller.dart';
 import 'package:crypto_template/models/Beneficiary.dart';
+import 'package:crypto_template/repository/beneficiary_repository.dart';
 import 'package:crypto_template/repository/wallet_repository.dart';
 import 'package:crypto_template/models/wallet.dart' as WalletClass;
 import 'package:flutter/material.dart';
@@ -39,20 +40,40 @@ class BeneficiaryController extends GetxController {
   void addBeneficiary() async {
     Get.dialog(Center(child: CircularProgressIndicator()),
         barrierDismissible: false);
-    WalletRepository _walletRepository = new WalletRepository();
+    BeneficiaryRepository _beneficiaryRepository = new BeneficiaryRepository();
     try {
-      // var requestData = {
-      //   'amount': withdrawAmountController.text,
-      //   'currency': wallet.currency,
-      //   'otp': withdrawOtpController.text
-      // };
+      Map<String, dynamic> requestObject = {
+        "currency": wallet.currency,
+        'name': descriptionTextController.text,
+      };
+      Map<String, dynamic> requestData = {
+        "full_name": fullNameTextController.text,
+        "account_number": accountNumberTextController.text,
+        "bank_name": bankNameTextController.text
+      };
 
-      // print(requestData);
-      // var response = await _walletRepository.withdrawCrypto(requestData);
-      // print(response);
-      // Get.back();
+      if (bankSwiftCodeTextController.text != null &&
+          bankSwiftCodeTextController.text != '') {
+        requestData["bank_swift_code"] = bankSwiftCodeTextController.text;
+      }
+      if (intermediaryBankNameTextController.text != null &&
+          intermediaryBankNameTextController.text != '') {
+        requestData['intermediary_bank_name'] =
+            intermediaryBankNameTextController.text;
+      }
+      if (intermediaryBankSwiftCodeTextController.text != null &&
+          intermediaryBankSwiftCodeTextController.text != '') {
+        requestData['intermediary_bank_swift_code'] =
+            intermediaryBankSwiftCodeTextController.text;
+      }
+
+      requestObject['data'] = requestData;
+
+      var response = await _beneficiaryRepository.addBeneficiary(requestObject);
+      Get.back();
+      Get.back();
       snackbarController = new SnackbarController(
-          title: 'Success', message: 'success.withdraw.action');
+          title: 'Success', message: 'success.beneficiaries.created');
       snackbarController.showSnackbar();
     } catch (error) {
       Get.back();

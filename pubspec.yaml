@@ -34,7 +34,7 @@ dependencies:
   get: ^3.22.2
   qr_flutter: ^3.1.0
   # get_mac: ^0.0.1
-  # webview_flutter: ^1.0.7
+  webview_flutter: ^1.0.7
   crypto: ^2.1.5
   crypto_font_icons: ^0.1.0+1
   share: ^0.6.5+4
