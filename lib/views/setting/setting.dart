@@ -1,7 +1,10 @@
 import 'package:crypto_template/controllers/HomeController.dart';
+import 'package:crypto_template/views/notification/%20notification_list.dart';
+import 'package:crypto_template/views/referral_program/referral_program.dart';
 import 'package:crypto_template/views/security/security.dart';
 // import 'package:crypto_template/views/setting/SeeAllTemplate.dart';
 import 'package:crypto_template/views/setting/themes.dart';
+import 'package:crypto_template/views/webview_container.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:crypto_template/component/style.dart';
@@ -193,7 +196,7 @@ class Setting extends StatelessWidget {
             }),
             InkWell(
                 onTap: () {
-                  // Get.to(Security());
+                  Get.to(WebViewContainer('https://ewallet.b4uwallet.com/fee'));
                 },
                 child: listSetting(
                     context,
@@ -206,7 +209,7 @@ class Setting extends StatelessWidget {
               return (homeController.isLoggedIn)
                   ? InkWell(
                       onTap: () {
-                        // Get.to(Security());
+                        Get.to(ReferralProgram());
                       },
                       child: listSetting(
                           context,
@@ -222,7 +225,7 @@ class Setting extends StatelessWidget {
               return (homeController.isLoggedIn)
                   ? InkWell(
                       onTap: () {
-                        // Get.to(Security());
+                        Get.off(NotificationList());
                       },
                       child: listSetting(
                           context,

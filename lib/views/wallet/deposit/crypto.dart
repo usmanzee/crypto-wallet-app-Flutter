@@ -1,6 +1,5 @@
 import 'package:crypto_template/controllers/crypto_deposit_controller.dart';
 import 'package:crypto_template/views/wallet/custom_appbar.dart';
-import 'package:crypto_template/views/wallet/wallet_search.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/models/wallet.dart' as WalletClass;
 import 'package:get/get.dart';

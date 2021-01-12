@@ -45,10 +45,11 @@ class TransactionHistoryController extends GetxController {
       var withdrawlHistoryResponse =
           await _walletRepository.fetchWithdrawHistory(currency);
       depositHistoryResponse.sort((a, b) {
-        var adate = a.createdAt; //before -> var adate = a.expiry;
-        var bdate = b.createdAt; //before -> var bdate = b.expiry;
-        return adate.millisecondsSinceEpoch.compareTo(bdate
-            .millisecondsSinceEpoch); //to get the order other way just switch `adate & bdate`
+        var adate = a.createdAt.toLocal();
+        var bdate = b.createdAt.toLocal();
+        print(adate.toLocal());
+        return adate.compareTo(
+            bdate); //to get the order other way just switch `adate & bdate`
       });
       depositHistory.assignAll(depositHistoryResponse);
       withdrawHistory.assignAll(withdrawlHistoryResponse);

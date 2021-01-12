@@ -322,7 +322,7 @@ class _WalletDetailState extends State<WalletDetail> {
     }
     return InkWell(
       onTap: () {
-        _settingModalBottomSheet(context, depositHistoryItem, _color, _icon,
+        _depositHistoryDetail(context, depositHistoryItem, _color, _icon,
             formatedDate, formatedTime);
       },
       child: Padding(
@@ -404,7 +404,195 @@ class _WalletDetailState extends State<WalletDetail> {
     );
   }
 
-  void _settingModalBottomSheet(context, DepositHistory depositHistoryItem,
+  Widget _withdrawHistoryList(WithdrawHistory withdrawHistoryItem) {
+    Color _color;
+    IconData _icon;
+    if (withdrawHistoryItem.state == 'canceled' ||
+        withdrawHistoryItem.state == 'rejected' ||
+        withdrawHistoryItem.state == 'failed' ||
+        withdrawHistoryItem.state == 'errored') {
+      _color = Colors.redAccent.withOpacity(0.75);
+      _icon = Icons.close;
+    } else if (withdrawHistoryItem.state == 'accepted' ||
+        withdrawHistoryItem.state == 'skipped' ||
+        withdrawHistoryItem.state == 'collected' ||
+        withdrawHistoryItem.state == 'succeed' ||
+        withdrawHistoryItem.state == 'confirming') {
+      _color = Color(0xFF2ebd85);
+      _icon = Icons.check;
+    } else {
+      _color = Theme.of(context).accentColor;
+      _icon = Icons.autorenew;
+    }
+    DateTime createdAt = withdrawHistoryItem.createdAt;
+    String formatedDate = '';
+    String formatedTime = '';
+    if (createdAt != null) {
+      formatedDate = createdAt.year.toString() +
+          '-' +
+          createdAt.month.toString() +
+          '-' +
+          createdAt.day.toString();
+
+      formatedTime = createdAt.hour.toString() +
+          ':' +
+          createdAt.minute.toString() +
+          ':' +
+          createdAt.second.toString();
+    }
+    return InkWell(
+      onTap: () {
+        _withdrawHistoryDetail(context, withdrawHistoryItem, _color, _icon,
+            formatedDate, formatedTime);
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 20.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Container(
+                  height: 44.0,
+                  width: 44.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(70.0)),
+                    border: Border.all(color: _color),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      _icon,
+                      color: _color,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 12.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        formatedDate,
+                        style: TextStyle(
+                          fontSize: 16.5,
+                          letterSpacing: 1.2,
+                          fontFamily: "Sans",
+                        ),
+                      ),
+                      Text(withdrawHistoryItem.state,
+                          style: TextStyle(
+                              letterSpacing: 1.1,
+                              fontFamily: "Popins",
+                              fontSize: 13.0))
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                Text(
+                  withdrawHistoryItem.amount,
+                  style: TextStyle(
+                      fontSize: 19.5,
+                      letterSpacing: 1.6,
+                      fontFamily: "Sans",
+                      fontWeight: FontWeight.w600,
+                      color: _color),
+                ),
+                Text(withdrawHistoryItem.currency.toUpperCase(),
+                    style: TextStyle(
+                        // color: Colors.white24,
+                        letterSpacing: 1.1,
+                        fontFamily: "Popins",
+                        fontSize: 13.0))
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  ///
+  /// Widget credit card transaction
+  ///
+  Widget _cardHeader(context, WalletClass.Wallet wallet) {
+    return Stack(
+      children: <Widget>[
+        Container(
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 0.0, right: 0.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 4.0),
+                          child: wallet.iconUrl != null
+                              ? Image.network(
+                                  wallet.iconUrl,
+                                  height: 35.0,
+                                  fit: BoxFit.contain,
+                                  width: 35.0,
+                                )
+                              : Image.asset(
+                                  'assets/image/market/BCH.png',
+                                  height: 35.0,
+                                  fit: BoxFit.contain,
+                                  width: 35.0,
+                                ),
+                        ),
+                        Text(
+                          wallet.currency.toUpperCase(),
+                          style: TextStyle(
+                            fontFamily: "Sans",
+                            fontWeight: FontWeight.w800,
+                            fontSize: 30.0,
+                            letterSpacing: 1.5,
+                            // color: Colors.white
+                          ),
+                        )
+                      ],
+                    ),
+                    WalletAmountHeader(
+                      wallet: wallet,
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.topRight,
+          child: Container(
+            height: 120.0,
+            width: 170.0,
+            decoration: BoxDecoration(
+                color: Colors.white10.withOpacity(0.1),
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(200.0),
+                    topRight: Radius.circular(20.0))),
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _depositHistoryDetail(context, DepositHistory depositHistoryItem,
       Color _color, IconData _icon, String formatedDate, String formatedTime) {
     showModalBottomSheet(
         context: context,
@@ -611,178 +799,218 @@ class _WalletDetailState extends State<WalletDetail> {
         });
   }
 
-  Widget _withdrawHistoryList(WithdrawHistory withdrawHistoryItem) {
-    Color _color;
-    IconData _icon;
-    if (withdrawHistoryItem.state == 'canceled' ||
-        withdrawHistoryItem.state == 'rejected' ||
-        withdrawHistoryItem.state == 'failed' ||
-        withdrawHistoryItem.state == 'errored') {
-      _color = Colors.redAccent.withOpacity(0.75);
-      _icon = Icons.close;
-    } else if (withdrawHistoryItem.state == 'accepted' ||
-        withdrawHistoryItem.state == 'skipped' ||
-        withdrawHistoryItem.state == 'collected' ||
-        withdrawHistoryItem.state == 'succeed' ||
-        withdrawHistoryItem.state == 'confirming') {
-      _color = Color(0xFF2ebd85);
-      _icon = Icons.check;
-    } else {
-      _color = Theme.of(context).accentColor;
-      _icon = Icons.autorenew;
-    }
-    DateTime createdAt = withdrawHistoryItem.createdAt;
-    String formatedDate = '';
-    if (createdAt != null) {
-      formatedDate = createdAt.year.toString() +
-          '-' +
-          createdAt.month.toString() +
-          '-' +
-          createdAt.day.toString();
-    }
-    return Padding(
-      padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 20.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Container(
-                height: 44.0,
-                width: 44.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(70.0)),
-                  border: Border.all(color: _color),
-                ),
-                child: Center(
-                  child: Icon(
-                    _icon,
-                    color: _color,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 12.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      formatedDate,
-                      style: TextStyle(
-                        fontSize: 16.5,
-                        letterSpacing: 1.2,
-                        fontFamily: "Sans",
-                      ),
-                    ),
-                    Text(withdrawHistoryItem.state,
-                        style: TextStyle(
-                            letterSpacing: 1.1,
-                            fontFamily: "Popins",
-                            fontSize: 13.0))
-                  ],
-                ),
-              ),
-            ],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-              Text(
-                withdrawHistoryItem.amount,
-                style: TextStyle(
-                    fontSize: 19.5,
-                    letterSpacing: 1.6,
-                    fontFamily: "Sans",
-                    fontWeight: FontWeight.w600,
-                    color: _color),
-              ),
-              Text(withdrawHistoryItem.currency.toUpperCase(),
-                  style: TextStyle(
-                      // color: Colors.white24,
-                      letterSpacing: 1.1,
-                      fontFamily: "Popins",
-                      fontSize: 13.0))
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  ///
-  /// Widget credit card transaction
-  ///
-  Widget _cardHeader(context, WalletClass.Wallet wallet) {
-    return Stack(
-      children: <Widget>[
-        Container(
-          width: double.infinity,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 0.0, right: 0.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
+  void _withdrawHistoryDetail(context, WithdrawHistory withdrawHistoryItem,
+      Color _color, IconData _icon, String formatedDate, String formatedTime) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return Container(
+            padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
+            child: new Wrap(
               children: <Widget>[
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 4.0),
-                          child: wallet.iconUrl != null
-                              ? Image.network(
-                                  wallet.iconUrl,
-                                  height: 35.0,
-                                  fit: BoxFit.contain,
-                                  width: 35.0,
-                                )
-                              : Image.asset(
-                                  'assets/image/market/BCH.png',
-                                  height: 35.0,
-                                  fit: BoxFit.contain,
-                                  width: 35.0,
-                                ),
-                        ),
-                        Text(
-                          wallet.currency.toUpperCase(),
-                          style: TextStyle(
-                            fontFamily: "Sans",
-                            fontWeight: FontWeight.w800,
-                            fontSize: 30.0,
-                            letterSpacing: 1.5,
-                            // color: Colors.white
-                          ),
-                        )
-                      ],
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 4.0),
+                      child: wallet.iconUrl != null
+                          ? Image.network(
+                              wallet.iconUrl,
+                              height: 25.0,
+                              fit: BoxFit.contain,
+                              width: 25.0,
+                            )
+                          : Image.asset(
+                              'assets/image/market/BCH.png',
+                              height: 25.0,
+                              fit: BoxFit.contain,
+                              width: 25.0,
+                            ),
                     ),
-                    WalletAmountHeader(
-                      wallet: wallet,
+                    Text(
+                      wallet.currency.toUpperCase(),
+                      style: TextStyle(
+                        fontFamily: "Sans",
+                        fontWeight: FontWeight.w800,
+                        fontSize: 20.0,
+                        letterSpacing: 1.5,
+                        // color: Colors.white
+                      ),
                     )
                   ],
                 ),
+                SizedBox(
+                  height: 32,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Amount",
+                      style: TextStyle(
+                          color: Theme.of(context).hintColor.withOpacity(0.5),
+                          fontFamily: "Popins",
+                          fontSize: 15.5),
+                    ),
+                    Text(
+                      withdrawHistoryItem.amount,
+                      style: TextStyle(fontFamily: "Popins"),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Status",
+                      style: TextStyle(
+                          color: Theme.of(context).hintColor.withOpacity(0.5),
+                          fontFamily: "Popins",
+                          fontSize: 15.5),
+                    ),
+                    Text(
+                      withdrawHistoryItem.state,
+                      style: TextStyle(fontFamily: "Popins"),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 16.0),
+                  child: Container(
+                    width: double.infinity,
+                    height: 0.5,
+                    decoration:
+                        BoxDecoration(color: Theme.of(context).hintColor),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Address",
+                      style: TextStyle(
+                          color: Theme.of(context).hintColor.withOpacity(0.5),
+                          fontFamily: "Popins",
+                          fontSize: 15.5),
+                    ),
+                    Text(
+                      withdrawHistoryItem.amount,
+                      style: TextStyle(fontFamily: "Popins"),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Transaction Fee",
+                      style: TextStyle(
+                          color: Theme.of(context).hintColor.withOpacity(0.5),
+                          fontFamily: "Popins",
+                          fontSize: 15.5),
+                    ),
+                    Text(
+                      withdrawHistoryItem.fee,
+                      style: TextStyle(fontFamily: "Popins"),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Flexible(
+                      child: Text(
+                        "TxID",
+                        style: TextStyle(
+                            color: Theme.of(context).hintColor.withOpacity(0.5),
+                            fontFamily: "Popins",
+                            fontSize: 15.5),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        (withdrawHistoryItem.blockchainTxid != null &&
+                                withdrawHistoryItem.blockchainTxid != ''
+                            ? withdrawHistoryItem.blockchainTxid
+                            : '---'),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontFamily: "Popins"),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Date",
+                      style: TextStyle(
+                          color: Theme.of(context).hintColor.withOpacity(0.5),
+                          fontFamily: "Popins",
+                          fontSize: 15.5),
+                    ),
+                    Text(
+                      formatedDate + ' ' + formatedTime,
+                      style: TextStyle(fontFamily: "Popins"),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      MaterialButton(
+                        color: Theme.of(context).canvasColor,
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(
+                                  text: (withdrawHistoryItem.blockchainTxid !=
+                                              null &&
+                                          withdrawHistoryItem.blockchainTxid !=
+                                              ''
+                                      ? withdrawHistoryItem.blockchainTxid
+                                      : '---')))
+                              .then((value) {
+                            Get.snackbar('Success', 'Copied to clipboard',
+                                snackPosition: SnackPosition.BOTTOM,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.grey[900]);
+                          });
+                        },
+                        child: Center(
+                            child: Text(
+                          "Copy TxID",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontFamily: "Popins",
+                              letterSpacing: 1.3,
+                              fontSize: 16.0),
+                        )),
+                      ),
+                      MaterialButton(
+                        color: Theme.of(context).accentColor,
+                        onPressed: () {
+                          _handleURLButtonPress('www.google.com');
+                        },
+                        child: Center(
+                            child: Text(
+                          "Check Explorer",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: "Popins",
+                              letterSpacing: 1.3,
+                              fontSize: 16.0),
+                        )),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
-          ),
-        ),
-        Align(
-          alignment: Alignment.topRight,
-          child: Container(
-            height: 120.0,
-            width: 170.0,
-            decoration: BoxDecoration(
-                color: Colors.white10.withOpacity(0.1),
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(200.0),
-                    topRight: Radius.circular(20.0))),
-          ),
-        ),
-      ],
-    );
+          );
+        });
   }
 }

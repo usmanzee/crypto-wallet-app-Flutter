@@ -1,4 +1,4 @@
-import 'package:crypto_template/views/Bottom_Nav_Bar/custom_nav_bar.dart';
+import 'package:crypto_template/views/bottom_nav_bar/custom_nav_bar.dart';
 import 'package:crypto_template/views/wallet/wallets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

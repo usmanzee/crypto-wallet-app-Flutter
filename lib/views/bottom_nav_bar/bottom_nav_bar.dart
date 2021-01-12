@@ -75,11 +75,10 @@
 //     });
 //   }
 // }
-import 'dart:async';
 import 'package:crypto_template/controllers/HomeController.dart';
+import 'package:crypto_template/views/trading/trading.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:crypto_template/views/Bottom_Nav_Bar/custom_nav_bar.dart';
 import 'package:crypto_template/views/home/home.dart';
 import 'package:crypto_template/views/market/markets.dart';
 import 'package:crypto_template/views/news/news_home.dart';
@@ -107,7 +106,7 @@ class BottomNavBar extends StatelessWidget {
           return new Market();
           break;
         case 2:
-          return new News();
+          return new Trading();
           break;
         case 3:
           return new News();

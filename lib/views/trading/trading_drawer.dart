@@ -1,142 +1,156 @@
-import 'dart:async';
-
-import 'package:crypto_template/component/market/ethModel.dart';
-import 'package:crypto_template/screen/market/detailCrypto/ethDetail.dart';
+import 'package:crypto_template/component/market/btcModel.dart';
+import 'package:crypto_template/controllers/MarketController.dart';
+import 'package:crypto_template/models/formated_market.dart';
+import 'package:crypto_template/screen/market/detailCrypto/btcDetail.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:get/get.dart';
 
-class eth extends StatefulWidget {
-  final Widget child;
-
-  eth({Key key, this.child}) : super(key: key);
-
-  _ethState createState() => _ethState();
+class TradingDrawer extends StatefulWidget {
+  @override
+  _TradingDrawerState createState() => _TradingDrawerState();
 }
 
-class _ethState extends State<eth> {
-  ///
-  /// Get image data dummy from firebase server
-  ///
-  var imageNetwork = NetworkImage(
-      "https://firebasestorage.googleapis.com/v0/b/beauty-look.appspot.com/o/Artboard%203.png?alt=media&token=dc7f4bf5-8f80-4f38-bb63-87aed9d59b95");
+class _TradingDrawerState extends State<TradingDrawer>
+    with SingleTickerProviderStateMixin {
+  final MarketController marketController = Get.find();
+  final List<Widget> myTabs = [
+    Tab(text: 'All'),
+    Tab(text: 'BTC'),
+    Tab(text: 'USD'),
+  ];
 
-  ///
-  /// check the condition is right or wrong for image loaded or no
-  ///
-  bool loadImage = true;
+  TabController _tabController;
 
   @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
-   
-  Timer(Duration(seconds: 3),(){
-setState(() {
-  loadImage=false;
-});
-    });
-    
-    // TODO: implement initState
+    _tabController = TabController(length: 3, vsync: this);
+    _tabController.addListener(_handleTabSelection);
     super.initState();
   }
 
+  _handleTabSelection() {
+    if (_tabController.indexIsChanging) {
+      setState(() {});
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-        child: ListView(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(
-              left: 0.0, right: 0.0, top: 7.0, bottom: 7.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: 12.0),
-                child: Container(
-                    width: 100.0,
-                    child: Text(
-                      "Pair",
-                      style: TextStyle(
-                          color: Theme.of(context).hintColor,
-                          fontFamily: "Popins"),
-                    )),
-              ),
-              Container(
-                  width: 100.0,
-                  child: Text(
-                    "Last Price",
-                    style: TextStyle(
-                        color: Theme.of(context).hintColor,
-                        fontFamily: "Popins"),
-                  )),
-              Container(
-                  width: 80.0,
-                  child: Text(
-                    "24h Chg%",
-                    style: TextStyle(
-                        color: Theme.of(context).hintColor,
-                        fontFamily: "Popins"),
-                  )),
-            ],
+    return Scaffold(
+      body: ListView(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 40, 0, 0),
+            child: Text(
+              'Markets',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
           ),
-        ),
-        SizedBox(
-          height: 5.0,
-        ),
-
-        ///
-        ///
-        /// check the condition if image data from server firebase loaded or no
-        /// if image loaded true (image still downloading from server)
-        /// Card to set card loading animation
-        ///
-
-        loadImage ? _loadingData(context) : _dataLoaded(context),
-      ],
-    ));
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.grey.withOpacity(0.5),
+                width: 1.0,
+              ),
+              borderRadius: BorderRadius.circular(4.0),
+            ),
+            margin: EdgeInsets.all(12),
+            child: Row(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(left: 8),
+                  child: Icon(
+                    Icons.search,
+                    color: Colors.grey,
+                    size: 20,
+                  ),
+                ),
+                new Expanded(
+                  child: TextField(
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Search...",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                      isDense: true,
+                    ),
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      color: Colors.black,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
+            child: Obx(() {
+              if (marketController.isLoading.value)
+                return _loadingData(context);
+              else
+                return _dataLoaded(
+                    context, marketController.formatedMarketsList);
+            }),
+          ),
+          // TabBar(
+          //   controller: _tabController,
+          //   tabs: myTabs,
+          //   indicatorColor: Theme.of(context).primaryColor,
+          //   labelColor: Theme.of(context).primaryColor,
+          //   unselectedLabelColor: Theme.of(context).textSelectionColor,
+          //   indicatorSize: TabBarIndicatorSize.label,
+          // ),
+          // Center(
+          //   child: [
+          //     Column(
+          //       children: [
+          //         Text('first tab'),
+          //       ],
+          //     ),
+          //     Column(
+          //       children: [
+          //         Text('second tab'),
+          //       ],
+          //     ),
+          //     Column(
+          //       children: [
+          //         Text('third tab'),
+          //       ],
+          //     ),
+          //   ][_tabController.index],
+          // ),
+        ],
+      ),
+    );
   }
 }
 
-///
-///
-/// Calling imageLoading animation for set a grid layout
-///
-///
 Widget _loadingData(BuildContext context) {
   return Container(
     child: ListView.builder(
       shrinkWrap: true,
       primary: false,
-      itemCount: ethMarketList.length,
+      itemCount: btcMarketList.length,
       itemBuilder: (ctx, i) {
-        return loadingCard(ctx, ethMarketList[i]);
+        return loadingCard(ctx, btcMarketList[i]);
       },
     ),
   );
 }
 
-///
-///
-/// Calling ImageLoaded animation for set a grid layout
-///
-///
-Widget _dataLoaded(BuildContext context) {
-  return Container(
-    child: ListView.builder(
-      shrinkWrap: true,
-      primary: false,
-      itemCount: ethMarketList.length,
-      itemBuilder: (ctx, i) {
-        return card(ctx, ethMarketList[i]);
-      },
-    ),
-  );
-}
-
-Widget loadingCard(BuildContext ctx, ethMarket item) {
+Widget loadingCard(BuildContext ctx, btcMarket item) {
   return Padding(
-    padding: const EdgeInsets.only(top: 12.0),
+    padding: const EdgeInsets.only(top: 7.0),
     child: Shimmer.fromColors(
       baseColor: Color(0xFF3B4659),
       highlightColor: Color(0xFF606B78),
@@ -247,16 +261,27 @@ Widget loadingCard(BuildContext ctx, ethMarket item) {
   );
 }
 
-Widget card(BuildContext ctx, ethMarket item) {
+Widget _dataLoaded(
+    BuildContext context, List<FormatedMarket> formatedMarketList) {
+  return Container(
+    child: ListView.builder(
+      shrinkWrap: true,
+      primary: false,
+      itemCount: formatedMarketList.length,
+      itemBuilder: (ctx, i) {
+        return card(ctx, btcMarketList[i], formatedMarketList[i]);
+      },
+    ),
+  );
+}
+
+Widget card(BuildContext ctx, btcMarket item, FormatedMarket formatedMarket) {
   return Padding(
     padding: const EdgeInsets.only(top: 7.0),
     child: Column(
       children: <Widget>[
         InkWell(
-          onTap: () {
-            Navigator.of(ctx).push(PageRouteBuilder(
-                pageBuilder: (_, __, ___) => new ethDetail(item: item)));
-          },
+          onTap: () {},
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -267,15 +292,6 @@ Widget card(BuildContext ctx, ethMarket item) {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(left: 5.0, right: 12.0),
-                      child: Image.asset(
-                        item.icon,
-                        height: 22.0,
-                        fit: BoxFit.contain,
-                        width: 22.0,
-                      ),
-                    ),
                     Container(
                       width: 95.0,
                       child: Column(
@@ -285,12 +301,12 @@ Widget card(BuildContext ctx, ethMarket item) {
                           Row(
                             children: <Widget>[
                               Text(
-                                item.name,
+                                formatedMarket.baseUnit.toUpperCase(),
                                 style: TextStyle(
                                     fontFamily: "Popins", fontSize: 16.5),
                               ),
                               Text(
-                                "/BTC",
+                                " / " + formatedMarket.quoteUnit.toUpperCase(),
                                 style: TextStyle(
                                     fontFamily: "Popins",
                                     fontSize: 11.5,
@@ -299,7 +315,7 @@ Widget card(BuildContext ctx, ethMarket item) {
                             ],
                           ),
                           Text(
-                            item.pairValue,
+                            'Vol ' + formatedMarket.volume.toString(),
                             style: TextStyle(
                                 fontFamily: "Popins",
                                 fontSize: 11.5,
@@ -318,39 +334,25 @@ Widget card(BuildContext ctx, ethMarket item) {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      item.priceValue,
+                      formatedMarket.last
+                          .toStringAsFixed(formatedMarket.amountPrecision),
                       style: TextStyle(
                           fontFamily: "Popins",
                           fontSize: 14.5,
                           fontWeight: FontWeight.w600),
                     ),
                     Text(
-                      item.priceDollar,
+                      formatedMarket.priceChangePercent,
                       style: TextStyle(
                           fontFamily: "Popins",
                           fontSize: 11.5,
-                          color: Theme.of(ctx).hintColor),
+                          color: formatedMarket.isPositiveChange
+                              ? Color(0xFF00C087)
+                              : Colors.redAccent),
                     ),
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(right: 20.0),
-                child: Container(
-                    height: 25.0,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(2.0)),
-                        color: item.colorChg),
-                    child: Center(
-                        child: Padding(
-                      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                      child: Text(
-                        item.percent,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600, color: Colors.white),
-                      ),
-                    ))),
-              )
             ],
           ),
         ),

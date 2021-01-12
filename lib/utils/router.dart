@@ -5,7 +5,7 @@ import 'package:crypto_template/views/auth/email_verification.dart';
 import 'package:crypto_template/views/auth/login.dart';
 import 'package:crypto_template/views/auth/2fa.dart';
 import 'package:crypto_template/views/auth/signup.dart';
-import 'package:crypto_template/views/Bottom_Nav_Bar/bottom_nav_bar.dart';
+import 'package:crypto_template/views/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:get/get.dart';
 
 class Router {

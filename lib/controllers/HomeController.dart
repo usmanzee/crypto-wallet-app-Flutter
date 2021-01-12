@@ -21,6 +21,7 @@ class HomeController extends GetxController {
   var deviceMacAddress = 'unknown'.obs;
   var authApiKey = 'unknown'.obs;
   var authSecret = 'unknown'.obs;
+
   ErrorController errorController = new ErrorController();
 
   bool isChanged = false;

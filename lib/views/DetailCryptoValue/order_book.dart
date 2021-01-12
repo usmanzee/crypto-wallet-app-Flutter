@@ -2,15 +2,15 @@ import 'package:crypto_template/component/CardDetail/AmountSell.dart';
 import 'package:crypto_template/component/CardDetail/BuyAmount.dart';
 import 'package:flutter/material.dart';
 
-class OpenOrders extends StatefulWidget {
+class OrderBook extends StatefulWidget {
   final Widget child;
 
-  OpenOrders({Key key, this.child}) : super(key: key);
+  OrderBook({Key key, this.child}) : super(key: key);
 
-  _OpenOrdersState createState() => _OpenOrdersState();
+  _OrderBookState createState() => _OrderBookState();
 }
 
-class _OpenOrdersState extends State<OpenOrders> {
+class _OrderBookState extends State<OrderBook> {
   @override
   Widget build(BuildContext context) {
     double mediaQuery = MediaQuery.of(context).size.width / 2.2;
@@ -62,7 +62,7 @@ class _OpenOrdersState extends State<OpenOrders> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Container(
-              height: 350.0,
+              height: 165.0,
               width: mediaQuery,
               child: ListView.builder(
                 shrinkWrap: true,
@@ -74,12 +74,12 @@ class _OpenOrdersState extends State<OpenOrders> {
               ),
             ),
             Container(
-              height: 350.0,
+              height: 165.0,
               width: 1.0,
               color: Theme.of(context).canvasColor,
             ),
             Container(
-              height: 350.0,
+              height: 165.0,
               width: mediaQuery,
               child: ListView.builder(
                 shrinkWrap: true,
