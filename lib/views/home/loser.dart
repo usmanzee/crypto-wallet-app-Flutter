@@ -82,7 +82,7 @@ Widget _marketsLoaded(
     BuildContext context, List<FormatedMarket> formatedMarketList) {
   return formatedMarketList.isEmpty
       ? EmptyMarkets()
-      : Container(
+      : Flexible(
           child: ListView.builder(
             shrinkWrap: true,
             primary: false,

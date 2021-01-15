@@ -1,14 +1,11 @@
 import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/models/user.dart';
 import 'package:crypto_template/views/DetailCryptoValue/order_book.dart';
+import 'package:crypto_template/views/market/market_drawer.dart';
 import 'package:crypto_template/views/trading/limit_order_form.dart';
-import 'package:crypto_template/views/trading/trading_drawer.dart';
+import 'package:crypto_template/views/trading/market_order_form.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter/services.dart';
-import 'package:share/share.dart';
 import 'package:crypto_template/views/DetailCryptoValue/openOrders.dart';
-import 'package:crypto_template/views/DetailCryptoValue/orderHistory.dart';
 
 class Trading extends StatefulWidget {
   @override
@@ -50,7 +47,7 @@ class _TradingState extends State<Trading> {
         elevation: 1,
       ),
       drawer: Drawer(
-        child: TradingDrawer(),
+        child: MarketDrawer(),
       ),
       body: SingleChildScrollView(
           child: Padding(
@@ -103,7 +100,7 @@ class _TradingState extends State<Trading> {
                     height: 250,
                     child: TabBarView(children: [
                       LimitOrderForm(),
-                      LimitOrderForm(),
+                      MarketOrderForm(),
                     ]),
                   ),
                 ],

@@ -1,3 +1,4 @@
+import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/controllers/fiat_deposit_controller.dart';
 import 'package:crypto_template/models/fiat_deposit_details.dart';
 import 'package:crypto_template/views/wallet/custom_appbar.dart';
@@ -22,6 +23,7 @@ class _DepositFiatState extends State<DepositFiat> {
   final WalletClass.Wallet wallet;
   _DepositFiatState({this.wallet});
   FiatDepositController depositController;
+  HomeController homeController = Get.find();
 
   var depositDetails;
   var loading = true;
@@ -32,7 +34,7 @@ class _DepositFiatState extends State<DepositFiat> {
         loading = true;
       });
       var response =
-          await get('http://10.121.121.112:3000/public_data/bank_details.json');
+          await get('http://10.121.121.111:3000/public_data/bank_details.json');
       var data = jsonDecode(response.body);
       // print(data);
       setState(() {
@@ -173,7 +175,7 @@ class _DepositFiatState extends State<DepositFiat> {
                                           flex: 1,
                                         ),
                                         Text(
-                                          'ID0D2741FBCA',
+                                          homeController.user.value.uid,
                                           style:
                                               TextStyle(fontFamily: "Popins"),
                                         ),
@@ -184,7 +186,8 @@ class _DepositFiatState extends State<DepositFiat> {
                                             icon: Icon(Icons.content_copy),
                                             tooltip: 'Copy Referance Id',
                                             onPressed: () {
-                                              _copyToClipboard('ID0D2741FBCA');
+                                              _copyToClipboard(homeController
+                                                  .user.value.uid);
                                             },
                                           ),
                                         ),

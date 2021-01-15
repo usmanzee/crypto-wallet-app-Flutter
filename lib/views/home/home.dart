@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:crypto_template/controllers/MarketController.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/component/modelGridHome.dart';
-import 'package:crypto_template/screen/crypto_detail_card_homeScreen/DetailCryptoValue/cardDetailHome.dart';
+import 'package:crypto_template/views/DetailCryptoValue/market_detail.dart';
 import 'package:crypto_template/views/home/gainer.dart';
 import 'package:crypto_template/views/home/loser.dart';
 import 'package:carousel_pro/carousel_pro.dart';
@@ -85,7 +85,7 @@ class Home extends StatelessWidget {
             /// Tab bar custom
             ///
             Container(
-              height: 500.0,
+              height: 300.0,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,15 +117,15 @@ class Home extends StatelessWidget {
                                       new Tab(
                                         child: Row(
                                           children: <Widget>[
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 4.0),
-                                              child: Icon(
-                                                IconData(0xe900,
-                                                    fontFamily: 'gainers'),
-                                                size: 15.0,
-                                              ),
-                                            ),
+                                            // Padding(
+                                            //   padding: const EdgeInsets.only(
+                                            //       left: 4.0),
+                                            //   child: Icon(
+                                            //     IconData(0xe900,
+                                            //         fontFamily: 'gainers'),
+                                            //     size: 15.0,
+                                            //   ),
+                                            // ),
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 8.0),
@@ -141,15 +141,15 @@ class Home extends StatelessWidget {
                                       new Tab(
                                         child: Row(
                                           children: <Widget>[
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 8.0),
-                                              child: Icon(
-                                                IconData(0xe901,
-                                                    fontFamily: 'loser'),
-                                                size: 15.0,
-                                              ),
-                                            ),
+                                            // Padding(
+                                            //   padding: const EdgeInsets.only(
+                                            //       left: 8.0),
+                                            //   child: Icon(
+                                            //     IconData(0xe901,
+                                            //         fontFamily: 'loser'),
+                                            //     size: 15.0,
+                                            //   ),
+                                            // ),
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 8.0),
@@ -199,10 +199,10 @@ class Card extends StatelessWidget {
       padding: const EdgeInsets.only(top: 3.0, bottom: 3.0),
       child: InkWell(
         onTap: () {
-          Navigator.of(context).push(PageRouteBuilder(
-              pageBuilder: (_, __, ___) => new cardDetailHome(
-                    item: item,
-                  )));
+          Get.to(MarketDetail(
+            item: item,
+            formatedMarket: formatedMarket,
+          ));
         },
         child: Container(
           height: 70.0,
@@ -242,7 +242,9 @@ class Card extends StatelessWidget {
                           Text(
                             formatedMarket.last.toString(),
                             style: TextStyle(
-                                color: item.chartColor,
+                                color: formatedMarket.isPositiveChange
+                                    ? Colors.greenAccent
+                                    : Colors.redAccent,
                                 fontFamily: "Gotik",
                                 fontSize: 13.5),
                           ),

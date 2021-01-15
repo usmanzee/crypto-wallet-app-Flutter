@@ -1,21 +1,40 @@
 import 'package:crypto_template/component/modelGridHome.dart';
+import 'package:crypto_template/controllers/market_detail_controller.dart';
+import 'package:crypto_template/models/formated_market.dart';
 import 'package:crypto_template/screen/crypto_detail_card_homeScreen/DetailCryptoValue/openOrders.dart';
 import 'package:crypto_template/screen/crypto_detail_card_homeScreen/DetailCryptoValue/orderHistory.dart';
+import 'package:crypto_template/views/market/market_detail_graph.dart';
+import 'package:crypto_template/views/market/market_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/component/style.dart';
 import 'package:flutter_sparkline/flutter_sparkline.dart';
+import 'package:get/get.dart';
 
-class cardDetailHome extends StatefulWidget {
+// class MarketDetail extends StatefulWidget {
+//   final gridHome item;
+//   final FormatedMarket formatedMarket;
+
+//   MarketDetail({Key key, this.item, this.formatedMarket}) : super(key: key);
+
+//   _MarketDetailState createState() => _MarketDetailState(item, formatedMarket);
+// }
+
+class MarketDetail extends StatelessWidget {
   final gridHome item;
+  final FormatedMarket formatedMarket;
 
-  cardDetailHome({Key key, this.item}) : super(key: key);
+  final MarketDetailController marketDetailController;
+  MarketDetail({this.item, this.formatedMarket})
+      : marketDetailController =
+            Get.put(MarketDetailController(formatedMarket: formatedMarket));
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final ScrollController _scrollController = ScrollController();
 
-  _cardDetailHomeState createState() => _cardDetailHomeState(item);
-}
+  // @override
+  // void initState() {
+  //   super.initState();
+  // }
 
-class _cardDetailHomeState extends State<cardDetailHome> {
-  gridHome item;
-  _cardDetailHomeState(this.item);
   @override
   Widget build(BuildContext context) {
     var grayText = TextStyle(
@@ -27,27 +46,49 @@ class _cardDetailHomeState extends State<cardDetailHome> {
         color: Theme.of(context).hintColor,
         fontFamily: "Popins",
         fontSize: 11.5);
-
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-
-      ///
-      /// Appbar
-      ///
+      key: _scaffoldKey,
       appBar: AppBar(
-        brightness: Brightness.dark,
         elevation: 0.0,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        title: Text(
-          item.name,
-          style: TextStyle(color: Theme.of(context).textSelectionColor),
+        backgroundColor: Theme.of(context).canvasColor,
+        title: GestureDetector(
+          onTap: () {
+            if (_scaffoldKey.currentState.isDrawerOpen) {
+              _scaffoldKey.currentState.openEndDrawer();
+            } else {
+              _scaffoldKey.currentState.openDrawer();
+            }
+          },
+          child: Row(children: [
+            Text(
+              formatedMarket.name.toUpperCase(),
+              style: TextStyle(
+                  color: Theme.of(context).textSelectionColor, fontSize: 18),
+            ),
+            Icon(
+              Icons.keyboard_arrow_down,
+              size: 24,
+              color: Theme.of(context).accentColor,
+            )
+          ]),
         ),
-        centerTitle: true,
+        // leadingWidth: 24,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            size: 24,
+          ),
+          onPressed: () {
+            Get.back();
+          },
+        ),
         iconTheme: IconThemeData(
-          color: Theme.of(context).hintColor,
+          color: Theme.of(context).textSelectionColor,
         ),
       ),
-
+      drawer: Drawer(
+        child: MarketDrawer(),
+      ),
       body: Column(
         children: <Widget>[
           Flexible(
@@ -60,40 +101,39 @@ class _cardDetailHomeState extends State<cardDetailHome> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      ///
-                      /// Calling header value
-                      ///
-                      _headerValue(),
+                      _headerValue(context),
                       SizedBox(
-                        height: 35.0,
+                        height: 8.0,
                       ),
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 30.0,
+                Container(
+                  width: double.infinity,
+                  height: 4,
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).hintColor.withOpacity(0.1)),
                 ),
+                Obx(() => loadGraphOption(
+                    context,
+                    marketDetailController.graphTypes.value,
+                    marketDetailController.selectedGraph.value,
+                    marketDetailController.selectedOption.value)),
                 Container(
                   height: 300.0,
                   child: Stack(
                     children: <Widget>[
-                      ///
-                      /// Calling vertical value grafik
-                      ///
-                      _verticalValueGrafik(),
-
-                      ///
-                      /// Calling sparkLine Grafik
-                      ///
-                      _sparkLineGrafic(),
+                      // _verticalValueGrafik(),
+                      // _horizontalValueGrafik(),
+                      Obx(() => MarketDetailGraph(
+                            selectedGraph:
+                                marketDetailController.selectedGraph.value,
+                          ))
+                      // _sparkLineGrafic(),
                     ],
                   ),
                 ),
 
-                ///
-                /// Calling horizontal value grafik
-                ///
-                _horizontalValueGrafik(),
                 SizedBox(
                   height: 20.0,
                 ),
@@ -101,42 +141,171 @@ class _cardDetailHomeState extends State<cardDetailHome> {
                 ///
                 /// Container for tab bar (open orders) and body value
                 ///
+
+                buildButtons(context),
                 Container(
                   height: 470.0,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Expanded(
-                        child: DefaultTabController(
-                          length: 2,
-                          child: new Scaffold(
-                            appBar: _tabBarCustomButton(),
-                            body: Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                              child: new TabBarView(
-                                children: [
-                                  openOrders(),
-                                  orderHistory(),
-                                ],
-                              ),
-                            ),
-                          ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                        child: Text(
+                          'Open Orders',
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
                         ),
                       ),
+                      openOrders(),
                     ],
                   ),
                 ),
               ],
             ),
           ),
-          _buttonBottom()
+          _buttonBottom(context)
         ],
       ),
     );
   }
 
-  Widget _buttonBottom() {
+  Widget loadGraphOption(
+      context, var graphTypes, var selectedGraph, var selectedOption) {
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Container(
+          height: 60,
+          child: Column(children: [
+            Row(
+              children: graphTypes.map<Widget>((graphType) {
+                return Row(children: [
+                  InkWell(
+                    onTap: () {
+                      marketDetailController.selectedGraph.assignAll(graphType);
+                    },
+                    child: Container(
+                      width: 60,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            offset: Offset(0.0, 1.0), //(x,y)
+                            blurRadius: 6.0,
+                          ),
+                        ],
+                        color: graphType['name'] == selectedGraph['name']
+                            ? Theme.of(context).accentColor
+                            : Theme.of(context).scaffoldBackgroundColor,
+                      ),
+                      padding: EdgeInsets.all(4.0),
+                      child: Center(
+                        child: Row(children: [
+                          Text(
+                            graphType['name'],
+                            style: TextStyle(
+                              color: graphType['name'] == selectedGraph['name']
+                                  ? Colors.white
+                                  : Theme.of(context).textSelectionColor,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Icon(
+                            Icons.keyboard_arrow_down,
+                            color: graphType['name'] == selectedGraph['name']
+                                ? Colors.white
+                                : Theme.of(context).textSelectionColor,
+                            size: 14,
+                          )
+                        ]),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 8.0,
+                  ),
+                ]);
+              }).toList(),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            if (selectedGraph['options'].length > 0)
+              Expanded(
+                child: Scrollbar(
+                  isAlwaysShown: true,
+                  controller: _scrollController,
+                  child: ListView.builder(
+                    controller: _scrollController,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: selectedGraph['options'].length,
+                    itemBuilder: (BuildContext context, int index) => Card(
+                      child: InkWell(
+                        onTap: () {
+                          marketDetailController.selectedOption.value =
+                              selectedGraph['options'][index]['key'];
+                        },
+                        child: Container(
+                          width: 50,
+                          color: selectedOption ==
+                                  selectedGraph['options'][index]['key']
+                              ? Theme.of(context).accentColor
+                              : Theme.of(context).scaffoldBackgroundColor,
+                          padding: EdgeInsets.all(4.0),
+                          child: Center(
+                            child: Text(
+                              selectedGraph['options'][index]['key'],
+                              style: TextStyle(
+                                  fontSize: 10,
+                                  color: selectedOption ==
+                                          selectedGraph['options'][index]['key']
+                                      ? Colors.white
+                                      : Theme.of(context).textSelectionColor,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            // Wrap(spacing: 8, runSpacing: 8, children: [
+            //   for (var option in selectedGraph['options'])
+            //     InkWell(
+            //       onTap: () {
+            //         // setState(() {
+            //         //   selectedOption = option;
+            //         // });
+            //       },
+            //       child: Container(
+            //         width: 50,
+            //         color: selectedOption == option
+            //             ? Theme.of(context).accentColor
+            //             : Theme.of(context).canvasColor,
+            //         padding: EdgeInsets.all(4.0),
+            //         child: Center(
+            //           child: Text(
+            //             option,
+            //             style: TextStyle(
+            //                 fontSize: 10,
+            //                 color: selectedOption == option
+            //                     ? Colors.white
+            //                     : Theme.of(context).textSelectionColor,
+            //                 fontWeight: FontWeight.w500),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            // ]),
+          ])),
+    );
+  }
+
+  Widget _buttonBottom(context) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Row(
@@ -213,7 +382,7 @@ class _cardDetailHomeState extends State<cardDetailHome> {
     );
   }
 
-  Widget _tabBarCustomButton() {
+  Widget _tabBarCustomButton(context) {
     return PreferredSize(
       preferredSize: Size.fromHeight(53.0), // here the desired height
       child: new AppBar(
@@ -253,16 +422,18 @@ class _cardDetailHomeState extends State<cardDetailHome> {
     );
   }
 
-  Widget _headerValue() {
+  Widget _headerValue(context) {
     return Column(
       children: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
-              item.valueMarket,
+              formatedMarket.last.toString(),
               style: TextStyle(
-                  color: item.chartColor,
+                  color: formatedMarket.isPositiveChange
+                      ? Colors.greenAccent
+                      : Colors.redAccent,
                   fontSize: 36.0,
                   fontFamily: "Sans",
                   fontWeight: FontWeight.w700),
@@ -284,7 +455,7 @@ class _cardDetailHomeState extends State<cardDetailHome> {
                     SizedBox(
                       height: 7.0,
                     ),
-                    Text("60.8950")
+                    Text(formatedMarket.high.toString())
                   ],
                 ),
                 Row(
@@ -299,7 +470,7 @@ class _cardDetailHomeState extends State<cardDetailHome> {
                             fontSize: 11.5),
                       ),
                     ),
-                    Text("60.0300")
+                    Text(formatedMarket.low.toString())
                   ],
                 )
               ],
@@ -321,8 +492,12 @@ class _cardDetailHomeState extends State<cardDetailHome> {
                 Padding(
                   padding: const EdgeInsets.only(left: 10.0),
                   child: Text(
-                    item.valuePercent,
-                    style: TextStyle(color: item.chartColor),
+                    formatedMarket.priceChangePercent,
+                    style: TextStyle(
+                      color: formatedMarket.isPositiveChange
+                          ? Colors.greenAccent
+                          : Colors.redAccent,
+                    ),
                   ),
                 ),
               ],
@@ -339,7 +514,7 @@ class _cardDetailHomeState extends State<cardDetailHome> {
                         fontSize: 11.5),
                   ),
                 ),
-                Text("906.8")
+                Text(formatedMarket.high.toString())
               ],
             )
           ],
@@ -365,7 +540,7 @@ class _cardDetailHomeState extends State<cardDetailHome> {
     );
   }
 
-  Widget _horizontalValueGrafik() {
+  Widget _horizontalValueGrafik(context) {
     return Padding(
       padding: const EdgeInsets.only(top: 10.0),
       child: Row(
@@ -418,10 +593,7 @@ class _cardDetailHomeState extends State<cardDetailHome> {
     );
   }
 
-
-
-
-  Widget _verticalValueGrafik() {
+  Widget _verticalValueGrafik(context) {
     return Padding(
       padding: const EdgeInsets.only(right: 8.0),
       child: Align(
@@ -435,7 +607,7 @@ class _cardDetailHomeState extends State<cardDetailHome> {
               Stack(children: <Widget>[
                 Padding(
                     padding: const EdgeInsets.only(top: 8.0, right: 70.0),
-                    child: _line()),
+                    child: _line(context)),
                 Align(
                     alignment: Alignment.centerRight,
                     child: Text(
@@ -449,7 +621,7 @@ class _cardDetailHomeState extends State<cardDetailHome> {
               Stack(children: <Widget>[
                 Padding(
                     padding: const EdgeInsets.only(top: 8.0, right: 70.0),
-                    child: _line()),
+                    child: _line(context)),
                 Align(
                     alignment: Alignment.centerRight,
                     child: Text(
@@ -463,7 +635,7 @@ class _cardDetailHomeState extends State<cardDetailHome> {
               Stack(children: <Widget>[
                 Padding(
                     padding: const EdgeInsets.only(top: 8.0, right: 70.0),
-                    child: _line()),
+                    child: _line(context)),
                 Align(
                     alignment: Alignment.centerRight,
                     child: Text(
@@ -477,7 +649,7 @@ class _cardDetailHomeState extends State<cardDetailHome> {
               Stack(children: <Widget>[
                 Padding(
                     padding: const EdgeInsets.only(top: 8.0, right: 70.0),
-                    child: _line()),
+                    child: _line(context)),
                 Align(
                     alignment: Alignment.centerRight,
                     child: Text(
@@ -491,7 +663,7 @@ class _cardDetailHomeState extends State<cardDetailHome> {
               Stack(children: <Widget>[
                 Padding(
                     padding: const EdgeInsets.only(top: 8.0, right: 70.0),
-                    child: _line()),
+                    child: _line(context)),
                 Align(
                     alignment: Alignment.centerRight,
                     child: Text(
@@ -505,7 +677,7 @@ class _cardDetailHomeState extends State<cardDetailHome> {
               Stack(children: <Widget>[
                 Padding(
                     padding: const EdgeInsets.only(top: 8.0, right: 30.0),
-                    child: _line()),
+                    child: _line(context)),
                 Align(
                     alignment: Alignment.centerRight,
                     child: Text(
@@ -523,9 +695,7 @@ class _cardDetailHomeState extends State<cardDetailHome> {
     );
   }
 
-
-
-  Widget _line() {
+  Widget _line(context) {
     return Container(
       height: 0.2,
       width: double.infinity,
@@ -533,12 +703,77 @@ class _cardDetailHomeState extends State<cardDetailHome> {
     );
   }
 
-  Widget _backgroundLine() {
+  Widget _backgroundLine(context) {
     return Container(
         height: 13.2,
         width: double.infinity,
         color: Theme.of(context).canvasColor);
   }
+}
 
+Widget buildButtons(context) {
+  return Wrap(
+    alignment: WrapAlignment.spaceEvenly,
+    children: <Widget>[
+      button(
+        context,
+        "Time sharing",
+      ),
+      button(
+        context,
+        "k line",
+      ),
+      button(
+        context,
+        "MA",
+      ),
+      button(
+        context,
+        "BOLL",
+      ),
+      button(
+        context,
+        "hide",
+      ),
+      button(
+        context,
+        "MACD",
+      ),
+      button(
+        context,
+        "KDJ",
+      ),
+      button(
+        context,
+        "RSI",
+      ),
+      button(
+        context,
+        "WR",
+      ),
+      button(
+        context,
+        "Hide side view",
+      ),
+      button(
+        context,
+        "Show volume",
+      ),
+      button(
+        context,
+        "切换中英文",
+      ),
+    ],
+  );
+}
 
+Widget button(context, String text, {VoidCallback onPressed}) {
+  return FlatButton(
+      onPressed: () {
+        if (onPressed != null) {
+          onPressed();
+        }
+      },
+      child: Text("$text"),
+      color: Theme.of(context).canvasColor);
 }

@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:crypto_template/Library/intro_views_flutter-2.4.0/lib/Models/page_view_model.dart';
 import 'package:crypto_template/Library/intro_views_flutter-2.4.0/lib/intro_views_flutter.dart';
-import 'package:crypto_template/views/setting/themes.dart';
 import 'package:crypto_template/component/style.dart';
 import 'package:get/get.dart';
 
 class OnBoarding extends StatelessWidget {
-  final ThemeBloc themeBloc;
-  OnBoarding({this.themeBloc});
   @override
   Widget build(BuildContext context) {
     return IntroViewsFlutter(
@@ -16,14 +13,14 @@ class OnBoarding extends StatelessWidget {
       skipText: Text(
         "SKIP",
         style: txtStyle.descriptionStyle.copyWith(
-            color: colorStyle.primaryColor,
+            color: Theme.of(context).accentColor,
             fontWeight: FontWeight.w800,
             letterSpacing: 1.0),
       ),
       doneText: Text(
         "DONE",
         style: txtStyle.descriptionStyle.copyWith(
-            color: colorStyle.primaryColor,
+            color: Theme.of(context).accentColor,
             fontWeight: FontWeight.w800,
             letterSpacing: 1.0),
       ),
@@ -43,7 +40,7 @@ final pages = [
       // iconColor: Colors.black,
       // bubbleBackgroundColor: Colors.black,
       title: Text(
-        'Crypto Template',
+        'B4U Wallet And Exchange',
         style: txtStyle.headerStyle,
       ),
       body: Container(

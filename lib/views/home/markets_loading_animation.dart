@@ -6,16 +6,14 @@ class MarketsLoadingAnimation extends StatelessWidget {
   MarketsLoadingAnimation({this.context});
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: Container(
-        child: ListView.builder(
-          shrinkWrap: true,
-          primary: false,
-          itemCount: 10,
-          itemBuilder: (ctx, i) {
-            return loadingGainers(ctx);
-          },
-        ),
+    return Expanded(
+      child: ListView.builder(
+        shrinkWrap: true,
+        primary: false,
+        itemCount: 10,
+        itemBuilder: (ctx, i) {
+          return loadingGainers(ctx);
+        },
       ),
     );
   }

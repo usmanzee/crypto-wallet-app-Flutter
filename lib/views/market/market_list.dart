@@ -2,6 +2,7 @@ import 'package:crypto_template/component/market/btcModel.dart';
 import 'package:crypto_template/controllers/MarketController.dart';
 import 'package:crypto_template/models/formated_market.dart';
 import 'package:crypto_template/screen/market/detailCrypto/btcDetail.dart';
+import 'package:crypto_template/views/market/market_detail_graph.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:get/get.dart';

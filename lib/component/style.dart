@@ -27,12 +27,12 @@ class txtStyle {
       fontFamily: "Popins",
       fontSize: 21.0,
       fontWeight: FontWeight.w800,
-      color: Color(0xFF45C2DA),
+      color: Colors.black,
       letterSpacing: 1.5);
 
   static final descriptionStyle = TextStyle(
       fontFamily: "Sans",
       fontSize: 15.0,
-      color: Colors.white70,
+      color: Colors.black45,
       fontWeight: FontWeight.w400);
 }

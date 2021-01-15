@@ -1,17 +1,16 @@
 import 'package:crypto_template/component/market/btcModel.dart';
 import 'package:crypto_template/controllers/MarketController.dart';
 import 'package:crypto_template/models/formated_market.dart';
-import 'package:crypto_template/screen/market/detailCrypto/btcDetail.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:get/get.dart';
 
-class TradingDrawer extends StatefulWidget {
+class MarketDrawer extends StatefulWidget {
   @override
-  _TradingDrawerState createState() => _TradingDrawerState();
+  _MarketDrawerState createState() => _MarketDrawerState();
 }
 
-class _TradingDrawerState extends State<TradingDrawer>
+class _MarketDrawerState extends State<MarketDrawer>
     with SingleTickerProviderStateMixin {
   final MarketController marketController = Get.find();
   final List<Widget> myTabs = [

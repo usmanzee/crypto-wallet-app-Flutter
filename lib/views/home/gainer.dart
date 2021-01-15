@@ -82,7 +82,7 @@ Widget _marketsLoaded(
     BuildContext context, List<FormatedMarket> formatedMarketList) {
   return formatedMarketList.isEmpty
       ? EmptyMarkets()
-      : Container(
+      : Flexible(
           child: ListView.builder(
             shrinkWrap: true,
             primary: false,
@@ -98,12 +98,7 @@ Widget listPriceGainers(FormatedMarket formatedMarket, BuildContext ctx) {
   return Padding(
     padding: const EdgeInsets.only(left: 12.0, top: 20.0),
     child: InkWell(
-      onTap: () {
-        // Navigator.of(ctx).push(PageRouteBuilder(
-        //     pageBuilder: (_, __, ___) => new gainersDetail(
-        //           item: item,
-        //         )));
-      },
+      onTap: () {},
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

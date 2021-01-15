@@ -39,6 +39,7 @@ dependencies:
   crypto_font_icons: ^0.1.0+1
   share: ^0.6.5+4
   connectivity: ^2.0.2
+  k_chart: ^0.1.2
 
 dev_dependencies: 
   flutter_test:
@@ -246,6 +247,8 @@ flutter:
     - assets/image/Template_5/alarm.png
     - assets/image/Template_5/creditCard.png
     - assets/image/google_authenticator.png
+    - assets/depth.json
+    - assets/graph_type.json
 
   # To add assets to your application, add an assets section, like this:
   # assets:

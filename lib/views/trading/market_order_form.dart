@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class LimitOrderForm extends StatefulWidget {
+class MarketOrderForm extends StatefulWidget {
   @override
-  _LimitOrderFormState createState() => _LimitOrderFormState();
+  _MarketOrderFormState createState() => _MarketOrderFormState();
 }
 
-class _LimitOrderFormState extends State<LimitOrderForm> {
+class _MarketOrderFormState extends State<MarketOrderForm> {
   @override
   Widget build(BuildContext context) {
     return Row(children: [

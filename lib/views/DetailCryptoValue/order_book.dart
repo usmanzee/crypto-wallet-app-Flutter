@@ -108,16 +108,9 @@ class _OrderBookState extends State<OrderBook> {
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: Text(
-                item.number,
-                style: TextStyle(
-                    color: Theme.of(context).hintColor,
-                    fontFamily: "Gotik",
-                    fontSize: 15.0),
+                item.value,
+                style: TextStyle(fontFamily: "Gotik", fontSize: 15.0),
               ),
-            ),
-            Text(
-              item.value,
-              style: TextStyle(fontFamily: "Gotik", fontSize: 15.0),
             ),
             Text(
               item.price,
@@ -150,18 +143,11 @@ class _OrderBookState extends State<OrderBook> {
                   fontFamily: "Gotik",
                   fontSize: 15.0),
             ),
-            Text(
-              item.value,
-              style: TextStyle(fontFamily: "Gotik", fontSize: 15.0),
-            ),
             Padding(
               padding: const EdgeInsets.only(right: 8.0),
               child: Text(
-                item.number,
-                style: TextStyle(
-                    color: Theme.of(context).hintColor,
-                    fontFamily: "Gotik",
-                    fontSize: 15.0),
+                item.value,
+                style: TextStyle(fontFamily: "Gotik", fontSize: 15.0),
               ),
             ),
           ],
