@@ -1,15 +1,15 @@
 import 'package:crypto_template/component/CardDetail/orderHistory.dart';
 import 'package:flutter/material.dart';
 
-class orderHistory extends StatefulWidget {
+class OrderHistory extends StatefulWidget {
   final Widget child;
 
-  orderHistory({Key key, this.child}) : super(key: key);
+  OrderHistory({Key key, this.child}) : super(key: key);
 
-  _orderHistoryState createState() => _orderHistoryState();
+  _OrderHistoryState createState() => _OrderHistoryState();
 }
 
-class _orderHistoryState extends State<orderHistory> {
+class _OrderHistoryState extends State<OrderHistory> {
   @override
   Widget build(BuildContext context) {
     return Column(

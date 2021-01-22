@@ -36,7 +36,7 @@ class TwoFA extends StatelessWidget {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          iconTheme: IconThemeData(color: colorStyle.fontColorDarkTitle),
+          iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           automaticallyImplyLeading: true,
@@ -44,22 +44,8 @@ class TwoFA extends StatelessWidget {
         body: Container(
           height: double.infinity,
           width: double.infinity,
-
-          /// Set Background image in splash screen layout (Click to open code)
-          decoration: BoxDecoration(color: colorStyle.whiteBacground),
           child: Stack(
             children: <Widget>[
-              ///
-              /// Set image in top
-              //
-              // Container(
-              //   height: 219.0,
-              //   width: double.infinity,
-              //   decoration: BoxDecoration(
-              //       image: DecorationImage(
-              //           image: AssetImage("assets/image/loginHeader.png"),
-              //           fit: BoxFit.cover)),
-              // ),
               Container(
                 height: double.infinity,
                 width: double.infinity,
@@ -109,13 +95,13 @@ class TwoFA extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(0.0)),
-                              color: colorStyle.primaryColor,
+                              color: Theme.of(context).primaryColor,
                             ),
                             child: Center(
                               child: Text(
                                 "Sign In",
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    color: Theme.of(context).textSelectionColor,
                                     fontWeight: FontWeight.w400,
                                     fontSize: 20.0,
                                     letterSpacing: 1.0),

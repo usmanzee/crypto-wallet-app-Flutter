@@ -1,22 +1,15 @@
 import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/views/notification/%20notification_list.dart';
 import 'package:crypto_template/views/referral_program/referral_program.dart';
 import 'package:crypto_template/views/security/security.dart';
-// import 'package:crypto_template/views/setting/SeeAllTemplate.dart';
 import 'package:crypto_template/views/setting/themes.dart';
 import 'package:crypto_template/views/webview_container.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:crypto_template/component/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:share/share.dart';
 
 class Setting extends StatelessWidget {
   final HomeController homeController = Get.find();
-  final ThemeBloc themeBloc;
-  Setting({Key key, this.themeBloc}) : super(key: key);
-  final bool theme = true;
-  // String _img = "assets/image/setting/lightMode.png";
 
   void _handleLogoutClick() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -49,59 +42,33 @@ class Setting extends StatelessWidget {
         ),
         iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
         elevation: 0.8,
+        actions: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  if (Get.isDarkMode) {
+                    Get.changeTheme(Themes.lightTheme);
+                  } else {
+                    Get.changeTheme(Themes.darkTheme);
+                  }
+                },
+                child: Icon(
+                  Get.isDarkMode ? Icons.wb_sunny : Icons.nights_stay,
+                  size: 26.0,
+                ),
+              )),
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {},
+                child: Icon(Icons.support_agent),
+              )),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            // Padding(
-            //   padding: const EdgeInsets.only(top: 40.0),
-            //   child: Center(
-            //       child: Text(
-            //     "Settings",
-            //     style: TextStyle(
-            //         fontFamily: "Sans",
-            //         fontSize: 19.5,
-            //         fontWeight: FontWeight.w700),
-            //   )),
-            // ),
-            // SizedBox(
-            //   height: 20.0,
-            // ),
-
-            ///
-            /// Image header
-            ///
-            // InkWell(
-            //   onTap: () {
-            //     ///
-            //     /// Change image header and theme color if user click image
-            //     ///
-            //     if (theme == true) {
-            //       setState(() {
-            //         _img = "assets/image/setting/nightMode.png";
-            //         theme = false;
-            //       });
-            //       themeBloc.selectedTheme.add(_buildLightTheme());
-            //     } else {
-            //       themeBloc.selectedTheme.add(_buildDarkTheme());
-            //       setState(() {
-            //         theme = true;
-            //         _img = "assets/image/setting/lightMode.png";
-            //       });
-            //     }
-            //   },
-            //   child: Padding(
-            //     padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-            //     child: Container(
-            //       height: 125.0,
-            //       width: double.infinity,
-            //       decoration: BoxDecoration(
-            //           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            //           image: DecorationImage(
-            //               image: AssetImage(_img), fit: BoxFit.cover)),
-            //     ),
-            //   ),
-            // ),
             Obx(() {
               if (homeController.isLoggedIn) {
                 return Container(
@@ -110,48 +77,44 @@ class Setting extends StatelessWidget {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Icon(
-                                Icons.account_circle,
-                                size: 32.0,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 4.0),
-                                child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        homeController.user.value.email != null
-                                            ? homeController.user.value.email
-                                            : '---',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w300,
-                                          fontFamily: "Popins",
-                                          letterSpacing: 1.5,
-                                        ),
-                                      ),
-                                      Text(
-                                        homeController.user.value.uid != null
-                                            ? 'ID: ' +
-                                                homeController.user.value.uid
-                                            : '---',
-                                        style: TextStyle(
-                                          color: Theme.of(context)
-                                              .hintColor
-                                              .withOpacity(0.5),
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w100,
-                                          fontFamily: "Popins",
-                                          letterSpacing: 1.5,
-                                        ),
-                                      ),
-                                    ]),
-                              ),
-                            ]),
+                        Row(children: [
+                          Icon(
+                            Icons.account_circle,
+                            size: 32.0,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 4.0),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    homeController.user.value.email != null
+                                        ? homeController.user.value.email
+                                        : '---',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w300,
+                                      fontFamily: "Popins",
+                                      letterSpacing: 1.5,
+                                    ),
+                                  ),
+                                  Text(
+                                    homeController.user.value.uid != null
+                                        ? 'ID: ' + homeController.user.value.uid
+                                        : '---',
+                                    style: TextStyle(
+                                      color: Theme.of(context)
+                                          .hintColor
+                                          .withOpacity(0.5),
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w100,
+                                      fontFamily: "Popins",
+                                      letterSpacing: 1.5,
+                                    ),
+                                  ),
+                                ]),
+                          ),
+                        ]),
                       ]),
                 );
               } else {
@@ -220,12 +183,11 @@ class Setting extends StatelessWidget {
                           "Referral ID"))
                   : Container();
             }),
-
             Obx(() {
               return (homeController.isLoggedIn)
                   ? InkWell(
                       onTap: () {
-                        Get.off(NotificationList());
+                        Get.toNamed('/notifications');
                       },
                       child: listSetting(
                           context,
@@ -291,7 +253,7 @@ class Setting extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(0.0)),
                         border: Border.all(
-                          color: colorStyle.primaryColor,
+                          color: Theme.of(context).primaryColor,
                           width: 0.35,
                         ),
                       ),
@@ -299,7 +261,7 @@ class Setting extends StatelessWidget {
                         child: Text(
                           "Logout",
                           style: TextStyle(
-                              color: colorStyle.primaryColor,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w400,
                               fontSize: 16.5,
                               letterSpacing: 1.2),
@@ -368,46 +330,5 @@ class Setting extends StatelessWidget {
         decoration: BoxDecoration(color: Theme.of(context).hintColor),
       ),
     );
-  }
-
-  ///
-  /// Change to mode light theme
-  ///
-  DemoTheme _buildLightTheme() {
-    return DemoTheme(
-        'light',
-        ThemeData(
-          brightness: Brightness.light,
-          accentColor: colorStyle.primaryColor,
-          primaryColor: colorStyle.primaryColor,
-          buttonColor: colorStyle.primaryColor,
-          cardColor: colorStyle.cardColorLight,
-          textSelectionColor: colorStyle.fontColorLight,
-          scaffoldBackgroundColor: Color(0xFFFDFDFD),
-          canvasColor: colorStyle.whiteBacground,
-          dividerColor: colorStyle.iconColorLight,
-          hintColor: colorStyle.fontSecondaryColorLight,
-        ));
-  }
-
-  ///
-  /// Change to mode dark theme
-  ///
-  DemoTheme _buildDarkTheme() {
-    return DemoTheme(
-        'dark',
-        ThemeData(
-            brightness: Brightness.dark,
-            scaffoldBackgroundColor: colorStyle.background,
-            backgroundColor: colorStyle.blackBackground,
-            dividerColor: colorStyle.iconColorDark,
-            accentColor: colorStyle.primaryColor,
-            primaryColor: colorStyle.primaryColor,
-            hintColor: colorStyle.fontSecondaryColorDark,
-            buttonColor: colorStyle.primaryColor,
-            canvasColor: colorStyle.grayBackground,
-            cardColor: colorStyle.grayBackground,
-            textSelectionColor: colorStyle.fontColorDark,
-            textSelectionHandleColor: colorStyle.fontColorDarkTitle));
   }
 }

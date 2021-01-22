@@ -1,22 +1,36 @@
-import 'package:crypto_template/component/CardDetail/AmountSell.dart';
-import 'package:crypto_template/component/CardDetail/BuyAmount.dart';
+import 'package:crypto_template/component/no_data.dart';
+import 'package:crypto_template/controllers/open_orders_controller.dart';
+import 'package:crypto_template/models/formated_market.dart';
+import 'package:crypto_template/models/open_order.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class OpenOrders extends StatefulWidget {
   final Widget child;
+  final FormatedMarket formatedMarket;
 
-  OpenOrders({Key key, this.child}) : super(key: key);
+  OpenOrders({Key key, this.child, this.formatedMarket}) : super(key: key);
 
-  _OpenOrdersState createState() => _OpenOrdersState();
+  _OpenOrdersState createState() =>
+      _OpenOrdersState(formatedMarket: formatedMarket);
 }
 
 class _OpenOrdersState extends State<OpenOrders> {
+  final FormatedMarket formatedMarket;
+  _OpenOrdersState({this.formatedMarket});
+  OpenOrdersController openOrdersController;
+
+  @override
+  void initState() {
+    openOrdersController =
+        Get.put(OpenOrdersController(formatedMarket: formatedMarket));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    double mediaQuery = MediaQuery.of(context).size.width / 2.2;
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Container(
           color: Theme.of(context).canvasColor,
@@ -30,21 +44,39 @@ class _OpenOrdersState extends State<OpenOrders> {
                 Padding(
                   padding: const EdgeInsets.only(left: 12.0),
                   child: Text(
-                    "Buy Amount",
+                    "Date",
                     style: TextStyle(
                         color: Theme.of(context).hintColor,
                         fontFamily: "Popins"),
                   ),
                 ),
                 Text(
-                  "Price",
+                  "Price(${formatedMarket.quoteUnit.toUpperCase()})",
                   style: TextStyle(
                       color: Theme.of(context).hintColor, fontFamily: "Popins"),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 10.0),
                   child: Text(
-                    "Amount Sell",
+                    "Amount(${formatedMarket.baseUnit.toUpperCase()})",
+                    style: TextStyle(
+                        color: Theme.of(context).hintColor,
+                        fontFamily: "Popins"),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: Text(
+                    "Value",
+                    style: TextStyle(
+                        color: Theme.of(context).hintColor,
+                        fontFamily: "Popins"),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: Text(
+                    "Filled",
                     style: TextStyle(
                         color: Theme.of(context).hintColor,
                         fontFamily: "Popins"),
@@ -57,50 +89,52 @@ class _OpenOrdersState extends State<OpenOrders> {
         SizedBox(
           height: 10.0,
         ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Container(
-              height: 350.0,
-              width: mediaQuery,
-              child: ListView.builder(
-                shrinkWrap: true,
-                primary: false,
-                itemCount: buyAmountList.length,
-                itemBuilder: (BuildContext ctx, int i) {
-                  return _buyAmount(mediaQuery, buyAmountList[i]);
-                },
-              ),
-            ),
-            Container(
-              height: 350.0,
-              width: 1.0,
-              color: Theme.of(context).canvasColor,
-            ),
-            Container(
-              height: 350.0,
-              width: mediaQuery,
-              child: ListView.builder(
-                shrinkWrap: true,
-                primary: false,
-                itemCount: amountSellList.length,
-                itemBuilder: (BuildContext ctx, int i) {
-                  return _amountSell(mediaQuery, amountSellList[i]);
-                },
-              ),
-            ),
-          ],
-        )
+        Obx(() {
+          if (openOrdersController.isLoading.value)
+            return Container(
+                width: double.infinity,
+                height: 200,
+                alignment: Alignment.center,
+                child: CircularProgressIndicator());
+          else
+            return _openOrdersLoaded(
+                context, openOrdersController.openOrdersList.value);
+        }),
       ],
     );
   }
 
-  Widget _buyAmount(double _width, buyAmount item) {
+  Widget _openOrdersLoaded(BuildContext context, List<OpenOrder> openOrders) {
+    return openOrders.isEmpty
+        ? NoData()
+        : Container(
+            height: 300.0,
+            child: ListView.builder(
+              shrinkWrap: true,
+              primary: false,
+              itemCount: openOrders.length,
+              itemBuilder: (BuildContext ctx, int i) {
+                return _openOrders(openOrders[i]);
+              },
+            ),
+          );
+  }
+
+  Widget _openOrders(OpenOrder openOrder) {
+    var executedVolume = double.parse(openOrder.originVolume) -
+        double.parse(openOrder.remainingVolume);
+    var remainingAmount = double.parse(openOrder.remainingVolume);
+    var total =
+        double.parse(openOrder.originVolume) * double.parse(openOrder.price);
+    var filled =
+        ((executedVolume / double.parse(openOrder.originVolume)) * 100);
+    var priceFixed = formatedMarket.pricePrecision;
+    var amountFixed = formatedMarket.amountPrecision;
+    String formattedDate = DateFormat('MM-dd').format(openOrder.createdAt);
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 19.0),
       child: Container(
-        width: _width,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,62 +142,57 @@ class _OpenOrdersState extends State<OpenOrders> {
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: Text(
-                item.number,
+                formattedDate,
                 style: TextStyle(
-                    color: Theme.of(context).hintColor,
+                    color:
+                        Theme.of(context).textSelectionColor.withOpacity(0.7),
                     fontFamily: "Gotik",
                     fontSize: 15.0),
               ),
             ),
             Text(
-              item.value,
-              style: TextStyle(fontFamily: "Gotik", fontSize: 15.0),
+              (double.parse(openOrder.price)).toStringAsFixed(priceFixed),
+              style: TextStyle(
+                fontFamily: "Gotik",
+                fontSize: 15.0,
+                color: openOrder.side == 'buy'
+                    ? Color(0xFF00C087)
+                    : Colors.redAccent.withOpacity(0.8),
+              ),
             ),
             Text(
-              item.price,
+              remainingAmount.toStringAsFixed(amountFixed),
               style: TextStyle(
-                  color: Colors.greenAccent,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: "Gotik",
-                  fontSize: 15.0),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _amountSell(double _width, amountSell item) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 19.0),
-      child: Container(
-        width: _width,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              item.price,
-              style: TextStyle(
-                  color: Colors.red,
+                  color: openOrder.side == 'buy'
+                      ? Color(0xFF00C087)
+                      : Colors.redAccent.withOpacity(0.8),
                   fontWeight: FontWeight.w700,
                   fontFamily: "Gotik",
                   fontSize: 15.0),
             ),
             Text(
-              item.value,
-              style: TextStyle(fontFamily: "Gotik", fontSize: 15.0),
+              total.toStringAsFixed(amountFixed),
+              style: TextStyle(
+                  color: openOrder.side == 'buy'
+                      ? Color(0xFF00C087)
+                      : Colors.redAccent.withOpacity(0.8),
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Gotik",
+                  fontSize: 15.0),
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 8.0),
+              padding: const EdgeInsets.only(right: 5.0),
               child: Text(
-                item.number,
+                filled.toString(),
                 style: TextStyle(
-                    color: Theme.of(context).hintColor,
+                    color: openOrder.side == 'buy'
+                        ? Color(0xFF00C087)
+                        : Colors.redAccent.withOpacity(0.8),
+                    fontWeight: FontWeight.w700,
                     fontFamily: "Gotik",
                     fontSize: 15.0),
               ),
-            ),
+            )
           ],
         ),
       ),

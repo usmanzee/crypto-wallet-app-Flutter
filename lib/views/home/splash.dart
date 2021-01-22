@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:crypto_template/controllers/SplashController.dart';
+import 'package:crypto_template/controllers/splash_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/views/setting/themes.dart';
 import 'package:shared_preferences/shared_preferences.dart';

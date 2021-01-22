@@ -12,10 +12,11 @@ import 'package:flutter/services.dart';
 import 'package:connectivity/connectivity.dart';
 
 class HomeController extends GetxController {
+  final int activeNavIndex = Get.arguments['selectedNavIndex'];
   final _hasConnection = true.obs;
   final _previousConnection = false.obs;
   final _isLoggedIn = false.obs;
-  final _selectedNavIndex = 0.obs;
+  var _selectedNavIndex = 0.obs;
   var marketList = List<Market>().obs;
   var user = new User().obs;
   var deviceMacAddress = 'unknown'.obs;
@@ -42,7 +43,6 @@ class HomeController extends GetxController {
 
   @override
   void onInit() async {
-    // fetchMacAddress();
     bool isLoggedIn = await isUserLoggedIn();
     if (isLoggedIn) {
       fetchUser();

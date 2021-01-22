@@ -99,10 +99,8 @@ Widget listPriceloser(FormatedMarket formatedMarket, BuildContext ctx) {
     padding: const EdgeInsets.only(left: 12.0, top: 20.0),
     child: InkWell(
       onTap: () {
-        // Navigator.of(ctx).push(PageRouteBuilder(
-        //     pageBuilder: (_, __, ___) => new loserDetail(
-        //           item: item,
-        //         )));
+        Get.toNamed('market-detail',
+            arguments: {'formatedMarket': formatedMarket});
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,

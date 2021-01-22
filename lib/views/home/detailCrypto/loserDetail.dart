@@ -18,7 +18,6 @@ class _loserDetailState extends State<loserDetail> {
   _loserDetailState({this.item});
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
@@ -64,12 +63,11 @@ class _loserDetailState extends State<loserDetail> {
                   height: 300.0,
                   child: Stack(
                     children: <Widget>[
-                    ///
+                      ///
                       /// Calling vertical value grafik
                       ///
                       _verticalValueGrafik(),
-                     
-                     
+
                       ///
                       /// Calling sparkLine Grafik
                       ///
@@ -119,7 +117,6 @@ class _loserDetailState extends State<loserDetail> {
       ),
     );
   }
-
 
   Widget _buttonBottom() {
     return Padding(
@@ -197,8 +194,6 @@ class _loserDetailState extends State<loserDetail> {
       ),
     );
   }
-
-
 
   Widget _line() {
     return Container(
@@ -303,7 +298,6 @@ class _loserDetailState extends State<loserDetail> {
     );
   }
 
-  
   Widget _verticalValueGrafik() {
     return Padding(
       padding: const EdgeInsets.only(right: 8.0),
@@ -406,40 +400,38 @@ class _loserDetailState extends State<loserDetail> {
     );
   }
 
-
-
   Widget _sparkLineGrafic() {
     return Padding(
-                        padding: const EdgeInsets.only(bottom: 10.0),
-                        child: new Sparkline(
-                          data: [
-                            0.0,
-                            0.5,
-                            0.9,
-                            1.4,
-                            2.2,
-                            1.0,
-                            3.3,
-                            0.0,
-                            -0.5,
-                            -1.0,
-                            -0.5,
-                            0.0,
-                            0.0
-                          ],
-                          lineWidth: 0.3,
-                          fillMode: FillMode.below,
-                          lineColor: Colors.greenAccent,
-                          fillGradient: new LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Colors.greenAccent.withOpacity(0.2),
-                              Colors.greenAccent.withOpacity(0.01)
-                            ],
-                          ),
-                        ),
-                      );
+      padding: const EdgeInsets.only(bottom: 10.0),
+      child: new Sparkline(
+        data: [
+          0.0,
+          0.5,
+          0.9,
+          1.4,
+          2.2,
+          1.0,
+          3.3,
+          0.0,
+          -0.5,
+          -1.0,
+          -0.5,
+          0.0,
+          0.0
+        ],
+        lineWidth: 0.3,
+        fillMode: FillMode.below,
+        lineColor: Colors.greenAccent,
+        fillGradient: new LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Colors.greenAccent.withOpacity(0.2),
+            Colors.greenAccent.withOpacity(0.01)
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _backgroundLine() {
@@ -448,8 +440,6 @@ class _loserDetailState extends State<loserDetail> {
         width: double.infinity,
         color: Theme.of(context).canvasColor);
   }
-
-
 
   Widget _horizontalValueGrafik() {
     return Padding(
@@ -504,7 +494,6 @@ class _loserDetailState extends State<loserDetail> {
     );
   }
 
-
   Widget _tabBarCustomButton() {
     return PreferredSize(
       preferredSize: Size.fromHeight(53.0), // here the desired height
@@ -544,9 +533,4 @@ class _loserDetailState extends State<loserDetail> {
       ),
     );
   }
-
-
-
 }
-
-

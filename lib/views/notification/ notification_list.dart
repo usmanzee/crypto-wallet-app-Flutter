@@ -4,10 +4,7 @@ import 'package:crypto_template/controllers/notification_controller.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 
-class NotificationList extends StatelessWidget {
-  final NotificationController notificationController =
-      Get.put(NotificationController());
-
+class NotificationList extends GetView<NotificationController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +12,7 @@ class NotificationList extends StatelessWidget {
         backgroundColor: Theme.of(context).canvasColor,
         centerTitle: true,
         title: Text(
-          'Account',
+          'Notifications',
           style: TextStyle(
               color: Theme.of(context).textSelectionColor,
               fontFamily: "Gotik",
@@ -26,11 +23,14 @@ class NotificationList extends StatelessWidget {
         elevation: 0.8,
       ),
       body: Obx(() {
-        if (notificationController.isLoading.value)
-          return _loadingCardAnimation(context);
+        if (controller.isLoading.value)
+          return Container(
+              width: double.infinity,
+              height: 200,
+              alignment: Alignment.center,
+              child: CircularProgressIndicator());
         else
-          return notificationLoaded(
-              context, notificationController.notificationList);
+          return notificationLoaded(context, controller.notificationList);
       }),
     );
   }
@@ -81,18 +81,18 @@ Widget noItemNotifications(BuildContext context) {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Padding(
-              padding: EdgeInsets.only(top: mediaQueryData.padding.top + 50.0)),
+              padding: EdgeInsets.only(top: mediaQueryData.padding.top + 10.0)),
           Image.asset(
             "assets/image/Template_4/notifications.png",
             height: 200.0,
           ),
           Padding(padding: EdgeInsets.only(bottom: 30.0)),
           Text(
-            "Not Have Notification",
+            "You're up to date!",
             style: TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: 18.5,
-                color: Colors.black54,
+                color: Theme.of(context).textSelectionColor,
                 fontFamily: "Gotik"),
           ),
         ],
@@ -124,7 +124,7 @@ Widget notificationLoaded(
                             '${notifications[position].subject}',
                             style: TextStyle(
                                 fontSize: 17.5,
-                                color: Colors.black87,
+                                color: Theme.of(context).textSelectionColor,
                                 fontWeight: FontWeight.w600),
                           ),
                           subtitle: Padding(
@@ -136,7 +136,8 @@ Widget notificationLoaded(
                                 style: new TextStyle(
                                     fontSize: 15.0,
                                     fontStyle: FontStyle.italic,
-                                    color: Colors.black38),
+                                    color:
+                                        Theme.of(context).textSelectionColor),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
@@ -159,9 +160,14 @@ Widget notificationLoaded(
                           onTap: () =>
                               _onTapItem(context, notifications[position]),
                         ),
-                        Divider(
-                          height: 5.0,
-                          color: Colors.black12,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 0.0),
+                          child: Container(
+                            width: double.infinity,
+                            height: 0.5,
+                            decoration: BoxDecoration(
+                                color: Theme.of(context).hintColor),
+                          ),
                         ),
                       ],
                     ),

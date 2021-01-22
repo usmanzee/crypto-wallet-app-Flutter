@@ -1,3 +1,4 @@
+import 'package:crypto_template/component/no_data.dart';
 import 'package:crypto_template/controllers/transaction_history_controller.dart';
 import 'package:crypto_template/models/deposit_histroy.dart';
 import 'package:crypto_template/models/withdraw_history.dart';
@@ -159,55 +160,75 @@ class _WalletDetailState extends State<WalletDetail> {
                                       Obx(() {
                                         if (transactionHistoryController
                                             .isLoading.value)
-                                          return Text('Loading..');
-                                        else
                                           return Container(
-                                              // height: 400.0,
-                                              child: ListView.builder(
-                                            shrinkWrap: true,
-                                            primary: false,
-                                            // physics: AlwaysScrollableScrollPhysics(),
-                                            padding: EdgeInsets.only(top: 0.0),
-                                            itemBuilder: (ctx, i) {
-                                              return _depositHistoryList(
-                                                transactionHistoryController
-                                                    .depositHistory[i],
-                                              );
-                                            },
-                                            itemCount:
-                                                transactionHistoryController
-                                                    .depositHistory.length,
-                                          ));
+                                              width: double.infinity,
+                                              height: 200,
+                                              alignment: Alignment.center,
+                                              child:
+                                                  CircularProgressIndicator());
+                                        else
+                                          return transactionHistoryController
+                                                  .depositHistory.isEmpty
+                                              ? NoData()
+                                              : Container(
+                                                  // height: 400.0,
+                                                  child: ListView.builder(
+                                                  shrinkWrap: true,
+                                                  primary: false,
+                                                  // physics: AlwaysScrollableScrollPhysics(),
+                                                  padding:
+                                                      EdgeInsets.only(top: 0.0),
+                                                  itemBuilder: (ctx, i) {
+                                                    return _depositHistoryList(
+                                                      transactionHistoryController
+                                                          .depositHistory[i],
+                                                    );
+                                                  },
+                                                  itemCount:
+                                                      transactionHistoryController
+                                                          .depositHistory
+                                                          .length,
+                                                ));
                                       }),
                                       Obx(() {
                                         if (transactionHistoryController
                                             .isLoading.value)
-                                          return Text('Loading..');
-                                        else
                                           return Container(
-                                              // height: 400.0,
-                                              child: ListView.builder(
-                                            shrinkWrap: true,
-                                            primary: false,
-                                            // physics: AlwaysScrollableScrollPhysics(),
-                                            padding: EdgeInsets.only(top: 0.0),
-                                            itemBuilder: (ctx, i) {
-                                              return _withdrawHistoryList(
-                                                transactionHistoryController
-                                                    .withdrawHistory[i],
-                                                // Colors.redAccent
-                                                //     .withOpacity(0.75),
-                                                // "06/03/2018",
-                                                // "Confirming",
-                                                // "- 0.010",
-                                                // "BTC",
-                                                // Icons.mobile_screen_share
-                                              );
-                                            },
-                                            itemCount:
-                                                transactionHistoryController
-                                                    .withdrawHistory.length,
-                                          ));
+                                              width: double.infinity,
+                                              height: 200,
+                                              alignment: Alignment.center,
+                                              child:
+                                                  CircularProgressIndicator());
+                                        else
+                                          return transactionHistoryController
+                                                  .withdrawHistory.isEmpty
+                                              ? NoData()
+                                              : Container(
+                                                  // height: 400.0,
+                                                  child: ListView.builder(
+                                                  shrinkWrap: true,
+                                                  primary: false,
+                                                  // physics: AlwaysScrollableScrollPhysics(),
+                                                  padding:
+                                                      EdgeInsets.only(top: 0.0),
+                                                  itemBuilder: (ctx, i) {
+                                                    return _withdrawHistoryList(
+                                                      transactionHistoryController
+                                                          .withdrawHistory[i],
+                                                      // Colors.redAccent
+                                                      //     .withOpacity(0.75),
+                                                      // "06/03/2018",
+                                                      // "Confirming",
+                                                      // "- 0.010",
+                                                      // "BTC",
+                                                      // Icons.mobile_screen_share
+                                                    );
+                                                  },
+                                                  itemCount:
+                                                      transactionHistoryController
+                                                          .withdrawHistory
+                                                          .length,
+                                                ));
                                       }),
                                     ],
                                   ),

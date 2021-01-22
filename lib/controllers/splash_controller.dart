@@ -22,7 +22,7 @@ class SplashController extends GetxController {
     bool _seenOnBoarding = (prefs.getBool('seen_on_boarding') ?? false);
     _seenOnBoarding = _seenOnBoarding != null ? _seenOnBoarding : false;
     if (_seenOnBoarding) {
-      Get.offNamed('/home');
+      Get.offNamed('/home', arguments: {'selectedNavIndex': 0});
     } else {
       await prefs.setBool('seen_on_boarding', true);
       Get.offNamed('/on_boarding');

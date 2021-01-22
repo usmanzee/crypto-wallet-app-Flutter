@@ -7,9 +7,6 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 
 class ForgetPassword extends StatelessWidget {
-  final ThemeBloc themeBloc;
-  ForgetPassword({this.themeBloc});
-
   final ForgetPasswordController _forgetPasswordController =
       Get.put(ForgetPasswordController());
 
@@ -37,7 +34,7 @@ class ForgetPassword extends StatelessWidget {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          iconTheme: IconThemeData(color: colorStyle.fontColorDarkTitle),
+          iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           automaticallyImplyLeading: true,
@@ -45,9 +42,6 @@ class ForgetPassword extends StatelessWidget {
         body: Container(
           height: double.infinity,
           width: double.infinity,
-
-          /// Set Background image in splash screen layout (Click to open code)
-          decoration: BoxDecoration(color: colorStyle.whiteBacground),
           child: Stack(
             children: <Widget>[
               Container(
@@ -99,13 +93,13 @@ class ForgetPassword extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(0.0)),
-                              color: colorStyle.primaryColor,
+                              color: Theme.of(context).primaryColor,
                             ),
                             child: Center(
                               child: Text(
                                 "Send Verification Code",
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    color: Theme.of(context).textSelectionColor,
                                     fontWeight: FontWeight.w400,
                                     fontSize: 20.0,
                                     letterSpacing: 1.0),
@@ -130,7 +124,7 @@ class ForgetPassword extends StatelessWidget {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(0.0)),
                               border: Border.all(
-                                color: colorStyle.primaryColor,
+                                color: Theme.of(context).primaryColor,
                                 width: 0.35,
                               ),
                             ),
@@ -138,7 +132,7 @@ class ForgetPassword extends StatelessWidget {
                               child: Text(
                                 "Back to Login",
                                 style: TextStyle(
-                                    color: colorStyle.primaryColor,
+                                    color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.w400,
                                     fontSize: 16.5,
                                     letterSpacing: 1.2),

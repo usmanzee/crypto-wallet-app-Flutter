@@ -25,7 +25,7 @@ class OnBoarding extends StatelessWidget {
             letterSpacing: 1.0),
       ),
       onTapDoneButton: () {
-        Get.offNamed('/home');
+        Get.offNamed('/home', arguments: {'selectedNavIndex': 0});
       },
     );
   }

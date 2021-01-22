@@ -1,4 +1,6 @@
 import 'package:crypto_template/controllers/HomeController.dart';
+import 'package:crypto_template/controllers/trading_controller.dart';
+import 'package:crypto_template/models/formated_market.dart';
 import 'package:crypto_template/views/DetailCryptoValue/order_book.dart';
 import 'package:crypto_template/views/market/market_drawer.dart';
 import 'package:crypto_template/views/trading/limit_order_form.dart';
@@ -7,17 +9,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:crypto_template/views/DetailCryptoValue/openOrders.dart';
 
-class Trading extends StatefulWidget {
-  @override
-  _TradingState createState() => _TradingState();
-}
+// class Trading extends StatefulWidget {
+//   final FormatedMarket formatedMarket;
 
-class _TradingState extends State<Trading> {
+//   Trading({this.formatedMarket});
+//   @override
+//   _TradingState createState() => _TradingState(formatedMarket);
+// }
+
+class Trading extends StatelessWidget {
+  final TradingController tradingController = Get.put(TradingController());
   final HomeController homeController = Get.find();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
+    print(tradingController.market.value);
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -106,14 +113,14 @@ class _TradingState extends State<Trading> {
                 ],
               ),
             ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
-              child: Text(
-                'Open Orders',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-            ),
-            OpenOrders(),
+            // Padding(
+            //   padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+            //   child: Text(
+            //     'Open Orders',
+            //     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            //   ),
+            // ),
+            // OpenOrders(formatedMarket: tradingController.market.value),
           ],
         ),
       )),

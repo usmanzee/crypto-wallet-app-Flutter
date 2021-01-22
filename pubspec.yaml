@@ -40,6 +40,7 @@ dependencies:
   share: ^0.6.5+4
   connectivity: ^2.0.2
   k_chart: ^0.1.2
+  intl: ^0.16.1
 
 dev_dependencies: 
   flutter_test:

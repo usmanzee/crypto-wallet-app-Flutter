@@ -1,17 +1,23 @@
 import 'package:crypto_template/component/market/btcModel.dart';
 import 'package:crypto_template/controllers/MarketController.dart';
+import 'package:crypto_template/controllers/market_detail_controller.dart';
 import 'package:crypto_template/models/formated_market.dart';
+import 'package:crypto_template/views/DetailCryptoValue/market_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:get/get.dart';
 
 class MarketDrawer extends StatefulWidget {
+  final String screen;
+  MarketDrawer({this.screen});
   @override
-  _MarketDrawerState createState() => _MarketDrawerState();
+  _MarketDrawerState createState() => _MarketDrawerState(screen: screen);
 }
 
 class _MarketDrawerState extends State<MarketDrawer>
     with SingleTickerProviderStateMixin {
+  final String screen;
+  _MarketDrawerState({this.screen});
   final MarketController marketController = Get.find();
   final List<Widget> myTabs = [
     Tab(text: 'All'),
@@ -35,9 +41,7 @@ class _MarketDrawerState extends State<MarketDrawer>
   }
 
   _handleTabSelection() {
-    if (_tabController.indexIsChanging) {
-      setState(() {});
-    }
+    if (_tabController.indexIsChanging) {}
   }
 
   @override
@@ -67,17 +71,18 @@ class _MarketDrawerState extends State<MarketDrawer>
                   padding: EdgeInsets.only(left: 8),
                   child: Icon(
                     Icons.search,
-                    color: Colors.grey,
                     size: 20,
                   ),
                 ),
                 new Expanded(
                   child: TextField(
+                    cursorColor: Theme.of(context).textSelectionColor,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: "Search...",
-                      hintStyle: TextStyle(color: Colors.grey),
+                      hintStyle: TextStyle(
+                          color: Theme.of(context).textSelectionColor),
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                       isDense: true,
@@ -98,7 +103,7 @@ class _MarketDrawerState extends State<MarketDrawer>
                 return _loadingData(context);
               else
                 return _dataLoaded(
-                    context, marketController.formatedMarketsList);
+                    context, marketController.formatedMarketsList, screen);
             }),
           ),
           // TabBar(
@@ -260,27 +265,33 @@ Widget loadingCard(BuildContext ctx, btcMarket item) {
   );
 }
 
-Widget _dataLoaded(
-    BuildContext context, List<FormatedMarket> formatedMarketList) {
+Widget _dataLoaded(BuildContext context,
+    List<FormatedMarket> formatedMarketList, String screenType) {
   return Container(
     child: ListView.builder(
       shrinkWrap: true,
       primary: false,
       itemCount: formatedMarketList.length,
       itemBuilder: (ctx, i) {
-        return card(ctx, btcMarketList[i], formatedMarketList[i]);
+        return card(ctx, formatedMarketList[i], screenType);
       },
     ),
   );
 }
 
-Widget card(BuildContext ctx, btcMarket item, FormatedMarket formatedMarket) {
+Widget card(BuildContext context, FormatedMarket formatedMarket, screenType) {
   return Padding(
     padding: const EdgeInsets.only(top: 7.0),
     child: Column(
       children: <Widget>[
         InkWell(
-          onTap: () {},
+          onTap: () {
+            if (screenType == 'market_detail') {
+              Get.back();
+              MarketDetailController marketDetailController = Get.find();
+              marketDetailController.updateCurrentMarket(formatedMarket);
+            }
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -309,7 +320,7 @@ Widget card(BuildContext ctx, btcMarket item, FormatedMarket formatedMarket) {
                                 style: TextStyle(
                                     fontFamily: "Popins",
                                     fontSize: 11.5,
-                                    color: Theme.of(ctx).hintColor),
+                                    color: Theme.of(context).hintColor),
                               ),
                             ],
                           ),
@@ -318,7 +329,7 @@ Widget card(BuildContext ctx, btcMarket item, FormatedMarket formatedMarket) {
                             style: TextStyle(
                                 fontFamily: "Popins",
                                 fontSize: 11.5,
-                                color: Theme.of(ctx).hintColor),
+                                color: Theme.of(context).hintColor),
                           )
                         ],
                       ),

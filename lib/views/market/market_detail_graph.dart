@@ -80,40 +80,39 @@ class _MarketDetailGraphState extends State<MarketDetailGraph> {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-        if (selectedGraph['name'] == 'Line')
-          Stack(children: <Widget>[
-            if (showLoading)
-              Container(
-                  width: double.infinity,
-                  height: 200,
-                  alignment: Alignment.center,
-                  child: CircularProgressIndicator()),
+        Stack(children: <Widget>[
+          if (showLoading)
             Container(
-              height: 200,
-              width: double.infinity,
-              child: KChartWidget(
-                newData,
-                isLine: isLine,
-                mainState: _mainState,
-                volHidden: _volHidden,
-                secondaryState: _secondaryState,
-                fixedLength: 2,
-                timeFormat: TimeFormat.YEAR_MONTH_DAY,
-                isChinese: isChinese,
-                bgColor: [
-                  Colors.white,
-                  Colors.white,
-                ],
-              ),
-            ),
-          ]),
-        buildButtons(),
-        if (selectedGraph['name'] == 'Depth')
+                width: double.infinity,
+                height: 200,
+                alignment: Alignment.center,
+                child: CircularProgressIndicator()),
           Container(
-            height: 230,
+            height: 200,
             width: double.infinity,
-            child: DepthChart(_bids, _asks),
-          )
+            child: KChartWidget(
+              newData,
+              isLine: isLine,
+              mainState: _mainState,
+              volHidden: _volHidden,
+              secondaryState: _secondaryState,
+              fixedLength: 2,
+              timeFormat: TimeFormat.YEAR_MONTH_DAY,
+              isChinese: isChinese,
+              bgColor: [
+                Colors.white,
+                Colors.white,
+              ],
+            ),
+          ),
+        ]),
+        // buildButtons(),
+
+        Container(
+          height: 230,
+          width: double.infinity,
+          child: DepthChart(_bids, _asks),
+        )
       ],
     );
   }

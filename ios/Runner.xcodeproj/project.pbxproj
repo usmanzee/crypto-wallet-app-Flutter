@@ -324,7 +324,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.cryptoTemplate;
+				PRODUCT_BUNDLE_IDENTIFIER = com.b4uwallet.ioswallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};

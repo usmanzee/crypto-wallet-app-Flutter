@@ -24,7 +24,7 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                     Flexible(
                       child: TextFormField(
                         cursorColor: Colors.black,
-                        keyboardType: TextInputType.name,
+                        keyboardType: TextInputType.number,
                         decoration: new InputDecoration(
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,

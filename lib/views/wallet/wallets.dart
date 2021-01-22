@@ -1,7 +1,6 @@
 import 'package:crypto_template/controllers/wallet_controller.dart';
 import 'package:crypto_template/views/wallet/wallet_detail.dart';
 import 'package:crypto_template/views/wallet/wallet_loading_animation.dart';
-import 'package:crypto_template/views/wallet/wallet_search.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/models/wallet.dart' as WalletClass;
 import 'package:get/get.dart';
@@ -78,8 +77,10 @@ class Wallets extends StatelessWidget {
                                         style: TextStyle(fontSize: 12),
                                       ),
                                       onPressed: () {
-                                        Get.to(WalletSearch(
-                                            searchFrom: 'deposit'));
+                                        Get.toNamed('/wallets-search',
+                                            arguments: {
+                                              'searchFrom': 'deposit'
+                                            });
                                       },
                                       shape: RoundedRectangleBorder(
                                           side: BorderSide(
@@ -105,8 +106,10 @@ class Wallets extends StatelessWidget {
                                         style: TextStyle(fontSize: 12),
                                       ),
                                       onPressed: () {
-                                        Get.to(WalletSearch(
-                                            searchFrom: 'withdraw'));
+                                        Get.toNamed('/wallets-search',
+                                            arguments: {
+                                              'searchFrom': 'withdraw'
+                                            });
                                       },
                                       shape: RoundedRectangleBorder(
                                           side: BorderSide(

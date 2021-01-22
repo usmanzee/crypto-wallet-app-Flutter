@@ -1,4 +1,4 @@
-package com.example.cryptotemplate;
+package com.b4uwallet.andoid;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

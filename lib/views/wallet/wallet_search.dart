@@ -1,42 +1,43 @@
 import 'package:crypto_template/controllers/wallet_controller.dart';
+import 'package:crypto_template/controllers/wallet_search_controller.dart';
 import 'package:crypto_template/views/wallet/deposit/crypto.dart';
 import 'package:crypto_template/views/wallet/deposit/fiat.dart';
 import 'package:crypto_template/views/wallet/withdraw/crypto.dart';
+import 'package:crypto_template/views/wallet/withdraw/fiat.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:crypto_template/models/wallet.dart' as WalletClass;
 
-class WalletSearch extends StatefulWidget {
-  final String searchFrom;
-  WalletSearch({this.searchFrom});
-  _WalletSearchState createState() =>
-      _WalletSearchState(searchFrom: searchFrom);
-}
+// class WalletSearch extends StatefulWidget {
+//   final String searchFrom;
+//   WalletSearch({this.searchFrom});
+//   _WalletSearchState createState() =>
+//       _WalletSearchState(searchFrom: searchFrom);
+// }
 
-class _WalletSearchState extends State<WalletSearch> {
-  final String searchFrom;
-  _WalletSearchState({this.searchFrom});
-  WalletController walletController = Get.find();
-  TextEditingController _textController = TextEditingController();
+class WalletSearch extends GetView<WalletController> {
+  var searchFrom = Get.arguments['searchFrom'];
+  final TextEditingController _textController = TextEditingController();
   List<WalletClass.Wallet> newWalletList;
 
-  @override
-  void initState() {
-    newWalletList = List.from(walletController.walletsList);
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   newWalletList = List.from(walletController.walletsList);
+  //   super.initState();
+  // }
 
-  void onItemChanged(String value) {
-    setState(() {
-      newWalletList = walletController.walletsList
-          .where((wallet) =>
-              wallet.name.toLowerCase().contains(value.toLowerCase()))
-          .toList();
-    });
-  }
+  // void onItemChanged(String value) {
+  //   setState(() {
+  //     newWalletList = walletController.walletsList
+  //         .where((wallet) =>
+  //             wallet.name.toLowerCase().contains(value.toLowerCase()))
+  //         .toList();
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
+    newWalletList = List.from(controller.walletsList);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).canvasColor,
@@ -61,7 +62,7 @@ class _WalletSearchState extends State<WalletSearch> {
               decoration: InputDecoration(
                 hintText: 'Search Here...',
               ),
-              onChanged: onItemChanged,
+              // onChanged: onItemChanged,
             ),
           ),
           Expanded(
@@ -81,7 +82,7 @@ class _WalletSearchState extends State<WalletSearch> {
                         if (searchFrom == 'deposit') {
                           Get.off(DepositFiat(wallet: wallet));
                         } else {
-                          Get.off(DepositFiat(wallet: wallet));
+                          Get.off(WithdrawFiat(wallet: wallet));
                         }
                       }
                     },

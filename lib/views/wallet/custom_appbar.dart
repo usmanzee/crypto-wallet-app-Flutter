@@ -1,4 +1,3 @@
-import 'package:crypto_template/views/wallet/wallet_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:crypto_template/models/wallet.dart' as WalletClass;
@@ -22,7 +21,8 @@ class WalletCustomAppbar extends StatelessWidget {
       centerTitle: true,
       flexibleSpace: GestureDetector(
         onTap: () {
-          Get.off(WalletSearch(searchFrom: screenType));
+          Get.offNamed('/wallets-search',
+              arguments: {'searchFrom': screenType});
         },
         child: Padding(
             padding: EdgeInsets.only(top: 50),

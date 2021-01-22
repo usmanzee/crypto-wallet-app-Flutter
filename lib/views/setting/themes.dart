@@ -50,7 +50,7 @@ class Themes {
       accentColor: colorStyle.secondaryColor,
       primaryColor: colorStyle.secondaryColor,
       hintColor: colorStyle.fontSecondaryColorDark,
-      buttonColor: colorStyle.primaryColor,
+      buttonColor: colorStyle.secondaryColor,
       canvasColor: colorStyle.grayBackground,
       cardColor: colorStyle.grayBackground,
       textSelectionColor: colorStyle.fontColorDark,
@@ -58,7 +58,7 @@ class Themes {
 
   static final lightTheme = ThemeData(
     brightness: Brightness.light,
-    accentColor: colorStyle.secondaryColor,
+    accentColor: colorStyle.primaryColor,
     primaryColor: colorStyle.primaryColor,
     buttonColor: colorStyle.primaryColor,
     cardColor: colorStyle.cardColorLight,

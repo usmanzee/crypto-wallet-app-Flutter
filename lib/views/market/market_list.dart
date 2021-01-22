@@ -1,8 +1,7 @@
 import 'package:crypto_template/component/market/btcModel.dart';
+import 'package:crypto_template/component/no_data.dart';
 import 'package:crypto_template/controllers/MarketController.dart';
 import 'package:crypto_template/models/formated_market.dart';
-import 'package:crypto_template/screen/market/detailCrypto/btcDetail.dart';
-import 'package:crypto_template/views/market/market_detail_graph.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:get/get.dart';
@@ -197,16 +196,18 @@ Widget loadingCard(BuildContext ctx, btcMarket item) {
 
 Widget _dataLoaded(
     BuildContext context, List<FormatedMarket> formatedMarketList) {
-  return Container(
-    child: ListView.builder(
-      shrinkWrap: true,
-      primary: false,
-      itemCount: formatedMarketList.length,
-      itemBuilder: (ctx, i) {
-        return card(ctx, btcMarketList[i], formatedMarketList[i]);
-      },
-    ),
-  );
+  return formatedMarketList.isEmpty
+      ? NoData()
+      : Container(
+          child: ListView.builder(
+            shrinkWrap: true,
+            primary: false,
+            itemCount: formatedMarketList.length,
+            itemBuilder: (ctx, i) {
+              return card(ctx, btcMarketList[i], formatedMarketList[i]);
+            },
+          ),
+        );
 }
 
 Widget card(BuildContext ctx, btcMarket item, FormatedMarket formatedMarket) {
@@ -216,8 +217,8 @@ Widget card(BuildContext ctx, btcMarket item, FormatedMarket formatedMarket) {
       children: <Widget>[
         InkWell(
           onTap: () {
-            Navigator.of(ctx).push(PageRouteBuilder(
-                pageBuilder: (_, __, ___) => new btcDetail(item: item)));
+            Get.toNamed('market-detail',
+                arguments: {'formatedMarket': formatedMarket});
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

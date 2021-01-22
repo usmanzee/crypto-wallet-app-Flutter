@@ -48,22 +48,8 @@ class Login extends StatelessWidget {
         body: Container(
           height: double.infinity,
           width: double.infinity,
-
-          /// Set Background image in splash screen layout (Click to open code)
-          // decoration: BoxDecoration(color: colorStyle.whiteBacground),
           child: Stack(
             children: <Widget>[
-              ///
-              /// Set image in top
-              //
-              // Container(
-              //   height: 219.0,
-              //   width: double.infinity,
-              //   decoration: BoxDecoration(
-              //       image: DecorationImage(
-              //           image: AssetImage("assets/image/loginHeader.png"),
-              //           fit: BoxFit.cover)),
-              // ),
               Container(
                 height: double.infinity,
                 width: double.infinity,
@@ -87,7 +73,7 @@ class Login extends StatelessWidget {
                             //     "B4U Wallet",
                             //     style: TextStyle(
                             //         fontFamily: "Sans",
-                            //         color: colorStyle.fontColorDarkTitle,
+                            //         color: Theme.of(context).fontColorDarkTitle,
                             //         fontSize: 27.0,
                             //         fontWeight: FontWeight.w300,
                             //         letterSpacing: 3.5),
@@ -102,7 +88,7 @@ class Login extends StatelessWidget {
                         child: CustomTextField(
                             widgetIcon: Icon(
                               Icons.email,
-                              color: colorStyle.primaryColor,
+                              color: Theme.of(context).primaryColor,
                               size: 20,
                             ),
                             validator: _emailValidator,
@@ -119,7 +105,7 @@ class Login extends StatelessWidget {
                             widgetIcon: Icon(
                               Icons.vpn_key,
                               size: 20,
-                              color: colorStyle.primaryColor,
+                              color: Theme.of(context).primaryColor,
                             ),
                             validator: _passwordValidator,
                             controller: _loginController.passwordTextController,
@@ -161,7 +147,7 @@ class Login extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(0.0)),
-                              color: colorStyle.primaryColor,
+                              color: Theme.of(context).primaryColor,
                             ),
                             child: Center(
                               child: Text(
@@ -192,7 +178,7 @@ class Login extends StatelessWidget {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(0.0)),
                               border: Border.all(
-                                color: colorStyle.primaryColor,
+                                color: Theme.of(context).primaryColor,
                                 width: 0.35,
                               ),
                             ),
@@ -200,7 +186,7 @@ class Login extends StatelessWidget {
                               child: Text(
                                 "Create Account",
                                 style: TextStyle(
-                                    color: colorStyle.primaryColor,
+                                    color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.w400,
                                     fontSize: 16.5,
                                     letterSpacing: 1.2),

@@ -8,6 +8,7 @@ import 'package:crypto_template/network/api_provider.dart';
 import 'package:crypto_template/models/balance.dart';
 import 'package:crypto_template/models/currency.dart';
 import 'package:crypto_template/models/deposit_histroy.dart';
+import 'package:crypto_template/network/request_headers.dart';
 import 'package:get/get.dart';
 
 class WalletRepository {
@@ -16,6 +17,8 @@ class WalletRepository {
   ApiProvider apiProvider;
   Future<List<Balance>> fetchBalances() async {
     apiProvider = new ApiProvider();
+    RequestHeaders requestHeaders = new RequestHeaders();
+    apiProvider.headers = requestHeaders.setAuthHeaders();
     final response = await apiProvider.get('peatio/account/balances');
     return balanceFromJson(response);
   }
@@ -28,6 +31,8 @@ class WalletRepository {
 
   Future<DepositAddress> fetchDepositAddress(currency) async {
     apiProvider = new ApiProvider();
+    RequestHeaders requestHeaders = new RequestHeaders();
+    apiProvider.headers = requestHeaders.setAuthHeaders();
     final response =
         await apiProvider.get('peatio/account/deposit_address/$currency');
     return depositAddressFromJson(response);
@@ -35,6 +40,8 @@ class WalletRepository {
 
   Future<List<DepositHistory>> fetchDepositHistory(currency) async {
     apiProvider = new ApiProvider();
+    RequestHeaders requestHeaders = new RequestHeaders();
+    apiProvider.headers = requestHeaders.setAuthHeaders();
     final response = await apiProvider
         .get('peatio/account/deposits/?page=1&currency=$currency&limit=6');
     return depositHistoryFromJson(response);
@@ -42,6 +49,8 @@ class WalletRepository {
 
   Future<List<WithdrawHistory>> fetchWithdrawHistory(currency) async {
     apiProvider = new ApiProvider();
+    RequestHeaders requestHeaders = new RequestHeaders();
+    apiProvider.headers = requestHeaders.setAuthHeaders();
     final response = await apiProvider
         .get('peatio/account/withdraws/?page=1&currency=$currency&limit=6');
     return withdrawHistoryFromJson(response);
@@ -49,6 +58,8 @@ class WalletRepository {
 
   Future<dynamic> withdrawCrypto(data) async {
     apiProvider = new ApiProvider();
+    RequestHeaders requestHeaders = new RequestHeaders();
+    apiProvider.headers = requestHeaders.setAuthHeaders();
     final response = await apiProvider.post('peatio/account/withdraws', data);
     return response;
   }
@@ -61,6 +72,8 @@ class WalletRepository {
 
   Future<List<Beneficiary>> fetchBeneficiaries() async {
     apiProvider = new ApiProvider();
+    RequestHeaders requestHeaders = new RequestHeaders();
+    apiProvider.headers = requestHeaders.setAuthHeaders();
     final response = await apiProvider.get('peatio/account/beneficiaries');
     return beneficiaryFromJson(response);
   }

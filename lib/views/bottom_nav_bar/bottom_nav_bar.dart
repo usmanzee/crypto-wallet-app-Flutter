@@ -76,6 +76,7 @@
 //   }
 // }
 import 'package:crypto_template/controllers/HomeController.dart';
+import 'package:crypto_template/controllers/MarketController.dart';
 import 'package:crypto_template/views/trading/trading.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -84,9 +85,8 @@ import 'package:crypto_template/views/market/markets.dart';
 import 'package:crypto_template/views/news/news_home.dart';
 import 'package:crypto_template/views/wallet/wallets.dart';
 
-class BottomNavBar extends StatelessWidget {
-  final HomeController homeController = Get.put(new HomeController());
-  // final AuthController authController = Get.put(AuthController());
+class BottomNavBar extends GetView<HomeController> {
+  // final int activeNavIndex = Get.arguments['selectedNavIndex'];
   // final List<Widget> bodyContent = [
   //   Home(),
   //   market(),
@@ -100,7 +100,7 @@ class BottomNavBar extends StatelessWidget {
       switch (current) {
         case 0:
           return RefreshIndicator(
-              onRefresh: homeController.refreshHomePage, child: new Home());
+              onRefresh: controller.refreshHomePage, child: new Home());
           break;
         case 1:
           return new Market();
@@ -113,8 +113,7 @@ class BottomNavBar extends StatelessWidget {
           break;
         case 4:
           return RefreshIndicator(
-              onRefresh: homeController.refreshWalletsPage,
-              child: new Wallets());
+              onRefresh: controller.refreshWalletsPage, child: new Wallets());
           break;
         default:
           return new Home();
@@ -129,9 +128,9 @@ class BottomNavBar extends StatelessWidget {
     return Scaffold(
       body: Obx(
         () => Center(
-          child: callPage(
-              homeController.selectedNavIndex, homeController.hasConnection),
-          // child: bodyContent.elementAt(homeController.selectedNavIndex),
+          child:
+              callPage(controller.selectedNavIndex, controller.hasConnection),
+          // child: bodyContent.elementAt(controller.selectedNavIndex),
         ),
       ),
       bottomNavigationBar: Obx(
@@ -176,13 +175,13 @@ class BottomNavBar extends StatelessWidget {
                     label: "Wallets",
                   ),
                 ],
-                currentIndex: homeController.selectedNavIndex,
+                currentIndex: controller.selectedNavIndex,
                 onTap: (index) {
-                  var isLoggedIn = homeController.isLoggedIn;
+                  var isLoggedIn = controller.isLoggedIn;
                   if (index == 4 && !isLoggedIn) {
                     Get.toNamed('/login');
                   } else {
-                    homeController.selectedNavIndex = index;
+                    controller.selectedNavIndex = index;
                   }
                 }
                 // onTap: (index) => homeController.selectedNavIndex = index,

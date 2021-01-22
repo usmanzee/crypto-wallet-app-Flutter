@@ -1,20 +1,19 @@
-import 'dart:async';
+import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/models/formated_market.dart';
-import 'package:crypto_template/views/setting/setting.dart';
+import 'package:crypto_template/views/wallet/wallet_search.dart';
 import 'package:get/get.dart';
 import 'package:crypto_template/controllers/MarketController.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/component/modelGridHome.dart';
-import 'package:crypto_template/views/DetailCryptoValue/market_detail.dart';
 import 'package:crypto_template/views/home/gainer.dart';
 import 'package:crypto_template/views/home/loser.dart';
 import 'package:carousel_pro/carousel_pro.dart';
-import 'package:crypto_template/component/style.dart';
 import 'package:flutter_sparkline/flutter_sparkline.dart';
 import 'package:shimmer/shimmer.dart';
 
 class Home extends StatelessWidget {
   final marketController = Get.put(MarketController());
+  final HomeController homeController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +28,7 @@ class Home extends StatelessWidget {
               icon: Icon(Icons.account_circle),
               tooltip: 'Profile settings',
               onPressed: () {
-                Get.to(Setting());
+                Get.toNamed('/settings');
               },
             ),
             Spacer(flex: 1),
@@ -37,7 +36,9 @@ class Home extends StatelessWidget {
               icon: Icon(Icons.notifications_none),
               tooltip: 'Notification',
               onPressed: () {
-                Get.to(Setting());
+                homeController.isLoggedIn
+                    ? Get.toNamed('/notifications')
+                    : Get.toNamed('/login');
               },
             ),
           ],
@@ -50,7 +51,7 @@ class Home extends StatelessWidget {
             // / Header image slider
             // /
             SizedBox(
-                height: 100.0,
+                height: 150.0,
                 width: double.infinity,
                 child: new Carousel(
                   boxFit: BoxFit.cover,
@@ -72,7 +73,63 @@ class Home extends StatelessWidget {
                   ],
                 )),
             SizedBox(height: 10.0),
-
+            Container(
+              height: 100.0,
+              child: ListView(
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                scrollDirection: Axis.horizontal,
+                children: <Widget>[
+                  _cardContact(
+                      context,
+                      Icon(
+                        Icons.vertical_align_bottom,
+                        size: 26.0,
+                        color: Theme.of(context).accentColor,
+                      ), () {
+                    homeController.isLoggedIn
+                        ? Get.toNamed('/wallets-search',
+                            arguments: {'searchFrom': 'deposit'})
+                        : Get.toNamed('/login');
+                  }, "Deposit"),
+                  _cardContact(
+                      context,
+                      Icon(
+                        Icons.vertical_align_top,
+                        size: 26.0,
+                        color: Theme.of(context).accentColor,
+                      ), () {
+                    homeController.isLoggedIn
+                        ? Get.toNamed('/wallets-search',
+                            arguments: {'searchFrom': 'withdraw'})
+                        : Get.toNamed('/login');
+                  }, "Withdraw"),
+                  _cardContact(
+                      context,
+                      Icon(
+                        Icons.swap_horiz,
+                        size: 26.0,
+                        color: Theme.of(context).accentColor,
+                      ), () {
+                    homeController.isLoggedIn
+                        ? Get.toNamed('/wallets-search',
+                            arguments: {'searchFrom': 'deposit'})
+                        : Get.toNamed('/login');
+                  }, "Buy/Sell"),
+                  _cardContact(
+                      context,
+                      Icon(
+                        Icons.insights,
+                        size: 26.0,
+                        color: Theme.of(context).accentColor,
+                      ), () {
+                    homeController.isLoggedIn
+                        ? Get.toNamed('/wallets-search',
+                            arguments: {'searchFrom': 'deposit'})
+                        : Get.toNamed('/login');
+                  }, "Trading"),
+                ],
+              ),
+            ),
             Obx(() {
               if (marketController.isLoading.value)
                 return _loadingCardAnimation(context);
@@ -199,17 +256,15 @@ class Card extends StatelessWidget {
       padding: const EdgeInsets.only(top: 3.0, bottom: 3.0),
       child: InkWell(
         onTap: () {
-          Get.to(MarketDetail(
-            item: item,
-            formatedMarket: formatedMarket,
-          ));
+          Get.toNamed('market-detail',
+              arguments: {'formatedMarket': formatedMarket});
         },
         child: Container(
           height: 70.0,
           width: _width / 2.2,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(5.0)),
-              color: Theme.of(context).canvasColor,
+              color: Theme.of(context).scaffoldBackgroundColor,
               boxShadow: [
                 BoxShadow(
                     color: Color(0xFF656565).withOpacity(0.15),
@@ -229,7 +284,7 @@ class Card extends StatelessWidget {
                       formatedMarket.name.toUpperCase(),
                       style: TextStyle(
                           color: Theme.of(context).textSelectionColor,
-                          fontFamily: "Popins",
+                          fontFamily: "sans",
                           fontWeight: FontWeight.w500,
                           fontSize: 14.0),
                     ),
@@ -414,4 +469,48 @@ Widget _cardLoaded(
             listGridHome.length,
             (index) => Card(listGridHome[index], formatedMarketList[index]),
           ));
+}
+
+Widget _cardContact(context, Widget icon, VoidCallback onPressed, String name) {
+  return Padding(
+    padding:
+        const EdgeInsets.only(left: 8.0, right: 1.0, bottom: 8.0, top: 8.0),
+    child: InkWell(
+      onTap: onPressed,
+      child: Container(
+        width: 100.0,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            color: Theme.of(context).scaffoldBackgroundColor,
+            boxShadow: [
+              BoxShadow(
+                  color: Color(0xFF656565).withOpacity(0.15),
+                  blurRadius: 1.0,
+                  spreadRadius: 1.0,
+                  offset: Offset(0.1, 1.0))
+            ]),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                height: 25.0,
+                width: 25.0,
+                child: icon,
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              Text(name,
+                  style: TextStyle(
+                      color: Theme.of(context).textSelectionColor,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: "Sans"))
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
 }

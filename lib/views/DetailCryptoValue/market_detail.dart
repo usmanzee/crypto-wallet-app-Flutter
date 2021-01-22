@@ -1,311 +1,268 @@
-import 'package:crypto_template/component/modelGridHome.dart';
 import 'package:crypto_template/controllers/market_detail_controller.dart';
 import 'package:crypto_template/models/formated_market.dart';
-import 'package:crypto_template/screen/crypto_detail_card_homeScreen/DetailCryptoValue/openOrders.dart';
-import 'package:crypto_template/screen/crypto_detail_card_homeScreen/DetailCryptoValue/orderHistory.dart';
-import 'package:crypto_template/views/market/market_detail_graph.dart';
+import 'package:crypto_template/views/DetailCryptoValue/openOrders.dart';
 import 'package:crypto_template/views/market/market_drawer.dart';
 import 'package:flutter/material.dart';
-import 'package:crypto_template/component/style.dart';
-import 'package:flutter_sparkline/flutter_sparkline.dart';
 import 'package:get/get.dart';
 
-// class MarketDetail extends StatefulWidget {
-//   final gridHome item;
-//   final FormatedMarket formatedMarket;
+import 'package:k_chart/flutter_k_chart.dart';
+import 'package:k_chart/k_chart_widget.dart';
 
-//   MarketDetail({Key key, this.item, this.formatedMarket}) : super(key: key);
-
-//   _MarketDetailState createState() => _MarketDetailState(item, formatedMarket);
-// }
-
-class MarketDetail extends StatelessWidget {
-  final gridHome item;
-  final FormatedMarket formatedMarket;
-
-  final MarketDetailController marketDetailController;
-  MarketDetail({this.item, this.formatedMarket})
-      : marketDetailController =
-            Get.put(MarketDetailController(formatedMarket: formatedMarket));
+class MarketDetail extends GetWidget<MarketDetailController> {
+  // final FormatedMarket formatedMarket = Get.arguments['formatedMarket'];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
-    var grayText = TextStyle(
-        color: Theme.of(context).hintColor,
-        fontFamily: "Popins",
-        fontSize: 12.5);
-
-    var styleValueChart = TextStyle(
-        color: Theme.of(context).hintColor,
-        fontFamily: "Popins",
-        fontSize: 11.5);
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Theme.of(context).canvasColor,
-        title: GestureDetector(
-          onTap: () {
-            if (_scaffoldKey.currentState.isDrawerOpen) {
-              _scaffoldKey.currentState.openEndDrawer();
-            } else {
-              _scaffoldKey.currentState.openDrawer();
-            }
-          },
-          child: Row(children: [
-            Text(
-              formatedMarket.name.toUpperCase(),
-              style: TextStyle(
-                  color: Theme.of(context).textSelectionColor, fontSize: 18),
-            ),
-            Icon(
-              Icons.keyboard_arrow_down,
+    return Obx(() {
+      final FormatedMarket formatedMarket = controller.market.value;
+      return Scaffold(
+        key: _scaffoldKey,
+        appBar: AppBar(
+          elevation: 0.0,
+          backgroundColor: Theme.of(context).canvasColor,
+          title: GestureDetector(
+            onTap: () {
+              if (_scaffoldKey.currentState.isDrawerOpen) {
+                _scaffoldKey.currentState.openEndDrawer();
+              } else {
+                _scaffoldKey.currentState.openDrawer();
+              }
+            },
+            child: Row(children: [
+              Text(
+                formatedMarket.name.toUpperCase(),
+                style: TextStyle(
+                    color: Theme.of(context).textSelectionColor, fontSize: 18),
+              ),
+              Icon(
+                Icons.keyboard_arrow_right,
+                size: 24,
+                color: Theme.of(context).textSelectionColor,
+              )
+            ]),
+          ),
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
               size: 24,
-              color: Theme.of(context).accentColor,
-            )
-          ]),
-        ),
-        // leadingWidth: 24,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            size: 24,
-          ),
-          onPressed: () {
-            Get.back();
-          },
-        ),
-        iconTheme: IconThemeData(
-          color: Theme.of(context).textSelectionColor,
-        ),
-      ),
-      drawer: Drawer(
-        child: MarketDrawer(),
-      ),
-      body: Column(
-        children: <Widget>[
-          Flexible(
-            child: ListView(
-              children: <Widget>[
-                Padding(
-                  padding:
-                      const EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      _headerValue(context),
-                      SizedBox(
-                        height: 8.0,
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: double.infinity,
-                  height: 4,
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).hintColor.withOpacity(0.1)),
-                ),
-                Obx(() => loadGraphOption(
-                    context,
-                    marketDetailController.graphTypes.value,
-                    marketDetailController.selectedGraph.value,
-                    marketDetailController.selectedOption.value)),
-                Container(
-                  height: 300.0,
-                  child: Stack(
-                    children: <Widget>[
-                      // _verticalValueGrafik(),
-                      // _horizontalValueGrafik(),
-                      Obx(() => MarketDetailGraph(
-                            selectedGraph:
-                                marketDetailController.selectedGraph.value,
-                          ))
-                      // _sparkLineGrafic(),
-                    ],
-                  ),
-                ),
-
-                SizedBox(
-                  height: 20.0,
-                ),
-
-                ///
-                /// Container for tab bar (open orders) and body value
-                ///
-
-                buildButtons(context),
-                Container(
-                  height: 470.0,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-                        child: Text(
-                          'Open Orders',
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      openOrders(),
-                    ],
-                  ),
-                ),
-              ],
             ),
+            onPressed: () {
+              Get.back();
+            },
           ),
-          _buttonBottom(context)
-        ],
-      ),
-    );
-  }
-
-  Widget loadGraphOption(
-      context, var graphTypes, var selectedGraph, var selectedOption) {
-    return Padding(
-      padding: EdgeInsets.all(8.0),
-      child: Container(
-          height: 60,
-          child: Column(children: [
-            Row(
-              children: graphTypes.map<Widget>((graphType) {
-                return Row(children: [
-                  InkWell(
-                    onTap: () {
-                      marketDetailController.selectedGraph.assignAll(graphType);
-                    },
-                    child: Container(
-                      width: 60,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey,
-                            offset: Offset(0.0, 1.0), //(x,y)
-                            blurRadius: 6.0,
-                          ),
-                        ],
-                        color: graphType['name'] == selectedGraph['name']
-                            ? Theme.of(context).accentColor
-                            : Theme.of(context).scaffoldBackgroundColor,
-                      ),
-                      padding: EdgeInsets.all(4.0),
-                      child: Center(
-                        child: Row(children: [
-                          Text(
-                            graphType['name'],
-                            style: TextStyle(
-                              color: graphType['name'] == selectedGraph['name']
-                                  ? Colors.white
-                                  : Theme.of(context).textSelectionColor,
-                              fontSize: 10,
-                              fontWeight: FontWeight.w500,
+          iconTheme: IconThemeData(
+            color: Theme.of(context).textSelectionColor,
+          ),
+        ),
+        drawer: Drawer(
+          child: MarketDrawer(screen: 'market_detail'),
+        ),
+        body: Column(
+          children: <Widget>[
+            Flexible(
+              child: ListView(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: 10.0, left: 15.0, right: 15.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        _headerValue(context, formatedMarket),
+                        SizedBox(
+                          height: 8.0,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    height: 4,
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).hintColor.withOpacity(0.1)),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                    child: DefaultTabController(
+                      length: 2,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Container(
+                            child: TabBar(
+                              indicator: UnderlineTabIndicator(
+                                  borderSide: BorderSide(
+                                    width: 2,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                  insets: EdgeInsets.only(
+                                      left: -8, right: 8, bottom: 8)),
+                              isScrollable: true,
+                              labelPadding: EdgeInsets.only(left: 0, right: 16),
+                              labelColor: Theme.of(context).primaryColor,
+                              unselectedLabelColor:
+                                  Theme.of(context).textSelectionColor,
+                              indicatorSize: TabBarIndicatorSize.label,
+                              tabs: [
+                                new Tab(
+                                  child: Text(
+                                    "Line",
+                                    style: TextStyle(
+                                        fontFamily: "Sans", fontSize: 14),
+                                  ),
+                                ),
+                                new Tab(
+                                  child: Text(
+                                    "Depth",
+                                    style: TextStyle(
+                                        fontFamily: "Sans", fontSize: 14),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
-                          Icon(
-                            Icons.keyboard_arrow_down,
-                            color: graphType['name'] == selectedGraph['name']
-                                ? Colors.white
-                                : Theme.of(context).textSelectionColor,
-                            size: 14,
-                          )
-                        ]),
+                          Container(
+                            height: 320,
+                            child: TabBarView(children: [
+                              Obx(() {
+                                if (controller.isKLineLoading.value) {
+                                  return Container(
+                                      width: double.infinity,
+                                      height: 200,
+                                      alignment: Alignment.center,
+                                      child: CircularProgressIndicator());
+                                } else {
+                                  return Column(children: [
+                                    loadGraphOption(
+                                        context,
+                                        controller.lineGraphTimeSlots.value,
+                                        controller.selectedOption.value),
+                                    Container(
+                                      height: 200,
+                                      child: KChartWidget(
+                                        controller.formatedKLineData,
+                                        isLine: controller.isLine,
+                                        mainState: controller.mainState,
+                                        volHidden: controller.volHidden,
+                                        secondaryState:
+                                            controller.secondaryState,
+                                        fixedLength: 2,
+                                        timeFormat: TimeFormat.YEAR_MONTH_DAY,
+                                        isChinese: false,
+                                        bgColor: [
+                                          Theme.of(context)
+                                              .scaffoldBackgroundColor,
+                                          Theme.of(context)
+                                              .scaffoldBackgroundColor,
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                        margin: EdgeInsets.symmetric(
+                                            vertical: 20.0),
+                                        height: 40.0,
+                                        child: buildGraphTypeButtons(context)),
+                                  ]);
+                                }
+                              }),
+                              Container(
+                                height: 200,
+                                width: double.infinity,
+                                child: DepthChart(controller.bidsData.value,
+                                    controller.asksData.value),
+                              )
+                            ]),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 8.0,
-                  ),
-                ]);
-              }).toList(),
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            if (selectedGraph['options'].length > 0)
-              Expanded(
-                child: Scrollbar(
-                  isAlwaysShown: true,
-                  controller: _scrollController,
-                  child: ListView.builder(
-                    controller: _scrollController,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: selectedGraph['options'].length,
-                    itemBuilder: (BuildContext context, int index) => Card(
-                      child: InkWell(
-                        onTap: () {
-                          marketDetailController.selectedOption.value =
-                              selectedGraph['options'][index]['key'];
-                        },
-                        child: Container(
-                          width: 50,
-                          color: selectedOption ==
-                                  selectedGraph['options'][index]['key']
-                              ? Theme.of(context).accentColor
-                              : Theme.of(context).scaffoldBackgroundColor,
-                          padding: EdgeInsets.all(4.0),
-                          child: Center(
-                            child: Text(
-                              selectedGraph['options'][index]['key'],
-                              style: TextStyle(
-                                  fontSize: 10,
-                                  color: selectedOption ==
-                                          selectedGraph['options'][index]['key']
-                                      ? Colors.white
-                                      : Theme.of(context).textSelectionColor,
-                                  fontWeight: FontWeight.w500),
-                            ),
+                  Container(
+                    height: 400.0,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(8, 0, 0, 8),
+                          child: Text(
+                            'Open Orders',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
                           ),
                         ),
+                        OpenOrders(
+                          formatedMarket: formatedMarket,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            _buttonBottom(context, formatedMarket)
+          ],
+        ),
+      );
+    });
+  }
+
+  Widget loadGraphOption(context, var lineGraphTimeSlots, var selectedOption) {
+    return Container(
+      height: 40,
+      child: Column(children: [
+        SizedBox(
+          height: 8,
+        ),
+        Expanded(
+          child: Scrollbar(
+            isAlwaysShown: true,
+            controller: _scrollController,
+            child: ListView.builder(
+              controller: _scrollController,
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: lineGraphTimeSlots.length,
+              itemBuilder: (BuildContext context, int index) => Card(
+                child: InkWell(
+                  onTap: () {
+                    controller.selectedOption.value = lineGraphTimeSlots[index];
+                    controller.getKlineData();
+                  },
+                  child: Container(
+                    width: 50,
+                    color: selectedOption['key'] ==
+                            lineGraphTimeSlots[index]['key']
+                        ? Theme.of(context).accentColor
+                        : Theme.of(context).scaffoldBackgroundColor,
+                    padding: EdgeInsets.all(4.0),
+                    child: Center(
+                      child: Text(
+                        lineGraphTimeSlots[index]['key'],
+                        style: TextStyle(
+                            fontSize: 10,
+                            color: selectedOption['key'] ==
+                                    lineGraphTimeSlots[index]['key']
+                                ? Colors.white
+                                : Theme.of(context).textSelectionColor,
+                            fontWeight: FontWeight.w500),
                       ),
                     ),
                   ),
                 ),
               ),
-            // Wrap(spacing: 8, runSpacing: 8, children: [
-            //   for (var option in selectedGraph['options'])
-            //     InkWell(
-            //       onTap: () {
-            //         // setState(() {
-            //         //   selectedOption = option;
-            //         // });
-            //       },
-            //       child: Container(
-            //         width: 50,
-            //         color: selectedOption == option
-            //             ? Theme.of(context).accentColor
-            //             : Theme.of(context).canvasColor,
-            //         padding: EdgeInsets.all(4.0),
-            //         child: Center(
-            //           child: Text(
-            //             option,
-            //             style: TextStyle(
-            //                 fontSize: 10,
-            //                 color: selectedOption == option
-            //                     ? Colors.white
-            //                     : Theme.of(context).textSelectionColor,
-            //                 fontWeight: FontWeight.w500),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            // ]),
-          ])),
+            ),
+          ),
+        ),
+      ]),
     );
   }
 
-  Widget _buttonBottom(context) {
+  Widget _buttonBottom(context, FormatedMarket formatedMarket) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Row(
@@ -313,15 +270,14 @@ class MarketDetail extends StatelessWidget {
         children: <Widget>[
           Container(
             height: 50.0,
-            width: 140.0,
+            width: 160.0,
             child: MaterialButton(
               splashColor: Colors.black12,
               highlightColor: Colors.black12,
-              color: Colors.greenAccent.withOpacity(0.8),
+              color: Color(0xFF00C087),
               onPressed: () {
-                Scaffold.of(context).showSnackBar(SnackBar(
-                  content: Text('Tap'),
-                ));
+                Get.offNamed('/trading',
+                    arguments: {'formatedMarket': formatedMarket});
               },
               child: Center(
                   child: Text(
@@ -340,15 +296,14 @@ class MarketDetail extends StatelessWidget {
           ),
           Container(
             height: 50.0,
-            width: 140.0,
+            width: 160.0,
             child: MaterialButton(
               splashColor: Colors.black12,
               highlightColor: Colors.black12,
               color: Colors.redAccent.withOpacity(0.8),
               onPressed: () {
-                Scaffold.of(context).showSnackBar(SnackBar(
-                  content: Text('Tap'),
-                ));
+                Get.offNamed('/trading',
+                    arguments: {'formatedMarket': formatedMarket});
               },
               child: Center(
                   child: Text(
@@ -362,67 +317,27 @@ class MarketDetail extends StatelessWidget {
               )),
             ),
           ),
-          Column(children: <Widget>[
-            Icon(
-              Icons.star,
-              color: Theme.of(context).hintColor,
-            ),
-            Container(
-                width: 50.0,
-                child: Center(
-                    child: Text(
-                  "Add to Favorites",
-                  style: TextStyle(
-                      fontSize: 10.0, color: Theme.of(context).hintColor),
-                  textAlign: TextAlign.center,
-                )))
-          ])
+          // Column(children: <Widget>[
+          //   Icon(
+          //     Icons.star,
+          //     color: Theme.of(context).hintColor,
+          //   ),
+          //   Container(
+          //       width: 50.0,
+          //       child: Center(
+          //           child: Text(
+          //         "Add to Favorites",
+          //         style: TextStyle(
+          //             fontSize: 10.0, color: Theme.of(context).hintColor),
+          //         textAlign: TextAlign.center,
+          //       )))
+          // ])
         ],
       ),
     );
   }
 
-  Widget _tabBarCustomButton(context) {
-    return PreferredSize(
-      preferredSize: Size.fromHeight(53.0), // here the desired height
-      child: new AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        elevation: 0.0,
-        centerTitle: true,
-        flexibleSpace: SafeArea(
-          child: Container(
-            child: Padding(
-              padding: const EdgeInsets.only(right: 100.0),
-              child: new TabBar(
-                // labelColor: Theme.of(context).primaryColor,
-                indicatorColor: colorStyle.primaryColor,
-                labelColor: Theme.of(context).primaryColor,
-                unselectedLabelColor: Theme.of(context).textSelectionColor,
-                indicatorSize: TabBarIndicatorSize.label,
-                tabs: [
-                  new Tab(
-                    child: Text(
-                      "Open Orders",
-                      style: TextStyle(fontFamily: "Sans"),
-                    ),
-                  ),
-                  new Tab(
-                    child: Text(
-                      "Order History",
-                      style: TextStyle(fontFamily: "Sans"),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
-        automaticallyImplyLeading: false,
-      ),
-    );
-  }
-
-  Widget _headerValue(context) {
+  Widget _headerValue(context, FormatedMarket formatedMarket) {
     return Column(
       children: <Widget>[
         Row(
@@ -432,7 +347,7 @@ class MarketDetail extends StatelessWidget {
               formatedMarket.last.toString(),
               style: TextStyle(
                   color: formatedMarket.isPositiveChange
-                      ? Colors.greenAccent
+                      ? Color(0xFF00C087)
                       : Colors.redAccent,
                   fontSize: 36.0,
                   fontFamily: "Sans",
@@ -495,7 +410,7 @@ class MarketDetail extends StatelessWidget {
                     formatedMarket.priceChangePercent,
                     style: TextStyle(
                       color: formatedMarket.isPositiveChange
-                          ? Colors.greenAccent
+                          ? Color(0xFF00C087)
                           : Colors.redAccent,
                     ),
                   ),
@@ -523,257 +438,58 @@ class MarketDetail extends StatelessWidget {
     );
   }
 
-  Widget _sparkLineGrafic() {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10.0),
-      child: new Sparkline(
-        data: item.data,
-        lineWidth: 0.3,
-        fillMode: FillMode.below,
-        lineColor: item.chartColor,
-        fillGradient: new LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: item.chartColorGradient,
-        ),
-      ),
-    );
-  }
-
-  Widget _horizontalValueGrafik(context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget buildGraphTypeButtons(context) {
+    return Scrollbar(
+      isAlwaysShown: true,
+      controller: _scrollController,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
         children: <Widget>[
-          Text(
-            "50.0000",
-            style: TextStyle(
-                color: Theme.of(context).hintColor,
-                fontFamily: "Popins",
-                fontSize: 11.5),
-          ),
-          Text(
-            "40.0000",
-            style: TextStyle(
-                color: Theme.of(context).hintColor,
-                fontFamily: "Popins",
-                fontSize: 11.5),
-          ),
-          Text(
-            "30.0000",
-            style: TextStyle(
-                color: Theme.of(context).hintColor,
-                fontFamily: "Popins",
-                fontSize: 11.5),
-          ),
-          Text(
-            "20.0000",
-            style: TextStyle(
-                color: Theme.of(context).hintColor,
-                fontFamily: "Popins",
-                fontSize: 11.5),
-          ),
-          Text(
-            "10.0000",
-            style: TextStyle(
-                color: Theme.of(context).hintColor,
-                fontFamily: "Popins",
-                fontSize: 11.5),
-          ),
-          Text(
-            "0.0000",
-            style: TextStyle(
-                color: Theme.of(context).hintColor,
-                fontFamily: "Popins",
-                fontSize: 11.5),
-          ),
+          button(context, "Time sharing",
+              onPressed: () => controller.isLine = true),
+          button(context, "k line", onPressed: () => controller.isLine = false),
+          button(context, "MA",
+              onPressed: () => controller.mainState = MainState.MA),
+          button(context, "BOLL",
+              onPressed: () => controller.mainState = MainState.BOLL),
+          button(context, "hide",
+              onPressed: () => controller.mainState = MainState.NONE),
+          button(context, "MACD",
+              onPressed: () => controller.secondaryState = SecondaryState.MACD),
+          button(context, "KDJ",
+              onPressed: () => controller.secondaryState = SecondaryState.KDJ),
+          button(context, "RSI",
+              onPressed: () => controller.secondaryState = SecondaryState.RSI),
+          button(context, "WR",
+              onPressed: () => controller.secondaryState = SecondaryState.WR),
+          button(context, "Hide side view",
+              onPressed: () => controller.secondaryState = SecondaryState.NONE),
+          button(context, controller.volHidden ? "Show volume" : "Hide volume",
+              onPressed: () => controller.volHidden = !controller.volHidden),
         ],
       ),
     );
   }
 
-  Widget _verticalValueGrafik(context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 8.0),
-      child: Align(
-        alignment: Alignment.centerRight,
+  Widget button(context, String text, {VoidCallback onPressed}) {
+    return Card(
+      child: InkWell(
+        onTap: () {
+          if (onPressed != null) {
+            onPressed();
+          }
+        },
         child: Container(
-          height: 300.0,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-              Stack(children: <Widget>[
-                Padding(
-                    padding: const EdgeInsets.only(top: 8.0, right: 70.0),
-                    child: _line(context)),
-                Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      "5000.0000",
-                      style: TextStyle(
-                          color: Theme.of(context).hintColor,
-                          fontFamily: "Popins",
-                          fontSize: 11.5),
-                    ))
-              ]),
-              Stack(children: <Widget>[
-                Padding(
-                    padding: const EdgeInsets.only(top: 8.0, right: 70.0),
-                    child: _line(context)),
-                Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      "4000.0000",
-                      style: TextStyle(
-                          color: Theme.of(context).hintColor,
-                          fontFamily: "Popins",
-                          fontSize: 11.5),
-                    ))
-              ]),
-              Stack(children: <Widget>[
-                Padding(
-                    padding: const EdgeInsets.only(top: 8.0, right: 70.0),
-                    child: _line(context)),
-                Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      "3000.0000",
-                      style: TextStyle(
-                          color: Theme.of(context).hintColor,
-                          fontFamily: "Popins",
-                          fontSize: 11.5),
-                    ))
-              ]),
-              Stack(children: <Widget>[
-                Padding(
-                    padding: const EdgeInsets.only(top: 8.0, right: 70.0),
-                    child: _line(context)),
-                Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      "2000.0000",
-                      style: TextStyle(
-                          color: Theme.of(context).hintColor,
-                          fontFamily: "Popins",
-                          fontSize: 11.5),
-                    ))
-              ]),
-              Stack(children: <Widget>[
-                Padding(
-                    padding: const EdgeInsets.only(top: 8.0, right: 70.0),
-                    child: _line(context)),
-                Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      "1000.0000",
-                      style: TextStyle(
-                          color: Theme.of(context).hintColor,
-                          fontFamily: "Popins",
-                          fontSize: 11.5),
-                    ))
-              ]),
-              Stack(children: <Widget>[
-                Padding(
-                    padding: const EdgeInsets.only(top: 8.0, right: 30.0),
-                    child: _line(context)),
-                Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      "0.0000",
-                      style: TextStyle(
-                          color: Theme.of(context).hintColor,
-                          fontFamily: "Popins",
-                          fontSize: 11.5),
-                    ))
-              ]),
-            ],
+          width: 50,
+          padding: EdgeInsets.all(4.0),
+          child: Center(
+            child: Text(
+              text,
+              style: TextStyle(fontSize: 10, fontWeight: FontWeight.w500),
+            ),
           ),
         ),
       ),
     );
   }
-
-  Widget _line(context) {
-    return Container(
-      height: 0.2,
-      width: double.infinity,
-      color: Theme.of(context).hintColor,
-    );
-  }
-
-  Widget _backgroundLine(context) {
-    return Container(
-        height: 13.2,
-        width: double.infinity,
-        color: Theme.of(context).canvasColor);
-  }
-}
-
-Widget buildButtons(context) {
-  return Wrap(
-    alignment: WrapAlignment.spaceEvenly,
-    children: <Widget>[
-      button(
-        context,
-        "Time sharing",
-      ),
-      button(
-        context,
-        "k line",
-      ),
-      button(
-        context,
-        "MA",
-      ),
-      button(
-        context,
-        "BOLL",
-      ),
-      button(
-        context,
-        "hide",
-      ),
-      button(
-        context,
-        "MACD",
-      ),
-      button(
-        context,
-        "KDJ",
-      ),
-      button(
-        context,
-        "RSI",
-      ),
-      button(
-        context,
-        "WR",
-      ),
-      button(
-        context,
-        "Hide side view",
-      ),
-      button(
-        context,
-        "Show volume",
-      ),
-      button(
-        context,
-        "切换中英文",
-      ),
-    ],
-  );
-}
-
-Widget button(context, String text, {VoidCallback onPressed}) {
-  return FlatButton(
-      onPressed: () {
-        if (onPressed != null) {
-          onPressed();
-        }
-      },
-      child: Text("$text"),
-      color: Theme.of(context).canvasColor);
 }

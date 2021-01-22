@@ -42,7 +42,7 @@ class SignUp extends StatelessWidget {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          iconTheme: IconThemeData(color: colorStyle.fontColorDarkTitle),
+          iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           automaticallyImplyLeading: true,
@@ -50,22 +50,8 @@ class SignUp extends StatelessWidget {
         body: Container(
           height: double.infinity,
           width: double.infinity,
-
-          /// Set Background image in splash screen layout (Click to open code)
-          decoration: BoxDecoration(color: colorStyle.whiteBacground),
           child: Stack(
             children: <Widget>[
-              ///
-              /// Set image in top
-              ///
-              // Container(
-              //   height: 129.0,
-              //   width: double.infinity,
-              //   decoration: BoxDecoration(
-              //       image: DecorationImage(
-              //           image: AssetImage("assets/image/signupHeader.png"),
-              //           fit: BoxFit.cover)),
-              // ),
               Container(
                 height: double.infinity,
                 width: double.infinity,
@@ -74,7 +60,6 @@ class SignUp extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      /// Animation text marketplace to choose Login with Hero Animation (Click to open code)
                       Padding(
                         padding:
                             EdgeInsets.only(top: mediaQuery.padding.top + 80.0),
@@ -174,7 +159,6 @@ class SignUp extends StatelessWidget {
                             keyboardType: TextInputType.text,
                             textAlign: TextAlign.start),
                       ),
-
                       Padding(
                         padding: const EdgeInsets.only(
                             left: 16.0, right: 16.0, top: 40.0),
@@ -188,13 +172,13 @@ class SignUp extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(0.0)),
-                              color: colorStyle.primaryColor,
+                              color: Theme.of(context).primaryColor,
                             ),
                             child: Center(
                               child: Text(
                                 "Register",
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    color: Theme.of(context).textSelectionColor,
                                     fontWeight: FontWeight.w400,
                                     fontSize: 20.0,
                                     letterSpacing: 1.0),
@@ -219,7 +203,7 @@ class SignUp extends StatelessWidget {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(0.0)),
                               border: Border.all(
-                                color: colorStyle.primaryColor,
+                                color: Theme.of(context).primaryColor,
                                 width: 0.35,
                               ),
                             ),
@@ -227,7 +211,7 @@ class SignUp extends StatelessWidget {
                               child: Text(
                                 "Sign In",
                                 style: TextStyle(
-                                    color: colorStyle.primaryColor,
+                                    color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.w400,
                                     fontSize: 17.5,
                                     letterSpacing: 1.9),
