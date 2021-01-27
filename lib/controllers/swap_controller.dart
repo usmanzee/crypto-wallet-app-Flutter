@@ -18,11 +18,15 @@ class SwapController extends GetxController {
   var toWalletsList = List<Wallet>().obs;
   var fromSelectedWallet = Wallet().obs;
   var toSelectedWallet = Wallet().obs;
+  var _selectedWalletIndex = 0.obs;
 
   SnackbarController snackbarController;
   ErrorController errorController = new ErrorController();
   HomeController homeController = Get.find();
   final WalletController walletController = Get.find();
+
+  get selectedWalletIndex => this._selectedWalletIndex.value;
+  set selectedWalletIndex(index) => this._selectedWalletIndex.value = index;
 
   @override
   void onInit() {
