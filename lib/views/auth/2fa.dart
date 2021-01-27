@@ -101,7 +101,7 @@ class TwoFA extends StatelessWidget {
                               child: Text(
                                 "Sign In",
                                 style: TextStyle(
-                                    color: Theme.of(context).textSelectionColor,
+                                    color: Colors.white,
                                     fontWeight: FontWeight.w400,
                                     fontSize: 20.0,
                                     letterSpacing: 1.0),

@@ -55,46 +55,34 @@ class _WalletState extends State<DepositCrypto> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(children: [
-          Padding(
-            padding: EdgeInsets.fromLTRB(16, 0, 16, 32),
-            child: Column(
-              children: <Widget>[
-                SizedBox(
-                  height: 16.0,
-                ),
-                Obx(() {
-                  if (depositController.isAddressLoading.value) {
-                    return _loadingAddressAnimation(context);
-                  } else {
-                    if (depositController.depositAddress.value == '')
-                      return _addressNotFound(context);
-                    else
-                      return Column(
-                        children: [
-                          (depositController.depositTag.value != '')
-                              ? Column(children: [
-                                  _showTagDepositInstruction(context),
-                                  SizedBox(
-                                    height: 16.0,
-                                  ),
-                                ])
-                              : Container(),
-                          Column(children: [
-                            _showAddress(context),
-                            Container(
-                              width: double.infinity,
-                              height: 1,
-                              decoration: BoxDecoration(
-                                  color: Theme.of(context).hintColor),
-                            ),
-                            SizedBox(
-                              height: 16.0,
-                            ),
-                          ]),
-                          (depositController.depositTag.value != '')
-                              ? Column(children: [
-                                  _showTag(context),
+        child: wallet.depositEnabled
+            ? Column(children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(16, 0, 16, 32),
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(
+                        height: 16.0,
+                      ),
+                      Obx(() {
+                        if (depositController.isAddressLoading.value) {
+                          return _loadingAddressAnimation(context);
+                        } else {
+                          if (depositController.depositAddress.value == '')
+                            return _addressNotFound(context);
+                          else
+                            return Column(
+                              children: [
+                                (depositController.depositTag.value != '')
+                                    ? Column(children: [
+                                        _showTagDepositInstruction(context),
+                                        SizedBox(
+                                          height: 16.0,
+                                        ),
+                                      ])
+                                    : Container(),
+                                Column(children: [
+                                  _showAddress(context),
                                   Container(
                                     width: double.infinity,
                                     height: 1,
@@ -104,57 +92,108 @@ class _WalletState extends State<DepositCrypto> {
                                   SizedBox(
                                     height: 16.0,
                                   ),
-                                ])
-                              : Container(),
-                          _showQRCode(context),
-                          SizedBox(
-                            height: 8.0,
-                          ),
-                          Container(
-                            width: double.infinity,
-                            height: 1,
-                            decoration: BoxDecoration(
-                                color: Theme.of(context).hintColor),
-                          ),
-                          SizedBox(
-                            height: 16.0,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Send only ' +
-                                    wallet.currency.toUpperCase() +
-                                    ' to this deposit address',
-                                style: Theme.of(context).textTheme.bodyText1,
-                              ),
-                              SizedBox(height: 8.0),
-                              Text(
-                                '* Sending coin or token other than ' +
-                                    wallet.currency.toUpperCase() +
-                                    ' to this address may result in the loss of your deposit.',
-                                style: Theme.of(context).textTheme.bodyText2,
-                              ),
-                              SizedBox(height: 4.0),
-                              Text(
-                                '* Until 6 confirmations are made, an equivalent amount of your assets will be temporarily unavailable for withdrawals.',
-                                style: Theme.of(context).textTheme.bodyText2,
-                              ),
-                            ],
-                          )
-                        ],
-                      );
-                  }
-                }),
-                SizedBox(
-                  height: 16.0,
-                )
-              ],
-            ),
-          ),
-        ]),
+                                ]),
+                                (depositController.depositTag.value != '')
+                                    ? Column(children: [
+                                        _showTag(context),
+                                        Container(
+                                          width: double.infinity,
+                                          height: 1,
+                                          decoration: BoxDecoration(
+                                              color:
+                                                  Theme.of(context).hintColor),
+                                        ),
+                                        SizedBox(
+                                          height: 16.0,
+                                        ),
+                                      ])
+                                    : Container(),
+                                _showQRCode(context),
+                                SizedBox(
+                                  height: 8.0,
+                                ),
+                                Container(
+                                  width: double.infinity,
+                                  height: 1,
+                                  decoration: BoxDecoration(
+                                      color: Theme.of(context).hintColor),
+                                ),
+                                SizedBox(
+                                  height: 16.0,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Send only ' +
+                                          wallet.currency.toUpperCase() +
+                                          ' to this deposit address',
+                                      style:
+                                          Theme.of(context).textTheme.bodyText1,
+                                    ),
+                                    SizedBox(height: 8.0),
+                                    Text(
+                                      '* Sending coin or token other than ' +
+                                          wallet.currency.toUpperCase() +
+                                          ' to this address may result in the loss of your deposit.',
+                                      style:
+                                          Theme.of(context).textTheme.bodyText2,
+                                    ),
+                                    SizedBox(height: 4.0),
+                                    Text(
+                                      '* Until 6 confirmations are made, an equivalent amount of your assets will be temporarily unavailable for withdrawals.',
+                                      style:
+                                          Theme.of(context).textTheme.bodyText2,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            );
+                        }
+                      }),
+                      SizedBox(
+                        height: 16.0,
+                      )
+                    ],
+                  ),
+                ),
+              ])
+            : _depositDisabled(context),
       ),
+    );
+  }
+
+  Widget _depositDisabled(context) {
+    return Container(
+      padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+      width: double.infinity,
+      decoration: BoxDecoration(
+          color: Theme.of(context).canvasColor,
+          borderRadius: BorderRadius.all(Radius.circular(10.0))),
+      child: Column(children: <Widget>[
+        SizedBox(
+          height: 16.0,
+        ),
+        Icon(
+          Icons.lock,
+          color: Theme.of(context).primaryColor,
+          size: 72.0,
+          semanticLabel: 'disabled',
+        ),
+        SizedBox(
+          height: 16.0,
+        ),
+        Center(
+          child: Text(
+            'Deposit is disabled by the administration',
+            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+          ),
+        ),
+        SizedBox(
+          height: 16.0,
+        ),
+      ]),
     );
   }
 

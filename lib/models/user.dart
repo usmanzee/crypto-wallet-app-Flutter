@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final user = userFromJson(jsonString);
+
 import 'dart:convert';
 
 User userFromJson(String str) => User.fromJson(json.decode(str));
@@ -127,13 +131,16 @@ class Phone {
   factory Phone.fromJson(Map<String, dynamic> json) => Phone(
         country: json["country"],
         number: json["number"],
-        validatedAt: DateTime.parse(json["validated_at"]),
+        validatedAt: json["validated_at"] == null
+            ? null
+            : DateTime.parse(json["validated_at"]),
       );
 
   Map<String, dynamic> toJson() => {
         "country": country,
         "number": number,
-        "validated_at": validatedAt.toIso8601String(),
+        "validated_at":
+            validatedAt == null ? null : validatedAt.toIso8601String(),
       };
 }
 
@@ -160,7 +167,7 @@ class Profile {
   String city;
   String country;
   String state;
-  String metadata;
+  dynamic metadata;
   DateTime createdAt;
   DateTime updatedAt;
 

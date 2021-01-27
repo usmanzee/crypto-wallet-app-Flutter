@@ -1,7 +1,6 @@
 import 'package:crypto_template/controllers/error_controller.dart';
 import 'package:crypto_template/models/formated_market.dart';
 import 'package:crypto_template/repository/market_repository.dart';
-import 'package:crypto_template/screen/market/markets.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
@@ -95,14 +94,13 @@ class MarketDetailController extends GetxController {
     try {
       isKLineLoading(true);
       var period = selectedOption['valueInMinute'];
-      var market = formatedMarket.id;
       var currentTime = DateTime.now();
       var from = currentTime.millisecondsSinceEpoch;
       var to = currentTime
           .add(new Duration(minutes: int.parse(period)))
           .millisecondsSinceEpoch;
-      var data =
-          await _marketRepository.fetchKLineData(market, period, from, to);
+      var data = await _marketRepository.fetchKLineData(
+          market.value.id, period, from, to);
       var keys = ['time', 'open', 'high', 'low', 'close', 'vol'];
       for (var i = 0; i < data.length; i++) {
         Map<String, dynamic> newObj = {};

@@ -1,6 +1,9 @@
+import 'package:crypto_template/controllers/HomeController.dart';
+import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:crypto_template/controllers/market_detail_controller.dart';
 import 'package:crypto_template/models/formated_market.dart';
 import 'package:crypto_template/views/DetailCryptoValue/openOrders.dart';
+import 'package:crypto_template/views/DetailCryptoValue/order_book.dart';
 import 'package:crypto_template/views/market/market_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,11 +15,15 @@ class MarketDetail extends GetWidget<MarketDetailController> {
   // final FormatedMarket formatedMarket = Get.arguments['formatedMarket'];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
+  MarketController marketController = Get.find();
+  HomeController homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      final FormatedMarket formatedMarket = controller.market.value;
+      // final FormatedMarket formatedMarket = controller.market.value;
+      final FormatedMarket formatedMarket =
+          marketController.selectedMarket.value;
       return Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
@@ -187,17 +194,26 @@ class MarketDetail extends GetWidget<MarketDetailController> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
+                        // Padding(
+                        //   padding: EdgeInsets.fromLTRB(8, 0, 0, 8),
+                        //   child: Text(
+                        //     'Open Orders',
+                        //     style: TextStyle(
+                        //         fontSize: 16, fontWeight: FontWeight.bold),
+                        //   ),
+                        // ),
+                        // OpenOrders(
+                        //   formatedMarket: formatedMarket,
+                        // ),
                         Padding(
-                          padding: EdgeInsets.fromLTRB(8, 0, 0, 8),
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
                           child: Text(
-                            'Open Orders',
+                            'Order Book',
                             style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                                fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                         ),
-                        OpenOrders(
-                          formatedMarket: formatedMarket,
-                        ),
+                        OrderBook(),
                       ],
                     ),
                   ),
@@ -211,132 +227,6 @@ class MarketDetail extends GetWidget<MarketDetailController> {
     });
   }
 
-  Widget loadGraphOption(context, var lineGraphTimeSlots, var selectedOption) {
-    return Container(
-      height: 40,
-      child: Column(children: [
-        SizedBox(
-          height: 8,
-        ),
-        Expanded(
-          child: Scrollbar(
-            isAlwaysShown: true,
-            controller: _scrollController,
-            child: ListView.builder(
-              controller: _scrollController,
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: lineGraphTimeSlots.length,
-              itemBuilder: (BuildContext context, int index) => Card(
-                child: InkWell(
-                  onTap: () {
-                    controller.selectedOption.value = lineGraphTimeSlots[index];
-                    controller.getKlineData();
-                  },
-                  child: Container(
-                    width: 50,
-                    color: selectedOption['key'] ==
-                            lineGraphTimeSlots[index]['key']
-                        ? Theme.of(context).accentColor
-                        : Theme.of(context).scaffoldBackgroundColor,
-                    padding: EdgeInsets.all(4.0),
-                    child: Center(
-                      child: Text(
-                        lineGraphTimeSlots[index]['key'],
-                        style: TextStyle(
-                            fontSize: 10,
-                            color: selectedOption['key'] ==
-                                    lineGraphTimeSlots[index]['key']
-                                ? Colors.white
-                                : Theme.of(context).textSelectionColor,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ]),
-    );
-  }
-
-  Widget _buttonBottom(context, FormatedMarket formatedMarket) {
-    return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Container(
-            height: 50.0,
-            width: 160.0,
-            child: MaterialButton(
-              splashColor: Colors.black12,
-              highlightColor: Colors.black12,
-              color: Color(0xFF00C087),
-              onPressed: () {
-                Get.offNamed('/trading',
-                    arguments: {'formatedMarket': formatedMarket});
-              },
-              child: Center(
-                  child: Text(
-                "Buy",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: "Popins",
-                    letterSpacing: 1.3,
-                    fontSize: 16.0),
-              )),
-            ),
-          ),
-          SizedBox(
-            width: 0.0,
-          ),
-          Container(
-            height: 50.0,
-            width: 160.0,
-            child: MaterialButton(
-              splashColor: Colors.black12,
-              highlightColor: Colors.black12,
-              color: Colors.redAccent.withOpacity(0.8),
-              onPressed: () {
-                Get.offNamed('/trading',
-                    arguments: {'formatedMarket': formatedMarket});
-              },
-              child: Center(
-                  child: Text(
-                "Sell",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: "Popins",
-                    letterSpacing: 1.3,
-                    fontSize: 16.0),
-              )),
-            ),
-          ),
-          // Column(children: <Widget>[
-          //   Icon(
-          //     Icons.star,
-          //     color: Theme.of(context).hintColor,
-          //   ),
-          //   Container(
-          //       width: 50.0,
-          //       child: Center(
-          //           child: Text(
-          //         "Add to Favorites",
-          //         style: TextStyle(
-          //             fontSize: 10.0, color: Theme.of(context).hintColor),
-          //         textAlign: TextAlign.center,
-          //       )))
-          // ])
-        ],
-      ),
-    );
-  }
-
   Widget _headerValue(context, FormatedMarket formatedMarket) {
     return Column(
       children: <Widget>[
@@ -344,7 +234,8 @@ class MarketDetail extends GetWidget<MarketDetailController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
-              formatedMarket.last.toString(),
+              formatedMarket.last
+                  .toStringAsFixed(formatedMarket.amountPrecision),
               style: TextStyle(
                   color: formatedMarket.isPositiveChange
                       ? Color(0xFF00C087)
@@ -370,7 +261,8 @@ class MarketDetail extends GetWidget<MarketDetailController> {
                     SizedBox(
                       height: 7.0,
                     ),
-                    Text(formatedMarket.high.toString())
+                    Text(formatedMarket.high
+                        .toStringAsFixed(formatedMarket.amountPrecision))
                   ],
                 ),
                 Row(
@@ -385,7 +277,8 @@ class MarketDetail extends GetWidget<MarketDetailController> {
                             fontSize: 11.5),
                       ),
                     ),
-                    Text(formatedMarket.low.toString())
+                    Text(formatedMarket.low
+                        .toStringAsFixed(formatedMarket.amountPrecision))
                   ],
                 )
               ],
@@ -429,12 +322,64 @@ class MarketDetail extends GetWidget<MarketDetailController> {
                         fontSize: 11.5),
                   ),
                 ),
-                Text(formatedMarket.high.toString())
+                Text(formatedMarket.high
+                    .toStringAsFixed(formatedMarket.amountPrecision))
               ],
             )
           ],
         ),
       ],
+    );
+  }
+
+  Widget loadGraphOption(context, var lineGraphTimeSlots, var selectedOption) {
+    return Container(
+      height: 40,
+      child: Column(children: [
+        SizedBox(
+          height: 8,
+        ),
+        Expanded(
+          child: Scrollbar(
+            isAlwaysShown: true,
+            controller: _scrollController,
+            child: ListView.builder(
+              controller: _scrollController,
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: lineGraphTimeSlots.length,
+              itemBuilder: (BuildContext context, int index) => Card(
+                child: InkWell(
+                  onTap: () {
+                    controller.selectedOption.value = lineGraphTimeSlots[index];
+                    controller.getKlineData();
+                  },
+                  child: Container(
+                    width: 50,
+                    color: selectedOption['key'] ==
+                            lineGraphTimeSlots[index]['key']
+                        ? Theme.of(context).accentColor
+                        : Theme.of(context).canvasColor,
+                    padding: EdgeInsets.all(4.0),
+                    child: Center(
+                      child: Text(
+                        lineGraphTimeSlots[index]['key'],
+                        style: TextStyle(
+                            fontSize: 10,
+                            color: selectedOption['key'] ==
+                                    lineGraphTimeSlots[index]['key']
+                                ? Colors.white
+                                : Theme.of(context).textSelectionColor,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ]),
     );
   }
 
@@ -492,4 +437,76 @@ class MarketDetail extends GetWidget<MarketDetailController> {
       ),
     );
   }
+}
+
+Widget _buttonBottom(context, FormatedMarket formatedMarket) {
+  HomeController homeController = Get.find();
+  MarketController marketController = Get.find();
+  return Padding(
+    padding: const EdgeInsets.all(4.0),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        Container(
+          height: 50.0,
+          width: 160.0,
+          child: MaterialButton(
+            splashColor: Colors.black12,
+            highlightColor: Colors.black12,
+            color: Color(0xFF00C087),
+            onPressed: () {
+              Get.back();
+              marketController.selectedMarketTrading.value = formatedMarket;
+              homeController.selectedNavIndex = 2;
+              // Get.offNamed('/trading', arguments: {
+              //   'formatedMarket': formatedMarket,
+              //   'selectedNavIndex': 3
+              // });
+            },
+            child: Center(
+                child: Text(
+              "Buy",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: "Popins",
+                  letterSpacing: 1.3,
+                  fontSize: 16.0),
+            )),
+          ),
+        ),
+        SizedBox(
+          width: 0.0,
+        ),
+        Container(
+          height: 50.0,
+          width: 160.0,
+          child: MaterialButton(
+            splashColor: Colors.black12,
+            highlightColor: Colors.black12,
+            color: Colors.redAccent.withOpacity(0.8),
+            onPressed: () {
+              Get.back();
+              marketController.selectedMarketTrading.value = formatedMarket;
+              homeController.selectedNavIndex = 2;
+              // Get.offNamed('/trading', arguments: {
+              //   'formatedMarket': formatedMarket,
+              //   'selectedNavIndex': 3
+              // });
+            },
+            child: Center(
+                child: Text(
+              "Sell",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: "Popins",
+                  letterSpacing: 1.3,
+                  fontSize: 16.0),
+            )),
+          ),
+        ),
+      ],
+    ),
+  );
 }

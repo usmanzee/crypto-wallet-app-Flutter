@@ -1,4 +1,6 @@
+import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MarketOrderForm extends StatefulWidget {
   @override
@@ -6,6 +8,7 @@ class MarketOrderForm extends StatefulWidget {
 }
 
 class _MarketOrderFormState extends State<MarketOrderForm> {
+  HomeController homeController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Row(children: [
@@ -171,26 +174,60 @@ class _MarketOrderFormState extends State<MarketOrderForm> {
             ),
             Padding(
               padding: EdgeInsets.only(bottom: 8.0),
-              child: Container(
-                height: 40.0,
-                child: MaterialButton(
-                  splashColor: Colors.black12,
-                  highlightColor: Colors.black12,
-                  color: Color(0xFF2ebd85),
-                  onPressed: () {},
-                  child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: Center(
                       child: Text(
-                    "Buy",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: "Popins",
-                        letterSpacing: 1.3,
-                        fontSize: 16.0),
-                  )),
-                ),
+                        'Avbl',
+                        style: TextStyle(
+                            fontSize: 10, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: Center(
+                      child: Text(
+                        '0.00 BTC',
+                        style: TextStyle(
+                            fontSize: 10, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            )
+            ),
+            if (homeController.isLoggedIn)
+              Padding(
+                padding: EdgeInsets.only(bottom: 8.0),
+                child: Container(
+                  height: 40.0,
+                  child: MaterialButton(
+                    splashColor: Colors.black12,
+                    highlightColor: Colors.black12,
+                    color: Color(0xFF2ebd85),
+                    onPressed: () {},
+                    child: Center(
+                        child: Text(
+                      "Buy",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: "Popins",
+                          letterSpacing: 1.3,
+                          fontSize: 16.0),
+                    )),
+                  ),
+                ),
+              )
+            else
+              Container(
+                height: 0,
+                width: 0,
+              )
           ],
         ),
       ),
@@ -359,26 +396,60 @@ class _MarketOrderFormState extends State<MarketOrderForm> {
             ),
             Padding(
               padding: EdgeInsets.only(bottom: 8.0),
-              child: Container(
-                height: 40.0,
-                child: MaterialButton(
-                  splashColor: Colors.black12,
-                  highlightColor: Colors.black12,
-                  color: Colors.redAccent.withOpacity(0.8),
-                  onPressed: () {},
-                  child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: Center(
                       child: Text(
-                    "Sell",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: "Popins",
-                        letterSpacing: 1.3,
-                        fontSize: 16.0),
-                  )),
-                ),
+                        'Avbl',
+                        style: TextStyle(
+                            fontSize: 10, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: Center(
+                      child: Text(
+                        '0.00 BTC',
+                        style: TextStyle(
+                            fontSize: 10, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            )
+            ),
+            if (homeController.isLoggedIn)
+              Padding(
+                padding: EdgeInsets.only(bottom: 8.0),
+                child: Container(
+                  height: 40.0,
+                  child: MaterialButton(
+                    splashColor: Colors.black12,
+                    highlightColor: Colors.black12,
+                    color: Colors.redAccent.withOpacity(0.8),
+                    onPressed: () {},
+                    child: Center(
+                        child: Text(
+                      "Sell",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: "Popins",
+                          letterSpacing: 1.3,
+                          fontSize: 16.0),
+                    )),
+                  ),
+                ),
+              )
+            else
+              Container(
+                height: 0,
+                width: 0,
+              )
           ],
         ),
       )

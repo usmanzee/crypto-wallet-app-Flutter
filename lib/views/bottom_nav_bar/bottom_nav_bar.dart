@@ -76,7 +76,6 @@
 //   }
 // }
 import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/controllers/MarketController.dart';
 import 'package:crypto_template/views/trading/trading.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -94,6 +93,9 @@ class BottomNavBar extends GetView<HomeController> {
   //   news(),
   //   setting(),
   // ];
+
+  // final WebSocketController webSocketController =
+  //     Get.put(WebSocketController());
 
   Widget callPage(int current, bool hasConnection) {
     if (hasConnection) {

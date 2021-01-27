@@ -1,6 +1,7 @@
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/controllers/SnackbarController.dart';
 import 'package:crypto_template/controllers/error_controller.dart';
+import 'package:crypto_template/controllers/fiat_withdraw_controller.dart';
 import 'package:crypto_template/models/Beneficiary.dart';
 import 'package:crypto_template/repository/beneficiary_repository.dart';
 import 'package:crypto_template/repository/wallet_repository.dart';
@@ -19,6 +20,8 @@ class BeneficiaryController extends GetxController {
   TextEditingController bankSwiftCodeTextController;
   TextEditingController intermediaryBankNameTextController;
   TextEditingController intermediaryBankSwiftCodeTextController;
+
+  FiatWithdrawController fiatWithdrawController = Get.find();
 
   SnackbarController snackbarController;
   ErrorController errorController = new ErrorController();
@@ -70,6 +73,8 @@ class BeneficiaryController extends GetxController {
       requestObject['data'] = requestData;
 
       var response = await _beneficiaryRepository.addBeneficiary(requestObject);
+      fiatWithdrawController.beneficiariesList.add(response);
+      fiatWithdrawController.beneficiariesList.refresh();
       Get.back();
       Get.back();
       snackbarController = new SnackbarController(

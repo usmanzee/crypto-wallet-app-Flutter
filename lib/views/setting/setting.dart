@@ -202,7 +202,7 @@ class Setting extends StatelessWidget {
               return (homeController.isLoggedIn)
                   ? InkWell(
                       onTap: () {
-                        Get.to(Security());
+                        Get.toNamed('/security');
                       },
                       child: listSetting(
                           context,

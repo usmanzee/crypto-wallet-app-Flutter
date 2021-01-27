@@ -49,8 +49,9 @@ class LoginController extends GetxController {
       var userData = await _authRepository.authenticate(requestObject);
       print(userData);
       Get.back();
-      if (user.value.state == 'pending') {
-        Get.toNamed('/email-verification');
+      if (userData.state == 'pending') {
+        Get.toNamed('/email-verification',
+            arguments: {'email': emailTextController.text});
       } else {
         Codec<String, String> stringToBase64 = utf8.fuse(base64);
         var userToken = userData.token.split('\n')[0];

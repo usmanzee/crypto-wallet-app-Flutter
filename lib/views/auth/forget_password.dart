@@ -99,7 +99,7 @@ class ForgetPassword extends StatelessWidget {
                               child: Text(
                                 "Send Verification Code",
                                 style: TextStyle(
-                                    color: Theme.of(context).textSelectionColor,
+                                    color: Colors.white,
                                     fontWeight: FontWeight.w400,
                                     fontSize: 20.0,
                                     letterSpacing: 1.0),

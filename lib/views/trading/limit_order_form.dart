@@ -1,4 +1,6 @@
+import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LimitOrderForm extends StatefulWidget {
   @override
@@ -6,6 +8,7 @@ class LimitOrderForm extends StatefulWidget {
 }
 
 class _LimitOrderFormState extends State<LimitOrderForm> {
+  HomeController homeController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Row(children: [
@@ -23,7 +26,7 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                     Icon(Icons.remove),
                     Flexible(
                       child: TextFormField(
-                        cursorColor: Colors.black,
+                        cursorColor: Theme.of(context).textSelectionColor,
                         keyboardType: TextInputType.number,
                         decoration: new InputDecoration(
                             border: InputBorder.none,
@@ -50,8 +53,8 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                     Icon(Icons.remove),
                     Flexible(
                       child: TextFormField(
-                        cursorColor: Colors.black,
-                        keyboardType: TextInputType.name,
+                        cursorColor: Theme.of(context).textSelectionColor,
+                        keyboardType: TextInputType.number,
                         decoration: new InputDecoration(
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,
@@ -171,26 +174,60 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
             ),
             Padding(
               padding: EdgeInsets.only(bottom: 8.0),
-              child: Container(
-                height: 40.0,
-                child: MaterialButton(
-                  splashColor: Colors.black12,
-                  highlightColor: Colors.black12,
-                  color: Color(0xFF2ebd85),
-                  onPressed: () {},
-                  child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: Center(
                       child: Text(
-                    "Buy",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: "Popins",
-                        letterSpacing: 1.3,
-                        fontSize: 16.0),
-                  )),
-                ),
+                        'Avbl',
+                        style: TextStyle(
+                            fontSize: 10, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: Center(
+                      child: Text(
+                        '0.00 BTC',
+                        style: TextStyle(
+                            fontSize: 10, fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            )
+            ),
+            if (homeController.isLoggedIn)
+              Padding(
+                padding: EdgeInsets.only(bottom: 8.0),
+                child: Container(
+                  height: 40.0,
+                  child: MaterialButton(
+                    splashColor: Colors.black12,
+                    highlightColor: Colors.black12,
+                    color: Color(0xFF2ebd85),
+                    onPressed: () {},
+                    child: Center(
+                        child: Text(
+                      "Buy",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: "Popins",
+                          letterSpacing: 1.3,
+                          fontSize: 16.0),
+                    )),
+                  ),
+                ),
+              )
+            else
+              Container(
+                height: 0,
+                width: 0,
+              )
           ],
         ),
       ),
@@ -359,26 +396,60 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
             ),
             Padding(
               padding: EdgeInsets.only(bottom: 8.0),
-              child: Container(
-                height: 40.0,
-                child: MaterialButton(
-                  splashColor: Colors.black12,
-                  highlightColor: Colors.black12,
-                  color: Colors.redAccent.withOpacity(0.8),
-                  onPressed: () {},
-                  child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: Center(
                       child: Text(
-                    "Sell",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: "Popins",
-                        letterSpacing: 1.3,
-                        fontSize: 16.0),
-                  )),
-                ),
+                        'Avbl',
+                        style: TextStyle(
+                            fontSize: 10, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: Center(
+                      child: Text(
+                        '0.00 BTC',
+                        style: TextStyle(
+                            fontSize: 10, fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            )
+            ),
+            if (homeController.isLoggedIn)
+              Padding(
+                padding: EdgeInsets.only(bottom: 8.0),
+                child: Container(
+                  height: 40.0,
+                  child: MaterialButton(
+                    splashColor: Colors.black12,
+                    highlightColor: Colors.black12,
+                    color: Colors.redAccent.withOpacity(0.8),
+                    onPressed: () {},
+                    child: Center(
+                        child: Text(
+                      "Sell",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: "Popins",
+                          letterSpacing: 1.3,
+                          fontSize: 16.0),
+                    )),
+                  ),
+                ),
+              )
+            else
+              Container(
+                height: 0,
+                width: 0,
+              )
           ],
         ),
       )

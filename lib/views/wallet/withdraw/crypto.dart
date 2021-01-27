@@ -52,7 +52,6 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
   @override
   void initState() {
     withdrawController = Get.put(CryptoWithdrawController(wallet: wallet));
-    print('widget init');
     super.initState();
   }
 
@@ -69,43 +68,88 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
       body: SingleChildScrollView(child: Obx(() {
         return Container(
           padding: EdgeInsets.all(16.0),
-          child: homeController.user.value.otp
-              ? Form(
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  key: _formKey,
+          child: homeController.fetchingUser.value &&
+                  homeController.fetchingMemberLevel.value
+              ? Container(
+                  width: double.infinity,
+                  height: 200,
+                  alignment: Alignment.center,
+                  child: CircularProgressIndicator())
+              : homeController.user.value.otp
+                  ? (homeController.user.value.level >=
+                          homeController
+                              .publicMemberLevel.value.withdraw.minimumLevel
+                      ? _withdrawForm(context)
+                      : _accountNotConfirmed(context))
+                  : _otpDisabled(context),
+        );
+      })),
+    );
+  }
+
+  Widget _withdrawForm(BuildContext context) {
+    return wallet.withdrawEnabled
+        ? Form(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 16.0,
+                ),
+                Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      // WalletAmountHeader(wallet: wallet),
-                      SizedBox(
-                        height: 16.0,
+                      Text(
+                        "Withdrawal Address",
+                        style: TextStyle(
+                          color: Theme.of(context).hintColor.withOpacity(0.7),
+                          fontFamily: "Popins",
+                        ),
                       ),
-                      Container(
-                        // height: 355.0,
-                        // padding: EdgeInsets.fromLTRB(0.0, 24, 0.0, 24.0),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            // color: Theme.of(context).canvasColor,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0))),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              "Withdrawal Address",
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: TextFormField(
+                          controller:
+                              withdrawController.withdrawAddressController,
+                          validator: _withDrawAddressValidator,
+                          obscureText: false,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                              errorStyle: TextStyle(
+                                fontSize: 13.5,
+                              ),
+                              errorMaxLines: 3,
+                              filled: true,
+                              fillColor: Colors.transparent,
+                              labelText: 'Address',
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5))),
+                        ),
+                      ),
+                      wallet.currency == 'xrp'
+                          ? Text(
+                              "Withdrawal Tag",
                               style: TextStyle(
                                 color: Theme.of(context)
                                     .hintColor
                                     .withOpacity(0.7),
                                 fontFamily: "Popins",
                               ),
-                            ),
-                            Padding(
+                            )
+                          : Container(width: 0, height: 0),
+                      wallet.currency == 'xrp'
+                          ? Padding(
                               padding: const EdgeInsets.only(bottom: 16.0),
                               child: TextFormField(
-                                controller: withdrawController
-                                    .withdrawAddressController,
-                                validator: _withDrawAddressValidator,
+                                controller:
+                                    withdrawController.withdrawTagController,
+                                validator: _withDrawTagValidator,
                                 obscureText: false,
                                 keyboardType: TextInputType.text,
                                 decoration: InputDecoration(
@@ -115,238 +159,217 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
                                     errorMaxLines: 3,
                                     filled: true,
                                     fillColor: Colors.transparent,
-                                    labelText: 'Address',
+                                    labelText: 'Tag',
                                     border: OutlineInputBorder(
                                         borderRadius:
                                             BorderRadius.circular(5))),
                               ),
-                            ),
-                            wallet.currency == 'xrp'
-                                ? Text(
-                                    "Withdrawal Tag",
-                                    style: TextStyle(
-                                      color: Theme.of(context)
-                                          .hintColor
-                                          .withOpacity(0.7),
-                                      fontFamily: "Popins",
-                                    ),
-                                  )
-                                : Container(width: 0, height: 0),
-                            wallet.currency == 'xrp'
-                                ? Padding(
-                                    padding:
-                                        const EdgeInsets.only(bottom: 16.0),
-                                    child: TextFormField(
-                                      controller: withdrawController
-                                          .withdrawTagController,
-                                      validator: _withDrawTagValidator,
-                                      obscureText: false,
-                                      keyboardType: TextInputType.text,
-                                      decoration: InputDecoration(
-                                          errorStyle: TextStyle(
-                                            fontSize: 13.5,
-                                          ),
-                                          errorMaxLines: 3,
-                                          filled: true,
-                                          fillColor: Colors.transparent,
-                                          labelText: 'Tag',
-                                          border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(5))),
-                                    ),
-                                  )
-                                : Container(width: 0, height: 0),
-                            Text(
-                              "Withdrawal Amount",
-                              style: TextStyle(
-                                color: Theme.of(context)
-                                    .hintColor
-                                    .withOpacity(0.7),
-                                fontFamily: "Popins",
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 16.0),
-                              child: TextFormField(
-                                obscureText: false,
-                                keyboardType: TextInputType.number,
-                                validator: (amount) {
-                                  if (withdrawController
-                                          .totalWithdrawlAmount.value >
-                                      double.parse(wallet.balance)) {
-                                    return 'Please enter a valid amount';
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                                controller:
-                                    withdrawController.withdrawAmountController,
-                                onChanged: (amount) {
-                                  var validAmount =
-                                      amount != null && amount != ''
-                                          ? amount
-                                          : '0.0';
-                                  withdrawController.amount.value = validAmount;
-                                  withdrawController
-                                          .totalWithdrawlAmount.value =
-                                      double.parse(validAmount) +
-                                          double.parse(wallet.fee);
-                                },
-                                decoration: InputDecoration(
-                                    errorStyle: TextStyle(
-                                      fontSize: 13.5,
-                                    ),
-                                    errorMaxLines: 3,
-                                    filled: true,
-                                    fillColor: Colors.transparent,
-                                    labelText: 'Amount',
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(5))),
-                              ),
-                            ),
-                            Text(
-                              "2FA Code",
-                              style: TextStyle(
-                                color: Theme.of(context)
-                                    .hintColor
-                                    .withOpacity(0.7),
-                                fontFamily: "Popins",
-                              ),
-                            ),
-                            TextFormField(
-                              obscureText: false,
-                              keyboardType: TextInputType.number,
-                              controller:
-                                  withdrawController.withdrawOtpController,
-                              validator: _twoFAValidator,
-                              decoration: InputDecoration(
-                                  errorStyle: TextStyle(
-                                    fontSize: 13.5,
-                                  ),
-                                  errorMaxLines: 3,
-                                  filled: true,
-                                  fillColor: Colors.transparent,
-                                  labelText: '2FA',
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5))),
-                            ),
-                          ],
+                            )
+                          : Container(width: 0, height: 0),
+                      Text(
+                        "Withdrawal Amount",
+                        style: TextStyle(
+                          color: Theme.of(context).hintColor.withOpacity(0.7),
+                          fontFamily: "Popins",
                         ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: TextFormField(
+                          obscureText: false,
+                          keyboardType: TextInputType.number,
+                          validator: (amount) {
+                            if (withdrawController.totalWithdrawlAmount.value >
+                                double.parse(wallet.balance)) {
+                              return 'Please enter a valid amount';
+                            } else {
+                              return null;
+                            }
+                          },
+                          controller:
+                              withdrawController.withdrawAmountController,
+                          onChanged: (amount) {
+                            var validAmount =
+                                amount != null && amount != '' ? amount : '0.0';
+                            withdrawController.amount.value = validAmount;
+                            withdrawController.totalWithdrawlAmount.value =
+                                double.parse(validAmount) +
+                                    double.parse(wallet.fee);
+                          },
+                          decoration: InputDecoration(
+                              errorStyle: TextStyle(
+                                fontSize: 13.5,
+                              ),
+                              errorMaxLines: 3,
+                              filled: true,
+                              fillColor: Colors.transparent,
+                              labelText: 'Amount',
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5))),
+                        ),
+                      ),
+                      Text(
+                        "2FA Code",
+                        style: TextStyle(
+                          color: Theme.of(context).hintColor.withOpacity(0.7),
+                          fontFamily: "Popins",
+                        ),
+                      ),
+                      TextFormField(
+                        obscureText: false,
+                        keyboardType: TextInputType.number,
+                        controller: withdrawController.withdrawOtpController,
+                        validator: _twoFAValidator,
+                        decoration: InputDecoration(
+                            errorStyle: TextStyle(
+                              fontSize: 13.5,
+                            ),
+                            errorMaxLines: 3,
+                            filled: true,
+                            fillColor: Colors.transparent,
+                            labelText: '2FA',
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5))),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 16.0,
+                ),
+                Container(
+                  padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            "Fee",
+                            style: TextStyle(
+                                color: Theme.of(context)
+                                    .hintColor
+                                    .withOpacity(0.5)),
+                          ),
+                          Text(
+                            wallet.fee + ' ' + wallet.currency.toUpperCase(),
+                            style: TextStyle(
+                                color: Theme.of(context)
+                                    .hintColor
+                                    .withOpacity(0.7)),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 8.0,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            "Total Withdrawl Amount",
+                            style: TextStyle(
+                                color: Theme.of(context)
+                                    .hintColor
+                                    .withOpacity(0.5)),
+                          ),
+                          Text(
+                            (withdrawController.totalWithdrawlAmount.value)
+                                .toString(),
+                            style: TextStyle(
+                                color: Theme.of(context)
+                                    .hintColor
+                                    .withOpacity(0.7)),
+                          )
+                        ],
                       ),
                       SizedBox(
                         height: 16.0,
                       ),
                       Container(
-                        padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text(
-                                  "Fee",
-                                  style: TextStyle(
-                                      color: Theme.of(context)
-                                          .hintColor
-                                          .withOpacity(0.5)),
-                                ),
-                                Text(
-                                  wallet.fee +
-                                      ' ' +
-                                      wallet.currency.toUpperCase(),
-                                  style: TextStyle(
-                                      color: Theme.of(context)
-                                          .hintColor
-                                          .withOpacity(0.7)),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: 8.0,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text(
-                                  "Total Withdrawl Amount",
-                                  style: TextStyle(
-                                      color: Theme.of(context)
-                                          .hintColor
-                                          .withOpacity(0.5)),
-                                ),
-                                Text(
-                                  (withdrawController
-                                          .totalWithdrawlAmount.value)
-                                      .toString(),
-                                  style: TextStyle(
-                                      color: Theme.of(context)
-                                          .hintColor
-                                          .withOpacity(0.7)),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: 16.0,
-                            ),
-                            Container(
-                              width: double.infinity,
-                              height: 0.5,
-                              decoration: BoxDecoration(
-                                  color: Theme.of(context).hintColor),
-                            ),
-                            SizedBox(
-                              height: 16.0,
-                            ),
-                            Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '* Do not withdraw directly to a crowdfund or ICO address, as your account will not be credited with tokens from such sales.',
-                                    style:
-                                        Theme.of(context).textTheme.bodyText2,
-                                  ),
-                                  SizedBox(height: 8.0),
-                                  Text(
-                                    '* When withdrawing to the B4U user\'s address, the handling fee will be returned to the Current Account by default.',
-                                    style:
-                                        Theme.of(context).textTheme.bodyText2,
-                                  ),
-                                ]),
-                          ],
-                        ),
+                        width: double.infinity,
+                        height: 0.5,
+                        decoration:
+                            BoxDecoration(color: Theme.of(context).hintColor),
                       ),
-
                       SizedBox(
                         height: 16.0,
                       ),
-                      CustomButton(
-                        height: 50.0,
-                        width: double.infinity,
-                        color: Theme.of(context).primaryColor,
-                        textColor: Colors.white,
-                        label: 'Withdraw',
-                        onPressed: () {
-                          _onWithdrawFormSubmit();
-                        },
-                        splashColor:
-                            Theme.of(context).primaryColor.withOpacity(0.5),
-                        disabled: false,
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      )
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              '* Do not withdraw directly to a crowdfund or ICO address, as your account will not be credited with tokens from such sales.',
+                              style: Theme.of(context).textTheme.bodyText2,
+                            ),
+                            SizedBox(height: 8.0),
+                            Text(
+                              '* When withdrawing to the B4U user\'s address, the handling fee will be returned to the Current Account by default.',
+                              style: Theme.of(context).textTheme.bodyText2,
+                            ),
+                          ]),
                     ],
                   ),
+                ),
+                SizedBox(
+                  height: 16.0,
+                ),
+                CustomButton(
+                  height: 50.0,
+                  width: double.infinity,
+                  color: Theme.of(context).primaryColor,
+                  textColor: Colors.white,
+                  label: 'Withdraw',
+                  onPressed: () {
+                    _onWithdrawFormSubmit();
+                  },
+                  splashColor: Theme.of(context).primaryColor.withOpacity(0.5),
+                  disabled: false,
+                ),
+                SizedBox(
+                  height: 20.0,
                 )
-              : _withdrawNotEnabled(context),
-        );
-      })),
+              ],
+            ),
+          )
+        : _withDdrawDisabled(context);
+  }
+
+  Widget _withDdrawDisabled(context) {
+    return Container(
+      padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+      width: double.infinity,
+      decoration: BoxDecoration(
+          color: Theme.of(context).canvasColor,
+          borderRadius: BorderRadius.all(Radius.circular(10.0))),
+      child: Column(children: <Widget>[
+        SizedBox(
+          height: 16.0,
+        ),
+        Icon(
+          Icons.lock,
+          color: Theme.of(context).primaryColor,
+          size: 72.0,
+          semanticLabel: 'disabled',
+        ),
+        SizedBox(
+          height: 16.0,
+        ),
+        Center(
+          child: Text(
+            'Withdraw is disabled by the administration',
+            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+          ),
+        ),
+        SizedBox(
+          height: 16.0,
+        ),
+      ]),
     );
   }
 
-  Widget _withdrawNotEnabled(context) {
+  Widget _otpDisabled(context) {
     return Container(
       padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
       // height: 125.0,
@@ -367,26 +390,89 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
         SizedBox(
           height: 16.0,
         ),
-        Container(
-          height: 40.0,
-          width: 150.0,
+        MaterialButton(
+          minWidth: 100,
+          splashColor: Colors.black12,
+          highlightColor: Colors.black12,
           color: Theme.of(context).primaryColor,
-          child: GestureDetector(
-            onTap: () {
-              Get.to(EnableOTP());
-            },
-            child: Center(
+          onPressed: () {
+            Get.toNamed('/enable-otp');
+          },
+          child: Center(
               child: Text(
-                "Enable 2FA",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
+            "Enable 2FA",
+            style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
+                fontFamily: "Popins",
+                letterSpacing: 1.3,
+                fontSize: 16.0),
+          )),
         ),
         SizedBox(
           height: 16.0,
         ),
       ]),
     );
+  }
+
+  Widget _accountNotConfirmed(context) {
+    return Container(
+      padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+      // height: 125.0,
+      width: double.infinity,
+      decoration: BoxDecoration(
+          color: Theme.of(context).canvasColor,
+          borderRadius: BorderRadius.all(Radius.circular(10.0))),
+      child: Column(children: <Widget>[
+        SizedBox(
+          height: 16.0,
+        ),
+        Center(
+          child: Text(
+            'To withdraw you have to confirm your account',
+            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+          ),
+        ),
+        SizedBox(
+          height: 16.0,
+        ),
+        MaterialButton(
+          minWidth: 100,
+          splashColor: Colors.black12,
+          highlightColor: Colors.black12,
+          color: Theme.of(context).primaryColor,
+          onPressed: () {
+            _confirmAccountInfo(context);
+          },
+          child: Center(
+              child: Text(
+            "Confirm Account",
+            style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
+                fontFamily: "Popins",
+                letterSpacing: 1.3,
+                fontSize: 16.0),
+          )),
+        ),
+        SizedBox(
+          height: 16.0,
+        ),
+      ]),
+    );
+  }
+
+  void _confirmAccountInfo(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (ctx) {
+          return Container(
+            height: MediaQuery.of(context).size.height * 0.4,
+            child: Center(
+              child: Text("Feature under development!"),
+            ),
+          );
+        });
   }
 }

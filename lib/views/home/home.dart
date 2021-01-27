@@ -1,8 +1,9 @@
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/models/formated_market.dart';
+import 'package:crypto_template/views/swap/swap.dart';
 import 'package:crypto_template/views/wallet/wallet_search.dart';
 import 'package:get/get.dart';
-import 'package:crypto_template/controllers/MarketController.dart';
+import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/component/modelGridHome.dart';
 import 'package:crypto_template/views/home/gainer.dart';
@@ -79,7 +80,7 @@ class Home extends StatelessWidget {
                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
-                  _cardContact(
+                  _linksCard(
                       context,
                       Icon(
                         Icons.vertical_align_bottom,
@@ -91,7 +92,7 @@ class Home extends StatelessWidget {
                             arguments: {'searchFrom': 'deposit'})
                         : Get.toNamed('/login');
                   }, "Deposit"),
-                  _cardContact(
+                  _linksCard(
                       context,
                       Icon(
                         Icons.vertical_align_top,
@@ -103,29 +104,27 @@ class Home extends StatelessWidget {
                             arguments: {'searchFrom': 'withdraw'})
                         : Get.toNamed('/login');
                   }, "Withdraw"),
-                  _cardContact(
+                  _linksCard(
                       context,
                       Icon(
                         Icons.swap_horiz,
                         size: 26.0,
                         color: Theme.of(context).accentColor,
                       ), () {
-                    homeController.isLoggedIn
-                        ? Get.toNamed('/wallets-search',
-                            arguments: {'searchFrom': 'deposit'})
-                        : Get.toNamed('/login');
+                    // homeController.isLoggedIn
+                    //     ? Get.toNamed('/wallets-search',
+                    //         arguments: {'searchFrom': 'deposit'})
+                    //     : Get.toNamed('/login');
+                    Get.toNamed('/swap');
                   }, "Buy/Sell"),
-                  _cardContact(
+                  _linksCard(
                       context,
                       Icon(
                         Icons.insights,
                         size: 26.0,
                         color: Theme.of(context).accentColor,
                       ), () {
-                    homeController.isLoggedIn
-                        ? Get.toNamed('/wallets-search',
-                            arguments: {'searchFrom': 'deposit'})
-                        : Get.toNamed('/login');
+                    homeController.selectedNavIndex = 2;
                   }, "Trading"),
                 ],
               ),
@@ -248,6 +247,7 @@ class Home extends StatelessWidget {
 class Card extends StatelessWidget {
   final gridHome item;
   final FormatedMarket formatedMarket;
+  // final MarketCOntroller formatedMarket;
   Card(this.item, this.formatedMarket);
   @override
   Widget build(BuildContext context) {
@@ -256,6 +256,8 @@ class Card extends StatelessWidget {
       padding: const EdgeInsets.only(top: 3.0, bottom: 3.0),
       child: InkWell(
         onTap: () {
+          MarketController marketController = Get.find();
+          marketController.selectedMarket.value = formatedMarket;
           Get.toNamed('market-detail',
               arguments: {'formatedMarket': formatedMarket});
         },
@@ -295,7 +297,8 @@ class Card extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            formatedMarket.last.toString(),
+                            formatedMarket.last.toStringAsFixed(
+                                formatedMarket.amountPrecision),
                             style: TextStyle(
                                 color: formatedMarket.isPositiveChange
                                     ? Colors.greenAccent
@@ -471,7 +474,7 @@ Widget _cardLoaded(
           ));
 }
 
-Widget _cardContact(context, Widget icon, VoidCallback onPressed, String name) {
+Widget _linksCard(context, Widget icon, VoidCallback onPressed, String name) {
   return Padding(
     padding:
         const EdgeInsets.only(left: 8.0, right: 1.0, bottom: 8.0, top: 8.0),

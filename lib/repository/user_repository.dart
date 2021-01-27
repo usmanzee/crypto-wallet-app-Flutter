@@ -8,6 +8,7 @@ class UserRepository {
   ApiProvider apiProvider;
 
   Future<dynamic> sendPasswordResetLink(dynamic data) async {
+    apiProvider = new ApiProvider();
     final response = await apiProvider.post(
         'barong/identity/users/password/generate_code', data);
     return response;

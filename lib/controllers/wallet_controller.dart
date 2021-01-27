@@ -6,11 +6,12 @@ import 'package:crypto_template/models/wallet.dart';
 import 'package:get/get.dart';
 
 class WalletController extends GetxController {
-  var isLoading = true.obs;
-  var isAddressLoading = true.obs;
+  var isLoading = false.obs;
+  var isAddressLoading = false.obs;
   var balancesList = List<Balance>().obs;
   var currenciesList = List<Currency>().obs;
   var walletsList = List<Wallet>().obs;
+  var searchWalletsList = List<Wallet>().obs;
   // var depositAddress = <DepositAddress>[].obs;
   var depositAddress = ''.obs;
   ErrorController errorController = new ErrorController();
@@ -26,6 +27,7 @@ class WalletController extends GetxController {
     WalletRepository _walletRepository = new WalletRepository();
     try {
       isLoading(true);
+      isLoading.refresh();
       var balances = await _walletRepository.fetchBalances();
       var currencies = await _walletRepository.fetchCurrencies();
       balancesList.assignAll(balances);
@@ -33,8 +35,10 @@ class WalletController extends GetxController {
       await formateWallets(balances, currencies);
 
       isLoading(false);
+      isLoading.refresh();
     } catch (error) {
       isLoading(false);
+      isLoading.refresh();
       errorController.handleError(error);
     }
   }
@@ -82,7 +86,16 @@ class WalletController extends GetxController {
       );
       wallets.add(walletsData);
     }
-    walletsList.value = wallets;
+    walletsList.assignAll(wallets);
+    searchWalletsList.assignAll(wallets);
+  }
+
+  void handleSearchInputChangeEvent(String value) {
+    var list = walletsList.value.where((wallet) {
+      return wallet.name.toLowerCase().contains(value.toLowerCase()) ||
+          wallet.currency.toLowerCase().contains(value.toLowerCase());
+    });
+    searchWalletsList.assignAll(list);
   }
 
   @override

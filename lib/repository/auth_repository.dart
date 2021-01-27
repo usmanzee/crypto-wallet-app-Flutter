@@ -8,6 +8,7 @@ class AuthRepository {
   Future<User> authenticate(dynamic authObject) async {
     final response =
         await apiProvider.post('barong/identity/sessions', authObject);
+    print(response);
     return userFromJson(response);
   }
 
@@ -15,5 +16,11 @@ class AuthRepository {
     final response =
         await apiProvider.post('barong/identity/users', registerObject);
     return userFromJson(response);
+  }
+
+  Future<dynamic> resendVerificationCode(dynamic object) async {
+    final response = await apiProvider.post(
+        'barong/identity/users/email/generate_code', object);
+    return response;
   }
 }

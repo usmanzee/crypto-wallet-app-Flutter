@@ -1,7 +1,11 @@
+import 'package:crypto_template/bindings/email_verification_binding.dart';
 import 'package:crypto_template/bindings/home_binding.dart';
 import 'package:crypto_template/bindings/market_detail_binding.dart';
 import 'package:crypto_template/bindings/notification_screen_binding.dart';
+import 'package:crypto_template/bindings/otp_binding.dart';
+import 'package:crypto_template/bindings/security_binding.dart';
 import 'package:crypto_template/bindings/splash_screen_binding.dart';
+import 'package:crypto_template/bindings/swap_binding.dart';
 import 'package:crypto_template/bindings/trading_binding.dart';
 import 'package:crypto_template/bindings/wallet_search_binding.dart';
 import 'package:crypto_template/views/DetailCryptoValue/market_detail.dart';
@@ -13,7 +17,10 @@ import 'package:crypto_template/views/auth/2fa.dart';
 import 'package:crypto_template/views/auth/signup.dart';
 import 'package:crypto_template/views/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:crypto_template/views/notification/%20notification_list.dart';
+import 'package:crypto_template/views/security/enable_otp.dart';
+import 'package:crypto_template/views/security/security.dart';
 import 'package:crypto_template/views/setting/setting.dart';
+import 'package:crypto_template/views/swap/swap.dart';
 import 'package:crypto_template/views/trading/trading.dart';
 import 'package:crypto_template/views/wallet/wallet_search.dart';
 import 'package:get/get.dart';
@@ -46,13 +53,17 @@ class Router {
       page: () => Setting(),
     ),
     GetPage(
+        name: '/security', page: () => Security(), binding: SecurityBinding()),
+    GetPage(
+        name: '/enable-otp', page: () => EnableOTP(), binding: OTPBinding()),
+    GetPage(
         name: '/notifications',
         page: () => NotificationList(),
         binding: NotificationScreenBinding()),
     GetPage(
-      name: '/email-verification',
-      page: () => EmailVerification(),
-    ),
+        name: '/email-verification',
+        page: () => EmailVerification(),
+        binding: EmailVerificationBinding()),
     GetPage(
       name: '/home',
       page: () => BottomNavBar(),
@@ -60,8 +71,8 @@ class Router {
     ),
     GetPage(
       name: '/trading',
-      page: () => Trading(),
-      binding: TradingBinding(),
+      page: () => BottomNavBar(),
+      // binding: TradingBinding(),
     ),
     GetPage(
       name: '/wallets',
@@ -75,6 +86,11 @@ class Router {
       name: '/market-detail',
       page: () => MarketDetail(),
       binding: MarketDetailBinding(),
+    ),
+    GetPage(
+      name: '/swap',
+      page: () => Swap(),
+      binding: SwapBinding(),
     ),
   ];
 }

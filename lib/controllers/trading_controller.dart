@@ -1,4 +1,4 @@
-import 'package:crypto_template/controllers/MarketController.dart';
+import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:crypto_template/controllers/error_controller.dart';
 import 'package:crypto_template/models/formated_market.dart';
 import 'package:crypto_template/repository/market_repository.dart';

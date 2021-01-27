@@ -4,8 +4,7 @@ import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 import 'package:crypto_template/controllers/otp_controller.dart';
 
-class EnableOTP extends StatelessWidget {
-  final OTPController _otpController = Get.put(OTPController());
+class EnableOTP extends GetView<OTPController> {
   final GlobalKey<FormState> _secretFormKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _otpFormKey = GlobalKey<FormState>();
   final StepperType stepperType = StepperType.vertical;
@@ -38,7 +37,7 @@ class EnableOTP extends StatelessWidget {
           child: new Stepper(
             physics: ClampingScrollPhysics(),
             steps: _myStep(context),
-            currentStep: _otpController.currentStep,
+            currentStep: controller.currentStep,
             onStepTapped: (step) {
               // setState(() {
               //   this._currentStep = step;
@@ -46,30 +45,29 @@ class EnableOTP extends StatelessWidget {
             },
             controlsBuilder: _createEventControlBuilder,
             onStepContinue: () {
-              if (_otpController.currentStep <
-                  this._myStep(context).length - 1) {
-                if (_otpController.currentStep == 2) {
+              if (controller.currentStep < this._myStep(context).length - 1) {
+                if (controller.currentStep == 2) {
                   final _formState = _secretFormKey.currentState;
                   if (_formState.validate()) {
                     _formState.save();
-                    _otpController.currentStep = _otpController.currentStep + 1;
+                    controller.currentStep = controller.currentStep + 1;
                   }
                 } else {
-                  _otpController.currentStep = _otpController.currentStep + 1;
+                  controller.currentStep = controller.currentStep + 1;
                 }
               } else {
                 final _formState = _otpFormKey.currentState;
                 if (_formState.validate()) {
                   _formState.save();
-                  _otpController.enableOTP();
+                  controller.enableOTP();
                 }
               }
             },
             onStepCancel: () {
-              if (_otpController.currentStep > 0) {
-                _otpController.currentStep = _otpController.currentStep - 1;
+              if (controller.currentStep > 0) {
+                controller.currentStep = controller.currentStep - 1;
               } else {
-                _otpController.currentStep = 0;
+                controller.currentStep = 0;
               }
             },
           ),
@@ -117,7 +115,7 @@ class EnableOTP extends StatelessWidget {
                   'Download and install Google Authenticator application from AppStore or Google play')
             ],
           ),
-          isActive: _otpController.currentStep >= 0,
+          isActive: controller.currentStep >= 0,
           state: StepState.indexed),
       Step(
           title: Text('Save The Scerect Key'),
@@ -137,8 +135,8 @@ class EnableOTP extends StatelessWidget {
                       borderRadius: BorderRadius.all(Radius.circular(10.0))),
                   child: GestureDetector(
                     onTap: () {
-                      Clipboard.setData(ClipboardData(
-                              text: _otpController.secretKey.value))
+                      Clipboard.setData(
+                              ClipboardData(text: controller.secretKey.value))
                           .then((value) {
                         Get.snackbar('Success', 'Copied to clipboard',
                             snackPosition: SnackPosition.BOTTOM,
@@ -148,7 +146,7 @@ class EnableOTP extends StatelessWidget {
                     },
                     child: Column(children: [
                       Text(
-                        _otpController.secretKey.value,
+                        controller.secretKey.value,
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w500),
                       ),
@@ -165,7 +163,7 @@ class EnableOTP extends StatelessWidget {
               }),
             ],
           ),
-          isActive: _otpController.currentStep >= 1,
+          isActive: controller.currentStep >= 1,
           state: StepState.indexed),
       Step(
           title: Text('Verify The Scerect Key'),
@@ -177,9 +175,9 @@ class EnableOTP extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     TextFormField(
-                      validator: (val) => MatchValidator(
-                              errorText: 'Key did not match')
-                          .validateMatch(val, _otpController.secretKey.value),
+                      validator: (val) =>
+                          MatchValidator(errorText: 'Key did not match')
+                              .validateMatch(val, controller.secretKey.value),
                       obscureText: false,
                       keyboardType: TextInputType.emailAddress,
                       textAlign: TextAlign.start,
@@ -193,7 +191,7 @@ class EnableOTP extends StatelessWidget {
               )
             ],
           ),
-          isActive: _otpController.currentStep >= 2,
+          isActive: controller.currentStep >= 2,
           state: StepState.indexed),
       Step(
           title: Text('Submit The Code From App'),
@@ -206,7 +204,7 @@ class EnableOTP extends StatelessWidget {
                   children: <Widget>[
                     TextFormField(
                       validator: _otpValidator,
-                      controller: _otpController.otpTextController,
+                      controller: controller.otpTextController,
                       obscureText: false,
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.start,
@@ -219,7 +217,7 @@ class EnableOTP extends StatelessWidget {
               )
             ],
           ),
-          isActive: _otpController.currentStep >= 3,
+          isActive: controller.currentStep >= 3,
           state: StepState.indexed),
     ];
     return _steps;

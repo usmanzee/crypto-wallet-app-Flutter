@@ -24,7 +24,9 @@ class OTPController extends GetxController {
     homeController = Get.find();
     _userRepository = new UserRepository();
     otpTextController = TextEditingController();
-    fetchOTP();
+    if (!homeController.user.value.otp) {
+      fetchOTP();
+    }
     super.onInit();
   }
 
@@ -77,9 +79,10 @@ class OTPController extends GetxController {
           await _userRepository.disableOTP({'code': otpTextController.text});
       print(response);
       homeController.user.value.otp = false;
+      homeController.user.refresh();
       Get.back();
       snackbarController =
-          new SnackbarController(title: 'Success', message: 'Otp Enabled');
+          new SnackbarController(title: 'Success', message: 'Otp disabled');
       snackbarController.showSnackbar();
 
       disablingOTP(false);

@@ -1,4 +1,4 @@
-import 'package:crypto_template/controllers/MarketController.dart';
+import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:crypto_template/models/formated_market.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -71,85 +71,81 @@ class Gainer extends StatelessWidget {
       ],
     );
   }
-}
 
-///
-///
-/// Calling marketsLoaded to set a grid layout
-///
-///
-Widget _marketsLoaded(
-    BuildContext context, List<FormatedMarket> formatedMarketList) {
-  return formatedMarketList.isEmpty
-      ? EmptyMarkets()
-      : Flexible(
-          child: ListView.builder(
-            shrinkWrap: true,
-            primary: false,
-            itemCount: formatedMarketList.length,
-            itemBuilder: (ctx, i) {
-              return listPriceGainers(formatedMarketList[i], ctx);
-            },
-          ),
-        );
-}
+  Widget _marketsLoaded(
+      BuildContext context, List<FormatedMarket> formatedMarketList) {
+    return formatedMarketList.isEmpty
+        ? EmptyMarkets()
+        : Flexible(
+            child: ListView.builder(
+              shrinkWrap: true,
+              primary: false,
+              itemCount: formatedMarketList.length,
+              itemBuilder: (ctx, i) {
+                return listPriceGainers(formatedMarketList[i], ctx);
+              },
+            ),
+          );
+  }
 
-Widget listPriceGainers(FormatedMarket formatedMarket, BuildContext ctx) {
-  return Padding(
-    padding: const EdgeInsets.only(left: 12.0, top: 20.0),
-    child: InkWell(
-      onTap: () {
-        Get.toNamed('market-detail',
-            arguments: {'formatedMarket': formatedMarket});
-      },
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Container(
-            width: 100.0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  formatedMarket.baseUnit.toUpperCase(),
-                  style: TextStyle(fontFamily: "Popins", fontSize: 16.5),
-                ),
-                Text(
-                  " / " + formatedMarket.quoteUnit.toUpperCase(),
-                  style: TextStyle(
-                      fontFamily: "Popins",
-                      fontSize: 11.5,
-                      color: Theme.of(ctx).hintColor),
-                ),
-              ],
+  Widget listPriceGainers(FormatedMarket formatedMarket, BuildContext ctx) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 12.0, top: 20.0),
+      child: InkWell(
+        onTap: () {
+          marketController.selectedMarket.value = formatedMarket;
+          Get.toNamed('market-detail',
+              arguments: {'formatedMarket': formatedMarket});
+        },
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Container(
+              width: 100.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    formatedMarket.baseUnit.toUpperCase(),
+                    style: TextStyle(fontFamily: "Popins", fontSize: 16.5),
+                  ),
+                  Text(
+                    " / " + formatedMarket.quoteUnit.toUpperCase(),
+                    style: TextStyle(
+                        fontFamily: "Popins",
+                        fontSize: 11.5,
+                        color: Theme.of(ctx).hintColor),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Container(
-            width: 100.0,
-            child: Text(
-              formatedMarket.last
-                  .toStringAsFixed(formatedMarket.amountPrecision),
-              style: TextStyle(fontFamily: "Popins", fontSize: 14.0),
+            Container(
+              width: 100.0,
+              child: Text(
+                formatedMarket.last
+                    .toStringAsFixed(formatedMarket.amountPrecision),
+                style: TextStyle(fontFamily: "Popins", fontSize: 14.0),
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: Container(
-                width: 80.0,
-                height: 35.0,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(2.0)),
-                    color: Color(0xFF00C087)),
-                child: Center(
-                    child: Text(
-                  formatedMarket.priceChangePercent,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600, color: Colors.white),
-                ))),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Container(
+                  width: 80.0,
+                  height: 35.0,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(2.0)),
+                      color: Color(0xFF00C087)),
+                  child: Center(
+                      child: Text(
+                    formatedMarket.priceChangePercent,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600, color: Colors.white),
+                  ))),
+            )
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }

@@ -41,6 +41,7 @@ dependencies:
   connectivity: ^2.0.2
   k_chart: ^0.1.2
   intl: ^0.16.1
+  web_socket_channel: ^1.2.0
 
 dev_dependencies: 
   flutter_test:

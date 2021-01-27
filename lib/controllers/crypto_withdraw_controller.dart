@@ -22,7 +22,7 @@ class CryptoWithdrawController extends GetxController {
 
   SnackbarController snackbarController;
   ErrorController errorController = new ErrorController();
-  HomeController homeController;
+  HomeController homeController = Get.find();
 
   @override
   void onInit() {
@@ -30,7 +30,8 @@ class CryptoWithdrawController extends GetxController {
     withdrawTagController = TextEditingController();
     withdrawAmountController = TextEditingController();
     withdrawOtpController = TextEditingController();
-    homeController = Get.find();
+    homeController.fetchUser();
+    homeController.fetchMemberLevels();
     super.onInit();
   }
 

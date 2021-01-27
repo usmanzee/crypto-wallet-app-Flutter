@@ -1,19 +1,17 @@
+import 'package:crypto_template/controllers/RegisterController.dart';
 import 'package:flutter/material.dart';
-import 'package:crypto_template/component/style.dart';
-import 'package:form_field_validator/form_field_validator.dart';
-import 'package:crypto_template/component/custom_text_field.dart';
 import 'package:get/get.dart';
-import 'package:crypto_template/controllers/login_controller.dart';
 
-class EmailVerification extends StatelessWidget {
+class EmailVerification extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
+    var emailAddress = Get.arguments['email'];
     MediaQueryData mediaQuery = MediaQuery.of(context);
     return Container(
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.white),
+          iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           automaticallyImplyLeading: true,
@@ -21,22 +19,8 @@ class EmailVerification extends StatelessWidget {
         body: Container(
           height: double.infinity,
           width: double.infinity,
-
-          /// Set Background image in splash screen layout (Click to open code)
-          // decoration: BoxDecoration(color: colorStyle.background),
           child: Stack(
             children: <Widget>[
-              ///
-              /// Set image in top
-              //
-              // Container(
-              //   height: 219.0,
-              //   width: double.infinity,
-              //   decoration: BoxDecoration(
-              //       image: DecorationImage(
-              //           image: AssetImage("assets/image/loginHeader.png"),
-              //           fit: BoxFit.cover)),
-              // ),
               Container(
                 height: double.infinity,
                 width: double.infinity,
@@ -97,7 +81,14 @@ class EmailVerification extends StatelessWidget {
                                       TextButton(
                                         child:
                                             const Text('Resend Confirmation'),
-                                        onPressed: () {/* ... */},
+                                        style: TextButton.styleFrom(
+                                          primary:
+                                              Theme.of(context).primaryColor,
+                                        ),
+                                        onPressed: () {
+                                          controller.resendVerificationCode(
+                                              emailAddress);
+                                        },
                                       ),
                                     ],
                                   ),

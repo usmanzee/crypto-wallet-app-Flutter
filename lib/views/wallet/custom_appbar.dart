@@ -25,7 +25,7 @@ class WalletCustomAppbar extends StatelessWidget {
               arguments: {'searchFrom': screenType});
         },
         child: Padding(
-            padding: EdgeInsets.only(top: 50),
+            padding: EdgeInsets.only(top: 30),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               SizedBox(height: 10),

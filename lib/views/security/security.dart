@@ -1,16 +1,10 @@
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/views/modals/otp_modal.dart';
 import 'package:crypto_template/views/security/change_password.dart';
-import 'package:crypto_template/views/security/enable_otp.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:crypto_template/component/custom_text_field.dart';
-import 'package:form_field_validator/form_field_validator.dart';
-import 'package:crypto_template/component/style.dart';
 
-class Security extends StatelessWidget {
-  final HomeController homeController = Get.find();
-
+class Security extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -42,14 +36,12 @@ class Security extends StatelessWidget {
                 "2FA",
                 Obx(
                   () => Switch(
-                    value: homeController.isLoggedIn
-                        ? homeController.user.value.otp
-                        : false,
+                    value: controller.user.value.otp,
                     onChanged: (value) {
-                      !homeController.user.value.otp
-                          ? Get.to(EnableOTP())
-                          : showDialog(
-                              context: context, builder: (_) => OTPModal());
+                      controller.user.value.otp
+                          ? showDialog(
+                              context: context, builder: (_) => OTPModal())
+                          : Get.toNamed('/enable-otp');
                     },
                   ),
                 )),

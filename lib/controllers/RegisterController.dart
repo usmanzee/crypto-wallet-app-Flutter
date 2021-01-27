@@ -39,7 +39,26 @@ class RegisterController extends GetxController {
       }
       user.value = await _authRepository.register(requestObject);
       Get.back();
-      Get.toNamed('/email-verification');
+      Get.toNamed('/email-verification',
+          arguments: {'email': emailTextController.text});
+    } catch (error) {
+      Get.back();
+      errorController.handleError(error);
+    }
+  }
+
+  void resendVerificationCode(String email) async {
+    Get.dialog(Center(child: CircularProgressIndicator()),
+        barrierDismissible: false);
+    AuthRepository _authRepository = new AuthRepository();
+    try {
+      var requestObject = {
+        'email': email,
+        'lang': 'en',
+      };
+      var response =
+          await _authRepository.resendVerificationCode(requestObject);
+      Get.back();
     } catch (error) {
       Get.back();
       errorController.handleError(error);
