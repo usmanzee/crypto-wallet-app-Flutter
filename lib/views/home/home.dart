@@ -111,11 +111,9 @@ class Home extends StatelessWidget {
                         size: 26.0,
                         color: Theme.of(context).accentColor,
                       ), () {
-                    // homeController.isLoggedIn
-                    //     ? Get.toNamed('/wallets-search',
-                    //         arguments: {'searchFrom': 'deposit'})
-                    //     : Get.toNamed('/login');
-                    Get.toNamed('/swap');
+                    homeController.isLoggedIn
+                        ? Get.toNamed('/swap')
+                        : Get.toNamed('/login');
                   }, "Buy/Sell"),
                   _linksCard(
                       context,

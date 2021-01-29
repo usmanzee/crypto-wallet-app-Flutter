@@ -27,6 +27,8 @@ class MarketController extends GetxController {
     final String wsURL =
         'ws://10.121.121.220:9003/api/v2/ranger/public/?stream=api/v2/ranger/private/&stream=balances&stream=btczar.kline-15m&stream=btczar.ob-inc&stream=btczar.trades&stream=global.tickers&stream=order&stream=trade';
     // final String wsURL =
+    //     'wss://www.coinee.cf/api/v2/ranger/public/?stream=global.tickers';
+    // final String wsURL =
     //     'wss://ewallet.b4uwallet.com/api/v2/ranger/public/?stream=global.tickers';
     final channel = await IOWebSocketChannel.connect(wsURL);
     print(channel);

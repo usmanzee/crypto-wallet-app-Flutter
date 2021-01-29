@@ -27,23 +27,22 @@ class WalletController extends GetxController {
     WalletRepository _walletRepository = new WalletRepository();
     try {
       isLoading(true);
-      isLoading.refresh();
       var balances = await _walletRepository.fetchBalances();
       var currencies = await _walletRepository.fetchCurrencies();
       balancesList.assignAll(balances);
       currenciesList.assignAll(currencies);
-      await formateWallets(balances, currencies);
+      var wallets = await formateWallets(balances, currencies);
+      walletsList.assignAll(wallets);
+      searchWalletsList.assignAll(wallets);
 
       isLoading(false);
-      isLoading.refresh();
     } catch (error) {
       isLoading(false);
-      isLoading.refresh();
       errorController.handleError(error);
     }
   }
 
-  Future<void> formateWallets(
+  Future<List<Wallet>> formateWallets(
       List<Balance> balances, List<Currency> currencies) async {
     var wallets = new List<Wallet>();
 
@@ -66,7 +65,7 @@ class WalletController extends GetxController {
         };
       }
 
-      var walletsData = new Wallet(
+      var walletData = new Wallet(
         name: currency.name,
         explorerTransaction: currency.explorerTransaction,
         explorerAddress: currency.explorerAddress,
@@ -84,10 +83,9 @@ class WalletController extends GetxController {
         locked: walletBalance['locked'],
         currency: walletBalance['currency'],
       );
-      wallets.add(walletsData);
+      wallets.add(walletData);
     }
-    walletsList.assignAll(wallets);
-    searchWalletsList.assignAll(wallets);
+    return wallets;
   }
 
   void handleSearchInputChangeEvent(String value) {
