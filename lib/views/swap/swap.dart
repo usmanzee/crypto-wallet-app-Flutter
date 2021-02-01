@@ -176,7 +176,7 @@ class Swap extends StatelessWidget {
           highlightColor: Colors.black12,
           color: Theme.of(context).primaryColor,
           onPressed: () {
-            Get.to(Verification());
+            Get.toNamed('/profile-verification');
           },
           child: Center(
               child: Text(

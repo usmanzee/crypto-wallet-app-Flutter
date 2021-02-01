@@ -24,24 +24,24 @@ class MarketController extends GetxController {
   void onInit() async {
     await fetchMarkets();
 
-    final String wsURL =
-        'ws://10.121.121.220:9003/api/v2/ranger/public/?stream=api/v2/ranger/private/&stream=balances&stream=btczar.kline-15m&stream=btczar.ob-inc&stream=btczar.trades&stream=global.tickers&stream=order&stream=trade';
     // final String wsURL =
-    //     'wss://www.coinee.cf/api/v2/ranger/public/?stream=global.tickers';
-    // final String wsURL =
-    //     'wss://ewallet.b4uwallet.com/api/v2/ranger/public/?stream=global.tickers';
-    final channel = await IOWebSocketChannel.connect(wsURL);
-    print(channel);
-    channel.stream.listen((message) {
-      var data = json.decode(message);
-      // print(data);
-      if (data.containsKey('global.tickers')) {
-        // print(data['global.tickers']);
-        updateMarketData(data['global.tickers']);
-      }
-      // channel.sink.add('received!');
-      // channel.sink.close(status.goingAway);
-    });
+    //     'ws://10.121.121.48:9003/api/v2/ranger/public/?stream=api/v2/ranger/private/&stream=balances&stream=btczar.kline-15m&stream=btczar.ob-inc&stream=btczar.trades&stream=global.tickers&stream=order&stream=trade';
+    // // final String wsURL =
+    // //     'wss://www.coinee.cf/api/v2/ranger/public/?stream=global.tickers';
+    // // final String wsURL =
+    // //     'wss://ewallet.b4uwallet.com/api/v2/ranger/public/?stream=global.tickers';
+    // final channel = await IOWebSocketChannel.connect(wsURL);
+    // print(channel);
+    // channel.stream.listen((message) {
+    //   var data = json.decode(message);
+    //   // print(data);
+    //   if (data.containsKey('global.tickers')) {
+    //     // print(data['global.tickers']);
+    //     updateMarketData(data['global.tickers']);
+    //   }
+    //   // channel.sink.add('received!');
+    //   // channel.sink.close(status.goingAway);
+    // });
 
     super.onInit();
   }

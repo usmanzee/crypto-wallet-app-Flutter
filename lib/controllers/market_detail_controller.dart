@@ -95,10 +95,13 @@ class MarketDetailController extends GetxController {
       isKLineLoading(true);
       var period = selectedOption['valueInMinute'];
       var currentTime = DateTime.now();
+      // var from = currentTime.millisecondsSinceEpoch;
+      // var to = currentTime
+      //     .add(new Duration(minutes: int.parse(period)))
+      //     .millisecondsSinceEpoch;
       var from = currentTime.millisecondsSinceEpoch;
-      var to = currentTime
-          .add(new Duration(minutes: int.parse(period)))
-          .millisecondsSinceEpoch;
+      var to =
+          currentTime.subtract(new Duration(days: 3)).millisecondsSinceEpoch;
       var data = await _marketRepository.fetchKLineData(
           market.value.id, period, from, to);
       var keys = ['time', 'open', 'high', 'low', 'close', 'vol'];

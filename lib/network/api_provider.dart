@@ -14,7 +14,7 @@ class RequestOptions {
 }
 
 class ApiProvider implements RequestOptions {
-  final String _baseUrl = "http://10.121.121.220:9002/";
+  final String _baseUrl = "http://10.121.121.48:9002/";
   // final String _baseUrl = "http://www.app.local/";
   // final String _baseUrl = "https://www.coinee.cf/";
   // final String _baseUrl = "https://ewallet.b4uwallet.com/";

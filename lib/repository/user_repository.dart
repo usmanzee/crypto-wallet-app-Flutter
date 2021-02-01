@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:crypto_template/models/verification_label.dart';
 import 'package:crypto_template/network/api_provider.dart';
 import 'package:crypto_template/models/user.dart';
 import 'package:crypto_template/models/otp.dart';
@@ -54,6 +55,33 @@ class UserRepository {
     apiProvider.headers = requestHeaders.setAuthHeaders();
     final response =
         await apiProvider.put('barong/resource/users/password', data);
+    return response;
+  }
+
+  Future<List<VerificationLabel>> fetchLables() async {
+    apiProvider = new ApiProvider();
+    RequestHeaders requestHeaders = new RequestHeaders();
+    apiProvider.headers = requestHeaders.setAuthHeaders();
+    final response = await apiProvider.get('barong/resource/labels');
+    return verificationLabelFromJson(response);
+  }
+
+  Future<dynamic> sendPhoneVerificationCode(reqObj) async {
+    apiProvider = new ApiProvider();
+    RequestHeaders requestHeaders = new RequestHeaders();
+    apiProvider.headers = requestHeaders.setAuthHeaders();
+    final response =
+        await apiProvider.post('barong/resource/phones/send_code', reqObj);
+    return response;
+  }
+
+  Future<dynamic> verifyPhonePinCode(reqObj) async {
+    apiProvider = new ApiProvider();
+    RequestHeaders requestHeaders = new RequestHeaders();
+    apiProvider.headers = requestHeaders.setAuthHeaders();
+    print(reqObj);
+    final response =
+        await apiProvider.post('barong/resource/phones/verify', reqObj);
     return response;
   }
 }
