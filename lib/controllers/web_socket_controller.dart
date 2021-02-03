@@ -1,38 +1,92 @@
+import 'dart:async';
+import 'dart:convert';
+import 'package:crypto_template/models/formated_market.dart';
 import 'package:get/get.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/status.dart' as status;
 
 class WebSocketController extends GetxController {
+  // final bool withAuth;
+  // final FormatedMarket market;
+
+  // WebSocketController({this.withAuth, this.market});
+  final String _baseUrl = "ws://192.168.18.7:9003/api/v2/ranger";
+  // final String _baseUrl = "http://www.app.local/";
+  // final String _baseUrl = "https://www.coinee.cf/";
+  // final String _baseUrl = "https://ewallet.b4uwallet.com/";
   final isChannelConnected = false.obs;
-  var channel = ''.obs;
+  Rx<IOWebSocketChannel> channel;
+  Rx<StreamController> streamController;
   var webSocketConnected = false.obs;
   var webSocketConnectionError;
+
   @override
   void onInit() {
-    connectToWebSocket();
+    streamController = StreamController.broadcast().obs;
+    // connectToWebSocket(withAuth, market);
     super.onInit();
   }
 
-  void connectToWebSocket() {
-    print("trying to connect to websocket");
-
-    final Future futureChannel = establishConnection();
-    futureChannel.then((future) {
-      print("Connection established, registering interest now...");
-      channel.value = future;
-      webSocketConnected(true);
-    }).catchError((error) {
-      channel.value = null;
-      webSocketConnected(false);
-      webSocketConnectionError = error.toString();
-      print("WS Connection failed \n $webSocketConnectionError");
-    });
+  void connectToWebSocket(bool withAuth, market) async {
+    var wsAPIVersion = withAuth ? '/private' : '/public';
+    var url = _baseUrl + wsAPIVersion;
+    var streams = await streamsBuilder(true, market, true);
+    final String wsURL =
+        'ws://192.168.18.7:9003/api/v2/ranger/public/?stream=global.tickers';
+    var streamURL = generateSocketURI(url, streams);
+    channel = IOWebSocketChannel.connect(wsURL).obs;
+    streamController = StreamController.broadcast().obs;
+    streamController.value.addStream(channel.value.stream);
   }
 
-  Future<IOWebSocketChannel> establishConnection() async {
-    final IOWebSocketChannel channel = IOWebSocketChannel.connect(
-        'wss://ewallet.b4uwallet.com/api/v2/ranger/public/?stream=global.tickers');
-    return channel;
+  streamsBuilder(
+      bool withAuth, FormatedMarket market, bool incrementalOrderBook) {
+    var streams = ['global.tickers'];
+    if (withAuth) {
+      streams = [
+        ...streams,
+        'order',
+        'trade',
+      ];
+    }
+    if (market != null) {
+      streams = [
+        ...streams,
+        ...(marketStreams(market, incrementalOrderBook)['channels']),
+      ];
+    }
+
+    return streams;
+  }
+
+  dynamic marketStreams(FormatedMarket market, incrementalOrderBook) {
+    var channels = [
+      '${market.id}.trades',
+    ];
+
+    if (incrementalOrderBook) {
+      return {
+        'channels': [
+          ...channels,
+          '${market.id}.ob-inc',
+        ],
+      };
+    }
+
+    return {
+      'channels': [
+        ...channels,
+        '${market.id}.update',
+      ],
+    };
+  }
+
+  String generateSocketURI(String url, streams) {
+    var streamsURL = '';
+    for (int i = 0; i < streams.length; i++) {
+      streamsURL += (i == 0) ? streams[i] : '&stream=' + streams[i];
+    }
+    return url + '/?stream=' + streamsURL;
   }
 
   @override

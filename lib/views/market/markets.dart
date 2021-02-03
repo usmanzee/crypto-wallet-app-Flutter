@@ -6,7 +6,7 @@ class Market extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          brightness: Brightness.dark,
+          // brightness: Brightness.dark,
           centerTitle: true,
           title: Text(
             "Market",

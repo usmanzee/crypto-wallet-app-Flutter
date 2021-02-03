@@ -10,14 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:crypto_template/views/DetailCryptoValue/openOrders.dart';
 
-// class Trading extends StatefulWidget {
-//   final FormatedMarket formatedMarket;
-
-//   Trading({this.formatedMarket});
-//   @override
-//   _TradingState createState() => _TradingState(formatedMarket);
-// }
-
 class Trading extends StatelessWidget {
   final TradingController tradingController = Get.put(TradingController());
   final HomeController homeController = Get.find();
@@ -27,8 +19,7 @@ class Trading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      final FormatedMarket formatedMarket =
-          marketController.selectedMarketTrading.value;
+      final FormatedMarket formatedMarket = tradingController.market.value;
       return Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
@@ -57,7 +48,7 @@ class Trading extends StatelessWidget {
               Transform(
                 transform: Matrix4.translationValues(-8.0, 0.0, 0.0),
                 child: Text(
-                  formatedMarket.id.toUpperCase(),
+                  formatedMarket.name.toUpperCase(),
                   style: TextStyle(
                       color: Theme.of(context).textSelectionColor,
                       fontFamily: "Gotik",
@@ -108,7 +99,10 @@ class Trading extends StatelessWidget {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
-              OrderBook(),
+              OrderBook(
+                  formatedMarket: formatedMarket,
+                  asks: marketController.asks.value,
+                  bids: marketController.bids.value),
               DefaultTabController(
                 length: 2,
                 child: Column(

@@ -22,7 +22,7 @@ class Wallets extends StatelessWidget {
         ),
         iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
         elevation: 1.0,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        backgroundColor: Theme.of(context).canvasColor,
       ),
       resizeToAvoidBottomInset: false,
       body: Column(

@@ -4,9 +4,6 @@ import 'package:crypto_template/network/app_exception.dart';
 
 import 'dart:async';
 import 'dart:convert';
-import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto/crypto.dart';
-import 'package:get/get.dart';
 
 class RequestOptions {
   String _apiVersion; //'applogic' | 'peatio' | 'barong' | 'arke' | 'finex';
@@ -14,7 +11,7 @@ class RequestOptions {
 }
 
 class ApiProvider implements RequestOptions {
-  final String _baseUrl = "http://10.121.121.48:9002/";
+  final String _baseUrl = "http://192.168.18.7:9002/";
   // final String _baseUrl = "http://www.app.local/";
   // final String _baseUrl = "https://www.coinee.cf/";
   // final String _baseUrl = "https://ewallet.b4uwallet.com/";

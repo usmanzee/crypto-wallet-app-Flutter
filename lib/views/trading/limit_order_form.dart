@@ -155,8 +155,8 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                   children: [
                     Flexible(
                       child: TextFormField(
-                        cursorColor: Colors.black,
-                        keyboardType: TextInputType.name,
+                        cursorColor: Theme.of(context).textSelectionColor,
+                        keyboardType: TextInputType.number,
                         decoration: new InputDecoration(
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,
@@ -248,8 +248,8 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                     Icon(Icons.remove),
                     Flexible(
                       child: TextFormField(
-                        cursorColor: Colors.black,
-                        keyboardType: TextInputType.name,
+                        cursorColor: Theme.of(context).textSelectionColor,
+                        keyboardType: TextInputType.number,
                         decoration: new InputDecoration(
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,
@@ -275,8 +275,8 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                     Icon(Icons.remove),
                     Flexible(
                       child: TextFormField(
-                        cursorColor: Colors.black,
-                        keyboardType: TextInputType.name,
+                        cursorColor: Theme.of(context).textSelectionColor,
+                        keyboardType: TextInputType.number,
                         decoration: new InputDecoration(
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,
@@ -377,8 +377,8 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                   children: [
                     Flexible(
                       child: TextFormField(
-                        cursorColor: Colors.black,
-                        keyboardType: TextInputType.name,
+                        cursorColor: Theme.of(context).textSelectionColor,
+                        keyboardType: TextInputType.number,
                         decoration: new InputDecoration(
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,

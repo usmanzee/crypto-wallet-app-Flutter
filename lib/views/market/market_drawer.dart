@@ -2,6 +2,7 @@ import 'package:crypto_template/component/market/btcModel.dart';
 import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:crypto_template/controllers/market_detail_controller.dart';
 import 'package:crypto_template/controllers/trading_controller.dart';
+import 'package:crypto_template/controllers/web_socket_controller.dart';
 import 'package:crypto_template/models/formated_market.dart';
 import 'package:crypto_template/views/DetailCryptoValue/market_detail.dart';
 import 'package:flutter/material.dart';
@@ -288,14 +289,12 @@ Widget card(BuildContext context, FormatedMarket formatedMarket, screenType) {
         InkWell(
           onTap: () {
             Get.back();
-            MarketController marketController = Get.find();
             if (screenType == 'market_detail') {
               MarketDetailController marketDetailController = Get.find();
               marketDetailController.updateCurrentMarket(formatedMarket);
-              marketController.selectedMarket.value = formatedMarket;
             } else {
               TradingController tradingController = Get.find();
-              marketController.selectedMarketTrading.value = formatedMarket;
+              tradingController.updateCurrentMarket(formatedMarket);
             }
           },
           child: Row(

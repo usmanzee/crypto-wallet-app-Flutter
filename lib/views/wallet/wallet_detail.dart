@@ -53,7 +53,7 @@ class _WalletDetailState extends State<WalletDetail> {
         ),
         iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
         elevation: 1.0,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        backgroundColor: Theme.of(context).canvasColor,
       ),
       body: Column(
         children: [
@@ -243,14 +243,14 @@ class _WalletDetailState extends State<WalletDetail> {
                 )),
           ),
           Container(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Container(
+            color: Theme.of(context).canvasColor,
+            padding: const EdgeInsets.all(4.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Expanded(
+                  child: Container(
                     height: 40.0,
-                    width: 150.0,
                     child: MaterialButton(
                       splashColor: Colors.black12,
                       highlightColor: Colors.black12,
@@ -274,9 +274,13 @@ class _WalletDetailState extends State<WalletDetail> {
                       )),
                     ),
                   ),
-                  Container(
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: Container(
                     height: 40.0,
-                    width: 150.0,
                     child: MaterialButton(
                       splashColor: Colors.black12,
                       highlightColor: Colors.black12,
@@ -300,8 +304,8 @@ class _WalletDetailState extends State<WalletDetail> {
                       )),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           )
         ],
@@ -619,6 +623,7 @@ class _WalletDetailState extends State<WalletDetail> {
         context: context,
         builder: (BuildContext bc) {
           return Container(
+            color: Theme.of(context).scaffoldBackgroundColor,
             padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
             child: new Wrap(
               children: <Widget>[
@@ -771,45 +776,52 @@ class _WalletDetailState extends State<WalletDetail> {
                 Padding(
                   padding: EdgeInsets.only(top: 16.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      MaterialButton(
-                        color: Theme.of(context).canvasColor,
-                        onPressed: () {
-                          Clipboard.setData(
-                                  ClipboardData(text: depositHistoryItem.txid))
-                              .then((value) {
-                            Get.snackbar('Success', 'Copied to clipboard',
-                                snackPosition: SnackPosition.BOTTOM,
-                                colorText: Colors.white,
-                                backgroundColor: Colors.grey[900]);
-                          });
-                        },
-                        child: Center(
-                            child: Text(
-                          "Copy TxID",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontFamily: "Popins",
-                              letterSpacing: 1.3,
-                              fontSize: 16.0),
-                        )),
+                      Expanded(
+                        child: MaterialButton(
+                          color: Theme.of(context).canvasColor,
+                          onPressed: () {
+                            Clipboard.setData(ClipboardData(
+                                    text: depositHistoryItem.txid))
+                                .then((value) {
+                              Get.snackbar('Success', 'Copied to clipboard',
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  colorText: Colors.white,
+                                  backgroundColor: Colors.grey[900]);
+                            });
+                          },
+                          child: Center(
+                              child: Text(
+                            "Copy TxID",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontFamily: "Popins",
+                                letterSpacing: 1.3,
+                                fontSize: 16.0),
+                          )),
+                        ),
                       ),
-                      MaterialButton(
-                        color: Theme.of(context).accentColor,
-                        onPressed: () {
-                          _handleURLButtonPress('www.google.com');
-                        },
-                        child: Center(
-                            child: Text(
-                          "Check Explorer",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: "Popins",
-                              letterSpacing: 1.3,
-                              fontSize: 16.0),
-                        )),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Expanded(
+                        child: MaterialButton(
+                          color: Theme.of(context).accentColor,
+                          onPressed: () {
+                            _handleURLButtonPress('www.google.com');
+                          },
+                          child: Center(
+                              child: Text(
+                            "Check Explorer",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: "Popins",
+                                letterSpacing: 1.3,
+                                fontSize: 16.0),
+                          )),
+                        ),
                       ),
                     ],
                   ),

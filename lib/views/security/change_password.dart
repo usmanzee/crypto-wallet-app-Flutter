@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:crypto_template/component/custom_text_field.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:crypto_template/component/style.dart';
 
 class ChangePassword extends StatelessWidget {
   final ChangePasswordController _changePasswordController =
@@ -60,7 +59,7 @@ class ChangePassword extends StatelessWidget {
                     child: CustomTextField(
                         widgetIcon: Icon(
                           Icons.email,
-                          color: colorStyle.primaryColor,
+                          color: Theme.of(context).primaryColor,
                           size: 20,
                         ),
                         validator: _passwordValidator,
@@ -78,7 +77,7 @@ class ChangePassword extends StatelessWidget {
                         widgetIcon: Icon(
                           Icons.vpn_key,
                           size: 20,
-                          color: colorStyle.primaryColor,
+                          color: Theme.of(context).primaryColor,
                         ),
                         validator: _passwordValidator,
                         controller:
@@ -95,7 +94,7 @@ class ChangePassword extends StatelessWidget {
                         widgetIcon: Icon(
                           Icons.vpn_key,
                           size: 20,
-                          color: colorStyle.primaryColor,
+                          color: Theme.of(context).primaryColor,
                         ),
                         controller: _changePasswordController
                             .confirmPasswordTextController,
@@ -122,7 +121,7 @@ class ChangePassword extends StatelessWidget {
                         width: double.infinity,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(0.0)),
-                          color: colorStyle.primaryColor,
+                          color: Theme.of(context).primaryColor,
                         ),
                         child: Center(
                           child: Text(

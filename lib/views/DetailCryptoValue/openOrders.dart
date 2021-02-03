@@ -108,7 +108,7 @@ class _OpenOrdersState extends State<OpenOrders> {
     return openOrders.isEmpty
         ? NoData()
         : Container(
-            height: 300.0,
+            height: 150.0,
             child: ListView.builder(
               shrinkWrap: true,
               primary: false,

@@ -1,13 +1,13 @@
+import 'dart:async';
 import 'package:crypto_template/controllers/error_controller.dart';
+import 'package:crypto_template/controllers/web_socket_controller.dart';
 import 'package:crypto_template/models/formated_market.dart';
 import 'package:crypto_template/models/market.dart';
 import 'package:crypto_template/models/market_ticker.dart';
 import 'package:crypto_template/repository/market_repository.dart';
-import 'package:crypto_template/screen/market/markets.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:web_socket_channel/io.dart';
-import 'package:web_socket_channel/status.dart' as status;
 
 class MarketController extends GetxController {
   var isLoading = true.obs;
@@ -16,34 +16,43 @@ class MarketController extends GetxController {
   var formatedMarketsList = List<FormatedMarket>().obs;
   var positiveMarketsList = List<FormatedMarket>().obs;
   var negativeMarketsList = List<FormatedMarket>().obs;
+  var bids = List<dynamic>().obs;
+  var asks = List<dynamic>().obs;
+  Rx<IOWebSocketChannel> channel;
   Rx<FormatedMarket> selectedMarket = FormatedMarket().obs;
   Rx<FormatedMarket> selectedMarketTrading = FormatedMarket().obs;
   ErrorController errorController = new ErrorController();
+  WebSocketController webSocketController;
+
+  Rx<StreamController> streamController;
 
   @override
   void onInit() async {
     await fetchMarkets();
+    webSocketController = Get.put(WebSocketController());
+    await webSocketController.connectToWebSocket(false, selectedMarket.value);
 
-    // final String wsURL =
-    //     'ws://10.121.121.48:9003/api/v2/ranger/public/?stream=api/v2/ranger/private/&stream=balances&stream=btczar.kline-15m&stream=btczar.ob-inc&stream=btczar.trades&stream=global.tickers&stream=order&stream=trade';
-    // // final String wsURL =
-    // //     'wss://www.coinee.cf/api/v2/ranger/public/?stream=global.tickers';
-    // // final String wsURL =
-    // //     'wss://ewallet.b4uwallet.com/api/v2/ranger/public/?stream=global.tickers';
-    // final channel = await IOWebSocketChannel.connect(wsURL);
-    // print(channel);
-    // channel.stream.listen((message) {
-    //   var data = json.decode(message);
-    //   // print(data);
-    //   if (data.containsKey('global.tickers')) {
-    //     // print(data['global.tickers']);
-    //     updateMarketData(data['global.tickers']);
-    //   }
-    //   // channel.sink.add('received!');
-    //   // channel.sink.close(status.goingAway);
-    // });
+    webSocketController.streamController.value.stream.listen((message) {
+      var data = json.decode(message);
+
+      if (data.containsKey('global.tickers')) {
+        updateMarketData(data['global.tickers']);
+      }
+      // if (data.containsKey('btczar.ob-snap')) {
+      //   asks.assignAll(data['btczar.ob-snap']['asks']);
+      //   bids.assignAll(data['btczar.ob-snap']['bids']);
+      // }
+    }, onDone: () {
+      print("Task Done1");
+    }, onError: (error) {
+      print("Some Error1");
+    });
 
     super.onInit();
+  }
+
+  void onReady() {
+    super.onReady();
   }
 
   void fetchMarkets() async {
@@ -181,7 +190,7 @@ class MarketController extends GetxController {
       formatedMarketsList.refresh();
       positiveMarketsList.refresh();
       negativeMarketsList.refresh();
-      print('---WS MAREKTS MESSAGE---');
+      // print('---WS MAREKTS MESSAGE---');
     }
   }
 

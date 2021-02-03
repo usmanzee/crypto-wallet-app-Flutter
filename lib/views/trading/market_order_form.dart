@@ -26,8 +26,8 @@ class _MarketOrderFormState extends State<MarketOrderForm> {
                     Icon(Icons.remove),
                     Flexible(
                       child: TextFormField(
-                        cursorColor: Colors.black,
-                        keyboardType: TextInputType.name,
+                        cursorColor: Theme.of(context).textSelectionColor,
+                        keyboardType: TextInputType.number,
                         decoration: new InputDecoration(
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,
@@ -53,8 +53,8 @@ class _MarketOrderFormState extends State<MarketOrderForm> {
                     Icon(Icons.remove),
                     Flexible(
                       child: TextFormField(
-                        cursorColor: Colors.black,
-                        keyboardType: TextInputType.name,
+                        cursorColor: Theme.of(context).textSelectionColor,
+                        keyboardType: TextInputType.number,
                         decoration: new InputDecoration(
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,
@@ -155,8 +155,8 @@ class _MarketOrderFormState extends State<MarketOrderForm> {
                   children: [
                     Flexible(
                       child: TextFormField(
-                        cursorColor: Colors.black,
-                        keyboardType: TextInputType.name,
+                        cursorColor: Theme.of(context).textSelectionColor,
+                        keyboardType: TextInputType.number,
                         decoration: new InputDecoration(
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,
@@ -248,8 +248,8 @@ class _MarketOrderFormState extends State<MarketOrderForm> {
                     Icon(Icons.remove),
                     Flexible(
                       child: TextFormField(
-                        cursorColor: Colors.black,
-                        keyboardType: TextInputType.name,
+                        cursorColor: Theme.of(context).textSelectionColor,
+                        keyboardType: TextInputType.number,
                         decoration: new InputDecoration(
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,
@@ -275,8 +275,8 @@ class _MarketOrderFormState extends State<MarketOrderForm> {
                     Icon(Icons.remove),
                     Flexible(
                       child: TextFormField(
-                        cursorColor: Colors.black,
-                        keyboardType: TextInputType.name,
+                        cursorColor: Theme.of(context).textSelectionColor,
+                        keyboardType: TextInputType.number,
                         decoration: new InputDecoration(
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,
@@ -377,8 +377,8 @@ class _MarketOrderFormState extends State<MarketOrderForm> {
                   children: [
                     Flexible(
                       child: TextFormField(
-                        cursorColor: Colors.black,
-                        keyboardType: TextInputType.name,
+                        cursorColor: Theme.of(context).textSelectionColor,
+                        keyboardType: TextInputType.number,
                         decoration: new InputDecoration(
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,

@@ -19,7 +19,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        backgroundColor: Theme.of(context).canvasColor,
         elevation: 1.0,
         iconTheme: IconThemeData(
             color: Theme.of(context).textSelectionColor.withOpacity(0.6)),

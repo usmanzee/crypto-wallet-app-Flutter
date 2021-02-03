@@ -15,15 +15,15 @@ class MarketDetail extends GetWidget<MarketDetailController> {
   // final FormatedMarket formatedMarket = Get.arguments['formatedMarket'];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
-  MarketController marketController = Get.find();
-  HomeController homeController = Get.find();
+  final MarketController marketController = Get.find();
+  final HomeController homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      // final FormatedMarket formatedMarket = controller.market.value;
       final FormatedMarket formatedMarket =
           marketController.selectedMarket.value;
+
       return Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
@@ -72,8 +72,8 @@ class MarketDetail extends GetWidget<MarketDetailController> {
               child: ListView(
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.only(
-                        top: 10.0, left: 15.0, right: 15.0),
+                    padding:
+                        const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,7 +189,7 @@ class MarketDetail extends GetWidget<MarketDetailController> {
                     ),
                   ),
                   Container(
-                    height: 400.0,
+                    height: 250.0,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -206,14 +206,17 @@ class MarketDetail extends GetWidget<MarketDetailController> {
                         //   formatedMarket: formatedMarket,
                         // ),
                         Padding(
-                          padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                          padding: EdgeInsets.fromLTRB(8, 0, 0, 8),
                           child: Text(
                             'Order Book',
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                         ),
-                        OrderBook(),
+                        OrderBook(
+                            formatedMarket: formatedMarket,
+                            asks: marketController.asks.value,
+                            bids: marketController.bids.value)
                       ],
                     ),
                   ),
@@ -351,8 +354,7 @@ class MarketDetail extends GetWidget<MarketDetailController> {
               itemBuilder: (BuildContext context, int index) => Card(
                 child: InkWell(
                   onTap: () {
-                    controller.selectedOption.value = lineGraphTimeSlots[index];
-                    controller.getKlineData();
+                    controller.updateKlineTimeOption(lineGraphTimeSlots[index]);
                   },
                   child: Container(
                     width: 50,
@@ -442,68 +444,71 @@ class MarketDetail extends GetWidget<MarketDetailController> {
 Widget _buttonBottom(context, FormatedMarket formatedMarket) {
   HomeController homeController = Get.find();
   MarketController marketController = Get.find();
-  return Padding(
+  return Container(
+    color: Theme.of(context).canvasColor,
     padding: const EdgeInsets.all(4.0),
     child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Container(
-          height: 50.0,
-          width: 160.0,
-          child: MaterialButton(
-            splashColor: Colors.black12,
-            highlightColor: Colors.black12,
-            color: Color(0xFF00C087),
-            onPressed: () {
-              Get.back();
-              marketController.selectedMarketTrading.value = formatedMarket;
-              homeController.selectedNavIndex = 2;
-              // Get.offNamed('/trading', arguments: {
-              //   'formatedMarket': formatedMarket,
-              //   'selectedNavIndex': 3
-              // });
-            },
-            child: Center(
-                child: Text(
-              "Buy",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: "Popins",
-                  letterSpacing: 1.3,
-                  fontSize: 16.0),
-            )),
+        Expanded(
+          child: Container(
+            height: 50.0,
+            child: MaterialButton(
+              splashColor: Colors.black12,
+              highlightColor: Colors.black12,
+              color: Color(0xFF00C087),
+              onPressed: () {
+                Get.back();
+                marketController.selectedMarketTrading.value = formatedMarket;
+                homeController.selectedNavIndex = 2;
+                // Get.offNamed('/trading', arguments: {
+                //   'formatedMarket': formatedMarket,
+                //   'selectedNavIndex': 3
+                // });
+              },
+              child: Center(
+                  child: Text(
+                "Buy",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: "Popins",
+                    letterSpacing: 1.3,
+                    fontSize: 16.0),
+              )),
+            ),
           ),
         ),
         SizedBox(
-          width: 0.0,
+          width: 8.0,
         ),
-        Container(
-          height: 50.0,
-          width: 160.0,
-          child: MaterialButton(
-            splashColor: Colors.black12,
-            highlightColor: Colors.black12,
-            color: Colors.redAccent.withOpacity(0.8),
-            onPressed: () {
-              Get.back();
-              marketController.selectedMarketTrading.value = formatedMarket;
-              homeController.selectedNavIndex = 2;
-              // Get.offNamed('/trading', arguments: {
-              //   'formatedMarket': formatedMarket,
-              //   'selectedNavIndex': 3
-              // });
-            },
-            child: Center(
-                child: Text(
-              "Sell",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: "Popins",
-                  letterSpacing: 1.3,
-                  fontSize: 16.0),
-            )),
+        Expanded(
+          child: Container(
+            height: 50.0,
+            child: MaterialButton(
+              splashColor: Colors.black12,
+              highlightColor: Colors.black12,
+              color: Colors.redAccent.withOpacity(0.8),
+              onPressed: () {
+                Get.back();
+                marketController.selectedMarketTrading.value = formatedMarket;
+                homeController.selectedNavIndex = 2;
+                // Get.offNamed('/trading', arguments: {
+                //   'formatedMarket': formatedMarket,
+                //   'selectedNavIndex': 3
+                // });
+              },
+              child: Center(
+                  child: Text(
+                "Sell",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: "Popins",
+                    letterSpacing: 1.3,
+                    fontSize: 16.0),
+              )),
+            ),
           ),
         ),
       ],

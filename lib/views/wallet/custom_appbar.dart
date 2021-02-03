@@ -44,15 +44,15 @@ class WalletCustomAppbar extends StatelessWidget {
                           child: wallet.iconUrl != null
                               ? Image.network(
                                   wallet.iconUrl,
-                                  height: 30.0,
+                                  height: 25.0,
                                   fit: BoxFit.contain,
-                                  width: 30.0,
+                                  width: 25.0,
                                 )
                               : Image.asset(
                                   'assets/image/market/BCH.png',
-                                  height: 30.0,
+                                  height: 25.0,
                                   fit: BoxFit.contain,
-                                  width: 30.0,
+                                  width: 25.0,
                                 ),
                         ),
                         Text(
@@ -78,7 +78,7 @@ class WalletCustomAppbar extends StatelessWidget {
       ),
       iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
       elevation: 1.0,
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).canvasColor,
     );
   }
 }

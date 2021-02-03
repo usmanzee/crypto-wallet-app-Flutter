@@ -1,16 +1,26 @@
 import 'package:crypto_template/component/CardDetail/AmountSell.dart';
 import 'package:crypto_template/component/CardDetail/BuyAmount.dart';
+import 'package:crypto_template/models/formated_market.dart';
 import 'package:flutter/material.dart';
 
 class OrderBook extends StatefulWidget {
   final Widget child;
+  final FormatedMarket formatedMarket;
+  final dynamic asks;
+  final dynamic bids;
 
-  OrderBook({Key key, this.child}) : super(key: key);
+  OrderBook({Key key, this.child, this.formatedMarket, this.asks, this.bids})
+      : super(key: key);
 
-  _OrderBookState createState() => _OrderBookState();
+  _OrderBookState createState() =>
+      _OrderBookState(formatedMarket: formatedMarket, asks: asks, bids: bids);
 }
 
 class _OrderBookState extends State<OrderBook> {
+  final FormatedMarket formatedMarket;
+  final dynamic asks;
+  final dynamic bids;
+  _OrderBookState({this.formatedMarket, this.asks, this.bids});
   @override
   Widget build(BuildContext context) {
     double mediaQuery = MediaQuery.of(context).size.width / 2.2;
@@ -67,9 +77,9 @@ class _OrderBookState extends State<OrderBook> {
               child: ListView.builder(
                 shrinkWrap: true,
                 primary: false,
-                itemCount: buyAmountList.length,
+                itemCount: bids.length,
                 itemBuilder: (BuildContext ctx, int i) {
-                  return _buyAmount(mediaQuery, buyAmountList[i]);
+                  return _buyAmount(mediaQuery, buyAmountList[i], bids[i]);
                 },
               ),
             ),
@@ -84,9 +94,9 @@ class _OrderBookState extends State<OrderBook> {
               child: ListView.builder(
                 shrinkWrap: true,
                 primary: false,
-                itemCount: amountSellList.length,
+                itemCount: asks.length,
                 itemBuilder: (BuildContext ctx, int i) {
-                  return _amountSell(mediaQuery, amountSellList[i]);
+                  return _amountSell(mediaQuery, amountSellList[i], asks[i]);
                 },
               ),
             ),
@@ -96,7 +106,7 @@ class _OrderBookState extends State<OrderBook> {
     );
   }
 
-  Widget _buyAmount(double _width, buyAmount item) {
+  Widget _buyAmount(double _width, buyAmount item, bid) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 19.0),
       child: Container(
@@ -108,12 +118,14 @@ class _OrderBookState extends State<OrderBook> {
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: Text(
-                item.value,
+                double.parse(bid[0])
+                    .toStringAsFixed(formatedMarket.pricePrecision),
                 style: TextStyle(fontFamily: "Gotik", fontSize: 15.0),
               ),
             ),
             Text(
-              item.price,
+              double.parse(bid[0])
+                  .toStringAsFixed(formatedMarket.amountPrecision),
               style: TextStyle(
                   color: Colors.greenAccent,
                   fontWeight: FontWeight.w700,
@@ -126,7 +138,7 @@ class _OrderBookState extends State<OrderBook> {
     );
   }
 
-  Widget _amountSell(double _width, amountSell item) {
+  Widget _amountSell(double _width, amountSell item, ask) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 19.0),
       child: Container(
@@ -136,7 +148,8 @@ class _OrderBookState extends State<OrderBook> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              item.price,
+              double.parse(ask[0])
+                  .toStringAsFixed(formatedMarket.pricePrecision),
               style: TextStyle(
                   color: Colors.red,
                   fontWeight: FontWeight.w700,
@@ -146,7 +159,8 @@ class _OrderBookState extends State<OrderBook> {
             Padding(
               padding: const EdgeInsets.only(right: 8.0),
               child: Text(
-                item.value,
+                double.parse(ask[1])
+                    .toStringAsFixed(formatedMarket.amountPrecision),
                 style: TextStyle(fontFamily: "Gotik", fontSize: 15.0),
               ),
             ),
