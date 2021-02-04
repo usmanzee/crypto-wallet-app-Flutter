@@ -62,7 +62,7 @@ class Setting extends StatelessWidget {
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {
-                  Get.to(WebViewContainer(
+                  Get.to(WebViewContainer('Help/Support',
                       'https://support.b4uwallet.com/lhc/lhc_web/index.php/chat/start'));
                 },
                 child: Icon(Icons.support_agent),
@@ -162,7 +162,8 @@ class Setting extends StatelessWidget {
             }),
             InkWell(
                 onTap: () {
-                  Get.to(WebViewContainer('https://ewallet.b4uwallet.com/fee'));
+                  Get.to(WebViewContainer(
+                      'Fee', 'https://ewallet.b4uwallet.com/fee'));
                 },
                 child: listSetting(
                     context,
@@ -218,7 +219,7 @@ class Setting extends StatelessWidget {
             }),
             InkWell(
                 onTap: () {
-                  Get.to(WebViewContainer(
+                  Get.to(WebViewContainer('Help/Support',
                       'https://support.b4uwallet.com/lhc/lhc_web/index.php/chat/start'));
                 },
                 child: listSetting(

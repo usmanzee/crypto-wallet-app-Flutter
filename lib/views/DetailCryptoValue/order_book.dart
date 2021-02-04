@@ -1,7 +1,9 @@
 import 'package:crypto_template/component/CardDetail/AmountSell.dart';
 import 'package:crypto_template/component/CardDetail/BuyAmount.dart';
+import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:crypto_template/models/formated_market.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class OrderBook extends StatefulWidget {
   final Widget child;
@@ -21,6 +23,7 @@ class _OrderBookState extends State<OrderBook> {
   final dynamic asks;
   final dynamic bids;
   _OrderBookState({this.formatedMarket, this.asks, this.bids});
+  MarketController marketController = Get.find();
   @override
   Widget build(BuildContext context) {
     double mediaQuery = MediaQuery.of(context).size.width / 2.2;
@@ -71,42 +74,46 @@ class _OrderBookState extends State<OrderBook> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Container(
-              height: 165.0,
-              width: mediaQuery,
-              child: ListView.builder(
-                shrinkWrap: true,
-                primary: false,
-                itemCount: bids.length,
-                itemBuilder: (BuildContext ctx, int i) {
-                  return _buyAmount(mediaQuery, buyAmountList[i], bids[i]);
-                },
-              ),
-            ),
+            Obx(() {
+              return Container(
+                height: 165.0,
+                width: mediaQuery,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  primary: false,
+                  itemCount: marketController.bids.length,
+                  itemBuilder: (BuildContext ctx, int i) {
+                    return _buyAmount(mediaQuery, marketController.bids[i]);
+                  },
+                ),
+              );
+            }),
             Container(
               height: 165.0,
               width: 1.0,
               color: Theme.of(context).canvasColor,
             ),
-            Container(
-              height: 165.0,
-              width: mediaQuery,
-              child: ListView.builder(
-                shrinkWrap: true,
-                primary: false,
-                itemCount: asks.length,
-                itemBuilder: (BuildContext ctx, int i) {
-                  return _amountSell(mediaQuery, amountSellList[i], asks[i]);
-                },
-              ),
-            ),
+            Obx(() {
+              return Container(
+                height: 165.0,
+                width: mediaQuery,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  primary: false,
+                  itemCount: marketController.asks.length,
+                  itemBuilder: (BuildContext ctx, int i) {
+                    return _amountSell(mediaQuery, marketController.asks[i]);
+                  },
+                ),
+              );
+            })
           ],
         )
       ],
     );
   }
 
-  Widget _buyAmount(double _width, buyAmount item, bid) {
+  Widget _buyAmount(double _width, bid) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 19.0),
       child: Container(
@@ -118,14 +125,14 @@ class _OrderBookState extends State<OrderBook> {
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: Text(
-                double.parse(bid[0])
-                    .toStringAsFixed(formatedMarket.pricePrecision),
+                double.parse(bid[1])
+                    .toStringAsFixed(formatedMarket.amountPrecision),
                 style: TextStyle(fontFamily: "Gotik", fontSize: 15.0),
               ),
             ),
             Text(
               double.parse(bid[0])
-                  .toStringAsFixed(formatedMarket.amountPrecision),
+                  .toStringAsFixed(formatedMarket.pricePrecision),
               style: TextStyle(
                   color: Colors.greenAccent,
                   fontWeight: FontWeight.w700,
@@ -138,7 +145,7 @@ class _OrderBookState extends State<OrderBook> {
     );
   }
 
-  Widget _amountSell(double _width, amountSell item, ask) {
+  Widget _amountSell(double _width, ask) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 19.0),
       child: Container(

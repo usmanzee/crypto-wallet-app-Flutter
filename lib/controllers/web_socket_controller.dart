@@ -10,7 +10,7 @@ class WebSocketController extends GetxController {
   // final FormatedMarket market;
 
   // WebSocketController({this.withAuth, this.market});
-  final String _baseUrl = "ws://192.168.18.7:9003/api/v2/ranger";
+  final String _baseUrl = "ws://10.121.121.48:9003/api/v2/ranger";
   // final String _baseUrl = "http://www.app.local/";
   // final String _baseUrl = "https://www.coinee.cf/";
   // final String _baseUrl = "https://ewallet.b4uwallet.com/";
@@ -32,7 +32,7 @@ class WebSocketController extends GetxController {
     var url = _baseUrl + wsAPIVersion;
     var streams = await streamsBuilder(true, market, true);
     final String wsURL =
-        'ws://192.168.18.7:9003/api/v2/ranger/public/?stream=global.tickers';
+        'ws://10.121.121.48:9003/api/v2/ranger/public/?stream=global.tickers';
     var streamURL = generateSocketURI(url, streams);
     channel = IOWebSocketChannel.connect(wsURL).obs;
     streamController = StreamController.broadcast().obs;

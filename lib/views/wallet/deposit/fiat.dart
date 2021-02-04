@@ -308,8 +308,6 @@ class _DepositFiatState extends State<DepositFiat> {
                                                               Icons
                                                                   .content_copy,
                                                               size: 20.0,
-                                                              color: Colors
-                                                                  .brown[900],
                                                             ),
                                                             onPressed: () {
                                                               _copyToClipboard(

@@ -34,7 +34,6 @@ class MarketController extends GetxController {
 
     webSocketController.streamController.value.stream.listen((message) {
       var data = json.decode(message);
-
       if (data.containsKey('global.tickers')) {
         updateMarketData(data['global.tickers']);
       }

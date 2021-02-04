@@ -28,7 +28,7 @@ class _WalletDetailState extends State<WalletDetail> {
   TransactionHistoryController transactionHistoryController;
 
   void _handleURLButtonPress(String url) {
-    Get.to(WebViewContainer(url));
+    Get.to(WebViewContainer('Explorer', url));
   }
 
   @override
