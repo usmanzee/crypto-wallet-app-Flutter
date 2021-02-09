@@ -293,7 +293,9 @@ Widget card(BuildContext context, FormatedMarket formatedMarket, screenType) {
               MarketDetailController marketDetailController = Get.find();
               marketDetailController.updateCurrentMarket(formatedMarket);
             } else {
-              TradingController tradingController = Get.find();
+              TradingController tradingController =
+                  Get.find(tag: 'trading_instance');
+
               tradingController.updateCurrentMarket(formatedMarket);
             }
           },

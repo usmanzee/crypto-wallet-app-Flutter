@@ -203,7 +203,7 @@ class _MarketOrderFormState extends State<MarketOrderForm> {
                 ],
               ),
             ),
-            if (homeController.isLoggedIn)
+            if (homeController.isLoggedIn.value)
               Padding(
                 padding: EdgeInsets.only(bottom: 8.0),
                 child: Container(
@@ -428,7 +428,7 @@ class _MarketOrderFormState extends State<MarketOrderForm> {
                 ],
               ),
             ),
-            if (homeController.isLoggedIn)
+            if (homeController.isLoggedIn.value)
               Padding(
                 padding: EdgeInsets.only(bottom: 8.0),
                 child: Container(

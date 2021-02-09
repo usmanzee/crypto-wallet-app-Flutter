@@ -39,6 +39,38 @@ class WebSocketController extends GetxController {
     streamController.value.addStream(channel.value.stream);
   }
 
+  void subscribeOrderBookInc(FormatedMarket market) {
+    channel.value.sink.add(json.encode({
+      "event": "subscribe",
+      "streams": [
+        '${market.id}.ob-inc',
+      ]
+    }));
+  }
+
+  void unSubscribeOrderBookInc(FormatedMarket market) {
+    channel.value.sink.add(json.encode({
+      "event": "unsubscribe",
+      "streams": [
+        '${market.id}.ob-inc',
+      ]
+    }));
+  }
+
+  void subscribeKline(FormatedMarket market, String timeValue) {
+    channel.value.sink.add(json.encode({
+      "event": "subscribe",
+      "streams": ['${market.id}.kline-' + timeValue]
+    }));
+  }
+
+  void unSubscribeKline(FormatedMarket market, String timeValue) {
+    channel.value.sink.add(json.encode({
+      "event": "unsubscribe",
+      "streams": ['${market.id}.kline-' + timeValue]
+    }));
+  }
+
   streamsBuilder(
       bool withAuth, FormatedMarket market, bool incrementalOrderBook) {
     var streams = ['global.tickers'];

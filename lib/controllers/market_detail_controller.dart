@@ -3,6 +3,7 @@ import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:crypto_template/controllers/web_socket_controller.dart';
 import 'package:crypto_template/models/formated_market.dart';
 import 'package:crypto_template/repository/market_repository.dart';
+import 'package:crypto_template/screen/market/markets.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
@@ -63,61 +64,57 @@ class MarketDetailController extends GetxController {
     market.value = marketController.selectedMarket.value;
     await setDefaultValues();
     await getKlineData();
-    rootBundle.loadString('assets/depth.json').then((result) {
-      final parseJson = json.decode(result);
-      Map tick = parseJson['tick'];
-      var bids = tick['bids']
-          .map((item) => DepthEntity(item[0], item[1]))
-          .toList()
-          .cast<DepthEntity>();
-      var asks = tick['asks']
-          .map((item) => DepthEntity(item[0], item[1]))
-          .toList()
-          .cast<DepthEntity>();
-      initDepth(bids, asks);
-    });
+    // rootBundle.loadString('assets/depth.json').then((result) {
+    //   final parseJson = json.decode(result);
+    //   Map tick = parseJson['tick'];
+    //   var bids = tick['bids']
+    //       .map((item) => DepthEntity(item[0], item[1]))
+    //       .toList()
+    //       .cast<DepthEntity>();
+    //   var asks = tick['asks']
+    //       .map((item) => DepthEntity(item[0], item[1]))
+    //       .toList()
+    //       .cast<DepthEntity>();
 
-    getWSStreams();
+    //   initDepth(bids, asks);
+    // });
 
     super.onInit();
   }
 
+  @override
+  void onReady() async {
+    // getWSStreams();
+    await webSocketController.subscribeKline(
+        market.value, selectedOption['valueInMinute']);
+    getKlineDataFromWS();
+
+    await webSocketController.subscribeOrderBookInc(market.value);
+    getOrderBookDataFromWS();
+    super.onReady();
+  }
+
   void updateCurrentMarket(FormatedMarket newMarket) async {
-    webSocketController.channel.value.sink.add(json.encode({
-      "event": "unsubscribe",
-      "streams": [
-        '${market.value.id}.ob-inc',
-        '${market.value.id}.kline-' + selectedOption['valueInMinute']
-      ]
-    }));
+    webSocketController.unSubscribeKline(
+        market.value, selectedOption['valueInMinute']);
+    webSocketController.unSubscribeOrderBookInc(market.value);
     market.value = newMarket;
     marketController.selectedMarket.value = newMarket;
+
     await getKlineData();
-    webSocketController.channel.value.sink.add(json.encode({
-      "event": "subscribe",
-      "streams": [
-        '${market.value.id}.ob-inc',
-        '${market.value.id}.kline-' + selectedOption['valueInMinute']
-      ]
-    }));
+    webSocketController.subscribeKline(
+        newMarket, selectedOption['valueInMinute']);
+    webSocketController.subscribeOrderBookInc(newMarket);
   }
 
   void updateKlineTimeOption(newOption) async {
-    webSocketController.channel.value.sink.add(json.encode({
-      "event": "unsubscribe",
-      "streams": ['${market.value.id}.kline-' + selectedOption['valueInMinute']]
-    }));
+    webSocketController.unSubscribeKline(
+        market.value, selectedOption['valueInMinute']);
+
     selectedOption.value = newOption;
     await getKlineData();
-    webSocketController.channel.value.sink.add(json.encode({
-      "event": "subscribe",
-      "streams": ['${market.value.id}.kline-' + selectedOption['valueInMinute']]
-    }));
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
+    webSocketController.subscribeKline(
+        market.value, selectedOption['valueInMinute']);
   }
 
   void setDefaultValues() {
@@ -159,12 +156,25 @@ class MarketDetailController extends GetxController {
     }
   }
 
+  void makeDepthData() {
+    var bids = marketController.bids
+        .map(
+            (item) => DepthEntity(double.parse(item[0]), double.parse(item[1])))
+        .toList()
+        .cast<DepthEntity>();
+    var asks = marketController.asks
+        .map(
+            (item) => DepthEntity(double.parse(item[0]), double.parse(item[1])))
+        .toList()
+        .cast<DepthEntity>();
+    initDepth(bids, asks);
+  }
+
   void initDepth(List<DepthEntity> bids, List<DepthEntity> asks) {
     if (bids == null || asks == null || bids.isEmpty || asks.isEmpty) return;
 
     double amount = 0.0;
     bids?.sort((left, right) => left.price.compareTo(right.price));
-    //累加买入委托量
     bids.reversed.forEach((item) {
       amount += item.vol;
       item.vol = amount;
@@ -173,7 +183,6 @@ class MarketDetailController extends GetxController {
 
     amount = 0.0;
     asks?.sort((left, right) => left.price.compareTo(right.price));
-    //累加卖出委托量
     asks?.forEach((item) {
       amount += item.vol;
       item.vol = amount;
@@ -181,14 +190,31 @@ class MarketDetailController extends GetxController {
     });
   }
 
-  void getWSStreams() {
-    webSocketController.channel.value.sink.add(json.encode({
-      "event": "subscribe",
-      "streams": [
-        '${market.value.id}.ob-inc',
-        '${market.value.id}.kline-' + selectedOption['valueInMinute']
-      ]
-    }));
+  void getKlineDataFromWS() {
+    webSocketController.streamController.value.stream.listen((message) {
+      var data = json.decode(message);
+      if (data
+          .containsKey('${market.value.id}.kline-' + selectedOption['key'])) {
+        var keys = ['time', 'open', 'high', 'low', 'close', 'vol'];
+        Map<String, dynamic> newObj = {};
+        KLineEntity klineObj;
+        for (var i = 0; i < keys.length; i++) {
+          var kLineEntry = double.parse(
+              data['${market.value.id}.kline-' + selectedOption['key']][i]);
+          newObj.addAll({keys[i]: kLineEntry});
+        }
+        klineObj = new KLineEntity.fromJson(newObj);
+        formatedKLineData.add(klineObj);
+        DataUtil.calculate(formatedKLineData);
+      }
+    }, onDone: () {
+      print("K Line data done");
+    }, onError: (error) {
+      print("K Line data Error");
+    });
+  }
+
+  void getOrderBookDataFromWS() {
     webSocketController.streamController.value.stream.listen((message) {
       var data = json.decode(message);
       if (data.containsKey('${market.value.id}.ob-snap')) {
@@ -196,6 +222,8 @@ class MarketDetailController extends GetxController {
             .assignAll(data['${market.value.id}.ob-snap']['asks']);
         marketController.bids
             .assignAll(data['${market.value.id}.ob-snap']['bids']);
+
+        makeDepthData();
       }
       if (data.containsKey('${market.value.id}.ob-inc')) {
         var updatedAsksData = [];
@@ -212,11 +240,12 @@ class MarketDetailController extends GetxController {
                 marketController.asks, asks, 'asks');
           }
 
-          updatedAsksData = updatedAsksData.length >= 25
-              ? updatedAsksData.sublist(0, 25)
+          updatedAsksData = updatedAsksData.length >= 10
+              ? updatedAsksData.sublist(0, 10)
               : updatedAsksData;
           marketController.asks.assignAll(updatedAsksData);
           marketController.asks.refresh();
+          // makeDepthData();
         }
         if (data['${market.value.id}.ob-inc']['bids'] != null) {
           var bids = data['${market.value.id}.ob-inc']['bids'];
@@ -229,26 +258,13 @@ class MarketDetailController extends GetxController {
             updatedBidsData = WsHelper.handleIncrementalUpdate(
                 marketController.bids, bids, 'bids');
           }
-          updatedBidsData = updatedBidsData.length >= 25
-              ? updatedBidsData.sublist(0, 25)
+          updatedBidsData = updatedBidsData.length >= 10
+              ? updatedBidsData.sublist(0, 10)
               : updatedBidsData;
           marketController.bids.assignAll(updatedBidsData);
           marketController.bids.refresh();
+          // makeDepthData();
         }
-      }
-      if (data
-          .containsKey('${market.value.id}.kline-' + selectedOption['key'])) {
-        var keys = ['time', 'open', 'high', 'low', 'close', 'vol'];
-        Map<String, dynamic> newObj = {};
-        KLineEntity klineObj;
-        for (var i = 0; i < keys.length; i++) {
-          var kLineEntry = double.parse(
-              data['${market.value.id}.kline-' + selectedOption['key']][i]);
-          newObj.addAll({keys[i]: kLineEntry});
-        }
-        klineObj = new KLineEntity.fromJson(newObj);
-        formatedKLineData.add(klineObj);
-        DataUtil.calculate(formatedKLineData);
       }
     }, onDone: () {
       print("Task Done1");
@@ -257,15 +273,92 @@ class MarketDetailController extends GetxController {
     });
   }
 
+  // void getWSStreams() {
+  //   webSocketController.channel.value.sink.add(json.encode({
+  //     "event": "subscribe",
+  //     "streams": [
+  //       '${market.value.id}.ob-inc',
+  //       '${market.value.id}.kline-' + selectedOption['valueInMinute']
+  //     ]
+  //   }));
+  //   webSocketController.streamController.value.stream.listen((message) {
+  //     var data = json.decode(message);
+  //     if (data.containsKey('${market.value.id}.ob-snap')) {
+  //       marketController.asks
+  //           .assignAll(data['${market.value.id}.ob-snap']['asks']);
+  //       marketController.bids
+  //           .assignAll(data['${market.value.id}.ob-snap']['bids']);
+
+  //       makeDepthData();
+  //     }
+  //     if (data.containsKey('${market.value.id}.ob-inc')) {
+  //       print(data);
+  //       var updatedAsksData = [];
+  //       var updatedBidsData = [];
+  //       if (data['${market.value.id}.ob-inc']['asks'] != null) {
+  //         var asks = data['${market.value.id}.ob-inc']['asks'];
+  //         if (WsHelper.isArray(asks[0].toString())) {
+  //           for (var i = 0; i < asks.length; i++) {
+  //             updatedAsksData = WsHelper.handleIncrementalUpdate(
+  //                 marketController.asks, asks[i], 'asks');
+  //           }
+  //         } else {
+  //           updatedAsksData = WsHelper.handleIncrementalUpdate(
+  //               marketController.asks, asks, 'asks');
+  //         }
+
+  //         updatedAsksData = updatedAsksData.length >= 10
+  //             ? updatedAsksData.sublist(0, 10)
+  //             : updatedAsksData;
+  //         marketController.asks.assignAll(updatedAsksData);
+  //         marketController.asks.refresh();
+  //         // makeDepthData();
+  //       }
+  //       if (data['${market.value.id}.ob-inc']['bids'] != null) {
+  //         var bids = data['${market.value.id}.ob-inc']['bids'];
+  //         if (WsHelper.isArray(bids[0].toString())) {
+  //           for (var i = 0; i < bids.length; i++) {
+  //             updatedBidsData = WsHelper.handleIncrementalUpdate(
+  //                 marketController.bids, bids[i], 'bids');
+  //           }
+  //         } else {
+  //           updatedBidsData = WsHelper.handleIncrementalUpdate(
+  //               marketController.bids, bids, 'bids');
+  //         }
+  //         updatedBidsData = updatedBidsData.length >= 10
+  //             ? updatedBidsData.sublist(0, 10)
+  //             : updatedBidsData;
+  //         marketController.bids.assignAll(updatedBidsData);
+  //         marketController.bids.refresh();
+  //         // makeDepthData();
+  //       }
+  //     }
+  //     if (data
+  //         .containsKey('${market.value.id}.kline-' + selectedOption['key'])) {
+  //       var keys = ['time', 'open', 'high', 'low', 'close', 'vol'];
+  //       Map<String, dynamic> newObj = {};
+  //       KLineEntity klineObj;
+  //       for (var i = 0; i < keys.length; i++) {
+  //         var kLineEntry = double.parse(
+  //             data['${market.value.id}.kline-' + selectedOption['key']][i]);
+  //         newObj.addAll({keys[i]: kLineEntry});
+  //       }
+  //       klineObj = new KLineEntity.fromJson(newObj);
+  //       formatedKLineData.add(klineObj);
+  //       DataUtil.calculate(formatedKLineData);
+  //     }
+  //   }, onDone: () {
+  //     print("Task Done1");
+  //   }, onError: (error) {
+  //     print("Some Error1");
+  //   });
+  // }
+
   @override
   void onClose() {
-    webSocketController.channel.value.sink.add(json.encode({
-      "event": "unsubscribe",
-      "streams": [
-        '${market.value.id}.ob-inc',
-        '${market.value.id}.kline-' + selectedOption['valueInMinute']
-      ]
-    }));
+    webSocketController.unSubscribeKline(
+        market.value, selectedOption['valueInMinute']);
+    webSocketController.unSubscribeOrderBookInc(market.value);
     super.onClose();
   }
 }

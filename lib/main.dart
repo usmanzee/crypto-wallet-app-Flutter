@@ -76,8 +76,8 @@ void main() {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  // SocketBinding().dependencies();
-  // RootBinding().dependencies();
+  SocketBinding().dependencies();
+  RootBinding().dependencies();
   runApp(MyApp());
 }
 

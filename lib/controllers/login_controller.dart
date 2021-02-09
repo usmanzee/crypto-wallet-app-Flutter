@@ -67,7 +67,7 @@ class LoginController extends GetxController {
         await prefs.setBool('loggedIn', true);
         await prefs.setString('authApiKey', decodedStrArr[0]);
         await prefs.setString('authSecret', decodedStrArr[1]);
-        homeController.isLoggedIn = true;
+        homeController.isLoggedIn.value = true;
         homeController.user.value = userData;
         // Get.offAllNamed('/wallets');
         if (loginScreenType == 1) {

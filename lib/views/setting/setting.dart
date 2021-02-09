@@ -14,7 +14,7 @@ class Setting extends StatelessWidget {
   void _handleLogoutClick() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('loggedIn');
-    homeController.isLoggedIn = false;
+    homeController.isLoggedIn.value = false;
     Get.back();
   }
 
@@ -73,7 +73,7 @@ class Setting extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Obx(() {
-              if (homeController.isLoggedIn) {
+              if (homeController.isLoggedIn.value) {
                 return Container(
                   width: double.infinity,
                   padding: EdgeInsets.all(16),
@@ -173,7 +173,7 @@ class Setting extends StatelessWidget {
                     ),
                     "Fee Schedule")),
             Obx(() {
-              return (homeController.isLoggedIn)
+              return (homeController.isLoggedIn.value)
                   ? InkWell(
                       onTap: () {
                         Get.to(ReferralProgram());
@@ -188,7 +188,7 @@ class Setting extends StatelessWidget {
                   : Container();
             }),
             Obx(() {
-              return (homeController.isLoggedIn)
+              return (homeController.isLoggedIn.value)
                   ? InkWell(
                       onTap: () {
                         Get.toNamed('/notifications');
@@ -203,7 +203,7 @@ class Setting extends StatelessWidget {
                   : Container();
             }),
             Obx(() {
-              return (homeController.isLoggedIn)
+              return (homeController.isLoggedIn.value)
                   ? InkWell(
                       onTap: () {
                         Get.toNamed('/security');
@@ -244,7 +244,7 @@ class Setting extends StatelessWidget {
               height: 16.0,
             ),
             Obx(() {
-              if (homeController.isLoggedIn)
+              if (homeController.isLoggedIn.value)
                 return Padding(
                   padding:
                       const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0),

@@ -1,4 +1,5 @@
 import 'package:crypto_template/controllers/HomeController.dart';
+import 'package:crypto_template/controllers/trading_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,6 +10,7 @@ class LimitOrderForm extends StatefulWidget {
 
 class _LimitOrderFormState extends State<LimitOrderForm> {
   HomeController homeController = Get.find();
+  final TradingController tradingController = Get.find(tag: 'trading_instance');
   @override
   Widget build(BuildContext context) {
     return Row(children: [
@@ -26,6 +28,8 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                     Icon(Icons.remove),
                     Flexible(
                       child: TextFormField(
+                        controller:
+                            tradingController.limitOrderBuyPriceTextController,
                         cursorColor: Theme.of(context).textSelectionColor,
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
@@ -54,6 +58,8 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                     Icon(Icons.remove),
                     Flexible(
                       child: TextFormField(
+                        controller:
+                            tradingController.limitOrderBuyAmountTextController,
                         cursorColor: Theme.of(context).textSelectionColor,
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
@@ -157,9 +163,12 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                   children: [
                     Flexible(
                       child: TextFormField(
+                        controller:
+                            tradingController.limitOrderBuyTotalTextController,
                         cursorColor: Theme.of(context).textSelectionColor,
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
+                        enabled: false,
                         decoration: new InputDecoration(
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,
@@ -203,7 +212,7 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                 ],
               ),
             ),
-            if (homeController.isLoggedIn)
+            if (homeController.isLoggedIn.value)
               Padding(
                 padding: EdgeInsets.only(bottom: 8.0),
                 child: Container(
@@ -251,6 +260,8 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                     Icon(Icons.remove),
                     Flexible(
                       child: TextFormField(
+                        controller:
+                            tradingController.limitOrderSellPriceTextController,
                         cursorColor: Theme.of(context).textSelectionColor,
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
@@ -279,6 +290,8 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                     Icon(Icons.remove),
                     Flexible(
                       child: TextFormField(
+                        controller: tradingController
+                            .limitOrderSellAmountTextController,
                         cursorColor: Theme.of(context).textSelectionColor,
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
@@ -382,9 +395,12 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                   children: [
                     Flexible(
                       child: TextFormField(
+                        controller:
+                            tradingController.limitOrderSellTotalTextController,
                         cursorColor: Theme.of(context).textSelectionColor,
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
+                        enabled: false,
                         decoration: new InputDecoration(
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,
@@ -428,7 +444,7 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                 ],
               ),
             ),
-            if (homeController.isLoggedIn)
+            if (homeController.isLoggedIn.value)
               Padding(
                 padding: EdgeInsets.only(bottom: 8.0),
                 child: Container(

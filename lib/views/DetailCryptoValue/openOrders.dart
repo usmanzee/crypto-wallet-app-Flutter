@@ -23,8 +23,9 @@ class _OpenOrdersState extends State<OpenOrders> {
 
   @override
   void initState() {
-    openOrdersController =
-        Get.put(OpenOrdersController(formatedMarket: formatedMarket));
+    openOrdersController = Get.put(
+        OpenOrdersController(formatedMarket: formatedMarket),
+        tag: 'open_orders_instance');
     super.initState();
   }
 

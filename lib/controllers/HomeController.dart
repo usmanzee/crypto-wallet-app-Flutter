@@ -18,7 +18,7 @@ class HomeController extends GetxController {
   // final int activeNavIndex = Get.arguments['selectedNavIndex'];
   final _hasConnection = true.obs;
   final _previousConnection = false.obs;
-  final _isLoggedIn = false.obs;
+  final isLoggedIn = false.obs;
   var _selectedNavIndex = 0.obs;
   var marketList = List<Market>().obs;
   var fetchingUser = false.obs;
@@ -38,8 +38,8 @@ class HomeController extends GetxController {
   get selectedNavIndex => this._selectedNavIndex.value;
   set selectedNavIndex(index) => this._selectedNavIndex.value = index;
 
-  get isLoggedIn => this._isLoggedIn.value;
-  set isLoggedIn(value) => this._isLoggedIn.value = value;
+  // get isLoggedIn => this.isLoggedIn.value;
+  // set isLoggedIn(value) => this.isLoggedIn.value = value;
 
   get hasConnection => this._hasConnection.value;
   set hasConnection(value) => this._hasConnection.value = value;
@@ -49,7 +49,8 @@ class HomeController extends GetxController {
 
   @override
   void onInit() async {
-    selectedNavIndex = Get.arguments['selectedNavIndex'];
+    selectedNavIndex =
+        Get.arguments != null ? Get.arguments['selectedNavIndex'] : 0;
     print('selectedNavIndex');
     print(selectedNavIndex);
     bool isLoggedIn = await isUserLoggedIn();
@@ -85,19 +86,25 @@ class HomeController extends GetxController {
 
   Future<bool> isUserLoggedIn() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    isLoggedIn = prefs.getBool('loggedIn' ?? false);
+    isLoggedIn.value = prefs.getBool('loggedIn' ?? false);
     authApiKey.value = prefs.getString('authApiKey');
     authSecret.value = prefs.getString('authSecret');
-    isLoggedIn = isLoggedIn != null ? isLoggedIn : false;
-    print('user loggedIn: $isLoggedIn');
-    return isLoggedIn;
+    isLoggedIn.value = isLoggedIn.value != null ? isLoggedIn.value : false;
+    return isLoggedIn.value;
+  }
+
+  void changePage(int index) {
+    // if (currentIndex.value != index) {
+    //   currentIndex.value = index;
+    //   Get.offNamed(pages[index], id: 1);
+    // }
   }
 
   Future<Null> refreshHomePage() async {
     // await Future.delayed(Duration(seconds: 2));
     MarketController marketController = Get.find<MarketController>();
     marketController.fetchMarkets();
-    if (isLoggedIn) {
+    if (isLoggedIn.value) {
       fetchUser();
     }
   }

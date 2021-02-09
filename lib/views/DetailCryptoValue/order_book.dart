@@ -1,29 +1,32 @@
 import 'package:crypto_template/component/CardDetail/AmountSell.dart';
 import 'package:crypto_template/component/CardDetail/BuyAmount.dart';
 import 'package:crypto_template/controllers/market_controller.dart';
+import 'package:crypto_template/controllers/order_book_controller.dart';
 import 'package:crypto_template/models/formated_market.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class OrderBook extends StatefulWidget {
-  final Widget child;
+// class OrderBook extends StatefulWidget {
+//   final Widget child;
+//   final FormatedMarket formatedMarket;
+//   final dynamic asks;
+//   final dynamic bids;
+
+//   OrderBook({Key key, this.child, this.formatedMarket, this.asks, this.bids})
+//       : super(key: key);
+
+//   _OrderBookState createState() =>
+//       _OrderBookState(formatedMarket: formatedMarket, asks: asks, bids: bids);
+// }
+
+class OrderBook extends StatelessWidget {
   final FormatedMarket formatedMarket;
   final dynamic asks;
   final dynamic bids;
 
-  OrderBook({Key key, this.child, this.formatedMarket, this.asks, this.bids})
-      : super(key: key);
+  final MarketController marketController = Get.find();
 
-  _OrderBookState createState() =>
-      _OrderBookState(formatedMarket: formatedMarket, asks: asks, bids: bids);
-}
-
-class _OrderBookState extends State<OrderBook> {
-  final FormatedMarket formatedMarket;
-  final dynamic asks;
-  final dynamic bids;
-  _OrderBookState({this.formatedMarket, this.asks, this.bids});
-  MarketController marketController = Get.find();
+  OrderBook({this.formatedMarket, this.asks, this.bids});
   @override
   Widget build(BuildContext context) {
     double mediaQuery = MediaQuery.of(context).size.width / 2.2;
@@ -46,13 +49,16 @@ class _OrderBookState extends State<OrderBook> {
                     "Buy Amount",
                     style: TextStyle(
                         color: Theme.of(context).hintColor,
+                        fontSize: 12,
                         fontFamily: "Popins"),
                   ),
                 ),
                 Text(
                   "Price",
                   style: TextStyle(
-                      color: Theme.of(context).hintColor, fontFamily: "Popins"),
+                      color: Theme.of(context).hintColor,
+                      fontSize: 12,
+                      fontFamily: "Popins"),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 10.0),
@@ -60,6 +66,7 @@ class _OrderBookState extends State<OrderBook> {
                     "Amount Sell",
                     style: TextStyle(
                         color: Theme.of(context).hintColor,
+                        fontSize: 12,
                         fontFamily: "Popins"),
                   ),
                 ),
@@ -75,18 +82,34 @@ class _OrderBookState extends State<OrderBook> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Obx(() {
-              return Container(
-                height: 165.0,
-                width: mediaQuery,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  primary: false,
-                  itemCount: marketController.bids.length,
-                  itemBuilder: (BuildContext ctx, int i) {
-                    return _buyAmount(mediaQuery, marketController.bids[i]);
-                  },
-                ),
-              );
+              if (marketController.bids.length > 0)
+                return Container(
+                  height: 165.0,
+                  width: mediaQuery,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    primary: false,
+                    // physics: const NeverScrollableScrollPhysics(),
+                    itemCount: marketController.bids.length,
+                    itemBuilder: (BuildContext ctx, int i) {
+                      return _buyAmount(mediaQuery, marketController.bids[i]);
+                    },
+                  ),
+                );
+              else
+                return Container(
+                  height: 165.0,
+                  width: mediaQuery,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    primary: false,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: 10,
+                    itemBuilder: (BuildContext ctx, int i) {
+                      return _emptyBuyAmount(mediaQuery);
+                    },
+                  ),
+                );
             }),
             Container(
               height: 165.0,
@@ -94,18 +117,34 @@ class _OrderBookState extends State<OrderBook> {
               color: Theme.of(context).canvasColor,
             ),
             Obx(() {
-              return Container(
-                height: 165.0,
-                width: mediaQuery,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  primary: false,
-                  itemCount: marketController.asks.length,
-                  itemBuilder: (BuildContext ctx, int i) {
-                    return _amountSell(mediaQuery, marketController.asks[i]);
-                  },
-                ),
-              );
+              if (marketController.asks.length > 0)
+                return Container(
+                  height: 165.0,
+                  width: mediaQuery,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    primary: false,
+                    // physics: const NeverScrollableScrollPhysics(),
+                    itemCount: marketController.asks.length,
+                    itemBuilder: (BuildContext ctx, int i) {
+                      return _amountSell(mediaQuery, marketController.asks[i]);
+                    },
+                  ),
+                );
+              else
+                return Container(
+                  height: 165.0,
+                  width: mediaQuery,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    primary: false,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: 10,
+                    itemBuilder: (BuildContext ctx, int i) {
+                      return _emptyAmountSell(mediaQuery);
+                    },
+                  ),
+                );
             })
           ],
         )
@@ -115,7 +154,7 @@ class _OrderBookState extends State<OrderBook> {
 
   Widget _buyAmount(double _width, bid) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 19.0),
+      padding: const EdgeInsets.only(bottom: 8.0),
       child: Container(
         width: _width,
         child: Row(
@@ -127,7 +166,7 @@ class _OrderBookState extends State<OrderBook> {
               child: Text(
                 double.parse(bid[1])
                     .toStringAsFixed(formatedMarket.amountPrecision),
-                style: TextStyle(fontFamily: "Gotik", fontSize: 15.0),
+                style: TextStyle(fontFamily: "Gotik", fontSize: 12.0),
               ),
             ),
             Text(
@@ -137,7 +176,37 @@ class _OrderBookState extends State<OrderBook> {
                   color: Colors.greenAccent,
                   fontWeight: FontWeight.w700,
                   fontFamily: "Gotik",
-                  fontSize: 15.0),
+                  fontSize: 12.0),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _emptyBuyAmount(double _width) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Container(
+        width: _width,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text(
+                '--',
+                style: TextStyle(fontFamily: "Gotik", fontSize: 12.0),
+              ),
+            ),
+            Text(
+              '--',
+              style: TextStyle(
+                  color: Colors.greenAccent,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Gotik",
+                  fontSize: 12.0),
             )
           ],
         ),
@@ -147,7 +216,7 @@ class _OrderBookState extends State<OrderBook> {
 
   Widget _amountSell(double _width, ask) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 19.0),
+      padding: const EdgeInsets.only(bottom: 8.0),
       child: Container(
         width: _width,
         child: Row(
@@ -161,14 +230,44 @@ class _OrderBookState extends State<OrderBook> {
                   color: Colors.red,
                   fontWeight: FontWeight.w700,
                   fontFamily: "Gotik",
-                  fontSize: 15.0),
+                  fontSize: 12.0),
             ),
             Padding(
               padding: const EdgeInsets.only(right: 8.0),
               child: Text(
                 double.parse(ask[1])
                     .toStringAsFixed(formatedMarket.amountPrecision),
-                style: TextStyle(fontFamily: "Gotik", fontSize: 15.0),
+                style: TextStyle(fontFamily: "Gotik", fontSize: 12.0),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _emptyAmountSell(double _width) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Container(
+        width: _width,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              '--',
+              style: TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Gotik",
+                  fontSize: 12.0),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Text(
+                '--',
+                style: TextStyle(fontFamily: "Gotik", fontSize: 12.0),
               ),
             ),
           ],

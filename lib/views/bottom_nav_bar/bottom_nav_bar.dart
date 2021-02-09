@@ -75,7 +75,13 @@
 //     });
 //   }
 // }
+
 import 'package:crypto_template/controllers/HomeController.dart';
+import 'package:crypto_template/controllers/market_controller.dart';
+import 'package:crypto_template/controllers/open_orders_controller.dart';
+import 'package:crypto_template/controllers/order_book_controller.dart';
+import 'package:crypto_template/controllers/trading_controller.dart';
+import 'package:crypto_template/controllers/web_socket_controller.dart';
 import 'package:crypto_template/views/trading/trading.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -93,9 +99,8 @@ class BottomNavBar extends GetView<HomeController> {
   //   news(),
   //   setting(),
   // ];
-
-  // final WebSocketController webSocketController =
-  //     Get.put(WebSocketController());
+  final MarketController marketController = Get.find();
+  final WebSocketController webSocketController = Get.find();
 
   Widget callPage(int current, bool hasConnection) {
     if (hasConnection) {
@@ -180,8 +185,37 @@ class BottomNavBar extends GetView<HomeController> {
                 currentIndex: controller.selectedNavIndex,
                 onTap: (index) {
                   var isLoggedIn = controller.isLoggedIn;
-                  if (index == 4 && !isLoggedIn) {
+                  if (index == 4 && !isLoggedIn.value) {
                     Get.toNamed('/login');
+                  } else if (index == 2) {
+                    bool tradingControllerInstance =
+                        Get.isRegistered<TradingController>(
+                            tag: 'trading_instance');
+                    // bool openOrdersInstance =
+                    //     Get.isRegistered<OpenOrdersController>(
+                    //         tag: 'open_orders_instance');
+
+                    TradingController tradingController =
+                        tradingControllerInstance
+                            ? Get.find<TradingController>(
+                                tag: 'trading_instance')
+                            : Get.put(TradingController(),
+                                tag: 'trading_instance');
+                    webSocketController.subscribeOrderBookInc(
+                        marketController.selectedMarketTrading.value);
+                    tradingController.getOrderBookDataFromWS();
+                    // bool orderBookInstance =
+                    //     Get.isRegistered<OrderBookController>(
+                    //         tag: 'order_book_instance');
+                    // if (tradingControllerInstance && openOrdersInstance) {
+                    //   Get.delete<TradingController>(
+                    //       tag: 'trading_instance', force: true);
+                    //   Get.delete<OpenOrdersController>(
+                    //       tag: 'open_orders_instance', force: true);
+                    //   // Get.delete<OrderBookController>(
+                    //   //     tag: 'order_book_instance', force: true);
+                    // }
+                    controller.selectedNavIndex = index;
                   } else {
                     controller.selectedNavIndex = index;
                   }

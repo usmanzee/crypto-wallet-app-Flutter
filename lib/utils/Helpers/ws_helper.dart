@@ -1,3 +1,8 @@
+import 'dart:convert';
+import 'package:get/get.dart';
+import 'package:crypto_template/models/formated_market.dart';
+import 'package:crypto_template/controllers/web_socket_controller.dart';
+
 class WsHelper {
   static bool isArray(String type) {
     return type.lastIndexOf(']') == type.length - 1;

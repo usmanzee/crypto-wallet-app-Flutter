@@ -16,10 +16,20 @@ class OpenOrdersController extends GetxController {
 
   @override
   void onInit() {
-    if (homeController.isLoggedIn) {
+    openOrdersList.clear();
+    if (homeController.isLoggedIn.value) {
       fetchOpenOrders();
     }
+    ever(homeController.isLoggedIn, fetchOrderOnLoggedIn);
     super.onInit();
+  }
+
+  fetchOrderOnLoggedIn(isUserLoggedIn) {
+    if (isUserLoggedIn) {
+      fetchOpenOrders();
+    } else {
+      openOrdersList.clear();
+    }
   }
 
   void fetchOpenOrders() async {

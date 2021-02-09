@@ -1,6 +1,7 @@
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/models/formated_market.dart';
 import 'package:crypto_template/views/swap/swap.dart';
+import 'package:crypto_template/views/trading/trading.dart';
 import 'package:crypto_template/views/wallet/wallet_search.dart';
 import 'package:get/get.dart';
 import 'package:crypto_template/controllers/market_controller.dart';
@@ -37,7 +38,7 @@ class Home extends StatelessWidget {
               icon: Icon(Icons.notifications_none),
               tooltip: 'Notification',
               onPressed: () {
-                homeController.isLoggedIn
+                homeController.isLoggedIn.value
                     ? Get.toNamed('/notifications')
                     : Get.toNamed('/login');
               },
@@ -87,7 +88,7 @@ class Home extends StatelessWidget {
                         size: 26.0,
                         color: Theme.of(context).accentColor,
                       ), () {
-                    homeController.isLoggedIn
+                    homeController.isLoggedIn.value
                         ? Get.toNamed('/wallets-search',
                             arguments: {'searchFrom': 'deposit'})
                         : Get.toNamed('/login');
@@ -99,7 +100,7 @@ class Home extends StatelessWidget {
                         size: 26.0,
                         color: Theme.of(context).accentColor,
                       ), () {
-                    homeController.isLoggedIn
+                    homeController.isLoggedIn.value
                         ? Get.toNamed('/wallets-search',
                             arguments: {'searchFrom': 'withdraw'})
                         : Get.toNamed('/login');
@@ -111,7 +112,7 @@ class Home extends StatelessWidget {
                         size: 26.0,
                         color: Theme.of(context).accentColor,
                       ), () {
-                    homeController.isLoggedIn
+                    homeController.isLoggedIn.value
                         ? Get.toNamed('/swap')
                         : Get.toNamed('/login');
                   }, "Buy/Sell"),

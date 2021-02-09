@@ -1,8 +1,8 @@
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:crypto_template/controllers/market_detail_controller.dart';
+import 'package:crypto_template/controllers/web_socket_controller.dart';
 import 'package:crypto_template/models/formated_market.dart';
-import 'package:crypto_template/views/DetailCryptoValue/openOrders.dart';
 import 'package:crypto_template/views/DetailCryptoValue/order_book.dart';
 import 'package:crypto_template/views/market/market_drawer.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,6 @@ import 'package:k_chart/flutter_k_chart.dart';
 import 'package:k_chart/k_chart_widget.dart';
 
 class MarketDetail extends GetWidget<MarketDetailController> {
-  // final FormatedMarket formatedMarket = Get.arguments['formatedMarket'];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
   final MarketController marketController = Get.find();
@@ -20,10 +19,8 @@ class MarketDetail extends GetWidget<MarketDetailController> {
 
   @override
   Widget build(BuildContext context) {
+    final FormatedMarket formatedMarket = marketController.selectedMarket.value;
     return Obx(() {
-      final FormatedMarket formatedMarket =
-          marketController.selectedMarket.value;
-
       return Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
@@ -194,17 +191,6 @@ class MarketDetail extends GetWidget<MarketDetailController> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        // Padding(
-                        //   padding: EdgeInsets.fromLTRB(8, 0, 0, 8),
-                        //   child: Text(
-                        //     'Open Orders',
-                        //     style: TextStyle(
-                        //         fontSize: 16, fontWeight: FontWeight.bold),
-                        //   ),
-                        // ),
-                        // OpenOrders(
-                        //   formatedMarket: formatedMarket,
-                        // ),
                         Padding(
                           padding: EdgeInsets.fromLTRB(8, 0, 0, 8),
                           child: Text(
@@ -392,9 +378,10 @@ class MarketDetail extends GetWidget<MarketDetailController> {
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: <Widget>[
-          button(context, "Time sharing",
-              onPressed: () => controller.isLine = true),
-          button(context, "k line", onPressed: () => controller.isLine = false),
+          // button(context, "Time sharing",
+          //     onPressed: () => controller.isLine = true),
+          button(context, controller.isLine ? "K-Line" : 'Time Sharing',
+              onPressed: () => controller.isLine = !controller.isLine),
           button(context, "MA",
               onPressed: () => controller.mainState = MainState.MA),
           button(context, "BOLL",
@@ -411,7 +398,7 @@ class MarketDetail extends GetWidget<MarketDetailController> {
               onPressed: () => controller.secondaryState = SecondaryState.WR),
           button(context, "Hide side view",
               onPressed: () => controller.secondaryState = SecondaryState.NONE),
-          button(context, controller.volHidden ? "Show volume" : "Hide volume",
+          button(context, controller.volHidden ? "Show Vol" : "Hide Vol",
               onPressed: () => controller.volHidden = !controller.volHidden),
         ],
       ),
@@ -444,6 +431,7 @@ class MarketDetail extends GetWidget<MarketDetailController> {
 Widget _buttonBottom(context, FormatedMarket formatedMarket) {
   HomeController homeController = Get.find();
   MarketController marketController = Get.find();
+  final WebSocketController webSocketController = Get.find();
   return Container(
     color: Theme.of(context).canvasColor,
     padding: const EdgeInsets.all(4.0),
@@ -461,6 +449,7 @@ Widget _buttonBottom(context, FormatedMarket formatedMarket) {
                 Get.back();
                 marketController.selectedMarketTrading.value = formatedMarket;
                 homeController.selectedNavIndex = 2;
+                webSocketController.subscribeOrderBookInc(formatedMarket);
                 // Get.offNamed('/trading', arguments: {
                 //   'formatedMarket': formatedMarket,
                 //   'selectedNavIndex': 3
@@ -493,6 +482,7 @@ Widget _buttonBottom(context, FormatedMarket formatedMarket) {
                 Get.back();
                 marketController.selectedMarketTrading.value = formatedMarket;
                 homeController.selectedNavIndex = 2;
+                webSocketController.subscribeOrderBookInc(formatedMarket);
                 // Get.offNamed('/trading', arguments: {
                 //   'formatedMarket': formatedMarket,
                 //   'selectedNavIndex': 3
