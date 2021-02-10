@@ -7,7 +7,6 @@ class Market extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          brightness: Brightness.dark,
           centerTitle: true,
           title: Text(
             "Market",
@@ -18,6 +17,7 @@ class Market extends StatelessWidget {
                 fontSize: 18.5),
           ),
           elevation: 3.0,
+          brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
           backgroundColor: Theme.of(context).canvasColor,
         ),
         body: MarketList());

@@ -14,6 +14,7 @@ class ReferralProgram extends StatelessWidget {
         homeController.user.value.uid;
     return Scaffold(
       appBar: AppBar(
+        brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
         backgroundColor: Theme.of(context).canvasColor,
         centerTitle: true,
         title: Text(

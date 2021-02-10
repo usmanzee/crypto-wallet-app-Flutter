@@ -1,16 +1,14 @@
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/controllers/trading_controller.dart';
+import 'package:crypto_template/models/formated_market.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LimitOrderForm extends StatefulWidget {
-  @override
-  _LimitOrderFormState createState() => _LimitOrderFormState();
-}
-
-class _LimitOrderFormState extends State<LimitOrderForm> {
-  HomeController homeController = Get.find();
-  final TradingController tradingController = Get.find(tag: 'trading_instance');
+class LimitOrderForm extends StatelessWidget {
+  final FormatedMarket formatedMarket;
+  LimitOrderForm({this.formatedMarket});
+  final HomeController homeController = Get.find();
+  final TradingController tradingController = Get.find<TradingController>();
   @override
   Widget build(BuildContext context) {
     return Row(children: [
@@ -25,11 +23,15 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                 color: Theme.of(context).canvasColor,
                 child: Row(
                   children: [
-                    Icon(Icons.remove),
+                    IconButton(
+                      icon: Icon(Icons.remove),
+                      onPressed: () {},
+                    ),
                     Flexible(
                       child: TextFormField(
                         controller:
                             tradingController.limitOrderBuyPriceTextController,
+                        onChanged: tradingController.onLimitOrderBuyPriceChange,
                         cursorColor: Theme.of(context).textSelectionColor,
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
@@ -44,7 +46,10 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                             hintText: "Price"),
                       ),
                     ),
-                    Icon(Icons.add),
+                    IconButton(
+                      icon: Icon(Icons.add),
+                      onPressed: () {},
+                    ),
                   ],
                 ),
               ),
@@ -55,11 +60,16 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                 color: Theme.of(context).canvasColor,
                 child: Row(
                   children: [
-                    Icon(Icons.remove),
+                    IconButton(
+                      icon: Icon(Icons.remove),
+                      onPressed: () {},
+                    ),
                     Flexible(
                       child: TextFormField(
                         controller:
                             tradingController.limitOrderBuyAmountTextController,
+                        onChanged:
+                            tradingController.onLimitOrderBuyAmountChange,
                         cursorColor: Theme.of(context).textSelectionColor,
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
@@ -74,7 +84,10 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                             hintText: "Amount"),
                       ),
                     ),
-                    Icon(Icons.add),
+                    IconButton(
+                      icon: Icon(Icons.add),
+                      onPressed: () {},
+                    ),
                   ],
                 ),
               ),
@@ -165,10 +178,10 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                       child: TextFormField(
                         controller:
                             tradingController.limitOrderBuyTotalTextController,
+                        onChanged: tradingController.onLimitOrderBuyTotalChange,
                         cursorColor: Theme.of(context).textSelectionColor,
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
-                        enabled: false,
                         decoration: new InputDecoration(
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,
@@ -177,7 +190,9 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                             disabledBorder: InputBorder.none,
                             contentPadding: EdgeInsets.only(
                                 left: 15, bottom: 11, top: 11, right: 15),
-                            hintText: "Total(BTC)"),
+                            hintText: "Total( " +
+                                formatedMarket.quoteUnit.toUpperCase() +
+                                ")"),
                       ),
                     ),
                   ],
@@ -202,11 +217,27 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                   Padding(
                     padding: EdgeInsets.all(4.0),
                     child: Center(
-                      child: Text(
-                        '0.00 BTC',
-                        style: TextStyle(
-                            fontSize: 10, fontWeight: FontWeight.w600),
-                      ),
+                      child: Row(children: [
+                        Text(
+                            tradingController.walletQuote.value.balance != null
+                                ? tradingController.walletQuote.value.balance
+                                : '--',
+                            style: TextStyle(
+                              color: Theme.of(context).textSelectionColor,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: "Popins",
+                              letterSpacing: 1.3,
+                            )),
+                        Text(' ' + formatedMarket.quoteUnit.toUpperCase(),
+                            style: TextStyle(
+                              color: Theme.of(context).textSelectionColor,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: "Popins",
+                              letterSpacing: 1.3,
+                            ))
+                      ]),
                     ),
                   ),
                 ],
@@ -221,10 +252,12 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                     splashColor: Colors.black12,
                     highlightColor: Colors.black12,
                     color: Color(0xFF2ebd85),
-                    onPressed: () {},
+                    onPressed: () {
+                      tradingController.limitOrderBuy();
+                    },
                     child: Center(
                         child: Text(
-                      "Buy",
+                      "Buy " + formatedMarket.baseUnit.toUpperCase(),
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
@@ -257,11 +290,16 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                 color: Theme.of(context).canvasColor,
                 child: Row(
                   children: [
-                    Icon(Icons.remove),
+                    IconButton(
+                      icon: Icon(Icons.remove),
+                      onPressed: () {},
+                    ),
                     Flexible(
                       child: TextFormField(
                         controller:
                             tradingController.limitOrderSellPriceTextController,
+                        onChanged:
+                            tradingController.onLimitOrderSellPriceChange,
                         cursorColor: Theme.of(context).textSelectionColor,
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
@@ -276,7 +314,10 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                             hintText: "Price"),
                       ),
                     ),
-                    Icon(Icons.add),
+                    IconButton(
+                      icon: Icon(Icons.add),
+                      onPressed: () {},
+                    ),
                   ],
                 ),
               ),
@@ -287,11 +328,16 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                 color: Theme.of(context).canvasColor,
                 child: Row(
                   children: [
-                    Icon(Icons.remove),
+                    IconButton(
+                      icon: Icon(Icons.remove),
+                      onPressed: () {},
+                    ),
                     Flexible(
                       child: TextFormField(
                         controller: tradingController
                             .limitOrderSellAmountTextController,
+                        onChanged:
+                            tradingController.onLimitOrderSellAmountChange,
                         cursorColor: Theme.of(context).textSelectionColor,
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
@@ -306,7 +352,10 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                             hintText: "Amount"),
                       ),
                     ),
-                    Icon(Icons.add),
+                    IconButton(
+                      icon: Icon(Icons.add),
+                      onPressed: () {},
+                    ),
                   ],
                 ),
               ),
@@ -397,10 +446,11 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                       child: TextFormField(
                         controller:
                             tradingController.limitOrderSellTotalTextController,
+                        onChanged:
+                            tradingController.onLimitOrderSellTotalChange,
                         cursorColor: Theme.of(context).textSelectionColor,
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
-                        enabled: false,
                         decoration: new InputDecoration(
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,
@@ -409,7 +459,9 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                             disabledBorder: InputBorder.none,
                             contentPadding: EdgeInsets.only(
                                 left: 15, bottom: 11, top: 11, right: 15),
-                            hintText: "Total(BTC)"),
+                            hintText: "Total (" +
+                                formatedMarket.baseUnit.toUpperCase() +
+                                ")"),
                       ),
                     ),
                   ],
@@ -434,12 +486,27 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                   Padding(
                     padding: EdgeInsets.all(4.0),
                     child: Center(
-                      child: Text(
-                        '0.00 BTC',
-                        style: TextStyle(
-                            fontSize: 10, fontWeight: FontWeight.w600),
-                      ),
-                    ),
+                        child: Row(children: [
+                      Text(
+                          tradingController.walletBase.value.balance != null
+                              ? tradingController.walletBase.value.balance
+                              : '--',
+                          style: TextStyle(
+                            color: Theme.of(context).textSelectionColor,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: "Popins",
+                            letterSpacing: 1.3,
+                          )),
+                      Text(' ' + formatedMarket.baseUnit.toUpperCase(),
+                          style: TextStyle(
+                            color: Theme.of(context).textSelectionColor,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: "Popins",
+                            letterSpacing: 1.3,
+                          ))
+                    ])),
                   ),
                 ],
               ),
@@ -456,7 +523,7 @@ class _LimitOrderFormState extends State<LimitOrderForm> {
                     onPressed: () {},
                     child: Center(
                         child: Text(
-                      "Sell",
+                      "Sell " + formatedMarket.baseUnit.toUpperCase(),
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,

@@ -11,6 +11,7 @@ class EmailVerification extends GetView<RegisterController> {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
+          brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
           iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
           backgroundColor: Colors.transparent,
           elevation: 0.0,

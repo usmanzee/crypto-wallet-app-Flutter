@@ -1,3 +1,4 @@
+import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/controllers/SnackbarController.dart';
 import 'package:crypto_template/controllers/error_controller.dart';
 import 'package:crypto_template/controllers/market_controller.dart';
@@ -33,9 +34,12 @@ class TradingController extends GetxController {
   // GlobalKey<FormState> marketSellformKey;
 
   var walletsList = List<Wallet>().obs;
+  var walletBase = Wallet().obs;
+  var walletQuote = Wallet().obs;
 
   var market = FormatedMarket().obs;
   MarketController marketController = Get.find();
+  HomeController homeController = Get.find();
   WebSocketController webSocketController = Get.find();
   WalletController walletController;
 
@@ -63,17 +67,21 @@ class TradingController extends GetxController {
     // marketSellformKey = GlobalKey<FormState>();
 
     market.value = marketController.selectedMarketTrading.value;
+    if (homeController.isLoggedIn.value) {
+      bool isWalletControllerRegistered = Get.isRegistered<WalletController>();
 
-    bool isWalletControllerRegistered = Get.isRegistered<WalletController>();
+      walletController = isWalletControllerRegistered
+          ? Get.find<WalletController>()
+          : Get.put(WalletController());
 
-    walletController = isWalletControllerRegistered
-        ? Get.find<WalletController>()
-        : Get.put(WalletController());
-
-    if (!walletController.isLoading.value) {
-      walletsList = walletController.walletsList;
+      if (!walletController.isLoading.value &&
+          walletController.walletsList.length > 0) {
+        walletsList = walletController.walletsList;
+        walletBase.value = getWallet(market.value.baseUnit, walletsList);
+        walletQuote.value = getWallet(market.value.quoteUnit, walletsList);
+      }
+      ever(walletController.isLoading, setWalletValues);
     }
-    ever(walletController.isLoading, setWalletValues);
 
     super.onInit();
     print('onint trading');
@@ -83,15 +91,25 @@ class TradingController extends GetxController {
   void onReady() {
     print('ready trading');
     super.onReady();
-    // webSocketController.subscribeOrderBookInc(market.value);
-    // getOrderBookDataFromWS();
+    webSocketController.subscribeOrderBookInc(market.value);
+    getOrderBookDataFromWS();
   }
 
   setWalletValues(isWalletsLoading) {
-    print(!isWalletsLoading && walletController.walletsList.length > 0);
     if (!isWalletsLoading && walletController.walletsList.length > 0) {
       walletsList.assignAll(walletController.walletsList);
+      if (homeController.isLoggedIn.value) {
+        walletBase.value = getWallet(market.value.baseUnit, walletsList);
+        walletQuote.value = getWallet(market.value.quoteUnit, walletsList);
+      }
     }
+  }
+
+  Wallet getWallet(String currency, List<Wallet> wallets) {
+    return wallets.firstWhere((wallet) {
+      return wallet.name.toLowerCase().contains(currency.toLowerCase()) ||
+          wallet.currency.toLowerCase().contains(currency.toLowerCase());
+    });
   }
 
   void updateCurrentMarket(FormatedMarket newMarket) {
@@ -99,6 +117,8 @@ class TradingController extends GetxController {
     market.value = newMarket;
     marketController.selectedMarketTrading.value = newMarket;
     webSocketController.subscribeOrderBookInc(newMarket);
+    walletBase.value = getWallet(market.value.baseUnit, walletsList);
+    walletQuote.value = getWallet(market.value.quoteUnit, walletsList);
   }
 
   void getOrderBookDataFromWS() {
@@ -159,7 +179,165 @@ class TradingController extends GetxController {
     });
   }
 
-  void limitBuyOrder() async {
+  void setBidFormPrice(List<dynamic> bid) {
+    limitOrderBuyPriceTextController.text = bid[0];
+    limitOrderSellPriceTextController.text = bid[0];
+    marketOrderBuyPriceTextController.text = bid[0];
+    marketOrderSellPriceTextController.text = bid[0];
+  }
+
+  void setAskFormPrice(List<dynamic> ask) {
+    limitOrderBuyPriceTextController.text = ask[0];
+    limitOrderSellPriceTextController.text = ask[0];
+    marketOrderBuyPriceTextController.text = ask[0];
+    marketOrderSellPriceTextController.text = ask[0];
+  }
+
+  void onLimitOrderBuyPriceChange(String value) {
+    calculateLimitOrderBuyTotal();
+  }
+
+  void onLimitOrderBuyAmountChange(String value) {
+    calculateLimitOrderBuyTotal();
+  }
+
+  void onLimitOrderBuyTotalChange(String value) {
+    calculateLimitOrderBuyAmount();
+  }
+
+  void onLimitOrderSellPriceChange(String value) {
+    calculateLimitOrderSellTotal();
+  }
+
+  void onLimitOrderSellAmountChange(String value) {
+    calculateLimitOrderSellTotal();
+  }
+
+  void onLimitOrderSellTotalChange(String value) {
+    calculateLimitOrderSellAmount();
+  }
+
+  //   void onLimitOrderBuyPriceChange(String value) {
+  //   calculateLimitOrderBuyTotal();
+  // }
+
+  void onMarketOrderBuyAmountChange(String value) {
+    calculateMarketOrderBuyTotal();
+  }
+
+  void onMarketOrderBuyTotalChange(String value) {
+    calculateMarketOrderBuyAmount();
+  }
+
+  void onMarketOrderSellPriceChange(String value) {
+    calculateMarketOrderSellTotal();
+  }
+
+  void onMarketOrderSellAmountChange(String value) {
+    calculateMarketOrderSellTotal();
+  }
+
+  void onMarketOrderSellTotalChange(String value) {
+    calculateMarketOrderSellAmount();
+  }
+
+  void calculateLimitOrderBuyTotal() {
+    if (limitOrderBuyPriceTextController.text != '' &&
+        limitOrderBuyAmountTextController.text != '') {
+      double buyPrice = double.parse(limitOrderBuyPriceTextController.text);
+      double buyAmount = double.parse(limitOrderBuyAmountTextController.text);
+      double buyTotal = buyPrice * buyAmount;
+      limitOrderBuyTotalTextController.text = buyTotal.toString();
+    } else {
+      limitOrderBuyTotalTextController.text = '';
+    }
+  }
+
+  void calculateLimitOrderBuyAmount() {
+    if (limitOrderBuyPriceTextController.text != '' &&
+        limitOrderBuyTotalTextController.text != '') {
+      double buyPrice = double.parse(limitOrderBuyPriceTextController.text);
+      double buyTotal = double.parse(limitOrderBuyTotalTextController.text);
+      double buyAmount = buyTotal / buyPrice;
+      limitOrderBuyAmountTextController.text = buyAmount.toString();
+    } else {
+      limitOrderBuyAmountTextController.text = '';
+    }
+  }
+
+  void calculateLimitOrderSellTotal() {
+    if (limitOrderSellPriceTextController.text != '' &&
+        limitOrderSellAmountTextController.text != '') {
+      double sellPrice = double.parse(limitOrderSellPriceTextController.text);
+      double sellAmount = double.parse(limitOrderSellAmountTextController.text);
+      double sellTotal = sellPrice * sellAmount;
+      limitOrderSellTotalTextController.text = sellTotal.toString();
+    } else {
+      limitOrderSellTotalTextController.text = '';
+    }
+  }
+
+  void calculateLimitOrderSellAmount() {
+    if (limitOrderSellPriceTextController.text != '' &&
+        limitOrderSellTotalTextController.text != '') {
+      double sellPrice = double.parse(limitOrderSellPriceTextController.text);
+      double sellTotal = double.parse(limitOrderSellTotalTextController.text);
+      double sellAmount = sellTotal / sellPrice;
+      limitOrderSellAmountTextController.text = sellAmount.toString();
+    } else {
+      limitOrderSellAmountTextController.text = '';
+    }
+  }
+
+  void calculateMarketOrderBuyTotal() {
+    if (market.value.last > 0 &&
+        marketOrderBuyAmountTextController.text != '') {
+      double buyPrice = market.value.last;
+      double buyAmount = double.parse(marketOrderBuyAmountTextController.text);
+      double buyTotal = buyPrice * buyAmount;
+      marketOrderBuyTotalTextController.text = buyTotal.toString();
+    } else {
+      marketOrderBuyTotalTextController.text = '';
+    }
+  }
+
+  void calculateMarketOrderBuyAmount() {
+    if (market.value.last > 0 && marketOrderBuyTotalTextController.text != '') {
+      double buyPrice = market.value.last;
+      double buyTotal = double.parse(marketOrderBuyTotalTextController.text);
+      double buyAmount = buyTotal / buyPrice;
+      marketOrderBuyAmountTextController.text = buyAmount.toString();
+    } else {
+      marketOrderBuyAmountTextController.text = '';
+    }
+  }
+
+  void calculateMarketOrderSellTotal() {
+    if (market.value.last > 0 &&
+        marketOrderSellAmountTextController.text != '') {
+      double sellPrice = market.value.last;
+      double sellAmount =
+          double.parse(marketOrderSellAmountTextController.text);
+      double sellTotal = sellPrice * sellAmount;
+      marketOrderSellTotalTextController.text = sellTotal.toString();
+    } else {
+      marketOrderSellTotalTextController.text = '';
+    }
+  }
+
+  void calculateMarketOrderSellAmount() {
+    if (market.value.last > 0 &&
+        marketOrderSellTotalTextController.text != '') {
+      double sellPrice = market.value.last;
+      double sellTotal = double.parse(marketOrderSellTotalTextController.text);
+      double sellAmount = sellTotal / sellPrice;
+      marketOrderSellAmountTextController.text = sellAmount.toString();
+    } else {
+      marketOrderSellAmountTextController.text = '';
+    }
+  }
+
+  void limitOrderBuy() async {
     TradingRepository _tradingRepository = new TradingRepository();
     try {
       var orderObj = {
@@ -169,6 +347,8 @@ class TradingController extends GetxController {
         'side': 'buy',
         'type': 'limit',
       };
+
+      print(orderObj);
       var orderResponseResponse =
           await _tradingRepository.placeTradingOrder(orderObj);
       print(orderResponseResponse);
@@ -177,7 +357,7 @@ class TradingController extends GetxController {
     }
   }
 
-  void limitSellOrder() async {
+  void limitOrderSell() async {
     TradingRepository _tradingRepository = new TradingRepository();
     try {
       var orderObj = {
@@ -233,19 +413,19 @@ class TradingController extends GetxController {
 
   @override
   void onClose() {
-    limitOrderBuyPriceTextController?.dispose();
-    limitOrderBuyAmountTextController?.dispose();
-    limitOrderBuyTotalTextController?.dispose();
-    limitOrderSellPriceTextController?.dispose();
-    limitOrderSellAmountTextController?.dispose();
-    limitOrderSellTotalTextController?.dispose();
+    // limitOrderBuyPriceTextController?.dispose();
+    // limitOrderBuyAmountTextController?.dispose();
+    // limitOrderBuyTotalTextController?.dispose();
+    // limitOrderSellPriceTextController?.dispose();
+    // limitOrderSellAmountTextController?.dispose();
+    // limitOrderSellTotalTextController?.dispose();
 
-    marketOrderBuyPriceTextController?.dispose();
-    marketOrderBuyAmountTextController?.dispose();
-    marketOrderBuyTotalTextController?.dispose();
-    marketOrderSellAmountTextController?.dispose();
-    marketOrderSellPriceTextController?.dispose();
-    marketOrderSellTotalTextController?.dispose();
+    // marketOrderBuyPriceTextController?.dispose();
+    // marketOrderBuyAmountTextController?.dispose();
+    // marketOrderBuyTotalTextController?.dispose();
+    // marketOrderSellAmountTextController?.dispose();
+    // marketOrderSellPriceTextController?.dispose();
+    // marketOrderSellTotalTextController?.dispose();
 
     webSocketController.unSubscribeOrderBookInc(market.value);
     super.onClose();

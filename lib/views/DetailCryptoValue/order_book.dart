@@ -2,6 +2,7 @@ import 'package:crypto_template/component/CardDetail/AmountSell.dart';
 import 'package:crypto_template/component/CardDetail/BuyAmount.dart';
 import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:crypto_template/controllers/order_book_controller.dart';
+import 'package:crypto_template/controllers/trading_controller.dart';
 import 'package:crypto_template/models/formated_market.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,13 +21,14 @@ import 'package:get/get.dart';
 // }
 
 class OrderBook extends StatelessWidget {
+  final bool isTrading;
   final FormatedMarket formatedMarket;
   final dynamic asks;
   final dynamic bids;
 
-  final MarketController marketController = Get.find();
+  final MarketController marketController = Get.find<MarketController>();
 
-  OrderBook({this.formatedMarket, this.asks, this.bids});
+  OrderBook({this.isTrading, this.formatedMarket, this.asks, this.bids});
   @override
   Widget build(BuildContext context) {
     double mediaQuery = MediaQuery.of(context).size.width / 2.2;
@@ -157,28 +159,37 @@ class OrderBook extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Container(
         width: _width,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Text(
-                double.parse(bid[1])
-                    .toStringAsFixed(formatedMarket.amountPrecision),
-                style: TextStyle(fontFamily: "Gotik", fontSize: 12.0),
+        child: GestureDetector(
+          onTap: () {
+            if (isTrading) {
+              final TradingController tradingController =
+                  Get.find<TradingController>();
+              tradingController.setBidFormPrice(bid);
+            }
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(
+                  double.parse(bid[1])
+                      .toStringAsFixed(formatedMarket.amountPrecision),
+                  style: TextStyle(fontFamily: "Gotik", fontSize: 12.0),
+                ),
               ),
-            ),
-            Text(
-              double.parse(bid[0])
-                  .toStringAsFixed(formatedMarket.pricePrecision),
-              style: TextStyle(
-                  color: Colors.greenAccent,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: "Gotik",
-                  fontSize: 12.0),
-            )
-          ],
+              Text(
+                double.parse(bid[0])
+                    .toStringAsFixed(formatedMarket.pricePrecision),
+                style: TextStyle(
+                    color: Colors.greenAccent,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Gotik",
+                    fontSize: 12.0),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -219,28 +230,37 @@ class OrderBook extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Container(
         width: _width,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              double.parse(ask[0])
-                  .toStringAsFixed(formatedMarket.pricePrecision),
-              style: TextStyle(
-                  color: Colors.red,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: "Gotik",
-                  fontSize: 12.0),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: Text(
-                double.parse(ask[1])
-                    .toStringAsFixed(formatedMarket.amountPrecision),
-                style: TextStyle(fontFamily: "Gotik", fontSize: 12.0),
+        child: GestureDetector(
+          onTap: () {
+            if (isTrading) {
+              final TradingController tradingController =
+                  Get.find<TradingController>();
+              tradingController.setAskFormPrice(ask);
+            }
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                double.parse(ask[0])
+                    .toStringAsFixed(formatedMarket.pricePrecision),
+                style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Gotik",
+                    fontSize: 12.0),
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Text(
+                  double.parse(ask[1])
+                      .toStringAsFixed(formatedMarket.amountPrecision),
+                  style: TextStyle(fontFamily: "Gotik", fontSize: 12.0),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

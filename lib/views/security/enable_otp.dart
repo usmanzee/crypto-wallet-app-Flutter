@@ -19,7 +19,7 @@ class EnableOTP extends GetView<OTPController> {
     return new Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).canvasColor,
-        brightness: Brightness.dark,
+        brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
         centerTitle: true,
         title: Text(
           'Two Factor Authentication',

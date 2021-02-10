@@ -31,8 +31,10 @@ class WebSocketController extends GetxController {
     var wsAPIVersion = withAuth ? '/private' : '/public';
     var url = _baseUrl + wsAPIVersion;
     var streams = await streamsBuilder(true, market, true);
+    // final String wsURL =
+    //     'ws://10.121.121.48:9003/api/v2/ranger/public/?stream=global.tickers';
     final String wsURL =
-        'ws://10.121.121.48:9003/api/v2/ranger/public/?stream=global.tickers';
+        'wss://ewallet.b4uwallet.com/api/v2/ranger/public/?stream=global.tickers';
     var streamURL = generateSocketURI(url, streams);
     channel = IOWebSocketChannel.connect(wsURL).obs;
     streamController = StreamController.broadcast().obs;

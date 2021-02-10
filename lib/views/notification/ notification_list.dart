@@ -9,6 +9,7 @@ class NotificationList extends GetView<NotificationController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
         backgroundColor: Theme.of(context).canvasColor,
         centerTitle: true,
         title: Text(

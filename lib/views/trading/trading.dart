@@ -13,7 +13,8 @@ import 'package:crypto_template/views/DetailCryptoValue/openOrders.dart';
 class Trading extends StatelessWidget {
   static final GlobalKey<ScaffoldState> _scaffoldKey =
       GlobalKey<ScaffoldState>();
-  final TradingController tradingController = Get.find(tag: 'trading_instance');
+  final TradingController tradingController =
+      Get.put<TradingController>(TradingController());
   final HomeController homeController = Get.find();
   final MarketController marketController = Get.find();
 
@@ -37,6 +38,7 @@ class Trading extends StatelessWidget {
           },
         ),
         backgroundColor: Theme.of(context).canvasColor,
+        brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
         title: GestureDetector(
           onTap: () {
             if (_scaffoldKey.currentState.isDrawerOpen) {
@@ -90,6 +92,7 @@ class Trading extends StatelessWidget {
               ),
             ),
             OrderBook(
+                isTrading: true,
                 formatedMarket: formatedMarket,
                 asks: marketController.asks.value,
                 bids: marketController.bids.value),
@@ -135,8 +138,8 @@ class Trading extends StatelessWidget {
                   Container(
                     height: homeController.isLoggedIn.value ? 280 : 230,
                     child: TabBarView(children: [
-                      LimitOrderForm(),
-                      MarketOrderForm(),
+                      LimitOrderForm(formatedMarket: formatedMarket),
+                      MarketOrderForm(formatedMarket: formatedMarket),
                     ]),
                   ),
                   if (!homeController.isLoggedIn.value)

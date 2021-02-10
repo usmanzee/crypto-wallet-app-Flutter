@@ -91,15 +91,7 @@ import 'package:crypto_template/views/news/news_home.dart';
 import 'package:crypto_template/views/wallet/wallets.dart';
 
 class BottomNavBar extends GetView<HomeController> {
-  // final int activeNavIndex = Get.arguments['selectedNavIndex'];
-  // final List<Widget> bodyContent = [
-  //   Home(),
-  //   market(),
-  //   Wallet(),
-  //   news(),
-  //   setting(),
-  // ];
-  final MarketController marketController = Get.find();
+  final MarketController marketController = Get.put(MarketController());
   final WebSocketController webSocketController = Get.find();
 
   Widget callPage(int current, bool hasConnection) {
@@ -187,34 +179,22 @@ class BottomNavBar extends GetView<HomeController> {
                   var isLoggedIn = controller.isLoggedIn;
                   if (index == 4 && !isLoggedIn.value) {
                     Get.toNamed('/login');
-                  } else if (index == 2) {
+                  } else if (index != 2) {
                     bool tradingControllerInstance =
-                        Get.isRegistered<TradingController>(
-                            tag: 'trading_instance');
-                    // bool openOrdersInstance =
-                    //     Get.isRegistered<OpenOrdersController>(
-                    //         tag: 'open_orders_instance');
+                        Get.isRegistered<TradingController>();
+                    bool openOrdersInstance =
+                        Get.isRegistered<OpenOrdersController>(
+                            tag: 'open_orders_instance');
+                    if (tradingControllerInstance) {
+                      webSocketController.subscribeOrderBookInc(
+                          marketController.selectedMarketTrading.value);
+                    }
 
-                    TradingController tradingController =
-                        tradingControllerInstance
-                            ? Get.find<TradingController>(
-                                tag: 'trading_instance')
-                            : Get.put(TradingController(),
-                                tag: 'trading_instance');
-                    webSocketController.subscribeOrderBookInc(
-                        marketController.selectedMarketTrading.value);
-                    tradingController.getOrderBookDataFromWS();
-                    // bool orderBookInstance =
-                    //     Get.isRegistered<OrderBookController>(
-                    //         tag: 'order_book_instance');
-                    // if (tradingControllerInstance && openOrdersInstance) {
-                    //   Get.delete<TradingController>(
-                    //       tag: 'trading_instance', force: true);
-                    //   Get.delete<OpenOrdersController>(
-                    //       tag: 'open_orders_instance', force: true);
-                    //   // Get.delete<OrderBookController>(
-                    //   //     tag: 'order_book_instance', force: true);
-                    // }
+                    if (tradingControllerInstance && openOrdersInstance) {
+                      Get.delete<TradingController>(force: true);
+                      Get.delete<OpenOrdersController>(
+                          tag: 'open_orders_instance', force: true);
+                    }
                     controller.selectedNavIndex = index;
                   } else {
                     controller.selectedNavIndex = index;

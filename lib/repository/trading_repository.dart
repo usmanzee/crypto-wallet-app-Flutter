@@ -15,6 +15,7 @@ class TradingRepository {
     RequestHeaders requestHeaders = new RequestHeaders();
     apiProvider.headers = requestHeaders.setAuthHeaders();
     final response = await apiProvider.post('peatio/market/orders', orderObj);
+    print(response);
     return tradingOrderResponseFromJson(response);
   }
 }

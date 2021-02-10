@@ -10,6 +10,7 @@ class SwapHistory extends GetView<SwapHistoryController> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).canvasColor,
+          brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
           centerTitle: true,
           title: Text(
             'Buy/Sell History',

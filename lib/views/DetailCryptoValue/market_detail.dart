@@ -200,6 +200,7 @@ class MarketDetail extends GetWidget<MarketDetailController> {
                           ),
                         ),
                         OrderBook(
+                            isTrading: false,
                             formatedMarket: formatedMarket,
                             asks: marketController.asks.value,
                             bids: marketController.bids.value)
@@ -449,7 +450,7 @@ Widget _buttonBottom(context, FormatedMarket formatedMarket) {
                 Get.back();
                 marketController.selectedMarketTrading.value = formatedMarket;
                 homeController.selectedNavIndex = 2;
-                webSocketController.subscribeOrderBookInc(formatedMarket);
+                // webSocketController.subscribeOrderBookInc(formatedMarket);
                 // Get.offNamed('/trading', arguments: {
                 //   'formatedMarket': formatedMarket,
                 //   'selectedNavIndex': 3
@@ -482,7 +483,7 @@ Widget _buttonBottom(context, FormatedMarket formatedMarket) {
                 Get.back();
                 marketController.selectedMarketTrading.value = formatedMarket;
                 homeController.selectedNavIndex = 2;
-                webSocketController.subscribeOrderBookInc(formatedMarket);
+                // webSocketController.subscribeOrderBookInc(formatedMarket);
                 // Get.offNamed('/trading', arguments: {
                 //   'formatedMarket': formatedMarket,
                 //   'selectedNavIndex': 3

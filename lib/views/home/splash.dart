@@ -23,7 +23,7 @@ class SplashScreen extends StatelessWidget {
   /// Code Create UI Splash Screen
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).backgroundColor,
       body: Container(
         /// Set Background image in splash screen layout (Click to open code)
         // decoration: BoxDecoration(

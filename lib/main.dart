@@ -77,7 +77,7 @@ void main() {
     DeviceOrientation.portraitDown,
   ]);
   SocketBinding().dependencies();
-  RootBinding().dependencies();
+  // RootBinding().dependencies();
   runApp(MyApp());
 }
 
@@ -85,7 +85,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'B4U App',
+      title: 'B4U Wallet',
       debugShowCheckedModeBanner: false,
       defaultTransition: Transition.downToUp,
       getPages: RouterFile.Router.route,

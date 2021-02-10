@@ -1,14 +1,14 @@
 import 'package:crypto_template/controllers/HomeController.dart';
+import 'package:crypto_template/controllers/trading_controller.dart';
+import 'package:crypto_template/models/formated_market.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class MarketOrderForm extends StatefulWidget {
-  @override
-  _MarketOrderFormState createState() => _MarketOrderFormState();
-}
-
-class _MarketOrderFormState extends State<MarketOrderForm> {
-  HomeController homeController = Get.find();
+class MarketOrderForm extends StatelessWidget {
+  final FormatedMarket formatedMarket;
+  MarketOrderForm({this.formatedMarket});
+  final HomeController homeController = Get.find();
+  final TradingController tradingController = Get.find<TradingController>();
   @override
   Widget build(BuildContext context) {
     return Row(children: [
@@ -20,28 +20,16 @@ class _MarketOrderFormState extends State<MarketOrderForm> {
             Padding(
               padding: EdgeInsets.only(bottom: 8.0),
               child: Container(
+                padding: EdgeInsets.only(top: 8, bottom: 8),
                 color: Theme.of(context).canvasColor,
-                child: Row(
-                  children: [
-                    Icon(Icons.remove),
-                    Flexible(
-                      child: TextFormField(
-                        cursorColor: Theme.of(context).textSelectionColor,
-                        keyboardType: TextInputType.number,
-                        textAlign: TextAlign.center,
-                        decoration: new InputDecoration(
-                            border: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            errorBorder: InputBorder.none,
-                            disabledBorder: InputBorder.none,
-                            contentPadding: EdgeInsets.only(
-                                left: 15, bottom: 11, top: 11, right: 15),
-                            hintText: "Price"),
-                      ),
-                    ),
-                    Icon(Icons.add),
-                  ],
+                child: Center(
+                  child: Text("≃ " + formatedMarket.last.toStringAsPrecision(2),
+                      style: TextStyle(
+                          color: Theme.of(context).textSelectionColor,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: "Popins",
+                          letterSpacing: 1.3,
+                          fontSize: 16.0)),
                 ),
               ),
             ),
@@ -51,9 +39,16 @@ class _MarketOrderFormState extends State<MarketOrderForm> {
                 color: Theme.of(context).canvasColor,
                 child: Row(
                   children: [
-                    Icon(Icons.remove),
+                    IconButton(
+                      icon: Icon(Icons.remove),
+                      onPressed: () {},
+                    ),
                     Flexible(
                       child: TextFormField(
+                        controller: tradingController
+                            .marketOrderBuyAmountTextController,
+                        onChanged:
+                            tradingController.onMarketOrderBuyAmountChange,
                         cursorColor: Theme.of(context).textSelectionColor,
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
@@ -64,11 +59,14 @@ class _MarketOrderFormState extends State<MarketOrderForm> {
                             errorBorder: InputBorder.none,
                             disabledBorder: InputBorder.none,
                             contentPadding: EdgeInsets.only(
-                                left: 15, bottom: 11, top: 11, right: 15),
-                            hintText: "Amount"),
+                                left: 12, bottom: 8, top: 8, right: 16),
+                            hintText: formatedMarket.quoteUnit.toUpperCase()),
                       ),
                     ),
-                    Icon(Icons.add),
+                    IconButton(
+                      icon: Icon(Icons.add),
+                      onPressed: () {},
+                    ),
                   ],
                 ),
               ),
@@ -157,6 +155,10 @@ class _MarketOrderFormState extends State<MarketOrderForm> {
                   children: [
                     Flexible(
                       child: TextFormField(
+                        controller:
+                            tradingController.marketOrderBuyTotalTextController,
+                        onChanged:
+                            tradingController.onMarketOrderBuyTotalChange,
                         cursorColor: Theme.of(context).textSelectionColor,
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
@@ -168,7 +170,9 @@ class _MarketOrderFormState extends State<MarketOrderForm> {
                             disabledBorder: InputBorder.none,
                             contentPadding: EdgeInsets.only(
                                 left: 15, bottom: 11, top: 11, right: 15),
-                            hintText: "Total(BTC)"),
+                            hintText: "Total (" +
+                                formatedMarket.quoteUnit.toUpperCase() +
+                                ")"),
                       ),
                     ),
                   ],
@@ -193,11 +197,27 @@ class _MarketOrderFormState extends State<MarketOrderForm> {
                   Padding(
                     padding: EdgeInsets.all(4.0),
                     child: Center(
-                      child: Text(
-                        '0.00 BTC',
-                        style: TextStyle(
-                            fontSize: 10, fontWeight: FontWeight.bold),
-                      ),
+                      child: Row(children: [
+                        Text(
+                            tradingController.walletQuote.value.balance != null
+                                ? tradingController.walletQuote.value.balance
+                                : '--',
+                            style: TextStyle(
+                              color: Theme.of(context).textSelectionColor,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: "Popins",
+                              letterSpacing: 1.3,
+                            )),
+                        Text(' ' + formatedMarket.quoteUnit.toUpperCase(),
+                            style: TextStyle(
+                              color: Theme.of(context).textSelectionColor,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: "Popins",
+                              letterSpacing: 1.3,
+                            ))
+                      ]),
                     ),
                   ),
                 ],
@@ -215,7 +235,7 @@ class _MarketOrderFormState extends State<MarketOrderForm> {
                     onPressed: () {},
                     child: Center(
                         child: Text(
-                      "Buy",
+                      "Buy " + formatedMarket.baseUnit.toUpperCase(),
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
@@ -245,28 +265,16 @@ class _MarketOrderFormState extends State<MarketOrderForm> {
             Padding(
               padding: EdgeInsets.only(bottom: 8.0),
               child: Container(
+                padding: EdgeInsets.only(top: 8, bottom: 8),
                 color: Theme.of(context).canvasColor,
-                child: Row(
-                  children: [
-                    Icon(Icons.remove),
-                    Flexible(
-                      child: TextFormField(
-                        cursorColor: Theme.of(context).textSelectionColor,
-                        keyboardType: TextInputType.number,
-                        textAlign: TextAlign.center,
-                        decoration: new InputDecoration(
-                            border: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            errorBorder: InputBorder.none,
-                            disabledBorder: InputBorder.none,
-                            contentPadding: EdgeInsets.only(
-                                left: 15, bottom: 11, top: 11, right: 15),
-                            hintText: "Price"),
-                      ),
-                    ),
-                    Icon(Icons.add),
-                  ],
+                child: Center(
+                  child: Text("≃ " + formatedMarket.last.toStringAsPrecision(2),
+                      style: TextStyle(
+                          color: Theme.of(context).textSelectionColor,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: "Popins",
+                          letterSpacing: 1.3,
+                          fontSize: 16.0)),
                 ),
               ),
             ),
@@ -276,9 +284,16 @@ class _MarketOrderFormState extends State<MarketOrderForm> {
                 color: Theme.of(context).canvasColor,
                 child: Row(
                   children: [
-                    Icon(Icons.remove),
+                    IconButton(
+                      icon: Icon(Icons.remove),
+                      onPressed: () {},
+                    ),
                     Flexible(
                       child: TextFormField(
+                        controller: tradingController
+                            .marketOrderSellAmountTextController,
+                        onChanged:
+                            tradingController.onMarketOrderSellAmountChange,
                         cursorColor: Theme.of(context).textSelectionColor,
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
@@ -290,10 +305,13 @@ class _MarketOrderFormState extends State<MarketOrderForm> {
                             disabledBorder: InputBorder.none,
                             contentPadding: EdgeInsets.only(
                                 left: 15, bottom: 11, top: 11, right: 15),
-                            hintText: "Amount"),
+                            hintText: formatedMarket.baseUnit.toUpperCase()),
                       ),
                     ),
-                    Icon(Icons.add),
+                    IconButton(
+                      icon: Icon(Icons.add),
+                      onPressed: () {},
+                    ),
                   ],
                 ),
               ),
@@ -382,6 +400,10 @@ class _MarketOrderFormState extends State<MarketOrderForm> {
                   children: [
                     Flexible(
                       child: TextFormField(
+                        controller: tradingController
+                            .marketOrderSellTotalTextController,
+                        onChanged:
+                            tradingController.onMarketOrderSellTotalChange,
                         cursorColor: Theme.of(context).textSelectionColor,
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
@@ -393,7 +415,9 @@ class _MarketOrderFormState extends State<MarketOrderForm> {
                             disabledBorder: InputBorder.none,
                             contentPadding: EdgeInsets.only(
                                 left: 15, bottom: 11, top: 11, right: 15),
-                            hintText: "Total(BTC)"),
+                            hintText: "Total (" +
+                                formatedMarket.baseUnit.toUpperCase() +
+                                ")"),
                       ),
                     ),
                   ],
@@ -418,12 +442,27 @@ class _MarketOrderFormState extends State<MarketOrderForm> {
                   Padding(
                     padding: EdgeInsets.all(4.0),
                     child: Center(
-                      child: Text(
-                        '0.00 BTC',
-                        style: TextStyle(
-                            fontSize: 10, fontWeight: FontWeight.bold),
-                      ),
-                    ),
+                        child: Row(children: [
+                      Text(
+                          tradingController.walletBase.value.balance != null
+                              ? tradingController.walletBase.value.balance
+                              : '--',
+                          style: TextStyle(
+                            color: Theme.of(context).textSelectionColor,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: "Popins",
+                            letterSpacing: 1.3,
+                          )),
+                      Text(' ' + formatedMarket.baseUnit.toUpperCase(),
+                          style: TextStyle(
+                            color: Theme.of(context).textSelectionColor,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: "Popins",
+                            letterSpacing: 1.3,
+                          ))
+                    ])),
                   ),
                 ],
               ),
@@ -440,7 +479,7 @@ class _MarketOrderFormState extends State<MarketOrderForm> {
                     onPressed: () {},
                     child: Center(
                         child: Text(
-                      "Sell",
+                      "Sell " + formatedMarket.baseUnit.toUpperCase(),
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,

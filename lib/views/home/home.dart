@@ -14,12 +14,14 @@ import 'package:flutter_sparkline/flutter_sparkline.dart';
 import 'package:shimmer/shimmer.dart';
 
 class Home extends StatelessWidget {
-  final marketController = Get.put(MarketController());
+  // final marketController = Get.put(MarketController());
+  final MarketController marketController = Get.find();
   final HomeController homeController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
         backgroundColor: Theme.of(context).canvasColor,
         elevation: 1.0,
         iconTheme: IconThemeData(

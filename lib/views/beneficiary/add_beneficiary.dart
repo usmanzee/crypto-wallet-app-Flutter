@@ -45,6 +45,7 @@ class _AddBeneficiaryState extends State<AddBeneficiary> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
         centerTitle: true,
         title: Text(
           'Add Beneficiary',

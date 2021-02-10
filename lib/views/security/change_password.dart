@@ -27,7 +27,7 @@ class ChangePassword extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).canvasColor,
-        brightness: Brightness.dark,
+        brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
         centerTitle: true,
         title: Text(
           'ChangePassword',

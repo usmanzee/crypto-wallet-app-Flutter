@@ -1,6 +1,5 @@
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/views/referral_program/referral_program.dart';
-import 'package:crypto_template/views/security/security.dart';
 import 'package:crypto_template/views/setting/themes.dart';
 import 'package:crypto_template/views/webview_container.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +29,7 @@ class Setting extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).canvasColor,
-        brightness: Brightness.dark,
+        brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
         centerTitle: true,
         title: Text(
           'Account',

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:get/get.dart';
 
 class WebViewContainer extends StatefulWidget {
   final appBarTitle;
@@ -24,7 +25,7 @@ class _WebViewContainerState extends State<WebViewContainer> {
         backgroundColor: Theme.of(context).canvasColor,
         appBar: AppBar(
           backgroundColor: Theme.of(context).canvasColor,
-          brightness: Brightness.dark,
+          brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
           centerTitle: true,
           title: Text(
             _appBarTitle != null ? _appBarTitle : 'B4U Wallet',
