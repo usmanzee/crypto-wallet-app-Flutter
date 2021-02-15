@@ -190,9 +190,11 @@ class LimitOrderForm extends StatelessWidget {
                             disabledBorder: InputBorder.none,
                             contentPadding: EdgeInsets.only(
                                 left: 15, bottom: 11, top: 11, right: 15),
-                            hintText: "Total( " +
-                                formatedMarket.quoteUnit.toUpperCase() +
-                                ")"),
+                            hintText: formatedMarket.quoteUnit != null
+                                ? "Total( " +
+                                    formatedMarket.quoteUnit.toUpperCase() +
+                                    ")"
+                                : ''),
                       ),
                     ),
                   ],
@@ -229,7 +231,10 @@ class LimitOrderForm extends StatelessWidget {
                               fontFamily: "Popins",
                               letterSpacing: 1.3,
                             )),
-                        Text(' ' + formatedMarket.quoteUnit.toUpperCase(),
+                        Text(
+                            formatedMarket.quoteUnit != null
+                                ? ' ' + formatedMarket.quoteUnit.toUpperCase()
+                                : ' --',
                             style: TextStyle(
                               color: Theme.of(context).textSelectionColor,
                               fontSize: 10,
@@ -257,7 +262,9 @@ class LimitOrderForm extends StatelessWidget {
                     },
                     child: Center(
                         child: Text(
-                      "Buy " + formatedMarket.baseUnit.toUpperCase(),
+                      formatedMarket.baseUnit != null
+                          ? "Buy " + formatedMarket.baseUnit.toUpperCase()
+                          : '',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
@@ -459,9 +466,11 @@ class LimitOrderForm extends StatelessWidget {
                             disabledBorder: InputBorder.none,
                             contentPadding: EdgeInsets.only(
                                 left: 15, bottom: 11, top: 11, right: 15),
-                            hintText: "Total (" +
-                                formatedMarket.baseUnit.toUpperCase() +
-                                ")"),
+                            hintText: formatedMarket.baseUnit != null
+                                ? "Total (" +
+                                    formatedMarket.baseUnit.toUpperCase() +
+                                    ")"
+                                : ''),
                       ),
                     ),
                   ],
@@ -498,7 +507,10 @@ class LimitOrderForm extends StatelessWidget {
                             fontFamily: "Popins",
                             letterSpacing: 1.3,
                           )),
-                      Text(' ' + formatedMarket.baseUnit.toUpperCase(),
+                      Text(
+                          formatedMarket.baseUnit != null
+                              ? ' ' + formatedMarket.baseUnit.toUpperCase()
+                              : ' --',
                           style: TextStyle(
                             color: Theme.of(context).textSelectionColor,
                             fontSize: 10,
@@ -520,10 +532,14 @@ class LimitOrderForm extends StatelessWidget {
                     splashColor: Colors.black12,
                     highlightColor: Colors.black12,
                     color: Colors.redAccent.withOpacity(0.8),
-                    onPressed: () {},
+                    onPressed: () {
+                      tradingController.limitOrderSell();
+                    },
                     child: Center(
                         child: Text(
-                      "Sell " + formatedMarket.baseUnit.toUpperCase(),
+                      formatedMarket.baseUnit != null
+                          ? "Sell " + formatedMarket.baseUnit.toUpperCase()
+                          : '',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,

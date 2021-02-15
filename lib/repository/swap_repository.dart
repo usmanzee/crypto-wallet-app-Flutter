@@ -4,6 +4,7 @@ import 'package:crypto_template/models/swap_history_response.dart';
 import 'package:crypto_template/network/api_provider.dart';
 import 'package:crypto_template/network/request_headers.dart';
 import 'package:get/get.dart';
+import 'dart:convert';
 
 class SwapRepository {
   HomeController homeController = Get.find();
@@ -16,7 +17,7 @@ class SwapRepository {
     apiProvider.headers = requestHeaders.setAuthHeaders();
     final response = await apiProvider.post(
         'peatio/account/exchanges/rate', exchangeRateRequestObj);
-    return response;
+    return json.decode(response);
   }
 
   Future<dynamic> exchangeRequest(exchangeRequestObj) async {

@@ -51,8 +51,6 @@ class HomeController extends GetxController {
   void onInit() async {
     selectedNavIndex =
         Get.arguments != null ? Get.arguments['selectedNavIndex'] : 0;
-    print('selectedNavIndex');
-    print(selectedNavIndex);
     bool isLoggedIn = await isUserLoggedIn();
     if (isLoggedIn) {
       fetchUser();
@@ -93,11 +91,10 @@ class HomeController extends GetxController {
     return isLoggedIn.value;
   }
 
-  void changePage(int index) {
-    // if (currentIndex.value != index) {
-    //   currentIndex.value = index;
-    //   Get.offNamed(pages[index], id: 1);
-    // }
+  void changePage() {
+    print(Get.arguments['selectedNavIndex']);
+    selectedNavIndex =
+        Get.arguments != null ? Get.arguments['selectedNavIndex'] : 0;
   }
 
   Future<Null> refreshHomePage() async {

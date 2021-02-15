@@ -247,7 +247,7 @@ class Setting extends StatelessWidget {
                 return Padding(
                   padding:
                       const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0),
-                  child: GestureDetector(
+                  child: InkWell(
                     onTap: () {
                       _handleLogoutClick();
                     },

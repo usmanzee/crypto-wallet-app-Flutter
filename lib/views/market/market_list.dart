@@ -217,8 +217,7 @@ class MarketList extends StatelessWidget {
           InkWell(
             onTap: () {
               marketController.selectedMarket.value = formatedMarket;
-              Get.toNamed('market-detail',
-                  arguments: {'formatedMarket': formatedMarket});
+              Get.toNamed('market-detail');
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -282,8 +281,7 @@ class MarketList extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        formatedMarket.last
-                            .toStringAsFixed(formatedMarket.amountPrecision),
+                        formatedMarket.last.toStringAsFixed(2),
                         style: TextStyle(
                             fontFamily: "Popins",
                             fontSize: 14.5,

@@ -1,8 +1,6 @@
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/views/auth/forget_password.dart';
-import 'package:crypto_template/views/setting/themes.dart';
-import 'package:crypto_template/component/style.dart';
 import 'package:crypto_template/component/custom_text_field.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
@@ -16,7 +14,8 @@ class Login extends StatelessWidget {
 
   final _passwordValidator = MultiValidator([
     PatternValidator(r'((?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*\W)\w.{6,18}\w)',
-        errorText: 'passwords must be 8 characters with uppercase letters')
+        errorText:
+            'passwords must be 8 characters with uppercase and special letters')
   ]);
 
   final _emailValidator = MultiValidator([

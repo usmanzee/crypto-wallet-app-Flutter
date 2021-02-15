@@ -9,18 +9,18 @@ class OnBoarding extends StatelessWidget {
   Widget build(BuildContext context) {
     return IntroViewsFlutter(
       pages,
-      pageButtonsColor: Colors.black45,
+      pageButtonsColor: Theme.of(context).primaryColor,
       skipText: Text(
         "SKIP",
         style: txtStyle.descriptionStyle.copyWith(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w800,
             letterSpacing: 1.0),
       ),
       doneText: Text(
         "DONE",
         style: txtStyle.descriptionStyle.copyWith(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w800,
             letterSpacing: 1.0),
       ),
@@ -36,9 +36,6 @@ class OnBoarding extends StatelessWidget {
 ///
 final pages = [
   new PageViewModel(
-      // pageColor: colorStyle.background,
-      // iconColor: Colors.black,
-      // bubbleBackgroundColor: Colors.black,
       title: Text(
         'B4U Wallet And Exchange',
         style: txtStyle.headerStyle,
@@ -46,57 +43,54 @@ final pages = [
       body: Container(
         height: 250.0,
         child: Text(
-          'Crypto application template \nbuy this code template in codecanyon',
+          'The application allows you to buy, sell, trade, exchange or store digital currencies (crypto-fiat) on a multi cryptocurrency & fiat wallet.',
+          // 'Crypto application template \nbuy this code template in codecanyon',
           textAlign: TextAlign.center,
           style: txtStyle.descriptionStyle,
         ),
       ),
       mainImage: Image.asset(
-        'assets/ilustration/boarding1.png',
+        'assets/ilustration/b1.png',
         height: 285.0,
         width: 285.0,
         alignment: Alignment.center,
       )),
   new PageViewModel(
-      // pageColor: colorStyle.darkBackground,
-      // iconColor: Colors.black,
-      // bubbleBackgroundColor: Colors.black,
       title: Text(
-        'Crypto Template',
+        'Keep Your Digital Assets Private and Secure',
         style: txtStyle.headerStyle,
       ),
       body: Container(
         height: 250.0,
         child: Text(
-          'Crypto application template \nbuy this code template in codecanyon',
+          'B4U Wallet & Exchange encrypts your transaction data on your device so that no one can access your crypto & fiat-currency.',
+          // 'Crypto application template \nbuy this code template in codecanyon',
           textAlign: TextAlign.center,
           style: txtStyle.descriptionStyle,
         ),
       ),
       mainImage: Image.asset(
-        'assets/ilustration/boarding2.png',
+        'assets/ilustration/b2.png',
         height: 285.0,
         width: 285.0,
         alignment: Alignment.center,
       )),
   new PageViewModel(
-      // pageColor: colorStyle.background,
-      // iconColor: Colors.black,
-      // bubbleBackgroundColor: Colors.black,
       title: Text(
-        'Crypto Template',
+        'Exchange Your Crypto Fast in a few Taps',
         style: txtStyle.headerStyle,
       ),
       body: Container(
         height: 250.0,
         child: Text(
-          'Crypto application template \nbuy this code template in codecanyon',
+          'Need to send or receive Crypto, Fiat? Send and receive any of the many supported blockchain assets with the touch of a button using text addresses or QR codes.',
+          // 'Crypto application template \nbuy this code template in codecanyon',
           textAlign: TextAlign.center,
           style: txtStyle.descriptionStyle,
         ),
       ),
       mainImage: Image.asset(
-        'assets/ilustration/boarding3.png',
+        'assets/ilustration/b3.png',
         height: 285.0,
         width: 285.0,
         alignment: Alignment.center,

@@ -13,6 +13,7 @@ class WebViewContainer extends StatefulWidget {
 }
 
 class _WebViewContainerState extends State<WebViewContainer> {
+  bool isLoading = true;
   var _appBarTitle;
   var _url;
   final _key = UniqueKey();
@@ -38,13 +39,22 @@ class _WebViewContainerState extends State<WebViewContainer> {
           iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
           elevation: 0.8,
         ),
-        body: Column(
+        body: Stack(
           children: [
-            Expanded(
-                child: WebView(
-                    key: _key,
-                    javascriptMode: JavascriptMode.unrestricted,
-                    initialUrl: _url))
+            WebView(
+                key: _key,
+                javascriptMode: JavascriptMode.unrestricted,
+                onPageFinished: (finish) {
+                  setState(() {
+                    isLoading = false;
+                  });
+                },
+                initialUrl: _url),
+            isLoading
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Stack(),
           ],
         ));
   }

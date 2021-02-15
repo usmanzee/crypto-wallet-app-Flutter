@@ -2,9 +2,7 @@ import 'package:crypto_template/component/market/btcModel.dart';
 import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:crypto_template/controllers/market_detail_controller.dart';
 import 'package:crypto_template/controllers/trading_controller.dart';
-import 'package:crypto_template/controllers/web_socket_controller.dart';
 import 'package:crypto_template/models/formated_market.dart';
-import 'package:crypto_template/views/DetailCryptoValue/market_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:get/get.dart';
@@ -58,46 +56,46 @@ class _MarketDrawerState extends State<MarketDrawer>
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.grey.withOpacity(0.5),
-                width: 1.0,
-              ),
-              borderRadius: BorderRadius.circular(4.0),
-            ),
-            margin: EdgeInsets.all(12),
-            child: Row(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(left: 8),
-                  child: Icon(
-                    Icons.search,
-                    size: 20,
-                  ),
-                ),
-                new Expanded(
-                  child: TextField(
-                    cursorColor: Theme.of(context).textSelectionColor,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Search...",
-                      hintStyle: TextStyle(
-                          color: Theme.of(context).textSelectionColor),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                      isDense: true,
-                    ),
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      color: Colors.black,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
+          // Container(
+          //   decoration: BoxDecoration(
+          //     border: Border.all(
+          //       color: Colors.grey.withOpacity(0.5),
+          //       width: 1.0,
+          //     ),
+          //     borderRadius: BorderRadius.circular(4.0),
+          //   ),
+          //   margin: EdgeInsets.all(12),
+          //   child: Row(
+          //     children: <Widget>[
+          //       Padding(
+          //         padding: EdgeInsets.only(left: 8),
+          //         child: Icon(
+          //           Icons.search,
+          //           size: 20,
+          //         ),
+          //       ),
+          //       new Expanded(
+          //         child: TextField(
+          //           cursorColor: Theme.of(context).textSelectionColor,
+          //           keyboardType: TextInputType.text,
+          //           decoration: InputDecoration(
+          //             border: InputBorder.none,
+          //             hintText: "Search...",
+          //             hintStyle: TextStyle(
+          //                 color: Theme.of(context).textSelectionColor),
+          //             contentPadding:
+          //                 EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+          //             isDense: true,
+          //           ),
+          //           style: TextStyle(
+          //             fontSize: 14.0,
+          //             color: Colors.black,
+          //           ),
+          //         ),
+          //       )
+          //     ],
+          //   ),
+          // ),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
             child: Obx(() {
@@ -351,8 +349,7 @@ Widget card(BuildContext context, FormatedMarket formatedMarket, screenType) {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      formatedMarket.last
-                          .toStringAsFixed(formatedMarket.amountPrecision),
+                      formatedMarket.last.toStringAsFixed(2),
                       style: TextStyle(
                           fontFamily: "Popins",
                           fontSize: 14.5,

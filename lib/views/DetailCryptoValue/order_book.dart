@@ -94,7 +94,8 @@ class OrderBook extends StatelessWidget {
                     // physics: const NeverScrollableScrollPhysics(),
                     itemCount: marketController.bids.length,
                     itemBuilder: (BuildContext ctx, int i) {
-                      return _buyAmount(mediaQuery, marketController.bids[i]);
+                      return _buyAmount(
+                          context, mediaQuery, marketController.bids[i]);
                     },
                   ),
                 );
@@ -129,7 +130,8 @@ class OrderBook extends StatelessWidget {
                     // physics: const NeverScrollableScrollPhysics(),
                     itemCount: marketController.asks.length,
                     itemBuilder: (BuildContext ctx, int i) {
-                      return _amountSell(mediaQuery, marketController.asks[i]);
+                      return _amountSell(
+                          context, mediaQuery, marketController.asks[i]);
                     },
                   ),
                 );
@@ -154,43 +156,61 @@ class OrderBook extends StatelessWidget {
     );
   }
 
-  Widget _buyAmount(double _width, bid) {
+  Widget _buyAmount(BuildContext context, double _width, bid) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Container(
         width: _width,
-        child: GestureDetector(
-          onTap: () {
-            if (isTrading) {
-              final TradingController tradingController =
-                  Get.find<TradingController>();
-              tradingController.setBidFormPrice(bid);
-            }
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Text(
-                  double.parse(bid[1])
-                      .toStringAsFixed(formatedMarket.amountPrecision),
-                  style: TextStyle(fontFamily: "Gotik", fontSize: 12.0),
-                ),
-              ),
-              Text(
-                double.parse(bid[0])
-                    .toStringAsFixed(formatedMarket.pricePrecision),
-                style: TextStyle(
-                    color: Colors.greenAccent,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: "Gotik",
-                    fontSize: 12.0),
-              )
-            ],
+        height: 15,
+        child: Stack(children: [
+          SizedBox.expand(
+            child: LinearProgressIndicator(
+              value: 0.9,
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              valueColor: AlwaysStoppedAnimation<Color>(
+                  Color(0xFF00C087).withOpacity(0.18)),
+              // valueColor: AlwaysStoppedAnimation<Color>(
+              //     Theme.of(context).scaffoldBackgroundColor),
+            ),
           ),
-        ),
+          GestureDetector(
+            onTap: () {
+              if (isTrading) {
+                final TradingController tradingController =
+                    Get.find<TradingController>();
+                tradingController.setBidFormPrice(bid);
+              }
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    bid[1] != ''
+                        ? double.parse(bid[1]).toStringAsFixed(2)
+                        : double.parse('0').toStringAsFixed(2),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontFamily: "Gotik",
+                        fontSize: 12.0),
+                  ),
+                ),
+                Text(
+                  bid[0] != ''
+                      ? double.parse(bid[0]).toStringAsFixed(2)
+                      : double.parse('0').toStringAsFixed(2),
+                  style: TextStyle(
+                      color: Color(0xFF00C087),
+                      fontWeight: FontWeight.w700,
+                      fontFamily: "Gotik",
+                      fontSize: 12.0),
+                )
+              ],
+            ),
+          ),
+        ]),
       ),
     );
   }
@@ -208,13 +228,16 @@ class OrderBook extends StatelessWidget {
               padding: const EdgeInsets.only(left: 8.0),
               child: Text(
                 '--',
-                style: TextStyle(fontFamily: "Gotik", fontSize: 12.0),
+                style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Gotik",
+                    fontSize: 12.0),
               ),
             ),
             Text(
               '--',
               style: TextStyle(
-                  color: Colors.greenAccent,
+                  color: Color(0xFF00C087),
                   fontWeight: FontWeight.w700,
                   fontFamily: "Gotik",
                   fontSize: 12.0),
@@ -225,43 +248,60 @@ class OrderBook extends StatelessWidget {
     );
   }
 
-  Widget _amountSell(double _width, ask) {
+  Widget _amountSell(BuildContext context, double _width, ask) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Container(
+        height: 15,
         width: _width,
-        child: GestureDetector(
-          onTap: () {
-            if (isTrading) {
-              final TradingController tradingController =
-                  Get.find<TradingController>();
-              tradingController.setAskFormPrice(ask);
-            }
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                double.parse(ask[0])
-                    .toStringAsFixed(formatedMarket.pricePrecision),
-                style: TextStyle(
-                    color: Colors.red,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: "Gotik",
-                    fontSize: 12.0),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: Text(
-                  double.parse(ask[1])
-                      .toStringAsFixed(formatedMarket.amountPrecision),
-                  style: TextStyle(fontFamily: "Gotik", fontSize: 12.0),
-                ),
-              ),
-            ],
+        child: Stack(children: [
+          SizedBox.expand(
+            child: LinearProgressIndicator(
+              value: 0.9,
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              valueColor:
+                  AlwaysStoppedAnimation<Color>(Colors.red.withOpacity(0.15)),
+              // valueColor: AlwaysStoppedAnimation<Color>(
+              //     Theme.of(context).scaffoldBackgroundColor),
+            ),
           ),
-        ),
+          GestureDetector(
+            onTap: () {
+              if (isTrading) {
+                final TradingController tradingController =
+                    Get.find<TradingController>();
+                tradingController.setAskFormPrice(ask);
+              }
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  ask[0] != ''
+                      ? double.parse(ask[0]).toStringAsFixed(2)
+                      : double.parse('0').toStringAsFixed(2),
+                  style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: "Gotik",
+                      fontSize: 12.0),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Text(
+                      ask[1] != ''
+                          ? double.parse(ask[1]).toStringAsFixed(2)
+                          : double.parse('0').toStringAsFixed(2),
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontFamily: "Gotik",
+                          fontSize: 12.0)),
+                ),
+              ],
+            ),
+          ),
+        ]),
       ),
     );
   }
@@ -287,7 +327,10 @@ class OrderBook extends StatelessWidget {
               padding: const EdgeInsets.only(right: 8.0),
               child: Text(
                 '--',
-                style: TextStyle(fontFamily: "Gotik", fontSize: 12.0),
+                style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Gotik",
+                    fontSize: 12.0),
               ),
             ),
           ],

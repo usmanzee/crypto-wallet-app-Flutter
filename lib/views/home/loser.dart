@@ -94,8 +94,7 @@ class Loser extends StatelessWidget {
       child: InkWell(
         onTap: () {
           marketController.selectedMarket.value = formatedMarket;
-          Get.toNamed('market-detail',
-              arguments: {'formatedMarket': formatedMarket});
+          Get.toNamed('market-detail');
         },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -123,8 +122,7 @@ class Loser extends StatelessWidget {
             Container(
               width: 100.0,
               child: Text(
-                formatedMarket.last
-                    .toStringAsFixed(formatedMarket.amountPrecision),
+                formatedMarket.last.toStringAsFixed(2),
                 style: TextStyle(fontFamily: "Popins", fontSize: 14.0),
               ),
             ),

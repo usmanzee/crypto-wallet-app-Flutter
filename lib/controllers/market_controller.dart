@@ -16,6 +16,7 @@ class MarketController extends GetxController {
   var formatedMarketsList = List<FormatedMarket>().obs;
   var positiveMarketsList = List<FormatedMarket>().obs;
   var negativeMarketsList = List<FormatedMarket>().obs;
+  var orderBookSequence = -1.obs;
   var bids = List<dynamic>().obs;
   var asks = List<dynamic>().obs;
   Rx<IOWebSocketChannel> channel;
@@ -29,18 +30,13 @@ class MarketController extends GetxController {
   @override
   void onInit() async {
     await fetchMarkets();
-    webSocketController = Get.put(WebSocketController());
-    await webSocketController.connectToWebSocket(false, selectedMarket.value);
+    webSocketController = Get.find<WebSocketController>();
 
     webSocketController.streamController.value.stream.listen((message) {
       var data = json.decode(message);
       if (data.containsKey('global.tickers')) {
         updateMarketData(data['global.tickers']);
       }
-      // if (data.containsKey('btczar.ob-snap')) {
-      //   asks.assignAll(data['btczar.ob-snap']['asks']);
-      //   bids.assignAll(data['btczar.ob-snap']['bids']);
-      // }
     }, onDone: () {
       print("Task Done1");
     }, onError: (error) {

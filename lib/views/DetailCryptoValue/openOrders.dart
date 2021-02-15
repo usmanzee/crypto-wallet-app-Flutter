@@ -52,14 +52,18 @@ class _OpenOrdersState extends State<OpenOrders> {
                   ),
                 ),
                 Text(
-                  "Price(${formatedMarket.quoteUnit.toUpperCase()})",
+                  formatedMarket.quoteUnit != null
+                      ? "Price(${formatedMarket.quoteUnit.toUpperCase()})"
+                      : 'Price',
                   style: TextStyle(
                       color: Theme.of(context).hintColor, fontFamily: "Popins"),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 10.0),
                   child: Text(
-                    "Amount(${formatedMarket.baseUnit.toUpperCase()})",
+                    formatedMarket.baseUnit != null
+                        ? "Amount(${formatedMarket.baseUnit.toUpperCase()})"
+                        : 'Amount',
                     style: TextStyle(
                         color: Theme.of(context).hintColor,
                         fontFamily: "Popins"),
@@ -152,7 +156,8 @@ class _OpenOrdersState extends State<OpenOrders> {
               ),
             ),
             Text(
-              (double.parse(openOrder.price)).toStringAsFixed(priceFixed),
+              // (double.parse(openOrder.price)).toStringAsFixed(priceFixed),
+              (double.parse(openOrder.price)).toStringAsFixed(2),
               style: TextStyle(
                 fontFamily: "Gotik",
                 fontSize: 15.0,
@@ -162,7 +167,8 @@ class _OpenOrdersState extends State<OpenOrders> {
               ),
             ),
             Text(
-              remainingAmount.toStringAsFixed(amountFixed),
+              // remainingAmount.toStringAsFixed(amountFixed),
+              remainingAmount.toStringAsFixed(2),
               style: TextStyle(
                   color: openOrder.side == 'buy'
                       ? Color(0xFF00C087)
@@ -172,7 +178,8 @@ class _OpenOrdersState extends State<OpenOrders> {
                   fontSize: 15.0),
             ),
             Text(
-              total.toStringAsFixed(amountFixed),
+              // total.toStringAsFixed(amountFixed),
+              total.toStringAsFixed(2),
               style: TextStyle(
                   color: openOrder.side == 'buy'
                       ? Color(0xFF00C087)

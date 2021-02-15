@@ -20,8 +20,8 @@ class Trading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FormatedMarket formatedMarket =
-        marketController.selectedMarketTrading.value;
+    // final FormatedMarket formatedMarket =
+    //     marketController.selectedMarketTrading.value;
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -51,7 +51,10 @@ class Trading extends StatelessWidget {
             Transform(
               transform: Matrix4.translationValues(-8.0, 0.0, 0.0),
               child: Text(
-                formatedMarket.name.toUpperCase(),
+                marketController.selectedMarketTrading.value.name != null
+                    ? marketController.selectedMarketTrading.value.name
+                        .toUpperCase()
+                    : '--',
                 style: TextStyle(
                     color: Theme.of(context).textSelectionColor,
                     fontFamily: "Gotik",
@@ -60,11 +63,20 @@ class Trading extends StatelessWidget {
               ),
             ),
             Text(
-              formatedMarket.priceChangePercent,
+              marketController.selectedMarketTrading.value.priceChangePercent !=
+                      null
+                  ? marketController
+                      .selectedMarketTrading.value.priceChangePercent
+                  : '',
               style: TextStyle(
-                  color: formatedMarket.isPositiveChange
-                      ? Color(0xFF00C087)
-                      : Colors.redAccent,
+                  color: marketController
+                              .selectedMarketTrading.value.isPositiveChange !=
+                          null
+                      ? marketController
+                              .selectedMarketTrading.value.isPositiveChange
+                          ? Color(0xFF00C087)
+                          : Colors.redAccent
+                      : Theme.of(context).scaffoldBackgroundColor,
                   fontFamily: "Gotik",
                   fontWeight: FontWeight.w600,
                   fontSize: 18.5),
@@ -93,7 +105,7 @@ class Trading extends StatelessWidget {
             ),
             OrderBook(
                 isTrading: true,
-                formatedMarket: formatedMarket,
+                formatedMarket: marketController.selectedMarketTrading.value,
                 asks: marketController.asks.value,
                 bids: marketController.bids.value),
             DefaultTabController(
@@ -138,8 +150,12 @@ class Trading extends StatelessWidget {
                   Container(
                     height: homeController.isLoggedIn.value ? 280 : 230,
                     child: TabBarView(children: [
-                      LimitOrderForm(formatedMarket: formatedMarket),
-                      MarketOrderForm(formatedMarket: formatedMarket),
+                      LimitOrderForm(
+                          formatedMarket:
+                              marketController.selectedMarketTrading.value),
+                      MarketOrderForm(
+                          formatedMarket:
+                              marketController.selectedMarketTrading.value),
                     ]),
                   ),
                   if (!homeController.isLoggedIn.value)
@@ -177,7 +193,8 @@ class Trading extends StatelessWidget {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
-            OpenOrders(formatedMarket: formatedMarket),
+            OpenOrders(
+                formatedMarket: marketController.selectedMarketTrading.value),
           ],
         ),
       )),

@@ -1,8 +1,3 @@
-import 'dart:convert';
-import 'package:get/get.dart';
-import 'package:crypto_template/models/formated_market.dart';
-import 'package:crypto_template/controllers/web_socket_controller.dart';
-
 class WsHelper {
   static bool isArray(String type) {
     return type.lastIndexOf(']') == type.length - 1;
@@ -21,8 +16,10 @@ class WsHelper {
     if (newLevel.length != 2) {
       return depthOld;
     }
-    var newLevelPrice = double.parse(newLevel[0]);
-    var newLevelVolume = double.parse(newLevel[1]);
+    var newLevelPrice =
+        newLevel[0] != "" ? double.parse(newLevel[0]) : double.parse('0');
+    var newLevelVolume =
+        newLevel[1] != "" ? double.parse(newLevel[1]) : double.parse('0');
     var depthNew = [...depthOld];
 
     if (depthOld.length == 0) {

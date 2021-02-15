@@ -84,4 +84,13 @@ class UserRepository {
         await apiProvider.post('barong/resource/phones/verify', reqObj);
     return response;
   }
+
+  Future<dynamic> verifyIdentity(reqObj) async {
+    apiProvider = new ApiProvider();
+    RequestHeaders requestHeaders = new RequestHeaders();
+    apiProvider.headers = requestHeaders.setAuthHeaders();
+    print(reqObj);
+    final response = await apiProvider.post('barong/resource/profiles', reqObj);
+    return response;
+  }
 }

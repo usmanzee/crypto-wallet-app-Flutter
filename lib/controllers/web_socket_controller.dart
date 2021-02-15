@@ -8,12 +8,12 @@ import 'package:web_socket_channel/status.dart' as status;
 class WebSocketController extends GetxController {
   // final bool withAuth;
   // final FormatedMarket market;
-
   // WebSocketController({this.withAuth, this.market});
-  final String _baseUrl = "ws://10.121.121.48:9003/api/v2/ranger";
-  // final String _baseUrl = "http://www.app.local/";
-  // final String _baseUrl = "https://www.coinee.cf/";
-  // final String _baseUrl = "https://ewallet.b4uwallet.com/";
+
+  // final String _baseUrl = "ws://10.121.121.48:9003/api/v2/ranger/public";
+  // final String _baseUrl = "wss://www.app.local/";
+  // final String _baseUrl = "wss://www.coinee.cf/";
+  final String _baseUrl = "wss://ewallet.b4uwallet.com/api/v2/ranger/public";
   final isChannelConnected = false.obs;
   Rx<IOWebSocketChannel> channel;
   Rx<StreamController> streamController;
@@ -23,23 +23,29 @@ class WebSocketController extends GetxController {
   @override
   void onInit() {
     streamController = StreamController.broadcast().obs;
-    // connectToWebSocket(withAuth, market);
+    connectToWebSocket();
     super.onInit();
   }
 
-  void connectToWebSocket(bool withAuth, market) async {
-    var wsAPIVersion = withAuth ? '/private' : '/public';
-    var url = _baseUrl + wsAPIVersion;
-    var streams = await streamsBuilder(true, market, true);
-    // final String wsURL =
-    //     'ws://10.121.121.48:9003/api/v2/ranger/public/?stream=global.tickers';
-    final String wsURL =
-        'wss://ewallet.b4uwallet.com/api/v2/ranger/public/?stream=global.tickers';
-    var streamURL = generateSocketURI(url, streams);
+  void connectToWebSocket() async {
+    final String wsURL = _baseUrl + '/?stream=global.tickers';
     channel = IOWebSocketChannel.connect(wsURL).obs;
     streamController = StreamController.broadcast().obs;
     streamController.value.addStream(channel.value.stream);
   }
+  // void connectToWebSocket(bool withAuth, market) async {
+  //   var wsAPIVersion = withAuth ? '/private' : '/public';
+  //   var url = _baseUrl + wsAPIVersion;
+  //   var streams = await streamsBuilder(true, market, true);
+  //   final String wsURL =
+  //       'ws://10.121.121.48:9003/api/v2/ranger/public/?stream=global.tickers';
+  //   // final String wsURL =
+  //   //     'wss://ewallet.b4uwallet.com/api/v2/ranger/public/?stream=global.tickers';
+  //   var streamURL = generateSocketURI(url, streams);
+  //   channel = IOWebSocketChannel.connect(wsURL).obs;
+  //   streamController = StreamController.broadcast().obs;
+  //   streamController.value.addStream(channel.value.stream);
+  // }
 
   void subscribeOrderBookInc(FormatedMarket market) {
     channel.value.sink.add(json.encode({

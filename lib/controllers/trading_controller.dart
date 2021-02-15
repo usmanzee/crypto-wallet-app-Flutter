@@ -84,15 +84,20 @@ class TradingController extends GetxController {
     }
 
     super.onInit();
-    print('onint trading');
   }
 
   @override
   void onReady() {
-    print('ready trading');
+    // marketController.orderBookSequence = -1;
+    marketController.asks.clear();
+    marketController.bids.clear();
+    Future.delayed(Duration(seconds: 1), () {
+      print('calling');
+      webSocketController.subscribeOrderBookInc(market.value);
+      getOrderBookDataFromWS();
+    });
+
     super.onReady();
-    webSocketController.subscribeOrderBookInc(market.value);
-    getOrderBookDataFromWS();
   }
 
   setWalletValues(isWalletsLoading) {
@@ -117,8 +122,10 @@ class TradingController extends GetxController {
     market.value = newMarket;
     marketController.selectedMarketTrading.value = newMarket;
     webSocketController.subscribeOrderBookInc(newMarket);
-    walletBase.value = getWallet(market.value.baseUnit, walletsList);
-    walletQuote.value = getWallet(market.value.quoteUnit, walletsList);
+    if (homeController.isLoggedIn.value) {
+      walletBase.value = getWallet(market.value.baseUnit, walletsList);
+      walletQuote.value = getWallet(market.value.quoteUnit, walletsList);
+    }
   }
 
   void getOrderBookDataFromWS() {
@@ -129,11 +136,25 @@ class TradingController extends GetxController {
             .assignAll(data['${market.value.id}.ob-snap']['asks']);
         marketController.bids
             .assignAll(data['${market.value.id}.ob-snap']['bids']);
+        marketController.orderBookSequence =
+            data['${market.value.id}.ob-snap']['sequence'];
       }
       if (data.containsKey('${market.value.id}.ob-inc')) {
-        // print(data);
         var updatedAsksData = [];
         var updatedBidsData = [];
+        if (marketController.orderBookSequence == -1) {
+          print("OrderBook increment received before snapshot");
+          return;
+        }
+        if (marketController.orderBookSequence + 1 !=
+            data['${market.value.id}.ob-inc']['sequence']) {
+          print(
+              'Bad sequence detected in incremental orderbook previous: ${marketController.orderBookSequence}, event: ' +
+                  data['${market.value.id}.ob-inc']['sequence'].toString());
+          // emitter(rangerDisconnectFetch());
+
+          return;
+        }
         if (data['${market.value.id}.ob-inc']['asks'] != null) {
           var asks = data['${market.value.id}.ob-inc']['asks'];
           if (WsHelper.isArray(asks[0].toString())) {
@@ -151,7 +172,6 @@ class TradingController extends GetxController {
               : updatedAsksData;
           marketController.asks.assignAll(updatedAsksData);
           marketController.asks.refresh();
-          // makeDepthData();
         }
         if (data['${market.value.id}.ob-inc']['bids'] != null) {
           var bids = data['${market.value.id}.ob-inc']['bids'];
@@ -169,8 +189,9 @@ class TradingController extends GetxController {
               : updatedBidsData;
           marketController.bids.assignAll(updatedBidsData);
           marketController.bids.refresh();
-          // makeDepthData();
         }
+        marketController.orderBookSequence =
+            data['${market.value.id}.ob-inc']['sequence'];
       }
     }, onDone: () {
       print("Task Done1");
@@ -338,6 +359,8 @@ class TradingController extends GetxController {
   }
 
   void limitOrderBuy() async {
+    Get.dialog(Center(child: CircularProgressIndicator()),
+        barrierDismissible: false);
     TradingRepository _tradingRepository = new TradingRepository();
     try {
       var orderObj = {
@@ -352,12 +375,19 @@ class TradingController extends GetxController {
       var orderResponseResponse =
           await _tradingRepository.placeTradingOrder(orderObj);
       print(orderResponseResponse);
+      Get.back();
+      snackbarController = new SnackbarController(
+          title: 'Success', message: 'success.order.created');
+      snackbarController.showSnackbar();
     } catch (error) {
+      Get.back();
       errorController.handleError(error);
     }
   }
 
   void limitOrderSell() async {
+    Get.dialog(Center(child: CircularProgressIndicator()),
+        barrierDismissible: false);
     TradingRepository _tradingRepository = new TradingRepository();
     try {
       var orderObj = {
@@ -370,12 +400,68 @@ class TradingController extends GetxController {
       var orderResponseResponse =
           await _tradingRepository.placeTradingOrder(orderObj);
       print(orderResponseResponse);
+      Get.back();
+      snackbarController = new SnackbarController(
+          title: 'Success', message: 'success.order.created');
     } catch (error) {
+      Get.back();
+      errorController.handleError(error);
+    }
+  }
+
+  void marketOrderBuy() async {
+    Get.dialog(Center(child: CircularProgressIndicator()),
+        barrierDismissible: false);
+    TradingRepository _tradingRepository = new TradingRepository();
+    try {
+      var orderObj = {
+        'amount': marketOrderBuyAmountTextController.text,
+        'market': market.value.id,
+        'price': market.value.last,
+        'side': 'buy',
+        'type': 'limit',
+      };
+
+      print(orderObj);
+      var orderResponseResponse =
+          await _tradingRepository.placeTradingOrder(orderObj);
+      print(orderResponseResponse);
+      Get.back();
+      snackbarController = new SnackbarController(
+          title: 'Success', message: 'success.order.created');
+    } catch (error) {
+      Get.back();
+      errorController.handleError(error);
+    }
+  }
+
+  void marketOrderSell() async {
+    Get.dialog(Center(child: CircularProgressIndicator()),
+        barrierDismissible: false);
+    TradingRepository _tradingRepository = new TradingRepository();
+    try {
+      var orderObj = {
+        'amount': marketOrderSellAmountTextController.text,
+        'market': market.value.id,
+        'price': market.value.last,
+        'side': 'sell',
+        'type': 'limit',
+      };
+      var orderResponseResponse =
+          await _tradingRepository.placeTradingOrder(orderObj);
+      print(orderResponseResponse);
+      Get.back();
+      snackbarController = new SnackbarController(
+          title: 'Success', message: 'success.order.created');
+    } catch (error) {
+      Get.back();
       errorController.handleError(error);
     }
   }
 
   void marketBuyOrder() async {
+    Get.dialog(Center(child: CircularProgressIndicator()),
+        barrierDismissible: false);
     TradingRepository _tradingRepository = new TradingRepository();
     try {
       var orderObj = {
@@ -388,12 +474,18 @@ class TradingController extends GetxController {
       var orderResponseResponse =
           await _tradingRepository.placeTradingOrder(orderObj);
       print(orderResponseResponse);
+      Get.back();
+      snackbarController = new SnackbarController(
+          title: 'Success', message: 'success.order.created');
     } catch (error) {
+      Get.back();
       errorController.handleError(error);
     }
   }
 
   void marketSellOrder() async {
+    Get.dialog(Center(child: CircularProgressIndicator()),
+        barrierDismissible: false);
     TradingRepository _tradingRepository = new TradingRepository();
     try {
       var orderObj = {
@@ -406,7 +498,11 @@ class TradingController extends GetxController {
       var orderResponseResponse =
           await _tradingRepository.placeTradingOrder(orderObj);
       print(orderResponseResponse);
+      Get.back();
+      snackbarController = new SnackbarController(
+          title: 'Success', message: 'success.order.created');
     } catch (error) {
+      Get.back();
       errorController.handleError(error);
     }
   }

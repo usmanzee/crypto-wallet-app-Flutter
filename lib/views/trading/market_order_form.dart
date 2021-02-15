@@ -23,7 +23,12 @@ class MarketOrderForm extends StatelessWidget {
                 padding: EdgeInsets.only(top: 8, bottom: 8),
                 color: Theme.of(context).canvasColor,
                 child: Center(
-                  child: Text("≃ " + formatedMarket.last.toStringAsPrecision(2),
+                  child: Text(
+                      formatedMarket.last != null
+                          ? "≃ " +
+                              formatedMarket.last.toStringAsPrecision(
+                                  formatedMarket.amountPrecision)
+                          : '--',
                       style: TextStyle(
                           color: Theme.of(context).textSelectionColor,
                           fontWeight: FontWeight.w500,
@@ -60,7 +65,9 @@ class MarketOrderForm extends StatelessWidget {
                             disabledBorder: InputBorder.none,
                             contentPadding: EdgeInsets.only(
                                 left: 12, bottom: 8, top: 8, right: 16),
-                            hintText: formatedMarket.quoteUnit.toUpperCase()),
+                            hintText: formatedMarket.quoteUnit != null
+                                ? formatedMarket.quoteUnit.toUpperCase()
+                                : ''),
                       ),
                     ),
                     IconButton(
@@ -170,9 +177,11 @@ class MarketOrderForm extends StatelessWidget {
                             disabledBorder: InputBorder.none,
                             contentPadding: EdgeInsets.only(
                                 left: 15, bottom: 11, top: 11, right: 15),
-                            hintText: "Total (" +
-                                formatedMarket.quoteUnit.toUpperCase() +
-                                ")"),
+                            hintText: formatedMarket.quoteUnit != null
+                                ? "Total (" +
+                                    formatedMarket.quoteUnit.toUpperCase() +
+                                    ")"
+                                : ''),
                       ),
                     ),
                   ],
@@ -209,7 +218,10 @@ class MarketOrderForm extends StatelessWidget {
                               fontFamily: "Popins",
                               letterSpacing: 1.3,
                             )),
-                        Text(' ' + formatedMarket.quoteUnit.toUpperCase(),
+                        Text(
+                            formatedMarket.quoteUnit != null
+                                ? ' ' + formatedMarket.quoteUnit.toUpperCase()
+                                : ' --',
                             style: TextStyle(
                               color: Theme.of(context).textSelectionColor,
                               fontSize: 10,
@@ -232,10 +244,14 @@ class MarketOrderForm extends StatelessWidget {
                     splashColor: Colors.black12,
                     highlightColor: Colors.black12,
                     color: Color(0xFF2ebd85),
-                    onPressed: () {},
+                    onPressed: () {
+                      tradingController.marketOrderBuy();
+                    },
                     child: Center(
                         child: Text(
-                      "Buy " + formatedMarket.baseUnit.toUpperCase(),
+                      formatedMarket.baseUnit != null
+                          ? "Buy " + formatedMarket.baseUnit.toUpperCase()
+                          : '',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
@@ -268,7 +284,12 @@ class MarketOrderForm extends StatelessWidget {
                 padding: EdgeInsets.only(top: 8, bottom: 8),
                 color: Theme.of(context).canvasColor,
                 child: Center(
-                  child: Text("≃ " + formatedMarket.last.toStringAsPrecision(2),
+                  child: Text(
+                      formatedMarket.last != null
+                          ? "≃ " +
+                              formatedMarket.last.toStringAsPrecision(
+                                  formatedMarket.amountPrecision)
+                          : '--',
                       style: TextStyle(
                           color: Theme.of(context).textSelectionColor,
                           fontWeight: FontWeight.w500,
@@ -305,7 +326,9 @@ class MarketOrderForm extends StatelessWidget {
                             disabledBorder: InputBorder.none,
                             contentPadding: EdgeInsets.only(
                                 left: 15, bottom: 11, top: 11, right: 15),
-                            hintText: formatedMarket.baseUnit.toUpperCase()),
+                            hintText: formatedMarket.baseUnit != null
+                                ? formatedMarket.baseUnit.toUpperCase()
+                                : ''),
                       ),
                     ),
                     IconButton(
@@ -415,9 +438,11 @@ class MarketOrderForm extends StatelessWidget {
                             disabledBorder: InputBorder.none,
                             contentPadding: EdgeInsets.only(
                                 left: 15, bottom: 11, top: 11, right: 15),
-                            hintText: "Total (" +
-                                formatedMarket.baseUnit.toUpperCase() +
-                                ")"),
+                            hintText: formatedMarket.baseUnit != null
+                                ? "Total (" +
+                                    formatedMarket.baseUnit.toUpperCase() +
+                                    ")"
+                                : ''),
                       ),
                     ),
                   ],
@@ -454,7 +479,10 @@ class MarketOrderForm extends StatelessWidget {
                             fontFamily: "Popins",
                             letterSpacing: 1.3,
                           )),
-                      Text(' ' + formatedMarket.baseUnit.toUpperCase(),
+                      Text(
+                          formatedMarket.baseUnit != null
+                              ? ' ' + formatedMarket.baseUnit.toUpperCase()
+                              : ' --',
                           style: TextStyle(
                             color: Theme.of(context).textSelectionColor,
                             fontSize: 10,
@@ -476,10 +504,14 @@ class MarketOrderForm extends StatelessWidget {
                     splashColor: Colors.black12,
                     highlightColor: Colors.black12,
                     color: Colors.redAccent.withOpacity(0.8),
-                    onPressed: () {},
+                    onPressed: () {
+                      tradingController.marketOrderSell();
+                    },
                     child: Center(
                         child: Text(
-                      "Sell " + formatedMarket.baseUnit.toUpperCase(),
+                      formatedMarket.baseUnit != null
+                          ? "Sell " + formatedMarket.baseUnit.toUpperCase()
+                          : '',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,

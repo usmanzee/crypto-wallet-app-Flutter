@@ -259,8 +259,7 @@ class Card extends StatelessWidget {
         onTap: () {
           MarketController marketController = Get.find();
           marketController.selectedMarket.value = formatedMarket;
-          Get.toNamed('market-detail',
-              arguments: {'formatedMarket': formatedMarket});
+          Get.toNamed('market-detail');
         },
         child: Container(
           height: 70.0,
@@ -298,8 +297,7 @@ class Card extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            formatedMarket.last.toStringAsFixed(
-                                formatedMarket.amountPrecision),
+                            formatedMarket.last.toStringAsFixed(2),
                             style: TextStyle(
                                 color: formatedMarket.isPositiveChange
                                     ? Colors.greenAccent

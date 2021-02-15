@@ -1,7 +1,6 @@
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:crypto_template/controllers/market_detail_controller.dart';
-import 'package:crypto_template/controllers/web_socket_controller.dart';
 import 'package:crypto_template/models/formated_market.dart';
 import 'package:crypto_template/views/DetailCryptoValue/order_book.dart';
 import 'package:crypto_template/views/market/market_drawer.dart';
@@ -11,7 +10,8 @@ import 'package:get/get.dart';
 import 'package:k_chart/flutter_k_chart.dart';
 import 'package:k_chart/k_chart_widget.dart';
 
-class MarketDetail extends GetWidget<MarketDetailController> {
+class MarketDetail extends StatelessWidget {
+  final MarketDetailController controller = Get.find<MarketDetailController>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
   final MarketController marketController = Get.find();
@@ -19,12 +19,14 @@ class MarketDetail extends GetWidget<MarketDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    final FormatedMarket formatedMarket = marketController.selectedMarket.value;
     return Obx(() {
+      // final FormatedMarket formatedMarket =
+      //     marketController.selectedMarket.value;
       return Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
           elevation: 0.0,
+          brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
           backgroundColor: Theme.of(context).canvasColor,
           title: GestureDetector(
             onTap: () {
@@ -36,7 +38,7 @@ class MarketDetail extends GetWidget<MarketDetailController> {
             },
             child: Row(children: [
               Text(
-                formatedMarket.name.toUpperCase(),
+                marketController.selectedMarket.value.name.toUpperCase(),
                 style: TextStyle(
                     color: Theme.of(context).textSelectionColor, fontSize: 18),
               ),
@@ -75,7 +77,8 @@ class MarketDetail extends GetWidget<MarketDetailController> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        _headerValue(context, formatedMarket),
+                        _headerValue(
+                            context, marketController.selectedMarket.value),
                         SizedBox(
                           height: 8.0,
                         ),
@@ -201,7 +204,8 @@ class MarketDetail extends GetWidget<MarketDetailController> {
                         ),
                         OrderBook(
                             isTrading: false,
-                            formatedMarket: formatedMarket,
+                            formatedMarket:
+                                marketController.selectedMarket.value,
                             asks: marketController.asks.value,
                             bids: marketController.bids.value)
                       ],
@@ -210,7 +214,7 @@ class MarketDetail extends GetWidget<MarketDetailController> {
                 ],
               ),
             ),
-            _buttonBottom(context, formatedMarket)
+            _buttonBottom(context, marketController.selectedMarket.value)
           ],
         ),
       );
@@ -224,10 +228,11 @@ class MarketDetail extends GetWidget<MarketDetailController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
-              formatedMarket.last
-                  .toStringAsFixed(formatedMarket.amountPrecision),
+              // marketController.selectedMarket.value.last
+              //     .toStringAsFixed(marketController.selectedMarket.value.amountPrecision),
+              marketController.selectedMarket.value.last.toStringAsFixed(2),
               style: TextStyle(
-                  color: formatedMarket.isPositiveChange
+                  color: marketController.selectedMarket.value.isPositiveChange
                       ? Color(0xFF00C087)
                       : Colors.redAccent,
                   fontSize: 36.0,
@@ -251,8 +256,11 @@ class MarketDetail extends GetWidget<MarketDetailController> {
                     SizedBox(
                       height: 7.0,
                     ),
-                    Text(formatedMarket.high
-                        .toStringAsFixed(formatedMarket.amountPrecision))
+                    Text(
+                        // marketController.selectedMarket.value.high
+                        //   .toStringAsFixed(marketController.selectedMarket.value.amountPrecision)
+                        marketController.selectedMarket.value.high
+                            .toStringAsFixed(2))
                   ],
                 ),
                 Row(
@@ -267,8 +275,30 @@ class MarketDetail extends GetWidget<MarketDetailController> {
                             fontSize: 11.5),
                       ),
                     ),
-                    Text(formatedMarket.low
-                        .toStringAsFixed(formatedMarket.amountPrecision))
+                    Text(marketController.selectedMarket.value.low
+                            .toStringAsFixed(2)
+                        // marketController.selectedMarket.value.low
+                        //   .toStringAsFixed(marketController.selectedMarket.value.amountPrecision)
+                        )
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(right: 15.0),
+                      child: Text(
+                        "24h",
+                        style: TextStyle(
+                            color: Theme.of(context).hintColor,
+                            fontFamily: "Popins",
+                            fontSize: 11.5),
+                      ),
+                    ),
+                    Text(
+                        // marketController.selectedMarket.value.high
+                        //   .toStringAsFixed(marketController.selectedMarket.value.amountPrecision)
+                        marketController.selectedMarket.value.high
+                            .toStringAsFixed(2))
                   ],
                 )
               ],
@@ -290,32 +320,17 @@ class MarketDetail extends GetWidget<MarketDetailController> {
                 Padding(
                   padding: const EdgeInsets.only(left: 10.0),
                   child: Text(
-                    formatedMarket.priceChangePercent,
+                    marketController.selectedMarket.value.priceChangePercent,
                     style: TextStyle(
-                      color: formatedMarket.isPositiveChange
-                          ? Color(0xFF00C087)
-                          : Colors.redAccent,
+                      color:
+                          marketController.selectedMarket.value.isPositiveChange
+                              ? Color(0xFF00C087)
+                              : Colors.redAccent,
                     ),
                   ),
                 ),
               ],
             ),
-            Row(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(right: 31.0),
-                  child: Text(
-                    "24h Vol",
-                    style: TextStyle(
-                        color: Theme.of(context).hintColor,
-                        fontFamily: "Popins",
-                        fontSize: 11.5),
-                  ),
-                ),
-                Text(formatedMarket.high
-                    .toStringAsFixed(formatedMarket.amountPrecision))
-              ],
-            )
           ],
         ),
       ],
@@ -432,7 +447,6 @@ class MarketDetail extends GetWidget<MarketDetailController> {
 Widget _buttonBottom(context, FormatedMarket formatedMarket) {
   HomeController homeController = Get.find();
   MarketController marketController = Get.find();
-  final WebSocketController webSocketController = Get.find();
   return Container(
     color: Theme.of(context).canvasColor,
     padding: const EdgeInsets.all(4.0),
@@ -450,11 +464,6 @@ Widget _buttonBottom(context, FormatedMarket formatedMarket) {
                 Get.back();
                 marketController.selectedMarketTrading.value = formatedMarket;
                 homeController.selectedNavIndex = 2;
-                // webSocketController.subscribeOrderBookInc(formatedMarket);
-                // Get.offNamed('/trading', arguments: {
-                //   'formatedMarket': formatedMarket,
-                //   'selectedNavIndex': 3
-                // });
               },
               child: Center(
                   child: Text(
@@ -478,16 +487,11 @@ Widget _buttonBottom(context, FormatedMarket formatedMarket) {
             child: MaterialButton(
               splashColor: Colors.black12,
               highlightColor: Colors.black12,
-              color: Colors.redAccent.withOpacity(0.8),
-              onPressed: () {
-                Get.back();
+              color: Colors.redAccent,
+              onPressed: () async {
+                await Get.back();
                 marketController.selectedMarketTrading.value = formatedMarket;
                 homeController.selectedNavIndex = 2;
-                // webSocketController.subscribeOrderBookInc(formatedMarket);
-                // Get.offNamed('/trading', arguments: {
-                //   'formatedMarket': formatedMarket,
-                //   'selectedNavIndex': 3
-                // });
               },
               child: Center(
                   child: Text(
