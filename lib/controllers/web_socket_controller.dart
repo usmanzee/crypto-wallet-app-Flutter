@@ -79,6 +79,20 @@ class WebSocketController extends GetxController {
     }));
   }
 
+  void subscribeOrder() {
+    channel.value.sink.add(json.encode({
+      "event": "subscribe",
+      "streams": ['order']
+    }));
+  }
+
+  void unSubscribeOrder() {
+    channel.value.sink.add(json.encode({
+      "event": "unsubscribe",
+      "streams": ['order']
+    }));
+  }
+
   streamsBuilder(
       bool withAuth, FormatedMarket market, bool incrementalOrderBook) {
     var streams = ['global.tickers'];

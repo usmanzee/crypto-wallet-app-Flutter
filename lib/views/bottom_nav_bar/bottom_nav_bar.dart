@@ -183,8 +183,7 @@ class BottomNavBar extends GetView<HomeController> {
                     bool tradingControllerInstance =
                         Get.isRegistered<TradingController>();
                     bool openOrdersInstance =
-                        Get.isRegistered<OpenOrdersController>(
-                            tag: 'open_orders_instance');
+                        Get.isRegistered<OpenOrdersController>();
                     if (tradingControllerInstance) {
                       webSocketController.subscribeOrderBookInc(
                           marketController.selectedMarketTrading.value);
@@ -192,8 +191,7 @@ class BottomNavBar extends GetView<HomeController> {
 
                     if (tradingControllerInstance && openOrdersInstance) {
                       Get.delete<TradingController>(force: true);
-                      Get.delete<OpenOrdersController>(
-                          tag: 'open_orders_instance', force: true);
+                      Get.delete<OpenOrdersController>(force: true);
                     }
                     controller.selectedNavIndex = index;
                   } else {

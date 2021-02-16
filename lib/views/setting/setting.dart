@@ -190,6 +190,21 @@ class Setting extends StatelessWidget {
               return (homeController.isLoggedIn.value)
                   ? InkWell(
                       onTap: () {
+                        Get.toNamed('/profile-verification');
+                      },
+                      child: listSetting(
+                          context,
+                          Icon(
+                            Icons.group_add,
+                            size: 20.0,
+                          ),
+                          "Identification"))
+                  : Container();
+            }),
+            Obx(() {
+              return (homeController.isLoggedIn.value)
+                  ? InkWell(
+                      onTap: () {
                         Get.toNamed('/notifications');
                       },
                       child: listSetting(

@@ -1,3 +1,5 @@
+import 'package:crypto_template/models/open_order.dart';
+
 class WsHelper {
   static bool isArray(String type) {
     return type.lastIndexOf(']') == type.length - 1;
@@ -63,5 +65,67 @@ class WsHelper {
       }
     }
     return depthNew;
+  }
+
+  static List<dynamic> insertOrUpdate(List<OpenOrder> openOrdersList, order) {
+    var id = order['id'];
+    var state = order['state'];
+    var createdAt = DateTime.fromMillisecondsSinceEpoch(order['at'] * 1000);
+    switch (state) {
+      case 'wait':
+        var orderIndex = openOrdersList
+            .firstWhere((openOrder) => openOrder.id == id, orElse: () => null);
+        if (orderIndex == null) {
+          var newOpenOrder = new OpenOrder(
+            id: order['id'],
+            side: order['kind'].toString(),
+            ordType: null,
+            price: order['price'].toString(),
+            avgPrice: null,
+            state: order['state'].toString(),
+            market: order['market'].toString(),
+            createdAt: createdAt,
+            originVolume: order['origin_volume'].toString(),
+            remainingVolume: order['remaining_volume'].toString(),
+            executedVolume: null,
+            tradesCount: null,
+          );
+          openOrdersList.insert(0, newOpenOrder);
+          return openOrdersList;
+        }
+        var newList = openOrdersList.map((openOrder) {
+          if (openOrder.id == id) {
+            var newOpenOrder = new OpenOrder(
+              id: order['id'],
+              side: order['kind'].toString(),
+              ordType: null,
+              price: order['price'].toString(),
+              avgPrice: null,
+              state: order['state'].toString(),
+              market: order['market'].toString(),
+              createdAt: createdAt,
+              originVolume: order['origin_volume'].toString(),
+              remainingVolume: order['remaining_volume'].toString(),
+              executedVolume: null,
+              tradesCount: null,
+            );
+            return {newOpenOrder};
+          }
+          return openOrder;
+        }).toList();
+        return newList;
+      default:
+        List<OpenOrder> newli = [];
+        for (var i = 0; i < openOrdersList.length; i++) {
+          // if (openOrdersList[i].id != id) {
+          //   newli.add(openOrdersList[i]);
+          // }
+
+          if (openOrdersList[i].id == id) {
+            splice(openOrdersList, i, 1);
+          }
+        }
+        return openOrdersList;
+    }
   }
 }

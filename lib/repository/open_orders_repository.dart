@@ -14,4 +14,14 @@ class OpenOrdersRepository {
         .get('peatio/market/orders?market=${marketId}&state=wait');
     return openOrderFromJson(response);
   }
+
+  Future<dynamic> cancelOpenOrders(bool cancelAll, [int orderId]) async {
+    apiProvider = new ApiProvider();
+    RequestHeaders requestHeaders = new RequestHeaders();
+    apiProvider.headers = requestHeaders.setAuthHeaders();
+    var url = 'peatio/market/orders/cancel';
+    url = orderId != null ? url + '/' + orderId.toString() : url;
+    final response = await apiProvider.get(url);
+    return response;
+  }
 }
