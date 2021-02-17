@@ -19,6 +19,9 @@ class MarketController extends GetxController {
   var orderBookSequence = -1.obs;
   var bids = List<dynamic>().obs;
   var asks = List<dynamic>().obs;
+  var maxVolume = 0.0.obs;
+  var orderBookEntryBids = List<dynamic>().obs;
+  var orderBookEntryAsks = List<dynamic>().obs;
   Rx<IOWebSocketChannel> channel;
   Rx<FormatedMarket> selectedMarket = FormatedMarket().obs;
   Rx<FormatedMarket> selectedMarketTrading = FormatedMarket().obs;

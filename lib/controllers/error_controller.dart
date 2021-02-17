@@ -1,7 +1,6 @@
 import 'package:crypto_template/controllers/SnackbarController.dart';
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ErrorController {
   SnackbarController snackbarController;
@@ -28,11 +27,6 @@ class ErrorController {
   void logoutUser() async {
     HomeController homeController = Get.find<HomeController>();
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('loggedIn');
-    homeController.isLoggedIn.value = false;
-    snackbarController = new SnackbarController(
-        title: 'Error', message: 'You have been loggedout.');
-    snackbarController.showSnackbar();
+    homeController.logoutUser();
   }
 }

@@ -11,6 +11,7 @@ import 'dart:convert';
 import 'package:crypto_template/controllers/web_socket_controller.dart';
 import 'package:crypto_template/utils/Helpers/ws_helper.dart';
 import 'package:crypto_template/models/wallet.dart';
+import 'package:crypto_template/utils/Helpers/helper.dart';
 
 class TradingController extends GetxController {
   TextEditingController limitOrderBuyPriceTextController;
@@ -138,19 +139,26 @@ class TradingController extends GetxController {
             .assignAll(data['${market.value.id}.ob-snap']['bids']);
         marketController.orderBookSequence =
             data['${market.value.id}.ob-snap']['sequence'];
+
+        marketController.maxVolume.value =
+            Helper.calcMaxVolume(marketController.bids, marketController.asks);
+        marketController.orderBookEntryBids
+            .assignAll(Helper.accumulateVolume(marketController.bids));
+        marketController.orderBookEntryAsks
+            .assignAll(Helper.accumulateVolume(marketController.asks));
       }
       if (data.containsKey('${market.value.id}.ob-inc')) {
         var updatedAsksData = [];
         var updatedBidsData = [];
         if (marketController.orderBookSequence == -1) {
-          print("OrderBook increment received before snapshot");
+          // print("OrderBook increment received before snapshot");
           return;
         }
         if (marketController.orderBookSequence + 1 !=
             data['${market.value.id}.ob-inc']['sequence']) {
-          print(
-              'Bad sequence detected in incremental orderbook previous: ${marketController.orderBookSequence}, event: ' +
-                  data['${market.value.id}.ob-inc']['sequence'].toString());
+          // print(
+          //     'Bad sequence detected in incremental orderbook previous: ${marketController.orderBookSequence}, event: ' +
+          //         data['${market.value.id}.ob-inc']['sequence'].toString());
           // emitter(rangerDisconnectFetch());
 
           return;
@@ -170,8 +178,16 @@ class TradingController extends GetxController {
           updatedAsksData = updatedAsksData.length >= 10
               ? updatedAsksData.sublist(0, 10)
               : updatedAsksData;
+
           marketController.asks.assignAll(updatedAsksData);
           marketController.asks.refresh();
+
+          marketController.maxVolume.value =
+              Helper.calcMaxVolume(marketController.bids, updatedAsksData);
+          marketController.orderBookEntryBids
+              .assignAll(Helper.accumulateVolume(marketController.bids));
+          marketController.orderBookEntryAsks
+              .assignAll(Helper.accumulateVolume(updatedAsksData));
         }
         if (data['${market.value.id}.ob-inc']['bids'] != null) {
           var bids = data['${market.value.id}.ob-inc']['bids'];
@@ -189,6 +205,13 @@ class TradingController extends GetxController {
               : updatedBidsData;
           marketController.bids.assignAll(updatedBidsData);
           marketController.bids.refresh();
+
+          marketController.maxVolume.value =
+              Helper.calcMaxVolume(updatedBidsData, marketController.asks);
+          marketController.orderBookEntryBids
+              .assignAll(Helper.accumulateVolume(updatedBidsData));
+          marketController.orderBookEntryAsks
+              .assignAll(Helper.accumulateVolume(marketController.asks));
         }
         marketController.orderBookSequence =
             data['${market.value.id}.ob-inc']['sequence'];
@@ -376,6 +399,7 @@ class TradingController extends GetxController {
           await _tradingRepository.placeTradingOrder(orderObj);
       print(orderResponseResponse);
       Get.back();
+      resetLimitOrderForm();
       snackbarController = new SnackbarController(
           title: 'Success', message: 'success.order.created');
       snackbarController.showSnackbar();
@@ -401,12 +425,31 @@ class TradingController extends GetxController {
           await _tradingRepository.placeTradingOrder(orderObj);
       print(orderResponseResponse);
       Get.back();
+      resetLimitOrderForm();
       snackbarController = new SnackbarController(
           title: 'Success', message: 'success.order.created');
     } catch (error) {
       Get.back();
       errorController.handleError(error);
     }
+  }
+
+  void resetLimitOrderForm() {
+    limitOrderBuyPriceTextController.text = '';
+    limitOrderBuyAmountTextController.text = '';
+    limitOrderBuyTotalTextController.text = '';
+    limitOrderSellAmountTextController.text = '';
+    limitOrderSellPriceTextController.text = '';
+    limitOrderSellTotalTextController.text = '';
+  }
+
+  void resetMarketOrderForm() {
+    marketOrderBuyPriceTextController.text = '';
+    marketOrderBuyAmountTextController.text = '';
+    marketOrderBuyTotalTextController.text = '';
+    marketOrderSellAmountTextController.text = '';
+    marketOrderSellPriceTextController.text = '';
+    marketOrderSellTotalTextController.text = '';
   }
 
   void marketOrderBuy() async {
@@ -417,16 +460,15 @@ class TradingController extends GetxController {
       var orderObj = {
         'amount': marketOrderBuyAmountTextController.text,
         'market': market.value.id,
-        'price': market.value.last,
         'side': 'buy',
-        'type': 'limit',
+        'type': 'market',
       };
 
-      print(orderObj);
       var orderResponseResponse =
           await _tradingRepository.placeTradingOrder(orderObj);
       print(orderResponseResponse);
       Get.back();
+      resetMarketOrderForm();
       snackbarController = new SnackbarController(
           title: 'Success', message: 'success.order.created');
     } catch (error) {
@@ -443,14 +485,14 @@ class TradingController extends GetxController {
       var orderObj = {
         'amount': marketOrderSellAmountTextController.text,
         'market': market.value.id,
-        'price': market.value.last,
         'side': 'sell',
-        'type': 'limit',
+        'type': 'market',
       };
       var orderResponseResponse =
           await _tradingRepository.placeTradingOrder(orderObj);
       print(orderResponseResponse);
       Get.back();
+      resetMarketOrderForm();
       snackbarController = new SnackbarController(
           title: 'Success', message: 'success.order.created');
     } catch (error) {

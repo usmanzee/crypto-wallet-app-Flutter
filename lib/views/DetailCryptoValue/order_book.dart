@@ -1,11 +1,10 @@
-import 'package:crypto_template/component/CardDetail/AmountSell.dart';
-import 'package:crypto_template/component/CardDetail/BuyAmount.dart';
 import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:crypto_template/controllers/order_book_controller.dart';
 import 'package:crypto_template/controllers/trading_controller.dart';
 import 'package:crypto_template/models/formated_market.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:crypto_template/utils/Helpers/helper.dart';
 
 // class OrderBook extends StatefulWidget {
 //   final Widget child;
@@ -32,6 +31,10 @@ class OrderBook extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double mediaQuery = MediaQuery.of(context).size.width / 2.2;
+    return _orderBookUI(context, mediaQuery);
+  }
+
+  Widget _orderBookUI(BuildContext context, double mediaQuery) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,7 +98,11 @@ class OrderBook extends StatelessWidget {
                     itemCount: marketController.bids.length,
                     itemBuilder: (BuildContext ctx, int i) {
                       return _buyAmount(
-                          context, mediaQuery, marketController.bids[i]);
+                        context,
+                        mediaQuery,
+                        i,
+                        marketController.bids[i],
+                      );
                     },
                   ),
                 );
@@ -131,7 +138,11 @@ class OrderBook extends StatelessWidget {
                     itemCount: marketController.asks.length,
                     itemBuilder: (BuildContext ctx, int i) {
                       return _amountSell(
-                          context, mediaQuery, marketController.asks[i]);
+                        context,
+                        mediaQuery,
+                        i,
+                        marketController.asks[i],
+                      );
                     },
                   ),
                 );
@@ -142,7 +153,7 @@ class OrderBook extends StatelessWidget {
                   child: ListView.builder(
                     shrinkWrap: true,
                     primary: false,
-                    physics: const NeverScrollableScrollPhysics(),
+                    // physics: const NeverScrollableScrollPhysics(),
                     itemCount: 10,
                     itemBuilder: (BuildContext ctx, int i) {
                       return _emptyAmountSell(mediaQuery);
@@ -156,37 +167,48 @@ class OrderBook extends StatelessWidget {
     );
   }
 
-  Widget _buyAmount(BuildContext context, double _width, bid) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
-      child: Container(
-        width: _width,
-        height: 15,
-        child: Stack(children: [
-          SizedBox.expand(
-            child: LinearProgressIndicator(
-              value: 0.9,
-              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              valueColor: AlwaysStoppedAnimation<Color>(
-                  Color(0xFF00C087).withOpacity(0.18)),
-              // valueColor: AlwaysStoppedAnimation<Color>(
-              //     Theme.of(context).scaffoldBackgroundColor),
+  Widget _buyAmount(BuildContext context, double _width, int index, bid) {
+    var rowWidth = 0.0;
+    if (marketController.bids != null && marketController.bids.length > 0) {
+      var resultData = Helper.mapValues(marketController.maxVolume.value,
+          marketController.orderBookEntryBids.value);
+
+      rowWidth = resultData != null && resultData.length > 0
+          ? resultData[index]['value'] / 100
+          : 0.0;
+    }
+    return Container(
+      // padding: const EdgeInsets.only(bottom: 8.0),
+      // color: Color(0xFF00C087).withOpacity(0.18),
+      child: InkWell(
+        onTap: () {
+          if (isTrading) {
+            final TradingController tradingController =
+                Get.find<TradingController>();
+            tradingController.setBidFormPrice(bid);
+          }
+        },
+        child: Container(
+          width: _width,
+          height: 25,
+          child: Stack(children: [
+            SizedBox.expand(
+              child: RotatedBox(
+                quarterTurns: 2,
+                child: LinearProgressIndicator(
+                  value: rowWidth,
+                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      Color(0xFF00C087).withOpacity(0.18)),
+                ),
+              ),
             ),
-          ),
-          GestureDetector(
-            onTap: () {
-              if (isTrading) {
-                final TradingController tradingController =
-                    Get.find<TradingController>();
-                tradingController.setBidFormPrice(bid);
-              }
-            },
-            child: Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
+                  padding: const EdgeInsets.only(left: 0.0),
                   child: Text(
                     bid[1] != ''
                         ? double.parse(bid[1]).toStringAsFixed(2)
@@ -209,8 +231,8 @@ class OrderBook extends StatelessWidget {
                 )
               ],
             ),
-          ),
-        ]),
+          ]),
+        ),
       ),
     );
   }
@@ -248,32 +270,43 @@ class OrderBook extends StatelessWidget {
     );
   }
 
-  Widget _amountSell(BuildContext context, double _width, ask) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
-      child: Container(
-        height: 15,
-        width: _width,
-        child: Stack(children: [
-          SizedBox.expand(
-            child: LinearProgressIndicator(
-              value: 0.9,
-              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              valueColor:
-                  AlwaysStoppedAnimation<Color>(Colors.red.withOpacity(0.15)),
-              // valueColor: AlwaysStoppedAnimation<Color>(
-              //     Theme.of(context).scaffoldBackgroundColor),
+  Widget _amountSell(BuildContext context, double _width, int index, ask) {
+    var rowWidth = 0.0;
+    if (marketController.asks != null && marketController.asks.length > 0) {
+      var resultData = Helper.mapValues(marketController.maxVolume.value,
+          marketController.orderBookEntryAsks.value);
+
+      rowWidth = resultData != null && resultData.length > 0
+          ? resultData[index]['value'] / 100
+          : 0.0;
+    }
+    return Container(
+      // padding: const EdgeInsets.only(bottom: 8.0),
+      // color: Colors.redAccent.withOpacity(0.15),
+      child: InkWell(
+        onTap: () {
+          if (isTrading) {
+            final TradingController tradingController =
+                Get.find<TradingController>();
+            tradingController.setAskFormPrice(ask);
+          }
+        },
+        child: Container(
+          height: 25,
+          width: _width,
+          child: Stack(children: [
+            SizedBox.expand(
+              child: RotatedBox(
+                quarterTurns: 0,
+                child: LinearProgressIndicator(
+                  value: rowWidth,
+                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      Colors.red.withOpacity(0.15)),
+                ),
+              ),
             ),
-          ),
-          GestureDetector(
-            onTap: () {
-              if (isTrading) {
-                final TradingController tradingController =
-                    Get.find<TradingController>();
-                tradingController.setAskFormPrice(ask);
-              }
-            },
-            child: Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -288,7 +321,7 @@ class OrderBook extends StatelessWidget {
                       fontSize: 12.0),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
+                  padding: const EdgeInsets.only(right: 0.0),
                   child: Text(
                       ask[1] != ''
                           ? double.parse(ask[1]).toStringAsFixed(2)
@@ -300,8 +333,8 @@ class OrderBook extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-        ]),
+          ]),
+        ),
       ),
     );
   }

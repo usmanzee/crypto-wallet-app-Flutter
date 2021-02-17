@@ -186,13 +186,6 @@ class Trading extends StatelessWidget {
                 ],
               ),
             ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
-              child: Text(
-                'Open Orders',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-            ),
             OpenOrders(
                 formatedMarket: marketController.selectedMarketTrading.value),
           ],

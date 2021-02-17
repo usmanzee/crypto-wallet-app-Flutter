@@ -4,16 +4,13 @@ import 'package:crypto_template/views/setting/themes.dart';
 import 'package:crypto_template/views/webview_container.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:share/share.dart';
 
 class Setting extends StatelessWidget {
   final HomeController homeController = Get.find();
 
   void _handleLogoutClick() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('loggedIn');
-    homeController.isLoggedIn.value = false;
+    homeController.logoutUser();
     Get.back();
   }
 

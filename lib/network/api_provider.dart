@@ -55,6 +55,7 @@ class ApiProvider implements RequestOptions {
       print(_baseUrl + url);
       final response = await http.post(_baseUrl + _appVersion + url,
           body: body, headers: headers);
+      print(response);
       responseJson = _returnResponse(response);
     } on SocketException {
       throw FetchDataException(

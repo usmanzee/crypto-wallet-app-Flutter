@@ -8,6 +8,7 @@ import 'dart:convert';
 import 'package:k_chart/flutter_k_chart.dart';
 import 'package:k_chart/k_chart_widget.dart';
 import 'package:crypto_template/utils/Helpers/ws_helper.dart';
+import 'package:crypto_template/utils/Helpers/helper.dart';
 
 class MarketDetailController extends GetxController {
   // // final FormatedMarket formatedMarket = Get.arguments['formatedMarket'];
@@ -215,6 +216,13 @@ class MarketDetailController extends GetxController {
             .assignAll(data['${market.value.id}.ob-snap']['bids']);
         marketController.orderBookSequence =
             data['${market.value.id}.ob-snap']['sequence'];
+
+        marketController.maxVolume.value =
+            Helper.calcMaxVolume(marketController.bids, marketController.asks);
+        marketController.orderBookEntryBids
+            .assignAll(Helper.accumulateVolume(marketController.bids));
+        marketController.orderBookEntryAsks
+            .assignAll(Helper.accumulateVolume(marketController.asks));
         makeDepthData();
       }
       if (data.containsKey('${market.value.id}.ob-inc')) {
@@ -250,6 +258,12 @@ class MarketDetailController extends GetxController {
               : updatedAsksData;
           marketController.asks.assignAll(updatedAsksData);
           marketController.asks.refresh();
+          marketController.maxVolume.value =
+              Helper.calcMaxVolume(marketController.bids, updatedAsksData);
+          marketController.orderBookEntryBids
+              .assignAll(Helper.accumulateVolume(marketController.bids));
+          marketController.orderBookEntryAsks
+              .assignAll(Helper.accumulateVolume(updatedAsksData));
           makeDepthData();
         }
         if (data['${market.value.id}.ob-inc']['bids'] != null) {
@@ -269,6 +283,12 @@ class MarketDetailController extends GetxController {
 
           marketController.bids.assignAll(updatedBidsData);
           marketController.bids.refresh();
+          marketController.maxVolume.value =
+              Helper.calcMaxVolume(updatedBidsData, marketController.asks);
+          marketController.orderBookEntryBids
+              .assignAll(Helper.accumulateVolume(updatedBidsData));
+          marketController.orderBookEntryAsks
+              .assignAll(Helper.accumulateVolume(marketController.asks));
           makeDepthData();
         }
         marketController.orderBookSequence =

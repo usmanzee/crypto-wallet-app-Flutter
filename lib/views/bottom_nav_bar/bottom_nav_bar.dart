@@ -184,10 +184,10 @@ class BottomNavBar extends GetView<HomeController> {
                         Get.isRegistered<TradingController>();
                     bool openOrdersInstance =
                         Get.isRegistered<OpenOrdersController>();
-                    if (tradingControllerInstance) {
-                      webSocketController.subscribeOrderBookInc(
-                          marketController.selectedMarketTrading.value);
-                    }
+                    // if (tradingControllerInstance) {
+                    //   webSocketController.subscribeOrderBookInc(
+                    //       marketController.selectedMarketTrading.value);
+                    // }
 
                     if (tradingControllerInstance && openOrdersInstance) {
                       Get.delete<TradingController>(force: true);

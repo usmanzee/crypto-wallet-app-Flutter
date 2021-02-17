@@ -258,7 +258,17 @@ class LimitOrderForm extends StatelessWidget {
                     highlightColor: Colors.black12,
                     color: Color(0xFF2ebd85),
                     onPressed: () {
-                      tradingController.limitOrderBuy();
+                      if (tradingController
+                                  .limitOrderBuyPriceTextController.text !=
+                              '' &&
+                          tradingController
+                                  .limitOrderBuyAmountTextController.text !=
+                              '' &&
+                          tradingController
+                                  .limitOrderBuyTotalTextController.text !=
+                              '') {
+                        tradingController.limitOrderBuy();
+                      }
                     },
                     child: Center(
                         child: Text(
@@ -533,7 +543,17 @@ class LimitOrderForm extends StatelessWidget {
                     highlightColor: Colors.black12,
                     color: Colors.redAccent.withOpacity(0.8),
                     onPressed: () {
-                      tradingController.limitOrderSell();
+                      if (tradingController
+                                  .limitOrderSellAmountTextController.text !=
+                              '' &&
+                          tradingController
+                                  .limitOrderSellPriceTextController.text !=
+                              '' &&
+                          tradingController
+                                  .limitOrderSellTotalTextController.text !=
+                              '') {
+                        tradingController.limitOrderSell();
+                      }
                     },
                     child: Center(
                         child: Text(

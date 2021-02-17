@@ -15,13 +15,14 @@ class OpenOrdersRepository {
     return openOrderFromJson(response);
   }
 
-  Future<dynamic> cancelOpenOrders(bool cancelAll, [int orderId]) async {
+  Future<dynamic> cancelOpenOrders(bool cancelAll, dynamic reqObj,
+      [int orderId]) async {
     apiProvider = new ApiProvider();
     RequestHeaders requestHeaders = new RequestHeaders();
     apiProvider.headers = requestHeaders.setAuthHeaders();
     var url = 'peatio/market/orders/cancel';
     url = orderId != null ? url + '/' + orderId.toString() : url;
-    final response = await apiProvider.get(url);
+    final response = await apiProvider.post(url, reqObj);
     return response;
   }
 }

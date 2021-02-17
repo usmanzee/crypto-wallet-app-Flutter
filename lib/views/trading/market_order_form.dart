@@ -245,7 +245,14 @@ class MarketOrderForm extends StatelessWidget {
                     highlightColor: Colors.black12,
                     color: Color(0xFF2ebd85),
                     onPressed: () {
-                      tradingController.marketOrderBuy();
+                      if (tradingController
+                                  .marketOrderBuyAmountTextController.text !=
+                              '' &&
+                          tradingController
+                                  .marketOrderBuyTotalTextController.text !=
+                              '') {
+                        tradingController.marketOrderBuy();
+                      }
                     },
                     child: Center(
                         child: Text(
@@ -505,7 +512,14 @@ class MarketOrderForm extends StatelessWidget {
                     highlightColor: Colors.black12,
                     color: Colors.redAccent.withOpacity(0.8),
                     onPressed: () {
-                      tradingController.marketOrderSell();
+                      if (tradingController
+                                  .marketOrderSellPriceTextController.text !=
+                              '' &&
+                          tradingController
+                                  .marketOrderSellTotalTextController.text !=
+                              '') {
+                        tradingController.marketOrderSell();
+                      }
                     },
                     child: Center(
                         child: Text(

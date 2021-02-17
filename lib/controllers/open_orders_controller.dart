@@ -76,8 +76,14 @@ class OpenOrdersController extends GetxController {
     Get.dialog(Center(child: CircularProgressIndicator()),
         barrierDismissible: false);
     try {
-      var cancelOrderResponse =
-          await _openOrdersRepository.cancelOpenOrders(cancelAll, orderId);
+      var reqObj = {};
+      if (cancelAll) {
+        reqObj = {'market': formatedMarket.id};
+      } else {
+        reqObj = {'id': orderId};
+      }
+      var cancelOrderResponse = await _openOrdersRepository.cancelOpenOrders(
+          cancelAll, reqObj, orderId);
       Get.back();
       print(cancelOrderResponse);
       if (cancelAll) {

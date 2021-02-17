@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:crypto_template/controllers/SnackbarController.dart';
 import 'package:crypto_template/controllers/error_controller.dart';
 import 'package:crypto_template/models/MemberLevel.dart';
 import 'package:crypto_template/models/market.dart';
@@ -29,6 +30,7 @@ class HomeController extends GetxController {
   var fetchingMemberLevel = false.obs;
   var publicMemberLevel = MemberLevel().obs;
 
+  SnackbarController snackbarController;
   ErrorController errorController = new ErrorController();
 
   bool isChanged = false;
@@ -89,6 +91,16 @@ class HomeController extends GetxController {
     authSecret.value = prefs.getString('authSecret');
     isLoggedIn.value = isLoggedIn.value != null ? isLoggedIn.value : false;
     return isLoggedIn.value;
+  }
+
+  void logoutUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('loggedIn');
+    isLoggedIn.value = false;
+    snackbarController =
+        new SnackbarController(title: 'Error', message: 'Loggedout.');
+    snackbarController.showSnackbar();
+    // Get.offNamed('/home', arguments: {'selectedNavIndex': 0});
   }
 
   void changePage() {

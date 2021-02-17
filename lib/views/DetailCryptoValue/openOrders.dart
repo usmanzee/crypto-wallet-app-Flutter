@@ -35,54 +35,80 @@ class _OpenOrdersState extends State<OpenOrders> {
     return Obx(() {
       return Column(
         children: <Widget>[
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+            child: Row(children: [
+              Text(
+                'Open Orders ',
+                style: TextStyle(
+                    fontSize: 18,
+                    fontFamily: 'sans',
+                    fontWeight: FontWeight.bold),
+              ),
+              Text(
+                '(' +
+                    openOrdersController.openOrdersSortedList.length
+                        .toString() +
+                    ')',
+                style: TextStyle(
+                    fontSize: 18,
+                    fontFamily: 'sans',
+                    fontWeight: FontWeight.bold),
+              ),
+            ]),
+          ),
           Container(
             width: double.infinity,
             height: 1,
             decoration: BoxDecoration(color: Theme.of(context).canvasColor),
           ),
-          Container(
-            padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-            width: double.infinity,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(children: [
-                  Checkbox(
-                    value: openOrdersController.hideOtherOrders.value,
-                    onChanged: (bool value) {
-                      openOrdersController.hideOrShowOtherOrder();
+          if (openOrdersController.openOrdersSortedList.length > 0)
+            Container(
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(children: [
+                    Checkbox(
+                      value: openOrdersController.hideOtherOrders.value,
+                      onChanged: (bool value) {
+                        openOrdersController.hideOrShowOtherOrder();
+                      },
+                    ),
+                    InkWell(
+                      onTap: () {
+                        openOrdersController.hideOrShowOtherOrder();
+                      },
+                      child: Text(
+                        'Hide Other Pairs',
+                        style: TextStyle(
+                            color: Theme.of(context).hintColor,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: "sans",
+                            fontSize: 15.0),
+                      ),
+                    ),
+                  ]),
+                  FlatButton(
+                    height: 30.0,
+                    minWidth: 40.0,
+                    color: Theme.of(context).canvasColor,
+                    child: Text(
+                      "Cancel All",
+                      style: TextStyle(
+                          color: Theme.of(context).textSelectionColor,
+                          fontWeight: FontWeight.w700,
+                          fontFamily: "sans",
+                          fontSize: 12.0),
+                    ),
+                    onPressed: () {
+                      cancelOrderAlert(true);
                     },
-                  ),
-                  Text(
-                    'Hide Other Pairs',
-                    style: TextStyle(
-                        color: Theme.of(context).textSelectionColor,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: "sans",
-                        fontSize: 15.0),
-                  ),
-                ]),
-                FlatButton(
-                  height: 30.0,
-                  minWidth: 40.0,
-                  color: Theme.of(context).canvasColor,
-                  // textColor: Colors.white,
-                  child: Text(
-                    "Cancel All",
-                    style: TextStyle(
-                        color: Theme.of(context).textSelectionColor,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: "sans",
-                        fontSize: 12.0),
-                  ),
-                  onPressed: () {
-                    cancelOrderAlert(true);
-                  },
-                  splashColor: Theme.of(context).canvasColor.withOpacity(0.5),
-                )
-              ],
+                    splashColor: Theme.of(context).canvasColor.withOpacity(0.5),
+                  )
+                ],
+              ),
             ),
-          ),
           Container(
             width: double.infinity,
             height: 1,
@@ -108,7 +134,7 @@ class _OpenOrdersState extends State<OpenOrders> {
     return openOrders.isEmpty
         ? NoData()
         : Container(
-            height: 250.0,
+            height: 200.0,
             child: ListView.builder(
               shrinkWrap: true,
               primary: false,
@@ -134,7 +160,7 @@ class _OpenOrdersState extends State<OpenOrders> {
         DateFormat('yyyy-MM-dd hh:mm:ss').format(openOrder.createdAt);
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0, top: 8.0),
+      padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
       child: Container(
           child: Column(
         children: [
@@ -148,7 +174,7 @@ class _OpenOrdersState extends State<OpenOrders> {
                         : Colors.redAccent.withOpacity(0.8),
                     fontWeight: FontWeight.w700,
                     fontFamily: "sans",
-                    fontSize: 15.0),
+                    fontSize: 13.0),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 24.0),
@@ -170,24 +196,33 @@ class _OpenOrdersState extends State<OpenOrders> {
                     color: Theme.of(context).hintColor,
                     fontWeight: FontWeight.w700,
                     fontFamily: "sans",
-                    fontSize: 15.0),
+                    fontSize: 13.0),
               ),
             ],
           ),
           SizedBox(
-            height: 16.0,
+            height: 4.0,
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              new CircularPercentIndicator(
-                radius: 50.0,
-                lineWidth: 5.0,
-                percent: filled / 100,
-                center: new Text(filled.toStringAsFixed(0) + '%'),
-                progressColor: openOrder.side == 'buy'
-                    ? Color(0xFF00C087)
-                    : Colors.redAccent.withOpacity(0.8),
+              Padding(
+                padding: EdgeInsets.only(left: 4),
+                child: CircularPercentIndicator(
+                  radius: 45.0,
+                  lineWidth: 3.0,
+                  percent: filled / 100,
+                  center: Text(filled.toStringAsFixed(0) + '%',
+                      style: TextStyle(
+                          color: openOrder.side == 'buy'
+                              ? Color(0xFF00C087)
+                              : Colors.redAccent,
+                          fontFamily: "sans",
+                          fontSize: 13.0)),
+                  progressColor: openOrder.side == 'buy'
+                      ? Color(0xFF00C087)
+                      : Colors.redAccent,
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 36.0),
@@ -199,17 +234,17 @@ class _OpenOrdersState extends State<OpenOrders> {
                         style: TextStyle(
                             color: Theme.of(context).hintColor.withOpacity(0.7),
                             fontFamily: "sans",
-                            fontSize: 15.0),
+                            fontSize: 13.0),
                       ),
                       SizedBox(
-                        height: 8,
+                        height: 4,
                       ),
                       Text(
                         'Price',
                         style: TextStyle(
                             color: Theme.of(context).hintColor.withOpacity(0.7),
                             fontFamily: "sans",
-                            fontSize: 15.0),
+                            fontSize: 13.0),
                       ),
                     ]),
               ),
@@ -225,13 +260,13 @@ class _OpenOrdersState extends State<OpenOrders> {
                               color: Theme.of(context).textSelectionColor,
                               fontWeight: FontWeight.w700,
                               fontFamily: "sans",
-                              fontSize: 15.0),
+                              fontSize: 13.0),
                         ),
                         Text(
                           '/',
                           style: TextStyle(
                               fontFamily: "sans",
-                              fontSize: 15.0,
+                              fontSize: 13.0,
                               color: Theme.of(context).textSelectionColor),
                         ),
                         Text(
@@ -239,13 +274,13 @@ class _OpenOrdersState extends State<OpenOrders> {
                               .toStringAsFixed(2),
                           style: TextStyle(
                             fontFamily: "sans",
-                            fontSize: 15.0,
+                            fontSize: 13.0,
                             color: Theme.of(context).hintColor.withOpacity(0.7),
                           ),
                         ),
                       ]),
                       SizedBox(
-                        height: 8,
+                        height: 4,
                       ),
                       Text(
                         double.parse(openOrder.price)
@@ -254,7 +289,7 @@ class _OpenOrdersState extends State<OpenOrders> {
                             color: Theme.of(context).textSelectionColor,
                             fontWeight: FontWeight.w700,
                             fontFamily: "sans",
-                            fontSize: 15.0),
+                            fontSize: 13.0),
                       ),
                     ]),
               ),
@@ -291,26 +326,27 @@ class _OpenOrdersState extends State<OpenOrders> {
   }
 
   void cancelOrderAlert(bool cancelAll, [int orderId]) {
-    Get.dialog(AlertDialog(
-      title: Text(cancelAll ? 'Cancel All Orders?' : 'Cancel Order?'),
-      content: Text('You may not be able to revent this action.'),
-      actions: [
-        FlatButton(
-          textColor: Theme.of(context).hintColor.withOpacity(0.8),
-          onPressed: () {
-            Get.back();
-          },
-          child: Text('CANCEL'),
-        ),
-        FlatButton(
-          textColor: Theme.of(context).primaryColor,
-          onPressed: () {
-            Get.back();
-            openOrdersController.cancelOpenOrders(cancelAll, orderId);
-          },
-          child: Text('CONFIRM'),
-        ),
-      ],
-    ));
+    openOrdersController.cancelOpenOrders(cancelAll, orderId);
+    // Get.dialog(AlertDialog(
+    //   title: Text(cancelAll ? 'Cancel All Orders?' : 'Cancel Order?'),
+    //   content: Text('You may not be able to revent this action.'),
+    //   actions: [
+    //     FlatButton(
+    //       textColor: Theme.of(context).hintColor.withOpacity(0.8),
+    //       onPressed: () {
+    //         Get.back();
+    //       },
+    //       child: Text('CANCEL'),
+    //     ),
+    //     FlatButton(
+    //       textColor: Theme.of(context).primaryColor,
+    //       onPressed: () {
+    //         Get.back();
+    //         openOrdersController.cancelOpenOrders(cancelAll, orderId);
+    //       },
+    //       child: Text('CONFIRM'),
+    //     ),
+    //   ],
+    // ));
   }
 }
