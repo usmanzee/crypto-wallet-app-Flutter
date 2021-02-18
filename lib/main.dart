@@ -69,6 +69,7 @@ import 'package:get/get.dart';
 import 'package:crypto_template/utils/router.dart' as RouterFile;
 import 'package:crypto_template/views/setting/themes.dart';
 import 'package:flutter/services.dart';
+import 'package:oktoast/oktoast.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -84,13 +85,15 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'B4U Wallet',
-      debugShowCheckedModeBanner: false,
-      defaultTransition: Transition.downToUp,
-      getPages: RouterFile.Router.route,
-      initialRoute: '/splash',
-      theme: Themes.lightTheme,
+    return OKToast(
+      child: GetMaterialApp(
+        title: 'B4U Wallet',
+        debugShowCheckedModeBanner: false,
+        defaultTransition: Transition.downToUp,
+        getPages: RouterFile.Router.route,
+        initialRoute: '/splash',
+        theme: Themes.lightTheme,
+      ),
     );
   }
 }

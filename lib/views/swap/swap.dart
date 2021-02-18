@@ -837,221 +837,206 @@ class Swap extends StatelessWidget {
                     color: Theme.of(context).scaffoldBackgroundColor,
                     padding: EdgeInsets.all(8.0),
                     child: Column(children: [
-                      Expanded(
-                        child: ListView(
-                          shrinkWrap: true,
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Center(
+                        child: Text('Confirm Conversion',
+                            style: TextStyle(
+                                color: Theme.of(context).textSelectionColor,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Popins",
+                                letterSpacing: 1.3,
+                                fontSize: 16.0)),
+                      ),
+                      SizedBox(
+                        height: 24,
+                      ),
+                      Center(
+                        child: Text('You will receive',
+                            style: TextStyle(
+                                color: Theme.of(context).hintColor,
+                                fontFamily: "Popins",
+                                letterSpacing: 1.3,
+                                fontSize: 14.0)),
+                      ),
+                      SizedBox(
+                        height: 8.0,
+                      ),
+                      Center(
+                        child: Text(
+                            swapController.receivableAmount.value +
+                                ' ' +
+                                swapController.toSelectedWallet.value.currency
+                                    .toUpperCase(),
+                            style: TextStyle(
+                                color: Theme.of(context).textSelectionColor,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Popins",
+                                fontSize: 24.0)),
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
+                        color: Theme.of(context).canvasColor,
+                        child: Column(
                           children: [
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Center(
-                              child: Text('Confirm Conversion',
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Price',
                                   style: TextStyle(
-                                      color:
-                                          Theme.of(context).textSelectionColor,
-                                      fontWeight: FontWeight.bold,
                                       fontFamily: "Popins",
-                                      letterSpacing: 1.3,
-                                      fontSize: 16.0)),
-                            ),
-                            SizedBox(
-                              height: 24,
-                            ),
-                            Center(
-                              child: Text('You will receive',
-                                  style: TextStyle(
                                       color: Theme.of(context).hintColor,
-                                      fontFamily: "Popins",
-                                      letterSpacing: 1.3,
-                                      fontSize: 14.0)),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      '1 ' +
+                                          swapController
+                                              .fromSelectedWallet.value.currency
+                                              .toUpperCase(),
+                                      style: TextStyle(
+                                          fontFamily: "Popins",
+                                          color: Theme.of(context)
+                                              .textSelectionColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      ' ≃ ',
+                                      style: TextStyle(
+                                          fontFamily: "Popins",
+                                          color: Theme.of(context)
+                                              .textSelectionColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      double.parse(swapController
+                                                  .exchangeRate.value)
+                                              .toStringAsFixed(5) +
+                                          ' ' +
+                                          swapController
+                                              .toSelectedWallet.value.currency
+                                              .toUpperCase(),
+                                      style: TextStyle(
+                                          fontFamily: "Popins",
+                                          color: Theme.of(context)
+                                              .textSelectionColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold),
+                                    )
+                                  ],
+                                ),
+                              ],
                             ),
-                            SizedBox(
-                              height: 8.0,
-                            ),
-                            Center(
-                              child: Text(
-                                  swapController.receivableAmount.value +
-                                      ' ' +
-                                      swapController
-                                          .toSelectedWallet.value.currency
-                                          .toUpperCase(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Fee %',
                                   style: TextStyle(
+                                      fontFamily: "Popins",
+                                      color: Theme.of(context).hintColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  (double.parse(swapController
+                                              .toSelectedWallet.value.swapFee) *
+                                          100)
+                                      .toString(),
+                                  style: TextStyle(
+                                      fontFamily: "Popins",
                                       color:
                                           Theme.of(context).textSelectionColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: "Popins",
-                                      fontSize: 24.0)),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              ],
                             ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Container(
-                              padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
-                              color: Theme.of(context).canvasColor,
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Convert',
-                                        style: TextStyle(
-                                            fontFamily: "Popins",
-                                            color: Theme.of(context).hintColor,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(
-                                        swapController
-                                                .fromAmountTextController.text +
-                                            ' ' +
-                                            swapController.fromSelectedWallet
-                                                .value.currency
-                                                .toUpperCase(),
-                                        style: TextStyle(
-                                            fontFamily: "Popins",
-                                            color: Theme.of(context)
-                                                .textSelectionColor,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold),
-                                      )
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Fee %',
-                                        style: TextStyle(
-                                            fontFamily: "Popins",
-                                            color: Theme.of(context).hintColor,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(
-                                        (double.parse(swapController
-                                                        .toSelectedWallet
-                                                        .value
-                                                        .swapFee) *
-                                                    100)
-                                                .toString() +
-                                            ' ' +
-                                            swapController
-                                                .toSelectedWallet.value.currency
-                                                .toUpperCase(),
-                                        style: TextStyle(
-                                            fontFamily: "Popins",
-                                            color: Theme.of(context)
-                                                .textSelectionColor,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold),
-                                      )
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Rate',
-                                        style: TextStyle(
-                                            fontFamily: "Popins",
-                                            color: Theme.of(context).hintColor,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            '1 ' +
-                                                swapController
-                                                    .fromSelectedWallet
-                                                    .value
-                                                    .currency
-                                                    .toUpperCase(),
-                                            style: TextStyle(
-                                                fontFamily: "Popins",
-                                                color: Theme.of(context)
-                                                    .textSelectionColor,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          Text(
-                                            ' ≃ ',
-                                            style: TextStyle(
-                                                fontFamily: "Popins",
-                                                color: Theme.of(context)
-                                                    .textSelectionColor,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          Text(
-                                            swapController.exchangeRate.value +
-                                                ' ' +
-                                                swapController.toSelectedWallet
-                                                    .value.currency
-                                                    .toUpperCase(),
-                                            style: TextStyle(
-                                                fontFamily: "Popins",
-                                                color: Theme.of(context)
-                                                    .textSelectionColor,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold),
-                                          )
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
+                            // Row(
+                            //   mainAxisAlignment:
+                            //       MainAxisAlignment.spaceBetween,
+                            //   children: [
+                            //     Text(
+                            //       'You will get',
+                            //       style: TextStyle(
+                            //           fontFamily: "Popins",
+                            //           color: Theme.of(context).hintColor,
+                            //           fontSize: 14,
+                            //           fontWeight: FontWeight.bold),
+                            //     ),
+                            //     Text(
+                            //       swapController
+                            //               .fromAmountTextController.text +
+                            //           ' ' +
+                            //           swapController.fromSelectedWallet
+                            //               .value.currency
+                            //               .toUpperCase(),
+                            //       style: TextStyle(
+                            //           fontFamily: "Popins",
+                            //           color: Theme.of(context)
+                            //               .textSelectionColor,
+                            //           fontSize: 14,
+                            //           fontWeight: FontWeight.bold),
+                            //     )
+                            //   ],
+                            // ),
                           ],
                         ),
                       ),
-                      Row(
-                        children: <Widget>[
-                          new Expanded(
-                            child: Form(
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              key: _otpFormKey,
-                              child: TextFormField(
-                                obscureText: false,
-                                keyboardType: TextInputType.number,
-                                controller:
-                                    swapController.otpCodeTextController,
-                                validator: _twoFAValidator,
-                                cursorColor: Theme.of(context).hintColor,
-                                decoration: InputDecoration(
-                                  errorStyle: TextStyle(
-                                    fontSize: 13.5,
+                      Padding(
+                        padding: EdgeInsets.only(top: 8.0),
+                        child: Row(
+                          children: <Widget>[
+                            new Expanded(
+                              child: Form(
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                key: _otpFormKey,
+                                child: TextFormField(
+                                  obscureText: false,
+                                  keyboardType: TextInputType.number,
+                                  controller:
+                                      swapController.otpCodeTextController,
+                                  validator: _twoFAValidator,
+                                  cursorColor: Theme.of(context).hintColor,
+                                  decoration: InputDecoration(
+                                    errorStyle: TextStyle(
+                                      fontSize: 13.5,
+                                    ),
+                                    errorMaxLines: 3,
+                                    filled: true,
+                                    fillColor: Colors.transparent,
+                                    labelText: '2FA Code to Confirm',
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(5)),
+                                    hintStyle: TextStyle(
+                                        color: Theme.of(context).hintColor),
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: 12, horizontal: 12),
+                                    isDense: true,
                                   ),
-                                  errorMaxLines: 3,
-                                  filled: true,
-                                  fillColor: Colors.transparent,
-                                  labelText: '2FA Code to Confirm',
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5)),
-                                  hintStyle: TextStyle(
-                                      color: Theme.of(context).hintColor),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      vertical: 12, horizontal: 12),
-                                  isDense: true,
-                                ),
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  color: Theme.of(context).textSelectionColor,
+                                  style: TextStyle(
+                                    fontSize: 14.0,
+                                    color: Theme.of(context).textSelectionColor,
+                                  ),
                                 ),
                               ),
-                            ),
-                          )
-                        ],
+                            )
+                          ],
+                        ),
                       ),
                       Spacer(),
                       Padding(
-                        padding: EdgeInsets.only(bottom: 8.0),
+                        padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
                         child: Row(
                           children: <Widget>[
                             Expanded(

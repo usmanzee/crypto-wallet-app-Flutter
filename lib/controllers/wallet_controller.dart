@@ -1,4 +1,5 @@
 import 'package:crypto_template/controllers/error_controller.dart';
+import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:crypto_template/models/balance.dart';
 import 'package:crypto_template/models/currency.dart';
 import 'package:crypto_template/repository/wallet_repository.dart';
@@ -15,6 +16,7 @@ class WalletController extends GetxController {
   // var depositAddress = <DepositAddress>[].obs;
   var depositAddress = ''.obs;
   ErrorController errorController = new ErrorController();
+  MarketController marketController = Get.find<MarketController>();
   var iconC = 'BTC'.obs;
 
   @override

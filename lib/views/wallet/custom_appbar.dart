@@ -78,6 +78,7 @@ class WalletCustomAppbar extends StatelessWidget {
       ),
       iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
       elevation: 1.0,
+      brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
       backgroundColor: Theme.of(context).canvasColor,
     );
   }

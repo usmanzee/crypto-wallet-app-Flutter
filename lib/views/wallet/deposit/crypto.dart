@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter/services.dart';
 import 'package:share/share.dart';
+import 'package:crypto_template/utils/Helpers/helper.dart';
 
 class DepositCrypto extends StatefulWidget {
   final WalletClass.Wallet wallet;
@@ -270,14 +271,8 @@ class _WalletState extends State<DepositCrypto> {
                   style: TextStyle(fontSize: 10),
                 ),
                 onPressed: () {
-                  Clipboard.setData(ClipboardData(
-                          text: depositController.depositAddress.value))
-                      .then((value) {
-                    Get.snackbar('Success', 'Copied to clipboard',
-                        snackPosition: SnackPosition.BOTTOM,
-                        colorText: Colors.white,
-                        backgroundColor: Colors.grey[900]);
-                  });
+                  Helper.copyToClipBoard(
+                      depositController.depositAddress.value);
                 },
                 splashColor: Theme.of(context).canvasColor.withOpacity(0.5),
               )
@@ -380,16 +375,9 @@ class _WalletState extends State<DepositCrypto> {
                   style: TextStyle(fontSize: 10),
                 ),
                 onPressed: () {
-                  Clipboard.setData(new ClipboardData(
-                          text: depositController.depositTag.value))
-                      .then((value) {
-                    Get.snackbar('Success', 'Copied to clipboard',
-                        snackPosition: SnackPosition.BOTTOM,
-                        colorText: Colors.white,
-                        backgroundColor: Colors.grey[900]);
-                  });
+                  Helper.copyToClipBoard(depositController.depositTag.value);
                 },
-                splashColor: Colors.redAccent,
+                splashColor: Theme.of(context).canvasColor,
               )
             ],
           ),

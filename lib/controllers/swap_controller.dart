@@ -140,8 +140,7 @@ class SwapController extends GetxController {
           await _swapRepository.fetchExchangeRate(exchangeRateRequestObj);
 
       var exchangeRateRes = double.parse(exchangeRateResponse);
-      print(exchangeRateRes);
-      var rate = exchangeRateRes ~/ double.parse(fromAmountTextController.text);
+      var rate = exchangeRateRes / double.parse(fromAmountTextController.text);
       exchangeRate.value = rate.toString();
 
       var receivable = exchangeRateRes -

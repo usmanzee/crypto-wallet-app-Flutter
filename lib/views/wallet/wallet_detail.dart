@@ -1,8 +1,8 @@
 import 'package:crypto_template/component/no_data.dart';
 import 'package:crypto_template/controllers/transaction_history_controller.dart';
+import 'package:crypto_template/controllers/wallet_controller.dart';
 import 'package:crypto_template/models/deposit_histroy.dart';
 import 'package:crypto_template/models/withdraw_history.dart';
-import 'package:crypto_template/screen/wallet/tabs/deposit.dart';
 import 'package:crypto_template/views/wallet/deposit/crypto.dart';
 import 'package:crypto_template/views/wallet/deposit/fiat.dart';
 import 'package:crypto_template/views/wallet/withdraw/crypto.dart';
@@ -13,6 +13,7 @@ import 'package:get/get.dart';
 import 'package:crypto_template/views/wallet/wallet_amount_header.dart';
 import 'package:crypto_template/views/webview_container.dart';
 import 'package:flutter/services.dart';
+import 'package:crypto_template/utils/Helpers/helper.dart';
 
 class WalletDetail extends StatefulWidget {
   final WalletClass.Wallet wallet;
@@ -25,17 +26,34 @@ class WalletDetail extends StatefulWidget {
 class _WalletDetailState extends State<WalletDetail> {
   final WalletClass.Wallet wallet;
   _WalletDetailState({this.wallet});
+  WalletController walletController = Get.find<WalletController>();
   TransactionHistoryController transactionHistoryController;
 
-  void _handleURLButtonPress(String url) {
-    Get.to(WebViewContainer('Explorer', url));
+  String getBlockchainLink(currency, txid) {
+    var wallets = walletController.walletsList;
+    WalletClass.Wallet currencyInfo =
+        wallets.firstWhere((wallet) => wallet.currency == currency);
+    if (currencyInfo != null) {
+      if ((txid != '' && txid != null) &&
+          (currencyInfo.explorerTransaction != '' &&
+              currencyInfo.explorerTransaction != null)) {
+        var bLink =
+            currencyInfo.explorerTransaction.replaceFirst('#{txid}', txid);
+        return bLink;
+      }
+    }
+    return '';
+  }
+
+  void _handleURLButtonPress(String currency, String txid) {
+    String blockchainLink = getBlockchainLink(currency, txid);
+    Get.to(WebViewContainer('Explorer', blockchainLink));
   }
 
   @override
   void initState() {
     transactionHistoryController =
         Get.put(TransactionHistoryController(currency: wallet.currency));
-    print('widget init');
     super.initState();
   }
 
@@ -53,6 +71,7 @@ class _WalletDetailState extends State<WalletDetail> {
         ),
         iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
         elevation: 1.0,
+        brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
         backgroundColor: Theme.of(context).canvasColor,
       ),
       body: Column(
@@ -542,9 +561,6 @@ class _WalletDetailState extends State<WalletDetail> {
     );
   }
 
-  ///
-  /// Widget credit card transaction
-  ///
   Widget _cardHeader(context, WalletClass.Wallet wallet) {
     return Stack(
       children: <Widget>[
@@ -775,53 +791,45 @@ class _WalletDetailState extends State<WalletDetail> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 16.0),
-                  child: Row(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Expanded(
-                        child: MaterialButton(
-                          color: Theme.of(context).canvasColor,
-                          onPressed: () {
-                            Clipboard.setData(ClipboardData(
-                                    text: depositHistoryItem.txid))
-                                .then((value) {
-                              Get.snackbar('Success', 'Copied to clipboard',
-                                  snackPosition: SnackPosition.BOTTOM,
-                                  colorText: Colors.white,
-                                  backgroundColor: Colors.grey[900]);
-                            });
-                          },
-                          child: Center(
-                              child: Text(
-                            "Copy TxID",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontFamily: "Popins",
-                                letterSpacing: 1.3,
-                                fontSize: 16.0),
-                          )),
-                        ),
+                      MaterialButton(
+                        color: Theme.of(context).canvasColor,
+                        onPressed: (depositHistoryItem.txid != '' &&
+                                depositHistoryItem.txid != null)
+                            ? () =>
+                                Helper.copyToClipBoard(depositHistoryItem.txid)
+                            : null,
+                        child: Center(
+                            child: Text(
+                          "Copy TxID",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontFamily: "Popins",
+                              letterSpacing: 1.3,
+                              fontSize: 16.0),
+                        )),
                       ),
                       SizedBox(
                         width: 8,
                       ),
-                      Expanded(
-                        child: MaterialButton(
-                          color: Theme.of(context).accentColor,
-                          onPressed: () {
-                            _handleURLButtonPress('www.google.com');
-                          },
-                          child: Center(
-                              child: Text(
-                            "Check Explorer",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: "Popins",
-                                letterSpacing: 1.3,
-                                fontSize: 16.0),
-                          )),
-                        ),
+                      MaterialButton(
+                        color: Theme.of(context).accentColor,
+                        onPressed: () {
+                          _handleURLButtonPress(
+                              wallet.currency, depositHistoryItem.txid);
+                        },
+                        child: Center(
+                            child: Text(
+                          "Check Explorer",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: "Popins",
+                              letterSpacing: 1.3,
+                              fontSize: 16.0),
+                        )),
                       ),
                     ],
                   ),
@@ -992,26 +1000,16 @@ class _WalletDetailState extends State<WalletDetail> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 16.0),
-                  child: Row(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       MaterialButton(
-                        color: Theme.of(context).canvasColor,
-                        onPressed: () {
-                          Clipboard.setData(ClipboardData(
-                                  text: (withdrawHistoryItem.blockchainTxid !=
-                                              null &&
-                                          withdrawHistoryItem.blockchainTxid !=
-                                              ''
-                                      ? withdrawHistoryItem.blockchainTxid
-                                      : '---')))
-                              .then((value) {
-                            Get.snackbar('Success', 'Copied to clipboard',
-                                snackPosition: SnackPosition.BOTTOM,
-                                colorText: Colors.white,
-                                backgroundColor: Colors.grey[900]);
-                          });
-                        },
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        onPressed: (withdrawHistoryItem.blockchainTxid != '' &&
+                                withdrawHistoryItem.blockchainTxid != null)
+                            ? () => Helper.copyToClipBoard(
+                                withdrawHistoryItem.blockchainTxid)
+                            : null,
                         child: Center(
                             child: Text(
                           "Copy TxID",
@@ -1025,7 +1023,8 @@ class _WalletDetailState extends State<WalletDetail> {
                       MaterialButton(
                         color: Theme.of(context).accentColor,
                         onPressed: () {
-                          _handleURLButtonPress('www.google.com');
+                          _handleURLButtonPress(wallet.currency,
+                              withdrawHistoryItem.blockchainTxid);
                         },
                         child: Center(
                             child: Text(

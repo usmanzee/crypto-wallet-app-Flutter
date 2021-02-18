@@ -1,6 +1,5 @@
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/controllers/fiat_deposit_controller.dart';
-import 'package:crypto_template/models/fiat_deposit_details.dart';
 import 'package:crypto_template/views/wallet/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/models/wallet.dart' as WalletClass;
@@ -8,8 +7,8 @@ import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
-import 'package:intl/intl.dart';
 import 'dart:async';
+import 'package:crypto_template/utils/Helpers/helper.dart';
 
 class DepositFiat extends StatefulWidget {
   final WalletClass.Wallet wallet;
@@ -50,12 +49,7 @@ class _DepositFiatState extends State<DepositFiat> {
   }
 
   _copyToClipboard(String text) {
-    Clipboard.setData(new ClipboardData(text: text)).then((value) {
-      Get.snackbar('Success', 'Copied to clipboard',
-          snackPosition: SnackPosition.BOTTOM,
-          colorText: Colors.white,
-          backgroundColor: Colors.grey[900]);
-    });
+    Helper.copyToClipBoard(text);
   }
 
   @override

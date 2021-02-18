@@ -194,7 +194,7 @@ class OrderBook extends StatelessWidget {
           child: Stack(children: [
             SizedBox.expand(
               child: RotatedBox(
-                quarterTurns: 2,
+                quarterTurns: 0,
                 child: LinearProgressIndicator(
                   value: rowWidth,
                   backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -297,7 +297,7 @@ class OrderBook extends StatelessWidget {
           child: Stack(children: [
             SizedBox.expand(
               child: RotatedBox(
-                quarterTurns: 0,
+                quarterTurns: 2,
                 child: LinearProgressIndicator(
                   value: rowWidth,
                   backgroundColor: Theme.of(context).scaffoldBackgroundColor,

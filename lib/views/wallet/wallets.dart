@@ -1,12 +1,16 @@
+import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:crypto_template/controllers/wallet_controller.dart';
+import 'package:crypto_template/views/wallet/estimated_widget.dart';
 import 'package:crypto_template/views/wallet/wallet_detail.dart';
 import 'package:crypto_template/views/wallet/wallet_loading_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/models/wallet.dart' as WalletClass;
 import 'package:get/get.dart';
+import 'package:crypto_template/utils/Helpers/estimate_value.dart';
 
 class Wallets extends StatelessWidget {
   final walletController = Get.put(WalletController());
+  final MarketController marketController = Get.find<MarketController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,92 +47,7 @@ class Wallets extends StatelessWidget {
                             context: context,
                           );
                         } else {
-                          return Padding(
-                            padding: EdgeInsets.all(8),
-                            child: Column(
-                              children: [
-                                Text('Equity Value(BTC)',
-                                    style:
-                                        Theme.of(context).textTheme.bodyText1,
-                                    textAlign: TextAlign.left),
-                                SizedBox(
-                                  height: 4,
-                                ),
-                                Text('0.00000',
-                                    style:
-                                        Theme.of(context).textTheme.headline4,
-                                    textAlign: TextAlign.left),
-                                Text('≈ \$00000',
-                                    style:
-                                        Theme.of(context).textTheme.bodyText2,
-                                    textAlign: TextAlign.left),
-                                SizedBox(
-                                  height: 4,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    FlatButton(
-                                      height: 32.0,
-                                      minWidth: 120.0,
-                                      textColor: Theme.of(context).accentColor,
-                                      child: Text(
-                                        "Deposit",
-                                        style: TextStyle(fontSize: 12),
-                                      ),
-                                      onPressed: () {
-                                        Get.toNamed('/wallets-search',
-                                            arguments: {
-                                              'searchFrom': 'deposit'
-                                            });
-                                      },
-                                      shape: RoundedRectangleBorder(
-                                          side: BorderSide(
-                                              color:
-                                                  Theme.of(context).accentColor,
-                                              width: 1,
-                                              style: BorderStyle.solid),
-                                          borderRadius:
-                                              BorderRadius.circular(5)),
-                                      splashColor: Theme.of(context)
-                                          .accentColor
-                                          .withOpacity(0.5),
-                                    ),
-                                    SizedBox(
-                                      width: 8.0,
-                                    ),
-                                    FlatButton(
-                                      height: 32.0,
-                                      minWidth: 120.0,
-                                      textColor: Theme.of(context).accentColor,
-                                      child: Text(
-                                        "Withdraw",
-                                        style: TextStyle(fontSize: 12),
-                                      ),
-                                      onPressed: () {
-                                        Get.toNamed('/wallets-search',
-                                            arguments: {
-                                              'searchFrom': 'withdraw'
-                                            });
-                                      },
-                                      shape: RoundedRectangleBorder(
-                                          side: BorderSide(
-                                              color:
-                                                  Theme.of(context).accentColor,
-                                              width: 1,
-                                              style: BorderStyle.solid),
-                                          borderRadius:
-                                              BorderRadius.circular(5)),
-                                      splashColor: Theme.of(context)
-                                          .accentColor
-                                          .withOpacity(0.5),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          );
+                          return EstimatedWidget();
                         }
                       }),
                     ],

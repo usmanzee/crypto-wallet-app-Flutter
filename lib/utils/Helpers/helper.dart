@@ -1,6 +1,17 @@
 import 'dart:math';
+import 'package:crypto_template/controllers/SnackbarController.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Helper {
+  static copyToClipBoard(String text) {
+    Clipboard.setData(ClipboardData(text: text)).then((value) {
+      SnackbarController snackbarController =
+          new SnackbarController(title: '', message: 'Copied to Clipboard');
+      snackbarController.showSnackbar();
+    });
+  }
+
   static List<dynamic> accumulateVolume(List<dynamic> list) {
     List<dynamic> total = [];
     List<dynamic> volArr = [];

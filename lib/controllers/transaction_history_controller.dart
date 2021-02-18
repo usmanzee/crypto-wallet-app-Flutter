@@ -31,8 +31,6 @@ class TransactionHistoryController extends GetxController {
 
   @override
   void onReady() {
-    // called after the widget is rendered on screen
-    print('wallet on ready called');
     super.onReady();
   }
 
@@ -47,9 +45,7 @@ class TransactionHistoryController extends GetxController {
       depositHistoryResponse.sort((a, b) {
         var adate = a.createdAt.toLocal();
         var bdate = b.createdAt.toLocal();
-        print(adate.toLocal());
-        return adate.compareTo(
-            bdate); //to get the order other way just switch `adate & bdate`
+        return adate.compareTo(bdate);
       });
       depositHistory.assignAll(depositHistoryResponse);
       withdrawHistory.assignAll(withdrawlHistoryResponse);
