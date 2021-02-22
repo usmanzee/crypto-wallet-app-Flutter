@@ -1,6 +1,7 @@
 import 'package:crypto_template/component/market/btcModel.dart';
 import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:crypto_template/controllers/market_detail_controller.dart';
+import 'package:crypto_template/controllers/open_orders_controller.dart';
 import 'package:crypto_template/controllers/trading_controller.dart';
 import 'package:crypto_template/models/formated_market.dart';
 import 'package:flutter/material.dart';
@@ -293,8 +294,13 @@ Widget card(BuildContext context, FormatedMarket formatedMarket, screenType) {
             } else {
               TradingController tradingController =
                   Get.find<TradingController>();
-
               tradingController.updateCurrentMarket(formatedMarket);
+              bool openOrdersInstance =
+                  Get.isRegistered<OpenOrdersController>();
+              if (openOrdersInstance) {
+                Get.delete<OpenOrdersController>(force: true);
+                Get.put(OpenOrdersController(formatedMarket: formatedMarket));
+              }
             }
           },
           child: Row(

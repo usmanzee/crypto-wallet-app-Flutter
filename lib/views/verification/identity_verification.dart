@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
-import 'package:crypto_template/controllers/otp_controller.dart';
 
 class IdentityVerification extends StatelessWidget {
   final VerificationController verificationController = Get.find();

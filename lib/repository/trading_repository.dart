@@ -1,21 +1,21 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/models/trading_order_response.dart';
 import 'package:crypto_template/network/api_provider.dart';
 import 'package:crypto_template/network/request_headers.dart';
+import 'package:crypto_template/models/open_order.dart';
 
 class TradingRepository {
   HomeController homeController = Get.find();
 
   ApiProvider apiProvider;
 
-  Future<TradingOrderResponse> placeTradingOrder(orderObj) async {
+  Future<OpenOrder> placeTradingOrder(orderObj) async {
     apiProvider = new ApiProvider();
     RequestHeaders requestHeaders = new RequestHeaders();
     apiProvider.headers = requestHeaders.setAuthHeaders();
     final response = await apiProvider.post('peatio/market/orders', orderObj);
-    print(response);
-    return tradingOrderResponseFromJson(response);
+    return OpenOrder.fromJson(json.decode(response));
   }
 }

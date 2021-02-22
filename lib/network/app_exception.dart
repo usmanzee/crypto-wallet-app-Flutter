@@ -19,7 +19,6 @@ class AppException implements Exception {
   // }
 
   dynamic errorResponse() {
-    print("errorResponse");
     var errorResponseObject = {};
 
     ReadAbleMessage newReadAbleMessage =

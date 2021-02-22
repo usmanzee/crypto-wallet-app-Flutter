@@ -41,9 +41,9 @@ final pages = [
         style: txtStyle.headerStyle,
       ),
       body: Container(
-        height: 250.0,
+        height: 350.0,
         child: Text(
-          'The application allows you to buy, sell, trade, exchange or store digital currencies (crypto-fiat) on a multi cryptocurrency & fiat wallet.',
+          'Buy, sell, trade, exchange or store digital currencies.',
           // 'Crypto application template \nbuy this code template in codecanyon',
           textAlign: TextAlign.center,
           style: txtStyle.descriptionStyle,
@@ -51,19 +51,19 @@ final pages = [
       ),
       mainImage: Image.asset(
         'assets/ilustration/b1.png',
-        height: 285.0,
-        width: 285.0,
+        height: 485.0,
+        width: 485.0,
         alignment: Alignment.center,
       )),
   new PageViewModel(
       title: Text(
-        'Keep Your Digital Assets Private and Secure',
+        '24/7 Support',
         style: txtStyle.headerStyle,
       ),
       body: Container(
         height: 250.0,
         child: Text(
-          'B4U Wallet & Exchange encrypts your transaction data on your device so that no one can access your crypto & fiat-currency.',
+          'Extensive online help desk, 24/7 global human support.',
           // 'Crypto application template \nbuy this code template in codecanyon',
           textAlign: TextAlign.center,
           style: txtStyle.descriptionStyle,
@@ -77,13 +77,13 @@ final pages = [
       )),
   new PageViewModel(
       title: Text(
-        'Exchange Your Crypto Fast in a few Taps',
+        'Fast Exchange',
         style: txtStyle.headerStyle,
       ),
       body: Container(
         height: 250.0,
         child: Text(
-          'Need to send or receive Crypto, Fiat? Send and receive any of the many supported blockchain assets with the touch of a button using text addresses or QR codes.',
+          'Send or receive blockchain assets with single touch, Address or QR codes.',
           // 'Crypto application template \nbuy this code template in codecanyon',
           textAlign: TextAlign.center,
           style: txtStyle.descriptionStyle,

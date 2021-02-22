@@ -229,14 +229,14 @@ class MarketDetailController extends GetxController {
         var updatedAsksData = [];
         var updatedBidsData = [];
         if (marketController.orderBookSequence == -1) {
-          print("OrderBook increment received before snapshot");
+          // print("OrderBook increment received before snapshot");
           return;
         }
         if (marketController.orderBookSequence + 1 !=
             data['${market.value.id}.ob-inc']['sequence']) {
-          print(
-              'Bad sequence detected in incremental orderbook previous: ${marketController.orderBookSequence}, event: ' +
-                  data['${market.value.id}.ob-inc']['sequence'].toString());
+          // print(
+          //     'Bad sequence detected in incremental orderbook previous: ${marketController.orderBookSequence}, event: ' +
+          //         data['${market.value.id}.ob-inc']['sequence'].toString());
           // emitter(rangerDisconnectFetch());
 
           return;

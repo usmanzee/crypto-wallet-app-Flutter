@@ -13,7 +13,6 @@ class EstimatedValue {
         return market;
       }
     }
-
     return null;
   }
 

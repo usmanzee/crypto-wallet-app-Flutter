@@ -184,6 +184,17 @@ class MarketController extends GetxController {
             }
           }
         }
+
+        //Update Tickers List
+        marketTickerList[market.id].ticker.high = marketHigh.toString();
+        marketTickerList[market.id].ticker.low = marketLow.toString();
+        marketTickerList[market.id].ticker.open = marketOpen.toString();
+        marketTickerList[market.id].ticker.last = marketLast.toString();
+        marketTickerList[market.id].ticker.volume = marketVolume.toString();
+        marketTickerList[market.id].ticker.avgPrice =
+            tickers[market.id]['avg_price'];
+        marketTickerList[market.id].ticker.priceChangePercent =
+            marketPriceChangePercent;
       }
       formatedMarketsList.refresh();
       positiveMarketsList.refresh();

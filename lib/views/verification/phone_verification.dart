@@ -117,14 +117,6 @@ class PhoneVerification extends StatelessWidget {
                     },
                   ),
                 ]),
-
-                // Text(
-                //   "Pin Code",
-                //   style: TextStyle(
-                //     color: Theme.of(context).hintColor.withOpacity(0.7),
-                //     fontFamily: "Popins",
-                //   ),
-                // ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16.0),
                   child: Form(
@@ -132,6 +124,7 @@ class PhoneVerification extends StatelessWidget {
                     key: _pinFormKey,
                     child: TextFormField(
                       obscureText: false,
+                      autofocus: true,
                       keyboardType: TextInputType.number,
                       validator: _pinCodeValidator,
                       controller: verificationController.pinCodeTextController,
@@ -186,7 +179,6 @@ class PhoneVerification extends StatelessWidget {
                         ),
                       ]);
                 }),
-
                 MaterialButton(
                   minWidth: double.infinity,
                   child: Text('Verify'),

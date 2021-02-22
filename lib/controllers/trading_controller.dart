@@ -2,6 +2,7 @@ import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/controllers/SnackbarController.dart';
 import 'package:crypto_template/controllers/error_controller.dart';
 import 'package:crypto_template/controllers/market_controller.dart';
+import 'package:crypto_template/controllers/open_orders_controller.dart';
 import 'package:crypto_template/controllers/wallet_controller.dart';
 import 'package:crypto_template/models/formated_market.dart';
 import 'package:crypto_template/repository/trading_repository.dart';
@@ -93,7 +94,6 @@ class TradingController extends GetxController {
     marketController.asks.clear();
     marketController.bids.clear();
     Future.delayed(Duration(seconds: 1), () {
-      print('calling');
       webSocketController.subscribeOrderBookInc(market.value);
       getOrderBookDataFromWS();
     });
@@ -394,10 +394,14 @@ class TradingController extends GetxController {
         'type': 'limit',
       };
 
-      print(orderObj);
       var orderResponseResponse =
           await _tradingRepository.placeTradingOrder(orderObj);
-      print(orderResponseResponse);
+      OpenOrdersController openOrdersController = Get.find();
+      openOrdersController.openOrdersList.insert(0, orderResponseResponse);
+      openOrdersController.openOrdersList.refresh();
+      openOrdersController.openOrdersSortedList
+          .insert(0, orderResponseResponse);
+      openOrdersController.openOrdersSortedList.refresh();
       Get.back();
       resetLimitOrderForm();
       snackbarController = new SnackbarController(
@@ -423,7 +427,12 @@ class TradingController extends GetxController {
       };
       var orderResponseResponse =
           await _tradingRepository.placeTradingOrder(orderObj);
-      print(orderResponseResponse);
+      OpenOrdersController openOrdersController = Get.find();
+      openOrdersController.openOrdersList.insert(0, orderResponseResponse);
+      openOrdersController.openOrdersList.refresh();
+      openOrdersController.openOrdersSortedList
+          .insert(0, orderResponseResponse);
+      openOrdersController.openOrdersSortedList.refresh();
       Get.back();
       resetLimitOrderForm();
       snackbarController = new SnackbarController(
@@ -466,7 +475,12 @@ class TradingController extends GetxController {
 
       var orderResponseResponse =
           await _tradingRepository.placeTradingOrder(orderObj);
-      print(orderResponseResponse);
+      OpenOrdersController openOrdersController = Get.find();
+      openOrdersController.openOrdersList.insert(0, orderResponseResponse);
+      openOrdersController.openOrdersList.refresh();
+      openOrdersController.openOrdersSortedList
+          .insert(0, orderResponseResponse);
+      openOrdersController.openOrdersSortedList.refresh();
       Get.back();
       resetMarketOrderForm();
       snackbarController = new SnackbarController(
@@ -490,57 +504,14 @@ class TradingController extends GetxController {
       };
       var orderResponseResponse =
           await _tradingRepository.placeTradingOrder(orderObj);
-      print(orderResponseResponse);
+      OpenOrdersController openOrdersController = Get.find();
+      openOrdersController.openOrdersList.insert(0, orderResponseResponse);
+      openOrdersController.openOrdersList.refresh();
+      openOrdersController.openOrdersSortedList
+          .insert(0, orderResponseResponse);
+      openOrdersController.openOrdersSortedList.refresh();
       Get.back();
       resetMarketOrderForm();
-      snackbarController = new SnackbarController(
-          title: 'Success', message: 'success.order.created');
-    } catch (error) {
-      Get.back();
-      errorController.handleError(error);
-    }
-  }
-
-  void marketBuyOrder() async {
-    Get.dialog(Center(child: CircularProgressIndicator()),
-        barrierDismissible: false);
-    TradingRepository _tradingRepository = new TradingRepository();
-    try {
-      var orderObj = {
-        'amount': marketOrderSellAmountTextController.text,
-        'market': market.value.id,
-        'price': marketOrderSellPriceTextController.text,
-        'side': 'buy',
-        'type': 'market',
-      };
-      var orderResponseResponse =
-          await _tradingRepository.placeTradingOrder(orderObj);
-      print(orderResponseResponse);
-      Get.back();
-      snackbarController = new SnackbarController(
-          title: 'Success', message: 'success.order.created');
-    } catch (error) {
-      Get.back();
-      errorController.handleError(error);
-    }
-  }
-
-  void marketSellOrder() async {
-    Get.dialog(Center(child: CircularProgressIndicator()),
-        barrierDismissible: false);
-    TradingRepository _tradingRepository = new TradingRepository();
-    try {
-      var orderObj = {
-        'amount': marketOrderSellAmountTextController.text,
-        'market': market.value.id,
-        'price': marketOrderSellPriceTextController.text,
-        'side': 'buy',
-        'type': 'market',
-      };
-      var orderResponseResponse =
-          await _tradingRepository.placeTradingOrder(orderObj);
-      print(orderResponseResponse);
-      Get.back();
       snackbarController = new SnackbarController(
           title: 'Success', message: 'success.order.created');
     } catch (error) {

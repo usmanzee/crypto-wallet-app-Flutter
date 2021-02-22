@@ -10,10 +10,10 @@ class WebSocketController extends GetxController {
   // final FormatedMarket market;
   // WebSocketController({this.withAuth, this.market});
 
-  // final String _baseUrl = "ws://10.121.121.48:9003/api/v2/ranger/public";
+  final String _baseUrl = "ws://10.121.121.48:9003/api/v2/ranger/public";
   // final String _baseUrl = "wss://www.app.local/";
   // final String _baseUrl = "wss://www.coinee.cf/";
-  final String _baseUrl = "wss://ewallet.b4uwallet.com/api/v2/ranger/public";
+  // final String _baseUrl = "wss://ewallet.b4uwallet.com/api/v2/ranger/public";
   final isChannelConnected = false.obs;
   Rx<IOWebSocketChannel> channel;
   Rx<StreamController> streamController;

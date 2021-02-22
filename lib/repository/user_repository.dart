@@ -70,6 +70,14 @@ class UserRepository {
     apiProvider = new ApiProvider();
     RequestHeaders requestHeaders = new RequestHeaders();
     apiProvider.headers = requestHeaders.setAuthHeaders();
+    final response = await apiProvider.post('barong/resource/phones', reqObj);
+    return response;
+  }
+
+  Future<dynamic> reSendPhoneVerificationCode(reqObj) async {
+    apiProvider = new ApiProvider();
+    RequestHeaders requestHeaders = new RequestHeaders();
+    apiProvider.headers = requestHeaders.setAuthHeaders();
     final response =
         await apiProvider.post('barong/resource/phones/send_code', reqObj);
     return response;

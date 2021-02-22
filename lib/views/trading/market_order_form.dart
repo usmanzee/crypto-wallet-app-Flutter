@@ -513,7 +513,7 @@ class MarketOrderForm extends StatelessWidget {
                     color: Colors.redAccent.withOpacity(0.8),
                     onPressed: () {
                       if (tradingController
-                                  .marketOrderSellPriceTextController.text !=
+                                  .marketOrderSellAmountTextController.text !=
                               '' &&
                           tradingController
                                   .marketOrderSellTotalTextController.text !=

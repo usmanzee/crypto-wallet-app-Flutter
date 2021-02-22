@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:crypto_template/utils/Helpers/readable_message.dart';
 
 class SnackbarController extends GetxController {
   String title;
@@ -9,6 +10,8 @@ class SnackbarController extends GetxController {
   SnackbarController({this.title, this.message});
 
   void showSnackbar() {
+    ReadAbleMessage newReadAbleMessage = new ReadAbleMessage(message: message);
+    var readAbleMessage = newReadAbleMessage.getMessage();
     showToastWidget(
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
@@ -27,7 +30,7 @@ class SnackbarController extends GetxController {
                 width: 12.0,
               ),
               Text(
-                message,
+                readAbleMessage,
                 style: TextStyle(
                   color: Get.isDarkMode ? Colors.black : Colors.white,
                 ),

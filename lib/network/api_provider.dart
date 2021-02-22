@@ -11,10 +11,10 @@ class RequestOptions {
 }
 
 class ApiProvider implements RequestOptions {
-  // final String _baseUrl = "http://10.121.121.48:9002/";
+  final String _baseUrl = "http://10.121.121.48:9002/";
   // final String _baseUrl = "http://www.app.local/";
   // final String _baseUrl = "https://www.coinee.cf/";
-  final String _baseUrl = "https://ewallet.b4uwallet.com/";
+  // final String _baseUrl = "https://ewallet.b4uwallet.com/";
   final String _appVersion = "api/v2/";
   @override
   String _apiVersion;
@@ -55,7 +55,6 @@ class ApiProvider implements RequestOptions {
       print(_baseUrl + url);
       final response = await http.post(_baseUrl + _appVersion + url,
           body: body, headers: headers);
-      print(response);
       responseJson = _returnResponse(response);
     } on SocketException {
       throw FetchDataException(

@@ -79,7 +79,7 @@ class Setting extends StatelessWidget {
                         Row(children: [
                           Icon(
                             Icons.account_circle,
-                            size: 32.0,
+                            size: 24.0,
                           ),
                           Padding(
                             padding: EdgeInsets.only(left: 4.0),
@@ -117,42 +117,40 @@ class Setting extends StatelessWidget {
                       ]),
                 );
               } else {
-                return Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Get.toNamed('/login');
-                          },
-                          child: Row(
-                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Icon(
-                                  Icons.account_circle,
-                                  size: 32.0,
+                return InkWell(
+                  onTap: () {
+                    Get.toNamed('/login');
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(children: [
+                            Icon(
+                              Icons.account_circle,
+                              size: 24.0,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 4.0),
+                              child: Text(
+                                'Login/Register',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w300,
+                                  fontFamily: "Popins",
+                                  letterSpacing: 1.5,
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: 4.0),
-                                  child: Text(
-                                    'Login/Register',
-                                    style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w300,
-                                      fontFamily: "Popins",
-                                      letterSpacing: 1.5,
-                                    ),
-                                  ),
-                                ),
-                                Spacer(flex: 1),
-                                Icon(
-                                  Icons.keyboard_arrow_right,
-                                ),
-                              ]),
-                        ),
-                      ]),
+                              ),
+                            ),
+                            Spacer(flex: 1),
+                            Icon(
+                              Icons.keyboard_arrow_right,
+                            ),
+                          ]),
+                        ]),
+                  ),
                 );
               }
             }),
@@ -306,13 +304,13 @@ class Setting extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           SizedBox(
-            height: 12.0,
+            height: 16.0,
           ),
           Row(
             children: <Widget>[
               icon,
               SizedBox(
-                width: 12,
+                width: 16,
               ),
               Padding(
                 padding: EdgeInsets.only(left: 4.0),
@@ -329,7 +327,7 @@ class Setting extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: 12.0,
+            height: 16.0,
           ),
           line(context)
         ],
@@ -338,13 +336,10 @@ class Setting extends StatelessWidget {
   }
 
   Widget line(context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 0.0),
-      child: Container(
-        width: double.infinity,
-        height: 0.5,
-        decoration: BoxDecoration(color: Theme.of(context).hintColor),
-      ),
+    return Container(
+      width: double.infinity,
+      height: 0.5,
+      decoration: BoxDecoration(color: Theme.of(context).canvasColor),
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 import 'package:share/share.dart';
+import 'package:crypto_template/utils/Helpers/helper.dart';
 
 class ReferralProgram extends StatelessWidget {
   final HomeController homeController = Get.find();
@@ -127,12 +128,7 @@ Widget _showReferralId(context, User user) {
                 style: TextStyle(fontSize: 10),
               ),
               onPressed: () {
-                Clipboard.setData(ClipboardData(text: user.uid)).then((value) {
-                  Get.snackbar('Success', 'Copied to clipboard',
-                      snackPosition: SnackPosition.BOTTOM,
-                      colorText: Colors.white,
-                      backgroundColor: Colors.grey[900]);
-                });
+                Helper.copyToClipBoard(user.uid);
               },
               splashColor: Theme.of(context).canvasColor.withOpacity(0.9),
             )
@@ -177,12 +173,7 @@ Widget _showReferralLink(context, String link) {
                 style: TextStyle(fontSize: 10),
               ),
               onPressed: () {
-                Clipboard.setData(ClipboardData(text: link)).then((value) {
-                  Get.snackbar('Success', 'Copied to clipboard',
-                      snackPosition: SnackPosition.BOTTOM,
-                      colorText: Colors.white,
-                      backgroundColor: Colors.grey[900]);
-                });
+                Helper.copyToClipBoard(link);
               },
               splashColor: Theme.of(context).canvasColor.withOpacity(0.5),
             )

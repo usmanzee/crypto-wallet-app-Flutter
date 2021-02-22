@@ -7,28 +7,13 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-class OpenOrders extends StatefulWidget {
-  final Widget child;
+class OpenOrders extends StatelessWidget {
   final FormatedMarket formatedMarket;
-
-  OpenOrders({Key key, this.child, this.formatedMarket}) : super(key: key);
-
-  _OpenOrdersState createState() =>
-      _OpenOrdersState(formatedMarket: formatedMarket);
-}
-
-class _OpenOrdersState extends State<OpenOrders> {
-  final FormatedMarket formatedMarket;
-  _OpenOrdersState({this.formatedMarket});
-  OpenOrdersController openOrdersController;
-
-  @override
-  void initState() {
-    openOrdersController = Get.put(
-      OpenOrdersController(formatedMarket: formatedMarket),
-    );
-    super.initState();
-  }
+  final OpenOrdersController openOrdersController;
+  OpenOrders({this.formatedMarket})
+      : openOrdersController = Get.put(
+          OpenOrdersController(formatedMarket: formatedMarket),
+        );
 
   @override
   Widget build(BuildContext context) {
@@ -140,13 +125,13 @@ class _OpenOrdersState extends State<OpenOrders> {
               primary: false,
               itemCount: openOrders.length,
               itemBuilder: (BuildContext ctx, int i) {
-                return _openOrders(openOrders[i]);
+                return _openOrders(context, openOrders[i]);
               },
             ),
           );
   }
 
-  Widget _openOrders(OpenOrder openOrder) {
+  Widget _openOrders(BuildContext context, OpenOrder openOrder) {
     var executedVolume = double.parse(openOrder.originVolume) -
         double.parse(openOrder.remainingVolume);
     var remainingAmount = double.parse(openOrder.remainingVolume);

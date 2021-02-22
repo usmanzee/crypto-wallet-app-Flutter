@@ -412,6 +412,13 @@ class VerificationController extends GetxController {
     "Zimbabwe"
   ].obs;
 
+  var documentTypes = [
+    {"id": 1, "type": "passport", "name": "Passport"},
+    {"id": 2, "type": "identity_card", "name": "Identity Card"},
+    {"id": 3, "type": "driver_license", "name": "Driver License"},
+    {"id": 4, "type": "utility_bill", "name": "Utility Bill"},
+  ].obs;
+
   TextEditingController phoneTextController;
   TextEditingController pinCodeTextController;
 
@@ -424,6 +431,9 @@ class VerificationController extends GetxController {
   TextEditingController cityTextController;
   TextEditingController postCodeTextController;
 
+  TextEditingController documentNumberTextController;
+  TextEditingController documentExpiryTextController;
+
   HomeController homeController = Get.find();
 
   var isLoadingLables = false.obs;
@@ -434,8 +444,10 @@ class VerificationController extends GetxController {
   var phoneNumberText = ''.obs;
   var selectedNationality = ''.obs;
   var selectedCountry = ''.obs;
-
   final _currentStep = 0.obs;
+
+  var selectedDocumentType = Map<String, Object>().obs;
+
   get currentStep => this._currentStep.value;
   set currentStep(index) => this._currentStep.value = index;
 
@@ -467,11 +479,16 @@ class VerificationController extends GetxController {
     cityTextController = TextEditingController();
     postCodeTextController = TextEditingController();
 
+    documentNumberTextController = TextEditingController();
+    documentExpiryTextController = TextEditingController();
+
     selectedNationality.value = nationalities[0];
     selectedCountry.value = countries[0];
 
     nationalityTextController.text = nationalities[0];
     residencyTextController.text = countries[0];
+
+    selectedDocumentType.assignAll(documentTypes[0]);
 
     fetchLabels();
 
@@ -542,7 +559,7 @@ class VerificationController extends GetxController {
     startCodeSentCountDown();
     try {
       var reqObj = {'phone_number': phoneNumberText.value};
-      var response = await _userRepository.sendPhoneVerificationCode(reqObj);
+      var response = await _userRepository.reSendPhoneVerificationCode(reqObj);
       codeSent = true;
       print(response);
       Get.back();
@@ -564,6 +581,7 @@ class VerificationController extends GetxController {
         'phone_number': phoneNumberText.value,
         'verification_code': pinCodeTextController.text
       };
+      print(reqObj);
       var response = await _userRepository.verifyPhonePinCode(reqObj);
       homeController.user.value.level = 2;
       homeController.user.refresh();
@@ -622,6 +640,9 @@ class VerificationController extends GetxController {
     addressTextController?.dispose();
     cityTextController?.dispose();
     postCodeTextController?.dispose();
+
+    documentNumberTextController?.dispose();
+    documentExpiryTextController?.dispose();
 
     _timer?.cancel();
     super.onClose();

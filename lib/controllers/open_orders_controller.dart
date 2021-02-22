@@ -28,14 +28,15 @@ class OpenOrdersController extends GetxController {
   void onInit() {
     openOrdersList.clear();
     openOrdersSortedList.clear();
-    if (homeController.isLoggedIn.value) {
-      fetchOpenOrders();
-    }
+
     super.onInit();
   }
 
   @override
   void onReady() async {
+    if (homeController.isLoggedIn.value) {
+      fetchOpenOrders();
+    }
     ever(homeController.isLoggedIn, fetchOrderOnLoggedIn);
     if (homeController.isLoggedIn.value) {
       await webSocketController.subscribeOrder();
@@ -80,16 +81,36 @@ class OpenOrdersController extends GetxController {
       if (cancelAll) {
         reqObj = {'market': formatedMarket.id};
       } else {
-        reqObj = {'id': orderId};
+        reqObj = {'id': orderId.toString()};
       }
-      var cancelOrderResponse = await _openOrdersRepository.cancelOpenOrders(
-          cancelAll, reqObj, orderId);
-      Get.back();
-      print(cancelOrderResponse);
       if (cancelAll) {
+        var cancelAllOrdersResponse =
+            await _openOrdersRepository.cancelAllOpenOrders(reqObj);
+        if (cancelAllOrdersResponse.length > 0) {
+          for (var i = 0; i < cancelAllOrdersResponse.length; i++) {
+            openOrdersList.removeWhere((openOrder) {
+              return openOrder.id == cancelAllOrdersResponse[i].id;
+            });
+            openOrdersSortedList.removeWhere((openOrder) {
+              return openOrder.id == cancelAllOrdersResponse[i].id;
+            });
+          }
+        }
+        Get.back();
         snackbarController = new SnackbarController(
             title: 'Success', message: 'success.order.cancelling.all');
       } else {
+        var cancelOrderResponse =
+            await _openOrdersRepository.cancelOpenOrder(orderId, reqObj);
+        if (cancelOrderResponse != null) {
+          openOrdersList.removeWhere((openOrder) {
+            return openOrder.id == cancelOrderResponse.id;
+          });
+          openOrdersSortedList.removeWhere((openOrder) {
+            return openOrder.id == cancelOrderResponse.id;
+          });
+        }
+        Get.back();
         snackbarController = new SnackbarController(
             title: 'Success', message: 'success.order.cancelling');
       }
@@ -118,13 +139,42 @@ class OpenOrdersController extends GetxController {
     webSocketController.streamController.value.stream.listen((message) {
       var data = json.decode(message);
       if (data.containsKey('order')) {
+        var state = data['order']['state'];
+        switch (state) {
+          case 'wait':
+          case 'pending':
+            var index = openOrdersSortedList.indexWhere((openOrder) {
+              return openOrder.id == data['order']['id'];
+            });
+            if (index == -1) {
+              snackbarController = new SnackbarController(
+                  title: 'Success', message: 'success.order.created');
+              snackbarController.showSnackbar();
+            }
+            break;
+          case 'done':
+            snackbarController = new SnackbarController(
+                title: 'Success', message: 'success.order.done');
+            snackbarController.showSnackbar();
+            break;
+          case 'reject':
+            snackbarController = new SnackbarController(
+                title: 'Error', message: 'error.order.rejected');
+            snackbarController.showSnackbar();
+            break;
+          default:
+            break;
+        }
+        List<OpenOrder> newOrdersList =
+            WsHelper.insertOrUpdate(openOrdersList, data['order']);
         if (hideOtherOrders.value) {
-          if (data['order']['market'].toLowerCase() ==
-              formatedMarket.id.toLowerCase()) {
-            WsHelper.insertOrUpdate(openOrdersSortedList, data['order']);
-          }
+          var list = newOrdersList.where((openOrder) {
+            return openOrder.market.toLowerCase() ==
+                formatedMarket.id.toLowerCase();
+          });
+          openOrdersSortedList.assignAll(list);
         } else {
-          WsHelper.insertOrUpdate(openOrdersSortedList, data['order']);
+          openOrdersSortedList.assignAll(openOrdersList);
         }
       }
     }, onDone: () {

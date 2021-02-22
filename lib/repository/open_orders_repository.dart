@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:crypto_template/models/open_order.dart';
 import 'package:crypto_template/network/api_provider.dart';
 import 'package:crypto_template/network/request_headers.dart';
@@ -10,19 +11,28 @@ class OpenOrdersRepository {
     apiProvider = new ApiProvider();
     RequestHeaders requestHeaders = new RequestHeaders();
     apiProvider.headers = requestHeaders.setAuthHeaders();
-    final response = await apiProvider
-        .get('peatio/market/orders?market=${marketId}&state=wait');
+    // var url = 'peatio/market/orders?market=${marketId}&state=wait';
+    var url = 'peatio/market/orders?state=wait';
+    final response = await apiProvider.get(url);
     return openOrderFromJson(response);
   }
 
-  Future<dynamic> cancelOpenOrders(bool cancelAll, dynamic reqObj,
-      [int orderId]) async {
+  Future<OpenOrder> cancelOpenOrder(int orderId, dynamic reqObj) async {
+    apiProvider = new ApiProvider();
+    RequestHeaders requestHeaders = new RequestHeaders();
+    apiProvider.headers = requestHeaders.setAuthHeaders();
+    // var url = 'peatio/market/orders/cancel/${orderId}';
+    var url = 'peatio/market/orders/${orderId}/cancel';
+    final response = await apiProvider.post(url, reqObj);
+    return OpenOrder.fromJson(json.decode(response));
+  }
+
+  Future<List<OpenOrder>> cancelAllOpenOrders(dynamic reqObj) async {
     apiProvider = new ApiProvider();
     RequestHeaders requestHeaders = new RequestHeaders();
     apiProvider.headers = requestHeaders.setAuthHeaders();
     var url = 'peatio/market/orders/cancel';
-    url = orderId != null ? url + '/' + orderId.toString() : url;
     final response = await apiProvider.post(url, reqObj);
-    return response;
+    return openOrderFromJson(response);
   }
 }

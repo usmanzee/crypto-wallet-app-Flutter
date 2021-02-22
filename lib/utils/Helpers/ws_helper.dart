@@ -1,4 +1,5 @@
 import 'package:crypto_template/models/open_order.dart';
+import 'package:crypto_template/screen/crypto_detail_card_homeScreen/DetailCryptoValue/openOrders.dart';
 
 class WsHelper {
   static bool isArray(String type) {
@@ -67,22 +68,23 @@ class WsHelper {
     return depthNew;
   }
 
-  static List<dynamic> insertOrUpdate(List<OpenOrder> openOrdersList, order) {
+  static List<OpenOrder> insertOrUpdate(List<OpenOrder> openOrdersList, order) {
     var id = order['id'];
     var state = order['state'];
     var createdAt = DateTime.fromMillisecondsSinceEpoch(order['at'] * 1000);
     switch (state) {
       case 'wait':
-        var orderIndex = openOrdersList
-            .firstWhere((openOrder) => openOrder.id == id, orElse: () => null);
-        if (orderIndex == null) {
+        var index = openOrdersList.indexWhere((openOrder) {
+          return openOrder.id == id;
+        });
+        if (index == -1) {
           var newOpenOrder = new OpenOrder(
-            id: order['id'],
+            id: id,
             side: order['kind'].toString(),
             ordType: null,
             price: order['price'].toString(),
             avgPrice: null,
-            state: order['state'].toString(),
+            state: state,
             market: order['market'].toString(),
             createdAt: createdAt,
             originVolume: order['origin_volume'].toString(),
@@ -93,15 +95,15 @@ class WsHelper {
           openOrdersList.insert(0, newOpenOrder);
           return openOrdersList;
         }
-        var newList = openOrdersList.map((openOrder) {
+        return openOrdersList.map((openOrder) {
           if (openOrder.id == id) {
             var newOpenOrder = new OpenOrder(
-              id: order['id'],
+              id: id,
               side: order['kind'].toString(),
               ordType: null,
               price: order['price'].toString(),
               avgPrice: null,
-              state: order['state'].toString(),
+              state: state,
               market: order['market'].toString(),
               createdAt: createdAt,
               originVolume: order['origin_volume'].toString(),
@@ -109,23 +111,32 @@ class WsHelper {
               executedVolume: null,
               tradesCount: null,
             );
-            return {newOpenOrder};
+            return newOpenOrder;
           }
           return openOrder;
         }).toList();
-        return newList;
       default:
         List<OpenOrder> newli = [];
-        for (var i = 0; i < openOrdersList.length; i++) {
-          // if (openOrdersList[i].id != id) {
-          //   newli.add(openOrdersList[i]);
-          // }
 
-          if (openOrdersList[i].id == id) {
-            splice(openOrdersList, i, 1);
-          }
-        }
+        //   // if (openOrdersList[i].id == id) {
+        //   //   splice(openOrdersList, i, 1);
+        //   // }
+        // }
+        // return newli;
+
+        openOrdersList.removeWhere((openOrder) {
+          return openOrder.id == id;
+        });
+
         return openOrdersList;
+
+      // return openOrdersList.map((openOrder) {
+      //   if (openOrder.id != id) {
+      //     return openOrder;
+      //   } else {
+      //     print(openOrder.id.toString() + ' is removed');
+      //   }
+      // }).toList();
     }
   }
 }
