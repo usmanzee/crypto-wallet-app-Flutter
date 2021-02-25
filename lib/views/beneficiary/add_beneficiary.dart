@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:crypto_template/component/custom_text_field.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:crypto_template/component/style.dart';
 import 'package:crypto_template/models/wallet.dart' as WalletClass;
 
 class AddBeneficiary extends StatefulWidget {
@@ -164,7 +163,7 @@ class _AddBeneficiaryState extends State<AddBeneficiary> {
                         width: double.infinity,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(0.0)),
-                          color: colorStyle.primaryColor,
+                          color: Theme.of(context).primaryColor,
                         ),
                         child: Center(
                           child: Text(

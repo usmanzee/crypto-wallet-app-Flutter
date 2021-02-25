@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final swapHistoryResponse = swapHistoryResponseFromJson(jsonString);
+
 import 'dart:convert';
 
 List<SwapHistoryResponse> swapHistoryResponseFromJson(String str) =>
@@ -9,7 +13,6 @@ String swapHistoryResponseToJson(List<SwapHistoryResponse> data) =>
 
 class SwapHistoryResponse {
   SwapHistoryResponse({
-    this.id,
     this.inCurrencyId,
     this.outCurrencyId,
     this.inAmount,
@@ -19,29 +22,26 @@ class SwapHistoryResponse {
     this.updatedAt,
   });
 
-  dynamic id;
-  String inCurrencyId;
+  dynamic inCurrencyId;
   String outCurrencyId;
   String inAmount;
-  double outAmountRequested;
+  String outAmountRequested;
   String status;
   DateTime createdAt;
   DateTime updatedAt;
 
   factory SwapHistoryResponse.fromJson(Map<String, dynamic> json) =>
       SwapHistoryResponse(
-        id: json["id"],
         inCurrencyId: json["in_currency_id"],
         outCurrencyId: json["out_currency_id"],
         inAmount: json["in_amount"],
-        outAmountRequested: json["out_amount_requested"].toDouble(),
+        outAmountRequested: json["out_amount_requested"],
         status: json["status"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
         "in_currency_id": inCurrencyId,
         "out_currency_id": outCurrencyId,
         "in_amount": inAmount,

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:crypto_template/models/wallet.dart' as WalletClass;
 import 'package:get/get.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:flutter/services.dart';
 import 'package:share/share.dart';
 import 'package:crypto_template/utils/Helpers/helper.dart';
 
@@ -306,7 +305,6 @@ class _WalletState extends State<DepositCrypto> {
         height: 40.0,
         minWidth: 150.0,
         color: Theme.of(context).canvasColor,
-        // textColor: Colors.white,
         child: new Text("Share"),
         onPressed: () {
           share(context);

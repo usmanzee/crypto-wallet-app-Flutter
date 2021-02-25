@@ -1,7 +1,8 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:crypto_template/controllers/SnackbarController.dart';
 import 'package:crypto_template/controllers/error_controller.dart';
+import 'package:crypto_template/controllers/open_orders_controller.dart';
+import 'package:crypto_template/controllers/trading_controller.dart';
 import 'package:crypto_template/models/MemberLevel.dart';
 import 'package:crypto_template/models/market.dart';
 import 'package:crypto_template/models/user.dart';
@@ -12,7 +13,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:crypto_template/controllers/wallet_controller.dart';
 // import 'package:get_mac/get_mac.dart';
-import 'package:flutter/services.dart';
 import 'package:connectivity/connectivity.dart';
 
 class HomeController extends GetxController {
@@ -115,6 +115,27 @@ class HomeController extends GetxController {
     marketController.fetchMarkets();
     if (isLoggedIn.value) {
       fetchUser();
+    }
+  }
+
+  Future<Null> refreshMarketsPage() async {
+    // await Future.delayed(Duration(seconds: 2));
+    MarketController marketController = Get.find<MarketController>();
+    marketController.fetchMarkets();
+  }
+
+  Future<Null> refreshTradingPage() async {
+    MarketController marketController = Get.find<MarketController>();
+    bool tradingCOntrollerInstance = Get.isRegistered<TradingController>();
+    if (tradingCOntrollerInstance) {
+      Get.delete<TradingController>(force: true);
+      Get.put(TradingController());
+    }
+    bool openOrdersInstance = Get.isRegistered<OpenOrdersController>();
+    if (openOrdersInstance) {
+      Get.delete<OpenOrdersController>(force: true);
+      Get.put(OpenOrdersController(
+          formatedMarket: marketController.selectedMarketTrading.value));
     }
   }
 

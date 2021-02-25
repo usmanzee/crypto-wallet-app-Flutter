@@ -44,10 +44,12 @@ class MarketOrderForm extends StatelessWidget {
                 color: Theme.of(context).canvasColor,
                 child: Row(
                   children: [
-                    IconButton(
-                      icon: Icon(Icons.remove),
-                      onPressed: () {},
-                    ),
+                    GestureDetector(
+                        onTap: () {
+                          removeValueFromInput(
+                              'buy', 'amount', formatedMarket.pricePrecision);
+                        },
+                        child: Icon(Icons.remove)),
                     Flexible(
                       child: TextFormField(
                         controller: tradingController
@@ -70,10 +72,12 @@ class MarketOrderForm extends StatelessWidget {
                                 : ''),
                       ),
                     ),
-                    IconButton(
-                      icon: Icon(Icons.add),
-                      onPressed: () {},
-                    ),
+                    GestureDetector(
+                        onTap: () {
+                          addValueToInput(
+                              'buy', 'amount', formatedMarket.pricePrecision);
+                        },
+                        child: Icon(Icons.add)),
                   ],
                 ),
               ),
@@ -312,10 +316,12 @@ class MarketOrderForm extends StatelessWidget {
                 color: Theme.of(context).canvasColor,
                 child: Row(
                   children: [
-                    IconButton(
-                      icon: Icon(Icons.remove),
-                      onPressed: () {},
-                    ),
+                    GestureDetector(
+                        onTap: () {
+                          removeValueFromInput(
+                              'sell', 'amount', formatedMarket.pricePrecision);
+                        },
+                        child: Icon(Icons.remove)),
                     Flexible(
                       child: TextFormField(
                         controller: tradingController
@@ -338,10 +344,12 @@ class MarketOrderForm extends StatelessWidget {
                                 : ''),
                       ),
                     ),
-                    IconButton(
-                      icon: Icon(Icons.add),
-                      onPressed: () {},
-                    ),
+                    GestureDetector(
+                        onTap: () {
+                          addValueToInput(
+                              'sell', 'amount', formatedMarket.pricePrecision);
+                        },
+                        child: Icon(Icons.add)),
                   ],
                 ),
               ),
@@ -545,5 +553,81 @@ class MarketOrderForm extends StatelessWidget {
         ),
       )
     ]);
+  }
+
+  void addValueToInput(String formType, String inputType, int percision) {
+    var number = 1;
+    var decimalPointNumber = number.toString().padRight(percision + 1, '0');
+    var maxNumber = int.parse(decimalPointNumber);
+    var finalNumber = (1 / maxNumber).toStringAsFixed(percision);
+
+    if (formType == 'buy' && inputType == 'amount') {
+      var existingNumber =
+          tradingController.marketOrderBuyAmountTextController.text != ''
+              ? double.parse(
+                  tradingController.marketOrderBuyAmountTextController.text)
+              : 0.0;
+
+      tradingController.marketOrderBuyAmountTextController.text =
+          (existingNumber + double.parse(finalNumber))
+              .toStringAsFixed(percision);
+      tradingController.onMarketOrderBuyAmountChange(
+          tradingController.marketOrderBuyAmountTextController.text);
+    }
+
+    if (formType == 'sell' && inputType == 'amount') {
+      var existingNumber =
+          tradingController.marketOrderSellAmountTextController.text != ''
+              ? double.parse(
+                  tradingController.marketOrderSellAmountTextController.text)
+              : 0.0;
+
+      tradingController.marketOrderSellAmountTextController.text =
+          (existingNumber + double.parse(finalNumber))
+              .toStringAsFixed(percision);
+      tradingController.onMarketOrderSellAmountChange(
+          tradingController.marketOrderSellAmountTextController.text);
+    }
+  }
+
+  void removeValueFromInput(String formType, String inputType, int percision) {
+    var number = 1;
+    var decimalPointNumber = number.toString().padRight(percision + 1, '0');
+    var maxNumber = int.parse(decimalPointNumber);
+    var finalNumber = (1 / maxNumber).toStringAsFixed(percision);
+
+    if (formType == 'buy' && inputType == 'amount') {
+      var existingNumber =
+          tradingController.marketOrderBuyAmountTextController.text != ''
+              ? double.parse(
+                  tradingController.marketOrderBuyAmountTextController.text)
+              : 0.0;
+
+      if (existingNumber > 0) {
+        tradingController.marketOrderBuyAmountTextController.text =
+            (existingNumber - double.parse(finalNumber))
+                .toStringAsFixed(percision);
+        tradingController.onMarketOrderBuyAmountChange(
+            tradingController.marketOrderBuyAmountTextController.text);
+      }
+    }
+
+    if (formType == 'sell' &&
+        inputType == 'amount' &&
+        tradingController.marketOrderSellAmountTextController.text != '') {
+      var existingNumber =
+          tradingController.marketOrderSellAmountTextController.text != ''
+              ? double.parse(
+                  tradingController.marketOrderSellAmountTextController.text)
+              : 0.0;
+
+      if (existingNumber > 0) {
+        tradingController.marketOrderSellAmountTextController.text =
+            (existingNumber - double.parse(finalNumber))
+                .toStringAsFixed(percision);
+        tradingController.onMarketOrderSellAmountChange(
+            tradingController.marketOrderSellAmountTextController.text);
+      }
+    }
   }
 }

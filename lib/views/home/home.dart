@@ -1,12 +1,8 @@
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/models/formated_market.dart';
-import 'package:crypto_template/views/swap/swap.dart';
-import 'package:crypto_template/views/trading/trading.dart';
-import 'package:crypto_template/views/wallet/wallet_search.dart';
 import 'package:get/get.dart';
 import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:crypto_template/component/modelGridHome.dart';
 import 'package:crypto_template/views/home/gainer.dart';
 import 'package:crypto_template/views/home/loser.dart';
 import 'package:carousel_pro/carousel_pro.dart';
@@ -14,9 +10,30 @@ import 'package:flutter_sparkline/flutter_sparkline.dart';
 import 'package:shimmer/shimmer.dart';
 
 class Home extends StatelessWidget {
-  // final marketController = Get.put(MarketController());
   final MarketController marketController = Get.find();
   final HomeController homeController = Get.find();
+
+  var banners = [1, 2, 3];
+  _listBannerImages(context) {
+    var bannerImages = [];
+    for (var image in banners) {
+      bannerImages.add(new GestureDetector(
+        onTap: () {
+          print('image.url');
+        },
+        child: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/image/banner/banner2.png'),
+                  fit: BoxFit.cover)),
+          height: 220.0,
+          width: MediaQuery.of(context).size.width,
+        ),
+      ));
+    }
+    return bannerImages;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -174,15 +191,6 @@ class Home extends StatelessWidget {
                                       new Tab(
                                         child: Row(
                                           children: <Widget>[
-                                            // Padding(
-                                            //   padding: const EdgeInsets.only(
-                                            //       left: 4.0),
-                                            //   child: Icon(
-                                            //     IconData(0xe900,
-                                            //         fontFamily: 'gainers'),
-                                            //     size: 15.0,
-                                            //   ),
-                                            // ),
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 8.0),
@@ -198,19 +206,14 @@ class Home extends StatelessWidget {
                                       new Tab(
                                         child: Row(
                                           children: <Widget>[
-                                            // Padding(
-                                            //   padding: const EdgeInsets.only(
-                                            //       left: 8.0),
-                                            //   child: Icon(
-                                            //     IconData(0xe901,
-                                            //         fontFamily: 'loser'),
-                                            //     size: 15.0,
-                                            //   ),
-                                            // ),
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 8.0),
-                                              child: Text("Losers"),
+                                              child: Text(
+                                                "Losers",
+                                                style: TextStyle(
+                                                    fontFamily: 'Sans'),
+                                              ),
                                             )
                                           ],
                                         ),
@@ -246,10 +249,23 @@ class Home extends StatelessWidget {
 }
 
 class Card extends StatelessWidget {
-  final gridHome item;
   final FormatedMarket formatedMarket;
-  // final MarketCOntroller formatedMarket;
-  Card(this.item, this.formatedMarket);
+  final data = [
+    0.0,
+    0.5,
+    0.9,
+    1.4,
+    2.2,
+    1.0,
+    3.3,
+    0.0,
+    -0.5,
+    -1.0,
+    -0.5,
+    0.0,
+    0.0
+  ];
+  Card(this.formatedMarket);
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
@@ -259,7 +275,7 @@ class Card extends StatelessWidget {
         onTap: () {
           MarketController marketController = Get.find();
           marketController.selectedMarket.value = formatedMarket;
-          Get.toNamed('market-detail');
+          Get.toNamed('/market-detail');
         },
         child: Container(
           height: 70.0,
@@ -323,7 +339,7 @@ class Card extends StatelessWidget {
                 child: Container(
                   height: 30.0,
                   child: new Sparkline(
-                    data: item.data,
+                    data: data,
                     lineWidth: 0.3,
                     fillMode: FillMode.below,
                     lineColor: Theme.of(context).accentColor,
@@ -468,8 +484,8 @@ Widget _cardLoaded(
           crossAxisCount: 2,
           primary: false,
           children: List.generate(
-            listGridHome.length,
-            (index) => Card(listGridHome[index], formatedMarketList[index]),
+            formatedMarketList.length > 4 ? 4 : formatedMarketList.length,
+            (index) => Card(formatedMarketList[index]),
           ));
 }
 

@@ -26,7 +26,6 @@ class SwapHistoryController extends GetxController {
     try {
       isLoading(true);
       var historyResponse = await _swapRepository.fetchSwapHistory();
-
       swapHistoryList.assignAll(historyResponse);
       isLoading(false);
     } catch (error) {

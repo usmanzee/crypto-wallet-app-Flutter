@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:crypto_template/component/style.dart';
 
 class CustomTextField extends StatelessWidget {
   final String label;

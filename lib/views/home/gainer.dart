@@ -94,7 +94,7 @@ class Gainer extends StatelessWidget {
       child: InkWell(
         onTap: () {
           marketController.selectedMarket.value = formatedMarket;
-          Get.toNamed('market-detail');
+          Get.toNamed('/market-detail');
         },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,

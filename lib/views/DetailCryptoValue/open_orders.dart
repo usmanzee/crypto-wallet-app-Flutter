@@ -108,7 +108,7 @@ class OpenOrders extends StatelessWidget {
                   child: CircularProgressIndicator());
             else
               return _openOrdersLoaded(
-                  context, openOrdersController.openOrdersSortedList.value);
+                  context, openOrdersController.openOrdersSortedList);
           }),
         ],
       );
@@ -134,13 +134,13 @@ class OpenOrders extends StatelessWidget {
   Widget _openOrders(BuildContext context, OpenOrder openOrder) {
     var executedVolume = double.parse(openOrder.originVolume) -
         double.parse(openOrder.remainingVolume);
-    var remainingAmount = double.parse(openOrder.remainingVolume);
-    var total =
-        double.parse(openOrder.originVolume) * double.parse(openOrder.price);
+    // var remainingAmount = double.parse(openOrder.remainingVolume);
+    // var total =
+    //     double.parse(openOrder.originVolume) * double.parse(openOrder.price);
     var filled =
         ((executedVolume / double.parse(openOrder.originVolume)) * 100);
     var priceFixed = formatedMarket.pricePrecision;
-    var amountFixed = formatedMarket.amountPrecision;
+    // var amountFixed = formatedMarket.amountPrecision;
     String formattedDate =
         DateFormat('yyyy-MM-dd hh:mm:ss').format(openOrder.createdAt);
 

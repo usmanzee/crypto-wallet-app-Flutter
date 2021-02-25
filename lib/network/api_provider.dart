@@ -7,7 +7,7 @@ import 'dart:convert';
 
 class RequestOptions {
   String _apiVersion; //'applogic' | 'peatio' | 'barong' | 'arke' | 'finex';
-  Object _headers;
+  Map<String, String> _headers;
 }
 
 class ApiProvider implements RequestOptions {
@@ -18,13 +18,13 @@ class ApiProvider implements RequestOptions {
   final String _appVersion = "api/v2/";
   @override
   String _apiVersion;
-  Object _headers;
+  Map<String, String> _headers;
 
-  get headers {
+  Map<String, String> get headers {
     return _headers;
   }
 
-  set headers(Object headers) {
+  set headers(Map<String, String> headers) {
     _headers = headers;
   }
 

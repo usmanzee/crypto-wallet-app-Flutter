@@ -1,4 +1,3 @@
-import 'package:crypto_template/component/market/btcModel.dart';
 import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:crypto_template/controllers/market_detail_controller.dart';
 import 'package:crypto_template/controllers/open_orders_controller.dart';
@@ -145,15 +144,15 @@ Widget _loadingData(BuildContext context) {
     child: ListView.builder(
       shrinkWrap: true,
       primary: false,
-      itemCount: btcMarketList.length,
+      itemCount: 10,
       itemBuilder: (ctx, i) {
-        return loadingCard(ctx, btcMarketList[i]);
+        return loadingCard(ctx);
       },
     ),
   );
 }
 
-Widget loadingCard(BuildContext ctx, btcMarket item) {
+Widget loadingCard(BuildContext ctx) {
   return Padding(
     padding: const EdgeInsets.only(top: 7.0),
     child: Shimmer.fromColors(
@@ -336,7 +335,7 @@ Widget card(BuildContext context, FormatedMarket formatedMarket, screenType) {
                             ],
                           ),
                           Text(
-                            'Vol ' + formatedMarket.volume.toString(),
+                            'Vol ' + formatedMarket.volume.toStringAsFixed(2),
                             style: TextStyle(
                                 fontFamily: "Popins",
                                 fontSize: 11.5,

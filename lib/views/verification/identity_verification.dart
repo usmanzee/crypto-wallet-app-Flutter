@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 class IdentityVerification extends StatelessWidget {
   final VerificationController verificationController = Get.find();
   final GlobalKey<FormState> _nameForm = GlobalKey<FormState>();
   final GlobalKey<FormState> _addressFormKey = GlobalKey<FormState>();
   final StepperType stepperType = StepperType.horizontal;
+
+  final myFormat = DateFormat('d/MM/yyyy');
 
   final _firstNameValidator =
       RequiredValidator(errorText: 'This field is required');
@@ -22,6 +25,33 @@ class IdentityVerification extends StatelessWidget {
   final _cityValidator = RequiredValidator(errorText: 'This field is required');
   final _postCodeValidator =
       RequiredValidator(errorText: 'This field is required');
+
+  Future<void> _selectDate(BuildContext context) async {
+    var themeData = Get.isDarkMode ? ThemeData.dark() : ThemeData.light();
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: verificationController.currentDate.value,
+      firstDate: DateTime(1970),
+      lastDate: DateTime(2101),
+      builder: (BuildContext context, Widget child) {
+        return Theme(
+          data: themeData.copyWith(
+            colorScheme: Get.isDarkMode
+                ? ColorScheme.dark(
+                    primary: Theme.of(context).primaryColor,
+                  )
+                : ColorScheme.light(
+                    primary: Theme.of(context).primaryColor,
+                  ),
+          ),
+          child: child,
+        );
+      },
+    );
+    if (picked != null && picked != verificationController.currentDate.value)
+      verificationController.dateOfBirthTextController.text =
+          myFormat.format(picked);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -135,16 +165,22 @@ class IdentityVerification extends StatelessWidget {
                           labelText: 'Last Name',
                           hintText: 'Enter Your Last Name'),
                     ),
-                    TextFormField(
-                      controller:
-                          verificationController.dateOfBirthTextController,
-                      validator: _dateOfBirthValidator,
-                      obscureText: false,
-                      keyboardType: TextInputType.text,
-                      textAlign: TextAlign.start,
-                      decoration: InputDecoration(
-                          labelText: 'Date of Birth',
-                          hintText: 'Enter Your Date of Birth'),
+                    GestureDetector(
+                      onTap: () {
+                        _selectDate(context);
+                      },
+                      child: TextFormField(
+                        controller:
+                            verificationController.dateOfBirthTextController,
+                        validator: _dateOfBirthValidator,
+                        obscureText: false,
+                        enabled: false,
+                        keyboardType: TextInputType.text,
+                        textAlign: TextAlign.start,
+                        decoration: InputDecoration(
+                            labelText: 'Date of Birth',
+                            hintText: 'Enter Your Date of Birth'),
+                      ),
                     ),
                   ],
                 ),

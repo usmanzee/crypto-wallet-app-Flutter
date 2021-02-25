@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:crypto_template/views/setting/themes.dart';
-import 'package:crypto_template/component/style.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:crypto_template/component/custom_text_field.dart';
 import 'package:get/get.dart';
@@ -72,7 +71,7 @@ class TwoFA extends StatelessWidget {
                         child: CustomTextField(
                             widgetIcon: Icon(
                               Icons.email,
-                              color: colorStyle.primaryColor,
+                              color: Theme.of(context).primaryColor,
                               size: 20,
                             ),
                             validator: _twoFAValidator,

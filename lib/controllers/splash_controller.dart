@@ -9,7 +9,6 @@ class SplashController extends GetxController {
   @override
   void onInit() {
     startTime();
-
     super.onInit();
   }
 
@@ -21,7 +20,7 @@ class SplashController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool _seenOnBoarding = (prefs.getBool('seen_on_boarding') ?? false);
     _seenOnBoarding = _seenOnBoarding != null ? _seenOnBoarding : false;
-    if (!_seenOnBoarding) {
+    if (_seenOnBoarding) {
       Get.offNamed('/home', arguments: {'selectedNavIndex': 0});
     } else {
       await prefs.setBool('seen_on_boarding', true);

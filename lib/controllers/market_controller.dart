@@ -53,7 +53,7 @@ class MarketController extends GetxController {
     super.onReady();
   }
 
-  void fetchMarkets() async {
+  Future<void> fetchMarkets() async {
     MarketRepository _marketRepository = new MarketRepository();
     try {
       isLoading(true);
@@ -78,6 +78,7 @@ class MarketController extends GetxController {
     var negativemarketsFormatedData = new List<FormatedMarket>();
     for (Market market in markets) {
       if (tickers[market.id] != null) {
+        var priceInUsd = '---';
         bool isPositiveChange = true;
         double marketLast = double.parse(tickers[market.id].ticker.last);
         double marketOpen = tickers[market.id].ticker.open.runtimeType != double
@@ -92,6 +93,9 @@ class MarketController extends GetxController {
         if (change < 0) {
           isPositiveChange = false;
         }
+        priceInUsd = market.quoteUnit == 'usd'
+            ? priceInUsd = marketLast.toStringAsFixed(2)
+            : getBaseUnitPriceInUsd(market.baseUnit, tickers);
         var formatedMarket = new FormatedMarket(
             id: market.id,
             name: market.name,
@@ -99,6 +103,7 @@ class MarketController extends GetxController {
             quoteUnit: market.quoteUnit,
             minPrice: market.minPrice,
             maxPrice: market.maxPrice,
+            priceInUsd: priceInUsd,
             amountPrecision: market.amountPrecision,
             pricePrecision: market.pricePrecision,
             state: market.state,
@@ -126,6 +131,21 @@ class MarketController extends GetxController {
     selectedMarketTrading.value = formatedMarketsList[0];
     positiveMarketsList.assignAll(positivemarketsFormatedData);
     negativeMarketsList.assignAll(negativemarketsFormatedData);
+  }
+
+  String getBaseUnitPriceInUsd(String baseUnit, Map<String, dynamic> tickers) {
+    var priceInUsd = '---';
+
+    var market = marketList.firstWhere(
+        (market) =>
+            market.baseUnit.toLowerCase() == baseUnit.toLowerCase() &&
+            market.quoteUnit == 'usd',
+        orElse: () => null);
+    if (market != null) {
+      priceInUsd =
+          (double.parse(tickers[market.id].ticker.last)).toStringAsFixed(2);
+    }
+    return priceInUsd;
   }
 
   void updateMarketData(tickers) {
@@ -161,9 +181,9 @@ class MarketController extends GetxController {
           selectedMarketTrading.value = market;
           selectedMarketTrading.refresh();
         }
-        int positiveExistingIndex = positiveMarketsList.value
+        int positiveExistingIndex = positiveMarketsList
             .indexWhere((element) => element.id == market.id);
-        int negativeExistingIndex = negativeMarketsList.value
+        int negativeExistingIndex = negativeMarketsList
             .indexWhere((element) => element.id == market.id);
         if (isPositiveChange) {
           if (positiveExistingIndex != -1) {

@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:io';
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/controllers/SnackbarController.dart';
 import 'package:crypto_template/controllers/error_controller.dart';
@@ -7,6 +7,7 @@ import 'package:crypto_template/models/verification_label.dart';
 import 'package:crypto_template/repository/user_repository.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class VerificationController extends GetxController {
   var nationalities = [
@@ -418,7 +419,7 @@ class VerificationController extends GetxController {
     {"id": 3, "type": "driver_license", "name": "Driver License"},
     {"id": 4, "type": "utility_bill", "name": "Utility Bill"},
   ].obs;
-
+  final myFormat = DateFormat('d/MM/yyyy');
   TextEditingController phoneTextController;
   TextEditingController pinCodeTextController;
 
@@ -447,6 +448,28 @@ class VerificationController extends GetxController {
   final _currentStep = 0.obs;
 
   var selectedDocumentType = Map<String, Object>().obs;
+  var currentDate = DateTime.now().obs;
+
+  Rx<File> documentFile = File('').obs;
+  var documentFileName = ''.obs;
+  var documentFilePath = ''.obs;
+  var documentFileBytes = List<int>().obs;
+  var documentFileError = false.obs;
+  var documentFileErrorMessage = ''.obs;
+
+  Rx<File> additionalFile = File('').obs;
+  var additionalFileName = ''.obs;
+  var additionalFilePath = ''.obs;
+  var additionalFileBytes = List<int>().obs;
+  var additionalFileError = false.obs;
+  var additionalFileErrorMessage = ''.obs;
+
+  Rx<File> selfie = File('').obs;
+  var selfieName = ''.obs;
+  var selfiePath = ''.obs;
+  var selfieBytes = List<int>().obs;
+  var selfieError = false.obs;
+  var selfieErrorMessage = ''.obs;
 
   get currentStep => this._currentStep.value;
   set currentStep(index) => this._currentStep.value = index;
@@ -481,6 +504,9 @@ class VerificationController extends GetxController {
 
     documentNumberTextController = TextEditingController();
     documentExpiryTextController = TextEditingController();
+
+    documentExpiryTextController.text = myFormat.format(currentDate.value);
+    dateOfBirthTextController.text = myFormat.format(currentDate.value);
 
     selectedNationality.value = nationalities[0];
     selectedCountry.value = countries[0];
@@ -601,25 +627,54 @@ class VerificationController extends GetxController {
     Get.dialog(Center(child: CircularProgressIndicator()),
         barrierDismissible: false);
     try {
+      var metaData = {
+        'nationality': nationalityTextController.text,
+      };
       var reqObj = {
         'first_name': firstNameTextController.text,
         'last_name': lastNameTextController.text,
         'dob': dateOfBirthTextController.text,
         'country': residencyTextController.text,
-        'metadata': {
-          'nationality': nationalityTextController.text,
-        },
-        'address': addressTextController.value,
+        'metadata': metaData.toString(),
+        'address': addressTextController.text,
         'city': cityTextController.text,
         'postcode': postCodeTextController.text,
       };
       var response = await _userRepository.verifyIdentity(reqObj);
-      homeController.user.value.level = 3;
-      homeController.user.refresh();
+      fetchLabels();
       print(response);
       Get.back();
       snackbarController = new SnackbarController(
-          title: 'Success', message: 'success.phone.confirmed');
+          title: 'Success', message: 'success.identity.accepted');
+      snackbarController.showSnackbar();
+    } catch (error) {
+      Get.back();
+      errorController.handleError(error);
+    }
+  }
+
+  void verifyDocuments() async {
+    UserRepository _userRepository = new UserRepository();
+    Get.dialog(Center(child: CircularProgressIndicator()),
+        barrierDismissible: false);
+    try {
+      var files = [documentFileBytes, additionalFileBytes, selfieBytes];
+      var reqObj = {
+        'doc_type': selectedDocumentType['name'],
+        'doc_number': documentNumberTextController.text,
+        'doc_expire': documentExpiryTextController.text,
+        'upload[]': files
+      };
+      // reqObj.addAll({'upload[]': documentFileBytes.value.toString()});
+      // reqObj.addAll({'upload[]': additionalFileBytes.value.toString()});
+      // reqObj.addAll({'upload[]': selfieBytes.value.toString()});
+
+      var response = await _userRepository.verifyDocuments(reqObj);
+      Get.back();
+      Get.back();
+      Get.back();
+      snackbarController = new SnackbarController(
+          title: 'Success', message: 'success.documents.accepted');
       snackbarController.showSnackbar();
     } catch (error) {
       Get.back();

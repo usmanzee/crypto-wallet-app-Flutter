@@ -13,7 +13,7 @@ class MarketTicker {
     this.ticker,
   });
 
-  int at;
+  dynamic at;
   Ticker ticker;
 
   factory MarketTicker.fromJson(Map<String, dynamic> json) => MarketTicker(

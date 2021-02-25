@@ -62,7 +62,6 @@
 //   }
 // }
 
-import 'package:crypto_template/bindings/root_binding.dart';
 import 'package:crypto_template/bindings/socket_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -78,7 +77,6 @@ void main() {
     DeviceOrientation.portraitDown,
   ]);
   SocketBinding().dependencies();
-  // RootBinding().dependencies();
   runApp(MyApp());
 }
 

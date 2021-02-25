@@ -32,7 +32,7 @@ class CryptoDepositController extends GetxController {
       isAddressLoading(true);
       var depositAddressResponse =
           await _walletRepository.fetchDepositAddress(currency);
-      if (!depositAddressResponse.address.isNull) {
+      if (depositAddressResponse.address != null) {
         var addressArr = depositAddressResponse.address.split('?dt=');
         depositAddress.value = addressArr[0];
         depositTag.value = addressArr.length == 2 ? addressArr[1] : '';

@@ -8,7 +8,7 @@ import 'package:crypto_template/views/trading/limit_order_form.dart';
 import 'package:crypto_template/views/trading/market_order_form.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:crypto_template/views/DetailCryptoValue/openOrders.dart';
+import 'package:crypto_template/views/DetailCryptoValue/open_orders.dart';
 
 class Trading extends StatelessWidget {
   static final GlobalKey<ScaffoldState> _scaffoldKey =
@@ -91,23 +91,23 @@ class Trading extends StatelessWidget {
       ),
       body: SingleChildScrollView(
           child: Padding(
-        padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+        padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
-              child: Text(
-                'Order Book',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+            //   child: Text(
+            //     'Order Book',
+            //     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            //   ),
+            // ),
             OrderBook(
                 isTrading: true,
                 formatedMarket: marketController.selectedMarketTrading.value,
-                asks: marketController.asks.value,
-                bids: marketController.bids.value),
+                asks: marketController.asks,
+                bids: marketController.bids),
             DefaultTabController(
               length: 2,
               child: Column(

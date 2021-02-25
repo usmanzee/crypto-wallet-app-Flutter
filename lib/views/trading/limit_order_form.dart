@@ -23,10 +23,12 @@ class LimitOrderForm extends StatelessWidget {
                 color: Theme.of(context).canvasColor,
                 child: Row(
                   children: [
-                    IconButton(
-                      icon: Icon(Icons.remove),
-                      onPressed: () {},
-                    ),
+                    GestureDetector(
+                        onTap: () {
+                          removeValueFromInput(
+                              'buy', 'price', formatedMarket.pricePrecision);
+                        },
+                        child: Icon(Icons.remove)),
                     Flexible(
                       child: TextFormField(
                         controller:
@@ -46,10 +48,12 @@ class LimitOrderForm extends StatelessWidget {
                             hintText: "Price"),
                       ),
                     ),
-                    IconButton(
-                      icon: Icon(Icons.add),
-                      onPressed: () {},
-                    ),
+                    GestureDetector(
+                        onTap: () {
+                          addValueToInput(
+                              'buy', 'price', formatedMarket.pricePrecision);
+                        },
+                        child: Icon(Icons.add)),
                   ],
                 ),
               ),
@@ -60,10 +64,12 @@ class LimitOrderForm extends StatelessWidget {
                 color: Theme.of(context).canvasColor,
                 child: Row(
                   children: [
-                    IconButton(
-                      icon: Icon(Icons.remove),
-                      onPressed: () {},
-                    ),
+                    GestureDetector(
+                        onTap: () {
+                          removeValueFromInput(
+                              'buy', 'amount', formatedMarket.pricePrecision);
+                        },
+                        child: Icon(Icons.remove)),
                     Flexible(
                       child: TextFormField(
                         controller:
@@ -84,10 +90,12 @@ class LimitOrderForm extends StatelessWidget {
                             hintText: "Amount"),
                       ),
                     ),
-                    IconButton(
-                      icon: Icon(Icons.add),
-                      onPressed: () {},
-                    ),
+                    GestureDetector(
+                        onTap: () {
+                          addValueToInput(
+                              'buy', 'amount', formatedMarket.amountPrecision);
+                        },
+                        child: Icon(Icons.add)),
                   ],
                 ),
               ),
@@ -307,10 +315,12 @@ class LimitOrderForm extends StatelessWidget {
                 color: Theme.of(context).canvasColor,
                 child: Row(
                   children: [
-                    IconButton(
-                      icon: Icon(Icons.remove),
-                      onPressed: () {},
-                    ),
+                    GestureDetector(
+                        onTap: () {
+                          removeValueFromInput(
+                              'sell', 'price', formatedMarket.pricePrecision);
+                        },
+                        child: Icon(Icons.remove)),
                     Flexible(
                       child: TextFormField(
                         controller:
@@ -331,10 +341,12 @@ class LimitOrderForm extends StatelessWidget {
                             hintText: "Price"),
                       ),
                     ),
-                    IconButton(
-                      icon: Icon(Icons.add),
-                      onPressed: () {},
-                    ),
+                    GestureDetector(
+                        onTap: () {
+                          addValueToInput(
+                              'sell', 'price', formatedMarket.pricePrecision);
+                        },
+                        child: Icon(Icons.add)),
                   ],
                 ),
               ),
@@ -345,10 +357,12 @@ class LimitOrderForm extends StatelessWidget {
                 color: Theme.of(context).canvasColor,
                 child: Row(
                   children: [
-                    IconButton(
-                      icon: Icon(Icons.remove),
-                      onPressed: () {},
-                    ),
+                    GestureDetector(
+                        onTap: () {
+                          removeValueFromInput(
+                              'sell', 'amount', formatedMarket.pricePrecision);
+                        },
+                        child: Icon(Icons.remove)),
                     Flexible(
                       child: TextFormField(
                         controller: tradingController
@@ -369,10 +383,12 @@ class LimitOrderForm extends StatelessWidget {
                             hintText: "Amount"),
                       ),
                     ),
-                    IconButton(
-                      icon: Icon(Icons.add),
-                      onPressed: () {},
-                    ),
+                    GestureDetector(
+                        onTap: () {
+                          addValueToInput(
+                              'sell', 'amount', formatedMarket.pricePrecision);
+                        },
+                        child: Icon(Icons.add)),
                   ],
                 ),
               ),
@@ -579,5 +595,135 @@ class LimitOrderForm extends StatelessWidget {
         ),
       )
     ]);
+  }
+
+  void addValueToInput(String formType, String inputType, int percision) {
+    var number = 1;
+    var decimalPointNumber = number.toString().padRight(percision + 1, '0');
+    var maxNumber = int.parse(decimalPointNumber);
+    var finalNumber = (1 / maxNumber).toStringAsFixed(percision);
+    if (formType == 'buy' && inputType == 'price') {
+      var existingNumber =
+          tradingController.limitOrderBuyPriceTextController.text != ''
+              ? double.parse(
+                  tradingController.limitOrderBuyPriceTextController.text)
+              : 0.0;
+
+      tradingController.limitOrderBuyPriceTextController.text =
+          (existingNumber + double.parse(finalNumber))
+              .toStringAsFixed(percision);
+      tradingController.onLimitOrderBuyPriceChange(
+          tradingController.limitOrderBuyPriceTextController.text);
+    }
+    if (formType == 'buy' && inputType == 'amount') {
+      var existingNumber =
+          tradingController.limitOrderBuyAmountTextController.text != ''
+              ? double.parse(
+                  tradingController.limitOrderBuyAmountTextController.text)
+              : 0.0;
+
+      tradingController.limitOrderBuyAmountTextController.text =
+          (existingNumber + double.parse(finalNumber))
+              .toStringAsFixed(percision);
+      tradingController.onLimitOrderBuyAmountChange(
+          tradingController.limitOrderBuyAmountTextController.text);
+    }
+    if (formType == 'sell' && inputType == 'price') {
+      var existingNumber =
+          tradingController.limitOrderSellPriceTextController.text != ''
+              ? double.parse(
+                  tradingController.limitOrderSellPriceTextController.text)
+              : 0.0;
+
+      tradingController.limitOrderSellPriceTextController.text =
+          (existingNumber + double.parse(finalNumber))
+              .toStringAsFixed(percision);
+      tradingController.onLimitOrderSellPriceChange(
+          tradingController.limitOrderSellPriceTextController.text);
+    }
+    if (formType == 'sell' && inputType == 'amount') {
+      var existingNumber =
+          tradingController.limitOrderSellAmountTextController.text != ''
+              ? double.parse(
+                  tradingController.limitOrderSellAmountTextController.text)
+              : 0.0;
+
+      tradingController.limitOrderSellAmountTextController.text =
+          (existingNumber + double.parse(finalNumber))
+              .toStringAsFixed(percision);
+      tradingController.onLimitOrderSellAmountChange(
+          tradingController.limitOrderSellAmountTextController.text);
+    }
+  }
+
+  void removeValueFromInput(String formType, String inputType, int percision) {
+    var number = 1;
+    var decimalPointNumber = number.toString().padRight(percision + 1, '0');
+    var maxNumber = int.parse(decimalPointNumber);
+    var finalNumber = (1 / maxNumber).toStringAsFixed(percision);
+    if (formType == 'buy' && inputType == 'price') {
+      var existingNumber =
+          tradingController.limitOrderBuyPriceTextController.text != ''
+              ? double.parse(
+                  tradingController.limitOrderBuyPriceTextController.text)
+              : 0.0;
+
+      if (existingNumber > 0) {
+        tradingController.limitOrderBuyPriceTextController.text =
+            (existingNumber - double.parse(finalNumber))
+                .toStringAsFixed(percision);
+        tradingController.onLimitOrderBuyPriceChange(
+            tradingController.limitOrderBuyPriceTextController.text);
+      }
+    }
+    if (formType == 'buy' && inputType == 'amount') {
+      var existingNumber =
+          tradingController.limitOrderBuyAmountTextController.text != ''
+              ? double.parse(
+                  tradingController.limitOrderBuyAmountTextController.text)
+              : 0.0;
+
+      if (existingNumber > 0) {
+        tradingController.limitOrderBuyAmountTextController.text =
+            (existingNumber - double.parse(finalNumber))
+                .toStringAsFixed(percision);
+        tradingController.onLimitOrderBuyAmountChange(
+            tradingController.limitOrderBuyAmountTextController.text);
+      }
+    }
+    if (formType == 'sell' &&
+        inputType == 'price' &&
+        tradingController.limitOrderSellPriceTextController.text != '') {
+      var existingNumber =
+          tradingController.limitOrderSellPriceTextController.text != ''
+              ? double.parse(
+                  tradingController.limitOrderSellPriceTextController.text)
+              : 0.0;
+
+      if (existingNumber > 0) {
+        tradingController.limitOrderSellPriceTextController.text =
+            (existingNumber - double.parse(finalNumber))
+                .toStringAsFixed(percision);
+        tradingController.onLimitOrderSellPriceChange(
+            tradingController.limitOrderSellPriceTextController.text);
+      }
+    }
+    if (formType == 'sell' &&
+        inputType == 'amount' &&
+        tradingController.limitOrderSellAmountTextController.text != '') {
+      var existingNumber =
+          tradingController.limitOrderSellAmountTextController.text != ''
+              ? double.parse(
+                  tradingController.limitOrderSellAmountTextController.text)
+              : 0.0;
+
+      if (existingNumber > 0) {
+        tradingController.limitOrderSellAmountTextController.text =
+            (existingNumber - double.parse(finalNumber))
+                .toStringAsFixed(percision);
+        tradingController.onLimitOrderSellAmountChange(
+            tradingController.limitOrderSellAmountTextController.text);
+      }
+    }
   }
 }

@@ -79,7 +79,6 @@
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:crypto_template/controllers/open_orders_controller.dart';
-import 'package:crypto_template/controllers/order_book_controller.dart';
 import 'package:crypto_template/controllers/trading_controller.dart';
 import 'package:crypto_template/controllers/web_socket_controller.dart';
 import 'package:crypto_template/views/trading/trading.dart';
@@ -89,8 +88,10 @@ import 'package:crypto_template/views/home/home.dart';
 import 'package:crypto_template/views/market/markets.dart';
 import 'package:crypto_template/views/news/news_home.dart';
 import 'package:crypto_template/views/wallet/wallets.dart';
+import 'package:crypto_template/controllers/SnackbarController.dart';
 
 class BottomNavBar extends GetView<HomeController> {
+  DateTime currentBackPressTime;
   final MarketController marketController = Get.put(MarketController());
   final WebSocketController webSocketController = Get.find();
 
@@ -102,10 +103,12 @@ class BottomNavBar extends GetView<HomeController> {
               onRefresh: controller.refreshHomePage, child: new Home());
           break;
         case 1:
-          return new Market();
+          return RefreshIndicator(
+              onRefresh: controller.refreshMarketsPage, child: new Market());
           break;
         case 2:
-          return new Trading();
+          return RefreshIndicator(
+              onRefresh: controller.refreshTradingPage, child: new Trading());
           break;
         case 3:
           return new News();
@@ -125,11 +128,13 @@ class BottomNavBar extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Obx(
-        () => Center(
-          child:
-              callPage(controller.selectedNavIndex, controller.hasConnection),
-          // child: bodyContent.elementAt(controller.selectedNavIndex),
+      body: WillPopScope(
+        onWillPop: onWillPop,
+        child: Obx(
+          () => Center(
+            child:
+                callPage(controller.selectedNavIndex, controller.hasConnection),
+          ),
         ),
       ),
       bottomNavigationBar: Obx(
@@ -165,10 +170,6 @@ class BottomNavBar extends GetView<HomeController> {
                     icon: Icon(Icons.library_books),
                     label: "News",
                   ),
-                  // BottomNavigationBarItem(
-                  //   icon: Icon(Icons.account_circle),
-                  // label: "Settings",
-                  // ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.account_balance_wallet),
                     label: "Wallets",
@@ -184,10 +185,6 @@ class BottomNavBar extends GetView<HomeController> {
                         Get.isRegistered<TradingController>();
                     bool openOrdersInstance =
                         Get.isRegistered<OpenOrdersController>();
-                    // if (tradingControllerInstance) {
-                    //   webSocketController.subscribeOrderBookInc(
-                    //       marketController.selectedMarketTrading.value);
-                    // }
 
                     if (tradingControllerInstance && openOrdersInstance) {
                       Get.delete<TradingController>(force: true);
@@ -197,12 +194,27 @@ class BottomNavBar extends GetView<HomeController> {
                   } else {
                     controller.selectedNavIndex = index;
                   }
-                }
-                // onTap: (index) => homeController.selectedNavIndex = index,
-                ),
+                }),
           ),
         ),
       ),
     );
+  }
+
+  Future<bool> onWillPop() {
+    DateTime now = DateTime.now();
+    if (currentBackPressTime == null ||
+        now.difference(currentBackPressTime) > Duration(seconds: 2)) {
+      currentBackPressTime = now;
+      displayBackWarning();
+      return Future.value(false);
+    }
+    return Future.value(true);
+  }
+
+  void displayBackWarning() {
+    SnackbarController snackbarController =
+        new SnackbarController(title: '', message: 'Press back again to leave');
+    snackbarController.showSnackbar();
   }
 }

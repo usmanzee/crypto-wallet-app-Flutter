@@ -5,6 +5,7 @@ class FormatedMarket {
   String quoteUnit;
   String minPrice;
   String maxPrice;
+  String priceInUsd;
   String minAmount;
   int amountPrecision;
   int pricePrecision;
@@ -30,6 +31,7 @@ class FormatedMarket {
       this.quoteUnit,
       this.minPrice,
       this.maxPrice,
+      this.priceInUsd,
       this.minAmount,
       this.amountPrecision,
       this.pricePrecision,

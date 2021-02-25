@@ -1,98 +1,83 @@
 import 'package:flutter/material.dart';
-import 'package:crypto_template/Library/intro_views_flutter-2.4.0/lib/Models/page_view_model.dart';
-import 'package:crypto_template/Library/intro_views_flutter-2.4.0/lib/intro_views_flutter.dart';
-import 'package:crypto_template/component/style.dart';
+import 'package:introduction_screen/introduction_screen.dart';
 import 'package:get/get.dart';
 
-class OnBoarding extends StatelessWidget {
+class OnBoarding extends StatefulWidget {
+  @override
+  _OnBoardingState createState() => _OnBoardingState();
+}
+
+class _OnBoardingState extends State<OnBoarding> {
+  final introKey = GlobalKey<IntroductionScreenState>();
+
+  void _onIntroEnd(context) {
+    Get.offNamed('/home', arguments: {'selectedNavIndex': 0});
+  }
+
+  Widget _buildImage(String assetName) {
+    return Align(
+      child: Image.asset('assets/$assetName.png', width: 350.0),
+      alignment: Alignment.bottomCenter,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return IntroViewsFlutter(
-      pages,
-      pageButtonsColor: Theme.of(context).primaryColor,
-      skipText: Text(
-        "SKIP",
-        style: txtStyle.descriptionStyle.copyWith(
-            color: Theme.of(context).primaryColor,
-            fontWeight: FontWeight.w800,
-            letterSpacing: 1.0),
+    var bodyStyle = TextStyle(fontFamily: 'popins', fontSize: 16.0);
+    var pageDecoration = PageDecoration(
+      titleTextStyle: TextStyle(
+          fontFamily: 'popins', fontSize: 24.0, fontWeight: FontWeight.w700),
+      bodyTextStyle: bodyStyle,
+      descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+      pageColor: Theme.of(context).scaffoldBackgroundColor,
+      imagePadding: EdgeInsets.zero,
+    );
+
+    return IntroductionScreen(
+      key: introKey,
+      pages: [
+        PageViewModel(
+          title: "B4U Wallet & Exchange",
+          body:
+              "Application allows to buy, sell, trade, exchange or store digital currencies.",
+          image: _buildImage('ilustration/b1'),
+          decoration: pageDecoration,
+        ),
+        PageViewModel(
+          title: "24/7 Human Support",
+          body: "Extensive online help desk, 24/7 global human support.",
+          image: _buildImage('ilustration/b2'),
+          decoration: pageDecoration,
+        ),
+        PageViewModel(
+          title: "Fast Exchange",
+          body:
+              "Send or receive blockchain assets with single touch, Address or QR codes.",
+          image: _buildImage('ilustration/b3'),
+          decoration: pageDecoration,
+        ),
+      ],
+      onDone: () => _onIntroEnd(context),
+      //onSkip: () => _onIntroEnd(context), // You can override onSkip callback
+      showSkipButton: true,
+      skipFlex: 0,
+      nextFlex: 0,
+      skip: const Text(
+        'SKIP',
+        style: TextStyle(fontFamily: 'popins'),
       ),
-      doneText: Text(
-        "DONE",
-        style: txtStyle.descriptionStyle.copyWith(
-            color: Theme.of(context).primaryColor,
-            fontWeight: FontWeight.w800,
-            letterSpacing: 1.0),
+      next: const Icon(Icons.arrow_forward),
+      done: const Text('DONE',
+          style: TextStyle(fontFamily: 'popins', fontWeight: FontWeight.w600)),
+      dotsDecorator: DotsDecorator(
+        size: Size(10.0, 10.0),
+        color: Theme.of(context).hintColor,
+        activeSize: Size(22.0, 10.0),
+        activeColor: Theme.of(context).primaryColor,
+        activeShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+        ),
       ),
-      onTapDoneButton: () {
-        Get.offNamed('/home', arguments: {'selectedNavIndex': 0});
-      },
     );
   }
 }
-
-///
-/// Page View Model for on boarding
-///
-final pages = [
-  new PageViewModel(
-      title: Text(
-        'B4U Wallet And Exchange',
-        style: txtStyle.headerStyle,
-      ),
-      body: Container(
-        height: 350.0,
-        child: Text(
-          'Buy, sell, trade, exchange or store digital currencies.',
-          // 'Crypto application template \nbuy this code template in codecanyon',
-          textAlign: TextAlign.center,
-          style: txtStyle.descriptionStyle,
-        ),
-      ),
-      mainImage: Image.asset(
-        'assets/ilustration/b1.png',
-        height: 485.0,
-        width: 485.0,
-        alignment: Alignment.center,
-      )),
-  new PageViewModel(
-      title: Text(
-        '24/7 Support',
-        style: txtStyle.headerStyle,
-      ),
-      body: Container(
-        height: 250.0,
-        child: Text(
-          'Extensive online help desk, 24/7 global human support.',
-          // 'Crypto application template \nbuy this code template in codecanyon',
-          textAlign: TextAlign.center,
-          style: txtStyle.descriptionStyle,
-        ),
-      ),
-      mainImage: Image.asset(
-        'assets/ilustration/b2.png',
-        height: 285.0,
-        width: 285.0,
-        alignment: Alignment.center,
-      )),
-  new PageViewModel(
-      title: Text(
-        'Fast Exchange',
-        style: txtStyle.headerStyle,
-      ),
-      body: Container(
-        height: 250.0,
-        child: Text(
-          'Send or receive blockchain assets with single touch, Address or QR codes.',
-          // 'Crypto application template \nbuy this code template in codecanyon',
-          textAlign: TextAlign.center,
-          style: txtStyle.descriptionStyle,
-        ),
-      ),
-      mainImage: Image.asset(
-        'assets/ilustration/b3.png',
-        height: 285.0,
-        width: 285.0,
-        alignment: Alignment.center,
-      )),
-];

@@ -1,5 +1,4 @@
 import 'package:crypto_template/models/open_order.dart';
-import 'package:crypto_template/screen/crypto_detail_card_homeScreen/DetailCryptoValue/openOrders.dart';
 
 class WsHelper {
   static bool isArray(String type) {
@@ -116,27 +115,10 @@ class WsHelper {
           return openOrder;
         }).toList();
       default:
-        List<OpenOrder> newli = [];
-
-        //   // if (openOrdersList[i].id == id) {
-        //   //   splice(openOrdersList, i, 1);
-        //   // }
-        // }
-        // return newli;
-
         openOrdersList.removeWhere((openOrder) {
           return openOrder.id == id;
         });
-
         return openOrdersList;
-
-      // return openOrdersList.map((openOrder) {
-      //   if (openOrder.id != id) {
-      //     return openOrder;
-      //   } else {
-      //     print(openOrder.id.toString() + ' is removed');
-      //   }
-      // }).toList();
     }
   }
 }

@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 class RequestHeaders {
   HomeController homeController = Get.find();
 
-  Object setAuthHeaders() {
+  Map<String, String> setAuthHeaders() {
     var nonce = new DateTime.now()
         // .add(new Duration(seconds: 10))
         .millisecondsSinceEpoch;

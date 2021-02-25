@@ -16,7 +16,7 @@ class SnackbarController extends GetxController {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25.0),
+            borderRadius: BorderRadius.circular(24.0),
             color: Get.isDarkMode ? Colors.grey[200] : Colors.grey[900],
           ),
           child: Row(

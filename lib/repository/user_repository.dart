@@ -101,4 +101,17 @@ class UserRepository {
     final response = await apiProvider.post('barong/resource/profiles', reqObj);
     return response;
   }
+
+  Future<dynamic> verifyDocuments(reqObj) async {
+    apiProvider = new ApiProvider();
+    RequestHeaders requestHeaders = new RequestHeaders();
+    var authHeaders = requestHeaders.setAuthHeaders();
+    // authHeaders.addAll({
+    //   "Content-Type": "multipart/form-data",
+    // });
+    apiProvider.headers = authHeaders;
+    final response =
+        await apiProvider.post('barong/resource/documents', reqObj);
+    return response;
+  }
 }

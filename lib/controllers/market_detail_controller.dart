@@ -61,7 +61,7 @@ class MarketDetailController extends GetxController {
   @override
   void onInit() async {
     market.value = marketController.selectedMarket.value;
-
+    print('init');
     await setDefaultValues();
     await getKlineData();
 
@@ -105,11 +105,22 @@ class MarketDetailController extends GetxController {
         market.value, selectedOption['valueInMinute']);
   }
 
-  void setDefaultValues() {
+  Future<void> setDefaultValues() {
     selectedOption.assignAll(lineGraphTimeSlots[2]);
   }
 
-  void getKlineData() async {
+  Future<Null> refreshPage() async {
+    // bool controllerInstance = Get.isRegistered<MarketDetailController>();
+    // if (controllerInstance) {
+    //   Get.delete<MarketDetailController>(force: true);
+    //   Get.put(MarketDetailController());
+    // }
+    onClose();
+    onInit();
+    onReady();
+  }
+
+  Future<void> getKlineData() async {
     MarketRepository _marketRepository = new MarketRepository();
     try {
       isKLineLoading(true);

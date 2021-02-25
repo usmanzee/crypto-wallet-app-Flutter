@@ -12,7 +12,7 @@ class WebSocketController extends GetxController {
 
   final String _baseUrl = "ws://10.121.121.48:9003/api/v2/ranger/public";
   // final String _baseUrl = "wss://www.app.local/";
-  // final String _baseUrl = "wss://www.coinee.cf/";
+  // final String _baseUrl = "wss://www.coinee.cf/api/v2/ranger/public";
   // final String _baseUrl = "wss://ewallet.b4uwallet.com/api/v2/ranger/public";
   final isChannelConnected = false.obs;
   Rx<IOWebSocketChannel> channel;
@@ -47,7 +47,7 @@ class WebSocketController extends GetxController {
   //   streamController.value.addStream(channel.value.stream);
   // }
 
-  void subscribeOrderBookInc(FormatedMarket market) {
+  Future<void> subscribeOrderBookInc(FormatedMarket market) async {
     channel.value.sink.add(json.encode({
       "event": "subscribe",
       "streams": [
@@ -56,7 +56,7 @@ class WebSocketController extends GetxController {
     }));
   }
 
-  void unSubscribeOrderBookInc(FormatedMarket market) {
+  Future<void> unSubscribeOrderBookInc(FormatedMarket market) async {
     channel.value.sink.add(json.encode({
       "event": "unsubscribe",
       "streams": [
@@ -65,28 +65,28 @@ class WebSocketController extends GetxController {
     }));
   }
 
-  void subscribeKline(FormatedMarket market, String timeValue) {
+  Future<void> subscribeKline(FormatedMarket market, String timeValue) async {
     channel.value.sink.add(json.encode({
       "event": "subscribe",
       "streams": ['${market.id}.kline-' + timeValue]
     }));
   }
 
-  void unSubscribeKline(FormatedMarket market, String timeValue) {
+  Future<void> unSubscribeKline(FormatedMarket market, String timeValue) async {
     channel.value.sink.add(json.encode({
       "event": "unsubscribe",
       "streams": ['${market.id}.kline-' + timeValue]
     }));
   }
 
-  void subscribeOrder() {
+  Future<void> subscribeOrder() async {
     channel.value.sink.add(json.encode({
       "event": "subscribe",
       "streams": ['order']
     }));
   }
 
-  void unSubscribeOrder() {
+  Future<void> unSubscribeOrder() async {
     channel.value.sink.add(json.encode({
       "event": "unsubscribe",
       "streams": ['order']

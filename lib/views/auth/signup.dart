@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:crypto_template/views/auth/login.dart';
 import 'package:crypto_template/views/setting/themes.dart';
-import 'package:crypto_template/component/style.dart';
 import 'package:crypto_template/component/custom_text_field.dart';
 import 'package:crypto_template/controllers/RegisterController.dart';
 
@@ -91,7 +89,7 @@ class SignUp extends StatelessWidget {
                         child: CustomTextField(
                             widgetIcon: Icon(
                               Icons.email,
-                              color: colorStyle.primaryColor,
+                              color: Theme.of(context).primaryColor,
                               size: 20,
                             ),
                             validator: emailValidator,
@@ -109,7 +107,7 @@ class SignUp extends StatelessWidget {
                             widgetIcon: Icon(
                               Icons.vpn_key,
                               size: 20,
-                              color: colorStyle.primaryColor,
+                              color: Theme.of(context).primaryColor,
                             ),
                             validator: _passwordValidator,
                             // onChanged: (input) => _password = input,
@@ -127,7 +125,7 @@ class SignUp extends StatelessWidget {
                             widgetIcon: Icon(
                               Icons.vpn_key,
                               size: 20,
-                              color: colorStyle.primaryColor,
+                              color: Theme.of(context).primaryColor,
                             ),
                             controller: _registerController
                                 .confirmPasswordTextController,
@@ -150,7 +148,7 @@ class SignUp extends StatelessWidget {
                             widgetIcon: Icon(
                               Icons.group_add,
                               size: 20,
-                              color: colorStyle.primaryColor,
+                              color: Theme.of(context).primaryColor,
                             ),
                             // onChanged: (input) => _referralCode = input,
                             controller:
@@ -229,52 +227,6 @@ class SignUp extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildTextFeild({
-    String hint,
-    FormFieldSetter onSaved,
-    ValueChanged onChanged,
-    FormFieldValidator validator,
-    TextEditingController controller,
-    TextInputType keyboardType,
-    bool obscure,
-    String icon,
-    TextAlign textAlign,
-    Widget widgetIcon,
-  }) {
-    return Column(
-      children: <Widget>[
-        Container(
-          child: TextFormField(
-            onChanged: onChanged,
-            // onSaved: onSaved,
-            style: new TextStyle(color: Colors.white),
-            textAlign: textAlign,
-            obscureText: obscure,
-            validator: validator,
-            controller: controller,
-            keyboardType: keyboardType,
-            autocorrect: false,
-            autofocus: false,
-            decoration: InputDecoration(
-                errorStyle: TextStyle(
-                  fontSize: 13.5,
-                ),
-                errorMaxLines: 3,
-                filled: true,
-                fillColor: Colors.transparent,
-                labelText: hint,
-                hintStyle: TextStyle(color: Colors.white),
-                labelStyle: TextStyle(
-                  color: Colors.white70,
-                ),
-                border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
-          ),
-        ),
-      ],
     );
   }
 }

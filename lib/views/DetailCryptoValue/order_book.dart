@@ -1,23 +1,9 @@
 import 'package:crypto_template/controllers/market_controller.dart';
-import 'package:crypto_template/controllers/order_book_controller.dart';
 import 'package:crypto_template/controllers/trading_controller.dart';
 import 'package:crypto_template/models/formated_market.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:crypto_template/utils/Helpers/helper.dart';
-
-// class OrderBook extends StatefulWidget {
-//   final Widget child;
-//   final FormatedMarket formatedMarket;
-//   final dynamic asks;
-//   final dynamic bids;
-
-//   OrderBook({Key key, this.child, this.formatedMarket, this.asks, this.bids})
-//       : super(key: key);
-
-//   _OrderBookState createState() =>
-//       _OrderBookState(formatedMarket: formatedMarket, asks: asks, bids: bids);
-// }
 
 class OrderBook extends StatelessWidget {
   final bool isTrading;
@@ -40,48 +26,62 @@ class OrderBook extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Container(
-          color: Theme.of(context).canvasColor,
-          child: Padding(
-            padding: const EdgeInsets.only(
-                left: 0.0, right: 0.0, top: 7.0, bottom: 7.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left: 12.0),
-                  child: Text(
-                    "Buy Amount",
+          child: Column(children: [
+            // Row(
+            //   crossAxisAlignment: CrossAxisAlignment.start,
+            //   children: [
+            //     Text(
+            //       formatedMarket.last != null
+            //           ? formatedMarket.last.toStringAsFixed(2)
+            //           : '',
+            //       style: TextStyle(
+            //           color: formatedMarket.isPositiveChange != null
+            //               ? formatedMarket.isPositiveChange
+            //                   ? Color(0xFF00C087)
+            //                   : Colors.redAccent
+            //               : Theme.of(context).scaffoldBackgroundColor,
+            //           fontFamily: "Gotik",
+            //           fontWeight: FontWeight.w600,
+            //           fontSize: 18.5),
+            //     )
+            //   ],
+            // ),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 0.0, right: 0.0, top: 8.0, bottom: 8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    "Amount (" + formatedMarket.baseUnit.toUpperCase() + ")",
                     style: TextStyle(
                         color: Theme.of(context).hintColor,
                         fontSize: 12,
                         fontFamily: "Popins"),
                   ),
-                ),
-                Text(
-                  "Price",
-                  style: TextStyle(
-                      color: Theme.of(context).hintColor,
-                      fontSize: 12,
-                      fontFamily: "Popins"),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 10.0),
-                  child: Text(
-                    "Amount Sell",
+                  Text(
+                    "Price (" + formatedMarket.quoteUnit.toUpperCase() + ")",
                     style: TextStyle(
                         color: Theme.of(context).hintColor,
                         fontSize: 12,
                         fontFamily: "Popins"),
                   ),
-                ),
-              ],
+                  Text(
+                    "Amount (" + formatedMarket.baseUnit.toUpperCase() + ")",
+                    style: TextStyle(
+                        color: Theme.of(context).hintColor,
+                        fontSize: 12,
+                        fontFamily: "Popins"),
+                  ),
+                ],
+              ),
             ),
-          ),
+          ]),
         ),
-        SizedBox(
-          height: 10.0,
-        ),
+        // SizedBox(
+        //   height: 8.0,
+        // ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -194,7 +194,7 @@ class OrderBook extends StatelessWidget {
           child: Stack(children: [
             SizedBox.expand(
               child: RotatedBox(
-                quarterTurns: 0,
+                quarterTurns: 2,
                 child: LinearProgressIndicator(
                   value: rowWidth,
                   backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -297,7 +297,7 @@ class OrderBook extends StatelessWidget {
           child: Stack(children: [
             SizedBox.expand(
               child: RotatedBox(
-                quarterTurns: 2,
+                quarterTurns: 0,
                 child: LinearProgressIndicator(
                   value: rowWidth,
                   backgroundColor: Theme.of(context).scaffoldBackgroundColor,

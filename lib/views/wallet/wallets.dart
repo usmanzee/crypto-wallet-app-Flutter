@@ -6,7 +6,6 @@ import 'package:crypto_template/views/wallet/wallet_loading_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/models/wallet.dart' as WalletClass;
 import 'package:get/get.dart';
-import 'package:crypto_template/utils/Helpers/estimate_value.dart';
 
 class Wallets extends StatelessWidget {
   final walletController = Get.put(WalletController());

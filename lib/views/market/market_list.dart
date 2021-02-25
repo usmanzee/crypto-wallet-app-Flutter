@@ -1,4 +1,3 @@
-import 'package:crypto_template/component/market/btcModel.dart';
 import 'package:crypto_template/component/no_data.dart';
 import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:crypto_template/models/formated_market.dart';
@@ -19,43 +18,34 @@ class MarketList extends StatelessWidget {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(
-              left: 0.0, right: 0.0, top: 7.0, bottom: 2.0),
+              left: 8.0, right: 8.0, top: 8.0, bottom: 8.0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(left: 22.0),
+                padding: const EdgeInsets.only(left: 0.0),
                 child: Container(
-                    width: 100.0,
                     child: Text(
-                      "Pair",
-                      style: TextStyle(
-                          color: Theme.of(context).hintColor,
-                          fontFamily: "Popins"),
-                    )),
+                  "Pair",
+                  style: TextStyle(
+                      color: Theme.of(context).hintColor, fontFamily: "Popins"),
+                )),
               ),
               Container(
-                  width: 100.0,
                   child: Text(
-                    "Last Price",
-                    style: TextStyle(
-                        color: Theme.of(context).hintColor,
-                        fontFamily: "Popins"),
-                  )),
+                "Last Price",
+                style: TextStyle(
+                    color: Theme.of(context).hintColor, fontFamily: "Popins"),
+              )),
               Container(
-                  width: 80.0,
                   child: Text(
-                    "24h Chg%",
-                    style: TextStyle(
-                        color: Theme.of(context).hintColor,
-                        fontFamily: "Popins"),
-                  )),
+                "24h Chg%",
+                style: TextStyle(
+                    color: Theme.of(context).hintColor, fontFamily: "Popins"),
+              )),
             ],
           ),
-        ),
-        SizedBox(
-          height: 0.0,
         ),
         Obx(() {
           if (marketController.isLoading.value)
@@ -72,15 +62,15 @@ class MarketList extends StatelessWidget {
       child: ListView.builder(
         shrinkWrap: true,
         primary: false,
-        itemCount: btcMarketList.length,
+        itemCount: 10,
         itemBuilder: (ctx, i) {
-          return loadingCard(ctx, btcMarketList[i]);
+          return loadingCard(ctx);
         },
       ),
     );
   }
 
-  Widget loadingCard(BuildContext ctx, btcMarket item) {
+  Widget loadingCard(BuildContext ctx) {
     return Padding(
       padding: const EdgeInsets.only(top: 7.0),
       child: Shimmer.fromColors(
@@ -203,13 +193,13 @@ class MarketList extends StatelessWidget {
               primary: false,
               itemCount: formatedMarketList.length,
               itemBuilder: (ctx, i) {
-                return card(ctx, btcMarketList[i], formatedMarketList[i]);
+                return card(ctx, formatedMarketList[i]);
               },
             ),
           );
   }
 
-  Widget card(BuildContext ctx, btcMarket item, FormatedMarket formatedMarket) {
+  Widget card(BuildContext ctx, FormatedMarket formatedMarket) {
     return Padding(
       padding: const EdgeInsets.only(top: 7.0),
       child: Column(
@@ -217,7 +207,7 @@ class MarketList extends StatelessWidget {
           InkWell(
             onTap: () {
               marketController.selectedMarket.value = formatedMarket;
-              Get.toNamed('market-detail');
+              Get.toNamed('/market-detail');
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -229,15 +219,6 @@ class MarketList extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      // Padding(
-                      //   padding: const EdgeInsets.only(left: 5.0, right: 12.0),
-                      //   child: Image.asset(
-                      //     item.icon,
-                      //     height: 22.0,
-                      //     fit: BoxFit.contain,
-                      //     width: 22.0,
-                      //   ),
-                      // ),
                       Container(
                         width: 95.0,
                         child: Column(
@@ -249,23 +230,24 @@ class MarketList extends StatelessWidget {
                                 Text(
                                   formatedMarket.baseUnit.toUpperCase(),
                                   style: TextStyle(
-                                      fontFamily: "Popins", fontSize: 16.5),
+                                      fontFamily: "Popins",
+                                      fontSize: 14.5,
+                                      fontWeight: FontWeight.w600),
                                 ),
                                 Text(
-                                  " / " +
-                                      formatedMarket.quoteUnit.toUpperCase(),
+                                  " /" + formatedMarket.quoteUnit.toUpperCase(),
                                   style: TextStyle(
                                       fontFamily: "Popins",
-                                      fontSize: 11.5,
+                                      fontSize: 10.5,
                                       color: Theme.of(ctx).hintColor),
                                 ),
                               ],
                             ),
                             Text(
-                              'Vol ' + formatedMarket.volume.toString(),
+                              'Vol ' + formatedMarket.volume.toStringAsFixed(2),
                               style: TextStyle(
                                   fontFamily: "Popins",
-                                  fontSize: 11.5,
+                                  fontSize: 10.5,
                                   color: Theme.of(ctx).hintColor),
                             )
                           ],
@@ -284,11 +266,11 @@ class MarketList extends StatelessWidget {
                         formatedMarket.last.toStringAsFixed(2),
                         style: TextStyle(
                             fontFamily: "Popins",
-                            fontSize: 14.5,
+                            fontSize: 12.5,
                             fontWeight: FontWeight.w600),
                       ),
                       Text(
-                        item.priceDollar,
+                        '\$' + formatedMarket.priceInUsd,
                         style: TextStyle(
                             fontFamily: "Popins",
                             fontSize: 11.5,

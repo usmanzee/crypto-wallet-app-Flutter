@@ -3,6 +3,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 import 'package:crypto_template/controllers/otp_controller.dart';
+import 'package:crypto_template/utils/Helpers/helper.dart';
 
 class EnableOTP extends GetView<OTPController> {
   final GlobalKey<FormState> _secretFormKey = GlobalKey<FormState>();
@@ -108,21 +109,43 @@ class EnableOTP extends GetView<OTPController> {
   List<Step> _myStep(context) {
     List<Step> _steps = [
       Step(
-          title: Text('Download & Install'),
+          title: Text(
+            'Download & Install',
+            style: TextStyle(
+              fontFamily: 'popins',
+              fontWeight: FontWeight.normal,
+            ),
+          ),
           content: Column(
             children: <Widget>[
               Text(
-                  'Download and install Google Authenticator application from AppStore or Google play')
+                'Download and install Google Authenticator application from AppStore or Google play',
+                style: TextStyle(
+                  fontFamily: 'popins',
+                  fontWeight: FontWeight.normal,
+                ),
+              )
             ],
           ),
           isActive: controller.currentStep >= 0,
           state: StepState.indexed),
       Step(
-          title: Text('Save The Scerect Key'),
+          title: Text(
+            'Save The Scerect Key',
+            style: TextStyle(
+              fontFamily: 'popins',
+              fontWeight: FontWeight.normal,
+            ),
+          ),
           content: Column(
             children: <Widget>[
               Text(
-                  'Save this secret in a secure location. This code can be used to gain 2FA access from a different device'),
+                'Save this secret in a secure location. This code can be used to gain 2FA access from a different device',
+                style: TextStyle(
+                  fontFamily: 'popins',
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
               SizedBox(
                 height: 8,
               ),
@@ -135,14 +158,7 @@ class EnableOTP extends GetView<OTPController> {
                       borderRadius: BorderRadius.all(Radius.circular(10.0))),
                   child: GestureDetector(
                     onTap: () {
-                      Clipboard.setData(
-                              ClipboardData(text: controller.secretKey.value))
-                          .then((value) {
-                        Get.snackbar('Success', 'Copied to clipboard',
-                            snackPosition: SnackPosition.BOTTOM,
-                            colorText: Colors.white,
-                            backgroundColor: Colors.grey[900]);
-                      });
+                      Helper.copyToClipBoard(controller.secretKey.value);
                     },
                     child: Column(children: [
                       Text(
@@ -153,6 +169,7 @@ class EnableOTP extends GetView<OTPController> {
                       Text(
                         'Copy Secret',
                         style: TextStyle(
+                            fontFamily: 'popins',
                             color: Theme.of(context).primaryColor,
                             fontSize: 16,
                             fontWeight: FontWeight.w500),
@@ -166,9 +183,19 @@ class EnableOTP extends GetView<OTPController> {
           isActive: controller.currentStep >= 1,
           state: StepState.indexed),
       Step(
-          title: Text('Verify The Scerect Key'),
+          title: Text(
+            'Verify The Secrect Key',
+            style: TextStyle(
+              fontFamily: 'popins',
+              fontWeight: FontWeight.normal,
+            ),
+          ),
           content: Column(
             children: <Widget>[
+              // Text('Verify the secret key you saved in above step.'),
+              // SizedBox(
+              //   height: 8,
+              // ),
               Form(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 key: _secretFormKey,
@@ -194,9 +221,26 @@ class EnableOTP extends GetView<OTPController> {
           isActive: controller.currentStep >= 2,
           state: StepState.indexed),
       Step(
-          title: Text('Submit The Code From App'),
+          title: Text(
+            'Submit The Code From App',
+            style: TextStyle(
+              fontFamily: 'popins',
+              fontWeight: FontWeight.normal,
+            ),
+          ),
           content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              Text(
+                'Now create a new entry in your authenticator app with the saved secret key and verify the gererated code.',
+                style: TextStyle(
+                  fontFamily: 'popins',
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+              SizedBox(
+                height: 8,
+              ),
               Form(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 key: _otpFormKey,
