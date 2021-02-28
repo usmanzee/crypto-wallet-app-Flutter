@@ -13,26 +13,26 @@ class Home extends StatelessWidget {
   final MarketController marketController = Get.find();
   final HomeController homeController = Get.find();
 
-  var banners = [1, 2, 3];
-  _listBannerImages(context) {
-    var bannerImages = [];
-    for (var image in banners) {
-      bannerImages.add(new GestureDetector(
-        onTap: () {
-          print('image.url');
-        },
-        child: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/image/banner/banner2.png'),
-                  fit: BoxFit.cover)),
-          height: 220.0,
-          width: MediaQuery.of(context).size.width,
-        ),
-      ));
-    }
-    return bannerImages;
-  }
+  // var banners = [1, 2, 3];
+  // _listBannerImages(context) {
+  //   var bannerImages = [];
+  //   for (var image in banners) {
+  //     bannerImages.add(new GestureDetector(
+  //       onTap: () {
+  //         print('image.url');
+  //       },
+  //       child: Container(
+  //         decoration: BoxDecoration(
+  //             image: DecorationImage(
+  //                 image: AssetImage('assets/image/banner/banner2.png'),
+  //                 fit: BoxFit.cover)),
+  //         height: 220.0,
+  //         width: MediaQuery.of(context).size.width,
+  //       ),
+  //     ));
+  //   }
+  //   return bannerImages;
+  // }
 
   @override
   Widget build(BuildContext context) {

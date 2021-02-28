@@ -1,81 +1,4 @@
-// import 'package:get/get.dart';
-// import 'package:flutter/material.dart';
-// import 'package:crypto_template/views/Bottom_Nav_Bar/custom_nav_bar.dart';
-// import 'package:crypto_template/views/home/home.dart';
-// import 'package:crypto_template/views/market/markets.dart';
-// import 'package:crypto_template/views/news/news_home.dart';
-// import 'package:crypto_template/views/wallet/wallet.dart';
-// import 'package:crypto_template/controllers/HomeController.dart';
-
-// class BottomNavBar extends StatelessWidget {
-//   final HomeController homeController = Get.put(new HomeController());
-//   Widget callPage(int current) {
-//     switch (current) {
-//       case 0:
-//         return new Home();
-//         break;
-//       case 1:
-//         return new market();
-//         break;
-//       case 2:
-//         return new news();
-//         break;
-//       case 3:
-//         return new news();
-//         break;
-//       case 4:
-//         return new Wallet();
-//         break;
-//       default:
-//         return new Home();
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Obx(() {
-//       return Scaffold(
-//         body: callPage(homeController.selectedNavIndex),
-//         bottomNavigationBar: BottomNavigationDotBar(
-//             // Usar -> "BottomNavigationDotBar"
-//             color: Theme.of(context).hintColor,
-//             items: <BottomNavigationDotBarItem>[
-//               BottomNavigationDotBarItem(
-//                   icon: Icons.home,
-//                   onTap: () {
-//                     homeController.selectedNavIndex = 0;
-//                   }),
-//               BottomNavigationDotBarItem(
-//                   icon: Icons.account_balance,
-//                   onTap: () {
-//                     homeController.selectedNavIndex = 1;
-//                   }),
-//               BottomNavigationDotBarItem(
-//                   icon: Icons.insights,
-//                   onTap: () {
-//                     homeController.selectedNavIndex = 2;
-//                   }),
-//               BottomNavigationDotBarItem(
-//                   icon: Icons.library_books,
-//                   onTap: () {
-//                     homeController.selectedNavIndex = 3;
-//                   }),
-//               BottomNavigationDotBarItem(
-//                   icon: Icons.account_balance_wallet,
-//                   onTap: () {
-//                     var isLoggedIn = homeController.isLoggedIn;
-//                     if (!isLoggedIn) {
-//                       Get.toNamed('/login');
-//                     } else {
-//                       homeController.selectedNavIndex = 4;
-//                     }
-//                   }),
-//             ]),
-//       );
-//     });
-//   }
-// }
-
+import 'package:crypto_template/component/no_internet.dart';
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:crypto_template/controllers/open_orders_controller.dart';
@@ -91,10 +14,9 @@ import 'package:crypto_template/views/wallet/wallets.dart';
 import 'package:crypto_template/controllers/SnackbarController.dart';
 
 class BottomNavBar extends GetView<HomeController> {
-  DateTime currentBackPressTime;
   final MarketController marketController = Get.put(MarketController());
   final WebSocketController webSocketController = Get.find();
-
+  DateTime currentBackPressTime;
   Widget callPage(int current, bool hasConnection) {
     if (hasConnection) {
       switch (current) {
@@ -118,10 +40,11 @@ class BottomNavBar extends GetView<HomeController> {
               onRefresh: controller.refreshWalletsPage, child: new Wallets());
           break;
         default:
-          return new Home();
+          return RefreshIndicator(
+              onRefresh: controller.refreshHomePage, child: new Home());
       }
     } else {
-      return Text('No internet connection');
+      return NoInternet();
     }
   }
 

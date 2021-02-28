@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 import 'package:crypto_template/component/custom_button.dart';
 import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/views/security/enable_otp.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
 class WithdrawFiat extends StatefulWidget {
@@ -22,9 +21,6 @@ class WithdrawFiat extends StatefulWidget {
 class _WithdrawFiatState extends State<WithdrawFiat> {
   final WalletClass.Wallet wallet;
   _WithdrawFiatState({this.wallet});
-
-  String dropdownValue = 'One';
-  String _currentSelectedValue = 'Food';
 
   final HomeController homeController = Get.find();
   FiatWithdrawController withdrawController;

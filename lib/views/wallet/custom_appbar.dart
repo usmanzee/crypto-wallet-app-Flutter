@@ -58,7 +58,7 @@ class WalletCustomAppbar extends StatelessWidget {
                         Text(
                           wallet.currency.toUpperCase(),
                           style: TextStyle(
-                            fontFamily: "Sans",
+                            fontFamily: "Popins",
                             fontWeight: FontWeight.w800,
                             fontSize: 20.0,
                             letterSpacing: 1.5,

@@ -47,14 +47,16 @@ class OpenOrders extends StatelessWidget {
             height: 1,
             decoration: BoxDecoration(color: Theme.of(context).canvasColor),
           ),
-          if (openOrdersController.openOrdersSortedList.length > 0)
-            Container(
-              width: double.infinity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+          Container(
+            width: double.infinity,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                if (openOrdersController.openOrdersList.length > 0)
                   Row(children: [
                     Checkbox(
+                      // checkColor: Colors.yellowAccent, // color of tick Mark
+                      activeColor: Theme.of(context).primaryColor,
                       value: openOrdersController.hideOtherOrders.value,
                       onChanged: (bool value) {
                         openOrdersController.hideOrShowOtherOrder();
@@ -67,13 +69,14 @@ class OpenOrders extends StatelessWidget {
                       child: Text(
                         'Hide Other Pairs',
                         style: TextStyle(
-                            color: Theme.of(context).hintColor,
+                            color: Theme.of(context).textSelectionColor,
                             fontWeight: FontWeight.w700,
                             fontFamily: "sans",
                             fontSize: 15.0),
                       ),
                     ),
                   ]),
+                if (openOrdersController.openOrdersSortedList.length > 0)
                   FlatButton(
                     height: 30.0,
                     minWidth: 40.0,
@@ -91,9 +94,9 @@ class OpenOrders extends StatelessWidget {
                     },
                     splashColor: Theme.of(context).canvasColor.withOpacity(0.5),
                   )
-                ],
-              ),
+              ],
             ),
+          ),
           Container(
             width: double.infinity,
             height: 1,

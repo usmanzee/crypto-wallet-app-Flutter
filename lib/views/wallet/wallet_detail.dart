@@ -85,36 +85,6 @@ class _WalletDetailState extends State<WalletDetail> {
                       padding: const EdgeInsets.only(top: 5.0),
                       child: _cardHeader(context, widget.wallet),
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(
-                    //       left: 0.0, right: 0.0, top: 0.0),
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //     children: <Widget>[
-                    //       Text("Transactions History",
-                    //           style: TextStyle(
-                    //               letterSpacing: 1.1, fontFamily: "Sans")),
-                    //       FlatButton(
-                    //         height: 32.0,
-                    //         minWidth: 120.0,
-                    //         textColor: Theme.of(context).accentColor,
-                    //         child: Text(
-                    //           "view All",
-                    //           style: TextStyle(fontSize: 12),
-                    //         ),
-                    //         onPressed: () {},
-                    //         shape: RoundedRectangleBorder(
-                    //             side: BorderSide(
-                    //                 color: Theme.of(context).accentColor,
-                    //                 width: 1,
-                    //                 style: BorderStyle.solid),
-                    //             borderRadius: BorderRadius.circular(10)),
-                    //         splashColor:
-                    //             Theme.of(context).accentColor.withOpacity(0.5),
-                    //       )
-                    //     ],
-                    //   ),
-                    // ),
                     Container(
                       height: 470.0,
                       child: Column(
@@ -223,24 +193,15 @@ class _WalletDetailState extends State<WalletDetail> {
                                                   .withdrawHistory.isEmpty
                                               ? NoData()
                                               : Container(
-                                                  // height: 400.0,
                                                   child: ListView.builder(
                                                   shrinkWrap: true,
                                                   primary: false,
-                                                  // physics: AlwaysScrollableScrollPhysics(),
                                                   padding:
                                                       EdgeInsets.only(top: 0.0),
                                                   itemBuilder: (ctx, i) {
                                                     return _withdrawHistoryList(
                                                       transactionHistoryController
                                                           .withdrawHistory[i],
-                                                      // Colors.redAccent
-                                                      //     .withOpacity(0.75),
-                                                      // "06/03/2018",
-                                                      // "Confirming",
-                                                      // "- 0.010",
-                                                      // "BTC",
-                                                      // Icons.mobile_screen_share
                                                     );
                                                   },
                                                   itemCount:
@@ -415,7 +376,7 @@ class _WalletDetailState extends State<WalletDetail> {
                       Text(depositHistoryItem.state,
                           style: TextStyle(
                               letterSpacing: 1.1,
-                              fontFamily: "Popins",
+                              fontFamily: "Sans",
                               fontSize: 13.0))
                     ],
                   ),
@@ -635,6 +596,8 @@ class _WalletDetailState extends State<WalletDetail> {
 
   void _depositHistoryDetail(context, DepositHistory depositHistoryItem,
       Color _color, IconData _icon, String formatedDate, String formatedTime) {
+    bool isButtonEnabled =
+        depositHistoryItem.txid != null && depositHistoryItem.txid != '';
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
@@ -794,10 +757,14 @@ class _WalletDetailState extends State<WalletDetail> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      MaterialButton(
-                        color: Theme.of(context).canvasColor,
-                        onPressed: (depositHistoryItem.txid != '' &&
-                                depositHistoryItem.txid != null)
+                      RawMaterialButton(
+                        disabledElevation: 1,
+                        fillColor: isButtonEnabled
+                            ? Theme.of(context).scaffoldBackgroundColor
+                            : Theme.of(context)
+                                .scaffoldBackgroundColor
+                                .withOpacity(0.5),
+                        onPressed: isButtonEnabled
                             ? () =>
                                 Helper.copyToClipBoard(depositHistoryItem.txid)
                             : null,
@@ -814,12 +781,15 @@ class _WalletDetailState extends State<WalletDetail> {
                       SizedBox(
                         width: 8,
                       ),
-                      MaterialButton(
-                        color: Theme.of(context).accentColor,
-                        onPressed: () {
-                          _handleURLButtonPress(
-                              wallet.currency, depositHistoryItem.txid);
-                        },
+                      RawMaterialButton(
+                        disabledElevation: 1,
+                        fillColor: isButtonEnabled
+                            ? Theme.of(context).primaryColor
+                            : Theme.of(context).primaryColor.withOpacity(0.5),
+                        onPressed: isButtonEnabled
+                            ? () => _handleURLButtonPress(
+                                wallet.currency, depositHistoryItem.txid)
+                            : null,
                         child: Center(
                             child: Text(
                           "Check Explorer",
@@ -842,6 +812,8 @@ class _WalletDetailState extends State<WalletDetail> {
 
   void _withdrawHistoryDetail(context, WithdrawHistory withdrawHistoryItem,
       Color _color, IconData _icon, String formatedDate, String formatedTime) {
+    bool isButtonEnabled = withdrawHistoryItem.blockchainTxid != null &&
+        withdrawHistoryItem.blockchainTxid != '';
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
@@ -1003,10 +975,14 @@ class _WalletDetailState extends State<WalletDetail> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      MaterialButton(
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                        onPressed: (withdrawHistoryItem.blockchainTxid != '' &&
-                                withdrawHistoryItem.blockchainTxid != null)
+                      RawMaterialButton(
+                        disabledElevation: 1,
+                        fillColor: isButtonEnabled
+                            ? Theme.of(context).scaffoldBackgroundColor
+                            : Theme.of(context)
+                                .scaffoldBackgroundColor
+                                .withOpacity(0.5),
+                        onPressed: isButtonEnabled
                             ? () => Helper.copyToClipBoard(
                                 withdrawHistoryItem.blockchainTxid)
                             : null,
@@ -1020,12 +996,15 @@ class _WalletDetailState extends State<WalletDetail> {
                               fontSize: 16.0),
                         )),
                       ),
-                      MaterialButton(
-                        color: Theme.of(context).accentColor,
-                        onPressed: () {
-                          _handleURLButtonPress(wallet.currency,
-                              withdrawHistoryItem.blockchainTxid);
-                        },
+                      RawMaterialButton(
+                        disabledElevation: 1,
+                        fillColor: isButtonEnabled
+                            ? Theme.of(context).primaryColor
+                            : Theme.of(context).primaryColor.withOpacity(0.5),
+                        onPressed: isButtonEnabled
+                            ? () => _handleURLButtonPress(wallet.currency,
+                                withdrawHistoryItem.blockchainTxid)
+                            : null,
                         child: Center(
                             child: Text(
                           "Check Explorer",

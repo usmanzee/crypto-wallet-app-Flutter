@@ -4,7 +4,6 @@ import 'package:crypto_template/views/wallet/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/models/wallet.dart' as WalletClass;
 import 'package:get/get.dart';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 import 'dart:async';
@@ -57,22 +56,13 @@ class _DepositFiatState extends State<DepositFiat> {
     depositController =
         Get.put(FiatDepositController(currency: wallet.currency));
     getDepositDetails();
-    print('widget init');
-    // var allbanks = depositDetails[0]['banks'];
-    // for (var bank in allbanks) {
-    //   var data = bank as Map;
-    //   for (var item in data.keys) {
-    //     final value = data[item];
-    //     print('$item , $value');
-    //   }
-    // }
     super.initState();
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size(double.infinity, 100),
+        preferredSize: Size(double.infinity, 80),
         child: WalletCustomAppbar(
           title: 'Deposit',
           screenType: 'deposit',

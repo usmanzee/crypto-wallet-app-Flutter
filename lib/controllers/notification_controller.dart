@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 class NotificationController extends GetxController {
   var isLoading = true.obs;
+  var showReload = false.obs;
   var notificationList = List<NotificationResponse>().obs;
   ErrorController errorController = new ErrorController();
 
@@ -18,13 +19,15 @@ class NotificationController extends GetxController {
     NotificationRepository _notificationRepository =
         new NotificationRepository();
     try {
+      showReload(false);
       isLoading(true);
       var notifications = await _notificationRepository.fetchNotifications();
       notificationList.assignAll(notifications);
       isLoading(false);
     } catch (error) {
-      print(error);
+      showReload(true);
       isLoading(false);
+      print(error);
       errorController.handleError(error);
     }
   }

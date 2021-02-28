@@ -129,22 +129,35 @@ class _WalletState extends State<DepositCrypto> {
                                       'Send only ' +
                                           wallet.currency.toUpperCase() +
                                           ' to this deposit address',
-                                      style:
-                                          Theme.of(context).textTheme.bodyText1,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: Theme.of(context)
+                                            .textSelectionColor,
+                                        fontSize: 12,
+                                        fontFamily: "Popins",
+                                      ),
                                     ),
                                     SizedBox(height: 8.0),
                                     Text(
                                       '* Sending coin or token other than ' +
                                           wallet.currency.toUpperCase() +
                                           ' to this address may result in the loss of your deposit.',
-                                      style:
-                                          Theme.of(context).textTheme.bodyText2,
+                                      style: TextStyle(
+                                        color: Theme.of(context)
+                                            .textSelectionColor,
+                                        fontSize: 12,
+                                        fontFamily: "Popins",
+                                      ),
                                     ),
                                     SizedBox(height: 4.0),
                                     Text(
                                       '* Until 6 confirmations are made, an equivalent amount of your assets will be temporarily unavailable for withdrawals.',
-                                      style:
-                                          Theme.of(context).textTheme.bodyText2,
+                                      style: TextStyle(
+                                        color: Theme.of(context)
+                                            .textSelectionColor,
+                                        fontSize: 12,
+                                        fontFamily: "Popins",
+                                      ),
                                     ),
                                   ],
                                 )
@@ -246,28 +259,38 @@ class _WalletState extends State<DepositCrypto> {
 
   Widget _showAddress(context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
-      // height: 125.0,
+      // padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
       width: double.infinity,
-      decoration: BoxDecoration(
-          // color: Theme.of(context).canvasColor,
-          borderRadius: BorderRadius.all(Radius.circular(10.0))),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10.0))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
             children: <Widget>[
-              Text(wallet.currency.toUpperCase() + ' Address'),
+              Text(
+                wallet.currency.toUpperCase() + ' Address',
+                style: TextStyle(
+                  color: Theme.of(context).textSelectionColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "Popins",
+                ),
+              ),
               Spacer(flex: 1),
               FlatButton(
                 height: 30.0,
                 minWidth: 40.0,
                 color: Theme.of(context).canvasColor,
-                // textColor: Colors.white,
                 child: Text(
                   "Copy Address",
-                  style: TextStyle(fontSize: 10),
+                  style: TextStyle(
+                    color: Theme.of(context).textSelectionColor,
+                    fontSize: 10,
+                    // fontWeight: FontWeight.w600,
+                    fontFamily: "Popins",
+                  ),
                 ),
                 onPressed: () {
                   Helper.copyToClipBoard(
@@ -305,7 +328,14 @@ class _WalletState extends State<DepositCrypto> {
         height: 40.0,
         minWidth: 150.0,
         color: Theme.of(context).canvasColor,
-        child: new Text("Share"),
+        child: new Text(
+          "Share",
+          style: TextStyle(
+            color: Theme.of(context).textSelectionColor,
+            fontSize: 10,
+            fontFamily: "Popins",
+          ),
+        ),
         onPressed: () {
           share(context);
         },
@@ -317,10 +347,8 @@ class _WalletState extends State<DepositCrypto> {
   Widget _showTagDepositInstruction(context) {
     return Container(
       padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
-      // height: 125.0,
       width: double.infinity,
       decoration: BoxDecoration(
-        // color: Theme.of(context).canvasColor,
         color: Theme.of(context).errorColor.withOpacity(0.3),
       ),
       child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [

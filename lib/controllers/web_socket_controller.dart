@@ -10,7 +10,7 @@ class WebSocketController extends GetxController {
   // final FormatedMarket market;
   // WebSocketController({this.withAuth, this.market});
 
-  final String _baseUrl = "ws://10.121.121.48:9003/api/v2/ranger/public";
+  final String _baseUrl = "ws://192.168.18.7:9003/api/v2/ranger/public";
   // final String _baseUrl = "wss://www.app.local/";
   // final String _baseUrl = "wss://www.coinee.cf/api/v2/ranger/public";
   // final String _baseUrl = "wss://ewallet.b4uwallet.com/api/v2/ranger/public";
@@ -30,22 +30,21 @@ class WebSocketController extends GetxController {
   void connectToWebSocket() async {
     final String wsURL = _baseUrl + '/?stream=global.tickers';
     channel = IOWebSocketChannel.connect(wsURL).obs;
-    streamController = StreamController.broadcast().obs;
-    streamController.value.addStream(channel.value.stream);
+    // streamController = StreamController.broadcast().obs;
+    // streamController.value.addStream(channel.value.stream);
+
+    channel.value.stream.listen((event) {
+      streamController.value.add(event);
+    }, onError: (e) async {
+      print('error');
+      await Future.delayed(Duration(seconds: 3));
+      connectToWebSocket();
+    }, onDone: () async {
+      print('on done');
+      await Future.delayed(Duration(seconds: 3));
+      connectToWebSocket();
+    }, cancelOnError: true);
   }
-  // void connectToWebSocket(bool withAuth, market) async {
-  //   var wsAPIVersion = withAuth ? '/private' : '/public';
-  //   var url = _baseUrl + wsAPIVersion;
-  //   var streams = await streamsBuilder(true, market, true);
-  //   final String wsURL =
-  //       'ws://10.121.121.48:9003/api/v2/ranger/public/?stream=global.tickers';
-  //   // final String wsURL =
-  //   //     'wss://ewallet.b4uwallet.com/api/v2/ranger/public/?stream=global.tickers';
-  //   var streamURL = generateSocketURI(url, streams);
-  //   channel = IOWebSocketChannel.connect(wsURL).obs;
-  //   streamController = StreamController.broadcast().obs;
-  //   streamController.value.addStream(channel.value.stream);
-  // }
 
   Future<void> subscribeOrderBookInc(FormatedMarket market) async {
     channel.value.sink.add(json.encode({

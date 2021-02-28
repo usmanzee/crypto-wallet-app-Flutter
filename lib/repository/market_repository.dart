@@ -15,7 +15,6 @@ class MarketRepository {
 
   Future<Map<String, MarketTicker>> fetchMarketsTickers() async {
     final response = await apiProvider.get('peatio/public/markets/tickers');
-    print(response);
     return marketTickerFromJson(response);
   }
 

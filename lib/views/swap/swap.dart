@@ -2,7 +2,6 @@ import 'package:crypto_template/component/no_data.dart';
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/controllers/swap_controller.dart';
 import 'package:crypto_template/controllers/wallet_controller.dart';
-import 'package:crypto_template/views/verification/verification.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';

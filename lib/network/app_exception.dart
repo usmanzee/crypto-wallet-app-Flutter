@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:crypto_template/utils/Helpers/readable_message.dart';
 
 class AppException implements Exception {
@@ -6,17 +5,6 @@ class AppException implements Exception {
   final _prefix;
 
   AppException([this.response, this._prefix]);
-
-  // String toString() {
-  //   ReadAbleMessage newReadAbleMessage = new ReadAbleMessage(message: _message);
-  //   var readAbleMessage = newReadAbleMessage.getMessage();
-  //   var obj = {
-  //     'statusCode': _statusCode,
-  //     'message': _prefix + readAbleMessage,
-  //     'originalMessage': _message
-  //   };
-  //   return obj.toString();
-  // }
 
   dynamic errorResponse() {
     var errorResponseObject = {};
@@ -29,27 +17,7 @@ class AppException implements Exception {
       'message': _prefix + readAbleMessage,
       'originalMessage': response["message"]
     };
-    // if (response.statusCode == 1) {
-    //   errorResponseObject = {
-    //     'statusCode': response["statusCode"],
-    //     'message': _prefix + response["message"],
-    //     'originalMessage': response["message"]
-    //   };
-    // } else {
-    //   var errorResponse = json.decode(response.body);
-    //   var errors = errorResponse['errors'];
-    //   for (var i = 0; i <= errors.length; i++) {
-    //     // throw BadRequestException(errors[i]);
-    //     ReadAbleMessage newReadAbleMessage =
-    //         new ReadAbleMessage(message: errors[i]);
-    //     var readAbleMessage = newReadAbleMessage.getMessage();
-    //     errorResponseObject = {
-    //       'statusCode': response.statusCode,
-    //       'message': _prefix + readAbleMessage,
-    //       'originalMessage': errors[i]
-    //     };
-    //   }
-    // }
+
     return errorResponseObject;
   }
 }

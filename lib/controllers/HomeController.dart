@@ -14,6 +14,7 @@ import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:crypto_template/controllers/wallet_controller.dart';
 // import 'package:get_mac/get_mac.dart';
 import 'package:connectivity/connectivity.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
 
 class HomeController extends GetxController {
   // final int activeNavIndex = Get.arguments['selectedNavIndex'];
@@ -49,6 +50,8 @@ class HomeController extends GetxController {
   get previousConnection => this._previousConnection.value;
   set previousConnection(value) => this._previousConnection.value = value;
 
+  // FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
   @override
   void onInit() async {
     selectedNavIndex =
@@ -59,11 +62,23 @@ class HomeController extends GetxController {
     }
     connectivity = new Connectivity();
     subscription = connectivity.onConnectivityChanged.listen(_connectionChange);
+
+    // _firebaseMessaging.configure(
+    //   onMessage: (message) async {
+    //     print('on message');
+    //     print(message);
+
+    //   },
+    //   onResume: (message) async {
+    //     print('resume');
+    //     print(message);
+
+    //   },
+    // );
     super.onInit();
   }
 
   void _connectionChange(ConnectivityResult result) {
-    print('change');
     previousConnection = hasConnection;
     if (result == ConnectivityResult.wifi ||
         result == ConnectivityResult.mobile) {
@@ -71,9 +86,9 @@ class HomeController extends GetxController {
     } else {
       hasConnection = false;
     }
-    if (!previousConnection) {
-      refreshHomePage();
-    }
+    // if (!previousConnection) {
+    //   refreshHomePage();
+    // }
   }
 
   // void fetchMacAddress() async {
@@ -97,31 +112,34 @@ class HomeController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('loggedIn');
     isLoggedIn.value = false;
-    snackbarController =
-        new SnackbarController(title: 'Error', message: 'Loggedout.');
+    snackbarController = new SnackbarController(
+        title: 'Error', message: 'Your login session has expired.');
     snackbarController.showSnackbar();
-    // Get.offNamed('/home', arguments: {'selectedNavIndex': 0});
   }
 
   void changePage() {
-    print(Get.arguments['selectedNavIndex']);
     selectedNavIndex =
         Get.arguments != null ? Get.arguments['selectedNavIndex'] : 0;
   }
 
   Future<Null> refreshHomePage() async {
     // await Future.delayed(Duration(seconds: 2));
-    MarketController marketController = Get.find<MarketController>();
-    marketController.fetchMarkets();
+    bool marketControllerInstance = Get.isRegistered<MarketController>();
+    if (marketControllerInstance) {
+      Get.delete<MarketController>(force: true);
+      Get.put(MarketController());
+    }
     if (isLoggedIn.value) {
       fetchUser();
     }
   }
 
   Future<Null> refreshMarketsPage() async {
-    // await Future.delayed(Duration(seconds: 2));
-    MarketController marketController = Get.find<MarketController>();
-    marketController.fetchMarkets();
+    bool marketControllerInstance = Get.isRegistered<MarketController>();
+    if (marketControllerInstance) {
+      Get.delete<MarketController>(force: true);
+      Get.put(MarketController());
+    }
   }
 
   Future<Null> refreshTradingPage() async {
@@ -140,9 +158,11 @@ class HomeController extends GetxController {
   }
 
   Future<Null> refreshWalletsPage() async {
-    // await Future.delayed(Duration(seconds: 2));
-    WalletController walletController = Get.find<WalletController>();
-    walletController.fetchWallets();
+    bool walletControllerInstance = Get.isRegistered<WalletController>();
+    if (walletControllerInstance) {
+      Get.delete<WalletController>(force: true);
+      Get.put(WalletController());
+    }
   }
 
   void fetchUser() async {

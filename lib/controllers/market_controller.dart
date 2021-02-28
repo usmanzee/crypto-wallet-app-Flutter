@@ -28,13 +28,10 @@ class MarketController extends GetxController {
   ErrorController errorController = new ErrorController();
   WebSocketController webSocketController;
 
-  Rx<StreamController> streamController;
-
   @override
   void onInit() async {
     await fetchMarkets();
     webSocketController = Get.find<WebSocketController>();
-
     webSocketController.streamController.value.stream.listen((message) {
       var data = json.decode(message);
       if (data.containsKey('global.tickers')) {
@@ -65,7 +62,6 @@ class MarketController extends GetxController {
 
       isLoading(false);
     } catch (error) {
-      print(error);
       isLoading(false);
       errorController.handleError(error);
     }
@@ -151,6 +147,7 @@ class MarketController extends GetxController {
   void updateMarketData(tickers) {
     for (FormatedMarket market in formatedMarketsList) {
       if (tickers[market.id] != null) {
+        var priceInUsd = '---';
         bool isPositiveChange = true;
         double marketLast = double.parse(tickers[market.id]['last']);
         double marketOpen = tickers[market.id]['open'].runtimeType != double
@@ -165,9 +162,13 @@ class MarketController extends GetxController {
         if (change < 0) {
           isPositiveChange = false;
         }
+        priceInUsd = market.quoteUnit == 'usd'
+            ? priceInUsd = marketLast.toStringAsFixed(2)
+            : getBaseUnitPriceInUsd(market.baseUnit, tickers);
         market.avgPrice = tickers[market.id]['avg_price'];
         market.high = marketHigh;
         market.last = marketLast;
+        market.priceInUsd = priceInUsd;
         market.low = marketLow;
         market.open = marketOpen;
         market.priceChangePercent = marketPriceChangePercent;

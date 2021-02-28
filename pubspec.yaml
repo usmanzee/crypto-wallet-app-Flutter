@@ -46,7 +46,8 @@ dependencies:
   oktoast: ^2.3.2
   image_picker: ^0.6.7+22
   introduction_screen: ^1.0.9
-  
+  upgrader: ^2.8.2
+  firebase_messaging: ^7.0.3
 
 dev_dependencies: 
   flutter_test:

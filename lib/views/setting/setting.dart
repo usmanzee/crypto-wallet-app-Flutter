@@ -190,7 +190,7 @@ class Setting extends StatelessWidget {
                       child: listSetting(
                           context,
                           Icon(
-                            Icons.group_add,
+                            Icons.perm_identity,
                             size: 20.0,
                           ),
                           "Identification"))

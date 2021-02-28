@@ -39,6 +39,7 @@ class OpenOrdersController extends GetxController {
     }
     ever(homeController.isLoggedIn, fetchOrderOnLoggedIn);
     if (homeController.isLoggedIn.value) {
+      print(webSocketController.channel.value);
       await webSocketController.subscribeOrder();
       getOpenOrdersDataFromWS();
     }
@@ -79,7 +80,9 @@ class OpenOrdersController extends GetxController {
     try {
       var reqObj = {};
       if (cancelAll) {
-        reqObj = {'market': formatedMarket.id};
+        if (hideOtherOrders.value) {
+          reqObj = {'market': formatedMarket.id};
+        }
       } else {
         reqObj = {'id': orderId.toString()};
       }

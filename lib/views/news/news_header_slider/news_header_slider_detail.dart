@@ -2,7 +2,7 @@ import 'package:crypto_template/component/News/newsHeaderModel.dart';
 import 'package:flutter/material.dart';
 
 class headerSliderDetail extends StatefulWidget {
-  newsHeader item;
+  NewsHeader item;
 
   headerSliderDetail({Key key, this.item}) : super(key: key);
 
@@ -10,7 +10,7 @@ class headerSliderDetail extends StatefulWidget {
 }
 
 class _headerSliderDetailState extends State<headerSliderDetail> {
-  newsHeader item;
+  NewsHeader item;
   _headerSliderDetailState(this.item);
 
   @override
@@ -48,15 +48,18 @@ class _headerSliderDetailState extends State<headerSliderDetail> {
 
     return Scaffold(
       body: SafeArea(
-              child: CustomScrollView(
+        child: CustomScrollView(
           scrollDirection: Axis.vertical,
           slivers: <Widget>[
-
-             SliverPersistentHeader( 
-                delegate:  MySliverAppBar(expandedHeight: _height-30.0,img: item.imageUrl,id:item.id,title: item.title,category: item.category),
-                pinned: true,
-              ),
-
+            SliverPersistentHeader(
+              delegate: MySliverAppBar(
+                  expandedHeight: _height - 30.0,
+                  img: item.imageUrl,
+                  id: item.id,
+                  title: item.title,
+                  category: item.category),
+              pinned: true,
+            ),
 
             /// Appbar Custom using a SliverAppBar
             // SliverAppBar(
@@ -158,162 +161,165 @@ class _headerSliderDetailState extends State<headerSliderDetail> {
   }
 }
 
-
-
-
 class MySliverAppBar extends SliverPersistentHeaderDelegate {
   final double expandedHeight;
 
-  String img,id,title,category;
+  String img, id, title, category;
 
-  MySliverAppBar({@required this.expandedHeight,this.img,this.id,this.title,this.category});
+  MySliverAppBar(
+      {@required this.expandedHeight,
+      this.img,
+      this.id,
+      this.title,
+      this.category});
 
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Stack(
-        fit: StackFit.expand,
-        overflow: Overflow.clip,
-        children: [
-          Container(
-            height: 50.0,
-            width: double.infinity,
-            color: Color(0xFF172E4D),
-          ),
-    Opacity(
-       opacity: (1 - shrinkOffset / expandedHeight),
+      fit: StackFit.expand,
+      overflow: Overflow.clip,
+      children: [
+        Container(
+          height: 50.0,
+          width: double.infinity,
+          color: Color(0xFF172E4D),
+        ),
+        Opacity(
+          opacity: (1 - shrinkOffset / expandedHeight),
           child: Hero(
-      transitionOnUserGestures: true,
-      tag: 'hero-tag-${id}',
-      child: new DecoratedBox(
-        decoration: new BoxDecoration(
-          image: new DecorationImage(
-      fit: BoxFit.cover,
-      image: new AssetImage(img),
+            transitionOnUserGestures: true,
+            tag: 'hero-tag-${id}',
+            child: new DecoratedBox(
+              decoration: new BoxDecoration(
+                image: new DecorationImage(
+                  fit: BoxFit.cover,
+                  image: new AssetImage(img),
+                ),
+                shape: BoxShape.rectangle,
+              ),
+              child: Container(
+                margin: EdgeInsets.only(top: 130.0),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: FractionalOffset.bottomCenter,
+                    end: FractionalOffset.topCenter,
+                    colors: <Color>[
+                      const Color(0xFF000000),
+                      const Color(0x00000000),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ),
-          shape: BoxShape.rectangle,
         ),
-        child: Container(
-          margin: EdgeInsets.only(top: 130.0),
-          decoration: BoxDecoration(
-      gradient: LinearGradient(
-              begin: FractionalOffset.bottomCenter,
-              end: FractionalOffset.topCenter,
-          colors: <Color>[
-           const Color(0xFF000000),
-                const Color(0x00000000),
-          ],
-        
-          ),
-          ),
-        ),
-      ),
-          ),
-    ),
- 
- 
-      //  Positioned(
-      //     top: expandedHeight / 2 - shrinkOffset,
-      //     left: MediaQuery.of(context).size.width / 4,
-      //     child: Opacity(
-      //       opacity: (1 - shrinkOffset / expandedHeight),
-      //       child: Card(
-      //         elevation: 10,
-      //         child: SizedBox(
-      //           height: expandedHeight,
-      //           width: MediaQuery.of(context).size.width / 2,
-      //           child: Container(
-      //               width: 220.0,
-      //               child: Padding(
-      //                 padding: const EdgeInsets.only(top: 50.0),
-      //                 child: Text(
-      //                   title,
-      //                   style: TextStyle(
-      //                       color: Colors.white,
-      //                       fontSize: 16.5,
-      //                       fontFamily: "Popins",
-      //                       fontWeight: FontWeight.w700),
-      //                   maxLines: 3,
-      //                   overflow: TextOverflow.ellipsis,
-      //                 ),
-      //               ),
-      //         ),
-      //       ),
-      //     ),),),
 
-          Align(
-              alignment: Alignment.bottomLeft,
-                      child: Opacity(
-              opacity: (1 - shrinkOffset / expandedHeight),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left:20.0),
-                    child: Container(
-                       width: MediaQuery.of(context).size.width-30,
-                      child: Text(
-                        title,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 22.5,
-                            fontFamily: "Popins",
-                            fontWeight: FontWeight.w700),
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ),
-                    Padding(
-                      padding: const EdgeInsets.only(left:20.0),
-                      child: Container(
-                      child: Text(
-                        category,
-                        style: TextStyle(
-                              color: Colors.white,
-                            fontSize: 16.5,
-                            fontFamily: "Popins",
-                            fontWeight: FontWeight.w400),
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                  ),
-                    ),
-                ],
-              ),),
-          ),
-   Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
+        //  Positioned(
+        //     top: expandedHeight / 2 - shrinkOffset,
+        //     left: MediaQuery.of(context).size.width / 4,
+        //     child: Opacity(
+        //       opacity: (1 - shrinkOffset / expandedHeight),
+        //       child: Card(
+        //         elevation: 10,
+        //         child: SizedBox(
+        //           height: expandedHeight,
+        //           width: MediaQuery.of(context).size.width / 2,
+        //           child: Container(
+        //               width: 220.0,
+        //               child: Padding(
+        //                 padding: const EdgeInsets.only(top: 50.0),
+        //                 child: Text(
+        //                   title,
+        //                   style: TextStyle(
+        //                       color: Colors.white,
+        //                       fontSize: 16.5,
+        //                       fontFamily: "Popins",
+        //                       fontWeight: FontWeight.w700),
+        //                   maxLines: 3,
+        //                   overflow: TextOverflow.ellipsis,
+        //                 ),
+        //               ),
+        //         ),
+        //       ),
+        //     ),),),
+
+        Align(
+          alignment: Alignment.bottomLeft,
+          child: Opacity(
+            opacity: (1 - shrinkOffset / expandedHeight),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                InkWell(
-                  onTap: (){
-                    Navigator.of(context).pop();
-                  },
-                  child: Align(
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width - 30,
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22.5,
+                          fontFamily: "Popins",
+                          fontWeight: FontWeight.w700),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0),
+                  child: Container(
+                    child: Text(
+                      category,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.5,
+                          fontFamily: "Popins",
+                          fontWeight: FontWeight.w400),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            InkWell(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                child: Align(
                     alignment: Alignment.topLeft,
                     child: Padding(
-                      padding: const EdgeInsets.only(top:20.0,left:20.0 ),
+                      padding: const EdgeInsets.only(top: 20.0, left: 20.0),
                       child: Icon(Icons.arrow_back),
                     ))),
-      Align(
-          alignment: Alignment.center,
-                      child: Text(
-          "News",
-          style: TextStyle(
-            color: Colors.white,
-            fontFamily: "Gotik",
-            fontWeight: FontWeight.w700,
-            fontSize: (expandedHeight/40)-(shrinkOffset/40)+18,
-          ),
-      ),
-      ), 
-                SizedBox(width: 36.0,)
-],
-    ),
-        ],
-      );
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                "News",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: "Gotik",
+                  fontWeight: FontWeight.w700,
+                  fontSize: (expandedHeight / 40) - (shrinkOffset / 40) + 18,
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 36.0,
+            )
+          ],
+        ),
+      ],
+    );
   }
 
   @override

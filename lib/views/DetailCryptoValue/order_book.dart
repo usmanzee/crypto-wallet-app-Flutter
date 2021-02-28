@@ -171,7 +171,7 @@ class OrderBook extends StatelessWidget {
     var rowWidth = 0.0;
     if (marketController.bids != null && marketController.bids.length > 0) {
       var resultData = Helper.mapValues(marketController.maxVolume.value,
-          marketController.orderBookEntryBids.value);
+          marketController.orderBookEntryBids);
 
       rowWidth = resultData != null && resultData.length > 0
           ? resultData[index]['value'] / 100
@@ -274,7 +274,7 @@ class OrderBook extends StatelessWidget {
     var rowWidth = 0.0;
     if (marketController.asks != null && marketController.asks.length > 0) {
       var resultData = Helper.mapValues(marketController.maxVolume.value,
-          marketController.orderBookEntryAsks.value);
+          marketController.orderBookEntryAsks);
 
       rowWidth = resultData != null && resultData.length > 0
           ? resultData[index]['value'] / 100

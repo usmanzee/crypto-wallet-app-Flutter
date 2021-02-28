@@ -1,6 +1,5 @@
 import 'package:crypto_template/component/no_data.dart';
 import 'package:crypto_template/controllers/wallet_controller.dart';
-import 'package:crypto_template/controllers/wallet_search_controller.dart';
 import 'package:crypto_template/views/wallet/deposit/crypto.dart';
 import 'package:crypto_template/views/wallet/deposit/fiat.dart';
 import 'package:crypto_template/views/wallet/withdraw/crypto.dart';
@@ -9,32 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:crypto_template/models/wallet.dart' as WalletClass;
 
-// class WalletSearch extends StatefulWidget {
-//   final String searchFrom;
-//   WalletSearch({this.searchFrom});
-//   _WalletSearchState createState() =>
-//       _WalletSearchState(searchFrom: searchFrom);
-// }
-
 class WalletSearch extends GetView<WalletController> {
-  var searchFrom = Get.arguments['searchFrom'];
+  final searchFrom = Get.arguments['searchFrom'];
   final TextEditingController _textController = TextEditingController();
-  List<WalletClass.Wallet> newWalletList;
-
-  // @override
-  // void initState() {
-  //   newWalletList = List.from(walletController.walletsList);
-  //   super.initState();
-  // }
-
-  // void onItemChanged(String value) {
-  //   setState(() {
-  //     newWalletList = walletController.walletsList
-  //         .where((wallet) =>
-  //             wallet.name.toLowerCase().contains(value.toLowerCase()))
-  //         .toList();
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +26,7 @@ class WalletSearch extends GetView<WalletController> {
                 fontWeight: FontWeight.w600,
                 fontSize: 18.5),
           ),
+          brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
           iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
           elevation: 0.8,
         ),

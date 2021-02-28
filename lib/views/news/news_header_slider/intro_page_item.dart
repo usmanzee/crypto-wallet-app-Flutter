@@ -11,7 +11,7 @@ class IntroPageItem extends StatelessWidget {
     @required this.pageVisibility,
   });
 
-  final newsHeader item;
+  final NewsHeader item;
   final PageVisibility pageVisibility;
 
   Widget _applyTextEffects({

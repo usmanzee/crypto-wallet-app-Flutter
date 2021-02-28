@@ -5,13 +5,8 @@ import 'package:crypto_template/network/app_exception.dart';
 import 'dart:async';
 import 'dart:convert';
 
-class RequestOptions {
-  String _apiVersion; //'applogic' | 'peatio' | 'barong' | 'arke' | 'finex';
-  Map<String, String> _headers;
-}
-
-class ApiProvider implements RequestOptions {
-  final String _baseUrl = "http://10.121.121.48:9002/";
+class ApiProvider {
+  final String _baseUrl = "http://192.168.18.7:9002/";
   // final String _baseUrl = "http://www.app.local/";
   // final String _baseUrl = "https://www.coinee.cf/";
   // final String _baseUrl = "https://ewallet.b4uwallet.com/";
@@ -32,7 +27,7 @@ class ApiProvider implements RequestOptions {
     var responseJson;
     try {
       print(_baseUrl + _appVersion + url);
-      print(headers);
+      print('headers :' + headers.toString());
       final response =
           await http.get(_baseUrl + _appVersion + url, headers: headers);
       responseJson = _returnResponse(response);

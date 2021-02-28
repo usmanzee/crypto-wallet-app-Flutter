@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:crypto_template/controllers/SnackbarController.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class Helper {
