@@ -8,10 +8,21 @@ import 'package:crypto_template/views/home/loser.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter_sparkline/flutter_sparkline.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:badges/badges.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class Home extends StatelessWidget {
   final MarketController marketController = Get.find();
   final HomeController homeController = Get.find();
+
+  final List<String> imgList = [
+    'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
+    'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
+    'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
+    'https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=89719a0d55dd05e2deae4120227e6efc&auto=format&fit=crop&w=1953&q=80',
+    'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
+    'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
+  ];
 
   // var banners = [1, 2, 3];
   // _listBannerImages(context) {
@@ -36,6 +47,48 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget image_carousel = new Container(
+        height: 345.0,
+        child: CarouselSlider(
+          options: CarouselOptions(
+            viewportFraction: 1,
+            height: 180.0,
+            enlargeCenterPage: true,
+            autoPlay: true,
+            aspectRatio: 16 / 9,
+            autoPlayCurve: Curves.fastOutSlowIn,
+            enableInfiniteScroll: true,
+            autoPlayAnimationDuration: Duration(milliseconds: 800),
+            // viewportFraction: 0.8,
+          ),
+          // height: 400.0,
+          items: [
+            'http://pic3.16pic.com/00/55/42/16pic_5542988_b.jpg',
+            'http://photo.16pic.com/00/38/88/16pic_3888084_b.jpg',
+            'http://pic3.16pic.com/00/55/42/16pic_5542988_b.jpg',
+            'http://photo.16pic.com/00/38/88/16pic_3888084_b.jpg'
+          ].map((i) {
+            return Builder(
+              builder: (BuildContext context) {
+                return Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: EdgeInsets.symmetric(horizontal: 5.0),
+                    decoration: BoxDecoration(color: Colors.amber),
+                    child: GestureDetector(
+                        child: Image.network(i, fit: BoxFit.fill),
+                        onTap: () {
+                          print(i);
+                          // Navigator.push<Widget>(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => ImageScreen(i),
+                          //   ),
+                          // );
+                        }));
+              },
+            );
+          }).toList(),
+        ));
     return Scaffold(
       appBar: AppBar(
         brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
@@ -53,46 +106,64 @@ class Home extends StatelessWidget {
               },
             ),
             Spacer(flex: 1),
-            IconButton(
-              icon: Icon(Icons.notifications_none),
-              tooltip: 'Notification',
-              onPressed: () {
+            // IconButton(
+            //   icon: Icon(Icons.notifications_none),
+            //   tooltip: 'Notification',
+            //   onPressed: () {
+            //     homeController.isLoggedIn.value
+            //         ? Get.toNamed('/notifications')
+            //         : Get.toNamed('/login');
+            //   },
+            // ),
+            InkWell(
+              onTap: () {
                 homeController.isLoggedIn.value
                     ? Get.toNamed('/notifications')
                     : Get.toNamed('/login');
               },
-            ),
+              child: Badge(
+                position: BadgePosition.topEnd(top: 10, end: 10),
+                badgeContent: null,
+                child: IconButton(
+                  icon: Icon(Icons.notifications_none),
+                  onPressed: () {
+                    homeController.isLoggedIn.value
+                        ? Get.toNamed('/notifications')
+                        : Get.toNamed('/login');
+                  },
+                ),
+              ),
+            )
           ],
         ),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            // /
-            // / Header image slider
-            // /
+            // SizedBox(
+            //     height: 150.0,
+            //     width: double.infinity,
+            //     child: new Carousel(
+            //       boxFit: BoxFit.cover,
+            //       dotColor: Colors.white.withOpacity(0.8),
+            //       dotSize: 5.5,
+            //       dotSpacing: 16.0,
+            //       dotBgColor: Colors.transparent,
+            //       showIndicator: true,
+            //       // overlayShadow: true,
+            //       // overlayShadowColors: Theme.of(context)
+            //       //     .scaffoldBackgroundColor
+            //       //     .withOpacity(0.9),
+            //       // overlayShadowSize: 0.25,
+            //       images: [
+            //         AssetImage("assets/image/banner/banner2.png"),
+            //         AssetImage("assets/image/banner/banner3.jpg"),
+            //         AssetImage("assets/image/banner/banner2.png"),
+            //         AssetImage("assets/image/banner/banner3.jpg"),
+            //       ],
+            //     )),
             SizedBox(
-                height: 150.0,
-                width: double.infinity,
-                child: new Carousel(
-                  boxFit: BoxFit.cover,
-                  dotColor: Colors.white.withOpacity(0.8),
-                  dotSize: 5.5,
-                  dotSpacing: 16.0,
-                  dotBgColor: Colors.transparent,
-                  showIndicator: true,
-                  // overlayShadow: true,
-                  // overlayShadowColors: Theme.of(context)
-                  //     .scaffoldBackgroundColor
-                  //     .withOpacity(0.9),
-                  // overlayShadowSize: 0.25,
-                  images: [
-                    AssetImage("assets/image/banner/banner2.png"),
-                    AssetImage("assets/image/banner/banner3.jpg"),
-                    AssetImage("assets/image/banner/banner2.png"),
-                    AssetImage("assets/image/banner/banner3.jpg"),
-                  ],
-                )),
+                height: 150.0, width: double.infinity, child: image_carousel),
             SizedBox(height: 10.0),
             Container(
               height: 100.0,
@@ -262,8 +333,8 @@ class Card extends StatelessWidget {
     -0.5,
     -1.0,
     -0.5,
-    0.0,
-    0.0
+    2.0,
+    4.0
   ];
   Card(this.formatedMarket);
   @override

@@ -1,5 +1,6 @@
 import 'package:crypto_template/component/no_data.dart';
 import 'package:crypto_template/controllers/wallet_controller.dart';
+import 'package:crypto_template/controllers/wallet_search_controller.dart';
 import 'package:crypto_template/views/wallet/deposit/crypto.dart';
 import 'package:crypto_template/views/wallet/deposit/fiat.dart';
 import 'package:crypto_template/views/wallet/withdraw/crypto.dart';
@@ -11,6 +12,8 @@ import 'package:crypto_template/models/wallet.dart' as WalletClass;
 class WalletSearch extends GetView<WalletController> {
   final searchFrom = Get.arguments['searchFrom'];
   final TextEditingController _textController = TextEditingController();
+  final WalletSearchController walletSearchController =
+      Get.put(WalletSearchController());
 
   @override
   Widget build(BuildContext context) {

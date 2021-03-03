@@ -1,10 +1,10 @@
 import 'package:crypto_template/controllers/SnackbarController.dart';
 import 'package:crypto_template/controllers/error_controller.dart';
-import 'package:crypto_template/models/DepositAddress.dart';
 import 'package:crypto_template/models/deposit_histroy.dart';
 import 'package:crypto_template/models/withdraw_history.dart';
 import 'package:crypto_template/repository/wallet_repository.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class TransactionHistoryController extends GetxController {
   final String currency;
@@ -18,13 +18,9 @@ class TransactionHistoryController extends GetxController {
   var withdrawHistory = List<WithdrawHistory>().obs;
   SnackbarController snackbarController;
   ErrorController errorController = new ErrorController();
-  // WalletRepository _walletRepository;
 
   @override
   void onInit() {
-    // _walletRepository = new WalletRepository();
-    // fetchDepositHistory(currency);
-    // fetchWithdrawHistory(currency);
     fetchHistory(currency);
     super.onInit();
   }
@@ -43,9 +39,9 @@ class TransactionHistoryController extends GetxController {
       var withdrawlHistoryResponse =
           await _walletRepository.fetchWithdrawHistory(currency);
       depositHistoryResponse.sort((a, b) {
-        var adate = a.createdAt.toLocal();
-        var bdate = b.createdAt.toLocal();
-        return adate.compareTo(bdate);
+        String adate = DateFormat('yyyy-MM-dd hh:mm:ss').format(a.createdAt);
+        String bdate = DateFormat('yyyy-MM-dd hh:mm:ss').format(b.createdAt);
+        return -adate.compareTo(bdate);
       });
       depositHistory.assignAll(depositHistoryResponse);
       withdrawHistory.assignAll(withdrawlHistoryResponse);
@@ -55,34 +51,6 @@ class TransactionHistoryController extends GetxController {
       errorController.handleError(error);
     }
   }
-
-  // fetchDepositHistory(String currency) async {
-  //   try {
-  //     isDepositHistoryLoading(true);
-  //     var response = await _walletRepository.fetchDepositHistory(currency);
-  //     depositHistory.assignAll(response);
-  //     isDepositHistoryLoading(false);
-  //   } catch (error) {
-  //     print(error);
-  //     isDepositHistoryLoading(false);
-  //     errorController.handleError(error);
-  //   }
-  // }
-
-  // fetchWithdrawHistory(String currency) async {
-  //   try {
-  //     isWithdrawHistoryLoading(true);
-  //     var response = await _walletRepository.fetchWithdrawHistory(currency);
-  //     print('response');
-  //     print(response);
-  //     withdrawHistory.assignAll(response);
-  //     isWithdrawHistoryLoading(false);
-  //   } catch (error) {
-  //     print(error);
-  //     isWithdrawHistoryLoading(false);
-  //     errorController.handleError(error);
-  //   }
-  // }
 
   @override
   void onClose() {

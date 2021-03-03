@@ -658,18 +658,18 @@ class VerificationController extends GetxController {
     Get.dialog(Center(child: CircularProgressIndicator()),
         barrierDismissible: false);
     try {
-      var files = [documentFileBytes, additionalFileBytes, selfieBytes];
+      var files = [documentFileBytes, selfieBytes];
+      if (selectedDocumentType['type'] != 'utility_bill') {
+        files.add(additionalFileBytes);
+      }
       var reqObj = {
         'doc_type': selectedDocumentType['name'],
         'doc_number': documentNumberTextController.text,
         'doc_expire': documentExpiryTextController.text,
         'upload[]': files
       };
-      // reqObj.addAll({'upload[]': documentFileBytes.value.toString()});
-      // reqObj.addAll({'upload[]': additionalFileBytes.value.toString()});
-      // reqObj.addAll({'upload[]': selfieBytes.value.toString()});
-
-      var response = await _userRepository.verifyDocuments(reqObj);
+      print(reqObj);
+      await _userRepository.verifyDocuments(reqObj);
       Get.back();
       Get.back();
       Get.back();

@@ -31,7 +31,7 @@ class ChangePasswordController extends GetxController {
         'old_password': oldPasswordTextController.text,
         'new_password': passwordTextController.text,
       };
-      var response = await _userRepository.changePassword(dataObject);
+      await _userRepository.changePassword(dataObject);
       Get.back();
       Get.back();
       Get.back();

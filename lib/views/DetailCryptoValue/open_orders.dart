@@ -14,7 +14,6 @@ class OpenOrders extends StatelessWidget {
       : openOrdersController = Get.put(
           OpenOrdersController(formatedMarket: formatedMarket),
         );
-
   @override
   Widget build(BuildContext context) {
     return Obx(() {

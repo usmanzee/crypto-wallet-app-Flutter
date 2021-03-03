@@ -1,7 +1,6 @@
 import 'package:crypto_template/component/no_internet.dart';
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/controllers/market_controller.dart';
-import 'package:crypto_template/controllers/open_orders_controller.dart';
 import 'package:crypto_template/controllers/trading_controller.dart';
 import 'package:crypto_template/controllers/web_socket_controller.dart';
 import 'package:crypto_template/views/trading/trading.dart';
@@ -106,12 +105,8 @@ class BottomNavBar extends GetView<HomeController> {
                   } else if (index != 2) {
                     bool tradingControllerInstance =
                         Get.isRegistered<TradingController>();
-                    bool openOrdersInstance =
-                        Get.isRegistered<OpenOrdersController>();
-
-                    if (tradingControllerInstance && openOrdersInstance) {
+                    if (tradingControllerInstance) {
                       Get.delete<TradingController>(force: true);
-                      Get.delete<OpenOrdersController>(force: true);
                     }
                     controller.selectedNavIndex = index;
                   } else {

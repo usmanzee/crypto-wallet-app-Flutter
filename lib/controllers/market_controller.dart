@@ -30,6 +30,7 @@ class MarketController extends GetxController {
 
   @override
   void onInit() async {
+    isLoading(true);
     await fetchMarkets();
     webSocketController = Get.find<WebSocketController>();
     webSocketController.streamController.value.stream.listen((message) {
@@ -91,7 +92,7 @@ class MarketController extends GetxController {
         }
         priceInUsd = market.quoteUnit == 'usd'
             ? priceInUsd = marketLast.toStringAsFixed(2)
-            : getBaseUnitPriceInUsd(market.baseUnit, tickers);
+            : getBaseUnitPriceInUsd(market.baseUnit, tickers, false);
         var formatedMarket = new FormatedMarket(
             id: market.id,
             name: market.name,
@@ -129,7 +130,8 @@ class MarketController extends GetxController {
     negativeMarketsList.assignAll(negativemarketsFormatedData);
   }
 
-  String getBaseUnitPriceInUsd(String baseUnit, Map<String, dynamic> tickers) {
+  String getBaseUnitPriceInUsd(
+      String baseUnit, Map<String, dynamic> tickers, bool fromWebSocket) {
     var priceInUsd = '---';
 
     var market = marketList.firstWhere(
@@ -138,8 +140,10 @@ class MarketController extends GetxController {
             market.quoteUnit == 'usd',
         orElse: () => null);
     if (market != null) {
-      priceInUsd =
-          (double.parse(tickers[market.id].ticker.last)).toStringAsFixed(2);
+      double lastPrice = fromWebSocket
+          ? double.parse(tickers[market.id]['last'])
+          : double.parse(tickers[market.id].ticker.last);
+      priceInUsd = lastPrice.toStringAsFixed(2);
     }
     return priceInUsd;
   }
@@ -164,7 +168,7 @@ class MarketController extends GetxController {
         }
         priceInUsd = market.quoteUnit == 'usd'
             ? priceInUsd = marketLast.toStringAsFixed(2)
-            : getBaseUnitPriceInUsd(market.baseUnit, tickers);
+            : getBaseUnitPriceInUsd(market.baseUnit, tickers, true);
         market.avgPrice = tickers[market.id]['avg_price'];
         market.high = marketHigh;
         market.last = marketLast;

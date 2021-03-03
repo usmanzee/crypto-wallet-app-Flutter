@@ -91,7 +91,7 @@ class WalletController extends GetxController {
   }
 
   void handleSearchInputChangeEvent(String value) {
-    var list = walletsList.value.where((wallet) {
+    var list = walletsList.where((wallet) {
       return wallet.name.toLowerCase().contains(value.toLowerCase()) ||
           wallet.currency.toLowerCase().contains(value.toLowerCase());
     });

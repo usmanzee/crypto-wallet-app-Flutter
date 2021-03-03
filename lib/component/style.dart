@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class colorStyle {
+class ColorStyle {
   // static final primaryColor = Color(0xFF45C2DA);
   static final primaryColor = Color(0xFF6F2158);
   // static final background = Color(0xFF191B2A);
@@ -22,7 +22,7 @@ class colorStyle {
   static final bottomBarDark = Color(0xFF202833);
 }
 
-class txtStyle {
+class TxtStyle {
   static final headerStyle = TextStyle(
       fontFamily: "Popins",
       fontSize: 21.0,

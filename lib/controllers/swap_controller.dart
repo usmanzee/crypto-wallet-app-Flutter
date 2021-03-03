@@ -17,6 +17,8 @@ class SwapController extends GetxController {
   var amount = '0.0'.obs;
   var totalWithdrawlAmount = 0.0.obs;
   var withdrawingCrypto = false.obs;
+  var walletsList = List<Wallet>().obs;
+  var searchWalletsList = List<Wallet>().obs;
   var fromWalletsList = List<Wallet>().obs;
   var toWalletsList = List<Wallet>().obs;
   var fromSelectedWallet = Wallet().obs;
@@ -48,8 +50,10 @@ class SwapController extends GetxController {
     homeController.fetchMemberLevels();
     if (!walletController.isLoading.value) {
       isLoading(false);
-      fromWalletsList = walletController.walletsList;
-      toWalletsList = walletController.walletsList;
+      walletsList.assignAll(walletController.walletsList);
+      searchWalletsList.assignAll(walletController.walletsList);
+      fromWalletsList.assignAll(walletController.walletsList);
+      toWalletsList.assignAll(walletController.walletsList);
       fromSelectedWallet.value = walletController.walletsList[0];
       toSelectedWallet.value = walletController.walletsList[1];
     }
@@ -58,9 +62,10 @@ class SwapController extends GetxController {
   }
 
   setWalletValues(isWalletsLoading) {
-    print(!isWalletsLoading && walletController.walletsList.length > 0);
     if (!isWalletsLoading && walletController.walletsList.length > 0) {
       isLoading(false);
+      walletsList.assignAll(walletController.walletsList);
+      searchWalletsList.assignAll(walletController.walletsList);
       fromWalletsList.assignAll(walletController.walletsList);
       toWalletsList.assignAll(walletController.walletsList);
       if (walletController.walletsList.length > 0) {
@@ -92,6 +97,14 @@ class SwapController extends GetxController {
     fromFieldError = false;
   }
 
+  void handleSearchInputChangeEvent(String value) {
+    var list = walletsList.where((wallet) {
+      return wallet.name.toLowerCase().contains(value.toLowerCase()) ||
+          wallet.currency.toLowerCase().contains(value.toLowerCase());
+    });
+    searchWalletsList.assignAll(list);
+  }
+
   void handleFromFieldErrror() {
     var amount = fromAmountTextController.text;
     var minSwapAmount = double.parse(fromSelectedWallet.value.minSwapAmount);
@@ -99,7 +112,6 @@ class SwapController extends GetxController {
     var currency = fromSelectedWallet.value.currency.toUpperCase();
     if (amount != '') {
       double receivedAmount = double.parse(amount);
-      print(receivedAmount);
       if (receivedAmount < minSwapAmount) {
         fromFieldError = true;
         fromFieldErrorText.value = 'The amount has to be higher than ' +

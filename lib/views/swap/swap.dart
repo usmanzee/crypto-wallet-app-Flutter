@@ -508,6 +508,7 @@ class Swap extends StatelessWidget {
   }
 
   void showWalletsList(BuildContext context) {
+    swapController.searchWalletsList.assignAll(swapController.walletsList);
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -676,7 +677,6 @@ class Swap extends StatelessWidget {
                             ),
                             borderRadius: BorderRadius.circular(16.0),
                           ),
-                          // margin: EdgeInsets.all(12),
                           child: Row(
                             children: <Widget>[
                               Padding(
@@ -690,7 +690,8 @@ class Swap extends StatelessWidget {
                               new Expanded(
                                 child: TextField(
                                   // controller: _textController,
-                                  // onChanged: controller.handleSearchInputChangeEvent,
+                                  onChanged: swapController
+                                      .handleSearchInputChangeEvent,
                                   cursorColor: Theme.of(context).hintColor,
                                   keyboardType: TextInputType.text,
                                   decoration: InputDecoration(
@@ -713,16 +714,16 @@ class Swap extends StatelessWidget {
                         ),
                         SizedBox(height: 8.0),
                         Expanded(
-                          child: swapController.fromWalletsList.isEmpty
-                              ? NoData
+                          child: swapController.searchWalletsList.length < 0
+                              ? NoData()
                               : ListView.builder(
                                   shrinkWrap: true,
                                   itemBuilder: (ctx, i) {
-                                    return walletList(
-                                        ctx, swapController.fromWalletsList[i]);
+                                    return walletList(ctx,
+                                        swapController.searchWalletsList[i]);
                                   },
                                   itemCount:
-                                      swapController.fromWalletsList.length,
+                                      swapController.searchWalletsList.length,
                                 ),
                         ),
                         Padding(

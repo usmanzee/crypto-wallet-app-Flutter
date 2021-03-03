@@ -124,8 +124,6 @@ class Trading extends StatelessWidget {
                               EdgeInsets.only(left: -8, right: 8, bottom: 8)),
                       isScrollable: true,
                       labelPadding: EdgeInsets.only(left: 0, right: 16),
-                      // indicatorColor:
-                      //     Theme.of(context).primaryColor,
                       labelColor: Theme.of(context).primaryColor,
                       unselectedLabelColor:
                           Theme.of(context).textSelectionColor,
@@ -147,7 +145,7 @@ class Trading extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    height: homeController.isLoggedIn.value ? 280 : 230,
+                    height: homeController.isLoggedIn.value ? 300 : 250,
                     child: TabBarView(children: [
                       LimitOrderForm(
                           formatedMarket:

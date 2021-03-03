@@ -50,7 +50,7 @@ class _MarketDrawerState extends State<MarketDrawer>
       body: ListView(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 40, 0, 0),
+            padding: const EdgeInsets.fromLTRB(16, 24, 0, 0),
             child: Text(
               'Markets',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -97,7 +97,7 @@ class _MarketDrawerState extends State<MarketDrawer>
           //   ),
           // ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
             child: Obx(() {
               if (marketController.isLoading.value)
                 return _loadingData(context);
@@ -280,110 +280,99 @@ Widget _dataLoaded(BuildContext context,
 }
 
 Widget card(BuildContext context, FormatedMarket formatedMarket, screenType) {
-  return Padding(
-    padding: const EdgeInsets.only(top: 7.0),
-    child: Column(
-      children: <Widget>[
-        InkWell(
-          onTap: () {
-            Get.back();
-            if (screenType == 'market_detail') {
-              MarketDetailController marketDetailController = Get.find();
-              marketDetailController.updateCurrentMarket(formatedMarket);
-            } else {
-              TradingController tradingController =
-                  Get.find<TradingController>();
-              tradingController.updateCurrentMarket(formatedMarket);
-              bool openOrdersInstance =
-                  Get.isRegistered<OpenOrdersController>();
-              if (openOrdersInstance) {
-                Get.delete<OpenOrdersController>(force: true);
-                Get.put(OpenOrdersController(formatedMarket: formatedMarket));
-              }
+  return Column(
+    children: <Widget>[
+      InkWell(
+        onTap: () {
+          Get.back();
+          if (screenType == 'market_detail') {
+            MarketDetailController marketDetailController = Get.find();
+            marketDetailController.updateCurrentMarket(formatedMarket);
+          } else {
+            TradingController tradingController = Get.find<TradingController>();
+            tradingController.updateCurrentMarket(formatedMarket);
+            bool openOrdersInstance = Get.isRegistered<OpenOrdersController>();
+            if (openOrdersInstance) {
+              Get.delete<OpenOrdersController>(force: true);
+              Get.put(OpenOrdersController(formatedMarket: formatedMarket));
             }
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      width: 95.0,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
+          }
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Container(
+                  width: 95.0,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
                         children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Text(
-                                formatedMarket.baseUnit.toUpperCase(),
-                                style: TextStyle(
-                                    fontFamily: "Popins", fontSize: 16.5),
-                              ),
-                              Text(
-                                " / " + formatedMarket.quoteUnit.toUpperCase(),
-                                style: TextStyle(
-                                    fontFamily: "Popins",
-                                    fontSize: 11.5,
-                                    color: Theme.of(context).hintColor),
-                              ),
-                            ],
+                          Text(
+                            formatedMarket.baseUnit.toUpperCase(),
+                            style:
+                                TextStyle(fontFamily: "Popins", fontSize: 15.5),
                           ),
                           Text(
-                            'Vol ' + formatedMarket.volume.toStringAsFixed(2),
+                            " / " + formatedMarket.quoteUnit.toUpperCase(),
                             style: TextStyle(
                                 fontFamily: "Popins",
                                 fontSize: 11.5,
                                 color: Theme.of(context).hintColor),
-                          )
+                          ),
                         ],
                       ),
-                    ),
-                  ],
+                      Text(
+                        'Vol: ' + formatedMarket.volume.toStringAsFixed(2),
+                        style: TextStyle(
+                            fontFamily: "Popins",
+                            fontSize: 11.5,
+                            color: Theme.of(context).hintColor),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              Container(
-                width: 120.0,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      formatedMarket.last.toStringAsFixed(2),
-                      style: TextStyle(
-                          fontFamily: "Popins",
-                          fontSize: 14.5,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    Text(
-                      formatedMarket.priceChangePercent,
-                      style: TextStyle(
-                          fontFamily: "Popins",
-                          fontSize: 11.5,
-                          color: formatedMarket.isPositiveChange
-                              ? Color(0xFF00C087)
-                              : Colors.redAccent),
-                    ),
-                  ],
+              ],
+            ),
+            Spacer(
+              flex: 1,
+            ),
+            Column(
+              children: <Widget>[
+                Text(
+                  formatedMarket.last.toStringAsFixed(2),
+                  style: TextStyle(
+                      fontFamily: "Popins",
+                      fontSize: 14.5,
+                      fontWeight: FontWeight.w600),
                 ),
-              ),
-            ],
-          ),
+                Text(
+                  formatedMarket.priceChangePercent,
+                  style: TextStyle(
+                      fontFamily: "Popins",
+                      fontSize: 11.5,
+                      color: formatedMarket.isPositiveChange
+                          ? Color(0xFF00C087)
+                          : Colors.redAccent),
+                ),
+              ],
+            ),
+          ],
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10.0, right: 20.0, top: 6.0),
-          child: Container(
-            width: double.infinity,
-            height: 0.5,
-            decoration: BoxDecoration(color: Colors.black12),
-          ),
-        )
-      ],
-    ),
+      ),
+      Padding(
+        padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+        child: Container(
+          width: double.infinity,
+          height: 0.5,
+          decoration: BoxDecoration(
+              color: Theme.of(context).hintColor.withOpacity(0.2)),
+        ),
+      ),
+    ],
   );
 }

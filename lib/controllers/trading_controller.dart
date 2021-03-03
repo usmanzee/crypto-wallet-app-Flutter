@@ -5,6 +5,7 @@ import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:crypto_template/controllers/open_orders_controller.dart';
 import 'package:crypto_template/controllers/wallet_controller.dart';
 import 'package:crypto_template/models/formated_market.dart';
+import 'package:crypto_template/models/trading_fee.dart';
 import 'package:crypto_template/repository/trading_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,15 +16,22 @@ import 'package:crypto_template/models/wallet.dart';
 import 'package:crypto_template/utils/Helpers/helper.dart';
 
 class TradingController extends GetxController {
+  var limitBuyFormPercentageOptions = List<FormPercentageOption>().obs;
+  var limitSellFormPercentageOptions = List<FormPercentageOption>().obs;
+  var marketBuyFormPercentageOptions = List<FormPercentageOption>().obs;
+  var marketSellFormPercentageOptions = List<FormPercentageOption>().obs;
+
+  var selectedLimitBuyFormPercentageOption = FormPercentageOption().obs;
+  var selectedLimitSellFormPercentageOption = FormPercentageOption().obs;
+  var selectedMarketBuyFormPercentageOption = FormPercentageOption().obs;
+  var selectedMarketSellFormPercentageOption = FormPercentageOption().obs;
+
   TextEditingController limitOrderBuyPriceTextController;
   TextEditingController limitOrderBuyAmountTextController;
   TextEditingController limitOrderBuyTotalTextController;
   TextEditingController limitOrderSellAmountTextController;
   TextEditingController limitOrderSellPriceTextController;
   TextEditingController limitOrderSellTotalTextController;
-
-  // GlobalKey<FormState> limitBuyformKey;
-  // GlobalKey<FormState> limitSellformKey;
 
   TextEditingController marketOrderBuyPriceTextController;
   TextEditingController marketOrderBuyAmountTextController;
@@ -32,12 +40,12 @@ class TradingController extends GetxController {
   TextEditingController marketOrderSellPriceTextController;
   TextEditingController marketOrderSellTotalTextController;
 
-  // GlobalKey<FormState> marketBuyformKey;
-  // GlobalKey<FormState> marketSellformKey;
-
   var walletsList = List<Wallet>().obs;
   var walletBase = Wallet().obs;
   var walletQuote = Wallet().obs;
+  var isLoadingTradingFee = false.obs;
+  var tradingFeeList = List<TradingFee>().obs();
+  var marketTradingFee = TradingFee().obs();
 
   var market = FormatedMarket().obs;
   MarketController marketController = Get.find();
@@ -55,8 +63,6 @@ class TradingController extends GetxController {
     limitOrderSellAmountTextController = TextEditingController();
     limitOrderSellPriceTextController = TextEditingController();
     limitOrderSellTotalTextController = TextEditingController();
-    // limitBuyformKey = GlobalKey<FormState>();
-    // limitSellformKey = GlobalKey<FormState>();
 
     marketOrderBuyPriceTextController = TextEditingController();
     marketOrderBuyAmountTextController = TextEditingController();
@@ -65,10 +71,33 @@ class TradingController extends GetxController {
     marketOrderSellPriceTextController = TextEditingController();
     marketOrderSellTotalTextController = TextEditingController();
 
-    // marketBuyformKey = GlobalKey<FormState>();
-    // marketSellformKey = GlobalKey<FormState>();
-
     market.value = marketController.selectedMarketTrading.value;
+
+    limitBuyFormPercentageOptions.assignAll([
+      FormPercentageOption(id: 1, value: 25, name: "25%", isActive: false),
+      FormPercentageOption(id: 2, value: 50, name: "50%", isActive: false),
+      FormPercentageOption(id: 3, value: 75, name: "75%", isActive: false),
+      FormPercentageOption(id: 4, value: 100, name: "100%", isActive: false),
+    ]);
+
+    limitSellFormPercentageOptions.assignAll([
+      FormPercentageOption(id: 1, value: 25, name: "25%", isActive: false),
+      FormPercentageOption(id: 2, value: 50, name: "50%", isActive: false),
+      FormPercentageOption(id: 3, value: 75, name: "75%", isActive: false),
+      FormPercentageOption(id: 4, value: 100, name: "100%", isActive: false),
+    ]);
+    marketBuyFormPercentageOptions.assignAll([
+      FormPercentageOption(id: 1, value: 25, name: "25%", isActive: false),
+      FormPercentageOption(id: 2, value: 50, name: "50%", isActive: false),
+      FormPercentageOption(id: 3, value: 75, name: "75%", isActive: false),
+      FormPercentageOption(id: 4, value: 100, name: "100%", isActive: false),
+    ]);
+    marketSellFormPercentageOptions.assignAll([
+      FormPercentageOption(id: 1, value: 25, name: "25%", isActive: false),
+      FormPercentageOption(id: 2, value: 50, name: "50%", isActive: false),
+      FormPercentageOption(id: 3, value: 75, name: "75%", isActive: false),
+      FormPercentageOption(id: 4, value: 100, name: "100%", isActive: false),
+    ]);
     if (homeController.isLoggedIn.value) {
       bool isWalletControllerRegistered = Get.isRegistered<WalletController>();
 
@@ -82,15 +111,15 @@ class TradingController extends GetxController {
         walletBase.value = getWallet(market.value.baseUnit, walletsList);
         walletQuote.value = getWallet(market.value.quoteUnit, walletsList);
       }
+      fetchTradingFee();
       ever(walletController.isLoading, setWalletValues);
     }
-
+    ever(homeController.isLoggedIn, setWalletValuesAfterLogin);
     super.onInit();
   }
 
   @override
   void onReady() {
-    // marketController.orderBookSequence = -1;
     marketController.asks.clear();
     marketController.bids.clear();
     Future.delayed(Duration(seconds: 1), () {
@@ -111,6 +140,18 @@ class TradingController extends GetxController {
     }
   }
 
+  setWalletValuesAfterLogin(isUserLoggedIn) {
+    if (isUserLoggedIn) {
+      bool isWalletControllerRegistered = Get.isRegistered<WalletController>();
+
+      walletController = isWalletControllerRegistered
+          ? Get.find<WalletController>()
+          : Get.put(WalletController());
+      fetchTradingFee();
+      ever(walletController.isLoading, setWalletValues);
+    }
+  }
+
   Wallet getWallet(String currency, List<Wallet> wallets) {
     return wallets.firstWhere((wallet) {
       return wallet.name.toLowerCase().contains(currency.toLowerCase()) ||
@@ -126,6 +167,26 @@ class TradingController extends GetxController {
     if (homeController.isLoggedIn.value) {
       walletBase.value = getWallet(market.value.baseUnit, walletsList);
       walletQuote.value = getWallet(market.value.quoteUnit, walletsList);
+    }
+  }
+
+  void fetchTradingFee() async {
+    TradingRepository _tradingRepository = new TradingRepository();
+    try {
+      isLoadingTradingFee(true);
+      var tradingFee = await _tradingRepository.fetchTradingFee();
+      marketTradingFee = tradingFee;
+      // if (tradingFeeList.length > 0 && homeController.isLoggedIn.value) {
+      //   var marketFee = tradingFeeList.firstWhere((TradingFee tradingFee) {
+      //     return (tradingFee.group == homeController.user.value.feeGroup);
+      //   });
+      //   marketTradingFee = marketFee;
+      //   isLoadingTradingFee(false);
+      // }
+    } catch (error) {
+      print(error);
+      isLoadingTradingFee(false);
+      errorController.handleError(error);
     }
   }
 
@@ -226,39 +287,49 @@ class TradingController extends GetxController {
   void setBidFormPrice(List<dynamic> bid) {
     limitOrderBuyPriceTextController.text = bid[0];
     limitOrderSellPriceTextController.text = bid[0];
-    marketOrderBuyPriceTextController.text = bid[0];
-    marketOrderSellPriceTextController.text = bid[0];
+    // marketOrderBuyPriceTextController.text = bid[0];
+    // marketOrderSellPriceTextController.text = bid[0];
+    onLimitOrderBuyPriceChange(limitOrderBuyPriceTextController.text);
+    onLimitOrderSellPriceChange(limitOrderSellPriceTextController.text);
   }
 
   void setAskFormPrice(List<dynamic> ask) {
     limitOrderBuyPriceTextController.text = ask[0];
     limitOrderSellPriceTextController.text = ask[0];
-    marketOrderBuyPriceTextController.text = ask[0];
-    marketOrderSellPriceTextController.text = ask[0];
+    // marketOrderBuyPriceTextController.text = ask[0];
+    // marketOrderSellPriceTextController.text = ask[0];
+    onLimitOrderBuyPriceChange(limitOrderBuyPriceTextController.text);
+    onLimitOrderSellPriceChange(limitOrderSellPriceTextController.text);
   }
 
   void onLimitOrderBuyPriceChange(String value) {
     calculateLimitOrderBuyTotal();
+    resetLimitBuyOrderPercentageButtons();
   }
 
   void onLimitOrderBuyAmountChange(String value) {
     calculateLimitOrderBuyTotal();
+    resetLimitBuyOrderPercentageButtons();
   }
 
   void onLimitOrderBuyTotalChange(String value) {
     calculateLimitOrderBuyAmount();
+    resetLimitBuyOrderPercentageButtons();
   }
 
   void onLimitOrderSellPriceChange(String value) {
     calculateLimitOrderSellTotal();
+    resetLimitSellOrderPercentageButtons();
   }
 
   void onLimitOrderSellAmountChange(String value) {
     calculateLimitOrderSellTotal();
+    resetLimitSellOrderPercentageButtons();
   }
 
   void onLimitOrderSellTotalChange(String value) {
     calculateLimitOrderSellAmount();
+    resetLimitSellOrderPercentageButtons();
   }
 
   //   void onLimitOrderBuyPriceChange(String value) {
@@ -267,22 +338,26 @@ class TradingController extends GetxController {
 
   void onMarketOrderBuyAmountChange(String value) {
     calculateMarketOrderBuyTotal();
+    resetMarketBuyOrderPercentageButtons();
   }
 
   void onMarketOrderBuyTotalChange(String value) {
     calculateMarketOrderBuyAmount();
+    resetMarketBuyOrderPercentageButtons();
   }
 
-  void onMarketOrderSellPriceChange(String value) {
-    calculateMarketOrderSellTotal();
-  }
+  // void onMarketOrderSellPriceChange(String value) {
+  //   calculateMarketOrderSellTotal();
+  // }
 
   void onMarketOrderSellAmountChange(String value) {
     calculateMarketOrderSellTotal();
+    resetMarketSellOrderPercentageButtons();
   }
 
   void onMarketOrderSellTotalChange(String value) {
     calculateMarketOrderSellAmount();
+    resetMarketSellOrderPercentageButtons();
   }
 
   void calculateLimitOrderBuyTotal() {
@@ -379,6 +454,187 @@ class TradingController extends GetxController {
     } else {
       marketOrderSellAmountTextController.text = '';
     }
+  }
+
+  void percentageOptionClick(
+      String tab, String form, FormPercentageOption percentageOption) {
+    if (tab == 'limit') {
+      if (form == 'buy') {
+        for (FormPercentageOption option in limitBuyFormPercentageOptions) {
+          if (!percentageOption.isActive ||
+              selectedLimitBuyFormPercentageOption.value.value !=
+                  percentageOption.value) {
+            if (option.value <= percentageOption.value) {
+              option.isActive = true;
+            } else if (option.value > percentageOption.value) {
+              option.isActive = false;
+            }
+          } else {
+            if (option.value <= percentageOption.value) {
+              option.isActive = false;
+            } else if (option.value > percentageOption.value) {
+              option.isActive = false;
+            }
+          }
+        }
+        selectedLimitBuyFormPercentageOption.value = percentageOption;
+        limitBuyFormPercentageOptions.refresh();
+        if (homeController.isLoggedIn.value) {
+          if (selectedLimitBuyFormPercentageOption.value.isActive) {
+            limitOrderBuyTotalTextController.text =
+                getWalletBalanceByPercentage(
+                    walletQuote.value,
+                    selectedLimitBuyFormPercentageOption.value.value,
+                    double.parse(marketTradingFee.taker));
+          } else {
+            limitOrderBuyTotalTextController.text = '';
+          }
+          calculateLimitOrderBuyAmount();
+        }
+      } else {
+        for (FormPercentageOption option in limitSellFormPercentageOptions) {
+          if (!percentageOption.isActive ||
+              selectedLimitSellFormPercentageOption.value.value !=
+                  percentageOption.value) {
+            if (option.value <= percentageOption.value) {
+              option.isActive = true;
+            } else if (option.value > percentageOption.value) {
+              option.isActive = false;
+            }
+          } else {
+            if (option.value <= percentageOption.value) {
+              option.isActive = false;
+            } else if (option.value > percentageOption.value) {
+              option.isActive = false;
+            }
+          }
+        }
+        selectedLimitSellFormPercentageOption.value = percentageOption;
+        limitSellFormPercentageOptions.refresh();
+        if (homeController.isLoggedIn.value) {
+          if (selectedLimitSellFormPercentageOption.value.isActive) {
+            limitOrderSellTotalTextController.text =
+                getWalletBalanceByPercentage(
+                    walletBase.value,
+                    selectedLimitSellFormPercentageOption.value.value,
+                    double.parse(marketTradingFee.maker));
+          } else {
+            limitOrderSellTotalTextController.text = '';
+          }
+          calculateLimitOrderSellAmount();
+        }
+      }
+    } else {
+      if (form == 'buy') {
+        for (FormPercentageOption option in marketBuyFormPercentageOptions) {
+          if (!percentageOption.isActive ||
+              selectedMarketBuyFormPercentageOption.value.value !=
+                  percentageOption.value) {
+            if (option.value <= percentageOption.value) {
+              option.isActive = true;
+            } else if (option.value > percentageOption.value) {
+              option.isActive = false;
+            }
+          } else {
+            if (option.value <= percentageOption.value) {
+              option.isActive = false;
+            } else if (option.value > percentageOption.value) {
+              option.isActive = false;
+            }
+          }
+        }
+        selectedMarketBuyFormPercentageOption.value = percentageOption;
+        marketBuyFormPercentageOptions.refresh();
+        if (homeController.isLoggedIn.value) {
+          if (selectedMarketBuyFormPercentageOption.value.isActive) {
+            marketOrderBuyTotalTextController.text =
+                getWalletBalanceByPercentage(
+                    walletQuote.value,
+                    selectedMarketBuyFormPercentageOption.value.value,
+                    double.parse(marketTradingFee.taker));
+          } else {
+            marketOrderBuyTotalTextController.text = '';
+          }
+          calculateMarketOrderBuyAmount();
+        }
+      } else {
+        for (FormPercentageOption option in marketSellFormPercentageOptions) {
+          if (!percentageOption.isActive ||
+              selectedMarketSellFormPercentageOption.value.value !=
+                  percentageOption.value) {
+            if (option.value <= percentageOption.value) {
+              option.isActive = true;
+            } else if (option.value > percentageOption.value) {
+              option.isActive = false;
+            }
+          } else {
+            if (option.value <= percentageOption.value) {
+              option.isActive = false;
+            } else if (option.value > percentageOption.value) {
+              option.isActive = false;
+            }
+          }
+        }
+        selectedMarketSellFormPercentageOption.value = percentageOption;
+        marketSellFormPercentageOptions.refresh();
+        if (homeController.isLoggedIn.value) {
+          if (selectedMarketSellFormPercentageOption.value.isActive) {
+            marketOrderSellTotalTextController.text =
+                getWalletBalanceByPercentage(
+                    walletQuote.value,
+                    selectedMarketSellFormPercentageOption.value.value,
+                    double.parse(marketTradingFee.taker));
+          } else {
+            marketOrderSellTotalTextController.text = '';
+          }
+          calculateMarketOrderSellAmount();
+        }
+      }
+    }
+  }
+
+  String getWalletBalanceByPercentage(
+      Wallet wallet, int percentage, double tradingFeePercentage) {
+    var percentageValue = '';
+    if (percentage != 100) {
+      percentageValue =
+          ((percentage / 100) * double.parse(wallet.balance)).toString();
+    } else {
+      var percentageValue1 =
+          ((percentage / 100) * double.parse(wallet.balance));
+      var marketFeePercentage = (tradingFeePercentage / 100) * percentageValue1;
+
+      percentageValue = (percentageValue1 - marketFeePercentage).toString();
+    }
+    return percentageValue;
+  }
+
+  void resetLimitBuyOrderPercentageButtons() {
+    for (FormPercentageOption option in limitBuyFormPercentageOptions) {
+      option.isActive = false;
+    }
+    limitBuyFormPercentageOptions.refresh();
+  }
+
+  void resetLimitSellOrderPercentageButtons() {
+    for (FormPercentageOption option in limitSellFormPercentageOptions) {
+      option.isActive = false;
+    }
+    limitSellFormPercentageOptions.refresh();
+  }
+
+  void resetMarketBuyOrderPercentageButtons() {
+    for (FormPercentageOption option in marketBuyFormPercentageOptions) {
+      option.isActive = false;
+    }
+    marketBuyFormPercentageOptions.refresh();
+  }
+
+  void resetMarketSellOrderPercentageButtons() {
+    for (FormPercentageOption option in marketSellFormPercentageOptions) {
+      option.isActive = false;
+    }
+    marketSellFormPercentageOptions.refresh();
   }
 
   void limitOrderBuy() async {
@@ -536,7 +792,53 @@ class TradingController extends GetxController {
     // marketOrderSellPriceTextController?.dispose();
     // marketOrderSellTotalTextController?.dispose();
 
+    bool openOrdersControllerRegistered =
+        Get.isRegistered<OpenOrdersController>();
+    bool isWalletControllerRegistered = Get.isRegistered<WalletController>();
+    if (openOrdersControllerRegistered) {
+      Get.delete<OpenOrdersController>(force: true);
+    }
+    if (isWalletControllerRegistered) {
+      Get.delete<WalletController>(force: true);
+    }
+
     webSocketController.unSubscribeOrderBookInc(market.value);
     super.onClose();
   }
+}
+
+List<FormPercentageOption> formPercentageOptionFromJson(String str) =>
+    List<FormPercentageOption>.from(
+        json.decode(str).map((x) => FormPercentageOption.fromJson(x)));
+
+String formPercentageOptionToJson(List<FormPercentageOption> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class FormPercentageOption {
+  FormPercentageOption({
+    this.id,
+    this.value,
+    this.name,
+    this.isActive,
+  });
+
+  int id;
+  int value;
+  String name;
+  bool isActive;
+
+  factory FormPercentageOption.fromJson(Map<String, dynamic> json) =>
+      FormPercentageOption(
+        id: json["id"],
+        value: json["value"],
+        name: json["name"],
+        isActive: json["isActive"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "value": value,
+        "name": name,
+        "isActive": isActive,
+      };
 }

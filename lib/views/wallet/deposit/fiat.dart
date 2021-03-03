@@ -1,6 +1,7 @@
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/controllers/fiat_deposit_controller.dart';
 import 'package:crypto_template/views/wallet/custom_appbar.dart';
+import 'package:crypto_template/views/wallet/search_wallet_header.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/models/wallet.dart' as WalletClass;
 import 'package:get/get.dart';
@@ -61,41 +62,52 @@ class _DepositFiatState extends State<DepositFiat> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size(double.infinity, 80),
-        child: WalletCustomAppbar(
-          title: 'Deposit',
-          screenType: 'deposit',
-          wallet: wallet,
+      appBar: AppBar(
+        title: Text(
+          'Deposit',
+          style: TextStyle(
+              color: Theme.of(context).textSelectionColor,
+              fontFamily: "Gotik",
+              fontWeight: FontWeight.w600,
+              fontSize: 18.5),
         ),
+        centerTitle: true,
+        iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
+        elevation: 1.0,
+        brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
+        backgroundColor: Theme.of(context).canvasColor,
       ),
       body: wallet.depositEnabled
           ? Column(children: [
+              SearchHeader(
+                screenType: 'deposit',
+                wallet: wallet,
+              ),
               Flexible(
                 child: Container(
-                    // height: 500,
-                    padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
+                    padding: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
                     child: ListView(
                       children: <Widget>[
-                        SizedBox(
-                          height: 16.0,
-                        ),
                         Padding(
                           padding: const EdgeInsets.only(
-                              left: 8.0, right: 8.0, top: 16.0, bottom: 8.0),
+                              left: 8.0, right: 8.0, top: 8.0, bottom: 8.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text(
-                                'Deposit using bank transfer',
-                                style: Theme.of(context).textTheme.headline6,
-                              ),
+                              Text('Deposit using bank transfer',
+                                  style: TextStyle(
+                                      fontSize: 18.5,
+                                      fontFamily: 'Popins',
+                                      fontWeight: FontWeight.bold)),
                               SizedBox(
                                 height: 8.0,
                               ),
                               Text(
                                   'Please use the following credentials to initiate your bank transfer. Your deposit will be reflected in your account in minimum 2 hours.',
-                                  style: Theme.of(context).textTheme.bodyText2),
+                                  style: TextStyle(
+                                      fontSize: 14.5,
+                                      fontFamily: 'Popins',
+                                      fontWeight: FontWeight.w500)),
                               SizedBox(
                                 height: 8.0,
                               ),
@@ -166,7 +178,11 @@ class _DepositFiatState extends State<DepositFiat> {
                                               Text(
                                                 homeController.user.value.uid,
                                                 style: TextStyle(
-                                                    fontFamily: "Popins"),
+                                                    color: Theme.of(context)
+                                                        .textSelectionColor,
+                                                    fontFamily: "Popins",
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 15.5),
                                               ),
                                               Container(
                                                 padding:
@@ -227,39 +243,62 @@ class _DepositFiatState extends State<DepositFiat> {
                                                 centerTitle: true,
                                                 flexibleSpace: SafeArea(
                                                   child: Container(
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              right: 50.0),
-                                                      child: new TabBar(
-                                                        indicatorColor:
-                                                            Theme.of(context)
-                                                                .primaryColor,
-                                                        labelColor:
-                                                            Theme.of(context)
-                                                                .primaryColor,
-                                                        unselectedLabelColor: Theme
-                                                                .of(context)
-                                                            .textSelectionColor,
-                                                        indicatorSize:
-                                                            TabBarIndicatorSize
-                                                                .label,
-                                                        tabs: depositDetail[
-                                                                'banks']
-                                                            .map<Widget>(
-                                                                (bank) {
-                                                          var index =
-                                                              depositDetail[
-                                                                          'banks']
-                                                                      .indexOf(
-                                                                          bank) +
-                                                                  1;
-                                                          return Tab(
-                                                            child: Text(
-                                                                'Bank $index'),
-                                                          );
-                                                        }).toList(),
-                                                      ),
+                                                    child: new TabBar(
+                                                      indicator:
+                                                          UnderlineTabIndicator(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                width: 2,
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .primaryColor,
+                                                              ),
+                                                              insets: EdgeInsets
+                                                                  .only(
+                                                                      left: -8,
+                                                                      right: 8,
+                                                                      bottom:
+                                                                          0)),
+                                                      isScrollable: true,
+                                                      labelPadding:
+                                                          EdgeInsets.only(
+                                                              left: 8,
+                                                              right: 16),
+                                                      labelColor:
+                                                          Theme.of(context)
+                                                              .primaryColor,
+                                                      unselectedLabelColor: Theme
+                                                              .of(context)
+                                                          .textSelectionColor,
+                                                      indicatorSize:
+                                                          TabBarIndicatorSize
+                                                              .label,
+                                                      tabs:
+                                                          depositDetail['banks']
+                                                              .map<Widget>(
+                                                                  (bank) {
+                                                        var index =
+                                                            depositDetail[
+                                                                        'banks']
+                                                                    .indexOf(
+                                                                        bank) +
+                                                                1;
+                                                        return Tab(
+                                                          child: Text(
+                                                              'Bank $index',
+                                                              style: TextStyle(
+                                                                  color: Theme.of(
+                                                                          context)
+                                                                      .textSelectionColor,
+                                                                  fontFamily:
+                                                                      "Popins",
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontSize:
+                                                                      14.5)),
+                                                        );
+                                                      }).toList(),
                                                     ),
                                                   ),
                                                 ),
@@ -279,20 +318,40 @@ class _DepositFiatState extends State<DepositFiat> {
                                                     return Card(
                                                       child: ListTile(
                                                         title: Text(
-                                                            item.toString()),
+                                                            item.toString(),
+                                                            style: TextStyle(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .textSelectionColor,
+                                                                fontFamily:
+                                                                    "Popins",
+                                                                fontSize:
+                                                                    15.5)),
                                                         subtitle: Text(
                                                             bank[item]
-                                                                .toString()),
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .hintColor
+                                                                    .withOpacity(
+                                                                        0.5),
+                                                                fontFamily:
+                                                                    "Popins",
+                                                                fontSize:
+                                                                    13.5)),
                                                         trailing: Container(
                                                           width: 30.0,
                                                           padding:
                                                               EdgeInsets.all(0),
                                                           child: IconButton(
                                                             icon: Icon(
-                                                              Icons
-                                                                  .content_copy,
-                                                              size: 20.0,
-                                                            ),
+                                                                Icons
+                                                                    .content_copy,
+                                                                size: 20.0,
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .textSelectionColor),
                                                             onPressed: () {
                                                               _copyToClipboard(
                                                                   bank[item]

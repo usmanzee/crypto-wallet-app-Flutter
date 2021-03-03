@@ -145,8 +145,11 @@ class DocumentVerification extends StatelessWidget {
   void _submitDocumentForm() {
     final _formState = _documentFormKey.currentState;
     documentImageValidation();
-    additionalImageValidation();
+    if (verificationController.selectedDocumentType['type'] != 'utility_bill') {
+      additionalImageValidation();
+    }
     selfieValidation();
+
     if (_formState.validate() &&
         !verificationController.documentFileError.value &&
         !verificationController.additionalFileError.value &&

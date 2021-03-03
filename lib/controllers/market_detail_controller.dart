@@ -99,22 +99,17 @@ class MarketDetailController extends GetxController {
     webSocketController.unSubscribeKline(
         market.value, selectedOption['valueInMinute']);
 
-    selectedOption.value = newOption;
+    selectedOption.assignAll(newOption);
     await getKlineData();
     webSocketController.subscribeKline(
         market.value, selectedOption['valueInMinute']);
   }
 
-  Future<void> setDefaultValues() {
+  Future<void> setDefaultValues() async {
     selectedOption.assignAll(lineGraphTimeSlots[2]);
   }
 
   Future<Null> refreshPage() async {
-    // bool controllerInstance = Get.isRegistered<MarketDetailController>();
-    // if (controllerInstance) {
-    //   Get.delete<MarketDetailController>(force: true);
-    //   Get.put(MarketDetailController());
-    // }
     onClose();
     onInit();
     onReady();

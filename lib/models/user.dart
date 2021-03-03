@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final user = userFromJson(jsonString);
-
 import 'dart:convert';
 
 User userFromJson(String str) => User.fromJson(json.decode(str));
@@ -15,6 +11,7 @@ class User {
     this.role,
     this.level,
     this.otp,
+    this.feeGroup,
     this.state,
     this.token,
     this.referralUid,
@@ -33,6 +30,7 @@ class User {
   String role;
   int level;
   bool otp;
+  String feeGroup;
   String state;
   String token;
   dynamic referralUid;
@@ -51,6 +49,7 @@ class User {
         role: json["role"],
         level: json["level"],
         otp: json["otp"],
+        feeGroup: json["fee_group"],
         state: json["state"],
         token: json["token"],
         referralUid: json["referral_uid"],
@@ -71,6 +70,7 @@ class User {
         "role": role,
         "level": level,
         "otp": otp,
+        "fee_group": feeGroup,
         "state": state,
         "token": token,
         "referral_uid": referralUid,

@@ -6,9 +6,9 @@ import 'dart:async';
 import 'dart:convert';
 
 class ApiProvider {
-  final String _baseUrl = "http://192.168.18.7:9002/";
+  // final String _baseUrl = "http://10.121.12.231:9002/";
   // final String _baseUrl = "http://www.app.local/";
-  // final String _baseUrl = "https://www.coinee.cf/";
+  final String _baseUrl = "https://www.coinee.cf/";
   // final String _baseUrl = "https://ewallet.b4uwallet.com/";
   final String _appVersion = "api/v2/";
   @override

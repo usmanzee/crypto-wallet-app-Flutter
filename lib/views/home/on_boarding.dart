@@ -64,7 +64,7 @@ class _OnBoardingState extends State<OnBoarding> {
       nextFlex: 0,
       skip: const Text(
         'SKIP',
-        style: TextStyle(fontFamily: 'popins'),
+        style: TextStyle(fontFamily: 'popins', fontWeight: FontWeight.w600),
       ),
       next: const Icon(Icons.arrow_forward),
       done: const Text('DONE',

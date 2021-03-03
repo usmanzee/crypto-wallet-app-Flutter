@@ -67,7 +67,7 @@ class LimitOrderForm extends StatelessWidget {
                     GestureDetector(
                         onTap: () {
                           removeValueFromInput(
-                              'buy', 'amount', formatedMarket.pricePrecision);
+                              'buy', 'amount', formatedMarket.amountPrecision);
                         },
                         child: Icon(Icons.remove)),
                     Flexible(
@@ -101,81 +101,42 @@ class LimitOrderForm extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: 8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      print('25%');
-                    },
-                    child: Container(
-                      width: 40,
-                      color: Theme.of(context).canvasColor,
-                      padding: EdgeInsets.all(4.0),
-                      child: Center(
-                        child: Text(
-                          '25%',
-                          style: TextStyle(
-                              fontSize: 10, fontWeight: FontWeight.w500),
+                padding: EdgeInsets.only(bottom: 8.0),
+                child: Obx(() {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: tradingController.limitBuyFormPercentageOptions
+                        .map((option) {
+                      return InkWell(
+                        onTap: () {
+                          tradingController.percentageOptionClick(
+                              'limit', 'buy', option);
+                        },
+                        child: Container(
+                          width: 40,
+                          decoration: BoxDecoration(
+                              color: option.isActive
+                                  ? Color(0xFF2ebd85)
+                                  : Theme.of(context).canvasColor,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(4))),
+                          padding: EdgeInsets.all(4.0),
+                          child: Center(
+                            child: Text(
+                              option.name,
+                              style: TextStyle(
+                                  color: option.isActive
+                                      ? Colors.white
+                                      : Theme.of(context).textSelectionColor,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      print('50%');
-                    },
-                    child: Container(
-                      width: 40,
-                      color: Theme.of(context).canvasColor,
-                      padding: EdgeInsets.all(4.0),
-                      child: Center(
-                        child: Text(
-                          '50%',
-                          style: TextStyle(
-                              fontSize: 10, fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      print('75%');
-                    },
-                    child: Container(
-                      width: 40,
-                      color: Theme.of(context).canvasColor,
-                      padding: EdgeInsets.all(4.0),
-                      child: Center(
-                        child: Text(
-                          '75%',
-                          style: TextStyle(
-                              fontSize: 10, fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      print('100%');
-                    },
-                    child: Container(
-                      width: 40,
-                      color: Theme.of(context).canvasColor,
-                      padding: EdgeInsets.all(4.0),
-                      child: Center(
-                        child: Text(
-                          '100%',
-                          style: TextStyle(
-                              fontSize: 10, fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                      );
+                    }).toList(),
+                  );
+                })),
             Padding(
               padding: EdgeInsets.only(bottom: 8.0),
               child: Container(
@@ -215,7 +176,7 @@ class LimitOrderForm extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: EdgeInsets.all(4.0),
+                    padding: EdgeInsets.only(left: 4.0),
                     child: Center(
                       child: Text(
                         'Avbl',
@@ -225,7 +186,7 @@ class LimitOrderForm extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(4.0),
+                    padding: EdgeInsets.only(right: 4.0),
                     child: Center(
                       child: Row(children: [
                         Text(
@@ -252,6 +213,45 @@ class LimitOrderForm extends StatelessWidget {
                             ))
                       ]),
                     ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 4.0),
+                    child: Center(
+                      child: Text(
+                        'Fee',
+                        style: TextStyle(
+                            fontSize: 10, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 4.0),
+                    child: Center(
+                        child: Row(children: [
+                      Text(
+                          tradingController.marketTradingFee.taker != null
+                              ? (double.parse(tradingController
+                                              .marketTradingFee.taker) *
+                                          100)
+                                      .toString() +
+                                  '%'
+                              : '--%',
+                          style: TextStyle(
+                            color: Theme.of(context).textSelectionColor,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: "Popins",
+                            letterSpacing: 1.3,
+                          )),
+                    ])),
                   ),
                 ],
               ),
@@ -360,7 +360,7 @@ class LimitOrderForm extends StatelessWidget {
                     GestureDetector(
                         onTap: () {
                           removeValueFromInput(
-                              'sell', 'amount', formatedMarket.pricePrecision);
+                              'sell', 'amount', formatedMarket.amountPrecision);
                         },
                         child: Icon(Icons.remove)),
                     Flexible(
@@ -386,7 +386,7 @@ class LimitOrderForm extends StatelessWidget {
                     GestureDetector(
                         onTap: () {
                           addValueToInput(
-                              'sell', 'amount', formatedMarket.pricePrecision);
+                              'sell', 'amount', formatedMarket.amountPrecision);
                         },
                         child: Icon(Icons.add)),
                   ],
@@ -394,81 +394,42 @@ class LimitOrderForm extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: 8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      print('25%');
-                    },
-                    child: Container(
-                      width: 40,
-                      color: Theme.of(context).canvasColor,
-                      padding: EdgeInsets.all(4.0),
-                      child: Center(
-                        child: Text(
-                          '25%',
-                          style: TextStyle(
-                              fontSize: 10, fontWeight: FontWeight.w500),
+                padding: EdgeInsets.only(bottom: 8.0),
+                child: Obx(() {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: tradingController.limitSellFormPercentageOptions
+                        .map((option) {
+                      return InkWell(
+                        onTap: () {
+                          tradingController.percentageOptionClick(
+                              'limit', 'sell', option);
+                        },
+                        child: Container(
+                          width: 40,
+                          decoration: BoxDecoration(
+                              color: option.isActive
+                                  ? Colors.redAccent.withOpacity(0.8)
+                                  : Theme.of(context).canvasColor,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(4))),
+                          padding: EdgeInsets.all(4.0),
+                          child: Center(
+                            child: Text(
+                              option.name,
+                              style: TextStyle(
+                                  color: option.isActive
+                                      ? Colors.white
+                                      : Theme.of(context).textSelectionColor,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      print('50%');
-                    },
-                    child: Container(
-                      width: 40,
-                      color: Theme.of(context).canvasColor,
-                      padding: EdgeInsets.all(4.0),
-                      child: Center(
-                        child: Text(
-                          '50%',
-                          style: TextStyle(
-                              fontSize: 10, fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      print('75%');
-                    },
-                    child: Container(
-                      width: 40,
-                      color: Theme.of(context).canvasColor,
-                      padding: EdgeInsets.all(4.0),
-                      child: Center(
-                        child: Text(
-                          '75%',
-                          style: TextStyle(
-                              fontSize: 10, fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      print('100%');
-                    },
-                    child: Container(
-                      width: 40,
-                      color: Theme.of(context).canvasColor,
-                      padding: EdgeInsets.all(4.0),
-                      child: Center(
-                        child: Text(
-                          '100%',
-                          style: TextStyle(
-                              fontSize: 10, fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                      );
+                    }).toList(),
+                  );
+                })),
             Padding(
               padding: EdgeInsets.only(bottom: 8.0),
               child: Container(
@@ -509,7 +470,7 @@ class LimitOrderForm extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: EdgeInsets.all(4.0),
+                    padding: EdgeInsets.only(left: 4.0),
                     child: Center(
                       child: Text(
                         'Avbl',
@@ -519,7 +480,7 @@ class LimitOrderForm extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(4.0),
+                    padding: EdgeInsets.only(right: 4.0),
                     child: Center(
                         child: Row(children: [
                       Text(
@@ -544,6 +505,45 @@ class LimitOrderForm extends StatelessWidget {
                             fontFamily: "Popins",
                             letterSpacing: 1.3,
                           ))
+                    ])),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 4.0),
+                    child: Center(
+                      child: Text(
+                        'Fee',
+                        style: TextStyle(
+                            fontSize: 10, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 4.0),
+                    child: Center(
+                        child: Row(children: [
+                      Text(
+                          tradingController.marketTradingFee.maker != null
+                              ? (double.parse(tradingController
+                                              .marketTradingFee.maker) *
+                                          100)
+                                      .toString() +
+                                  '%'
+                              : '--%',
+                          style: TextStyle(
+                            color: Theme.of(context).textSelectionColor,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: "Popins",
+                            letterSpacing: 1.3,
+                          )),
                     ])),
                   ),
                 ],
@@ -669,9 +669,12 @@ class LimitOrderForm extends StatelessWidget {
               : 0.0;
 
       if (existingNumber > 0) {
+        var removedFinalAmount = (existingNumber - double.parse(finalNumber));
+
         tradingController.limitOrderBuyPriceTextController.text =
-            (existingNumber - double.parse(finalNumber))
-                .toStringAsFixed(percision);
+            removedFinalAmount == 0
+                ? ''
+                : removedFinalAmount.toStringAsFixed(percision);
         tradingController.onLimitOrderBuyPriceChange(
             tradingController.limitOrderBuyPriceTextController.text);
       }
@@ -684,16 +687,22 @@ class LimitOrderForm extends StatelessWidget {
               : 0.0;
 
       if (existingNumber > 0) {
+        var removedFinalAmount = (existingNumber - double.parse(finalNumber));
         tradingController.limitOrderBuyAmountTextController.text =
-            (existingNumber - double.parse(finalNumber))
-                .toStringAsFixed(percision);
+            removedFinalAmount == 0
+                ? ''
+                : removedFinalAmount.toStringAsFixed(percision);
         tradingController.onLimitOrderBuyAmountChange(
             tradingController.limitOrderBuyAmountTextController.text);
+
+        // tradingController.limitOrderBuyAmountTextController.text =
+        //     (existingNumber - double.parse(finalNumber))
+        //         .toStringAsFixed(percision);
+        // tradingController.onLimitOrderBuyAmountChange(
+        //     tradingController.limitOrderBuyAmountTextController.text);
       }
     }
-    if (formType == 'sell' &&
-        inputType == 'price' &&
-        tradingController.limitOrderSellPriceTextController.text != '') {
+    if (formType == 'sell' && inputType == 'price') {
       var existingNumber =
           tradingController.limitOrderSellPriceTextController.text != ''
               ? double.parse(
@@ -701,16 +710,16 @@ class LimitOrderForm extends StatelessWidget {
               : 0.0;
 
       if (existingNumber > 0) {
+        var removedFinalAmount = (existingNumber - double.parse(finalNumber));
         tradingController.limitOrderSellPriceTextController.text =
-            (existingNumber - double.parse(finalNumber))
-                .toStringAsFixed(percision);
+            removedFinalAmount == 0
+                ? ''
+                : removedFinalAmount.toStringAsFixed(percision);
         tradingController.onLimitOrderSellPriceChange(
             tradingController.limitOrderSellPriceTextController.text);
       }
     }
-    if (formType == 'sell' &&
-        inputType == 'amount' &&
-        tradingController.limitOrderSellAmountTextController.text != '') {
+    if (formType == 'sell' && inputType == 'amount') {
       var existingNumber =
           tradingController.limitOrderSellAmountTextController.text != ''
               ? double.parse(
@@ -718,9 +727,11 @@ class LimitOrderForm extends StatelessWidget {
               : 0.0;
 
       if (existingNumber > 0) {
+        var removedFinalAmount = (existingNumber - double.parse(finalNumber));
         tradingController.limitOrderSellAmountTextController.text =
-            (existingNumber - double.parse(finalNumber))
-                .toStringAsFixed(percision);
+            removedFinalAmount == 0
+                ? ''
+                : removedFinalAmount.toStringAsFixed(percision);
         tradingController.onLimitOrderSellAmountChange(
             tradingController.limitOrderSellAmountTextController.text);
       }
