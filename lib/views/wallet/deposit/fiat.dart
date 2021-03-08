@@ -1,6 +1,5 @@
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/controllers/fiat_deposit_controller.dart';
-import 'package:crypto_template/views/wallet/custom_appbar.dart';
 import 'package:crypto_template/views/wallet/search_wallet_header.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/models/wallet.dart' as WalletClass;

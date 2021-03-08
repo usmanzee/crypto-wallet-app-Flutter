@@ -1,19 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:crypto_template/models/formated_market.dart';
+import 'package:crypto_template/utils/Helpers/environment.dart';
 import 'package:get/get.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/status.dart' as status;
 
 class WebSocketController extends GetxController {
-  // final bool withAuth;
-  // final FormatedMarket market;
-  // WebSocketController({this.withAuth, this.market});
-
-  // final String _baseUrl = "ws://10.121.12.231:9003/api/v2/ranger/public";
-  // final String _baseUrl = "wss://www.app.local/";
-  final String _baseUrl = "wss://www.coinee.cf/api/v2/ranger/public";
-  // final String _baseUrl = "wss://ewallet.b4uwallet.com/api/v2/ranger/public";
+  final String _baseUrl = Environment.getWSBaseUrl();
   final isChannelConnected = false.obs;
   Rx<IOWebSocketChannel> channel;
   Rx<StreamController> streamController;
@@ -28,7 +22,7 @@ class WebSocketController extends GetxController {
   }
 
   void connectToWebSocket() async {
-    final String wsURL = _baseUrl + '/?stream=global.tickers';
+    final String wsURL = _baseUrl + '?stream=global.tickers';
     channel = IOWebSocketChannel.connect(wsURL).obs;
     // streamController = StreamController.broadcast().obs;
     // streamController.value.addStream(channel.value.stream);
@@ -36,11 +30,11 @@ class WebSocketController extends GetxController {
     channel.value.stream.listen((event) {
       streamController.value.add(event);
     }, onError: (e) async {
-      print('error');
+      print('Error while connecting websocket, Reconnecting...');
       await Future.delayed(Duration(seconds: 3));
       connectToWebSocket();
     }, onDone: () async {
-      print('on done');
+      print('Reconnecting websocket...');
       await Future.delayed(Duration(seconds: 3));
       connectToWebSocket();
     }, cancelOnError: true);

@@ -163,6 +163,7 @@ class SignUp extends StatelessWidget {
                             left: 16.0, right: 16.0, top: 40.0),
                         child: GestureDetector(
                           onTap: () {
+                            FocusScope.of(context).unfocus();
                             _onSignFormSubmit();
                           },
                           child: Container(

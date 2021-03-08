@@ -4,6 +4,7 @@ import 'package:crypto_template/network/api_provider.dart';
 import 'package:crypto_template/models/user.dart';
 import 'package:crypto_template/models/otp.dart';
 import 'package:crypto_template/network/request_headers.dart';
+import 'package:http/http.dart' as http;
 
 class UserRepository {
   ApiProvider apiProvider;
@@ -101,16 +102,13 @@ class UserRepository {
     return response;
   }
 
-  Future<dynamic> verifyDocuments(reqObj) async {
+  Future<dynamic> verifyDocuments(http.MultipartRequest request) async {
     apiProvider = new ApiProvider();
     RequestHeaders requestHeaders = new RequestHeaders();
     var authHeaders = requestHeaders.setAuthHeaders();
-    // authHeaders.addAll({
-    //   "Content-Type": "multipart/form-data",
-    // });
-    apiProvider.headers = authHeaders;
-    final response =
-        await apiProvider.post('barong/resource/documents', reqObj);
+    var headers = authHeaders;
+    request.headers.addAll(headers);
+    final response = await apiProvider.multiPart(request);
     return response;
   }
 

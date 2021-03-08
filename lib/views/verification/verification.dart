@@ -39,11 +39,11 @@ class Verification extends StatelessWidget {
           else
             return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: renderContent());
+                child: renderContent(context));
         }));
   }
 
-  Widget renderContent() {
+  Widget renderContent(BuildContext context) {
     var labels = verificationController.labelsList;
     VerificationLabel isProfileVerified = labels.firstWhere(
         (label) =>
@@ -63,7 +63,36 @@ class Verification extends StatelessWidget {
       case 3:
         return DocumentVerification();
       default:
-        return Text('Something went wrong!');
+        return Center(
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Something went wrong!',
+                  style: TextStyle(
+                    fontFamily: 'Popins',
+                  ),
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                MaterialButton(
+                  minWidth: MediaQuery.of(context).size.width / 2,
+                  child: Text(
+                    'Go Back',
+                    style: TextStyle(
+                      fontFamily: 'Popins',
+                    ),
+                  ),
+                  color: Theme.of(context).primaryColor,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    Get.back();
+                  },
+                ),
+              ]),
+        );
     }
   }
 }

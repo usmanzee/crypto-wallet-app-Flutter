@@ -15,6 +15,8 @@ import 'package:crypto_template/controllers/wallet_controller.dart';
 // import 'package:get_mac/get_mac.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:http/http.dart';
+import 'dart:convert';
 
 class HomeController extends GetxController {
   // final int activeNavIndex = Get.arguments['selectedNavIndex'];
@@ -30,6 +32,9 @@ class HomeController extends GetxController {
   var authSecret = 'unknown'.obs;
   var fetchingMemberLevel = false.obs;
   var publicMemberLevel = MemberLevel().obs;
+
+  var isLoadingWpPosts = false.obs;
+  var wpPosts = List<dynamic>().obs;
 
   SnackbarController snackbarController;
   ErrorController errorController = new ErrorController();
@@ -64,6 +69,8 @@ class HomeController extends GetxController {
     subscription = connectivity.onConnectivityChanged.listen(_connectionChange);
     firebaseeMessagingConfig();
     ever(isLoggedIn, setValuesAfterLogin);
+
+    getWPPosts();
     super.onInit();
   }
 
@@ -239,6 +246,20 @@ class HomeController extends GetxController {
     } catch (error) {
       print('error while saving token!');
       print(error);
+    }
+  }
+
+  void getWPPosts() async {
+    try {
+      isLoadingWpPosts(true);
+      var response = await get(
+          'https://blog.b4uwallet.com/wp-json/wp/v2/posts?categories=261&_embed&per_page=4');
+      List<dynamic> posts = json.decode(response.body);
+      wpPosts.assignAll(posts);
+      isLoadingWpPosts(false);
+    } catch (error) {
+      print('Error while fetch WP posts :' + error.toString());
+      isLoadingWpPosts(false);
     }
   }
 

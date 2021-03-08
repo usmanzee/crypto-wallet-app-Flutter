@@ -196,6 +196,7 @@ class Swap extends StatelessWidget {
   }
 
   Widget _swapForm(context) {
+    // print(homeController.publicMemberLevel.value.toString());
     return Obx(() {
       if (swapController.isLoading.value)
         return Container(
@@ -265,7 +266,8 @@ class Swap extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            swapController.selectedWalletIndex = 0;
+                            swapController.selectedWalletIndex.value = 0;
+                            swapController.setSearchWallets();
                             showWalletsList(context);
                           },
                           child: Row(
@@ -386,7 +388,8 @@ class Swap extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            swapController.selectedWalletIndex = 1;
+                            swapController.selectedWalletIndex.value = 1;
+                            swapController.setSearchWallets();
                             showWalletsList(context);
                           },
                           child: Row(
@@ -508,7 +511,7 @@ class Swap extends StatelessWidget {
   }
 
   void showWalletsList(BuildContext context) {
-    swapController.searchWalletsList.assignAll(swapController.walletsList);
+    // swapController.searchWalletsList.assignAll(swapController.walletsList);
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -539,13 +542,16 @@ class Swap extends StatelessWidget {
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(50.0),
                                     ),
-                                    color:
-                                        swapController.selectedWalletIndex == 0
-                                            ? Theme.of(context)
-                                                .scaffoldBackgroundColor
-                                            : Theme.of(context).canvasColor,
+                                    color: swapController
+                                                .selectedWalletIndex.value ==
+                                            0
+                                        ? Theme.of(context)
+                                            .scaffoldBackgroundColor
+                                        : Theme.of(context).canvasColor,
                                     onPressed: () {
-                                      swapController.selectedWalletIndex = 0;
+                                      swapController.selectedWalletIndex.value =
+                                          0;
+                                      swapController.setSearchWallets();
                                     },
                                     child: Center(
                                         child: Row(children: [
@@ -600,13 +606,16 @@ class Swap extends StatelessWidget {
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(50.0),
                                     ),
-                                    color:
-                                        swapController.selectedWalletIndex == 1
-                                            ? Theme.of(context)
-                                                .scaffoldBackgroundColor
-                                            : Theme.of(context).canvasColor,
+                                    color: swapController
+                                                .selectedWalletIndex.value ==
+                                            1
+                                        ? Theme.of(context)
+                                            .scaffoldBackgroundColor
+                                        : Theme.of(context).canvasColor,
                                     onPressed: () {
-                                      swapController.selectedWalletIndex = 1;
+                                      swapController.selectedWalletIndex.value =
+                                          1;
+                                      swapController.setSearchWallets();
                                     },
                                     child: Center(
                                         child: Row(children: [
@@ -659,7 +668,7 @@ class Swap extends StatelessWidget {
                         ),
                         SizedBox(height: 16.0),
                         Text(
-                          swapController.selectedWalletIndex == 0
+                          swapController.selectedWalletIndex.value == 0
                               ? 'Convert From'
                               : 'Convert To',
                           style: TextStyle(
@@ -667,51 +676,50 @@ class Swap extends StatelessWidget {
                               color: Theme.of(context).textSelectionColor,
                               fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(height: 16.0),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).canvasColor,
-                            border: Border.all(
-                              color: Theme.of(context).scaffoldBackgroundColor,
-                              width: 3.0,
-                            ),
-                            borderRadius: BorderRadius.circular(16.0),
-                          ),
-                          child: Row(
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.only(left: 8),
-                                child: Icon(
-                                  Icons.search,
-                                  size: 20,
-                                  color: Theme.of(context).hintColor,
-                                ),
-                              ),
-                              new Expanded(
-                                child: TextField(
-                                  // controller: _textController,
-                                  onChanged: swapController
-                                      .handleSearchInputChangeEvent,
-                                  cursorColor: Theme.of(context).hintColor,
-                                  keyboardType: TextInputType.text,
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: "Search...",
-                                    hintStyle: TextStyle(
-                                        color: Theme.of(context).hintColor),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 8, horizontal: 8),
-                                    isDense: true,
-                                  ),
-                                  style: TextStyle(
-                                    fontSize: 14.0,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
+                        // SizedBox(height: 16.0),
+                        // Container(
+                        //   decoration: BoxDecoration(
+                        //     color: Theme.of(context).canvasColor,
+                        //     border: Border.all(
+                        //       color: Theme.of(context).scaffoldBackgroundColor,
+                        //       width: 3.0,
+                        //     ),
+                        //     borderRadius: BorderRadius.circular(16.0),
+                        //   ),
+                        //   child: Row(
+                        //     children: <Widget>[
+                        //       Padding(
+                        //         padding: EdgeInsets.only(left: 8),
+                        //         child: Icon(
+                        //           Icons.search,
+                        //           size: 20,
+                        //           color: Theme.of(context).hintColor,
+                        //         ),
+                        //       ),
+                        //       new Expanded(
+                        //         child: TextField(
+                        //           onChanged: swapController
+                        //               .handleSearchInputChangeEvent,
+                        //           cursorColor: Theme.of(context).hintColor,
+                        //           keyboardType: TextInputType.text,
+                        //           decoration: InputDecoration(
+                        //             border: InputBorder.none,
+                        //             hintText: "Search...",
+                        //             hintStyle: TextStyle(
+                        //                 color: Theme.of(context).hintColor),
+                        //             contentPadding: EdgeInsets.symmetric(
+                        //                 vertical: 8, horizontal: 8),
+                        //             isDense: true,
+                        //           ),
+                        //           style: TextStyle(
+                        //             fontSize: 14.0,
+                        //             color: Colors.black,
+                        //           ),
+                        //         ),
+                        //       )
+                        //     ],
+                        //   ),
+                        // ),
                         SizedBox(height: 8.0),
                         Expanded(
                           child: swapController.searchWalletsList.length < 0
@@ -802,11 +810,13 @@ class Swap extends StatelessWidget {
       subtitle: Text(wallet.name),
       trailing: Icon(Icons.keyboard_arrow_right),
       onTap: () {
-        if (swapController.selectedWalletIndex == 0) {
-          swapController.setFromSelectedWallet(wallet);
-        } else {
-          swapController.setToSelectedWallet(wallet);
-        }
+        swapController.setWalletOnClick(wallet);
+        // if (swapController.selectedWalletIndex.value == 0) {
+        //   swapController.setFromSelectedWallet(wallet);
+        //   swapController.selectedWalletIndex.value = 1;
+        // } else {
+        //   swapController.setToSelectedWallet(wallet);
+        // }
       },
     );
   }

@@ -113,7 +113,7 @@ class EnableOTP extends GetView<OTPController> {
             'Download & Install',
             style: TextStyle(
               fontFamily: 'popins',
-              fontWeight: FontWeight.normal,
+              fontWeight: FontWeight.bold,
             ),
           ),
           content: Column(
@@ -134,7 +134,7 @@ class EnableOTP extends GetView<OTPController> {
             'Save The Scerect Key',
             style: TextStyle(
               fontFamily: 'popins',
-              fontWeight: FontWeight.normal,
+              fontWeight: FontWeight.bold,
             ),
           ),
           content: Column(
@@ -187,7 +187,7 @@ class EnableOTP extends GetView<OTPController> {
             'Verify The Secrect Key',
             style: TextStyle(
               fontFamily: 'popins',
-              fontWeight: FontWeight.normal,
+              fontWeight: FontWeight.bold,
             ),
           ),
           content: Column(
@@ -225,7 +225,7 @@ class EnableOTP extends GetView<OTPController> {
             'Submit The Code From App',
             style: TextStyle(
               fontFamily: 'popins',
-              fontWeight: FontWeight.normal,
+              fontWeight: FontWeight.bold,
             ),
           ),
           content: Column(

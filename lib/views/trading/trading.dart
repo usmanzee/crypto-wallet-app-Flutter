@@ -19,8 +19,6 @@ class Trading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final FormatedMarket formatedMarket =
-    //     marketController.selectedMarketTrading.value;
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -95,13 +93,52 @@ class Trading extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Padding(
-            //   padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
-            //   child: Text(
-            //     'Order Book',
-            //     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            //   ),
-            // ),
+            Padding(
+              padding: EdgeInsets.only(top: 16.0, bottom: 8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    marketController.selectedMarketTrading.value.last != null
+                        ? marketController.selectedMarketTrading.value.last
+                            .toStringAsFixed(2)
+                        : '--',
+                    style: TextStyle(
+                        color: marketController.selectedMarketTrading.value
+                                    .isPositiveChange !=
+                                null
+                            ? marketController.selectedMarketTrading.value
+                                    .isPositiveChange
+                                ? Color(0xFF00C087)
+                                : Colors.redAccent
+                            : Theme.of(context).hintColor,
+                        fontFamily: "Popins",
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18.5),
+                  ),
+                  Text(
+                    ' ≈ \$',
+                    style: TextStyle(
+                        color: Theme.of(context).hintColor,
+                        fontFamily: "Popins",
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12.5),
+                  ),
+                  Text(
+                    marketController.selectedMarketTrading.value.priceInUsd !=
+                            null
+                        ? marketController
+                            .selectedMarketTrading.value.priceInUsd
+                        : '--',
+                    style: TextStyle(
+                        color: Theme.of(context).hintColor,
+                        fontFamily: "Popins",
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12.5),
+                  )
+                ],
+              ),
+            ),
             OrderBook(
                 isTrading: true,
                 formatedMarket: marketController.selectedMarketTrading.value,

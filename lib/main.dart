@@ -1,3 +1,4 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 import 'package:crypto_template/bindings/socket_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,7 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:upgrader/upgrader.dart';
 
-void main() {
+void main() async {
+  await DotEnv.load(fileName: ".env");
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

@@ -5,14 +5,13 @@ import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:async';
 import 'dart:io';
+import 'dart:convert';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:path/path.dart';
 
 class DocumentVerification extends StatelessWidget {
   final GlobalKey<FormState> _documentFormKey = GlobalKey<FormState>();
 
-  // final _documentValidator =
-  //     RequiredValidator(errorText: 'This field is required');
   final _documentNumberValidator = MultiValidator([
     RequiredValidator(errorText: 'This field is required.'),
   ]);
@@ -73,8 +72,10 @@ class DocumentVerification extends StatelessWidget {
                                 fileName;
                             verificationController.documentFilePath.value =
                                 image.path;
+                            var fileBytes = await image.readAsBytes();
+                            final encoded = base64.encode(fileBytes);
                             verificationController.documentFileBytes
-                                .assignAll(image.readAsBytesSync());
+                                .assignAll(fileBytes);
                             documentImageValidation();
                           }
                           if (isAdditional) {
@@ -83,8 +84,10 @@ class DocumentVerification extends StatelessWidget {
                                 fileName;
                             verificationController.additionalFilePath.value =
                                 image.path;
+                            var fileBytes = await image.readAsBytes();
+                            final encoded = base64.encode(fileBytes);
                             verificationController.additionalFileBytes
-                                .assignAll(image.readAsBytesSync());
+                                .assignAll(fileBytes);
                             additionalImageValidation();
                           }
                         }
@@ -104,8 +107,10 @@ class DocumentVerification extends StatelessWidget {
                               fileName;
                           verificationController.documentFilePath.value =
                               image.path;
+                          var fileBytes = await image.readAsBytes();
+                          final encoded = base64.encode(fileBytes);
                           verificationController.documentFileBytes
-                              .assignAll(image.readAsBytesSync());
+                              .assignAll(fileBytes);
                           documentImageValidation();
                         }
                         if (isAdditional) {
@@ -114,8 +119,10 @@ class DocumentVerification extends StatelessWidget {
                               fileName;
                           verificationController.additionalFilePath.value =
                               image.path;
+                          var fileBytes = await image.readAsBytes();
+                          final encoded = base64.encode(fileBytes);
                           verificationController.additionalFileBytes
-                              .assignAll(image.readAsBytesSync());
+                              .assignAll(fileBytes);
                           additionalImageValidation();
                         }
                       }
@@ -196,157 +203,199 @@ class DocumentVerification extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Obx(() {
-        return
-            // Column(
-            //   crossAxisAlignment: CrossAxisAlignment.start,
-            //   children: <Widget>[
-            //     SizedBox(height: 10),
-            Form(
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          key: _documentFormKey,
-          child: Column(
-              // scrollDirection: Axis.vertical, shrinkWrap: true,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Document Type",
-                  style: TextStyle(
-                    color: Theme.of(context).hintColor.withOpacity(0.7),
-                    fontFamily: "Popins",
-                  ),
+        return Padding(
+          padding: EdgeInsets.only(top: 16.0),
+          child: Form(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            key: _documentFormKey,
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(
+                "Document Type",
+                style: TextStyle(
+                  color: Theme.of(context).hintColor.withOpacity(0.7),
+                  fontFamily: "Popins",
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0),
-                  child: FormField<String>(
-                    // validator: _documentValidator,
-                    builder: (FormFieldState<String> state) {
-                      return InputDecorator(
-                        decoration: InputDecoration(
-                            errorStyle: TextStyle(
-                                color: Colors.redAccent, fontSize: 16.0),
-                            hintText: 'Please select beneficiary',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0))),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            value: verificationController
-                                .selectedDocumentType['type']
-                                .toString(),
-                            isDense: true,
-                            onChanged: (String newOptionValue) {
-                              var newOption = verificationController
-                                  .documentTypes
-                                  .where((documentType) =>
-                                      documentType['type'] == newOptionValue)
-                                  .single;
-                              verificationController.selectedDocumentType
-                                  .assignAll(newOption);
-                            },
-                            items: verificationController.documentTypes
-                                .map((documentType) {
-                              return DropdownMenuItem<String>(
-                                value: documentType['type'].toString(),
-                                child: Text(documentType['name'].toString()),
-                              );
-                            }).toList(),
-                          ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: FormField<String>(
+                  // validator: _documentValidator,
+                  builder: (FormFieldState<String> state) {
+                    return InputDecorator(
+                      decoration: InputDecoration(
+                          errorStyle: TextStyle(
+                              color: Colors.redAccent, fontSize: 16.0),
+                          hintText: 'Please select beneficiary',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0))),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          value: verificationController
+                              .selectedDocumentType['type']
+                              .toString(),
+                          isDense: true,
+                          onChanged: (String newOptionValue) {
+                            var newOption = verificationController.documentTypes
+                                .where((documentType) =>
+                                    documentType['type'] == newOptionValue)
+                                .single;
+                            verificationController.selectedDocumentType
+                                .assignAll(newOption);
+                          },
+                          items: verificationController.documentTypes
+                              .map((documentType) {
+                            return DropdownMenuItem<String>(
+                              value: documentType['type'].toString(),
+                              child: Text(documentType['name'].toString()),
+                            );
+                          }).toList(),
                         ),
-                      );
-                    },
-                  ),
+                      ),
+                    );
+                  },
                 ),
-                Text(
-                  "${verificationController.selectedDocumentType['name']} Number",
-                  style: TextStyle(
-                    color: Theme.of(context).hintColor.withOpacity(0.7),
-                    fontFamily: "Popins",
-                  ),
+              ),
+              Text(
+                "${verificationController.selectedDocumentType['name']} Number",
+                style: TextStyle(
+                  color: Theme.of(context).hintColor.withOpacity(0.7),
+                  fontFamily: "Popins",
                 ),
-                Padding(
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: TextFormField(
+                  obscureText: false,
+                  keyboardType: TextInputType.number,
+                  validator: _documentNumberValidator,
+                  cursorColor: Theme.of(context).hintColor,
+                  controller:
+                      verificationController.documentNumberTextController,
+                  decoration: InputDecoration(
+                      errorStyle: TextStyle(
+                        fontSize: 13.5,
+                      ),
+                      errorMaxLines: 3,
+                      filled: true,
+                      fillColor: Colors.transparent,
+                      // labelText: 'Number',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5))),
+                ),
+              ),
+              Text(
+                "${verificationController.selectedDocumentType['name']} Expiry",
+                style: TextStyle(
+                  color: Theme.of(context).hintColor.withOpacity(0.7),
+                  fontFamily: "Popins",
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  _selectDate(context);
+                },
+                child: Padding(
                   padding: const EdgeInsets.only(bottom: 16.0),
                   child: TextFormField(
                     obscureText: false,
+                    enabled: false,
                     keyboardType: TextInputType.number,
-                    validator: _documentNumberValidator,
-                    cursorColor: Theme.of(context).hintColor,
+                    validator: _documentExpiryValidator,
                     controller:
-                        verificationController.documentNumberTextController,
+                        verificationController.documentExpiryTextController,
                     decoration: InputDecoration(
-                        errorStyle: TextStyle(
-                          fontSize: 13.5,
-                        ),
+                        errorStyle:
+                            TextStyle(fontSize: 13.5, color: Colors.red),
                         errorMaxLines: 3,
                         filled: true,
                         fillColor: Colors.transparent,
-                        // labelText: 'Number',
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5))),
                   ),
                 ),
-                Text(
-                  "${verificationController.selectedDocumentType['name']} Expiry",
-                  style: TextStyle(
-                    color: Theme.of(context).hintColor.withOpacity(0.7),
-                    fontFamily: "Popins",
-                  ),
-                ),
-                GestureDetector(
+              ),
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                InkWell(
                   onTap: () {
-                    _selectDate(context);
+                    _selectDocumentFile(context, true, false);
                   },
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 16.0),
-                    child: TextFormField(
-                      obscureText: false,
-                      enabled: false,
-                      keyboardType: TextInputType.number,
-                      validator: _documentExpiryValidator,
-                      controller:
-                          verificationController.documentExpiryTextController,
-                      decoration: InputDecoration(
-                          errorStyle:
-                              TextStyle(fontSize: 13.5, color: Colors.red),
-                          errorMaxLines: 3,
-                          filled: true,
-                          fillColor: Colors.transparent,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5))),
-                    ),
+                  child: Container(
+                    width: double.infinity,
+                    // height: 100.0,
+                    padding: const EdgeInsets.all(40.0),
+                    decoration: BoxDecoration(
+                        border:
+                            Border.all(color: Theme.of(context).accentColor)),
+                    child: Center(
+                        child: Text(
+                            "Upload ${verificationController.selectedDocumentType['name']} Clear Picture")),
                   ),
                 ),
+                SizedBox(
+                  height: 8.0,
+                ),
+                if (verificationController.documentFileName.value != '')
+                  Row(children: [
+                    Container(
+                      height: 50,
+                      child: Image.file(
+                          File(verificationController.documentFilePath.value)),
+                    ),
+                    SizedBox(
+                      width: 8.0,
+                    ),
+                    Expanded(
+                      child: Text(
+                        verificationController.documentFileName.value,
+                        style: TextStyle(
+                            fontFamily: 'sans',
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ]),
+                if (verificationController.documentFileError.value)
+                  Text(
+                    verificationController.documentFileErrorMessage.value,
+                    style: TextStyle(
+                        fontFamily: 'sans', fontSize: 12, color: Colors.red),
+                  ),
+              ]),
+              if (verificationController.selectedDocumentType['type'] !=
+                  'utility_bill')
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  SizedBox(height: 8),
                   InkWell(
                     onTap: () {
-                      _selectDocumentFile(context, true, false);
+                      _selectDocumentFile(context, false, true);
                     },
                     child: Container(
                       width: double.infinity,
-                      // height: 100.0,
                       padding: const EdgeInsets.all(40.0),
                       decoration: BoxDecoration(
                           border:
                               Border.all(color: Theme.of(context).accentColor)),
                       child: Center(
-                          child: Text(
-                              "Upload ${verificationController.selectedDocumentType['name']} Clear Picture")),
+                          child: Text("Upload Utility Bill Clear Picture")),
                     ),
                   ),
                   SizedBox(
                     height: 8.0,
                   ),
-                  if (verificationController.documentFileName.value != '')
+                  if (verificationController.additionalFileName.value != '')
                     Row(children: [
                       Container(
                         height: 50,
                         child: Image.file(File(
-                            verificationController.documentFilePath.value)),
+                            verificationController.additionalFilePath.value)),
                       ),
                       SizedBox(
                         width: 8.0,
                       ),
                       Expanded(
                         child: Text(
-                          verificationController.documentFileName.value,
+                          verificationController.additionalFileName.value,
                           style: TextStyle(
                               fontFamily: 'sans',
                               fontSize: 12,
@@ -354,132 +403,79 @@ class DocumentVerification extends StatelessWidget {
                         ),
                       ),
                     ]),
-                  if (verificationController.documentFileError.value)
+                  if (verificationController.additionalFileError.value)
                     Text(
-                      verificationController.documentFileErrorMessage.value,
+                      verificationController.additionalFileErrorMessage.value,
                       style: TextStyle(
                           fontFamily: 'sans', fontSize: 12, color: Colors.red),
                     ),
+                  SizedBox(height: 8),
                 ]),
-                if (verificationController.selectedDocumentType['type'] !=
-                    'utility_bill')
-                  Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 8),
-                        InkWell(
-                          onTap: () {
-                            _selectDocumentFile(context, false, true);
-                          },
-                          child: Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.all(40.0),
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: Theme.of(context).accentColor)),
-                            child: Center(
-                                child:
-                                    Text("Upload Utility Bill Clear Picture")),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 8.0,
-                        ),
-                        if (verificationController.additionalFileName.value !=
-                            '')
-                          Row(children: [
-                            Container(
-                              height: 50,
-                              child: Image.file(File(verificationController
-                                  .additionalFilePath.value)),
-                            ),
-                            SizedBox(
-                              width: 8.0,
-                            ),
-                            Expanded(
-                              child: Text(
-                                verificationController.additionalFileName.value,
-                                style: TextStyle(
-                                    fontFamily: 'sans',
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ]),
-                        if (verificationController.additionalFileError.value)
-                          Text(
-                            verificationController
-                                .additionalFileErrorMessage.value,
-                            style: TextStyle(
-                                fontFamily: 'sans',
-                                fontSize: 12,
-                                color: Colors.red),
-                          ),
-                        SizedBox(height: 8),
-                      ]),
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  InkWell(
-                    onTap: () async {
-                      File image = await _imgFromCamera();
-                      if (image != null) {
-                        String fileName = basename(image.path);
-                        verificationController.selfie.value = image;
-                        verificationController.selfieName.value = fileName;
-                        verificationController.selfiePath.value = image.path;
-                        verificationController.selfieBytes
-                            .assignAll(image.readAsBytesSync());
-                        selfieValidation();
-                      }
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(40.0),
-                      decoration: BoxDecoration(
-                          border:
-                              Border.all(color: Theme.of(context).accentColor)),
-                      child: Center(child: Text("Take your selfie")),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 8.0,
-                  ),
-                  if (verificationController.selfieName.value != '')
-                    Row(children: [
-                      Container(
-                        height: 50,
-                        child: Image.file(
-                            File(verificationController.selfiePath.value)),
-                      ),
-                      SizedBox(
-                        width: 8.0,
-                      ),
-                      Expanded(
-                        child: Text(
-                          verificationController.selfieName.value,
-                          style: TextStyle(
-                              fontFamily: 'sans',
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ]),
-                  if (verificationController.selfieError.value)
-                    Text(
-                      verificationController.selfieErrorMessage.value,
-                      style: TextStyle(
-                          fontFamily: 'sans', fontSize: 12, color: Colors.red),
-                    ),
-                ]),
-                MaterialButton(
-                  minWidth: double.infinity,
-                  child: Text('Submit'),
-                  color: Theme.of(context).primaryColor,
-                  textColor: Colors.white,
-                  onPressed: () {
-                    _submitDocumentForm();
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                InkWell(
+                  onTap: () async {
+                    File image = await _imgFromCamera();
+                    if (image != null) {
+                      String fileName = basename(image.path);
+                      verificationController.selfie.value = image;
+                      verificationController.selfieName.value = fileName;
+                      verificationController.selfiePath.value = image.path;
+                      var fileBytes = await image.readAsBytes();
+                      final encoded = base64.encode(fileBytes);
+                      verificationController.selfieBytes.assignAll(fileBytes);
+                      selfieValidation();
+                    }
                   },
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(40.0),
+                    decoration: BoxDecoration(
+                        border:
+                            Border.all(color: Theme.of(context).accentColor)),
+                    child: Center(child: Text("Take your selfie")),
+                  ),
                 ),
+                SizedBox(
+                  height: 8.0,
+                ),
+                if (verificationController.selfieName.value != '')
+                  Row(children: [
+                    Container(
+                      height: 50,
+                      child: Image.file(
+                          File(verificationController.selfiePath.value)),
+                    ),
+                    SizedBox(
+                      width: 8.0,
+                    ),
+                    Expanded(
+                      child: Text(
+                        verificationController.selfieName.value,
+                        style: TextStyle(
+                            fontFamily: 'sans',
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ]),
+                if (verificationController.selfieError.value)
+                  Text(
+                    verificationController.selfieErrorMessage.value,
+                    style: TextStyle(
+                        fontFamily: 'sans', fontSize: 12, color: Colors.red),
+                  ),
               ]),
+              MaterialButton(
+                minWidth: double.infinity,
+                child: Text('Submit'),
+                color: Theme.of(context).primaryColor,
+                textColor: Colors.white,
+                onPressed: () {
+                  _submitDocumentForm();
+                },
+              ),
+            ]),
+          ),
         );
       }),
     );

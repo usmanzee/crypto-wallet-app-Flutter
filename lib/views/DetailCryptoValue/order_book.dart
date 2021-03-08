@@ -27,48 +27,40 @@ class OrderBook extends StatelessWidget {
       children: <Widget>[
         Container(
           child: Column(children: [
-            // Row(
-            //   crossAxisAlignment: CrossAxisAlignment.start,
-            //   children: [
-            //     Text(
-            //       formatedMarket.last != null
-            //           ? formatedMarket.last.toStringAsFixed(2)
-            //           : '',
-            //       style: TextStyle(
-            //           color: formatedMarket.isPositiveChange != null
-            //               ? formatedMarket.isPositiveChange
-            //                   ? Color(0xFF00C087)
-            //                   : Colors.redAccent
-            //               : Theme.of(context).scaffoldBackgroundColor,
-            //           fontFamily: "Gotik",
-            //           fontWeight: FontWeight.w600,
-            //           fontSize: 18.5),
-            //     )
-            //   ],
-            // ),
             Padding(
-              padding: const EdgeInsets.only(
-                  left: 0.0, right: 0.0, top: 8.0, bottom: 8.0),
+              padding: const EdgeInsets.only(right: 0.0, top: 8.0, bottom: 8.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    "Amount (" + formatedMarket.baseUnit.toUpperCase() + ")",
+                    formatedMarket.baseUnit != null
+                        ? "Amount (" +
+                            formatedMarket.baseUnit.toUpperCase() +
+                            ")"
+                        : 'Amount',
                     style: TextStyle(
                         color: Theme.of(context).hintColor,
                         fontSize: 12,
                         fontFamily: "Popins"),
                   ),
                   Text(
-                    "Price (" + formatedMarket.quoteUnit.toUpperCase() + ")",
+                    formatedMarket.quoteUnit != null
+                        ? "Price (" +
+                            formatedMarket.quoteUnit.toUpperCase() +
+                            ")"
+                        : 'Price',
                     style: TextStyle(
                         color: Theme.of(context).hintColor,
                         fontSize: 12,
                         fontFamily: "Popins"),
                   ),
                   Text(
-                    "Amount (" + formatedMarket.baseUnit.toUpperCase() + ")",
+                    formatedMarket.baseUnit != null
+                        ? "Amount (" +
+                            formatedMarket.baseUnit.toUpperCase() +
+                            ")"
+                        : 'Amount',
                     style: TextStyle(
                         color: Theme.of(context).hintColor,
                         fontSize: 12,

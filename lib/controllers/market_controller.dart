@@ -10,7 +10,7 @@ import 'dart:convert';
 import 'package:web_socket_channel/io.dart';
 
 class MarketController extends GetxController {
-  var isLoading = true.obs;
+  var isLoading = false.obs;
   var marketList = List<Market>().obs;
   var marketTickerList = Map<String, MarketTicker>().obs;
   var formatedMarketsList = List<FormatedMarket>().obs;

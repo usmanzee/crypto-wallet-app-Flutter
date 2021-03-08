@@ -1,5 +1,6 @@
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/models/formated_market.dart';
+import 'package:crypto_template/views/webview_container.dart';
 import 'package:get/get.dart';
 import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:flutter/material.dart';
@@ -45,9 +46,8 @@ class Home extends StatelessWidget {
   //   return bannerImages;
   // }
 
-  @override
-  Widget build(BuildContext context) {
-    Widget image_carousel = new Container(
+  Widget imageCarousel(List<dynamic> posts) {
+    return Container(
         height: 345.0,
         child: CarouselSlider(
           options: CarouselOptions(
@@ -62,12 +62,7 @@ class Home extends StatelessWidget {
             // viewportFraction: 0.8,
           ),
           // height: 400.0,
-          items: [
-            'http://pic3.16pic.com/00/55/42/16pic_5542988_b.jpg',
-            'http://photo.16pic.com/00/38/88/16pic_3888084_b.jpg',
-            'http://pic3.16pic.com/00/55/42/16pic_5542988_b.jpg',
-            'http://photo.16pic.com/00/38/88/16pic_3888084_b.jpg'
-          ].map((i) {
+          items: posts.map((post) {
             return Builder(
               builder: (BuildContext context) {
                 return Container(
@@ -75,20 +70,21 @@ class Home extends StatelessWidget {
                     margin: EdgeInsets.symmetric(horizontal: 5.0),
                     decoration: BoxDecoration(color: Colors.amber),
                     child: GestureDetector(
-                        child: Image.network(i, fit: BoxFit.fill),
+                        child: Image.network(post['featured_media_src_url'],
+                            fit: BoxFit.fill),
                         onTap: () {
-                          print(i);
-                          // Navigator.push<Widget>(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => ImageScreen(i),
-                          //   ),
-                          // );
+                          print(post['link']);
+                          print(post['_embedded']['wp:featuredmedia']);
+                          Get.to(WebViewContainer('Post', post['link']));
                         }));
               },
             );
           }).toList(),
         ));
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
@@ -162,8 +158,24 @@ class Home extends StatelessWidget {
             //         AssetImage("assets/image/banner/banner3.jpg"),
             //       ],
             //     )),
+            // MaterialButton(
+            //     child: Text('Get Posts'),
+            //     onPressed: () {
+            //       homeController.getWPPosts();
+            //     }),
             SizedBox(
-                height: 150.0, width: double.infinity, child: image_carousel),
+                height: 150.0,
+                width: double.infinity,
+                child: Obx(() {
+                  if (homeController.isLoadingWpPosts.value)
+                    return Container(
+                        width: double.infinity,
+                        height: 200,
+                        alignment: Alignment.center,
+                        child: CircularProgressIndicator());
+                  else
+                    return imageCarousel(homeController.wpPosts);
+                })),
             SizedBox(height: 10.0),
             Container(
               height: 100.0,

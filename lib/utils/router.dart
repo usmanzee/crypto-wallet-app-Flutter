@@ -23,6 +23,7 @@ import 'package:crypto_template/views/setting/setting.dart';
 import 'package:crypto_template/views/swap/swap.dart';
 import 'package:crypto_template/views/swap/swap_histroy.dart';
 import 'package:crypto_template/views/verification/verification.dart';
+import 'package:crypto_template/views/verification/verification_level.dart';
 import 'package:crypto_template/views/wallet/wallet_search.dart';
 import 'package:get/get.dart';
 
@@ -98,6 +99,11 @@ class Router {
       page: () => SwapHistory(),
       binding: SwapHistoryBinding(),
     ),
+    // GetPage(
+    //   name: '/verification-level',
+    //   page: () => VerificationLevel(),
+    //   binding: VerificationBinding(),
+    // ),
     GetPage(
       name: '/profile-verification',
       page: () => Verification(),

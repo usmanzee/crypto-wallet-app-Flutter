@@ -1,18 +1,14 @@
 import 'dart:io';
+import 'package:crypto_template/utils/Helpers/environment.dart';
 import 'package:http/http.dart' as http;
 import 'package:crypto_template/network/app_exception.dart';
-
 import 'dart:async';
 import 'dart:convert';
 
 class ApiProvider {
-  // final String _baseUrl = "http://10.121.12.231:9002/";
-  // final String _baseUrl = "http://www.app.local/";
-  final String _baseUrl = "https://www.coinee.cf/";
-  // final String _baseUrl = "https://ewallet.b4uwallet.com/";
-  final String _appVersion = "api/v2/";
+  final String _baseUrl = Environment.getApiBaseUrl();
+  final String _appVersion = Environment.getApiAppVersion();
   @override
-  String _apiVersion;
   Map<String, String> _headers;
 
   Map<String, String> get headers {
@@ -35,11 +31,12 @@ class ApiProvider {
       throw FetchDataException(
           {'statusCode': 1, 'message': 'No Internet connection'});
     } on HttpException {
-      throw FetchDataException(
-          {'statusCode': 2, 'message': 'Could not find the data'});
+      throw FetchDataException({
+        'statusCode': 2,
+        'message': 'Unable to communitate with the server'
+      });
     } on FormatException {
-      throw FetchDataException(
-          {'statusCode': 3, 'message': 'Bad response format'});
+      throw FetchDataException({'statusCode': 3, 'message': 'Server errror'});
     }
     return responseJson;
   }
@@ -55,11 +52,12 @@ class ApiProvider {
       throw FetchDataException(
           {'statusCode': 1, 'message': 'No Internet connection'});
     } on HttpException {
-      throw FetchDataException(
-          {'statusCode': 2, 'message': 'Could not find the data'});
+      throw FetchDataException({
+        'statusCode': 2,
+        'message': 'Unable to communitate with the server'
+      });
     } on FormatException {
-      throw FetchDataException(
-          {'statusCode': 3, 'message': 'Bad response format'});
+      throw FetchDataException({'statusCode': 3, 'message': 'Server errror'});
     }
     return responseJson;
   }
@@ -74,32 +72,54 @@ class ApiProvider {
       throw FetchDataException(
           {'statusCode': 1, 'message': 'No Internet connection'});
     } on HttpException {
-      throw FetchDataException(
-          {'statusCode': 2, 'message': 'Could not find the data'});
+      throw FetchDataException({
+        'statusCode': 2,
+        'message': 'Unable to communitate with the server'
+      });
     } on FormatException {
-      throw FetchDataException(
-          {'statusCode': 3, 'message': 'Bad response format'});
+      throw FetchDataException({'statusCode': 3, 'message': 'Server errror'});
     }
     return responseJson;
   }
 
   Future<dynamic> delete(String url) async {
-    var apiResponse;
+    var responseJson;
     try {
       final response =
           await http.delete(_baseUrl + _appVersion + url, headers: headers);
-      apiResponse = _returnResponse(response);
+      responseJson = _returnResponse(response);
     } on SocketException {
       throw FetchDataException(
           {'statusCode': 1, 'message': 'No Internet connection'});
     } on HttpException {
-      throw FetchDataException(
-          {'statusCode': 2, 'message': 'Could not find the data'});
+      throw FetchDataException({
+        'statusCode': 2,
+        'message': 'Unable to communitate with the server'
+      });
     } on FormatException {
-      throw FetchDataException(
-          {'statusCode': 3, 'message': 'Bad response format'});
+      throw FetchDataException({'statusCode': 3, 'message': 'Server errror'});
     }
-    return apiResponse;
+    return responseJson;
+  }
+
+  Future<dynamic> multiPart(http.MultipartRequest request) async {
+    var responseJson;
+    try {
+      final response = await request.send();
+      final res = await http.Response.fromStream(response);
+      responseJson = _returnResponse(res);
+    } on SocketException {
+      throw FetchDataException(
+          {'statusCode': 1, 'message': 'No Internet connection'});
+    } on HttpException {
+      throw FetchDataException({
+        'statusCode': 2,
+        'message': 'Unable to communitate with the server'
+      });
+    } on FormatException {
+      throw FetchDataException({'statusCode': 3, 'message': 'Server errror'});
+    }
+    return responseJson;
   }
 }
 
@@ -130,7 +150,7 @@ dynamic _returnResponse(http.Response response) {
       throw BadRequestException(errorResponse);
     case 500:
       var errorResponse = makeErrorResponse(response);
-      throw UnauthorisedException(errorResponse);
+      throw FetchDataException(errorResponse);
     default:
       var errorResponse = makeErrorResponse(response);
       FetchDataException(errorResponse);

@@ -8,6 +8,9 @@ import 'package:crypto_template/repository/user_repository.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:crypto_template/utils/Helpers/environment.dart';
+import 'package:http/http.dart' as http;
+import 'package:crypto_template/network/request_headers.dart';
 
 class VerificationController extends GetxController {
   var nationalities = [
@@ -532,11 +535,33 @@ class VerificationController extends GetxController {
       isLoadingLables(true);
       var response = await _userRepository.fetchLables();
       labelsList.assignAll(response);
-
+      await handleCheckPendingLabel(labelsList);
       isLoadingLables(false);
     } catch (error) {
       isLoadingLables(false);
       errorController.handleError(error);
+    }
+  }
+
+  Future<void> handleCheckPendingLabel(List<VerificationLabel> labels) async {
+    VerificationLabel isProfileSubmitted = labels.firstWhere(
+        (label) =>
+            label.key == 'profile' &&
+            label.value == 'submitted' &&
+            label.scope == 'private',
+        orElse: () => null);
+
+    VerificationLabel isDocumentPending = labels.firstWhere(
+        (label) =>
+            label.key == 'document' &&
+            label.value == 'pending' &&
+            label.scope == 'private',
+        orElse: () => null);
+    print(isProfileSubmitted);
+    print(isDocumentPending);
+    if (isProfileSubmitted != null && isDocumentPending != null) {
+      Get.back();
+      // Get.back();
     }
   }
 
@@ -658,18 +683,52 @@ class VerificationController extends GetxController {
     Get.dialog(Center(child: CircularProgressIndicator()),
         barrierDismissible: false);
     try {
-      var files = [documentFileBytes, selfieBytes];
+      var files = [documentFilePath.value, selfiePath.value];
       if (selectedDocumentType['type'] != 'utility_bill') {
-        files.add(additionalFileBytes);
+        files.add(additionalFilePath.value);
       }
-      var reqObj = {
-        'doc_type': selectedDocumentType['name'],
-        'doc_number': documentNumberTextController.text,
-        'doc_expire': documentExpiryTextController.text,
-        'upload[]': files
-      };
-      print(reqObj);
-      await _userRepository.verifyDocuments(reqObj);
+      var fieldsObj = [
+        {
+          'name': 'doc_type',
+          'data': selectedDocumentType['name'],
+        },
+        {
+          'name': 'doc_number',
+          'data': documentNumberTextController.text,
+        },
+        {
+          'name': 'doc_expire',
+          'data': documentExpiryTextController.text,
+        },
+      ];
+      var filesObj = {'upload': files.toString()};
+
+      final String _baseUrl = Environment.getApiBaseUrl();
+      final String _appVersion = Environment.getApiAppVersion();
+      var url = 'barong/resource/documents';
+      var request = http.MultipartRequest(
+          'POST', Uri.parse(_baseUrl + _appVersion + url));
+
+      request.fields['doc_type'] = selectedDocumentType['name'];
+      request.fields['doc_number'] = documentNumberTextController.text;
+      request.fields['doc_expire'] = documentExpiryTextController.text;
+      List<http.MultipartFile> newList = new List<http.MultipartFile>();
+      for (int i = 0; i < files.length; i++) {
+        http.MultipartFile multipartFile =
+            await http.MultipartFile.fromPath('upload[]', files[i]);
+        newList.add(multipartFile);
+      }
+
+      request.files.addAll(newList);
+
+      // var response = await request.send();
+
+      // print(response.stream);
+      // print(response.statusCode);
+      // final res = await http.Response.fromStream(response);
+      // print(res.body);
+
+      await _userRepository.verifyDocuments(request);
       Get.back();
       Get.back();
       Get.back();
