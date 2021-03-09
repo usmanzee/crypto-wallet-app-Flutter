@@ -24,50 +24,129 @@ class OTPModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Enter 2FA Code'),
-      content: Form(
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        key: _otpFormKey,
-        child: Container(
-          child: TextFormField(
-            validator: _otpValidator,
-            controller: _otpController.otpTextController,
-            obscureText: false,
-            keyboardType: TextInputType.number,
-            textAlign: TextAlign.start,
-            decoration: InputDecoration(
-                labelText: 'Enter code from google authenticator app',
-                hintText: 'Authenticator code'),
-          ),
+      title: Text(
+        'Enter 2FA Code',
+        style: TextStyle(
+            fontFamily: 'Popins',
+            fontSize: 16.5,
+            color: Theme.of(context).textSelectionColor,
+            fontWeight: FontWeight.w500),
+      ),
+      content: SingleChildScrollView(
+        child: ListBody(
+          children: <Widget>[
+            Form(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              key: _otpFormKey,
+              child: TextFormField(
+                validator: _otpValidator,
+                controller: _otpController.otpTextController,
+                obscureText: false,
+                keyboardType: TextInputType.number,
+                textAlign: TextAlign.start,
+                decoration: InputDecoration(
+                    labelText: 'Enter code from google authenticator app',
+                    hintText: 'Authenticator code'),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 8.0),
+              child: RaisedButton(
+                child: new Text(
+                  'Submit',
+                  style: TextStyle(
+                      fontFamily: 'Popins',
+                      fontSize: 14.5,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500),
+                ),
+                color: Theme.of(context).accentColor,
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(5.0),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 0.0),
+              child: RaisedButton(
+                child: new Text(
+                  'Cancel',
+                  style: TextStyle(
+                      fontFamily: 'Popins',
+                      fontSize: 14.5,
+                      color: Theme.of(context).textSelectionColor,
+                      fontWeight: FontWeight.w500),
+                ),
+                color: Theme.of(context).canvasColor,
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(5.0),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+          ],
         ),
       ),
-      actions: <Widget>[
-        FlatButton(
-          onPressed: () {
-            disableOTP();
-          },
-          height: 30.0,
-          minWidth: 40.0,
-          color: Theme.of(context).primaryColor,
-          textColor: Colors.white,
-          child: Text(
-            "Submit",
-            style: TextStyle(fontSize: 10),
-          ),
-        ),
-        FlatButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          height: 30.0,
-          minWidth: 40.0,
-          color: Theme.of(context).hintColor,
-          child: Text(
-            "Cancel",
-            style: TextStyle(fontSize: 10),
-          ),
-        )
-      ],
     );
+    // AlertDialog(
+    //   title: Text('Enter 2FA Code'),
+    //   content: Column(children: [
+    //     Form(
+    //       autovalidateMode: AutovalidateMode.onUserInteraction,
+    //       key: _otpFormKey,
+    //       child: Container(
+    //         child: TextFormField(
+    //           validator: _otpValidator,
+    //           controller: _otpController.otpTextController,
+    //           obscureText: false,
+    //           keyboardType: TextInputType.number,
+    //           textAlign: TextAlign.start,
+    //           decoration: InputDecoration(
+    //               labelText: 'Enter code from google authenticator app',
+    //               hintText: 'Authenticator code'),
+    //         ),
+    //       ),
+    //     ),
+    //   ]),
+    //   actions: <Widget>[
+    //     FlatButton(
+    //       onPressed: () {
+    //         disableOTP();
+    //       },
+    //       height: 30.0,
+    //       minWidth: 60.0,
+    //       color: Theme.of(context).primaryColor,
+    //       textColor: Colors.white,
+    //       child: Text(
+    //         "Submit",
+    //         style: TextStyle(
+    //           fontSize: 10,
+    //           fontFamily: "Popins",
+    //         ),
+    //       ),
+    //     ),
+    //     FlatButton(
+    //       onPressed: () {
+    //         Navigator.pop(context);
+    //       },
+    //       height: 30.0,
+    //       minWidth: 40.0,
+    //       color: Theme.of(context).canvasColor,
+    //       child: Text(
+    //         "Cancel",
+    //         style: TextStyle(
+    //           color: Theme.of(context).textSelectionColor,
+    //           fontSize: 10,
+    //           fontFamily: "Popins",
+    //         ),
+    //       ),
+    //     )
+    //   ],
+    // );
   }
 }

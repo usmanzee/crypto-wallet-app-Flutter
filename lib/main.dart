@@ -18,6 +18,9 @@ Future<void> main() async {
   ]);
   SocketBinding().dependencies();
 
+  // Sentry.configureScope(
+  //   (scope) => scope.user = User(id: '1234', email: 'jane.doe@example.com'),
+  // );
   await SentryFlutter.init(
     (options) => options.dsn =
         'https://8be4739068b14c4ca62ee53fbe2f3261@o175277.ingest.sentry.io/5653237',

@@ -8,7 +8,9 @@ import 'package:crypto_template/models/market.dart';
 import 'package:crypto_template/models/user.dart';
 import 'package:crypto_template/repository/public_repository.dart';
 import 'package:crypto_template/repository/user_repository.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:crypto_template/controllers/wallet_controller.dart';
@@ -47,9 +49,6 @@ class HomeController extends GetxController {
   get selectedNavIndex => this._selectedNavIndex.value;
   set selectedNavIndex(index) => this._selectedNavIndex.value = index;
 
-  // get isLoggedIn => this.isLoggedIn.value;
-  // set isLoggedIn(value) => this.isLoggedIn.value = value;
-
   get hasConnection => this._hasConnection.value;
   set hasConnection(value) => this._hasConnection.value = value;
 
@@ -57,6 +56,13 @@ class HomeController extends GetxController {
   set previousConnection(value) => this._previousConnection.value = value;
 
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
+  var onTapRecognizer;
+
+  TextEditingController textEditingController = TextEditingController();
+  // ..text = "123456";
+
+  StreamController<ErrorAnimationType> animationErrorController;
 
   @override
   void onInit() async {

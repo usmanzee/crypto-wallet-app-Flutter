@@ -1,8 +1,10 @@
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/views/modals/otp_modal.dart';
 import 'package:crypto_template/views/security/change_password.dart';
+import 'package:crypto_template/views/security/pin_code.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 class Security extends GetView<HomeController> {
   Widget build(BuildContext context) {
@@ -39,35 +41,14 @@ class Security extends GetView<HomeController> {
                     value: controller.user.value.otp,
                     onChanged: (value) {
                       controller.user.value.otp
-                          ? showDialog(
-                              context: context, builder: (_) => OTPModal())
+                          ? Get.to(PinCodeVerificationScreen(''))
+                          // showDialog(
+                          //     context: context, builder: (_) => OTPModal())
                           : Get.toNamed('/enable-otp');
                     },
                   ),
                 )),
             line(context),
-            // InkWell(
-            //     onTap: () {},
-            //     child: listSetting(
-            //         context,
-            //         "Login",
-            //         Icon(
-            //           Icons.local_activity,
-            //           size: 24.0,
-            //         ),
-            //         "Activities",
-            //         FlatButton(
-            //           onPressed: () {},
-            //           height: 30.0,
-            //           minWidth: 40.0,
-            //           color: Theme.of(context).primaryColor,
-            //           textColor: Colors.white,
-            //           child: Text(
-            //             "Change",
-            //             style: TextStyle(fontSize: 10),
-            //           ),
-            //         ))),
-            // line(context),
             InkWell(
                 onTap: () {},
                 child: listSetting(
