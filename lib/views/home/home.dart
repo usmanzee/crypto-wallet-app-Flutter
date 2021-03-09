@@ -6,7 +6,6 @@ import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/views/home/gainer.dart';
 import 'package:crypto_template/views/home/loser.dart';
-import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter_sparkline/flutter_sparkline.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:badges/badges.dart';
@@ -16,52 +15,22 @@ class Home extends StatelessWidget {
   final MarketController marketController = Get.find();
   final HomeController homeController = Get.find();
 
-  final List<String> imgList = [
-    'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
-    'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
-    'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
-    'https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=89719a0d55dd05e2deae4120227e6efc&auto=format&fit=crop&w=1953&q=80',
-    'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
-    'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
-  ];
-
-  // var banners = [1, 2, 3];
-  // _listBannerImages(context) {
-  //   var bannerImages = [];
-  //   for (var image in banners) {
-  //     bannerImages.add(new GestureDetector(
-  //       onTap: () {
-  //         print('image.url');
-  //       },
-  //       child: Container(
-  //         decoration: BoxDecoration(
-  //             image: DecorationImage(
-  //                 image: AssetImage('assets/image/banner/banner2.png'),
-  //                 fit: BoxFit.cover)),
-  //         height: 220.0,
-  //         width: MediaQuery.of(context).size.width,
-  //       ),
-  //     ));
-  //   }
-  //   return bannerImages;
-  // }
-
-  Widget imageCarousel(List<dynamic> posts) {
-    return Container(
-        height: 345.0,
-        child: CarouselSlider(
+  Widget imageCarousel(BuildContext context, List<dynamic> posts) {
+    return Column(
+      children: [
+        CarouselSlider(
           options: CarouselOptions(
-            viewportFraction: 1,
-            height: 180.0,
-            enlargeCenterPage: true,
-            autoPlay: true,
-            aspectRatio: 16 / 9,
-            autoPlayCurve: Curves.fastOutSlowIn,
-            enableInfiniteScroll: true,
-            autoPlayAnimationDuration: Duration(milliseconds: 800),
-            // viewportFraction: 0.8,
-          ),
-          // height: 400.0,
+              viewportFraction: 1,
+              height: 180.0,
+              enlargeCenterPage: true,
+              autoPlay: true,
+              aspectRatio: 16 / 9,
+              autoPlayCurve: Curves.fastOutSlowIn,
+              enableInfiniteScroll: true,
+              autoPlayAnimationDuration: Duration(milliseconds: 800),
+              onPageChanged: (index, reason) {
+                homeController.currentPos.value = index;
+              }),
           items: posts.map((post) {
             return Builder(
               builder: (BuildContext context) {
@@ -70,17 +39,38 @@ class Home extends StatelessWidget {
                     margin: EdgeInsets.symmetric(horizontal: 5.0),
                     decoration: BoxDecoration(color: Colors.amber),
                     child: GestureDetector(
-                        child: Image.network(post['featured_media_src_url'],
+                        child: Image.network(
+                            post['_embedded']['wp:featuredmedia'][0]
+                                    ['media_details']['sizes']['medium_large']
+                                ['source_url'],
                             fit: BoxFit.fill),
                         onTap: () {
-                          print(post['link']);
-                          print(post['_embedded']['wp:featuredmedia']);
                           Get.to(WebViewContainer('Post', post['link']));
                         }));
               },
             );
           }).toList(),
-        ));
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: posts.map(
+            (image) {
+              int index = posts.indexOf(image);
+              return Container(
+                width: 8.0,
+                height: 8.0,
+                margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 2.0),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: homeController.currentPos.value == index
+                        ? Theme.of(context).textSelectionColor
+                        : Theme.of(context).hintColor),
+              );
+            },
+          ).toList(),
+        )
+      ],
+    );
   }
 
   @override
@@ -89,7 +79,7 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
         backgroundColor: Theme.of(context).canvasColor,
-        elevation: 1.0,
+        // elevation: 1.0,
         iconTheme: IconThemeData(
             color: Theme.of(context).textSelectionColor.withOpacity(0.6)),
         title: Row(
@@ -102,15 +92,6 @@ class Home extends StatelessWidget {
               },
             ),
             Spacer(flex: 1),
-            // IconButton(
-            //   icon: Icon(Icons.notifications_none),
-            //   tooltip: 'Notification',
-            //   onPressed: () {
-            //     homeController.isLoggedIn.value
-            //         ? Get.toNamed('/notifications')
-            //         : Get.toNamed('/login');
-            //   },
-            // ),
             InkWell(
               onTap: () {
                 homeController.isLoggedIn.value
@@ -136,36 +117,18 @@ class Home extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            // SizedBox(
-            //     height: 150.0,
-            //     width: double.infinity,
-            //     child: new Carousel(
-            //       boxFit: BoxFit.cover,
-            //       dotColor: Colors.white.withOpacity(0.8),
-            //       dotSize: 5.5,
-            //       dotSpacing: 16.0,
-            //       dotBgColor: Colors.transparent,
-            //       showIndicator: true,
-            //       // overlayShadow: true,
-            //       // overlayShadowColors: Theme.of(context)
-            //       //     .scaffoldBackgroundColor
-            //       //     .withOpacity(0.9),
-            //       // overlayShadowSize: 0.25,
-            //       images: [
-            //         AssetImage("assets/image/banner/banner2.png"),
-            //         AssetImage("assets/image/banner/banner3.jpg"),
-            //         AssetImage("assets/image/banner/banner2.png"),
-            //         AssetImage("assets/image/banner/banner3.jpg"),
-            //       ],
-            //     )),
             // MaterialButton(
             //     child: Text('Get Posts'),
             //     onPressed: () {
             //       homeController.getWPPosts();
             //     }),
-            SizedBox(
-                height: 150.0,
+
+            Container(
+                height: 205.0,
                 width: double.infinity,
+                decoration: BoxDecoration(
+                    // borderRadius: BorderRadius.circular(10),
+                    color: Theme.of(context).canvasColor),
                 child: Obx(() {
                   if (homeController.isLoadingWpPosts.value)
                     return Container(
@@ -174,60 +137,72 @@ class Home extends StatelessWidget {
                         alignment: Alignment.center,
                         child: CircularProgressIndicator());
                   else
-                    return imageCarousel(homeController.wpPosts);
+                    return imageCarousel(context, homeController.wpPosts);
                 })),
-            SizedBox(height: 10.0),
-            Container(
-              height: 100.0,
-              child: ListView(
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  _linksCard(
-                      context,
-                      Icon(
-                        Icons.vertical_align_bottom,
-                        size: 26.0,
-                        color: Theme.of(context).accentColor,
-                      ), () {
-                    homeController.isLoggedIn.value
-                        ? Get.toNamed('/wallets-search',
-                            arguments: {'searchFrom': 'deposit'})
-                        : Get.toNamed('/login');
-                  }, "Deposit"),
-                  _linksCard(
-                      context,
-                      Icon(
-                        Icons.vertical_align_top,
-                        size: 26.0,
-                        color: Theme.of(context).accentColor,
-                      ), () {
-                    homeController.isLoggedIn.value
-                        ? Get.toNamed('/wallets-search',
-                            arguments: {'searchFrom': 'withdraw'})
-                        : Get.toNamed('/login');
-                  }, "Withdraw"),
-                  _linksCard(
-                      context,
-                      Icon(
-                        Icons.swap_horiz,
-                        size: 26.0,
-                        color: Theme.of(context).accentColor,
-                      ), () {
-                    homeController.isLoggedIn.value
-                        ? Get.toNamed('/swap')
-                        : Get.toNamed('/login');
-                  }, "Buy/Sell"),
-                  _linksCard(
-                      context,
-                      Icon(
-                        Icons.insights,
-                        size: 26.0,
-                        color: Theme.of(context).accentColor,
-                      ), () {
-                    homeController.selectedNavIndex = 2;
-                  }, "Trading"),
-                ],
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10.0),
+              child: Container(
+                height: 100.0,
+                margin: const EdgeInsets.only(top: 4.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Theme.of(context).hintColor,
+                        offset: Offset(0.0, 0.0), //(x,y)
+                        blurRadius: 6.0,
+                      ),
+                    ],
+                    color: Theme.of(context).scaffoldBackgroundColor),
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: <Widget>[
+                    _linksCard(
+                        context,
+                        Icon(
+                          Icons.vertical_align_bottom,
+                          size: 26.0,
+                          color: Theme.of(context).accentColor,
+                        ), () {
+                      homeController.isLoggedIn.value
+                          ? Get.toNamed('/wallets-search',
+                              arguments: {'searchFrom': 'deposit'})
+                          : Get.toNamed('/login');
+                    }, "Deposit"),
+                    _linksCard(
+                        context,
+                        Icon(
+                          Icons.vertical_align_top,
+                          size: 26.0,
+                          color: Theme.of(context).accentColor,
+                        ), () {
+                      homeController.isLoggedIn.value
+                          ? Get.toNamed('/wallets-search',
+                              arguments: {'searchFrom': 'withdraw'})
+                          : Get.toNamed('/login');
+                    }, "Withdraw"),
+                    _linksCard(
+                        context,
+                        Icon(
+                          Icons.swap_horiz,
+                          size: 26.0,
+                          color: Theme.of(context).accentColor,
+                        ), () {
+                      homeController.isLoggedIn.value
+                          ? homeController.selectedNavIndex = 3
+                          : Get.toNamed('/login');
+                    }, "Buy/Sell"),
+                    _linksCard(
+                        context,
+                        Icon(
+                          Icons.insights,
+                          size: 26.0,
+                          color: Theme.of(context).accentColor,
+                        ), () {
+                      homeController.selectedNavIndex = 2;
+                    }, "Trading"),
+                  ],
+                ),
               ),
             ),
             Obx(() {

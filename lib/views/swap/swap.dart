@@ -9,7 +9,8 @@ import 'package:crypto_template/models/wallet.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
 class Swap extends StatelessWidget {
-  final SwapController swapController = Get.find();
+  final SwapController swapController = Get.put(SwapController());
+  // final SwapController swapController = Get.find();
   final WalletController walletController = Get.find();
   final HomeController homeController = Get.find();
 

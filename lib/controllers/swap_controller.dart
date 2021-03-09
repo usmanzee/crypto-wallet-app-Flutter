@@ -36,7 +36,9 @@ class SwapController extends GetxController {
   SnackbarController snackbarController;
   ErrorController errorController = new ErrorController();
   HomeController homeController = Get.find();
-  final WalletController walletController = Get.find();
+  // final SwapController swapController = Get.put(SwapController());
+  final WalletController walletController = Get.put(WalletController());
+  // final WalletController walletController = Get.find();
   final MarketController marketController = Get.find();
 
   // get selectedWalletIndex => this._selectedWalletIndex.value;

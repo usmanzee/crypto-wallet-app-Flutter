@@ -92,7 +92,7 @@ class Setting extends StatelessWidget {
                                         : '---',
                                     style: TextStyle(
                                       fontSize: 16,
-                                      fontWeight: FontWeight.w300,
+                                      fontWeight: FontWeight.w600,
                                       fontFamily: "Popins",
                                       letterSpacing: 1.5,
                                     ),

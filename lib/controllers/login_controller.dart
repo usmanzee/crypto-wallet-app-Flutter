@@ -57,7 +57,6 @@ class LoginController extends GetxController {
         var userToken = userData.token.split('\n')[0];
         print(userToken);
         String decoded = stringToBase64.decode(userToken);
-        // String decoded = '89c36ca76662b371:6157bd6085f83466f4a5f7386d0f';
         var decodedStrArr = decoded.split(':');
         print(decodedStrArr);
         homeController.authApiKey.value = decodedStrArr[0];
@@ -69,13 +68,15 @@ class LoginController extends GetxController {
         await prefs.setString('authSecret', decodedStrArr[1]);
         homeController.isLoggedIn.value = true;
         homeController.user.value = userData;
-        // Get.offAllNamed('/wallets');
         if (loginScreenType == 1) {
           Get.back();
         } else {
           Get.back();
           Get.back();
         }
+        snackbarController =
+            new SnackbarController(title: 'Error', message: 'Logged In.');
+        snackbarController.showSnackbar();
       }
     } catch (error) {
       print(error);

@@ -92,7 +92,7 @@ class Router {
     GetPage(
       name: '/swap',
       page: () => Swap(),
-      binding: SwapBinding(),
+      // binding: SwapBinding(),
     ),
     GetPage(
       name: '/swap-history',

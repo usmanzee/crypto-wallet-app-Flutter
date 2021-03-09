@@ -33,6 +33,7 @@ class HomeController extends GetxController {
   var fetchingMemberLevel = false.obs;
   var publicMemberLevel = MemberLevel().obs;
 
+  var currentPos = 0.obs;
   var isLoadingWpPosts = false.obs;
   var wpPosts = List<dynamic>().obs;
 

@@ -110,14 +110,15 @@ class ApiProvider {
       responseJson = _returnResponse(res);
     } on SocketException {
       throw FetchDataException(
-          {'statusCode': 1, 'message': 'No Internet connection'});
+          {'statusCode': 1, 'message': 'No Internet connection1'});
     } on HttpException {
       throw FetchDataException({
         'statusCode': 2,
-        'message': 'Unable to communitate with the server'
+        'message': 'Unable to communitate with the server!'
       });
     } on FormatException {
-      throw FetchDataException({'statusCode': 3, 'message': 'Server errror'});
+      throw FetchDataException(
+          {'statusCode': 3, 'message': 'Server not responding correctly!'});
     }
     return responseJson;
   }
@@ -136,8 +137,6 @@ dynamic _returnResponse(http.Response response) {
       return responseJson;
     case 400:
       var errorResponse = makeErrorResponse(response);
-
-      print(errorResponse);
       throw BadRequestException(errorResponse);
     case 401:
       var errorResponse = makeErrorResponse(response);

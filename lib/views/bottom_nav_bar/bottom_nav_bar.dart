@@ -3,6 +3,7 @@ import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:crypto_template/controllers/trading_controller.dart';
 import 'package:crypto_template/controllers/web_socket_controller.dart';
+import 'package:crypto_template/views/swap/swap.dart';
 import 'package:crypto_template/views/trading/trading.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class BottomNavBar extends GetView<HomeController> {
               onRefresh: controller.refreshTradingPage, child: new Trading());
           break;
         case 3:
-          return new News();
+          return new Swap();
           break;
         case 4:
           return RefreshIndicator(
@@ -89,8 +90,9 @@ class BottomNavBar extends GetView<HomeController> {
                     label: "Trades",
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.library_books),
-                    label: "News",
+                    // icon: Icon(Icons.library_books),
+                    icon: Icon(Icons.swap_horiz),
+                    label: "Buy/Sell",
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.account_balance_wallet),
@@ -100,7 +102,7 @@ class BottomNavBar extends GetView<HomeController> {
                 currentIndex: controller.selectedNavIndex,
                 onTap: (index) {
                   var isLoggedIn = controller.isLoggedIn;
-                  if (index == 4 && !isLoggedIn.value) {
+                  if (index == 4 && index == 3 && !isLoggedIn.value) {
                     Get.toNamed('/login');
                   } else if (index != 2) {
                     bool tradingControllerInstance =

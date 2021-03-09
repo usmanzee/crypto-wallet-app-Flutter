@@ -171,7 +171,6 @@ class DepositHistoryList extends StatelessWidget {
         context: context,
         builder: (BuildContext bc) {
           return Container(
-            color: Theme.of(context).scaffoldBackgroundColor,
             padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
             child: new Wrap(
               children: <Widget>[
