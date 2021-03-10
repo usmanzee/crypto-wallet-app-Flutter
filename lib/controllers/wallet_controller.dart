@@ -1,3 +1,4 @@
+import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/controllers/error_controller.dart';
 import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:crypto_template/models/balance.dart';
@@ -17,12 +18,20 @@ class WalletController extends GetxController {
   var depositAddress = ''.obs;
   ErrorController errorController = new ErrorController();
   MarketController marketController = Get.find<MarketController>();
+  HomeController homeController = Get.find<HomeController>();
   var iconC = 'BTC'.obs;
 
   @override
   void onInit() {
-    fetchWallets();
+    if (homeController.isLoggedIn.value) {
+      fetchWallets();
+    }
+    ever(homeController.isLoggedIn, fetchWalletsValues);
     super.onInit();
+  }
+
+  fetchWalletsValues(isLoggedIn) {
+    fetchWallets();
   }
 
   void fetchWallets() async {

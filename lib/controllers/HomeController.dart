@@ -32,7 +32,7 @@ class HomeController extends GetxController {
   var deviceMacAddress = 'unknown'.obs;
   var authApiKey = 'unknown'.obs;
   var authSecret = 'unknown'.obs;
-  var fetchingMemberLevel = false.obs;
+  var fetchingMemberLevel = true.obs;
   var publicMemberLevel = MemberLevel().obs;
 
   var currentPos = 0.obs;

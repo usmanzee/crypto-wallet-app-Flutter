@@ -1,6 +1,7 @@
 import 'package:crypto_template/component/no_internet.dart';
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/controllers/market_controller.dart';
+import 'package:crypto_template/controllers/swap_controller.dart';
 import 'package:crypto_template/controllers/trading_controller.dart';
 import 'package:crypto_template/controllers/web_socket_controller.dart';
 import 'package:crypto_template/views/swap/swap.dart';
@@ -102,17 +103,27 @@ class BottomNavBar extends GetView<HomeController> {
                 currentIndex: controller.selectedNavIndex,
                 onTap: (index) {
                   var isLoggedIn = controller.isLoggedIn;
-                  if (index == 4 && index == 3 && !isLoggedIn.value) {
+
+                  if (index == 4 && !isLoggedIn.value) {
                     Get.toNamed('/login');
-                  } else if (index != 2) {
+                  } else if (index == 3 && !isLoggedIn.value) {
+                    Get.toNamed('/login');
+                  } else {
+                    controller.selectedNavIndex = index;
+                  }
+                  if (index != 2) {
                     bool tradingControllerInstance =
                         Get.isRegistered<TradingController>();
                     if (tradingControllerInstance) {
                       Get.delete<TradingController>(force: true);
                     }
-                    controller.selectedNavIndex = index;
-                  } else {
-                    controller.selectedNavIndex = index;
+                  }
+                  if (index != 3) {
+                    bool swapControllerInstance =
+                        Get.isRegistered<SwapController>();
+                    if (swapControllerInstance) {
+                      Get.delete<SwapController>(force: true);
+                    }
                   }
                 }),
           ),

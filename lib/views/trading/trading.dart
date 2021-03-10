@@ -81,62 +81,76 @@ class Trading extends StatelessWidget {
           ]),
         ),
         iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
-        elevation: 1,
+        // elevation: 1,
       ),
       drawer: Drawer(
         child: MarketDrawer(),
       ),
       body: SingleChildScrollView(
           child: Padding(
-        padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+        padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: EdgeInsets.only(top: 16.0, bottom: 8.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    marketController.selectedMarketTrading.value.last != null
-                        ? marketController.selectedMarketTrading.value.last
-                            .toStringAsFixed(2)
-                        : '--',
-                    style: TextStyle(
-                        color: marketController.selectedMarketTrading.value
-                                    .isPositiveChange !=
-                                null
-                            ? marketController.selectedMarketTrading.value
-                                    .isPositiveChange
-                                ? Color(0xFF00C087)
-                                : Colors.redAccent
-                            : Theme.of(context).hintColor,
-                        fontFamily: "Popins",
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18.5),
-                  ),
-                  Text(
-                    ' ≈ \$',
-                    style: TextStyle(
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10.0),
+              child: Container(
+                padding: EdgeInsets.only(top: 16.0, bottom: 8.0),
+                margin: const EdgeInsets.only(top: 4.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    boxShadow: [
+                      BoxShadow(
                         color: Theme.of(context).hintColor,
-                        fontFamily: "Popins",
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12.5),
-                  ),
-                  Text(
-                    marketController.selectedMarketTrading.value.priceInUsd !=
-                            null
-                        ? marketController
-                            .selectedMarketTrading.value.priceInUsd
-                        : '--',
-                    style: TextStyle(
-                        color: Theme.of(context).hintColor,
-                        fontFamily: "Popins",
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12.5),
-                  )
-                ],
+                        offset: Offset(0.0, 0.0), //(x,y)
+                        blurRadius: 6.0,
+                      ),
+                    ],
+                    color: Theme.of(context).scaffoldBackgroundColor),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      marketController.selectedMarketTrading.value.last != null
+                          ? marketController.selectedMarketTrading.value.last
+                              .toStringAsFixed(2)
+                          : '--',
+                      style: TextStyle(
+                          color: marketController.selectedMarketTrading.value
+                                      .isPositiveChange !=
+                                  null
+                              ? marketController.selectedMarketTrading.value
+                                      .isPositiveChange
+                                  ? Color(0xFF00C087)
+                                  : Colors.redAccent
+                              : Theme.of(context).hintColor,
+                          fontFamily: "Popins",
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18.5),
+                    ),
+                    Text(
+                      ' ≈ \$',
+                      style: TextStyle(
+                          color: Theme.of(context).hintColor,
+                          fontFamily: "Popins",
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12.5),
+                    ),
+                    Text(
+                      marketController.selectedMarketTrading.value.priceInUsd !=
+                              null
+                          ? marketController
+                              .selectedMarketTrading.value.priceInUsd
+                          : '--',
+                      style: TextStyle(
+                          color: Theme.of(context).hintColor,
+                          fontFamily: "Popins",
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12.5),
+                    )
+                  ],
+                ),
               ),
             ),
             OrderBook(

@@ -329,9 +329,13 @@ class SwapController extends GetxController {
 
   @override
   void onClose() {
-    fromAmountTextController?.dispose();
-    toAmountTextController?.dispose();
-    otpCodeTextController?.dispose();
+    bool isWalletControllerRegistered = Get.isRegistered<WalletController>();
+    if (isWalletControllerRegistered) {
+      Get.delete<WalletController>(force: true);
+    }
+    // fromAmountTextController?.dispose();
+    // toAmountTextController?.dispose();
+    // otpCodeTextController?.dispose();
     super.onClose();
   }
 }

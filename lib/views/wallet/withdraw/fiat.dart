@@ -1,7 +1,6 @@
 import 'package:crypto_template/controllers/fiat_withdraw_controller.dart';
 import 'package:crypto_template/models/Beneficiary.dart';
 import 'package:crypto_template/views/beneficiary/add_beneficiary.dart';
-import 'package:crypto_template/views/wallet/custom_appbar.dart';
 import 'package:crypto_template/views/wallet/search_wallet_header.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/models/wallet.dart' as WalletClass;
@@ -10,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:crypto_template/component/custom_button.dart';
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 class WithdrawFiat extends StatefulWidget {
   final WalletClass.Wallet wallet;
@@ -157,7 +157,7 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 16.0),
                                 child: FormField<String>(
-                                  validator: _beneficiaryValidator,
+                                  // validator: _beneficiaryValidator,
                                   builder: (FormFieldState<String> state) {
                                     return InputDecorator(
                                       decoration: InputDecoration(
@@ -223,7 +223,8 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
                           keyboardType: TextInputType.number,
                           validator: (amount) {
                             if (withdrawController.totalWithdrawlAmount.value >
-                                double.parse(wallet.balance)) {
+                                    double.parse(wallet.balance) ||
+                                amount == '') {
                               return 'Please enter a valid amount';
                             } else {
                               return null;
@@ -246,7 +247,7 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
                               errorMaxLines: 3,
                               filled: true,
                               fillColor: Colors.transparent,
-                              labelText: 'Amount',
+                              // labelText: 'Amount',
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5))),
                         ),
@@ -258,21 +259,59 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
                           fontFamily: "Popins",
                         ),
                       ),
-                      TextFormField(
+                      // TextFormField(
+                      //   obscureText: false,
+                      //   keyboardType: TextInputType.number,
+                      //   controller: withdrawController.withdrawOtpController,
+                      //   validator: _twoFAValidator,
+                      //   decoration: InputDecoration(
+                      //       errorStyle: TextStyle(
+                      //         fontSize: 13.5,
+                      //       ),
+                      //       errorMaxLines: 3,
+                      //       filled: true,
+                      //       fillColor: Colors.transparent,
+                      //       labelText: '2FA',
+                      //       border: OutlineInputBorder(
+                      //           borderRadius: BorderRadius.circular(5))),
+                      // ),
+                      PinCodeTextField(
+                        appContext: context,
+                        pastedTextStyle: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textStyle: TextStyle(
+                          color: Theme.of(context).textSelectionColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        length: 6,
                         obscureText: false,
-                        keyboardType: TextInputType.number,
+                        animationType: AnimationType.fade,
+                        pinTheme: PinTheme(
+                            shape: PinCodeFieldShape.box,
+                            inactiveColor:
+                                Theme.of(context).hintColor.withOpacity(0.6),
+                            borderWidth: 1,
+                            borderRadius: BorderRadius.circular(5),
+                            fieldHeight: 50,
+                            fieldWidth: 40,
+                            selectedColor: Theme.of(context).primaryColor,
+                            activeColor: Theme.of(context).textSelectionColor),
+                        cursorColor: Theme.of(context).textSelectionColor,
+                        animationDuration: Duration(milliseconds: 300),
+                        backgroundColor:
+                            Theme.of(context).scaffoldBackgroundColor,
                         controller: withdrawController.withdrawOtpController,
+                        autoDisposeControllers: false,
+                        keyboardType: TextInputType.number,
                         validator: _twoFAValidator,
-                        decoration: InputDecoration(
-                            errorStyle: TextStyle(
-                              fontSize: 13.5,
-                            ),
-                            errorMaxLines: 3,
-                            filled: true,
-                            fillColor: Colors.transparent,
-                            labelText: '2FA',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5))),
+                        onCompleted: (v) {},
+                        onChanged: (value) {},
+                        beforeTextPaste: (text) {
+                          print("Allowing to paste $text");
+                          return true;
+                        },
                       ),
                       SizedBox(
                         height: 16.0,

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/controllers/error_controller.dart';
 import 'package:crypto_template/repository/user_repository.dart';
@@ -6,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:crypto_template/models/user.dart';
 import 'package:crypto_template/models/otp.dart';
 import 'package:crypto_template/controllers/SnackbarController.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OTPController extends GetxController {
   HomeController homeController;
@@ -13,6 +16,7 @@ class OTPController extends GetxController {
   SnackbarController snackbarController;
   ErrorController errorController = new ErrorController();
   TextEditingController otpTextController;
+
   final _currentStep = 0.obs;
   var user = new User().obs;
   var otp = new Otp().obs;
@@ -23,10 +27,11 @@ class OTPController extends GetxController {
   void onInit() {
     homeController = Get.find();
     _userRepository = new UserRepository();
-    otpTextController = TextEditingController();
+    otpTextController = new TextEditingController();
     if (!homeController.user.value.otp) {
       fetchOTP();
     }
+
     super.onInit();
   }
 

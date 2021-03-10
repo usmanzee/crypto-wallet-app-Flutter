@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:crypto_template/views/setting/themes.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:crypto_template/component/custom_text_field.dart';
 import 'package:get/get.dart';
 import 'package:crypto_template/controllers/login_controller.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 class TwoFA extends StatelessWidget {
   final ThemeBloc themeBloc;
@@ -66,22 +66,57 @@ class TwoFA extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(
-                            left: 16.0, right: 16.0, top: 40.0),
-                        child: CustomTextField(
-                            widgetIcon: Icon(
-                              Icons.email,
+                          padding: const EdgeInsets.only(
+                              left: 16.0, right: 16.0, top: 40.0),
+                          child: PinCodeTextField(
+                            appContext: context,
+                            pastedTextStyle: TextStyle(
                               color: Theme.of(context).primaryColor,
-                              size: 20,
+                              fontWeight: FontWeight.bold,
                             ),
-                            validator: _twoFAValidator,
+                            length: 6,
+                            obscureText: false,
+                            animationType: AnimationType.fade,
+                            pinTheme: PinTheme(
+                                shape: PinCodeFieldShape.box,
+                                inactiveColor: Theme.of(context)
+                                    .hintColor
+                                    .withOpacity(0.6),
+                                borderWidth: 1,
+                                borderRadius: BorderRadius.circular(5),
+                                fieldHeight: 50,
+                                fieldWidth: 40,
+                                selectedColor:
+                                    Theme.of(context).textSelectionColor,
+                                activeColor:
+                                    Theme.of(context).textSelectionColor),
+                            cursorColor: Theme.of(context).textSelectionColor,
+                            animationDuration: Duration(milliseconds: 300),
                             controller: _loginController.twoFATextController,
-                            label: 'Enter 2FA code',
-                            // hint: '2FA code',
-                            obscure: false,
+                            autoDisposeControllers: false,
                             keyboardType: TextInputType.number,
-                            textAlign: TextAlign.start),
-                      ),
+                            validator: _twoFAValidator,
+                            onCompleted: (v) {},
+                            onChanged: (value) {},
+                            beforeTextPaste: (text) {
+                              print("Allowing to paste $text");
+                              return true;
+                            },
+                          )
+                          // CustomTextField(
+                          //     widgetIcon: Icon(
+                          //       Icons.email,
+                          //       color: Theme.of(context).primaryColor,
+                          //       size: 20,
+                          //     ),
+                          //     validator: _twoFAValidator,
+                          //     controller: _loginController.twoFATextController,
+                          //     label: 'Enter 2FA code',
+                          //     // hint: '2FA code',
+                          //     obscure: false,
+                          //     keyboardType: TextInputType.number,
+                          //     textAlign: TextAlign.start),
+                          ),
                       Padding(
                         padding: const EdgeInsets.only(
                             left: 16.0, right: 16.0, top: 24.0),
