@@ -9,6 +9,10 @@ import 'package:share/share.dart';
 class Setting extends StatelessWidget {
   final HomeController homeController = Get.find();
 
+  final languages = [
+    {"name": 'English', "locale": Locale('en', 'US')},
+    {"name": 'Pусский', "locale": Locale('ru', 'RU')}
+  ];
   void _handleLogoutClick() async {
     homeController.logoutUser();
     Get.back();
@@ -29,7 +33,7 @@ class Setting extends StatelessWidget {
         brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
         centerTitle: true,
         title: Text(
-          'Account',
+          'account.screen.title'.tr,
           style: TextStyle(
               color: Theme.of(context).textSelectionColor,
               fontFamily: "Gotik",
@@ -165,7 +169,7 @@ class Setting extends StatelessWidget {
                       Icons.event_note,
                       size: 20.0,
                     ),
-                    "Fee Schedule")),
+                    "account.screen.fee_schedule".tr)),
             Obx(() {
               return (homeController.isLoggedIn.value)
                   ? InkWell(
@@ -178,7 +182,7 @@ class Setting extends StatelessWidget {
                             Icons.group_add,
                             size: 20.0,
                           ),
-                          "Referral ID"))
+                          "account.screen.referral_id".tr))
                   : Container();
             }),
             Obx(() {
@@ -193,7 +197,7 @@ class Setting extends StatelessWidget {
                             Icons.perm_identity,
                             size: 20.0,
                           ),
-                          "Identification"))
+                          "account.screen.identification".tr))
                   : Container();
             }),
             Obx(() {
@@ -208,7 +212,7 @@ class Setting extends StatelessWidget {
                             Icons.notifications_active,
                             size: 20.0,
                           ),
-                          "Notifications"))
+                          "account.screen.notifications".tr))
                   : Container();
             }),
             Obx(() {
@@ -223,7 +227,22 @@ class Setting extends StatelessWidget {
                             Icons.security,
                             size: 20.0,
                           ),
-                          "Security"))
+                          "account.screen.security".tr))
+                  : Container();
+            }),
+            Obx(() {
+              return (homeController.isLoggedIn.value)
+                  ? InkWell(
+                      onTap: () {
+                        showLanguages(context);
+                      },
+                      child: listSetting(
+                          context,
+                          Icon(
+                            Icons.language,
+                            size: 20.0,
+                          ),
+                          "account.screen.languages".tr))
                   : Container();
             }),
             InkWell(
@@ -237,7 +256,7 @@ class Setting extends StatelessWidget {
                       Icons.live_help,
                       size: 20.0,
                     ),
-                    "Help & Support")),
+                    "account.screen.help_support".tr)),
             InkWell(
                 onTap: () {
                   share(context);
@@ -248,7 +267,7 @@ class Setting extends StatelessWidget {
                       Icons.share,
                       size: 20.0,
                     ),
-                    "Share The App")),
+                    "account.screen.share".tr)),
             SizedBox(
               height: 16.0,
             ),
@@ -273,7 +292,7 @@ class Setting extends StatelessWidget {
                       ),
                       child: Center(
                         child: Text(
-                          "Logout",
+                          "account.screen.logout".tr,
                           style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w400,
@@ -341,5 +360,96 @@ class Setting extends StatelessWidget {
       height: 0.5,
       decoration: BoxDecoration(color: Theme.of(context).canvasColor),
     );
+  }
+
+  void showLanguages(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            title: Text(
+              'Choose Language',
+              style: TextStyle(fontFamily: 'Popins'),
+            ),
+            content: Container(
+              width: double.maxFinite,
+              child: ListView.separated(
+                shrinkWrap: true,
+                itemBuilder: (context, index) => InkWell(
+                  onTap: () {
+                    Get.updateLocale(languages[index]['locale']);
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            languages[index]['name'],
+                            style: TextStyle(fontFamily: 'Popins'),
+                          ),
+                          if (Get.locale == languages[index]['locale'])
+                            Icon(
+                              Icons.done,
+                              size: 20.0,
+                              color: Theme.of(context).accentColor,
+                            ),
+                        ]),
+                  ),
+                ),
+                separatorBuilder: (context, index) => Divider(
+                  color: Colors.black,
+                ),
+                itemCount: languages.length,
+              ),
+            ),
+          );
+        });
+    // showDialog(
+    //     context: context,
+    //     builder: (BuildContext bc) {
+    //       return AlertDialog(
+    //         title: Text('Select Language'),
+    //         content: Padding(
+    //           padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
+    //           child: Column(
+    //             children: <Widget>[
+    //               Row(
+    //                 mainAxisAlignment: MainAxisAlignment.center,
+    //                 children: [
+    //                   Text(
+    //                     'Select Language',
+    //                     style: TextStyle(
+    //                       fontFamily: "Sans",
+    //                       fontWeight: FontWeight.w800,
+    //                       fontSize: 20.0,
+    //                       letterSpacing: 1.5,
+    //                     ),
+    //                   )
+    //                 ],
+    //               ),
+    //               SizedBox(
+    //                 height: 16,
+    //               ),
+    //               ListView(
+    //                 shrinkWrap: true,
+    //                 padding: const EdgeInsets.all(8),
+    //                 children: new List.generate(
+    //                   languages.length,
+    //                   (index) => InkWell(
+    //                     onTap: () {
+    //                       Get.updateLocale(languages[index]['local']);
+    //                     },
+    //                     child: new ListTile(
+    //                       title: Text(languages[index]['name']),
+    //                     ),
+    //                   ),
+    //                 ),
+    //               ),
+    //             ],
+    //           ),
+    //         ),
+    //       );
+    //     });
   }
 }

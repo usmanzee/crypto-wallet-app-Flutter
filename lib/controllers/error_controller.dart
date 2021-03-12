@@ -19,7 +19,7 @@ class ErrorController {
     } catch (error) {
       print(error);
       snackbarController = new SnackbarController(
-          title: 'Error', message: 'Something went wrong on the server side');
+          title: 'Error', message: 'server_exception'.tr);
       snackbarController.showSnackbar();
     }
   }

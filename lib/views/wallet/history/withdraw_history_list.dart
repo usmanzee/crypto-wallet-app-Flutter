@@ -216,7 +216,7 @@ class WithdrawHistoryList extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "Amount",
+                      "wallet_withdraw_history.screen.amount".tr,
                       style: TextStyle(
                           color: Theme.of(context).hintColor.withOpacity(0.5),
                           fontFamily: "Popins",
@@ -232,7 +232,7 @@ class WithdrawHistoryList extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "Status",
+                      "wallet_withdraw_history.screen.status".tr,
                       style: TextStyle(
                           color: Theme.of(context).hintColor.withOpacity(0.5),
                           fontFamily: "Popins",
@@ -257,7 +257,7 @@ class WithdrawHistoryList extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "Address",
+                      "wallet_withdraw_history.screen.address".tr,
                       style: TextStyle(
                           color: Theme.of(context).hintColor.withOpacity(0.5),
                           fontFamily: "Popins",
@@ -277,7 +277,7 @@ class WithdrawHistoryList extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "Transaction Fee",
+                      "wallet_withdraw_history.screen.transaction_fee".tr,
                       style: TextStyle(
                           color: Theme.of(context).hintColor.withOpacity(0.5),
                           fontFamily: "Popins",
@@ -294,7 +294,7 @@ class WithdrawHistoryList extends StatelessWidget {
                   children: <Widget>[
                     Flexible(
                       child: Text(
-                        "TxID",
+                        "wallet_withdraw_history.screen.txid".tr,
                         style: TextStyle(
                             color: Theme.of(context).hintColor.withOpacity(0.5),
                             fontFamily: "Popins",
@@ -318,7 +318,7 @@ class WithdrawHistoryList extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "Date",
+                      "wallet_withdraw_history.screen.date".tr,
                       style: TextStyle(
                           color: Theme.of(context).hintColor.withOpacity(0.5),
                           fontFamily: "Popins",
@@ -348,7 +348,7 @@ class WithdrawHistoryList extends StatelessWidget {
                             : null,
                         child: Center(
                             child: Text(
-                          "Copy TxID",
+                          "wallet_withdraw_history.screen.button.copy_txid".tr,
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontFamily: "Popins",
@@ -367,7 +367,8 @@ class WithdrawHistoryList extends StatelessWidget {
                             : null,
                         child: Center(
                             child: Text(
-                          "Check Explorer",
+                          "wallet_withdraw_history.screen.button.check_explorer"
+                              .tr,
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w500,

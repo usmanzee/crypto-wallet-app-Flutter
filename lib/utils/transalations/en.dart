@@ -1,36 +1,248 @@
-Map<String, String> serverMessages = {
-  //General text
-  'no.record.found': 'No Record Found.',
-  'page.body.copy': 'Copy',
-  'page.body.copied': 'Copied',
-  'copied.to.clipboard': 'Copied to clipboard.',
-  'learn.more': 'Learn more',
-  //End General text
+const Map<String, String> en = {
+  //General Messages
+  'copy.to.clipboard': 'Copied to Clipboard',
+  'no.internet': 'No Internet connection',
+  'server.not.available': 'Unable to communitate with the server',
+  'server.error': 'Server Error',
+  'server_exception': 'Something went wrong on the server side',
 
-  'page.header.navbar.signIn': 'Sign In',
-  'page.header.navbar.trade': 'Trade',
-  'page.header.navbar.wallets': 'Wallets',
-  'page.header.navbar.swap': 'Swap',
-  'page.header.navbar.buy_sell': 'Buy/Sell',
-  'page.header.navbar.openOrders': 'Orders',
-  'page.header.navbar.history': 'History',
+  //Bottom Navbar
+  'bottom.navbar.home': 'Home',
+  'bottom.navbar.markets': 'Markets',
+  'bottom.navbar.trading': 'Trading',
+  'bottom.navbar.buy_sell': 'Buy/Sell',
+  'bottom.navbar.wallets': 'Wallets',
 
-  'page.header.navbar.profile': 'Profile',
-  'page.header.navbar.logout': 'Logout',
+  // App Settings Screen
+  'account.screen.title': 'Account',
+  'account.screen.fee_schedule': 'Fee Schedule',
+  'account.screen.referral_id': 'Referral Id',
+  'account.screen.identification': 'Identification',
+  'account.screen.notifications': 'Notifications',
+  'account.screen.security': 'Security',
+  'account.screen.languages': 'Languages',
+  'account.screen.help_support': 'Help & Support',
+  'account.screen.share': 'Share the App',
+  'account.screen.logout': 'Logout',
 
-  // Header Profile Links
-  'page.header.navbar.profile.security': 'Security',
-  'page.header.navbar.profile.identification': 'Identification',
-  'page.header.navbar.profile.api_management': 'API Management',
-  'page.header.navbar.profile.referal': 'Referal',
-  'page.header.navbar.profile.activities': 'Activities',
+  //App Referral Screen
+  'referral.screen.title': 'Referral',
+  'referral.screen.referral_title': 'Invite Friends & Earn Crypto Together',
+  'referral.screen.referral_description':
+      'Earn up to 40% commission every time your friend makes a trade on B4U.',
+  'referral.screen.referral_instruction.title': 'Invite Now',
+  'referral.screen.referral_instruction.description':
+      'Use your unique link to invite your friends over message or email. Your default invitation code can also be shared in real life or as a screenshot.',
+  'referral.screen.referral_id': 'Referral ID',
+  'referral.screen.referral_link': 'Referral Link',
+  'referral.screen.referral_copy_id': 'Copy ID',
+  'referral.screen.referral_copy_link': 'Copy Link',
+  'referral.screen.share': 'Share',
 
-  //Header Notification Tab
-  'page.header.navbar.notifications.title': 'Notifications',
-  'page.header.navbar.notifications.empty.content1': "You're up to date!",
-  'page.header.navbar.notifications.empty.content2':
+  //App Notifications Screen
+  'notifications.screen.title': 'Notifications',
+  'notifications.screen.empty.content1': "You're up to date!",
+  'notifications.screen.empty.content2':
       'Visit every day for crypto news, price alerts, and more',
-  'page.header.navbar.notifications.detail.seen.button.text': 'I understand',
+  'notifications.screen.detail.seen.button.text': 'I understand',
+
+  //App Security Screen
+  'security.screen.title': 'Security',
+  'security.screen.twoFA': "2FA",
+  'security.screen.twoFA_enable': "Enable",
+  'security.screen.twoFA_disable': "Disable",
+  'security.screen.password': "Password",
+  'security.screen.password_change': "Change",
+  'security.screen.password_button_text': "Change",
+  'security.screen.disable.2fa.title': "Please Enter 2FA",
+  'security.screen.disable.2fa.submit': "Submit",
+  'security.screen.2fa_error': "Please enter a valid 2FA code",
+
+  //App Change Password Screen
+  'change.password.screen.title': "Change Password",
+  'change.password.screen.field.old_password': "Old Password",
+  'change.password.screen.field.new_password': "New Password",
+  'change.password.screen.field.confirm_new_password': "Confirm New Password",
+  'change.password.screen.change': "Change",
+  'change.password.screen.password.error':
+      "Passwords must be 8 characters with uppercase letters",
+  'change.password.screen.password_confirm.error': "Passwords do not match",
+
+  //App Home Screen
+  'home.screen.link.card.deposit': 'Deposit',
+  'home.screen.link.card.withdraw': 'Withdraw',
+  'home.screen.link.card.buy_sell': 'Buy/Sell',
+  'home.screen.link.card.trading': 'Trading',
+  'home.screen.tabs.losers': 'Losers',
+  'home.screen.tabs.gainers': 'Gainers',
+
+  //App Markets Screen
+  'markets.screen.title': 'Markets',
+  'markets.screen.column.pair': 'Pair',
+  'markets.screen.column.last_price': 'Last Price',
+  'markets.screen.column.24hr_change': '24h Chg%',
+  'markets.screen.vol': 'Vol',
+
+  //App Trading Screen
+  'trading.screen.tabs.limit': 'Limit',
+  'trading.screen.tabs.market': 'Market',
+  'trading.screen.tab.limit.buy.field.price': 'Price',
+  'trading.screen.tab.limit.buy.field.amount': 'Amount',
+  'trading.screen.tab.limit.buy.field.total': 'Total (@currency)',
+  'trading.screen.tab.limit.buy.available': 'Avbl',
+  'trading.screen.tab.limit.buy.fee': 'Fee',
+  'trading.screen.tab.limit.buy.button': 'Buy @currency',
+
+  'trading.screen.tab.limit.sell.field.price': 'Price',
+  'trading.screen.tab.limit.sell.field.amount': 'Amount',
+  'trading.screen.tab.limit.sell.field.total': 'Total (@currency)',
+  'trading.screen.tab.limit.sell.available': 'Avbl',
+  'trading.screen.tab.limit.sell.fee': 'Fee',
+  'trading.screen.tab.limit.sell.button': 'Sell @currency',
+
+  'trading.screen.tab.market.buy.field.amount': 'Amount',
+  'trading.screen.tab.market.buy.field.total': 'Total (@currency)',
+  'trading.screen.tab.market.buy.available': 'Avbl',
+  'trading.screen.tab.market.buy.fee': 'Fee',
+  'trading.screen.tab.market.buy.button': 'Buy @currency',
+
+  'trading.screen.tab.market.sell.field.amount': 'Amount',
+  'trading.screen.tab.market.sell.field.total': 'Total (@currency)',
+  'trading.screen.tab.market.sell.available': 'Avbl',
+  'trading.screen.tab.market.sell.fee': 'Fee',
+  'trading.screen.tab.market.sell.button': 'Sell @currency',
+
+  //App Orderbook screen
+  'order_book.screen.column.amount': 'Amount',
+  'order_book.screen.column.price': 'Price',
+
+  //App Openorders screen
+  'open_order.screen.title': 'Open Orders',
+  'open_order.screen.hide_pair': 'Hide Order Pairs',
+  'open_order.screen.buy_limit': 'Buy Limit',
+  'open_order.screen.sell_limit': 'Sell Limit',
+  'open_order.screen.amount': 'Amount',
+  'open_order.screen.price': 'Price',
+  'open_order.screen.cancel_all.button': 'Cancel All',
+  'open_order.screen.cancel.button': 'Cancel',
+
+  //App Swap screen
+  'swap.screen.title': 'Buy/Sell',
+  'swap.screen.2fa_disabled': 'To Exchange, you have to enable 2FA',
+  'swap.screen.2fa_disabled_button': 'Enable 2FA',
+  'swap.screen.account_not_confirmed':
+      'To Exchange, you have to confirm your account',
+  'swap.screen.account_not_confirmed_button': 'Confirm Account',
+  'swap.screen.field.from': 'From',
+  'swap.screen.field.to': 'To',
+  'swap.screen.amount.error1':
+      'The amount has to be lower than @amount @currency',
+  'swap.screen.amount.error2':
+      'The amount has to be higher than @amount @currency',
+  'swap.screen.amount.error3':
+      'Your balance is not enough. Please fund your wallet',
+  'swap.screen.available': 'Available',
+  'swap.screen.max': 'Max',
+  'swap.screen.button_preview': 'Preview Rates',
+  'swap.screen.select.from': 'From',
+  'swap.screen.select.to': 'To',
+  'swap.screen.select.convert_from': 'Convert From',
+  'swap.screen.select.convert_to': 'Convert To',
+  'swap.screen.select.button.cancel': 'Cancel',
+  'swap.screen.select.button.confirm': 'Confirm',
+  'swap.screen.preview.confirm_conversion': 'Confirm Conversion',
+  'swap.screen.preview.will_receive': 'You will receive',
+  'swap.screen.preview.price': 'Price',
+  'swap.screen.preview.fee': 'Fee',
+  'swap.screen.preview.field.2fa': 'Enter 2FA code to proceed',
+  'swap.screen.preview.2fa.error': 'Please enter a valid 2FA code',
+  'swap.screen.preview.button.back': 'Back',
+  'swap.screen.preview.button.convert': 'Convert',
+
+  //App Swap History Screen
+  'swap_history.screen.title': 'Buy/Sell History',
+  'swap_history.screen.column.from': 'From',
+  'swap_history.screen.column.to': 'To',
+
+  //App Wallets Screen
+  'wallets.screen.title': 'Wallets',
+  'wallets.screen.equity_value': 'Equity Value',
+  'wallets.screen.button.deposit': 'Deposit',
+  'wallets.screen.button.withdraw': 'Withdraw',
+  'wallets.screen.column.currency': 'Currency',
+  'wallets.screen.column.amount': 'Amount',
+
+  //App Wallet Detail Screen
+  'wallet_detail.screen.total': 'Total',
+  'wallet_detail.screen.available': 'Available',
+  'wallet_detail.screen.locked': 'Locked',
+  'wallet_detail.screen.tabs.deposit_history': 'Deposit History',
+  'wallet_detail.screen.tabs.withdraw_history': 'Withdraw History',
+  'wallet_detail.screen.button.deposit': 'Deposit',
+  'wallet_detail.screen.button.withdraw': 'Withdraw',
+
+  //App Crypto Deposit Screen
+  'crypto_deposit.screen.title': 'Deposit',
+  'crypto_deposit.screen.address': 'Address',
+  'crypto_deposit.screen.disabled':
+      'The deposit was disabled by the administration',
+  'crypto_deposit.screen.button.generate_address': 'Generate Address',
+  'crypto_deposit.screen.button.copy_address': 'Copy Address',
+  'crypto_deposit.screen.button.share': 'Share',
+  'crypto_deposit.screen.tag.instruction':
+      'Please enter both Tag and Address data, which are required to deposit @currency to your B4U account successfully.',
+  'crypto_deposit.screen.button.copy_tag': 'Copy Tag',
+  'crypto_deposit.screen.instruction.title':
+      'Send only @currency to this deposit address',
+  'crypto_deposit.screen.instruction.text1':
+      'Sending coin or token other than @currency to this address may result in the loss of your deposit.',
+  'crypto_deposit.screen.instruction.text2':
+      'Until @confirmations confirmations are made, an equivalent amount of your assets will be temporarily unavailable for withdrawals',
+
+  //App wallet Deposit History Screen
+  'wallet_deposit_history.screen.amount': 'Amount',
+  'wallet_deposit_history.screen.status': 'Status',
+  'wallet_deposit_history.screen.transaction_fee': 'Transaction Fee',
+  'wallet_deposit_history.screen.txid': 'TxID',
+  'wallet_deposit_history.screen.date': 'Date',
+  'wallet_deposit_history.screen.button.copy_txid': 'Copy TxID',
+  'wallet_deposit_history.screen.button.check_explorer': 'Check Explorer',
+
+  //App wallet Withdraw History Screen
+  'wallet_withdraw_history.screen.amount': 'Amount',
+  'wallet_withdraw_history.screen.status': 'Status',
+  'wallet_withdraw_history.screen.address': 'Address',
+  'wallet_withdraw_history.screen.transaction_fee': 'Transaction Fee',
+  'wallet_withdraw_history.screen.txid': 'TxID',
+  'wallet_withdraw_history.screen.date': 'Date',
+  'wallet_withdraw_history.screen.button.copy_txid': 'Copy TxID',
+  'wallet_withdraw_history.screen.button.check_explorer': 'Check Explorer',
+
+  //App Crypto Withdraw Screen
+  'crypto_withdraw.screen.title': 'Withdraw',
+  'crypto_withdraw.screen.withdraw_disabled':
+      'Withdraw is disabled by the administration',
+  'crypto_withdraw.screen.enable_2fa': 'To withdraw, you have to enable 2FA',
+  'crypto_withdraw.screen.button.enable_2fa': 'Enable 2FA',
+  'crypto_withdraw.screen.confirm_account':
+      'To withdraw you have to confirm your account',
+  'crypto_withdraw.screen.button.confirm_account': 'Confirm Account',
+  'crypto_withdraw.screen.field.address': 'Withdraw Address',
+  'crypto_withdraw.screen.field.address.error': 'Withdrawl Address is required',
+  'crypto_withdraw.screen.field.tag': 'Withdraw Tag',
+  'crypto_withdraw.screen.field.tag.error':
+      'Please enter a valid withdrawl tag',
+  'crypto_withdraw.screen.field.amount': 'Withdraw Amount',
+  'crypto_withdraw.screen.field.amount.error': 'Please enter a valid amount',
+  'crypto_withdraw.screen.field.2fa': '2FA Code',
+  'crypto_withdraw.screen.field.2fa.error': 'Please enter a valid 2FA code',
+  'crypto_withdraw.screen.fee': 'Fee',
+  'crypto_withdraw.screen.total_amount': 'Total Withdraw Amount',
+  'crypto_withdraw.screen.instruction1':
+      'Do not withdraw directly to a crowdfund or ICO address, as your account will not be credited with tokens from such sales.',
+  'crypto_withdraw.screen.instruction2':
+      'When withdrawing to the B4U user\'s address, the handling fee will be returned to the Current Account by default.',
+  'crypto_withdraw.screen.button.withdraw': 'Withdraw',
 
   'page.sidebar.group.text': 'Fee Group:',
   'page.sidebar.group.value': 'Base',

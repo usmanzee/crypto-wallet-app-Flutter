@@ -117,10 +117,11 @@ class Home extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
+            // Text('learn.more'.tr),
             // MaterialButton(
-            //     child: Text('Get Posts'),
+            //     child: Text('change lang'),
             //     onPressed: () {
-            //       homeController.getWPPosts();
+            //       Get.updateLocale(Locale('ru', 'RU'));
             //     }),
 
             Container(
@@ -168,7 +169,7 @@ class Home extends StatelessWidget {
                           ? Get.toNamed('/wallets-search',
                               arguments: {'searchFrom': 'deposit'})
                           : Get.toNamed('/login');
-                    }, "Deposit"),
+                    }, "home.screen.link.card.deposit".tr),
                     _linksCard(
                         context,
                         Icon(
@@ -180,7 +181,7 @@ class Home extends StatelessWidget {
                           ? Get.toNamed('/wallets-search',
                               arguments: {'searchFrom': 'withdraw'})
                           : Get.toNamed('/login');
-                    }, "Withdraw"),
+                    }, "home.screen.link.card.withdraw".tr),
                     _linksCard(
                         context,
                         Icon(
@@ -191,7 +192,7 @@ class Home extends StatelessWidget {
                       homeController.isLoggedIn.value
                           ? homeController.selectedNavIndex = 3
                           : Get.toNamed('/login');
-                    }, "Buy/Sell"),
+                    }, "home.screen.link.card.buy_sell".tr),
                     _linksCard(
                         context,
                         Icon(
@@ -200,7 +201,7 @@ class Home extends StatelessWidget {
                           color: Theme.of(context).accentColor,
                         ), () {
                       homeController.selectedNavIndex = 2;
-                    }, "Trading"),
+                    }, "home.screen.link.card.trading".tr),
                   ],
                 ),
               ),
@@ -253,7 +254,7 @@ class Home extends StatelessWidget {
                                               padding: const EdgeInsets.only(
                                                   left: 8.0),
                                               child: Text(
-                                                "Gainers",
+                                                "home.screen.tabs.gainers".tr,
                                                 style: TextStyle(
                                                     fontFamily: "Sans"),
                                               ),
@@ -268,7 +269,7 @@ class Home extends StatelessWidget {
                                               padding: const EdgeInsets.only(
                                                   left: 8.0),
                                               child: Text(
-                                                "Losers",
+                                                "home.screen.tabs.losers".tr,
                                                 style: TextStyle(
                                                     fontFamily: 'Sans'),
                                               ),

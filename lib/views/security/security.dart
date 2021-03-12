@@ -12,7 +12,7 @@ class Security extends GetView<HomeController> {
 
   final _otpValidator = MultiValidator([
     LengthRangeValidator(
-        min: 6, max: 6, errorText: 'Please enter a valid 2FA code')
+        min: 6, max: 6, errorText: 'security.screen.2fa_error'.tr)
   ]);
 
   void disableOTP() async {
@@ -31,7 +31,7 @@ class Security extends GetView<HomeController> {
         brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
         centerTitle: true,
         title: Text(
-          'Security',
+          'security.screen.title'.tr,
           style: TextStyle(
               color: Theme.of(context).textSelectionColor,
               fontFamily: "Gotik",
@@ -49,10 +49,12 @@ class Security extends GetView<HomeController> {
             ),
             listSetting(
                 context,
-                "Enable",
+                controller.user.value.otp
+                    ? "security.screen.twoFA_disable".tr
+                    : "security.screen.twoFA_enable".tr,
                 Image.asset("assets/image/google_authenticator.png",
                     height: 24.0),
-                "2FA",
+                "security.screen.twoFA".tr,
                 Obx(
                   () => Switch(
                     value: controller.user.value.otp,
@@ -68,12 +70,12 @@ class Security extends GetView<HomeController> {
                 onTap: () {},
                 child: listSetting(
                     context,
-                    "Change",
+                    "security.screen.password_change".tr,
                     Icon(
                       Icons.security,
                       size: 24.0,
                     ),
-                    "Password",
+                    "security.screen.password".tr,
                     FlatButton(
                       onPressed: () {
                         Get.to(ChangePassword());
@@ -83,7 +85,7 @@ class Security extends GetView<HomeController> {
                       color: Theme.of(context).primaryColor,
                       textColor: Colors.white,
                       child: Text(
-                        "Change",
+                        "security.screen.password_button_text".tr,
                         style: TextStyle(fontSize: 10),
                       ),
                     ))),
@@ -164,7 +166,7 @@ class Security extends GetView<HomeController> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Please Enter 2FA',
+                      'security.screen.disable.2fa.title'.tr,
                       style: TextStyle(
                         fontFamily: "Sans",
                         fontWeight: FontWeight.w800,
@@ -237,7 +239,7 @@ class Security extends GetView<HomeController> {
                         fillColor: Theme.of(context).primaryColor,
                         child: Center(
                             child: Text(
-                          "Submit",
+                          "security.screen.disable.2fa.submit".tr,
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w500,

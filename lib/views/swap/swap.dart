@@ -20,9 +20,9 @@ class Swap extends StatelessWidget {
   final GlobalKey<FormState> _otpFormKey = GlobalKey<FormState>();
 
   final _twoFAValidator = MultiValidator([
-    RequiredValidator(errorText: '2FA code is required'),
+    RequiredValidator(errorText: 'swap.screen.preview.2fa.error'.tr),
     LengthRangeValidator(
-        min: 6, max: 6, errorText: 'Please enter a valid 2FA code')
+        min: 6, max: 6, errorText: 'swap.screen.preview.2fa.error'.tr)
   ]);
 
   void _onKeyPressed(int key) {
@@ -60,7 +60,7 @@ class Swap extends StatelessWidget {
           brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
           centerTitle: true,
           title: Text(
-            'Buy/Sell',
+            'swap.screen.title'.tr,
             style: TextStyle(
                 color: Theme.of(context).textSelectionColor,
                 fontFamily: "Gotik",
@@ -92,7 +92,8 @@ class Swap extends StatelessWidget {
                     height: 200,
                     alignment: Alignment.center,
                     child: CircularProgressIndicator())
-                : homeController.user.value.otp
+                : homeController.user.value.otp != null &&
+                        homeController.user.value.otp
                     ? (homeController.user.value.level >=
                             homeController
                                 .publicMemberLevel.value.withdraw.minimumLevel
@@ -117,7 +118,7 @@ class Swap extends StatelessWidget {
         ),
         Center(
           child: Text(
-            'To Exchange you have to enable 2FA',
+            'swap.screen.2fa_disabled'.tr,
             style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
           ),
         ),
@@ -134,7 +135,7 @@ class Swap extends StatelessWidget {
           },
           child: Center(
               child: Text(
-            "Enable 2FA",
+            "swap.screen.2fa_disabled_button".tr,
             style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w500,
@@ -164,7 +165,7 @@ class Swap extends StatelessWidget {
         ),
         Center(
           child: Text(
-            'To Exchange you have to confirm your account',
+            'swap.screen.account_not_confirmed'.tr,
             style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
           ),
         ),
@@ -181,7 +182,7 @@ class Swap extends StatelessWidget {
           },
           child: Center(
               child: Text(
-            "Confirm Account",
+            "swap.screen.account_not_confirmed_button".tr,
             style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w500,
@@ -219,7 +220,7 @@ class Swap extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'From',
+                        'swap.screen.field.from'.tr,
                         style: TextStyle(
                             fontFamily: "Popins",
                             color: Theme.of(context).hintColor,
@@ -228,7 +229,7 @@ class Swap extends StatelessWidget {
                       ),
                       Row(children: [
                         Text(
-                          'Available: ',
+                          'swap.screen.available'.tr + ': ',
                           style: TextStyle(
                               fontFamily: "Popins",
                               color: Theme.of(context).hintColor,
@@ -348,7 +349,7 @@ class Swap extends StatelessWidget {
                                 swapController.fromSelectedWallet.value.balance;
                           },
                           child: Text(
-                            'Max',
+                            'swap.screen.max'.tr,
                             style: TextStyle(
                                 fontFamily: "Popins",
                                 color: Theme.of(context).primaryColor,
@@ -372,7 +373,7 @@ class Swap extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
                 child: Text(
-                  'To',
+                  'swap.screen.field.to'.tr,
                   style: TextStyle(
                       fontFamily: "Popins",
                       color: Theme.of(context).hintColor,
@@ -481,7 +482,7 @@ class Swap extends StatelessWidget {
                           },
                           child: Center(
                               child: Text(
-                            "Preview Rates",
+                            "swap.screen.button_preview".tr,
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w500,
@@ -560,7 +561,7 @@ class Swap extends StatelessWidget {
                                       Padding(
                                         padding: EdgeInsets.only(right: 8),
                                         child: Text(
-                                          'From',
+                                          'swap.screen.select.from'.tr,
                                           style: TextStyle(
                                               fontFamily: "Popins",
                                               color: Theme.of(context)
@@ -624,7 +625,7 @@ class Swap extends StatelessWidget {
                                       Padding(
                                         padding: EdgeInsets.only(right: 8),
                                         child: Text(
-                                          'To',
+                                          'swap.screen.select.to'.tr,
                                           style: TextStyle(
                                               fontFamily: "Popins",
                                               color: Theme.of(context)
@@ -671,57 +672,13 @@ class Swap extends StatelessWidget {
                         SizedBox(height: 16.0),
                         Text(
                           swapController.selectedWalletIndex.value == 0
-                              ? 'Convert From'
-                              : 'Convert To',
+                              ? 'swap.screen.select.convert_from'.tr
+                              : 'swap.screen.select.convert_to'.tr,
                           style: TextStyle(
                               fontFamily: "Popins",
                               color: Theme.of(context).textSelectionColor,
                               fontWeight: FontWeight.bold),
                         ),
-                        // SizedBox(height: 16.0),
-                        // Container(
-                        //   decoration: BoxDecoration(
-                        //     color: Theme.of(context).canvasColor,
-                        //     border: Border.all(
-                        //       color: Theme.of(context).scaffoldBackgroundColor,
-                        //       width: 3.0,
-                        //     ),
-                        //     borderRadius: BorderRadius.circular(16.0),
-                        //   ),
-                        //   child: Row(
-                        //     children: <Widget>[
-                        //       Padding(
-                        //         padding: EdgeInsets.only(left: 8),
-                        //         child: Icon(
-                        //           Icons.search,
-                        //           size: 20,
-                        //           color: Theme.of(context).hintColor,
-                        //         ),
-                        //       ),
-                        //       new Expanded(
-                        //         child: TextField(
-                        //           onChanged: swapController
-                        //               .handleSearchInputChangeEvent,
-                        //           cursorColor: Theme.of(context).hintColor,
-                        //           keyboardType: TextInputType.text,
-                        //           decoration: InputDecoration(
-                        //             border: InputBorder.none,
-                        //             hintText: "Search...",
-                        //             hintStyle: TextStyle(
-                        //                 color: Theme.of(context).hintColor),
-                        //             contentPadding: EdgeInsets.symmetric(
-                        //                 vertical: 8, horizontal: 8),
-                        //             isDense: true,
-                        //           ),
-                        //           style: TextStyle(
-                        //             fontSize: 14.0,
-                        //             color: Colors.black,
-                        //           ),
-                        //         ),
-                        //       )
-                        //     ],
-                        //   ),
-                        // ),
                         SizedBox(height: 8.0),
                         Expanded(
                           child: swapController.searchWalletsList.length < 0
@@ -750,7 +707,7 @@ class Swap extends StatelessWidget {
                                     },
                                     child: Center(
                                       child: Text(
-                                        'Cancel',
+                                        'swap.screen.select.button.cancel'.tr,
                                         style: TextStyle(
                                             fontFamily: "Popins",
                                             color: Theme.of(context)
@@ -774,7 +731,7 @@ class Swap extends StatelessWidget {
                                     },
                                     child: Center(
                                       child: Text(
-                                        'Confirm',
+                                        'swap.screen.select.button.confirm'.tr,
                                         style: TextStyle(
                                             fontFamily: "Popins",
                                             color: Colors.white,
@@ -855,7 +812,8 @@ class Swap extends StatelessWidget {
                             height: 8,
                           ),
                           Center(
-                            child: Text('Confirm Conversion',
+                            child: Text(
+                                'swap.screen.preview.confirm_conversion'.tr,
                                 style: TextStyle(
                                     color: Theme.of(context).textSelectionColor,
                                     fontWeight: FontWeight.bold,
@@ -867,7 +825,7 @@ class Swap extends StatelessWidget {
                             height: 24,
                           ),
                           Center(
-                            child: Text('You will receive',
+                            child: Text('swap.screen.preview.will_receive'.tr,
                                 style: TextStyle(
                                     color: Theme.of(context).hintColor,
                                     fontFamily: "Popins",
@@ -903,7 +861,7 @@ class Swap extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Price',
+                                      'swap.screen.preview.price'.tr,
                                       style: TextStyle(
                                           fontFamily: "Popins",
                                           color: Theme.of(context).hintColor,
@@ -957,7 +915,7 @@ class Swap extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Fee %',
+                                      'swap.screen.preview.fee'.tr + ' %',
                                       style: TextStyle(
                                           fontFamily: "Popins",
                                           color: Theme.of(context).hintColor,
@@ -980,41 +938,13 @@ class Swap extends StatelessWidget {
                                     )
                                   ],
                                 ),
-                                // Row(
-                                //   mainAxisAlignment:
-                                //       MainAxisAlignment.spaceBetween,
-                                //   children: [
-                                //     Text(
-                                //       'You will get',
-                                //       style: TextStyle(
-                                //           fontFamily: "Popins",
-                                //           color: Theme.of(context).hintColor,
-                                //           fontSize: 14,
-                                //           fontWeight: FontWeight.bold),
-                                //     ),
-                                //     Text(
-                                //       swapController
-                                //               .fromAmountTextController.text +
-                                //           ' ' +
-                                //           swapController.fromSelectedWallet
-                                //               .value.currency
-                                //               .toUpperCase(),
-                                //       style: TextStyle(
-                                //           fontFamily: "Popins",
-                                //           color: Theme.of(context)
-                                //               .textSelectionColor,
-                                //           fontSize: 14,
-                                //           fontWeight: FontWeight.bold),
-                                //     )
-                                //   ],
-                                // ),
                               ],
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 8.0),
                             child: Text(
-                              "Enter 2FA Code to proceed",
+                              "swap.screen.preview.field.2fa".tr,
                               style: TextStyle(
                                 color: Theme.of(context)
                                     .hintColor
@@ -1079,34 +1009,6 @@ class Swap extends StatelessWidget {
                                         return true;
                                       },
                                     ),
-                                    // TextFormField(
-                                    //   obscureText: false,
-                                    //   keyboardType: TextInputType.number,
-                                    //   controller:
-                                    //       swapController.otpCodeTextController,
-                                    //   validator: _twoFAValidator,
-                                    //   cursorColor: Theme.of(context).hintColor,
-                                    //   decoration: InputDecoration(
-                                    //     errorStyle: TextStyle(
-                                    //       fontSize: 13.5,
-                                    //     ),
-                                    //     errorMaxLines: 3,
-                                    //     filled: true,
-                                    //     fillColor: Colors.transparent,
-                                    //     labelText: '2FA Code to Confirm',
-                                    //     border: OutlineInputBorder(
-                                    //         borderRadius: BorderRadius.circular(5)),
-                                    //     hintStyle: TextStyle(
-                                    //         color: Theme.of(context).hintColor),
-                                    //     contentPadding: EdgeInsets.symmetric(
-                                    //         vertical: 12, horizontal: 12),
-                                    //     isDense: true,
-                                    //   ),
-                                    //   style: TextStyle(
-                                    //     fontSize: 14.0,
-                                    //     color: Theme.of(context).textSelectionColor,
-                                    //   ),
-                                    // ),
                                   ),
                                 )
                               ],
@@ -1120,14 +1022,14 @@ class Swap extends StatelessWidget {
                                 Expanded(
                                   child: Container(
                                     height: 40,
-                                    child: FlatButton(
+                                    child: MaterialButton(
                                       color: Theme.of(context).canvasColor,
                                       onPressed: () {
                                         Get.back();
                                       },
                                       child: Center(
                                         child: Text(
-                                          'Back',
+                                          'swap.screen.preview.button.back'.tr,
                                           style: TextStyle(
                                               fontFamily: "Popins",
                                               color: Theme.of(context)
@@ -1144,14 +1046,15 @@ class Swap extends StatelessWidget {
                                 Expanded(
                                   child: Container(
                                     height: 40,
-                                    child: FlatButton(
+                                    child: MaterialButton(
                                       color: Theme.of(context).primaryColor,
                                       onPressed: () {
                                         _onExchangeFormSubmit();
                                       },
                                       child: Center(
                                         child: Text(
-                                          'Convert',
+                                          'swap.screen.preview.button.convert'
+                                              .tr,
                                           style: TextStyle(
                                               fontFamily: "Popins",
                                               color: Colors.white,

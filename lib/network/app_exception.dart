@@ -14,7 +14,7 @@ class AppException implements Exception {
     var readAbleMessage = newReadAbleMessage.getMessage();
     errorResponseObject = {
       'statusCode': response["statusCode"],
-      'message': _prefix + readAbleMessage,
+      'message': _prefix + response["message"].tr,
       'originalMessage': response["message"]
     };
 
@@ -26,17 +26,17 @@ class APIException extends AppException {}
 
 class FetchDataException extends AppException {
   dynamic response;
-  FetchDataException([this.response]) : super(response, "Server error: ");
+  FetchDataException([this.response]) : super(response, "");
 }
 
 class BadRequestException extends AppException {
   dynamic response;
-  BadRequestException([this.response]) : super(response, "Bad Request: ");
+  BadRequestException([this.response]) : super(response, "");
 }
 
 class UnauthorisedException extends AppException {
   dynamic response;
-  UnauthorisedException([this.response]) : super(response, "Unauthorised: ");
+  UnauthorisedException([this.response]) : super(response, "");
 }
 
 class InvalidInputException extends AppException {

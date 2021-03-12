@@ -35,10 +35,11 @@ class OrderBook extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     formatedMarket.baseUnit != null
-                        ? "Amount (" +
+                        ? "order_book.screen.column.amount".tr +
+                            " (" +
                             formatedMarket.baseUnit.toUpperCase() +
                             ")"
-                        : 'Amount',
+                        : 'order_book.screen.column.amount'.tr,
                     style: TextStyle(
                         color: Theme.of(context).hintColor,
                         fontSize: 12,
@@ -46,10 +47,11 @@ class OrderBook extends StatelessWidget {
                   ),
                   Text(
                     formatedMarket.quoteUnit != null
-                        ? "Price (" +
+                        ? "order_book.screen.column.price".tr +
+                            " (" +
                             formatedMarket.quoteUnit.toUpperCase() +
                             ")"
-                        : 'Price',
+                        : 'order_book.screen.column.price',
                     style: TextStyle(
                         color: Theme.of(context).hintColor,
                         fontSize: 12,
@@ -57,10 +59,11 @@ class OrderBook extends StatelessWidget {
                   ),
                   Text(
                     formatedMarket.baseUnit != null
-                        ? "Amount (" +
+                        ? "order_book.screen.column.amount".tr +
+                            " (" +
                             formatedMarket.baseUnit.toUpperCase() +
                             ")"
-                        : 'Amount',
+                        : 'order_book.screen.column.amount'.tr,
                     style: TextStyle(
                         color: Theme.of(context).hintColor,
                         fontSize: 12,

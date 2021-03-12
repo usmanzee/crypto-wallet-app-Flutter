@@ -13,7 +13,7 @@ class NotificationList extends GetView<NotificationController> {
         backgroundColor: Theme.of(context).canvasColor,
         centerTitle: true,
         title: Text(
-          'Notifications',
+          'notifications.screen.title'.tr,
           style: TextStyle(
               color: Theme.of(context).textSelectionColor,
               fontFamily: "Gotik",
@@ -66,7 +66,7 @@ class NotificationList extends GetView<NotificationController> {
                   padding: EdgeInsets.only(top: 8.0),
                   child: RaisedButton(
                     child: new Text(
-                      'I Understand',
+                      'notifications.screen.detail.seen.button.text'.tr,
                       style: TextStyle(color: Colors.white),
                     ),
                     color: Theme.of(context).accentColor,
@@ -103,12 +103,12 @@ class NotificationList extends GetView<NotificationController> {
             ),
             Padding(padding: EdgeInsets.only(bottom: 30.0)),
             Text(
-              "You're up to date!",
+              "notifications.screen.empty.content1".tr,
               style: TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 18.5,
                   color: Theme.of(context).textSelectionColor,
-                  fontFamily: "Gotik"),
+                  fontFamily: "Popins"),
             ),
           ],
         ),

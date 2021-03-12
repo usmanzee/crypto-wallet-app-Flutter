@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:crypto_template/network/app_exception.dart';
 import 'dart:async';
 import 'dart:convert';
+import 'package:get/get.dart';
 
 class ApiProvider {
   final String _baseUrl = Environment.getApiBaseUrl();
@@ -28,15 +29,12 @@ class ApiProvider {
           await http.get(_baseUrl + _appVersion + url, headers: headers);
       responseJson = _returnResponse(response);
     } on SocketException {
-      throw FetchDataException(
-          {'statusCode': 1, 'message': 'No Internet connection'});
+      throw FetchDataException({'statusCode': 1, 'message': 'no.internet'.tr});
     } on HttpException {
-      throw FetchDataException({
-        'statusCode': 2,
-        'message': 'Unable to communitate with the server'
-      });
+      throw FetchDataException(
+          {'statusCode': 2, 'message': 'server.not.available'.tr});
     } on FormatException {
-      throw FetchDataException({'statusCode': 3, 'message': 'Server errror'});
+      throw FetchDataException({'statusCode': 3, 'message': 'server.error'.tr});
     }
     return responseJson;
   }
@@ -49,15 +47,12 @@ class ApiProvider {
           body: body, headers: headers);
       responseJson = _returnResponse(response);
     } on SocketException {
-      throw FetchDataException(
-          {'statusCode': 1, 'message': 'No Internet connection'});
+      throw FetchDataException({'statusCode': 1, 'message': 'no.internet'.tr});
     } on HttpException {
-      throw FetchDataException({
-        'statusCode': 2,
-        'message': 'Unable to communitate with the server'
-      });
+      throw FetchDataException(
+          {'statusCode': 2, 'message': 'server.not.available'.tr});
     } on FormatException {
-      throw FetchDataException({'statusCode': 3, 'message': 'Server errror'});
+      throw FetchDataException({'statusCode': 3, 'message': 'server.error'.tr});
     }
     return responseJson;
   }
@@ -69,15 +64,12 @@ class ApiProvider {
           body: body, headers: headers);
       responseJson = _returnResponse(response);
     } on SocketException {
-      throw FetchDataException(
-          {'statusCode': 1, 'message': 'No Internet connection'});
+      throw FetchDataException({'statusCode': 1, 'message': 'no.internet'.tr});
     } on HttpException {
-      throw FetchDataException({
-        'statusCode': 2,
-        'message': 'Unable to communitate with the server'
-      });
+      throw FetchDataException(
+          {'statusCode': 2, 'message': 'server.not.available'.tr});
     } on FormatException {
-      throw FetchDataException({'statusCode': 3, 'message': 'Server errror'});
+      throw FetchDataException({'statusCode': 3, 'message': 'server.error'.tr});
     }
     return responseJson;
   }
@@ -89,15 +81,12 @@ class ApiProvider {
           await http.delete(_baseUrl + _appVersion + url, headers: headers);
       responseJson = _returnResponse(response);
     } on SocketException {
-      throw FetchDataException(
-          {'statusCode': 1, 'message': 'No Internet connection'});
+      throw FetchDataException({'statusCode': 1, 'message': 'no.internet'.tr});
     } on HttpException {
-      throw FetchDataException({
-        'statusCode': 2,
-        'message': 'Unable to communitate with the server'
-      });
+      throw FetchDataException(
+          {'statusCode': 2, 'message': 'server.not.available'.tr});
     } on FormatException {
-      throw FetchDataException({'statusCode': 3, 'message': 'Server errror'});
+      throw FetchDataException({'statusCode': 3, 'message': 'server.error'.tr});
     }
     return responseJson;
   }
@@ -109,13 +98,10 @@ class ApiProvider {
       final res = await http.Response.fromStream(response);
       responseJson = _returnResponse(res);
     } on SocketException {
-      throw FetchDataException(
-          {'statusCode': 1, 'message': 'No Internet connection1'});
+      throw FetchDataException({'statusCode': 1, 'message': 'no.internet'.tr});
     } on HttpException {
-      throw FetchDataException({
-        'statusCode': 2,
-        'message': 'Unable to communitate with the server!'
-      });
+      throw FetchDataException(
+          {'statusCode': 2, 'message': 'server.not.available'.tr});
     } on FormatException {
       throw FetchDataException(
           {'statusCode': 3, 'message': 'Server not responding correctly!'});

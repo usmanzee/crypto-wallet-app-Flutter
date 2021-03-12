@@ -187,16 +187,16 @@ class Trading extends StatelessWidget {
                         tabs: [
                           new Tab(
                             child: Text(
-                              "Limit",
+                              "trading.screen.tabs.limit".tr,
                               style:
-                                  TextStyle(fontFamily: "Sans", fontSize: 14),
+                                  TextStyle(fontFamily: "Popins", fontSize: 14),
                             ),
                           ),
                           new Tab(
                             child: Text(
-                              "Market",
+                              "trading.screen.tabs.market".tr,
                               style:
-                                  TextStyle(fontFamily: "Sans", fontSize: 14),
+                                  TextStyle(fontFamily: "Popins", fontSize: 14),
                             ),
                           )
                         ],

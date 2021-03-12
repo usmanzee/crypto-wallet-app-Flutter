@@ -143,9 +143,11 @@ class MarketOrderForm extends StatelessWidget {
                             contentPadding: EdgeInsets.only(
                                 left: 15, bottom: 11, top: 11, right: 15),
                             hintText: formatedMarket.quoteUnit != null
-                                ? "Total (" +
-                                    formatedMarket.quoteUnit.toUpperCase() +
-                                    ")"
+                                ? "trading.screen.tab.market.buy.field.total"
+                                    .trParams({
+                                    'currency':
+                                        formatedMarket.quoteUnit.toUpperCase()
+                                  })
                                 : ''),
                       ),
                     ),
@@ -162,7 +164,7 @@ class MarketOrderForm extends StatelessWidget {
                     padding: EdgeInsets.only(left: 4.0),
                     child: Center(
                       child: Text(
-                        'Avbl',
+                        'trading.screen.tab.market.buy.available'.tr,
                         style: TextStyle(
                             fontSize: 10, fontWeight: FontWeight.w500),
                       ),
@@ -209,7 +211,7 @@ class MarketOrderForm extends StatelessWidget {
                     padding: EdgeInsets.only(left: 4.0),
                     child: Center(
                       child: Text(
-                        'Fee',
+                        'trading.screen.tab.market.buy.fee'.tr,
                         style: TextStyle(
                             fontSize: 10, fontWeight: FontWeight.w500),
                       ),
@@ -261,7 +263,9 @@ class MarketOrderForm extends StatelessWidget {
                     child: Center(
                         child: Text(
                       formatedMarket.baseUnit != null
-                          ? "Buy " + formatedMarket.baseUnit.toUpperCase()
+                          ? "trading.screen.tab.market.buy.button".trParams({
+                              'currency': formatedMarket.baseUnit.toUpperCase()
+                            })
                           : '',
                       style: TextStyle(
                           color: Colors.white,
@@ -415,9 +419,11 @@ class MarketOrderForm extends StatelessWidget {
                             contentPadding: EdgeInsets.only(
                                 left: 15, bottom: 11, top: 11, right: 15),
                             hintText: formatedMarket.baseUnit != null
-                                ? "Total (" +
-                                    formatedMarket.baseUnit.toUpperCase() +
-                                    ")"
+                                ? "trading.screen.tab.market.sell.field.total"
+                                    .trParams({
+                                    'currency':
+                                        formatedMarket.quoteUnit.toUpperCase()
+                                  })
                                 : ''),
                       ),
                     ),
@@ -434,7 +440,7 @@ class MarketOrderForm extends StatelessWidget {
                     padding: EdgeInsets.only(left: 4.0),
                     child: Center(
                       child: Text(
-                        'Avbl',
+                        'trading.screen.tab.market.sell.available'.tr,
                         style: TextStyle(
                             fontSize: 10, fontWeight: FontWeight.w500),
                       ),
@@ -480,7 +486,7 @@ class MarketOrderForm extends StatelessWidget {
                     padding: EdgeInsets.only(left: 4.0),
                     child: Center(
                       child: Text(
-                        'Fee',
+                        'trading.screen.tab.market.sell.fee'.tr,
                         style: TextStyle(
                             fontSize: 10, fontWeight: FontWeight.w500),
                       ),
@@ -532,7 +538,9 @@ class MarketOrderForm extends StatelessWidget {
                     child: Center(
                         child: Text(
                       formatedMarket.baseUnit != null
-                          ? "Sell " + formatedMarket.baseUnit.toUpperCase()
+                          ? "trading.screen.tab.market.sell.button".trParams({
+                              'currency': formatedMarket.baseUnit.toUpperCase()
+                            })
                           : '',
                       style: TextStyle(
                           color: Colors.white,

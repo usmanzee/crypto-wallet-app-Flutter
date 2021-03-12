@@ -41,94 +41,83 @@ class WalletDetail extends StatelessWidget {
         children: [
           Flexible(
             child: Container(
-                padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
-                child: ListView(
+                padding: EdgeInsets.all(8.0),
+                child: Column(
                   children: <Widget>[
-                    _cardHeader(context, wallet),
-                    Container(
-                      height: 470.0,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Expanded(
-                            child: DefaultTabController(
-                              length: 2,
-                              child: Scaffold(
-                                appBar: PreferredSize(
-                                  preferredSize: Size.fromHeight(
-                                      40.0), // here the desired height
-                                  child: AppBar(
-                                    backgroundColor:
-                                        Theme.of(context).canvasColor,
-                                    elevation: 2,
-                                    centerTitle: true,
-                                    flexibleSpace: SafeArea(
-                                      child: Container(
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 50.0),
-                                          child: new TabBar(
-                                            indicator: UnderlineTabIndicator(
-                                                borderSide: BorderSide(
-                                                  width: 2,
-                                                  color: Theme.of(context)
-                                                      .primaryColor,
-                                                ),
-                                                insets: EdgeInsets.only(
-                                                    left: -8,
-                                                    right: 8,
-                                                    bottom: 0)),
-                                            isScrollable: true,
-                                            labelPadding: EdgeInsets.only(
-                                                left: 0, right: 16),
-                                            labelColor:
+                    Padding(
+                        padding: EdgeInsets.only(bottom: 8.0),
+                        child: _cardHeader(context, wallet)),
+                    Expanded(
+                      child: DefaultTabController(
+                        length: 2,
+                        child: Scaffold(
+                          appBar: PreferredSize(
+                            preferredSize: Size.fromHeight(
+                                40.0), // here the desired height
+                            child: AppBar(
+                              backgroundColor: Theme.of(context).canvasColor,
+                              elevation: 2,
+                              centerTitle: true,
+                              flexibleSpace: SafeArea(
+                                child: Container(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 50.0),
+                                    child: new TabBar(
+                                      indicator: UnderlineTabIndicator(
+                                          borderSide: BorderSide(
+                                            width: 2,
+                                            color:
                                                 Theme.of(context).primaryColor,
-                                            unselectedLabelColor:
-                                                Theme.of(context)
-                                                    .textSelectionColor,
-                                            indicatorSize:
-                                                TabBarIndicatorSize.label,
-                                            tabs: [
-                                              new Tab(
-                                                child: Text(
-                                                  "Deposit History",
-                                                  style: TextStyle(
-                                                      fontFamily: "Popins"),
-                                                ),
-                                              ),
-                                              new Tab(
-                                                child: Text(
-                                                  "Withdraw History",
-                                                  style: TextStyle(
-                                                      fontFamily: "Popins"),
-                                                ),
-                                              )
-                                            ],
+                                          ),
+                                          insets: EdgeInsets.only(
+                                              left: -8, right: 8, bottom: 0)),
+                                      isScrollable: true,
+                                      labelPadding:
+                                          EdgeInsets.only(left: 0, right: 16),
+                                      labelColor:
+                                          Theme.of(context).primaryColor,
+                                      unselectedLabelColor:
+                                          Theme.of(context).textSelectionColor,
+                                      indicatorSize: TabBarIndicatorSize.label,
+                                      tabs: [
+                                        new Tab(
+                                          child: Text(
+                                            "wallet_detail.screen.tabs.deposit_history"
+                                                .tr,
+                                            style:
+                                                TextStyle(fontFamily: "Popins"),
                                           ),
                                         ),
-                                      ),
+                                        new Tab(
+                                          child: Text(
+                                            "wallet_detail.screen.tabs.withdraw_history"
+                                                .tr,
+                                            style:
+                                                TextStyle(fontFamily: "Popins"),
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                    automaticallyImplyLeading: false,
-                                  ),
-                                ),
-                                body: Padding(
-                                  padding: const EdgeInsets.only(top: 10.0),
-                                  child: new TabBarView(
-                                    children: [
-                                      DepositHistoryList(
-                                        wallet: wallet,
-                                      ),
-                                      WithdrawHistoryList(
-                                        wallet: wallet,
-                                      )
-                                    ],
                                   ),
                                 ),
                               ),
+                              automaticallyImplyLeading: false,
                             ),
                           ),
-                        ],
+                          body: Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: new TabBarView(
+                              children: [
+                                DepositHistoryList(
+                                  wallet: wallet,
+                                ),
+                                WithdrawHistoryList(
+                                  wallet: wallet,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ],
@@ -141,60 +130,54 @@ class WalletDetail extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Expanded(
-                  child: Container(
-                    height: 40.0,
-                    child: MaterialButton(
-                      splashColor: Colors.black12,
-                      highlightColor: Colors.black12,
-                      color: Color(0xFF2ebd85),
-                      onPressed: () {
-                        if (wallet.type == 'coin') {
-                          Get.to(DepositCrypto(wallet: wallet));
-                        } else {
-                          Get.to(DepositFiat(wallet: wallet));
-                        }
-                      },
-                      child: Center(
-                          child: Text(
-                        "Deposit",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: "Popins",
-                            letterSpacing: 1.3,
-                            fontSize: 16.0),
-                      )),
-                    ),
+                  child: MaterialButton(
+                    splashColor: Colors.black12,
+                    highlightColor: Colors.black12,
+                    color: Color(0xFF2ebd85),
+                    onPressed: () {
+                      if (wallet.type == 'coin') {
+                        Get.to(DepositCrypto(wallet: wallet));
+                      } else {
+                        Get.to(DepositFiat(wallet: wallet));
+                      }
+                    },
+                    child: Center(
+                        child: Text(
+                      "wallet_detail.screen.button.deposit".tr,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: "Popins",
+                          letterSpacing: 1.3,
+                          fontSize: 16.0),
+                    )),
                   ),
                 ),
                 SizedBox(
                   width: 8,
                 ),
                 Expanded(
-                  child: Container(
-                    height: 40.0,
-                    child: MaterialButton(
-                      splashColor: Colors.black12,
-                      highlightColor: Colors.black12,
-                      color: Colors.redAccent.withOpacity(0.8),
-                      onPressed: () {
-                        if (wallet.type == 'coin') {
-                          Get.to(WithdrawCrypto(wallet: wallet));
-                        } else {
-                          Get.to(WithdrawFiat(wallet: wallet));
-                        }
-                      },
-                      child: Center(
-                          child: Text(
-                        "Withdraw",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: "Popins",
-                            letterSpacing: 1.3,
-                            fontSize: 16.0),
-                      )),
-                    ),
+                  child: MaterialButton(
+                    splashColor: Colors.black12,
+                    highlightColor: Colors.black12,
+                    color: Colors.redAccent.withOpacity(0.8),
+                    onPressed: () {
+                      if (wallet.type == 'coin') {
+                        Get.to(WithdrawCrypto(wallet: wallet));
+                      } else {
+                        Get.to(WithdrawFiat(wallet: wallet));
+                      }
+                    },
+                    child: Center(
+                        child: Text(
+                      "wallet_detail.screen.button.withdraw".tr,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: "Popins",
+                          letterSpacing: 1.3,
+                          fontSize: 16.0),
+                    )),
                   ),
                 ),
               ],

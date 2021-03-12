@@ -1,12 +1,13 @@
 import 'dart:math';
 import 'package:crypto_template/controllers/SnackbarController.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 class Helper {
   static copyToClipBoard(String text) {
     Clipboard.setData(ClipboardData(text: text)).then((value) {
       SnackbarController snackbarController =
-          new SnackbarController(title: '', message: 'Copied to Clipboard');
+          new SnackbarController(title: '', message: 'copy.to.clipboard'.tr);
       snackbarController.showSnackbar();
     });
   }

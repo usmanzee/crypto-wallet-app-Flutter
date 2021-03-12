@@ -213,21 +213,18 @@ class SwapController extends GetxController {
       double receivedAmount = double.parse(amount);
       if (receivedAmount < minSwapAmount) {
         fromFieldError = true;
-        fromFieldErrorText.value = 'The amount has to be higher than ' +
-            minSwapAmount.toString() +
-            ' ' +
-            currency;
+
+        fromFieldErrorText.value = 'swap.screen.amount.error1'.trParams(
+            {'amount': minSwapAmount.toString(), 'currency': currency});
       } else if (receivedAmount > maxSwapAmount) {
         fromFieldError = true;
-        fromFieldErrorText.value = 'The amount has to be lower than ' +
-            maxSwapAmount.toString() +
-            ' ' +
-            currency;
+
+        fromFieldErrorText.value = 'swap.screen.amount.error2'.trParams(
+            {'amount': maxSwapAmount.toString(), 'currency': currency});
       } else if (receivedAmount >
           double.parse(fromSelectedWallet.value.balance)) {
         fromFieldError = true;
-        fromFieldErrorText.value =
-            'Your balance is not enough. Please fund your wallet.';
+        fromFieldErrorText.value = 'swap.screen.amount.error3'.tr;
       } else {
         fromFieldError = false;
         fromFieldErrorText.value = '';

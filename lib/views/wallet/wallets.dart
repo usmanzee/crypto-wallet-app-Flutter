@@ -16,7 +16,7 @@ class Wallets extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Wallets',
+          'wallets.screen.title'.tr,
           style: TextStyle(
               color: Theme.of(context).textSelectionColor,
               fontFamily: "Gotik",
@@ -67,7 +67,7 @@ class Wallets extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 12.0),
                     child: Text(
-                      "Currency",
+                      "wallets.screen.column.currency".tr,
                       style: TextStyle(
                           color: Theme.of(context).hintColor,
                           fontFamily: "Popins"),
@@ -76,7 +76,7 @@ class Wallets extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(right: 10.0),
                     child: Text(
-                      "Amount",
+                      "wallets.screen.column.amount".tr,
                       style: TextStyle(
                           color: Theme.of(context).hintColor,
                           fontFamily: "Popins"),

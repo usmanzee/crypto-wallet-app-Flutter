@@ -9,7 +9,7 @@ class Market extends StatelessWidget {
         appBar: AppBar(
           centerTitle: true,
           title: Text(
-            "Market",
+            "markets.screen.title".tr,
             style: TextStyle(
                 color: Theme.of(context).textSelectionColor,
                 fontFamily: "Gotik",

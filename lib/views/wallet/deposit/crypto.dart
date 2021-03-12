@@ -41,7 +41,6 @@ class _WalletState extends State<DepositCrypto> {
   void initState() {
     depositController =
         Get.put(CryptoDepositController(currency: wallet.currency));
-    print('widget init');
     super.initState();
   }
 
@@ -49,7 +48,7 @@ class _WalletState extends State<DepositCrypto> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Deposit',
+          'crypto_deposit.screen.title'.tr,
           style: TextStyle(
               color: Theme.of(context).textSelectionColor,
               fontFamily: "Gotik",
@@ -137,9 +136,11 @@ class _WalletState extends State<DepositCrypto> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Send only ' +
-                                            wallet.currency.toUpperCase() +
-                                            ' to this deposit address',
+                                        'crypto_deposit.screen.instruction.title'
+                                            .trParams({
+                                          'currency':
+                                              wallet.currency.toUpperCase()
+                                        }),
                                         style: TextStyle(
                                           fontWeight: FontWeight.w600,
                                           color: Theme.of(context)
@@ -150,9 +151,12 @@ class _WalletState extends State<DepositCrypto> {
                                       ),
                                       SizedBox(height: 8.0),
                                       Text(
-                                        '* Sending coin or token other than ' +
-                                            wallet.currency.toUpperCase() +
-                                            ' to this address may result in the loss of your deposit.',
+                                        '* ' +
+                                            'crypto_deposit.screen.instruction.text1'
+                                                .trParams({
+                                              'currency':
+                                                  wallet.currency.toUpperCase()
+                                            }),
                                         style: TextStyle(
                                           color: Theme.of(context)
                                               .textSelectionColor,
@@ -162,7 +166,10 @@ class _WalletState extends State<DepositCrypto> {
                                       ),
                                       SizedBox(height: 4.0),
                                       Text(
-                                        '* Until 6 confirmations are made, an equivalent amount of your assets will be temporarily unavailable for withdrawals.',
+                                        '* ' +
+                                            'crypto_deposit.screen.instruction.text2'
+                                                .trParams(
+                                                    {'confirmations': '6'}),
                                         style: TextStyle(
                                           color: Theme.of(context)
                                               .textSelectionColor,
@@ -211,7 +218,7 @@ class _WalletState extends State<DepositCrypto> {
         ),
         Center(
           child: Text(
-            'Deposit is disabled by the administration',
+            'crypto_deposit.screen.disabled'.tr,
             style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
           ),
         ),
@@ -254,7 +261,7 @@ class _WalletState extends State<DepositCrypto> {
             },
             child: Center(
               child: Text(
-                "Generate Address",
+                "crypto_deposit.screen.button.generate_address".tr,
                 style: TextStyle(color: Colors.white),
               ),
             ),
@@ -280,7 +287,9 @@ class _WalletState extends State<DepositCrypto> {
           Row(
             children: <Widget>[
               Text(
-                wallet.currency.toUpperCase() + ' Address',
+                wallet.currency.toUpperCase() +
+                    ' ' +
+                    'crypto_deposit.screen.address'.tr,
                 style: TextStyle(
                   color: Theme.of(context).textSelectionColor,
                   fontSize: 14,
@@ -294,7 +303,7 @@ class _WalletState extends State<DepositCrypto> {
                 minWidth: 40.0,
                 color: Theme.of(context).canvasColor,
                 child: Text(
-                  "Copy Address",
+                  "crypto_deposit.screen.button.copy_address".tr,
                   style: TextStyle(
                     color: Theme.of(context).textSelectionColor,
                     fontSize: 10,
@@ -339,7 +348,7 @@ class _WalletState extends State<DepositCrypto> {
         minWidth: 150.0,
         color: Theme.of(context).canvasColor,
         child: new Text(
-          "Share",
+          "crypto_deposit.screen.button.share".tr,
           style: TextStyle(
             color: Theme.of(context).textSelectionColor,
             fontSize: 10,
@@ -371,9 +380,8 @@ class _WalletState extends State<DepositCrypto> {
           child: Padding(
             padding: EdgeInsets.only(left: 8.0),
             child: Text(
-              'Please enter both Tag and Address data, which are required to deposit ' +
-                  wallet.currency.toUpperCase() +
-                  ' to your B4U account successfully.',
+              'crypto_deposit.screen.tag.instruction'
+                  .trParams({'currency': wallet.currency.toUpperCase()}),
               style: TextStyle(
                 color: Theme.of(context).errorColor,
                 fontSize: 10,
@@ -407,7 +415,7 @@ class _WalletState extends State<DepositCrypto> {
                 color: Theme.of(context).canvasColor,
                 // textColor: Colors.white,
                 child: new Text(
-                  "Copy Tag",
+                  "crypto_deposit.screen.button.copy_tag".tr,
                   style: TextStyle(fontSize: 10),
                 ),
                 onPressed: () {

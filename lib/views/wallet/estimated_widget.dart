@@ -26,7 +26,7 @@ class EstimatedWidget extends StatelessWidget {
       padding: EdgeInsets.all(8),
       child: Column(
         children: [
-          Text('Equity Value(BTC)',
+          Text('wallets.screen.equity_value'.tr + '(BTC)',
               style: Theme.of(context).textTheme.bodyText1,
               textAlign: TextAlign.left),
           SizedBox(
@@ -50,7 +50,7 @@ class EstimatedWidget extends StatelessWidget {
                 minWidth: 120.0,
                 textColor: Theme.of(context).accentColor,
                 child: Text(
-                  "Deposit",
+                  "wallets.screen.button.deposit".tr,
                   style: TextStyle(fontSize: 12),
                 ),
                 onPressed: () {
@@ -73,7 +73,7 @@ class EstimatedWidget extends StatelessWidget {
                 minWidth: 120.0,
                 textColor: Theme.of(context).accentColor,
                 child: Text(
-                  "Withdraw",
+                  "wallets.screen.button.deposit".tr,
                   style: TextStyle(fontSize: 12),
                 ),
                 onPressed: () {

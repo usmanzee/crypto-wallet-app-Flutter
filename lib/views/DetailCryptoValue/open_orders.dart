@@ -23,20 +23,20 @@ class OpenOrders extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
             child: Row(children: [
               Text(
-                'Open Orders ',
+                'open_order.screen.title'.tr,
                 style: TextStyle(
                     fontSize: 18,
-                    fontFamily: 'sans',
+                    fontFamily: 'Popins',
                     fontWeight: FontWeight.bold),
               ),
               Text(
-                '(' +
+                ' (' +
                     openOrdersController.openOrdersSortedList.length
                         .toString() +
                     ')',
                 style: TextStyle(
                     fontSize: 18,
-                    fontFamily: 'sans',
+                    fontFamily: 'Popins',
                     fontWeight: FontWeight.bold),
               ),
             ]),
@@ -66,11 +66,11 @@ class OpenOrders extends StatelessWidget {
                         openOrdersController.hideOrShowOtherOrder();
                       },
                       child: Text(
-                        'Hide Other Pairs',
+                        'open_order.screen.hide_pair'.tr,
                         style: TextStyle(
                             color: Theme.of(context).textSelectionColor,
                             fontWeight: FontWeight.w700,
-                            fontFamily: "sans",
+                            fontFamily: "Popins",
                             fontSize: 15.0),
                       ),
                     ),
@@ -81,11 +81,11 @@ class OpenOrders extends StatelessWidget {
                     minWidth: 40.0,
                     color: Theme.of(context).canvasColor,
                     child: Text(
-                      "Cancel All",
+                      "open_order.screen.cancel_all.button".tr,
                       style: TextStyle(
                           color: Theme.of(context).textSelectionColor,
                           fontWeight: FontWeight.w700,
-                          fontFamily: "sans",
+                          fontFamily: "Popins",
                           fontSize: 12.0),
                     ),
                     onPressed: () {
@@ -154,13 +154,15 @@ class OpenOrders extends StatelessWidget {
           Row(
             children: [
               Text(
-                openOrder.side == 'buy' ? 'Buy Limit' : 'Sell Limit',
+                openOrder.side == 'buy'
+                    ? 'open_order.screen.buy_limit'.tr
+                    : 'open_order.screen.sell_limit'.tr,
                 style: TextStyle(
                     color: openOrder.side == 'buy'
                         ? Color(0xFF00C087)
                         : Colors.redAccent.withOpacity(0.8),
                     fontWeight: FontWeight.w700,
-                    fontFamily: "sans",
+                    fontFamily: "Popins",
                     fontSize: 13.0),
               ),
               Padding(
@@ -170,7 +172,7 @@ class OpenOrders extends StatelessWidget {
                   style: TextStyle(
                       color: Theme.of(context).textSelectionColor,
                       fontWeight: FontWeight.w700,
-                      fontFamily: "sans",
+                      fontFamily: "Popins",
                       fontSize: 15.0),
                 ),
               ),
@@ -182,7 +184,7 @@ class OpenOrders extends StatelessWidget {
                 style: TextStyle(
                     color: Theme.of(context).hintColor,
                     fontWeight: FontWeight.w700,
-                    fontFamily: "sans",
+                    fontFamily: "Popins",
                     fontSize: 13.0),
               ),
             ],
@@ -204,7 +206,7 @@ class OpenOrders extends StatelessWidget {
                           color: openOrder.side == 'buy'
                               ? Color(0xFF00C087)
                               : Colors.redAccent,
-                          fontFamily: "sans",
+                          fontFamily: "Popins",
                           fontSize: 13.0)),
                   progressColor: openOrder.side == 'buy'
                       ? Color(0xFF00C087)
@@ -217,20 +219,20 @@ class OpenOrders extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Amount',
+                        'open_order.screen.amount'.tr,
                         style: TextStyle(
                             color: Theme.of(context).hintColor.withOpacity(0.7),
-                            fontFamily: "sans",
+                            fontFamily: "Popins",
                             fontSize: 13.0),
                       ),
                       SizedBox(
                         height: 4,
                       ),
                       Text(
-                        'Price',
+                        'open_order.screen.price'.tr,
                         style: TextStyle(
                             color: Theme.of(context).hintColor.withOpacity(0.7),
-                            fontFamily: "sans",
+                            fontFamily: "Popins",
                             fontSize: 13.0),
                       ),
                     ]),
@@ -246,13 +248,13 @@ class OpenOrders extends StatelessWidget {
                           style: TextStyle(
                               color: Theme.of(context).textSelectionColor,
                               fontWeight: FontWeight.w700,
-                              fontFamily: "sans",
+                              fontFamily: "Popins",
                               fontSize: 13.0),
                         ),
                         Text(
                           '/',
                           style: TextStyle(
-                              fontFamily: "sans",
+                              fontFamily: "Popins",
                               fontSize: 13.0,
                               color: Theme.of(context).textSelectionColor),
                         ),
@@ -260,7 +262,7 @@ class OpenOrders extends StatelessWidget {
                           double.parse(openOrder.originVolume)
                               .toStringAsFixed(2),
                           style: TextStyle(
-                            fontFamily: "sans",
+                            fontFamily: "Popins",
                             fontSize: 13.0,
                             color: Theme.of(context).hintColor.withOpacity(0.7),
                           ),
@@ -275,7 +277,7 @@ class OpenOrders extends StatelessWidget {
                         style: TextStyle(
                             color: Theme.of(context).textSelectionColor,
                             fontWeight: FontWeight.w700,
-                            fontFamily: "sans",
+                            fontFamily: "Popins",
                             fontSize: 13.0),
                       ),
                     ]),
@@ -287,11 +289,11 @@ class OpenOrders extends StatelessWidget {
                 color: Theme.of(context).canvasColor,
                 // textColor: Colors.white,
                 child: Text(
-                  "Cancel",
+                  "open_order.screen.cancel.button".tr,
                   style: TextStyle(
                       color: Theme.of(context).textSelectionColor,
                       fontWeight: FontWeight.w700,
-                      fontFamily: "sans",
+                      fontFamily: "Popins",
                       fontSize: 12.0),
                 ),
                 onPressed: () {

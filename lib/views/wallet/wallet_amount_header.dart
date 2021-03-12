@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:crypto_template/models/wallet.dart' as WalletClass;
+import 'package:get/get.dart';
 
 class WalletAmountHeader extends StatelessWidget {
   final WalletClass.Wallet wallet;
@@ -19,7 +20,7 @@ class WalletAmountHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                "Total",
+                "wallet_detail.screen.total".tr,
                 style: TextStyle(
                     color: Theme.of(context).hintColor.withOpacity(0.5),
                     fontFamily: "Popins",
@@ -40,7 +41,7 @@ class WalletAmountHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                "Available",
+                "wallet_detail.screen.available".tr,
                 style: TextStyle(
                     color: Theme.of(context).hintColor.withOpacity(0.5),
                     fontFamily: "Popins",
@@ -60,7 +61,7 @@ class WalletAmountHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                "Locked",
+                "wallet_detail.screen.locked".tr,
                 style: TextStyle(
                     color: Theme.of(context).hintColor.withOpacity(0.5),
                     fontFamily: "Popins",

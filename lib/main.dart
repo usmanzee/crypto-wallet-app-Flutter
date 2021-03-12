@@ -1,3 +1,4 @@
+import 'package:crypto_template/utils/transalations/messages.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 import 'package:crypto_template/bindings/socket_binding.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,9 @@ class MyApp extends StatelessWidget {
         child: GetMaterialApp(
       title: 'B4U Wallet',
       debugShowCheckedModeBanner: false,
+      translations: Messages(),
+      locale: Locale('en', 'US'),
+      // fallbackLocale: Locale('en', 'UK'),
       defaultTransition: Transition.downToUp,
       getPages: RouterFile.Router.route,
       initialRoute: '/splash',

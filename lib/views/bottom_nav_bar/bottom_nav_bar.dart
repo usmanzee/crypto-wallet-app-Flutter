@@ -10,7 +10,6 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/views/home/home.dart';
 import 'package:crypto_template/views/market/markets.dart';
-import 'package:crypto_template/views/news/news_home.dart';
 import 'package:crypto_template/views/wallet/wallets.dart';
 import 'package:crypto_template/controllers/SnackbarController.dart';
 
@@ -80,24 +79,24 @@ class BottomNavBar extends GetView<HomeController> {
                 items: [
                   BottomNavigationBarItem(
                     icon: Icon(Icons.home),
-                    label: "Home",
+                    label: "bottom.navbar.home".tr,
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.leaderboard),
-                    label: "Markets",
+                    label: "bottom.navbar.markets".tr,
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.insights),
-                    label: "Trades",
+                    label: "bottom.navbar.trading".tr,
                   ),
                   BottomNavigationBarItem(
                     // icon: Icon(Icons.library_books),
                     icon: Icon(Icons.swap_horiz),
-                    label: "Buy/Sell",
+                    label: "bottom.navbar.buy_sell".tr,
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.account_balance_wallet),
-                    label: "Wallets",
+                    label: "bottom.navbar.wallets".tr,
                   ),
                 ],
                 currentIndex: controller.selectedNavIndex,

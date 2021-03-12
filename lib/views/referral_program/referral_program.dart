@@ -19,7 +19,7 @@ class ReferralProgram extends StatelessWidget {
         backgroundColor: Theme.of(context).canvasColor,
         centerTitle: true,
         title: Text(
-          'Referral',
+          'referral.screen.title'.tr,
           style: TextStyle(
               color: Theme.of(context).textSelectionColor,
               fontFamily: "Gotik",
@@ -28,43 +28,63 @@ class ReferralProgram extends StatelessWidget {
         ),
         iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
         elevation: 1,
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(120.0),
-          child: Container(
-            color: Theme.of(context).primaryColor,
-            padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(bottom: 16.0),
-                  child: Text('Invite Friends & Earn Crypto Together',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: "Gotik",
-                          fontWeight: FontWeight.w600,
-                          fontSize: 22)),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 8.0),
-                  child: Text(
-                      'Earn upto 40% commission every time your friend make a trade on B4U.',
-                      style: TextStyle(color: Colors.white, fontSize: 12)),
-                )
-              ],
-            ),
-          ),
-        ),
+        // bottom: PreferredSize(
+        //   preferredSize: Size.fromHeight(120.0),
+        //   child: Container(
+        //     color: Theme.of(context).primaryColor,
+        //     padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+        //     child: Column(
+        //       children: [
+        //         Padding(
+        //           padding: EdgeInsets.only(bottom: 8.0),
+        //           child: Text('referral.screen.referral_title'.tr,
+        //               style: TextStyle(
+        //                   color: Colors.white,
+        //                   fontFamily: "Gotik",
+        //                   fontWeight: FontWeight.w600,
+        //                   fontSize: 22)),
+        //         ),
+        //         Padding(
+        //           padding: EdgeInsets.only(bottom: 8.0),
+        //           child: Text('referral.screen.referral_description'.tr,
+        //               style: TextStyle(color: Colors.white, fontSize: 12)),
+        //         )
+        //       ],
+        //     ),
+        //   ),
+        // ),
       ),
       body: SingleChildScrollView(
           child: Container(
-        padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Container(
+              color: Theme.of(context).primaryColor,
+              padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 8.0),
+                    child: Text('referral.screen.referral_title'.tr,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: "Gotik",
+                            fontWeight: FontWeight.w600,
+                            fontSize: 22)),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 8.0),
+                    child: Text('referral.screen.referral_description'.tr,
+                        style: TextStyle(color: Colors.white, fontSize: 12)),
+                  )
+                ],
+              ),
+            ),
             Padding(
-              padding: EdgeInsets.only(bottom: 8.0),
-              child: Text('Invite Now',
+              padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+              child: Text('referral.screen.referral_instruction.title'.tr,
                   style: TextStyle(
                       color: Theme.of(context).textSelectionColor,
                       fontFamily: "Gotik",
@@ -72,9 +92,8 @@ class ReferralProgram extends StatelessWidget {
                       fontSize: 22)),
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: 8.0),
-              child: Text(
-                  'Use your unique link to invite your friends over message or email. Your default invitation code can also be shared in real life or as a screenshot.',
+              padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+              child: Text('referral.screen.referral_instruction.description'.tr,
                   style: TextStyle(
                       color: Theme.of(context).textSelectionColor,
                       fontSize: 12)),
@@ -105,7 +124,7 @@ class ReferralProgram extends StatelessWidget {
 
 Widget _showReferralId(context, User user) {
   return Container(
-    padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+    padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
     width: double.infinity,
     decoration: BoxDecoration(
         // color: Theme.of(context).canvasColor,
@@ -116,7 +135,7 @@ Widget _showReferralId(context, User user) {
       children: <Widget>[
         Row(
           children: <Widget>[
-            Text('Referral ID'),
+            Text('referral.screen.referral_id'.tr),
             Spacer(flex: 1),
             FlatButton(
               height: 30.0,
@@ -124,7 +143,7 @@ Widget _showReferralId(context, User user) {
               color: Theme.of(context).canvasColor.withOpacity(0.9),
               textColor: Theme.of(context).textSelectionColor,
               child: Text(
-                "Copy ID",
+                "referral.screen.referral_copy_id".tr,
                 style: TextStyle(fontSize: 10),
               ),
               onPressed: () {
@@ -150,7 +169,7 @@ Widget _showReferralId(context, User user) {
 
 Widget _showReferralLink(context, String link) {
   return Container(
-    padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+    padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
     width: double.infinity,
     decoration: BoxDecoration(
         // color: Theme.of(context).canvasColor,
@@ -161,7 +180,7 @@ Widget _showReferralLink(context, String link) {
       children: <Widget>[
         Row(
           children: <Widget>[
-            Text('Referral Link'),
+            Text('referral.screen.referral_link'.tr),
             Spacer(flex: 1),
             FlatButton(
               height: 30.0,
@@ -169,7 +188,7 @@ Widget _showReferralLink(context, String link) {
               color: Theme.of(context).canvasColor,
               textColor: Theme.of(context).textSelectionColor,
               child: Text(
-                "Copy Link",
+                "referral.screen.referral_copy_link".tr,
                 style: TextStyle(fontSize: 10),
               ),
               onPressed: () {
@@ -189,7 +208,7 @@ Widget _showReferralLink(context, String link) {
           ),
         ),
         SizedBox(
-          height: 16.0,
+          height: 8.0,
         ),
         Center(
           child: FlatButton(
@@ -197,7 +216,7 @@ Widget _showReferralLink(context, String link) {
             minWidth: 150.0,
             color: Theme.of(context).canvasColor,
             textColor: Theme.of(context).textSelectionColor,
-            child: new Text("Share"),
+            child: new Text("referral.screen.share".tr),
             onPressed: () {
               shareLink(context, link);
             },

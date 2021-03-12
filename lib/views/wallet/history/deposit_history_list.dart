@@ -146,7 +146,7 @@ class DepositHistoryList extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 19.5,
                       letterSpacing: 1.6,
-                      fontFamily: "Sans",
+                      fontFamily: "Popins",
                       fontWeight: FontWeight.w600,
                       color: _color),
                 ),
@@ -197,7 +197,7 @@ class DepositHistoryList extends StatelessWidget {
                     Text(
                       wallet.currency.toUpperCase(),
                       style: TextStyle(
-                        fontFamily: "Sans",
+                        fontFamily: "Popins",
                         fontWeight: FontWeight.w800,
                         fontSize: 20.0,
                         letterSpacing: 1.5,
@@ -213,7 +213,7 @@ class DepositHistoryList extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "Amount",
+                      "wallet_deposit_history.screen.amount".tr,
                       style: TextStyle(
                           color: Theme.of(context).hintColor.withOpacity(0.5),
                           fontFamily: "Popins",
@@ -229,7 +229,7 @@ class DepositHistoryList extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "Status",
+                      "wallet_deposit_history.screen.status".tr,
                       style: TextStyle(
                           color: Theme.of(context).hintColor.withOpacity(0.5),
                           fontFamily: "Popins",
@@ -250,27 +250,11 @@ class DepositHistoryList extends StatelessWidget {
                         BoxDecoration(color: Theme.of(context).hintColor),
                   ),
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: <Widget>[
-                //     Text(
-                //       "Address",
-                //       style: TextStyle(
-                //           color: Theme.of(context).hintColor.withOpacity(0.5),
-                //           fontFamily: "Popins",
-                //           fontSize: 15.5),
-                //     ),
-                //     Text(
-                //       depositHistoryItem.confirmations.toString(),
-                //       style: TextStyle(fontFamily: "Popins"),
-                //     ),
-                //   ],
-                // ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "Transaction Fee",
+                      "wallet_deposit_history.screen.transaction_fee".tr,
                       style: TextStyle(
                           color: Theme.of(context).hintColor.withOpacity(0.5),
                           fontFamily: "Popins",
@@ -287,7 +271,7 @@ class DepositHistoryList extends StatelessWidget {
                   children: <Widget>[
                     Flexible(
                       child: Text(
-                        "TxID",
+                        "wallet_deposit_history.screen.txid".tr,
                         style: TextStyle(
                             color: Theme.of(context).hintColor.withOpacity(0.5),
                             fontFamily: "Popins",
@@ -308,7 +292,7 @@ class DepositHistoryList extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "Date",
+                      "wallet_deposit_history.screen.date".tr,
                       style: TextStyle(
                           color: Theme.of(context).hintColor.withOpacity(0.5),
                           fontFamily: "Popins",
@@ -338,7 +322,7 @@ class DepositHistoryList extends StatelessWidget {
                             : null,
                         child: Center(
                             child: Text(
-                          "Copy TxID",
+                          "wallet_deposit_history.screen.button.copy_txid".tr,
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontFamily: "Popins",
@@ -360,7 +344,8 @@ class DepositHistoryList extends StatelessWidget {
                             : null,
                         child: Center(
                             child: Text(
-                          "Check Explorer",
+                          "wallet_deposit_history.screen.button.check_explorer"
+                              .tr,
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w500,

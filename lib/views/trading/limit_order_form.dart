@@ -45,7 +45,8 @@ class LimitOrderForm extends StatelessWidget {
                             disabledBorder: InputBorder.none,
                             contentPadding: EdgeInsets.only(
                                 left: 15, bottom: 11, top: 11, right: 15),
-                            hintText: "Price"),
+                            hintText:
+                                "trading.screen.tab.limit.buy.field.price".tr),
                       ),
                     ),
                     GestureDetector(
@@ -87,7 +88,8 @@ class LimitOrderForm extends StatelessWidget {
                             disabledBorder: InputBorder.none,
                             contentPadding: EdgeInsets.only(
                                 left: 15, bottom: 11, top: 11, right: 15),
-                            hintText: "Amount"),
+                            hintText:
+                                "trading.screen.tab.limit.buy.field.amount".tr),
                       ),
                     ),
                     GestureDetector(
@@ -160,9 +162,11 @@ class LimitOrderForm extends StatelessWidget {
                             contentPadding: EdgeInsets.only(
                                 left: 15, bottom: 11, top: 11, right: 15),
                             hintText: formatedMarket.quoteUnit != null
-                                ? "Total( " +
-                                    formatedMarket.quoteUnit.toUpperCase() +
-                                    ")"
+                                ? "trading.screen.tab.limit.buy.field.total"
+                                    .trParams({
+                                    'currency':
+                                        formatedMarket.quoteUnit.toUpperCase()
+                                  })
                                 : ''),
                       ),
                     ),
@@ -179,7 +183,7 @@ class LimitOrderForm extends StatelessWidget {
                     padding: EdgeInsets.only(left: 4.0),
                     child: Center(
                       child: Text(
-                        'Avbl',
+                        'trading.screen.tab.limit.buy.available'.tr,
                         style: TextStyle(
                             fontSize: 10, fontWeight: FontWeight.w500),
                       ),
@@ -226,7 +230,7 @@ class LimitOrderForm extends StatelessWidget {
                     padding: EdgeInsets.only(left: 4.0),
                     child: Center(
                       child: Text(
-                        'Fee',
+                        'trading.screen.tab.limit.buy.fee'.tr,
                         style: TextStyle(
                             fontSize: 10, fontWeight: FontWeight.w500),
                       ),
@@ -281,7 +285,9 @@ class LimitOrderForm extends StatelessWidget {
                     child: Center(
                         child: Text(
                       formatedMarket.baseUnit != null
-                          ? "Buy " + formatedMarket.baseUnit.toUpperCase()
+                          ? "trading.screen.tab.limit.buy.button".trParams({
+                              'currency': formatedMarket.baseUnit.toUpperCase()
+                            })
                           : '',
                       style: TextStyle(
                           color: Colors.white,
@@ -338,7 +344,8 @@ class LimitOrderForm extends StatelessWidget {
                             disabledBorder: InputBorder.none,
                             contentPadding: EdgeInsets.only(
                                 left: 15, bottom: 11, top: 11, right: 15),
-                            hintText: "Price"),
+                            hintText:
+                                "trading.screen.tab.limit.sell.field.price".tr),
                       ),
                     ),
                     GestureDetector(
@@ -380,7 +387,9 @@ class LimitOrderForm extends StatelessWidget {
                             disabledBorder: InputBorder.none,
                             contentPadding: EdgeInsets.only(
                                 left: 15, bottom: 11, top: 11, right: 15),
-                            hintText: "Amount"),
+                            hintText:
+                                "trading.screen.tab.limit.sell.field.amount"
+                                    .tr),
                       ),
                     ),
                     GestureDetector(
@@ -454,9 +463,11 @@ class LimitOrderForm extends StatelessWidget {
                             contentPadding: EdgeInsets.only(
                                 left: 15, bottom: 11, top: 11, right: 15),
                             hintText: formatedMarket.baseUnit != null
-                                ? "Total (" +
-                                    formatedMarket.baseUnit.toUpperCase() +
-                                    ")"
+                                ? "trading.screen.tab.limit.sell.field.total"
+                                    .trParams({
+                                    'currency':
+                                        formatedMarket.quoteUnit.toUpperCase()
+                                  })
                                 : ''),
                       ),
                     ),
@@ -473,7 +484,7 @@ class LimitOrderForm extends StatelessWidget {
                     padding: EdgeInsets.only(left: 4.0),
                     child: Center(
                       child: Text(
-                        'Avbl',
+                        'trading.screen.tab.limit.sell.available'.tr,
                         style: TextStyle(
                             fontSize: 10, fontWeight: FontWeight.w500),
                       ),
@@ -519,7 +530,7 @@ class LimitOrderForm extends StatelessWidget {
                     padding: EdgeInsets.only(left: 4.0),
                     child: Center(
                       child: Text(
-                        'Fee',
+                        'trading.screen.tab.limit.sell.fee'.tr,
                         style: TextStyle(
                             fontSize: 10, fontWeight: FontWeight.w500),
                       ),
@@ -574,7 +585,9 @@ class LimitOrderForm extends StatelessWidget {
                     child: Center(
                         child: Text(
                       formatedMarket.baseUnit != null
-                          ? "Sell " + formatedMarket.baseUnit.toUpperCase()
+                          ? "trading.screen.tab.limit.buy.button".trParams({
+                              'currency': formatedMarket.baseUnit.toUpperCase()
+                            })
                           : '',
                       style: TextStyle(
                           color: Colors.white,

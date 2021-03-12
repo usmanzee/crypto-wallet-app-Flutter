@@ -27,16 +27,16 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final _withDrawAddressValidator = MultiValidator([
-    RequiredValidator(errorText: 'Withdrawl Address is required'),
+    RequiredValidator(
+        errorText: 'crypto_withdraw.screen.field.address.error'.tr),
   ]);
   final _withDrawTagValidator = MultiValidator([
-    RequiredValidator(errorText: 'Withdrawl Tag is required'),
+    RequiredValidator(errorText: 'crypto_withdraw.screen.field.tag.error'.tr),
   ]);
 
   final _twoFAValidator = MultiValidator([
-    RequiredValidator(errorText: '2FA code is required'),
     LengthRangeValidator(
-        min: 6, max: 6, errorText: 'Please enter a valid 2FA code')
+        min: 6, max: 6, errorText: 'crypto_withdraw.screen.field.2fa.error'.tr)
   ]);
 
   void isFormValid() {}
@@ -59,7 +59,7 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            'Withdraw',
+            'crypto_withdraw.screen.title'.tr,
             style: TextStyle(
                 color: Theme.of(context).textSelectionColor,
                 fontFamily: "Gotik",
@@ -130,7 +130,7 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "Withdrawal Address",
+                  "crypto_withdraw.screen.field.address".tr,
                   style: TextStyle(
                     color: Theme.of(context).hintColor.withOpacity(0.7),
                     fontFamily: "Popins",
@@ -150,14 +150,14 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
                         errorMaxLines: 3,
                         filled: true,
                         fillColor: Colors.transparent,
-                        labelText: 'Address',
+                        // labelText: 'Address',
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5))),
                   ),
                 ),
                 wallet.currency == 'xrp'
                     ? Text(
-                        "Withdrawal Tag",
+                        "crypto_withdraw.screen.field.tag".tr,
                         style: TextStyle(
                           color: Theme.of(context).hintColor.withOpacity(0.7),
                           fontFamily: "Popins",
@@ -179,14 +179,14 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
                               errorMaxLines: 3,
                               filled: true,
                               fillColor: Colors.transparent,
-                              labelText: 'Tag',
+                              // labelText: 'Tag',
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5))),
                         ),
                       )
                     : Container(width: 0, height: 0),
                 Text(
-                  "Withdrawal Amount",
+                  "crypto_withdraw.screen.field.amount".tr,
                   style: TextStyle(
                     color: Theme.of(context).hintColor.withOpacity(0.7),
                     fontFamily: "Popins",
@@ -201,7 +201,7 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
                       if (withdrawController.totalWithdrawlAmount.value >
                               double.parse(wallet.balance) ||
                           amount == '') {
-                        return 'Please enter a valid amount';
+                        return 'crypto_withdraw.screen.field.amount.error'.tr;
                       } else {
                         return null;
                       }
@@ -227,28 +227,12 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
                   ),
                 ),
                 Text(
-                  "2FA Code",
+                  "crypto_withdraw.screen.field.2fa".tr,
                   style: TextStyle(
                     color: Theme.of(context).hintColor.withOpacity(0.7),
                     fontFamily: "Popins",
                   ),
                 ),
-                // TextFormField(
-                //   obscureText: false,
-                //   keyboardType: TextInputType.number,
-                //   controller: withdrawController.withdrawOtpController,
-                //   validator: _twoFAValidator,
-                //   decoration: InputDecoration(
-                //       errorStyle: TextStyle(
-                //         fontSize: 13.5,
-                //       ),
-                //       errorMaxLines: 3,
-                //       filled: true,
-                //       fillColor: Colors.transparent,
-                //       labelText: '2FA',
-                //       border: OutlineInputBorder(
-                //           borderRadius: BorderRadius.circular(5))),
-                // ),
                 PinCodeTextField(
                   appContext: context,
                   pastedTextStyle: TextStyle(
@@ -299,7 +283,7 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "Fee",
+                      "crypto_withdraw.screen.fee".tr,
                       style: TextStyle(
                         color: Theme.of(context).hintColor.withOpacity(0.7),
                         fontSize: 14,
@@ -324,7 +308,7 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "Total Withdrawl Amount",
+                      "crypto_withdraw.screen.total_amount".tr,
                       style: TextStyle(
                         color: Theme.of(context).hintColor.withOpacity(0.7),
                         fontSize: 14,
@@ -359,7 +343,7 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        '* Do not withdraw directly to a crowdfund or ICO address, as your account will not be credited with tokens from such sales.',
+                        '* ' + 'crypto_withdraw.screen.instruction1'.tr,
                         style: TextStyle(
                           color: Theme.of(context).textSelectionColor,
                           fontSize: 12,
@@ -368,7 +352,7 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
                       ),
                       SizedBox(height: 8.0),
                       Text(
-                        '* When withdrawing to the B4U user\'s address, the handling fee will be returned to the Current Account by default.',
+                        '* ' + 'crypto_withdraw.screen.instruction2'.tr,
                         style: TextStyle(
                           color: Theme.of(context).textSelectionColor,
                           fontSize: 12,
@@ -393,7 +377,7 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
         width: double.infinity,
         color: Theme.of(context).primaryColor,
         textColor: Colors.white,
-        label: 'Withdraw',
+        label: 'crypto_withdraw.screen.button.withdraw'.tr,
         onPressed: () {
           _onWithdrawFormSubmit();
         },
@@ -425,7 +409,7 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
         ),
         Center(
           child: Text(
-            'Withdraw is disabled by the administration',
+            'crypto_withdraw.screen.withdraw_disabled'.tr,
             style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
           ),
         ),
@@ -450,7 +434,7 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
         ),
         Center(
           child: Text(
-            'To withdraw you have to enable 2FA',
+            'crypto_withdraw.screen.enable_2fa'.tr,
             style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
           ),
         ),
@@ -467,7 +451,7 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
           },
           child: Center(
               child: Text(
-            "Enable 2FA",
+            "crypto_withdraw.screen.button.enable_2fa".tr,
             style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w500,
@@ -497,7 +481,7 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
         ),
         Center(
           child: Text(
-            'To withdraw you have to confirm your account',
+            'crypto_withdraw.screen.confirm_account'.tr,
             style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
           ),
         ),
@@ -514,7 +498,7 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
           },
           child: Center(
               child: Text(
-            "Confirm Account",
+            "crypto_withdraw.screen.button.confirm_account".tr,
             style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w500,

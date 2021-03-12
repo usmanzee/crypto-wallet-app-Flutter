@@ -12,7 +12,7 @@ class ChangePassword extends StatelessWidget {
 
   final _passwordValidator = MultiValidator([
     PatternValidator(r'((?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*\W)\w.{6,18}\w)',
-        errorText: 'passwords must be 8 characters with uppercase letters')
+        errorText: 'change.password.screen.password.error'.tr)
   ]);
 
   _handleFormSubmit() async {
@@ -30,7 +30,7 @@ class ChangePassword extends StatelessWidget {
         brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
         centerTitle: true,
         title: Text(
-          'ChangePassword',
+          'change.password.screen.title'.tr,
           style: TextStyle(
               color: Theme.of(context).textSelectionColor,
               fontFamily: "Gotik",
@@ -65,7 +65,7 @@ class ChangePassword extends StatelessWidget {
                         validator: _passwordValidator,
                         controller:
                             _changePasswordController.oldPasswordTextController,
-                        label: 'Old Password',
+                        label: 'change.password.screen.field.old_password'.tr,
                         obscure: true,
                         keyboardType: TextInputType.emailAddress,
                         textAlign: TextAlign.start),
@@ -82,7 +82,7 @@ class ChangePassword extends StatelessWidget {
                         validator: _passwordValidator,
                         controller:
                             _changePasswordController.passwordTextController,
-                        label: 'New Password',
+                        label: 'change.password.screen.field.new_password'.tr,
                         obscure: true,
                         keyboardType: TextInputType.text,
                         textAlign: TextAlign.start),
@@ -98,13 +98,17 @@ class ChangePassword extends StatelessWidget {
                         ),
                         controller: _changePasswordController
                             .confirmPasswordTextController,
-                        validator: (val) =>
-                            MatchValidator(errorText: 'passwords do not match')
-                                .validateMatch(
-                                    val,
-                                    _changePasswordController
-                                        .passwordTextController.text),
-                        label: 'Confirm New Password',
+                        validator: (val) => MatchValidator(
+                                errorText:
+                                    'change.password.screen.password_confirm.error'
+                                        .tr)
+                            .validateMatch(
+                                val,
+                                _changePasswordController
+                                    .passwordTextController.text),
+                        label:
+                            'change.password.screen.field.confirm_new_password'
+                                .tr,
                         obscure: true,
                         keyboardType: TextInputType.text,
                         textAlign: TextAlign.start),
@@ -125,7 +129,7 @@ class ChangePassword extends StatelessWidget {
                         ),
                         child: Center(
                           child: Text(
-                            "Change",
+                            "change.password.screen.change".tr,
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w400,

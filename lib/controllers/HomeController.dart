@@ -57,13 +57,6 @@ class HomeController extends GetxController {
 
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
-  var onTapRecognizer;
-
-  TextEditingController textEditingController = TextEditingController();
-  // ..text = "123456";
-
-  StreamController<ErrorAnimationType> animationErrorController;
-
   @override
   void onInit() async {
     selectedNavIndex =
@@ -83,7 +76,6 @@ class HomeController extends GetxController {
 
   setValuesAfterLogin(bool isUserLoggedIn) {
     if (isUserLoggedIn) {
-      print('get token');
       getFirebaseToken();
     }
   }

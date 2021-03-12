@@ -27,20 +27,20 @@ class MarketList extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 0.0),
                 child: Container(
                     child: Text(
-                  "Pair",
+                  "markets.screen.column.pair".tr,
                   style: TextStyle(
                       color: Theme.of(context).hintColor, fontFamily: "Popins"),
                 )),
               ),
               Container(
                   child: Text(
-                "Last Price",
+                "markets.screen.column.last_price".tr,
                 style: TextStyle(
                     color: Theme.of(context).hintColor, fontFamily: "Popins"),
               )),
               Container(
                   child: Text(
-                "24h Chg%",
+                "markets.screen.column.24hr_change".tr,
                 style: TextStyle(
                     color: Theme.of(context).hintColor, fontFamily: "Popins"),
               )),
@@ -244,7 +244,9 @@ class MarketList extends StatelessWidget {
                               ],
                             ),
                             Text(
-                              'Vol ' + formatedMarket.volume.toStringAsFixed(2),
+                              'markets.screen.vol'.tr +
+                                  ' ' +
+                                  formatedMarket.volume.toStringAsFixed(2),
                               style: TextStyle(
                                   fontFamily: "Popins",
                                   fontSize: 10.5,
