@@ -19,7 +19,7 @@ class Verification extends StatelessWidget {
           brightness: Brightness.dark,
           centerTitle: true,
           title: Text(
-            'Verification',
+            'identification.screen.title'.tr,
             style: TextStyle(
                 color: Theme.of(context).textSelectionColor,
                 fontFamily: "Gotik",

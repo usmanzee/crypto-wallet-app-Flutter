@@ -12,7 +12,9 @@ class EnableOTP extends GetView<OTPController> {
 
   final _otpValidator = MultiValidator([
     LengthRangeValidator(
-        min: 6, max: 6, errorText: 'Please enter a valid 2FA code')
+        min: 6,
+        max: 6,
+        errorText: 'security_enable2fa.screen.step4.2fa.error'.tr)
   ]);
 
   @override
@@ -23,7 +25,7 @@ class EnableOTP extends GetView<OTPController> {
         brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
         centerTitle: true,
         title: Text(
-          'Two Factor Authentication',
+          'security_enable2fa.screen.title'.tr,
           style: TextStyle(
               color: Theme.of(context).textSelectionColor,
               fontFamily: "Gotik",
@@ -39,13 +41,10 @@ class EnableOTP extends GetView<OTPController> {
             physics: ClampingScrollPhysics(),
             steps: _myStep(context),
             currentStep: controller.currentStep,
-            onStepTapped: (step) {
-              // setState(() {
-              //   this._currentStep = step;
-              // });
-            },
+            onStepTapped: (step) {},
             controlsBuilder: _createEventControlBuilder,
             onStepContinue: () {
+              FocusScope.of(context).unfocus();
               if (controller.currentStep < this._myStep(context).length - 1) {
                 if (controller.currentStep == 2) {
                   final _formState = _secretFormKey.currentState;
@@ -88,7 +87,7 @@ class EnableOTP extends GetView<OTPController> {
             minWidth: 40.0,
             color: Theme.of(context).hintColor,
             child: Text(
-              "Back",
+              "security_enable2fa.screen.button.back".tr,
               style: TextStyle(fontSize: 10),
             ),
           ),
@@ -99,7 +98,7 @@ class EnableOTP extends GetView<OTPController> {
             color: Theme.of(context).primaryColor,
             textColor: Colors.white,
             child: Text(
-              "Next",
+              "security_enable2fa.screen.button.next".tr,
               style: TextStyle(fontSize: 10),
             ),
           ),
@@ -110,7 +109,7 @@ class EnableOTP extends GetView<OTPController> {
     List<Step> _steps = [
       Step(
           title: Text(
-            'Download & Install',
+            'security_enable2fa.screen.step1.title'.tr,
             style: TextStyle(
               fontFamily: 'popins',
               fontWeight: FontWeight.bold,
@@ -119,7 +118,7 @@ class EnableOTP extends GetView<OTPController> {
           content: Column(
             children: <Widget>[
               Text(
-                'Download and install Google Authenticator application from AppStore or Google play',
+                'security_enable2fa.screen.step1.desc'.tr,
                 style: TextStyle(
                   fontFamily: 'popins',
                   fontWeight: FontWeight.normal,
@@ -131,7 +130,7 @@ class EnableOTP extends GetView<OTPController> {
           state: StepState.indexed),
       Step(
           title: Text(
-            'Save The Scerect Key',
+            'security_enable2fa.screen.step2.title'.tr,
             style: TextStyle(
               fontFamily: 'popins',
               fontWeight: FontWeight.bold,
@@ -140,7 +139,7 @@ class EnableOTP extends GetView<OTPController> {
           content: Column(
             children: <Widget>[
               Text(
-                'Save this secret in a secure location. This code can be used to gain 2FA access from a different device',
+                'security_enable2fa.screen.step2.desc'.tr,
                 style: TextStyle(
                   fontFamily: 'popins',
                   fontWeight: FontWeight.normal,
@@ -167,7 +166,7 @@ class EnableOTP extends GetView<OTPController> {
                             fontSize: 16, fontWeight: FontWeight.w500),
                       ),
                       Text(
-                        'Copy Secret',
+                        'security_enable2fa.screen.step2.button.copy_secret'.tr,
                         style: TextStyle(
                             fontFamily: 'popins',
                             color: Theme.of(context).primaryColor,
@@ -184,7 +183,7 @@ class EnableOTP extends GetView<OTPController> {
           state: StepState.indexed),
       Step(
           title: Text(
-            'Verify The Secrect Key',
+            'security_enable2fa.screen.step3.title'.tr,
             style: TextStyle(
               fontFamily: 'popins',
               fontWeight: FontWeight.bold,
@@ -192,26 +191,23 @@ class EnableOTP extends GetView<OTPController> {
           ),
           content: Column(
             children: <Widget>[
-              // Text('Verify the secret key you saved in above step.'),
-              // SizedBox(
-              //   height: 8,
-              // ),
               Form(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 key: _secretFormKey,
                 child: Column(
                   children: <Widget>[
                     TextFormField(
-                      validator: (val) =>
-                          MatchValidator(errorText: 'Key did not match')
-                              .validateMatch(val, controller.secretKey.value),
+                      validator: (val) => MatchValidator(
+                              errorText:
+                                  'security_enable2fa.screen.step3.key.error'
+                                      .tr)
+                          .validateMatch(val, controller.secretKey.value),
                       obscureText: false,
                       keyboardType: TextInputType.emailAddress,
                       textAlign: TextAlign.start,
                       decoration: InputDecoration(
                           labelText:
-                              'Enter the 16-digit key you just backed up',
-                          hintText: '16 digit key'),
+                              'security_enable2fa.screen.step3.field.key'.tr),
                     ),
                   ],
                 ),
@@ -222,7 +218,7 @@ class EnableOTP extends GetView<OTPController> {
           state: StepState.indexed),
       Step(
           title: Text(
-            'Submit The Code From App',
+            'security_enable2fa.screen.step4.title'.tr,
             style: TextStyle(
               fontFamily: 'popins',
               fontWeight: FontWeight.bold,
@@ -232,7 +228,7 @@ class EnableOTP extends GetView<OTPController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                'Now create a new entry in your authenticator app with the saved secret key and verify the gererated code.',
+                'security_enable2fa.screen.step4.desc'.tr,
                 style: TextStyle(
                   fontFamily: 'popins',
                   fontWeight: FontWeight.normal,
@@ -253,8 +249,8 @@ class EnableOTP extends GetView<OTPController> {
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.start,
                       decoration: InputDecoration(
-                          labelText: 'Enter code from google authenticator app',
-                          hintText: 'Authenticator code'),
+                          labelText:
+                              'security_enable2fa.screen.step4.field.2fa'.tr),
                     ),
                   ],
                 ),

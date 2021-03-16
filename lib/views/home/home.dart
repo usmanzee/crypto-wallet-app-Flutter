@@ -256,7 +256,7 @@ class Home extends StatelessWidget {
                                               child: Text(
                                                 "home.screen.tabs.gainers".tr,
                                                 style: TextStyle(
-                                                    fontFamily: "Sans"),
+                                                    fontFamily: "Popins"),
                                               ),
                                             )
                                           ],
@@ -271,7 +271,7 @@ class Home extends StatelessWidget {
                                               child: Text(
                                                 "home.screen.tabs.losers".tr,
                                                 style: TextStyle(
-                                                    fontFamily: 'Sans'),
+                                                    fontFamily: 'Popins'),
                                               ),
                                             )
                                           ],
@@ -361,7 +361,7 @@ class Card extends StatelessWidget {
                       formatedMarket.name.toUpperCase(),
                       style: TextStyle(
                           color: Theme.of(context).textSelectionColor,
-                          fontFamily: "sans",
+                          fontFamily: "Popins",
                           fontWeight: FontWeight.w500,
                           fontSize: 14.0),
                     ),
@@ -520,7 +520,6 @@ Widget _loadingCardAnimation(BuildContext context) {
       primary: false,
       children: List.generate(
         4,
-        // (index) => CardLoading(listGridHome[index]),
         (index) => CardLoading(),
       ));
 }
@@ -583,7 +582,7 @@ Widget _linksCard(context, Widget icon, VoidCallback onPressed, String name) {
                   style: TextStyle(
                       color: Theme.of(context).textSelectionColor,
                       fontWeight: FontWeight.w600,
-                      fontFamily: "Sans"))
+                      fontFamily: "Popins"))
             ],
           ),
         ),

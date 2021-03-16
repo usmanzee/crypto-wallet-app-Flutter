@@ -63,7 +63,7 @@ class _DepositFiatState extends State<DepositFiat> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Deposit',
+          'fiat_deposit.screen.title'.tr,
           style: TextStyle(
               color: Theme.of(context).textSelectionColor,
               fontFamily: "Gotik",
@@ -76,13 +76,13 @@ class _DepositFiatState extends State<DepositFiat> {
         brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
         backgroundColor: Theme.of(context).canvasColor,
       ),
-      body: wallet.depositEnabled
-          ? Column(children: [
-              SearchHeader(
-                screenType: 'deposit',
-                wallet: wallet,
-              ),
-              Flexible(
+      body: Column(children: [
+        SearchHeader(
+          screenType: 'deposit',
+          wallet: wallet,
+        ),
+        wallet.depositEnabled
+            ? Flexible(
                 child: Container(
                     padding: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
                     child: ListView(
@@ -93,7 +93,7 @@ class _DepositFiatState extends State<DepositFiat> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text('Deposit using bank transfer',
+                              Text('fiat_deposit.screen.sub_title'.tr,
                                   style: TextStyle(
                                       fontSize: 18.5,
                                       fontFamily: 'Popins',
@@ -101,8 +101,7 @@ class _DepositFiatState extends State<DepositFiat> {
                               SizedBox(
                                 height: 8.0,
                               ),
-                              Text(
-                                  'Please use the following credentials to initiate your bank transfer. Your deposit will be reflected in your account in minimum 2 hours.',
+                              Text('fiat_deposit.screen.desc'.tr,
                                   style: TextStyle(
                                       fontSize: 14.5,
                                       fontFamily: 'Popins',
@@ -146,7 +145,9 @@ class _DepositFiatState extends State<DepositFiat> {
                                                     padding: EdgeInsets.only(
                                                         left: 8.0),
                                                     child: Text(
-                                                      'PLEASE USE THE BELOW REFERENCE CODE IN YOUR PAYMENT REFERENCE.',
+                                                      'fiat_deposit.screen.reference_code.instruction'
+                                                          .tr
+                                                          .toUpperCase(),
                                                       style: TextStyle(
                                                         color: Theme.of(context)
                                                             .errorColor,
@@ -163,7 +164,8 @@ class _DepositFiatState extends State<DepositFiat> {
                                           Row(
                                             children: <Widget>[
                                               Text(
-                                                "Reference code",
+                                                "fiat_deposit.screen.reference_code"
+                                                    .tr,
                                                 style: TextStyle(
                                                     color: Theme.of(context)
                                                         .hintColor
@@ -284,7 +286,9 @@ class _DepositFiatState extends State<DepositFiat> {
                                                                 1;
                                                         return Tab(
                                                           child: Text(
-                                                              'Bank $index',
+                                                              'fiat_deposit.screen.bank'
+                                                                      .tr +
+                                                                  ' $index',
                                                               style: TextStyle(
                                                                   color: Theme.of(
                                                                           context)
@@ -377,9 +381,9 @@ class _DepositFiatState extends State<DepositFiat> {
                           ),
                       ],
                     )),
-              ),
-            ])
-          : _depositDisabled(context),
+              )
+            : _depositDisabled(context),
+      ]),
     );
   }
 }
@@ -388,9 +392,6 @@ Widget _depositDisabled(context) {
   return Container(
     padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
     width: double.infinity,
-    decoration: BoxDecoration(
-        color: Theme.of(context).canvasColor,
-        borderRadius: BorderRadius.all(Radius.circular(10.0))),
     child: Column(children: <Widget>[
       SizedBox(
         height: 16.0,

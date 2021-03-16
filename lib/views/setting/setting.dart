@@ -139,7 +139,9 @@ class Setting extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.only(left: 4.0),
                               child: Text(
-                                'Login/Register',
+                                'account.screen.login_register'.tr,
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: true,
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w300,
@@ -230,21 +232,17 @@ class Setting extends StatelessWidget {
                           "account.screen.security".tr))
                   : Container();
             }),
-            Obx(() {
-              return (homeController.isLoggedIn.value)
-                  ? InkWell(
-                      onTap: () {
-                        showLanguages(context);
-                      },
-                      child: listSetting(
-                          context,
-                          Icon(
-                            Icons.language,
-                            size: 20.0,
-                          ),
-                          "account.screen.languages".tr))
-                  : Container();
-            }),
+            InkWell(
+                onTap: () {
+                  showLanguages(context);
+                },
+                child: listSetting(
+                    context,
+                    Icon(
+                      Icons.language,
+                      size: 20.0,
+                    ),
+                    "account.screen.languages".tr)),
             InkWell(
                 onTap: () {
                   Get.to(WebViewContainer('Help/Support',
@@ -378,6 +376,7 @@ class Setting extends StatelessWidget {
                 itemBuilder: (context, index) => InkWell(
                   onTap: () {
                     Get.updateLocale(languages[index]['locale']);
+                    Get.back();
                   },
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 8),
@@ -405,51 +404,5 @@ class Setting extends StatelessWidget {
             ),
           );
         });
-    // showDialog(
-    //     context: context,
-    //     builder: (BuildContext bc) {
-    //       return AlertDialog(
-    //         title: Text('Select Language'),
-    //         content: Padding(
-    //           padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
-    //           child: Column(
-    //             children: <Widget>[
-    //               Row(
-    //                 mainAxisAlignment: MainAxisAlignment.center,
-    //                 children: [
-    //                   Text(
-    //                     'Select Language',
-    //                     style: TextStyle(
-    //                       fontFamily: "Sans",
-    //                       fontWeight: FontWeight.w800,
-    //                       fontSize: 20.0,
-    //                       letterSpacing: 1.5,
-    //                     ),
-    //                   )
-    //                 ],
-    //               ),
-    //               SizedBox(
-    //                 height: 16,
-    //               ),
-    //               ListView(
-    //                 shrinkWrap: true,
-    //                 padding: const EdgeInsets.all(8),
-    //                 children: new List.generate(
-    //                   languages.length,
-    //                   (index) => InkWell(
-    //                     onTap: () {
-    //                       Get.updateLocale(languages[index]['local']);
-    //                     },
-    //                     child: new ListTile(
-    //                       title: Text(languages[index]['name']),
-    //                     ),
-    //                   ),
-    //                 ),
-    //               ),
-    //             ],
-    //           ),
-    //         ),
-    //       );
-    //     });
   }
 }

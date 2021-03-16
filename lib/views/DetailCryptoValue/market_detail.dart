@@ -14,6 +14,7 @@ class MarketDetail extends StatelessWidget {
   final MarketDetailController controller = Get.find<MarketDetailController>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController1 = ScrollController();
   final MarketController marketController = Get.find();
   final HomeController homeController = Get.find();
 
@@ -22,8 +23,6 @@ class MarketDetail extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: controller.refreshPage,
       child: Obx(() {
-        // final FormatedMarket formatedMarket =
-        //     marketController.selectedMarket.value;
         return Scaffold(
           key: _scaffoldKey,
           appBar: AppBar(
@@ -120,16 +119,16 @@ class MarketDetail extends StatelessWidget {
                                 tabs: [
                                   new Tab(
                                     child: Text(
-                                      "Line",
+                                      "market_detail.tabs.line".tr,
                                       style: TextStyle(
-                                          fontFamily: "Sans", fontSize: 14),
+                                          fontFamily: "Popins", fontSize: 14),
                                     ),
                                   ),
                                   new Tab(
                                     child: Text(
-                                      "Depth",
+                                      "market_detail.tabs.depth".tr,
                                       style: TextStyle(
-                                          fontFamily: "Sans", fontSize: 14),
+                                          fontFamily: "Popins", fontSize: 14),
                                     ),
                                   )
                                 ],
@@ -199,7 +198,7 @@ class MarketDetail extends StatelessWidget {
                           color: Theme.of(context).hintColor.withOpacity(0.1)),
                     ),
                     Container(
-                      height: 250.0,
+                      height: 240.0,
                       padding: EdgeInsets.fromLTRB(8, 0, 0, 8),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -207,7 +206,7 @@ class MarketDetail extends StatelessWidget {
                         children: <Widget>[
                           SizedBox(height: 8.0),
                           Text(
-                            'Order Book',
+                            'market_detail.order_book'.tr,
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
@@ -287,7 +286,7 @@ class MarketDetail extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "High",
+                            "market_detail.screen.high".tr,
                             style: TextStyle(
                                 color: Theme.of(context).hintColor,
                                 fontFamily: "Popins",
@@ -308,7 +307,7 @@ class MarketDetail extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Low",
+                            "market_detail.screen.high".tr,
                             style: TextStyle(
                                 color: Theme.of(context).hintColor,
                                 fontFamily: "Popins",
@@ -330,7 +329,7 @@ class MarketDetail extends StatelessWidget {
               children: <Widget>[
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text(
-                    "24h",
+                    "market_detail.screen.24hr".tr,
                     style: TextStyle(
                         color: Theme.of(context).hintColor,
                         fontFamily: "Popins",
@@ -405,8 +404,9 @@ class MarketDetail extends StatelessWidget {
   Widget buildGraphTypeButtons(context) {
     return Scrollbar(
       isAlwaysShown: true,
-      controller: _scrollController,
+      controller: _scrollController1,
       child: ListView(
+        controller: _scrollController1,
         scrollDirection: Axis.horizontal,
         children: <Widget>[
           // button(context, "Time sharing",
@@ -482,7 +482,7 @@ Widget _buttonBottom(context, FormatedMarket formatedMarket) {
               },
               child: Center(
                   child: Text(
-                "Buy",
+                "market_detail.button.buy".tr,
                 style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w500,
@@ -510,7 +510,7 @@ Widget _buttonBottom(context, FormatedMarket formatedMarket) {
               },
               child: Center(
                   child: Text(
-                "Sell",
+                "market_detail.button.sell".tr,
                 style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w500,

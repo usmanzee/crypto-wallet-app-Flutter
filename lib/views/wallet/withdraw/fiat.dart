@@ -29,12 +29,12 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final _twoFAValidator = MultiValidator([
-    RequiredValidator(errorText: '2FA code is required'),
     LengthRangeValidator(
-        min: 6, max: 6, errorText: 'Please enter a valid 2FA code')
+        min: 6, max: 6, errorText: 'fiat_withdraw.screen.field.2fa.error'.tr)
   ]);
   final _beneficiaryValidator = MultiValidator([
-    RequiredValidator(errorText: 'Beneficiary is required'),
+    RequiredValidator(
+        errorText: 'fiat_withdraw.screen.field.beneficiary.error'.tr),
   ]);
 
   void isFormValid() {}
@@ -50,7 +50,6 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
   @override
   void initState() {
     withdrawController = Get.put(FiatWithdrawController(wallet: wallet));
-    print('widget init');
     super.initState();
   }
 
@@ -58,7 +57,7 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Withdraw',
+          'fiat_withdraw.screen.title'.tr,
           style: TextStyle(
               color: Theme.of(context).textSelectionColor,
               fontFamily: "Gotik",
@@ -132,7 +131,7 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
                         width: 40.0,
                         color: Theme.of(context).accentColor,
                         textColor: Colors.white,
-                        label: 'Add Beneficiary',
+                        label: 'fiat_withdraw.screen.button.add_beneficiary'.tr,
                         onPressed: () {
                           Get.to(AddBeneficiary(wallet: wallet));
                         },
@@ -146,7 +145,7 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Select Beneficiary",
+                                "fiat_withdraw.screen.field.beneficiary".tr,
                                 style: TextStyle(
                                   color: Theme.of(context)
                                       .hintColor
@@ -164,7 +163,6 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
                                           errorStyle: TextStyle(
                                               color: Colors.redAccent,
                                               fontSize: 16.0),
-                                          hintText: 'Please select beneficiary',
                                           border: OutlineInputBorder(
                                               borderRadius:
                                                   BorderRadius.circular(5.0))),
@@ -210,7 +208,7 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
                       else
                         Container(),
                       Text(
-                        "Withdrawal Amount",
+                        "fiat_withdraw.screen.field.amount".tr,
                         style: TextStyle(
                           color: Theme.of(context).hintColor.withOpacity(0.7),
                           fontFamily: "Popins",
@@ -225,7 +223,8 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
                             if (withdrawController.totalWithdrawlAmount.value >
                                     double.parse(wallet.balance) ||
                                 amount == '') {
-                              return 'Please enter a valid amount';
+                              return 'fiat_withdraw.screen.field.amount.error'
+                                  .tr;
                             } else {
                               return null;
                             }
@@ -247,34 +246,17 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
                               errorMaxLines: 3,
                               filled: true,
                               fillColor: Colors.transparent,
-                              // labelText: 'Amount',
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5))),
                         ),
                       ),
                       Text(
-                        "2FA Code",
+                        "fiat_withdraw.screen.field.2fa".tr,
                         style: TextStyle(
                           color: Theme.of(context).hintColor.withOpacity(0.7),
                           fontFamily: "Popins",
                         ),
                       ),
-                      // TextFormField(
-                      //   obscureText: false,
-                      //   keyboardType: TextInputType.number,
-                      //   controller: withdrawController.withdrawOtpController,
-                      //   validator: _twoFAValidator,
-                      //   decoration: InputDecoration(
-                      //       errorStyle: TextStyle(
-                      //         fontSize: 13.5,
-                      //       ),
-                      //       errorMaxLines: 3,
-                      //       filled: true,
-                      //       fillColor: Colors.transparent,
-                      //       labelText: '2FA',
-                      //       border: OutlineInputBorder(
-                      //           borderRadius: BorderRadius.circular(5))),
-                      // ),
                       PinCodeTextField(
                         appContext: context,
                         pastedTextStyle: TextStyle(
@@ -324,7 +306,7 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text(
-                                  "Fee",
+                                  "fiat_withdraw.screen.fee".tr,
                                   style: TextStyle(
                                     color: Theme.of(context)
                                         .hintColor
@@ -353,7 +335,7 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text(
-                                  "Total Withdrawl Amount",
+                                  "fiat_withdraw.screen.total_amount".tr,
                                   style: TextStyle(
                                     color: Theme.of(context)
                                         .hintColor
@@ -387,25 +369,6 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
                           ],
                         ),
                       ),
-                      // SizedBox(
-                      //   height: 16.0,
-                      // ),
-                      // SizedBox(
-                      //   height: 20.0,
-                      // ),
-                      // CustomButton(
-                      //   height: 50.0,
-                      //   width: double.infinity,
-                      //   color: Theme.of(context).primaryColor,
-                      //   textColor: Colors.white,
-                      //   label: 'Withdraw',
-                      //   onPressed: () {
-                      //     _onWithdrawFormSubmit();
-                      //   },
-                      //   splashColor:
-                      //       Theme.of(context).primaryColor.withOpacity(0.5),
-                      //   disabled: false,
-                      // ),
                     ]),
               )
             : _withDdrawDisabled(context);
@@ -423,7 +386,7 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
           width: double.infinity,
           color: Theme.of(context).primaryColor,
           textColor: Colors.white,
-          label: 'Withdraw',
+          label: 'fiat_withdraw.screen.button.withdraw'.tr,
           onPressed: () {
             _onWithdrawFormSubmit();
           },
@@ -438,9 +401,6 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
     return Container(
       padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
       width: double.infinity,
-      decoration: BoxDecoration(
-          color: Theme.of(context).canvasColor,
-          borderRadius: BorderRadius.all(Radius.circular(10.0))),
       child: Column(children: <Widget>[
         SizedBox(
           height: 16.0,
@@ -456,7 +416,7 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
         ),
         Center(
           child: Text(
-            'Withdraw is disabled by the administration',
+            'fiat_withdraw.screen.withdraw_disabled'.tr,
             style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
           ),
         ),
@@ -470,18 +430,14 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
   Widget _accountNotConfirmed(context) {
     return Container(
       padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
-      // height: 125.0,
       width: double.infinity,
-      decoration: BoxDecoration(
-          color: Theme.of(context).canvasColor,
-          borderRadius: BorderRadius.all(Radius.circular(10.0))),
       child: Column(children: <Widget>[
         SizedBox(
           height: 16.0,
         ),
         Center(
           child: Text(
-            'To withdraw you have to confirm your account',
+            'fiat_withdraw.screen.confirm_account'.tr,
             style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
           ),
         ),
@@ -498,7 +454,7 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
           },
           child: Center(
               child: Text(
-            "Confirm Account",
+            "fiat_withdraw.screen.button.confirm_account".tr,
             style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w500,
@@ -517,18 +473,14 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
   Widget _otpDisabled(context) {
     return Container(
       padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
-      // height: 125.0,
       width: double.infinity,
-      decoration: BoxDecoration(
-          color: Theme.of(context).canvasColor,
-          borderRadius: BorderRadius.all(Radius.circular(10.0))),
       child: Column(children: <Widget>[
         SizedBox(
           height: 16.0,
         ),
         Center(
           child: Text(
-            'To withdraw you have to enable 2FA',
+            'fiat_withdraw.screen.enable_2fa'.tr,
             style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
           ),
         ),
@@ -545,7 +497,7 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
           },
           child: Center(
               child: Text(
-            "Enable 2FA",
+            "fiat_withdraw.screen.button.enable_2fa".tr,
             style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w500,

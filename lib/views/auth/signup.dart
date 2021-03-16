@@ -15,12 +15,12 @@ class SignUp extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final emailValidator = MultiValidator([
-    EmailValidator(errorText: 'Please type a valid email'),
+    EmailValidator(errorText: 'register.screen.email.error'.tr),
   ]);
 
   final _passwordValidator = MultiValidator([
     PatternValidator(r'((?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*\W)\w.{6,18}\w)',
-        errorText: 'passwords must be 8 characters with uppercase letters')
+        errorText: 'register.screen.password.error'.tr)
   ]);
 
   _onSignFormSubmit() async {
@@ -67,19 +67,6 @@ class SignUp extends StatelessWidget {
                           children: <Widget>[
                             Image.asset("assets/image/b4u_wallet_logo.png",
                                 height: 50.0),
-                            // Padding(
-                            //   padding:
-                            //       const EdgeInsets.only(left: 17.0, top: 7.0),
-                            //   child: Text(
-                            //     "Crypto",
-                            //     style: TextStyle(
-                            //         fontFamily: "Sans",
-                            //         color: Colors.white,
-                            //         fontSize: 27.0,
-                            //         fontWeight: FontWeight.w300,
-                            //         letterSpacing: 3.5),
-                            //   ),
-                            // ),
                           ],
                         ),
                       ),
@@ -95,7 +82,7 @@ class SignUp extends StatelessWidget {
                             validator: emailValidator,
                             // onChanged: (input) => _email = input,
                             controller: _registerController.emailTextController,
-                            label: 'Email',
+                            label: 'register.screen.field.email'.tr,
                             obscure: false,
                             keyboardType: TextInputType.emailAddress,
                             textAlign: TextAlign.start),
@@ -113,7 +100,7 @@ class SignUp extends StatelessWidget {
                             // onChanged: (input) => _password = input,
                             controller:
                                 _registerController.passwordTextController,
-                            label: 'Password',
+                            label: 'register.screen.field.password'.tr,
                             obscure: true,
                             keyboardType: TextInputType.text,
                             textAlign: TextAlign.start),
@@ -130,13 +117,15 @@ class SignUp extends StatelessWidget {
                             controller: _registerController
                                 .confirmPasswordTextController,
                             validator: (val) => MatchValidator(
-                                    errorText: 'passwords do not match')
+                                    errorText:
+                                        'register.screen.confirm_password.error'
+                                            .tr)
                                 .validateMatch(
                                     val,
                                     _registerController
                                         .passwordTextController.text),
                             // onChanged: (input) => _confirmPassword = input,
-                            label: 'Confirm Password',
+                            label: 'register.screen.field.confirm_password'.tr,
                             obscure: true,
                             keyboardType: TextInputType.text,
                             textAlign: TextAlign.start),
@@ -153,7 +142,7 @@ class SignUp extends StatelessWidget {
                             // onChanged: (input) => _referralCode = input,
                             controller:
                                 _registerController.referralCodeController,
-                            label: 'Referral Code',
+                            label: 'register.screen.field.referral_code'.tr,
                             obscure: false,
                             keyboardType: TextInputType.text,
                             textAlign: TextAlign.start),
@@ -176,7 +165,7 @@ class SignUp extends StatelessWidget {
                             ),
                             child: Center(
                               child: Text(
-                                "Register",
+                                "register.screen.button.register".tr,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w400,
@@ -209,7 +198,7 @@ class SignUp extends StatelessWidget {
                             ),
                             child: Center(
                               child: Text(
-                                "Sign In",
+                                "register.screen.button.login".tr,
                                 style: TextStyle(
                                     color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.w400,

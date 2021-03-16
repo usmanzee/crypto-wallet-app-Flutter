@@ -30,8 +30,7 @@ class ForgetPasswordController extends GetxController {
       Get.back();
       // emailTextController.clear();
       snackbarController = new SnackbarController(
-          title: 'Success',
-          message: 'Password reset link has been sent to your email');
+          title: 'Success', message: 'success.password.forgot'.tr);
       snackbarController.showSnackbar();
     } catch (error) {
       Get.back();

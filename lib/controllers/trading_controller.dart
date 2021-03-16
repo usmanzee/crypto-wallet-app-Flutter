@@ -661,7 +661,7 @@ class TradingController extends GetxController {
       Get.back();
       resetLimitOrderForm();
       snackbarController = new SnackbarController(
-          title: 'Success', message: 'success.order.created');
+          title: 'Success', message: 'success.order.created'.tr);
       snackbarController.showSnackbar();
     } catch (error) {
       Get.back();
@@ -692,7 +692,7 @@ class TradingController extends GetxController {
       Get.back();
       resetLimitOrderForm();
       snackbarController = new SnackbarController(
-          title: 'Success', message: 'success.order.created');
+          title: 'Success', message: 'success.order.created'.tr);
     } catch (error) {
       Get.back();
       errorController.handleError(error);
@@ -740,7 +740,7 @@ class TradingController extends GetxController {
       Get.back();
       resetMarketOrderForm();
       snackbarController = new SnackbarController(
-          title: 'Success', message: 'success.order.created');
+          title: 'Success', message: 'success.order.created'.tr);
     } catch (error) {
       Get.back();
       errorController.handleError(error);
@@ -769,7 +769,7 @@ class TradingController extends GetxController {
       Get.back();
       resetMarketOrderForm();
       snackbarController = new SnackbarController(
-          title: 'Success', message: 'success.order.created');
+          title: 'Success', message: 'success.order.created'.tr);
     } catch (error) {
       Get.back();
       errorController.handleError(error);

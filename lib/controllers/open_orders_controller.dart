@@ -101,7 +101,7 @@ class OpenOrdersController extends GetxController {
         }
         Get.back();
         snackbarController = new SnackbarController(
-            title: 'Success', message: 'success.order.cancelling.all');
+            title: 'Success', message: 'success.order.cancelling.all'.tr);
       } else {
         var cancelOrderResponse =
             await _openOrdersRepository.cancelOpenOrder(orderId, reqObj);
@@ -115,7 +115,7 @@ class OpenOrdersController extends GetxController {
         }
         Get.back();
         snackbarController = new SnackbarController(
-            title: 'Success', message: 'success.order.cancelling');
+            title: 'Success', message: 'success.order.cancelling'.tr);
       }
       snackbarController.showSnackbar();
     } catch (error) {
@@ -151,18 +151,18 @@ class OpenOrdersController extends GetxController {
             });
             if (index == -1) {
               snackbarController = new SnackbarController(
-                  title: 'Success', message: 'success.order.created');
+                  title: 'Success', message: 'success.order.created'.tr);
               snackbarController.showSnackbar();
             }
             break;
           case 'done':
             snackbarController = new SnackbarController(
-                title: 'Success', message: 'success.order.done');
+                title: 'Success', message: 'success.order.done'.tr);
             snackbarController.showSnackbar();
             break;
           case 'reject':
             snackbarController = new SnackbarController(
-                title: 'Error', message: 'error.order.rejected');
+                title: 'Error', message: 'error.order.rejected'.tr);
             snackbarController.showSnackbar();
             break;
           default:

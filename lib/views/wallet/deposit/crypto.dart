@@ -200,9 +200,6 @@ class _WalletState extends State<DepositCrypto> {
     return Container(
       padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
       width: double.infinity,
-      decoration: BoxDecoration(
-          color: Theme.of(context).canvasColor,
-          borderRadius: BorderRadius.all(Radius.circular(10.0))),
       child: Column(children: <Widget>[
         SizedBox(
           height: 16.0,

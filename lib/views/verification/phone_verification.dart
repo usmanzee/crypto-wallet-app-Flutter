@@ -10,9 +10,8 @@ class PhoneVerification extends StatelessWidget {
   final VerificationController verificationController = Get.find();
 
   final _pinCodeValidator = MultiValidator([
-    RequiredValidator(errorText: 'Pin code is required'),
     LengthRangeValidator(
-        min: 5, max: 5, errorText: 'Please enter a valid pin code')
+        min: 5, max: 5, errorText: 'identification.screen.phone.pin.error'.tr)
   ]);
   void sendPhoneVerificationCode() {
     final _formState = _phoneFormKey.currentState;
@@ -47,7 +46,7 @@ class PhoneVerification extends StatelessWidget {
                   //   border: Border.all(color: Theme.of(context).hintColor, width: 1),
                   // ),
                   decoration: InputDecoration(
-                    labelText: 'Phone Number',
+                    labelText: 'identification.screen.phone.field.phone'.tr,
                     // border: OutlineInputBorder(
                     //   borderSide: BorderSide(),
                     // ),
@@ -63,7 +62,12 @@ class PhoneVerification extends StatelessWidget {
                 ),
                 MaterialButton(
                   minWidth: double.infinity,
-                  child: Text('Send Verification Code'),
+                  child: Text(
+                    'identification.screen.phone.button.send_code'.tr,
+                    style: TextStyle(
+                      fontFamily: 'Popins',
+                    ),
+                  ),
                   color: Theme.of(context).primaryColor,
                   textColor: Colors.white,
                   onPressed: () {
@@ -79,7 +83,7 @@ class PhoneVerification extends StatelessWidget {
             Column(
               children: [
                 Center(
-                  child: Text('Alert',
+                  child: Text('identification.screen.phone.alert'.tr,
                       style: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.bold,
@@ -91,7 +95,7 @@ class PhoneVerification extends StatelessWidget {
                   height: 8,
                 ),
                 Center(
-                  child: Text('A pin has been sent to your phone number',
+                  child: Text('identification.screen.phone.alert.desc'.tr,
                       style: TextStyle(
                           color: Theme.of(context).hintColor,
                           fontFamily: "Popins",
@@ -135,7 +139,7 @@ class PhoneVerification extends StatelessWidget {
                           errorMaxLines: 3,
                           filled: true,
                           fillColor: Colors.transparent,
-                          labelText: 'Pin Code',
+                          labelText: 'identification.screen.phone.field.pin'.tr,
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5))),
                     ),
@@ -147,7 +151,8 @@ class PhoneVerification extends StatelessWidget {
                       children: [
                         Text(
                             verificationController.codeCountDown.toString() +
-                                ' Secs',
+                                ' ' +
+                                'identification.screen.phone.secs'.tr,
                             style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.bold,
@@ -159,7 +164,7 @@ class PhoneVerification extends StatelessWidget {
                           minWidth: 120.0,
                           textColor: Theme.of(context).accentColor,
                           child: Text(
-                            "Resend Code",
+                            "identification.screen.phone.button.resend".tr,
                             style: TextStyle(fontSize: 12),
                           ),
                           onPressed: () {
@@ -181,7 +186,7 @@ class PhoneVerification extends StatelessWidget {
                 }),
                 MaterialButton(
                   minWidth: double.infinity,
-                  child: Text('Verify'),
+                  child: Text('identification.screen.phone.button.verify'.tr),
                   color: Theme.of(context).primaryColor,
                   textColor: Colors.white,
                   onPressed: () {

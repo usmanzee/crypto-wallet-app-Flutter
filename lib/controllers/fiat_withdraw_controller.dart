@@ -87,7 +87,7 @@ class FiatWithdrawController extends GetxController {
       withdrawingFiat(false);
       Get.back();
       snackbarController = new SnackbarController(
-          title: 'Success', message: 'success.withdraw.action');
+          title: 'Success', message: 'success.withdraw.action'.tr);
       snackbarController.showSnackbar();
     } catch (error) {
       withdrawingFiat(false);

@@ -36,7 +36,7 @@ class ChangePasswordController extends GetxController {
       Get.back();
       Get.back();
       snackbarController = new SnackbarController(
-          title: 'Success', message: 'success.password.forgot');
+          title: 'Success', message: 'success.password.forgot'.tr);
       snackbarController.showSnackbar();
     } catch (error) {
       Get.back();

@@ -76,7 +76,7 @@ class BeneficiaryController extends GetxController {
       Get.back();
       Get.back();
       snackbarController = new SnackbarController(
-          title: 'Success', message: 'success.beneficiaries.created');
+          title: 'Success', message: 'success.beneficiaries.created'.tr);
       snackbarController.showSnackbar();
     } catch (error) {
       Get.back();

@@ -22,7 +22,7 @@ class _AddBeneficiaryState extends State<AddBeneficiary> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final requiredValidator =
-      RequiredValidator(errorText: 'this field is required');
+      RequiredValidator(errorText: 'beneficiary.screen.required_error'.tr);
 
   @override
   void initState() {
@@ -34,10 +34,7 @@ class _AddBeneficiaryState extends State<AddBeneficiary> {
     final _formState = _formKey.currentState;
     if (_formState.validate()) {
       _formState.save();
-      print('if');
       beneficiaryController.addBeneficiary();
-    } else {
-      print('else');
     }
   }
 
@@ -47,7 +44,7 @@ class _AddBeneficiaryState extends State<AddBeneficiary> {
         brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
         centerTitle: true,
         title: Text(
-          'Add Beneficiary',
+          'beneficiary.screen.title'.tr,
           style: TextStyle(
               color: Theme.of(context).textSelectionColor,
               fontFamily: "Gotik",
@@ -75,7 +72,7 @@ class _AddBeneficiaryState extends State<AddBeneficiary> {
                         validator: requiredValidator,
                         controller:
                             beneficiaryController.fullNameTextController,
-                        label: 'Full Name',
+                        label: 'beneficiary.screen.field.full_name'.tr,
                         obscure: false,
                         keyboardType: TextInputType.text,
                         textAlign: TextAlign.start),
@@ -87,7 +84,7 @@ class _AddBeneficiaryState extends State<AddBeneficiary> {
                         controller:
                             beneficiaryController.accountNumberTextController,
                         validator: requiredValidator,
-                        label: 'Account Number',
+                        label: 'beneficiary.screen.field.account_number'.tr,
                         obscure: false,
                         keyboardType: TextInputType.text,
                         textAlign: TextAlign.start),
@@ -99,7 +96,7 @@ class _AddBeneficiaryState extends State<AddBeneficiary> {
                         controller:
                             beneficiaryController.bankNameTextController,
                         validator: requiredValidator,
-                        label: 'Bank Name',
+                        label: 'beneficiary.screen.field.bank_name'.tr,
                         obscure: false,
                         keyboardType: TextInputType.text,
                         textAlign: TextAlign.start),
@@ -110,7 +107,7 @@ class _AddBeneficiaryState extends State<AddBeneficiary> {
                     child: CustomTextField(
                         controller:
                             beneficiaryController.bankSwiftCodeTextController,
-                        label: 'Bank Swift Code (optional)',
+                        label: 'beneficiary.screen.field.bank_swift_code'.tr,
                         obscure: false,
                         keyboardType: TextInputType.text,
                         textAlign: TextAlign.start),
@@ -121,7 +118,7 @@ class _AddBeneficiaryState extends State<AddBeneficiary> {
                     child: CustomTextField(
                         controller: beneficiaryController
                             .intermediaryBankNameTextController,
-                        label: 'Intermediary Bank Name (optional)',
+                        label: 'beneficiary.screen.field.bank_inter_name'.tr,
                         obscure: false,
                         keyboardType: TextInputType.text,
                         textAlign: TextAlign.start),
@@ -132,7 +129,8 @@ class _AddBeneficiaryState extends State<AddBeneficiary> {
                     child: CustomTextField(
                         controller: beneficiaryController
                             .intermediaryBankSwiftCodeTextController,
-                        label: 'Intermediary Bank Swift Code (optional)',
+                        label:
+                            'beneficiary.screen.field.bank_inter_swift_code'.tr,
                         obscure: false,
                         keyboardType: TextInputType.text,
                         textAlign: TextAlign.start),
@@ -146,7 +144,7 @@ class _AddBeneficiaryState extends State<AddBeneficiary> {
                         maxLength: 50,
                         controller:
                             beneficiaryController.descriptionTextController,
-                        label: 'Description',
+                        label: 'beneficiary.screen.field.bank_inter_desc'.tr,
                         obscure: false,
                         keyboardType: TextInputType.multiline,
                         textAlign: TextAlign.start),
@@ -167,7 +165,7 @@ class _AddBeneficiaryState extends State<AddBeneficiary> {
                         ),
                         child: Center(
                           child: Text(
-                            "Submit",
+                            "beneficiary.screen.button.submit".tr,
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w400,

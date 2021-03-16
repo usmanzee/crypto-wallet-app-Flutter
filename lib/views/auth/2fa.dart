@@ -15,7 +15,7 @@ class TwoFA extends StatelessWidget {
 
   final _twoFAValidator = MultiValidator([
     LengthRangeValidator(
-        min: 6, max: 6, errorText: 'Please enter a valid 2FA code')
+        min: 6, max: 6, errorText: '2fa_login.screen.email.error'.tr)
   ]);
 
   _onLoginFormSubmit() {
@@ -51,8 +51,6 @@ class TwoFA extends StatelessWidget {
                 width: double.infinity,
                 child: SingleChildScrollView(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Padding(
                         padding:
@@ -68,41 +66,60 @@ class TwoFA extends StatelessWidget {
                       Padding(
                           padding: const EdgeInsets.only(
                               left: 16.0, right: 16.0, top: 40.0),
-                          child: PinCodeTextField(
-                            appContext: context,
-                            pastedTextStyle: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            length: 6,
-                            obscureText: false,
-                            animationType: AnimationType.fade,
-                            pinTheme: PinTheme(
-                                shape: PinCodeFieldShape.box,
-                                inactiveColor: Theme.of(context)
-                                    .hintColor
-                                    .withOpacity(0.6),
-                                borderWidth: 1,
-                                borderRadius: BorderRadius.circular(5),
-                                fieldHeight: 50,
-                                fieldWidth: 40,
-                                selectedColor:
-                                    Theme.of(context).textSelectionColor,
-                                activeColor:
-                                    Theme.of(context).textSelectionColor),
-                            cursorColor: Theme.of(context).textSelectionColor,
-                            animationDuration: Duration(milliseconds: 300),
-                            controller: _loginController.twoFATextController,
-                            autoDisposeControllers: false,
-                            keyboardType: TextInputType.number,
-                            validator: _twoFAValidator,
-                            onCompleted: (v) {},
-                            onChanged: (value) {},
-                            beforeTextPaste: (text) {
-                              print("Allowing to paste $text");
-                              return true;
-                            },
-                          )
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(bottom: 8.0),
+                                  child: Text(
+                                    "2fa_login.screen.field.2fa".tr,
+                                    style: TextStyle(
+                                      color: Theme.of(context)
+                                          .hintColor
+                                          .withOpacity(0.7),
+                                      fontFamily: "Popins",
+                                    ),
+                                  ),
+                                ),
+                                PinCodeTextField(
+                                  appContext: context,
+                                  pastedTextStyle: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  length: 6,
+                                  obscureText: false,
+                                  animationType: AnimationType.fade,
+                                  pinTheme: PinTheme(
+                                      shape: PinCodeFieldShape.box,
+                                      inactiveColor: Theme.of(context)
+                                          .hintColor
+                                          .withOpacity(0.6),
+                                      borderWidth: 1,
+                                      borderRadius: BorderRadius.circular(5),
+                                      fieldHeight: 50,
+                                      fieldWidth: 40,
+                                      selectedColor:
+                                          Theme.of(context).textSelectionColor,
+                                      activeColor:
+                                          Theme.of(context).textSelectionColor),
+                                  cursorColor:
+                                      Theme.of(context).textSelectionColor,
+                                  animationDuration:
+                                      Duration(milliseconds: 300),
+                                  controller:
+                                      _loginController.twoFATextController,
+                                  autoDisposeControllers: false,
+                                  keyboardType: TextInputType.number,
+                                  validator: _twoFAValidator,
+                                  onCompleted: (v) {},
+                                  onChanged: (value) {},
+                                  beforeTextPaste: (text) {
+                                    print("Allowing to paste $text");
+                                    return true;
+                                  },
+                                ),
+                              ])
                           // CustomTextField(
                           //     widgetIcon: Icon(
                           //       Icons.email,
@@ -135,7 +152,7 @@ class TwoFA extends StatelessWidget {
                             ),
                             child: Center(
                               child: Text(
-                                "Sign In",
+                                "2fa_login.screen.button.login".tr,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w400,

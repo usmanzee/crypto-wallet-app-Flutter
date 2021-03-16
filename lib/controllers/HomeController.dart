@@ -157,8 +157,8 @@ class HomeController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('loggedIn');
     isLoggedIn.value = false;
-    snackbarController = new SnackbarController(
-        title: 'Error', message: 'Your login session has expired.');
+    snackbarController =
+        new SnackbarController(title: 'Error', message: 'logged_out'.tr);
     snackbarController.showSnackbar();
   }
 

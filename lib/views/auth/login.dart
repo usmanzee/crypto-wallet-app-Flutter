@@ -14,12 +14,11 @@ class Login extends StatelessWidget {
 
   final _passwordValidator = MultiValidator([
     PatternValidator(r'((?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*\W)\w.{6,18}\w)',
-        errorText:
-            'passwords must be 8 characters with uppercase and special letters')
+        errorText: 'login.screen.password.error'.tr)
   ]);
 
   final _emailValidator = MultiValidator([
-    EmailValidator(errorText: 'Please type a valid email'),
+    EmailValidator(errorText: 'login.screen.email.error'.tr),
   ]);
 
   _onLoginFormSubmit() {
@@ -66,19 +65,6 @@ class Login extends StatelessWidget {
                           children: <Widget>[
                             Image.asset("assets/image/b4u_wallet_logo.png",
                                 height: 50.0),
-                            // Padding(
-                            //   padding:
-                            //       const EdgeInsets.only(left: 5.0, top: 0.0),
-                            //   child: Text(
-                            //     "B4U Wallet",
-                            //     style: TextStyle(
-                            //         fontFamily: "Sans",
-                            //         color: Theme.of(context).fontColorDarkTitle,
-                            //         fontSize: 27.0,
-                            //         fontWeight: FontWeight.w300,
-                            //         letterSpacing: 3.5),
-                            //   ),
-                            // ),
                           ],
                         ),
                       ),
@@ -93,7 +79,7 @@ class Login extends StatelessWidget {
                             ),
                             validator: _emailValidator,
                             controller: _loginController.emailTextController,
-                            label: 'Email',
+                            label: 'login.screen.field.email'.tr,
                             obscure: false,
                             keyboardType: TextInputType.emailAddress,
                             textAlign: TextAlign.start),
@@ -109,7 +95,7 @@ class Login extends StatelessWidget {
                             ),
                             validator: _passwordValidator,
                             controller: _loginController.passwordTextController,
-                            label: 'Password',
+                            label: 'login.screen.field.password'.tr,
                             obscure: true,
                             keyboardType: TextInputType.text,
                             textAlign: TextAlign.start),
@@ -127,7 +113,7 @@ class Login extends StatelessWidget {
                             child: Align(
                                 alignment: Alignment.centerRight,
                                 child: Text(
-                                  "Forget Password ?",
+                                  "login.screen.forget_password".tr + " ?",
                                   style: TextStyle(
                                     // color: Colors.white70,
                                     fontSize: 12.0,
@@ -152,7 +138,7 @@ class Login extends StatelessWidget {
                             ),
                             child: Center(
                               child: Text(
-                                "Sign In",
+                                "login.screen.button.login".tr,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w400,
@@ -185,7 +171,7 @@ class Login extends StatelessWidget {
                             ),
                             child: Center(
                               child: Text(
-                                "Create Account",
+                                "login.screen.button.register".tr,
                                 style: TextStyle(
                                     color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.w400,

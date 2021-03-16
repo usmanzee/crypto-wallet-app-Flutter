@@ -11,7 +11,7 @@ class ForgetPassword extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final _emailValidator = MultiValidator([
-    EmailValidator(errorText: 'Please type a valid email'),
+    EmailValidator(errorText: 'forget_password.screen.email.error'.tr),
   ]);
 
   _handleSendVerificationFormSubmit(context) {
@@ -74,7 +74,7 @@ class ForgetPassword extends StatelessWidget {
                             validator: _emailValidator,
                             controller:
                                 _forgetPasswordController.emailTextController,
-                            label: 'Email',
+                            label: 'forget_password.screen.field.email'.tr,
                             obscure: false,
                             keyboardType: TextInputType.emailAddress,
                             textAlign: TextAlign.start),
@@ -97,7 +97,7 @@ class ForgetPassword extends StatelessWidget {
                             ),
                             child: Center(
                               child: Text(
-                                "Send Verification Code",
+                                "forget_password.screen.button.send_code".tr,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w400,
@@ -130,7 +130,7 @@ class ForgetPassword extends StatelessWidget {
                             ),
                             child: Center(
                               child: Text(
-                                "Back to Login",
+                                "forget_password.screen.button.login".tr,
                                 style: TextStyle(
                                     color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.w400,

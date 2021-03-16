@@ -1,17 +1,58 @@
 const Map<String, String> en = {
   //General Messages
   'copy.to.clipboard': 'Copied to Clipboard',
+  'logged_in': 'Logged In',
+  'logged_out': 'Your login session has expired',
   'no.internet': 'No Internet connection',
   'server.not.available': 'Unable to communitate with the server',
   'server.error': 'Server Error',
   'server_exception': 'Something went wrong on the server side',
 
-  //Bottom Navbar
+  //App Bottom Navbar
   'bottom.navbar.home': 'Home',
   'bottom.navbar.markets': 'Markets',
   'bottom.navbar.trading': 'Trading',
   'bottom.navbar.buy_sell': 'Buy/Sell',
   'bottom.navbar.wallets': 'Wallets',
+
+  //App Login Screen
+  'login.screen.field.email': 'Email',
+  'login.screen.field.password': 'Password',
+  'login.screen.email.error': 'Please type a valid email address',
+  'login.screen.password.error':
+      'Passwords must be 8 characters with uppercase and special letters',
+  'login.screen.forget_password': 'Forget Password',
+  'login.screen.button.login': 'Login',
+  'login.screen.button.register': 'Register',
+
+  //App Register Screen
+  'register.screen.field.email': 'Email',
+  'register.screen.field.password': 'Password',
+  'register.screen.field.confirm_password': 'Confirm Password',
+  'register.screen.field.referral_code': 'Referral Code',
+  'register.screen.email.error': 'Please type a valid email address',
+  'register.screen.password.error':
+      'Passwords must be 8 characters with uppercase and special letters',
+  'register.screen.confirm_password.error': 'Passwords do not match',
+  'register.screen.button.register': 'Register',
+  'register.screen.button.login': 'Login',
+
+  //App Forget Password Screen
+  'forget_password.screen.field.email': 'Email',
+  'forget_password.screen.email.error': 'Please type a valid email address',
+  'forget_password.screen.button.send_code': 'Send Verification Code',
+  'forget_password.screen.button.login': 'Back to Login',
+
+  //App Login/2FA Screen
+  '2fa_login.screen.field.2fa': '2FA Code',
+  '2fa_login.screen.email.error': 'Please enter a valid 2FA code',
+  '2fa_login.screen.button.login': 'Login',
+
+  //App Login/Verify Email Screen
+  'verify_email.screen.title': 'Verify Your Email Address',
+  'verify_email.screen.desc':
+      'To complete registration, check for an email in your inbox with further instructions. If you cannot find the email, please check your spam folder.',
+  'verify_email.screen.button.resend': 'Resend Confirmation',
 
   // App Settings Screen
   'account.screen.title': 'Account',
@@ -23,6 +64,7 @@ const Map<String, String> en = {
   'account.screen.languages': 'Languages',
   'account.screen.help_support': 'Help & Support',
   'account.screen.share': 'Share the App',
+  'account.screen.login_register': 'Login/Register',
   'account.screen.logout': 'Logout',
 
   //App Referral Screen
@@ -38,6 +80,19 @@ const Map<String, String> en = {
   'referral.screen.referral_copy_id': 'Copy ID',
   'referral.screen.referral_copy_link': 'Copy Link',
   'referral.screen.share': 'Share',
+
+  //App Notifications Screen
+  'identification.screen.title': 'Verification',
+  'identification.screen.phone.field.phone': 'Phone Number',
+  'identification.screen.phone.button.send_code': 'Send Verification Code',
+  'identification.screen.phone.alert': 'Alert',
+  'identification.screen.phone.alert.desc':
+      'A Pin has been sent to your phone number',
+  'identification.screen.phone.field.pin': 'Pin Code',
+  'identification.screen.phone.pin.error': 'Please enter a valid pin code',
+  'identification.screen.phone.secs': 'Secs',
+  'identification.screen.phone.button.resend': 'Resend Code',
+  'identification.screen.phone.button.verify': 'Verify',
 
   //App Notifications Screen
   'notifications.screen.title': 'Notifications',
@@ -57,6 +112,29 @@ const Map<String, String> en = {
   'security.screen.disable.2fa.title': "Please Enter 2FA",
   'security.screen.disable.2fa.submit': "Submit",
   'security.screen.2fa_error': "Please enter a valid 2FA code",
+
+  //App Security Enable 2FA Screen
+  'security_enable2fa.screen.title': 'Two Factor Authentication',
+  'security_enable2fa.screen.step1.title': 'Download & Install',
+  'security_enable2fa.screen.step1.desc':
+      'Download and install the Google Authenticator application from the App Store or Google play.',
+  'security_enable2fa.screen.step2.title': 'Save The Serect Key',
+  'security_enable2fa.screen.step2.desc':
+      'Save this secret in a secure location. This code can be used to gain 2FA access from a different device.',
+  'security_enable2fa.screen.step2.button.copy_secret': 'Copy Secret',
+  'security_enable2fa.screen.step3.title': 'Verify The Secrect Key',
+  'security_enable2fa.screen.step3.field.key':
+      'Enter the 16-digit key you just backed up',
+  'security_enable2fa.screen.step3.key.error': 'Key did not match',
+  'security_enable2fa.screen.step4.title':
+      'Submit the Code From Authenticator App',
+  'security_enable2fa.screen.step4.desc':
+      'Now create a new entry in your authenticator app with the saved secret key and verify the generated code.',
+  'security_enable2fa.screen.step4.field.2fa':
+      'Enter code from Google authenticator app',
+  'security_enable2fa.screen.step4.2fa.error': 'Please enter a valid 2FA code',
+  'security_enable2fa.screen.button.back': 'Back',
+  'security_enable2fa.screen.button.next': 'Next',
 
   //App Change Password Screen
   'change.password.screen.title': "Change Password",
@@ -82,6 +160,17 @@ const Map<String, String> en = {
   'markets.screen.column.last_price': 'Last Price',
   'markets.screen.column.24hr_change': '24h Chg%',
   'markets.screen.vol': 'Vol',
+
+  //App Market Detail Screen
+  'market_detail.screen.high': 'High',
+  'market_detail.screen.low': 'Low',
+  'market_detail.screen.24hr': '24h',
+  'market_detail.screen.vol': 'Vol',
+  'market_detail.tabs.line': 'Line',
+  'market_detail.tabs.depth': 'Depth',
+  'market_detail.order_book': 'Order Book',
+  'market_detail.button.buy': 'Buy',
+  'market_detail.button.sell': 'Sell',
 
   //App Trading Screen
   'trading.screen.tabs.limit': 'Limit',
@@ -244,714 +333,51 @@ const Map<String, String> en = {
       'When withdrawing to the B4U user\'s address, the handling fee will be returned to the Current Account by default.',
   'crypto_withdraw.screen.button.withdraw': 'Withdraw',
 
-  'page.sidebar.group.text': 'Fee Group:',
-  'page.sidebar.group.value': 'Base',
+  //App Fiat Deposit Screen
+  'fiat_deposit.screen.title': 'Deposit',
+  'fiat_deposit.screen.sub_title': 'Deposit using bank transfer',
+  'fiat_deposit.screen.desc':
+      'Please use the following credentials to initiate your bank transfer. Your deposit will be reflected in your account in a minimum of 2 hours.',
+  'fiat_deposit.screen.disabled':
+      'The deposit was disabled by the administration',
+  'fiat_deposit.screen.reference_code.instruction':
+      'Please use the below reference code in your payment reference.',
+  'fiat_deposit.screen.reference_code': 'Reference Code',
+  'fiat_deposit.screen.bank': 'Bank',
 
-  'page.body.trade.header.market': 'Market',
-  'page.body.trade.header.yours': 'Yours',
+  //App fiat Withdraw Screen
+  'fiat_withdraw.screen.title': 'Withdraw',
+  'fiat_withdraw.screen.withdraw_disabled':
+      'Withdraw is disabled by the administration',
+  'fiat_withdraw.screen.enable_2fa': 'To withdraw, you have to enable 2FA',
+  'fiat_withdraw.screen.button.enable_2fa': 'Enable 2FA',
+  'fiat_withdraw.screen.confirm_account':
+      'To withdraw you have to confirm your account',
+  'fiat_withdraw.screen.button.confirm_account': 'Confirm Account',
+  'fiat_withdraw.screen.button.add_beneficiary': 'Add Beneficiary',
+  'fiat_withdraw.screen.field.beneficiary': 'Select Beneficiary',
+  'fiat_withdraw.screen.field.beneficiary.error': 'Beneficiary is required',
+  'fiat_withdraw.screen.field.amount': 'Withdraw Amount',
+  'fiat_withdraw.screen.field.amount.error': 'Please enter a valid amount',
+  'fiat_withdraw.screen.field.2fa': '2FA Code',
+  'fiat_withdraw.screen.field.2fa.error': 'Please enter a valid 2FA code',
+  'fiat_withdraw.screen.fee': 'Fee',
+  'fiat_withdraw.screen.total_amount': 'Total Withdraw Amount',
+  'fiat_withdraw.screen.button.withdraw': 'Withdraw',
 
-  'page.body.trade.header.markets': 'Markets',
-  'page.body.trade.header.markets.content.market': 'Market',
-  'page.body.trade.header.markets.content.pair': 'Pair',
-  'page.body.trade.header.markets.content.price': 'Price',
-  'page.body.trade.header.markets.content.last_price': 'Last Price',
-  'page.body.trade.header.markets.content.change': 'Change',
-  'page.body.trade.header.markets.content.search': 'Search',
-  'page.body.trade.header.markets.content.volume': 'Volume',
-
-  'page.body.trade.header.newOrder': 'Order Form',
-  'page.body.trade.header.newOrder.content.tabs.buy': 'Buy',
-  'page.body.trade.header.newOrder.content.tabs.sell': 'Sell',
-  'page.body.trade.header.newOrder.content.orderType': 'Order Type',
-  'page.body.trade.header.newOrder.content.orderType.limit': 'Limit',
-  'page.body.trade.header.newOrder.content.orderType.market': 'Market',
-  'page.body.trade.header.newOrder.content.price': 'Price',
-  'page.body.trade.header.newOrder.content.amount': 'Amount',
-  'page.body.trade.header.newOrder.content.total': 'Total',
-  'page.body.trade.header.newOrder.content.available': 'Available',
-
-  'error.order.create.minAmount':
-      'Amount is too low. Minimum amount is {amount} {currency}',
-  'error.order.create.minPrice':
-      'Price is too low. Minimum price is {price} {currency}',
-  'error.order.create.maxPrice':
-      'Price is too high. Maximum price is {price} {currency}',
-  'error.order.create.available':
-      'Balance exceeded. Available {available} {currency}',
-
-  'page.body.trade.header.marketDepths': 'Market Depth',
-  'page.body.trade.header.marketDepths.content.price': 'Price:',
-  'page.body.trade.header.marketDepths.content.volume': 'Amount:',
-  'page.body.trade.header.marketDepths.content.cumulativeVolume': 'Total:',
-  'page.body.trade.header.marketDepths.content.cumulativeValue':
-      'Estimated Value:',
-
-  'page.body.trade.toolBar.lowest': 'Lowest 24h',
-  'page.body.trade.toolBar.lastPrice': 'Last Price',
-  'page.body.trade.toolBar.selectMarket': 'Select Market',
-  'page.body.trade.toolBar.highest': 'Highest 24h',
-  'page.body.trade.toolBar.volume': '24h Volume',
-  'page.body.trade.toolBar.change': 'Change',
-
-  'page.body.trade.header.asks': 'Asks',
-  'page.body.trade.header.bids': 'Bids',
-  'page.body.trade.orderbook': 'Order Book',
-  'page.body.trade.orderbook.lastMarket': 'Last Market Price',
-  'page.body.trade.orderbook.header.price': 'Price',
-  'page.body.trade.orderbook.header.amount': 'Amount',
-  'page.body.trade.orderbook.header.volume': 'Total',
-
-  'page.body.trade.header.recentTrades': 'Recent Trades',
-  'page.body.trade.header.recentTrades.content.time': 'Time',
-  'page.body.trade.header.recentTrades.content.price': 'Price',
-  'page.body.trade.header.recentTrades.content.amount': 'Amount',
-
-  'page.body.trade.header.openOrders': 'Open Orders',
-  'page.body.trade.header.openOrders.content.date': 'Date',
-  'page.body.trade.header.openOrders.content.state': 'State',
-  'page.body.trade.header.openOrders.content.price': 'Price',
-  'page.body.trade.header.openOrders.content.amount': 'Amount',
-  'page.body.trade.header.openOrders.content.total': 'Value',
-  'page.body.trade.header.openOrders.content.filled': 'Filled',
-
-  /* Markets Table */
-  'page.body.marketsTable.filter.all': 'All',
-  'page.body.marketsTable.header.pair': 'Market',
-  'page.body.marketsTable.header.lastPrice': 'Last Price',
-  'page.body.marketsTable.header.change': '24 Change',
-  'page.body.marketsTable.header.high': '24  high',
-  'page.body.marketsTable.header.low': '24 low',
-  'page.body.marketsTable.header.volume': '24 Volume',
-
-  /* Landing */
-  'page.body.landing.header.button1': 'profile',
-  'page.body.landing.header.button2': 'log in',
-  'page.body.landing.header.button3': 'register',
-
-  'page.body.landing.marketInfo.title.text1':
-      'Welcome to B4U Wallet and Exchange.',
-  'page.body.landing.marketInfo.title.text2':
-      'Buy, sell and trade digital currency.',
-  'page.body.landing.marketInfo.title.button': 'start trading',
-
-  'page.body.landing.platformInfo.item.first.value': '30M+',
-  'page.body.landing.platformInfo.item.first.title': 'Customers served',
-  // 'page.body.landing.platformInfo.item.second.value': "$3M+",
-  'page.body.landing.platformInfo.item.second.title': '30 days volume',
-  'page.body.landing.platformInfo.item.third.value': '101',
-  'page.body.landing.platformInfo.item.third.title': 'Countries supported',
-
-  'page.body.landing.register.item.title': 'No matter your experience level',
-  'page.body.landing.register.item.text':
-      'B4U Wallet and Exchange offers an intuitive interface with real time orderbooks, charting tools, trade history, and a simple order process so you can trade from day one.',
-  'page.body.landing.register.item.button': 'register',
-
-  'page.body.landing.features.title':
-      'B4U Wallet and Exchange platform features',
-  'page.body.landing.features.features.item1.title': 'Exchange',
-  'page.body.landing.features.features.item2.title': 'Order Types',
-  'page.body.landing.features.features.item3.title': 'Customizable Interface',
-  'page.body.landing.features.features.item4.title': 'Security',
-  'page.body.landing.features.features.item5.title': 'Community',
-  'page.body.landing.features.features.item6.title': 'Industry leading API',
-  'page.body.landing.features.features.item1.text':
-      'B4U Wallet and Exchange offers the most liquid order book in the world, allowing users to easily exchange Bitcoin, Ethereum, EOS, Litecoin, Ripple, NEO and many other digital assets with minimal slippage.',
-  'page.body.landing.features.features.item2.text':
-      'B4U Wallet and Exchange offers a suite of order types to give traders the tools they need for every scenario. Discover more about our most advanced Algorithmic orders types.',
-  'page.body.landing.features.features.item3.text':
-      'Organize your workspace according to your needs: compose your layout, choose between themes, set up notifications and data preferences.',
-  'page.body.landing.features.features.item4.text':
-      'Security of user information and funds is our first priority. Contact us to learn more about our security features and integrations.',
-  'page.body.landing.features.features.item5.text':
-      'Join a global community that believes in the power of crypto.',
-  'page.body.landing.features.features.item6.text':
-      'Our Websocket feed lets you easily gain access to real-time market data, while our trading API lets you develop secure, programmatic trading bots.',
-
-  'page.body.landing.tradeOnTheGo.item.title': 'Trade on the go',
-  'page.body.landing.tradeOnTheGo.item.text1':
-      'Our platform is optimized for trading on any device.',
-  'page.body.landing.tradeOnTheGo.item.text2':
-      'And you don’t need to download any additional applications.',
-  'page.body.landing.tradeOnTheGo.item.text3':
-      'All the power of B4U Wallet cryptocurrency exchange, in the palm of your hand.',
-  'page.body.landing.tradeOnTheGo.item.button': 'let’s try',
-
-  'page.body.landing.startTrading.title': 'Start trading now',
-  'page.body.landing.startTrading.button1': 'register',
-  'page.body.landing.startTrading.button2': 'Start trading',
-
-  'page.body.landing.footer.exchange': 'Exchange',
-  'page.body.landing.footer.wallets': 'Wallets',
-  'page.body.landing.footer.fees': 'Fees',
-  'page.body.landing.footer.faq': 'FAQ',
-  'page.body.landing.footer.support': 'Support',
-  'page.body.landing.footer.privacy': 'Privacy',
-  'page.body.landing.footer.about': 'About us',
-  'page.body.landing.footer.community': 'Community',
-  'page.body.landing.footer.info': 'Info',
-  'page.body.landing.footer.rights':
-      'B4U Wallet & Exchange © All rights reserved',
-
-  /* Wallets */
-
-  'page.body.wallets.title': 'Wallets',
-  'page.body.wallets.action.deposit': 'Deposit',
-  'page.body.wallets.action.withdraw': 'Withdraw',
-  'page.body.wallets.action.transfer': 'Transfer',
-  'page.body.wallets.action.trade': 'Trade',
-  'page.body.wallets.action.buy': 'Buy',
-
-  'page.body.wallets.estimated_value': 'Estimated Value',
-  'page.body.wallets.input.search.placeholder': 'Search',
-  'page.body.wallets.checkbox.label.hide_balance': 'hide small balances',
-
-  'page.body.wallets.table.header.coin': 'Coin',
-  'page.body.wallets.table.header.total': 'Total',
-  'page.body.wallets.table.header.available': 'Available',
-  'page.body.wallets.table.header.locked': 'Locked',
-  'page.body.wallets.table.header.actions': 'Actions',
-
-  'page.body.wallets.locked': 'Locked',
-  'page.body.wallets.balance': 'Balance',
-  'page.body.wallets.tabs.deposit': 'Deposit',
-  'page.body.wallets.tabs.deposit.disabled.message':
-      'Deposit was disabled by administration',
-  'page.body.wallets.tabs.deposit.ccy.message.submit':
-      'Submit a deposit using the following address or QR code. Your deposit will be reflected in your account after {confirmations} confirmations',
-  'page.body.wallets.tabs.deposit.ccy.message.address': 'Deposit Address',
-  'page.body.wallets.tabs.deposit.ccy.message.button': 'Copy',
-  'page.body.wallets.tabs.deposit.ccy.message.success': 'Address copied',
-  'page.body.wallets.tabs.deposit.ccy.message.error':
-      'Generating deposit address',
-  'page.body.wallets.tabs.deposit.ccy.button.generate': 'Generate',
-  'page.body.wallets.tabs.deposit.ccy.button.address': 'address',
-
-  'page.body.wallets.tabs.deposit.fiat.message1': 'Deposit using bank transfer',
-  'page.body.wallets.tabs.deposit.fiat.message2':
-      'Please use the following credentials to initiate your bank transfer. Your deposit will be reflected in your account in minimum 2 hours.',
-  'page.body.wallets.tabs.deposit.fiat.message3':
-      'Please Use the below reference code in your payment reference.',
-  'page.body.wallets.tabs.deposit.fiat.bankName': 'Bank Name',
-  'page.body.wallets.tabs.deposit.fiat.accountNumber': 'Account number',
-  'page.body.wallets.tabs.deposit.fiat.accountName': 'Account name',
-  'page.body.wallets.tabs.deposit.fiat.phoneNumber': 'Phone Number',
-  'page.body.wallets.tabs.deposit.fiat.referenceCode': 'Your reference code',
-  'page.body.wallets.table.pending': 'Pending',
-  'page.body.wallets.table.rejected': 'Rejected',
-  'page.body.wallets.tabs.deposit.fiat.admin':
-      ' To initiate a fiat withdrawal, please contact administrator!',
-
-  'page.body.wallets.tabs.withdraw': 'Withdraw',
-  'page.body.wallets.tabs.convert': 'Buy & Sell',
-  'page.body.wallets.tabs.withdraw.content.address': 'Withdrawal Address',
-  'page.body.wallets.tabs.withdraw.content.amount': 'Withdrawal Amount',
-  'page.body.wallets.tabs.withdraw.content.code2fa': '2FA code',
-  'page.body.wallets.tabs.withdraw.content.fee': 'Fee',
-  'page.body.wallets.tabs.withdraw.content.total': 'Total Withdrawal Amount',
-  'page.body.wallets.tabs.withdraw.content.button': 'WITHDRAW',
-  'page.body.wallets.tabs.withdraw.disabled.message':
-      'Withdraw was disabled by administration',
-
-  'page.body.wallets.tabs.withdraw.modal.confirmation': 'Confirmation',
-  'page.body.wallets.tabs.withdraw.modal.message1': 'You will receive ',
-  'page.body.wallets.tabs.withdraw.modal.message2': ' on address',
-  'page.body.wallets.tabs.withdraw.modal.button.cancel': 'Cancel',
-  'page.body.wallets.tabs.withdraw.modal.button.withdraw': 'Withdraw',
-
-  'page.body.wallets.tabs.withdraw.content.enable2fa':
-      'To withdraw you have to enable 2FA',
-  'page.body.wallets.tabs.withdraw.content.enable2faButton': 'Enable 2FA',
-
-  'success.beneficiaries.created': 'Beficiaries successfully created',
-  'success.beneficiaries.activated': 'Beficiaries successfully activated',
-  'success.beneficiaries.deleted': 'Beficiaries successfully deleted',
-
-  'page.body.wallets.beneficiaries.title': 'Withdraw address',
-  'page.body.wallets.beneficiaries.fiat.title': 'Withdrawal details',
-  'page.body.wallets.beneficiaries.dropdown.address': 'Address',
-  'page.body.wallets.beneficiaries.dropdown.select': 'Select',
-  'page.body.wallets.beneficiaries.dropdown.name': 'Name',
-
-  'page.body.wallets.beneficiaries.dropdown.fiat.account': 'Account',
-  'page.body.wallets.beneficiaries.dropdown.fiat.bankOfBeneficiary':
-      'Bank of Beneficiary',
-  'page.body.wallets.beneficiaries.dropdown.fiat.beneficiary': 'Beneficiary',
-  'page.body.wallets.beneficiaries.dropdown.fiat.description': 'Description',
-  'page.body.wallets.beneficiaries.dropdown.fiat.name': 'Name',
-  'page.body.wallets.beneficiaries.dropdown.fiat.fullName': 'Full Name',
-
-  'page.body.wallets.beneficiaries.addAddress': 'Add Address',
-  'page.body.wallets.beneficiaries.addAddressModal.header':
-      'Add new withdrawal address',
-
-  'page.body.wallets.beneficiaries.addAddressModal.body.coinAddress':
-      'Blockchain Address',
-  'page.body.wallets.beneficiaries.addAddressModal.body.coinBeneficiaryName':
-      'Beneficiary Name',
-  'page.body.wallets.beneficiaries.addAddressModal.body.coinDescription':
-      'Description (optional)',
-
-  'page.body.wallets.beneficiaries.addAddressModal.body.fiatName':
-      'Description',
-  'page.body.wallets.beneficiaries.addAddressModal.body.fiatFullName':
-      'Full Name',
-  'page.body.wallets.beneficiaries.addAddressModal.body.fiatAccountNumber':
-      'Account Number',
-  'page.body.wallets.beneficiaries.addAddressModal.body.fiatBankName':
-      'Bank Name',
-  'page.body.wallets.beneficiaries.addAddressModal.body.fiatBankSwiftCode':
-      'Bank Swift Code (optional)',
-  'page.body.wallets.beneficiaries.addAddressModal.body.fiatIntermediaryBankName':
+  //App beneficiary screen
+  'beneficiary.screen.title': 'Add Beneficiary',
+  'beneficiary.screen.field.full_name': 'Full Name',
+  'beneficiary.screen.field.account_number': 'Account Number',
+  'beneficiary.screen.field.bank_name': 'Bank Name',
+  'beneficiary.screen.field.bank_swift_code': 'Bank Swift Code (optional)',
+  'beneficiary.screen.field.bank_inter_name':
       'Intermediary Bank Name (optional)',
-  'page.body.wallets.beneficiaries.addAddressModal.body.fiatIntermediaryBankSwiftCode':
+  'beneficiary.screen.field.bank_inter_swift_code':
       'Intermediary Bank Swift Code (optional)',
-
-  'page.body.wallets.beneficiaries.addAddressModal.body.button':
-      'Submit for confirmation',
-
-  'page.body.wallets.beneficiaries.confirmationModal.header':
-      'Confirm new address',
-  'page.body.wallets.beneficiaries.confirmationModal.body.text':
-      'We have sent you an email containing a confirmation code pin, please enter it below to save the new address:',
-  'page.body.wallets.beneficiaries.confirmationModal.body.confirmationModalCode':
-      'Pin code',
-  'page.body.wallets.beneficiaries.confirmationModal.body.button': 'Confirm',
-
-  'page.body.wallets.beneficiaries.tipAddress': 'Address',
-  'page.body.wallets.beneficiaries.tipName': 'Name',
-  'page.body.wallets.beneficiaries.tipDescription': 'Note',
-
-  'page.body.wallets.beneficiaries.failAddModal.header': 'Warning',
-  'page.body.wallets.beneficiaries.failAddModal.content':
-      'You need to confirm your account to add a beneficiary',
-  'page.body.wallets.beneficiaries.failAddModal.button': 'Confirm an account',
-
-  'page.body.swap.title.swap': 'Swap',
-  'page.body.swap.title.buy_sell': 'Buy/Sell',
-  'page.body.swap.available': 'Available',
-  'page.body.swap.input.swap': 'Swap',
-  'page.body.swap.input.sell': 'Sell',
-  'page.body.swap.input.buy': 'Buy',
-  'page.body.swap.input.tag.max': 'Max',
-  'page.body.swap.input.error1': 'The amount has to be higher than {amount}.',
-  'page.body.swap.input.error2': 'The amount has to be lower than {amount}.',
-  'page.body.swap.input.error3': 'Your balance is not enough.',
-  'page.body.swap.fee': 'Fee',
-  'page.body.swap.price': 'Price',
-  'page.body.swap.receive': 'Receive',
-  'page.body.swap.you_will_get': 'You will get',
-  'page.body.swap.button.text.swap': 'Swap',
-  'page.body.swap.button.text.buy': 'Buy',
-  'page.body.swap.history.title.swap_history': 'Swap History',
-  'page.body.swap.history.title.buy_sell_history': 'Buy/Sell History',
-  'page.body.swap.history.table.column.sell': 'Sell',
-  'page.body.swap.history.table.column.amount': 'Amount',
-  'page.body.swap.history.table.column.buy': 'Buy',
-  'page.body.swap.history.table.column.status': 'Status',
-  'page.body.swap.history.table.column.date': 'Date',
-  'page.body.swap.history.table.pagination.text.rows_per_page': 'Rows Per Page',
-
-  'page.body.buy_crypto.title.buy_crypto': 'Buy Crypto',
-  'page.body.buy_crypto.content1':
-      'Buy Bitcoin and other cryptocurrencies easily',
-  'page.body.buy_crypto.content2':
-      'Buy and invest in minutes using your credit card, bank transfer or Apple Pay.',
-  'page.body.buy_crypto.fields.buy': 'I want to buy',
-  'page.body.buy_crypto.fields.spend': 'I want to spend',
-  'page.body.buy_crypto.fields.how_much': 'For this much',
-  'page.body.buy_crypto.submit_button.text': 'Buy {currencyCode}',
-  'page.body.buy_crypto.modal.exit_button.text': 'Exit',
-  'page.body.buy_crypto.field.error1':
-      'Insufficient amount. Minimum limit is {amount} {currencyCode}',
-  'page.body.buy_crypto.field.error2':
-      'Limit exceeded. Maximum limit per transaction is {amount} {currencyCode}',
-
-  'page.body.openOrders.tab.all': 'All',
-  'page.body.openOrders.tab.open': 'Open',
-  'page.body.openOrders.header.orderType': 'Order Type',
-  'page.body.openOrders.header.orderType.buy.market': 'Buy market',
-  'page.body.openOrders.header.orderType.buy.limit': 'Buy limit',
-  'page.body.openOrders.header.orderType.sell.market': 'Sell market',
-  'page.body.openOrders.header.orderType.sell.limit': 'Sell limit',
-  'page.body.openOrders.header.pair': 'Pair',
-  'page.body.openOrders.header.amount': 'Amount',
-  'page.body.openOrders.header.price': 'Price',
-  'page.body.openOrders.header.executed': 'Executed',
-  'page.body.openOrders.header.remaining': 'Remaining',
-  'page.body.openOrders.header.costRemaining': 'Cost Remaining',
-  'page.body.openOrders.header.status': 'Status',
-  'page.body.openOrders.content.status.done': 'Executed',
-  'page.body.openOrders.content.status.wait': 'Open',
-  'page.body.openOrders.content.status.cancel': 'Stopped',
-  'page.body.openOrders.header.button.cancelAll': 'Cancel all',
-
-  'page.body.history.deposit': 'Deposit History',
-  'page.body.history.deposit.header.txid': 'txID',
-  'page.body.history.deposit.header.date': 'Date',
-  'page.body.history.deposit.header.currency': 'Currency',
-  'page.body.history.deposit.header.amount': 'Amount',
-  'page.body.history.deposit.header.status': 'Status',
-  'page.body.history.deposit.content.status.accepted': 'Accepted',
-  'page.body.history.deposit.content.status.collected': 'Collected',
-  'page.body.history.deposit.content.status.submitted': 'Submitted',
-  'page.body.history.deposit.content.status.canceled': 'Cancelled',
-  'page.body.history.deposit.content.status.rejected': 'Rejected',
-  'page.body.history.deposit.content.status.skipped': 'Skipped',
-  'page.body.history.deposit.content.status.succeed': 'Succceed',
-
-  'page.body.history.withdraw': 'Withdrawal History',
-  'page.body.history.withdraw.header.id': 'ID',
-  'page.body.history.withdraw.header.date': 'Date',
-  'page.body.history.withdraw.header.currency': 'Currency',
-  'page.body.history.withdraw.header.address': 'Address',
-  'page.body.history.withdraw.header.amount': 'Amount',
-  'page.body.history.withdraw.header.fee': 'Fee',
-  'page.body.history.withdraw.header.status': 'Status',
-  'page.body.history.withdraw.header.txid': 'txID',
-  'page.body.history.withdraw.content.status.prepared': 'Prepared',
-  'page.body.history.withdraw.content.status.submitted': 'Submitted',
-  'page.body.history.withdraw.content.status.skipped': 'Skipped',
-  'page.body.history.withdraw.content.status.canceled': 'Cancelled',
-  'page.body.history.withdraw.content.status.accepted': 'Accepted',
-  'page.body.history.withdraw.content.status.suspected': 'Suspected',
-  'page.body.history.withdraw.content.status.rejected': 'Rejected',
-  'page.body.history.withdraw.content.status.processing': 'Processing',
-  'page.body.history.withdraw.content.status.succeed': 'Succeed',
-  'page.body.history.withdraw.content.status.failed': 'Failed',
-  'page.body.history.withdraw.content.status.confirming': 'Confirming',
-  'page.body.history.withdraw.content.status.errored': 'Error',
-  'page.body.history.withdraw.content.status.collected': 'Collected',
-
-  'page.body.history.trade': 'Trade History',
-  'page.body.history.trade.header.id': 'ID',
-  'page.body.history.trade.header.date': 'Date',
-  'page.body.history.trade.header.side': 'Side',
-  'page.body.history.trade.content.side.buy': 'Buy',
-  'page.body.history.trade.content.side.sell': 'Sell',
-  'page.body.history.trade.header.market': 'Market',
-  'page.body.history.trade.header.price': 'Price',
-  'page.body.history.trade.header.total': 'Total',
-  'page.body.history.trade.header.amount': 'Amount',
-  'page.body.history.trade.header.balance': 'Balance',
-
-  // Deposit Screen
-  'page.body.deposit.header.title': 'Deposit',
-  'page.body.deposit.tabs.crypto': 'Crypto',
-  'page.body.deposit.tabs.fiat': 'Fiat',
-  'page.body.deposit.select.title': 'Search Currency',
-  'page.body.deposit.total_balance': 'Total Balance',
-  'page.body.deposit.tips.title': 'Tips',
-  'page.body.deposit.tips.tip1':
-      'If you have deposited, please pay attention to the text messages, site letters and emails we send to you.',
-  'page.body.deposit.tips.tip2':
-      'Until {confirmations} confirmations are made, an equivalent amount of your assets will be temporarily unavailable for withdrawals.',
-  'page.body.deposit.network.title': 'Deposit network',
-  'page.body.deposit.network.message':
-      'Please select the corresponding B4U Deposit address format according to the public chain type of the transferred wallet. Do note that some wallets may support multiple public chain types of token transfer, like exchange wallets generally support deposits from ERC20, OMNI, and TRC20 types of USDT. Make sure that the public chain network type selected at the time of transfer is the same the one for B4U Deposits.',
-  'page.body.deposit.network.address.text': '{currency} Address',
-  'page.body.deposit.network.tag.text': '{currency} Tag',
-  'page.body.deposit.network.tag.instruction':
-      'Please enter both Tag and Address data, which are required to deposit {currency} to your B4U account successfully.',
-  'page.body.deposit.network.address.instructions.title':
-      'Send only {currency} to this deposit address.',
-  'page.body.deposit.network.address.instructions.description':
-      'Sending coin or token other than {currency} to this address may result in the loss of your deposit.',
-
-  'page.body.withdraw.header.title': 'Withdraw',
-  'page.body.withdraw.tabs.crypto': 'Crypto',
-  'page.body.withdraw.tabs.fiat': 'Fiat',
-  'page.body.withdraw.select.title': 'Search Currency',
-  'page.body.withdraw.total_balance': 'Total Balance',
-  'page.body.withdraw.tips.title': 'Tips',
-  'page.body.withdraw.tips.tip1':
-      'Do not withdraw directly to a crowdfund or ICO address, as your account will not be credited with tokens from such sales.',
-  'page.body.withdraw.tips.tip2':
-      "When withdrawing to the B4U user's address, the handling fee will be returned to the Current Account by default.",
-
-  'page.body.profile.header.account': 'Profile',
-
-  'page.body.profile.title': 'Profile Management',
-  'page.body.profile.tabs.security': 'Profile / Security',
-  'page.body.profile.tabs.identification': 'Identification',
-  'page.body.profile.tabs.referral': 'Referral',
-  'page.body.profile.tabs.api_management': 'API Management',
-  'page.body.profile.tabs.activity': 'Activity',
-
-  'page.body.profile.tabs.referral.title':
-      'Invite Friends & Earn Crypto Together',
-  'page.body.profile.tabs.referral.description':
-      'EARN UP TO 40% COMMISSION EVERY TIME YOUR FRIENDS MAKE A TRADE ON B4U.',
-  'page.body.profile.tabs.referral.instruction.title': 'Invite Now',
-  'page.body.profile.tabs.referral.instruction.description':
-      'Use your unique link to invite your friends over message or email. Your default invitation code can also be shared in real life or as a screenshot.',
-
-  'page.body.profile.tabs.referral.id': 'Referral ID',
-  'page.body.profile.tabs.referral.link': 'Referral Link',
-
-  'page.body.profile.header.account.content.password': 'Password',
-  'page.body.profile.header.account.content.password.button.change': 'Change',
-  'page.body.profile.header.account.content.password.old': 'Old password',
-  'page.body.profile.header.account.content.password.new': 'New password',
-  'page.body.profile.header.account.content.password.button.save': 'Save',
-  'page.body.profile.header.account.content.password.button.cancel': 'Cancel',
-  'page.body.profile.header.account.content.password.conf':
-      'Password Confirmation',
-  'page.body.profile.header.account.content.password.dont.match':
-      'Passwords don\'t match',
-  'page.body.profile.header.account.content.password.change.success':
-      'Success!',
-  'page.body.profile.header.account.content.password.change': 'Change password',
-
-  'page.body.profile.header.account.content.twoFactorAuthentication': '2FA',
-  'page.body.profile.header.account.content.twoFactorAuthentication.message.enable':
-      'Enabled',
-  'page.body.profile.header.account.content.twoFactorAuthentication.message.disable':
-      'Disabled',
-  'page.body.profile.header.account.content.twoFactorAuthentication.header':
-      'Google Authenticator',
-  'page.body.profile.header.account.content.twoFactorAuthentication.message.1':
-      'Download and install Google Authenticator application from ',
-  'page.body.profile.header.account.content.twoFactorAuthentication.message.or':
-      'or ',
-  'page.body.profile.header.account.content.twoFactorAuthentication.message.2':
-      'Scan QR code or use secret MFA code:',
-  'page.body.profile.header.account.content.twoFactorAuthentication.message.3':
-      '* Save this secret in a secure location. This code can be used to gain 2FA access from a different device.',
-  'page.body.profile.header.account.content.twoFactorAuthentication.message.mfa':
-      'MFA code',
-  'page.body.profile.header.account.content.twoFactorAuthentication.message.4':
-      'Enter 2fa code from the app',
-  'page.body.profile.header.account.content.twoFactorAuthentication.subHeader':
-      '2FA code',
-  'page.body.profile.header.account.content.twoFactorAuthentication.enable':
-      'ENABLE',
-  'page.body.profile.header.account.content.twoFactorAuthentication.disable':
-      'DISABLE 2FA',
-  'page.body.profile.header.account.content.twoFactorAuthentication.modalBody':
-      'Please сontact administrator to disable',
-  'page.body.profile.header.account.content.twoFactorAuthentication.modalHeader':
-      'Two-factor authentication is enabled',
-
-  'page.body.profile.header.account.profile': 'Profile Verification',
-  'page.body.profile.header.account.profile.email.title': 'Email verified',
-  'page.body.profile.header.account.profile.email.message':
-      'Deposit/Withdraw enabled',
-  'page.body.profile.header.account.profile.phone.unverified.title':
-      'Phone verification',
-  'page.body.profile.header.account.profile.phone.title': 'Phone verified',
-  'page.body.profile.header.account.profile.phone.message':
-      'Deposit/Trade enabled',
-  'page.body.profile.header.account.profile.identity.unverified.title':
-      'Identity verification',
-  'page.body.profile.header.account.profile.identity.title':
-      'Identity verified',
-  'page.body.profile.header.account.profile.identity.message':
-      'Withdraw enabled',
-
-  'page.body.profile.header.referralProgram': 'Referral Link',
-  'page.body.profile.content.copyLink': 'Copy',
-
-  'page.body.profile.apiKeys.header': 'My API Keys',
-  'page.body.profile.apiKeys.header.create': 'Create new',
-
-  'page.body.profile.apiKeys.noOtp': 'Please enable Two-factor authentication',
-  'page.body.profile.apiKeys.show': 'Show',
-  'page.body.profile.apiKeys.noKeys': 'You have no API keys',
-
-  'page.body.profile.apiKeys.modal.btn.show': 'Show',
-  'page.body.profile.apiKeys.modal.btn.create': 'Confirm',
-  'page.body.profile.apiKeys.modal.btn.copy': 'Copy',
-  'page.body.profile.apiKeys.modal.btn.activate': 'Activate',
-  'page.body.profile.apiKeys.modal.btn.disabled': 'Disable',
-  'page.body.profile.apiKeys.modal.btn.delete': 'Delete',
-  'page.body.profile.apiKeys.modal.header': '2FA Verification',
-  'page.body.profile.apiKeys.modal.created_header': 'Created',
-  'page.body.profile.apiKeys.modal.access_key': 'Access Key',
-  'page.body.profile.apiKeys.modal.secret_key': 'Secret Key',
-  'page.body.profile.apiKeys.modal.secret_key_info':
-      'This information will be shown only once and cannot be retrieved once lost.',
-  'page.body.profile.apiKeys.modal.secret_key_store':
-      'Please store it properly.',
-  'page.body.profile.apiKeys.modal.note': 'Note',
-//     'page.body.profile.apiKeys.modal.note_content': To avoid asset loss, please do not tell your Secret Key and Private Key to others.\
-//  If you forget you Secret Key, please delete it and apply for a new Secret Key pair.`,
-  'page.body.profile.apiKeys.modal.title': 'Enter 2fa code from the app',
-  'page.body.profile.apiKeys.modal.label': '6-digit Google Authenticator code',
-  'page.body.profile.apiKeys.modal.placeholder': 'Enter Code',
-
-  'page.body.profile.apiKeys.table.header.kid': 'Kid',
-  'page.body.profile.apiKeys.table.header.algorithm': 'Algorithm',
-  'page.body.profile.apiKeys.table.header.state': 'State',
-  'page.body.profile.apiKeys.table.header.created': 'Created',
-  'page.body.profile.apiKeys.table.header.updated': 'Updated',
-
-  'success.api_keys.fetched': 'Successfully fetched API keys',
-  'success.api_keys.created': 'API key was created',
-  'success.api_keys.copied.access': 'Access key was copied',
-  'success.api_keys.copied.secret': 'Secret key was copied',
-  'success.api_keys.updated': 'API key was updated',
-  'success.api_keys.deleted': 'API key was deleted',
-
-  'page.body.profile.header.accountActivity': 'Account Activity',
-  'page.body.profile.header.accountActivity.content.date': 'Date',
-  'page.body.profile.header.accountActivity.content.addressip': 'Address IP',
-  'page.body.profile.header.accountActivity.content.action': 'Action',
-  'page.body.profile.header.accountActivity.content.result': 'Result',
-  'page.body.profile.header.accountActivity.content.userAgent': 'User Agent',
-
-  'page.body.profile.content.action.login': 'Login',
-  'page.body.profile.content.action.logout': 'Logout',
-  'page.body.profile.content.action.request2fa': 'Request QR code for 2FA',
-  'page.body.profile.content.action.enable2fa': 'Enable 2FA',
-  'page.body.profile.content.action.login.2fa': 'Login with 2FA',
-  'page.body.profile.content.action.requestPasswordReset':
-      'Request password reset',
-  'page.body.profile.content.action.passwordReset': 'Password reset',
-
-  'page.body.profile.content.result.succeed': 'Succeed',
-  'page.body.profile.content.result.failed': 'Failed',
-  'page.body.profile.content.result.denied': 'Denied',
-
-  'page.body.kyc.phone.head': 'Verify Phone',
-  'page.body.kyc.phone.enterPhone': 'Enter phone number',
-  'page.body.kyc.phone.phoneNumber': 'Phone Number',
-  'page.body.kyc.phone.enterCode': 'Enter confirmation code',
-  'page.body.kyc.phone.code': 'SMS Code',
-  'page.body.kyc.phone.send': 'SEND CODE',
-  'page.body.kyc.phone.resend': 'RESEND CODE',
-  'page.body.kyc.identity.firstName': 'First Name',
-  'page.body.kyc.identity.lastName': 'Last Name',
-  'page.body.kyc.identity.dateOfBirth': 'Date of Birth DD/MM/YYYY',
-  'page.body.kyc.identity.residentialAddress': 'Residential Address',
-  'page.body.kyc.identity.city': 'City',
-  'page.body.kyc.identity.postcode': 'Postcode',
-  'page.body.kyc.identity.nationality': 'Citizenship',
-  'page.body.kyc.identity.CoR': 'Country of Residence',
-  'page.body.kyc.documents.expiryDate': 'Expiration Date DD/MM/YYYY',
-  'page.body.kyc.documents.drag': 'Drag and drop or browse files',
-  'page.body.kyc.documents.maxFile': 'Maximum file size is 10MB',
-  'page.body.kyc.documents.maxNum': 'Maximum number of files is 5',
-  'page.body.kyc.documents.upload': 'Upload your Photo ID',
-  'page.body.kyc.documents.select.passport': 'Passport',
-  'page.body.kyc.documents.select.identityCard': 'Identity Card',
-  'page.body.kyc.documents.select.driverLicense': 'Driver License',
-  'page.body.kyc.documents.select.utilityBill': 'Utility Bill',
-  'page.body.kyc.documents.number': ': Number',
-  'page.body.kyc.documentsType': 'Document type',
-
-  'page.body.kyc.next': 'Next',
-  'page.body.kyc.submit': 'Submit',
-  'page.body.kyc.head.phone': 'Phone Verification',
-  'page.body.kyc.head.identity': 'Identity Verification',
-  'page.body.kyc.head.document': 'Document Verification',
-
-  'page.body.lock.oops': 'Oops!',
-  'page.body.lock.expired': 'It seems your trial has expired',
-  'page.body.lock.license': 'It seems your license key is invalid',
-  'page.body.lock.visit': 'Visit',
-
-  'page.footer.legalDocuments': 'Legal documents',
-  'page.footer.faq': 'FAQ',
-
-  'page.header.signIn': 'Sign In',
-  'page.header.signIn.email': 'Email',
-  'page.header.signIn.password': 'Password',
-  'page.header.signIn.password.message.error': 'Password is invalid',
-  'page.header.signIn.receiveConfirmation':
-      'Didn\'t receive your confirmation email?',
-  'page.header.signIn.forgotPassword': 'Forgot your password?',
-  'page.header.signIn.resetPassword.title': 'Reset password',
-  'page.header.signIn.resetPassword.newPassword': 'New password',
-  'page.header.signIn.resetPassword.repeatPassword': 'Repeat password',
-  'page.header.signIn.resetPassword.button': 'Change',
-  'page.header.signIn.resetPassword.error': 'Fields are empty or don`t matches',
-
-  'page.header.signUp': 'Sign Up',
-  'page.header.signUp.email': 'Email',
-  'page.header.signUp.email.message.error': 'Email is invalid',
-  'page.header.signUp.password': 'Password',
-  'page.header.signUp.password.message.error':
-      'Password must contain at least 8 characters, at least one capital letter and one digit',
-  'page.header.signUp.confirmPassword': 'Confirm Password',
-  'page.header.signUp.confirmPassword.message.error': 'Passwords don\'t match',
-  'page.header.signUp.referalCode': 'Referral Code',
-  'page.header.signUp.terms': 'I have read and agree to the Terms of Service',
-  'page.header.signUp.modal.header': 'VERIFY YOUR EMAIL ADDRESS',
-  'page.header.signUp.modal.body': 'To complete registration, check for an ' +
-      'email in your inbox with further ' +
-      'instruction. If you cannot find the email, ' +
-      'please check your spam folder',
-  'page.header.signUp.modal.footer': 'OK',
-  'page.header.signUp.strength.password': 'Password Strength',
-  'page.header.signUp.password.too.weak': 'TOO WEAK',
-  'page.header.signUp.password.weak': 'WEAK',
-  'page.header.signUp.password.good': 'GOOD',
-  'page.header.signUp.password.strong': 'STRONG',
-  'page.header.signUp.password.very.strong': 'VERY STRONG',
-  'page.resendConfirmation': 'Resend Confirmation',
-  'page.forgotPassword': 'Forgot Password',
-  'page.forgotPassword.message': 'Enter email to reset password',
-  'page.password2fa': '2FA verification',
-  'page.password2fa.message': 'Enter 2fa code from the app',
-  'page.forgotPassword.email': 'Email',
-  'page.forgotPassword.send': 'Send',
-  'page.noDataToShow': 'There is no data to show',
-
-  'page.modal.withdraw.success': 'Success!',
-  'page.modal.withdraw.success.message.content':
-      'Your withdrawal request has been received',
-  'page.modal.withdraw.success.button': 'OK',
-
-  'page.modal.expired.title': 'Your session has expired',
-  'page.modal.expired.submit': 'Log in again',
-
-  /* Customization */
-  'page.body.customization.tabs.themes': 'Colors',
-  'page.body.customization.tabs.fonts': 'Fonts',
-  'page.body.customization.tabs.spacing': 'Spacing',
-  'page.body.customization.tabs.images': 'Images',
-  'page.body.customization.comingSoon': 'Coming Soon',
-  'page.body.customization.actionButtons.reset': 'Reset',
-  'page.body.customization.actionButtons.save': 'Save',
-
-  'page.body.customization.themes.selector.label': 'Theme Presets',
-
-  'page.body.customization.themes.color.mainBackgroundColor': 'Main background',
-  'page.body.customization.themes.color.bodyBackgroundColor': 'Body background',
-  'page.body.customization.themes.color.headerBackgroundColor':
-      'Header background',
-  'page.body.customization.themes.color.subheaderBackgroundColor':
-      'Subheader background',
-  'page.body.customization.themes.color.dropdownBackgroundColor':
-      'Dropdown background',
-  'page.body.customization.themes.color.icon': 'Icons',
-  'page.body.customization.themes.color.primaryCtaColor':
-      'Primary Call to action',
-  'page.body.customization.themes.color.contrastCtaColor':
-      'Contrast Call to action',
-  'page.body.customization.themes.color.secondaryContrastCtaColor':
-      'Secondary Contrast CTA',
-  'page.body.customization.themes.color.ctaLayerColor': 'CTA Layer',
-  'page.body.customization.themes.color.systemGreen': 'System Green',
-  'page.body.customization.themes.color.systemRed': 'System Red',
-  'page.body.customization.themes.color.systemYellow': 'System Yellow',
-  'page.body.customization.themes.color.asks': 'Asks color',
-  'page.body.customization.themes.color.bids': 'Bids color',
-  'page.body.customization.themes.color.primaryTextColor': 'Primary text',
-  'page.body.customization.themes.color.textContrastColor': 'Text contrast',
-  'page.body.customization.themes.color.inputBackgroundColor':
-      'Input background',
-  'page.body.customization.themes.color.dividerColor': 'Divider color',
-  'page.body.customization.themes.color.shadowColor': 'Shadow color',
-  'page.body.customization.themes.color.landingBackgroundColor':
-      'Landing background',
-  'page.body.customization.themes.color.strengthMeterVeryStrong':
-      'Password very strong',
-
-  'page.body.customization.themes.theme.darkBlue.title': 'Dark blue',
-  'page.body.customization.themes.theme.darkRed.title': 'Dark red',
-  'page.body.customization.themes.theme.purple.title': 'Purple',
-  'page.body.customization.themes.theme.green.title': 'Green',
+  'beneficiary.screen.field.bank_inter_desc': 'Description',
+  'beneficiary.screen.required_error': 'This field is required',
+  'beneficiary.screen.button.submit': 'Submit',
 
   // success messages
   'success.documents.accepted': 'Documents upload was successful',

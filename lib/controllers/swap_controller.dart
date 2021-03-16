@@ -310,7 +310,7 @@ class SwapController extends GetxController {
       resetSwapForm();
       Get.back();
       snackbarController = new SnackbarController(
-          title: 'Success', message: 'account.exchanges.exchange.success');
+          title: 'Success', message: 'account.exchanges.exchange.success'.tr);
       snackbarController.showSnackbar();
     } catch (error) {
       Get.back();

@@ -56,8 +56,7 @@ class RegisterController extends GetxController {
         'email': email,
         'lang': 'en',
       };
-      var response =
-          await _authRepository.resendVerificationCode(requestObject);
+      await _authRepository.resendVerificationCode(requestObject);
       Get.back();
     } catch (error) {
       Get.back();

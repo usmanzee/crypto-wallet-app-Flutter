@@ -593,7 +593,7 @@ class VerificationController extends GetxController {
       codeSent = true;
       Get.back();
       snackbarController = new SnackbarController(
-          title: 'Success', message: 'success.phone.verification.send');
+          title: 'Success', message: 'success.phone.verification.send'.tr);
       snackbarController.showSnackbar();
     } catch (error) {
       Get.back();
@@ -615,7 +615,7 @@ class VerificationController extends GetxController {
       print(response);
       Get.back();
       snackbarController = new SnackbarController(
-          title: 'Success', message: 'success.phone.verification.send');
+          title: 'Success', message: 'success.phone.verification.send'.tr);
       snackbarController.showSnackbar();
     } catch (error) {
       Get.back();
@@ -639,7 +639,7 @@ class VerificationController extends GetxController {
       print(response);
       Get.back();
       snackbarController = new SnackbarController(
-          title: 'Success', message: 'success.phone.confirmed');
+          title: 'Success', message: 'success.phone.confirmed'.tr);
       snackbarController.showSnackbar();
     } catch (error) {
       Get.back();
@@ -670,7 +670,7 @@ class VerificationController extends GetxController {
       print(response);
       Get.back();
       snackbarController = new SnackbarController(
-          title: 'Success', message: 'success.identity.accepted');
+          title: 'Success', message: 'success.identity.accepted'.tr);
       snackbarController.showSnackbar();
     } catch (error) {
       Get.back();
@@ -733,7 +733,7 @@ class VerificationController extends GetxController {
       Get.back();
       Get.back();
       snackbarController = new SnackbarController(
-          title: 'Success', message: 'success.documents.accepted');
+          title: 'Success', message: 'success.documents.accepted'.tr);
       snackbarController.showSnackbar();
     } catch (error) {
       Get.back();

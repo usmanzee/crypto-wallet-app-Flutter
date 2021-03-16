@@ -68,8 +68,8 @@ class OTPController extends GetxController {
       homeController.user.value.otp = true;
       Get.back();
       Get.back();
-      snackbarController =
-          new SnackbarController(title: 'Success', message: 'Otp Enabled');
+      snackbarController = new SnackbarController(
+          title: 'Success', message: 'success.otp.enabled'.tr);
       snackbarController.showSnackbar();
     } catch (error) {
       Get.back();
@@ -86,8 +86,8 @@ class OTPController extends GetxController {
       homeController.user.value.otp = false;
       homeController.user.refresh();
       Get.back();
-      snackbarController =
-          new SnackbarController(title: 'Success', message: 'Otp disabled');
+      snackbarController = new SnackbarController(
+          title: 'Success', message: 'success.otp.disabled'.tr);
       snackbarController.showSnackbar();
 
       disablingOTP(false);

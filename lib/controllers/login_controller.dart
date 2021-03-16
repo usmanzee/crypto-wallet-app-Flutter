@@ -75,7 +75,7 @@ class LoginController extends GetxController {
           Get.back();
         }
         snackbarController =
-            new SnackbarController(title: 'Error', message: 'Logged In.');
+            new SnackbarController(title: 'Error', message: 'logged_in'.tr);
         snackbarController.showSnackbar();
       }
     } catch (error) {

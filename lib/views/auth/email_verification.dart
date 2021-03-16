@@ -38,19 +38,6 @@ class EmailVerification extends GetView<RegisterController> {
                           children: <Widget>[
                             Image.asset("assets/image/b4u_wallet_logo.png",
                                 height: 50.0),
-                            // Padding(
-                            //   padding:
-                            //       const EdgeInsets.only(left: 17.0, top: 7.0),
-                            //   child: Text(
-                            //     "Crypto",
-                            //     style: TextStyle(
-                            //         fontFamily: "Sans",
-                            //         color: Colors.white,
-                            //         fontSize: 27.0,
-                            //         fontWeight: FontWeight.w300,
-                            //         letterSpacing: 3.5),
-                            //   ),
-                            // ),
                           ],
                         ),
                       ),
@@ -64,24 +51,25 @@ class EmailVerification extends GetView<RegisterController> {
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  const ListTile(
+                                  ListTile(
                                     title: Text(
-                                      'Verify Your Email Address',
+                                      'verify_email.screen.title'.tr,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold),
                                     ),
                                     subtitle: Padding(
                                       padding: EdgeInsets.fromLTRB(0, 16, 0, 8),
-                                      child: Text(
-                                          'To complete registration, check for an email in your inbox with further instruction. If you cannot find the email, please check your spam folder.'),
+                                      child:
+                                          Text('verify_email.screen.desc'.tr),
                                     ),
                                   ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: <Widget>[
                                       TextButton(
-                                        child:
-                                            const Text('Resend Confirmation'),
+                                        child: Text(
+                                            'verify_email.screen.button.resend'
+                                                .tr),
                                         style: TextButton.styleFrom(
                                           primary:
                                               Theme.of(context).primaryColor,
