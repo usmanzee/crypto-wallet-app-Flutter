@@ -1,54 +1,26 @@
 import 'package:crypto_template/component/no_data.dart';
-import 'package:crypto_template/controllers/transaction_history_controller.dart';
-import 'package:crypto_template/controllers/wallet_controller.dart';
-import 'package:crypto_template/models/deposit_histroy_response.dart';
-import 'package:flutter/material.dart';
-import 'package:crypto_template/models/wallet.dart' as WalletClass;
-import 'package:get/get.dart';
-import 'package:crypto_template/views/webview_container.dart';
+import 'package:crypto_template/controllers/history_controller.dart';
+import 'package:crypto_template/models/withdraw_history_response.dart';
 import 'package:crypto_template/utils/Helpers/helper.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class DepositHistoryList extends StatelessWidget {
-  final WalletClass.Wallet wallet;
-  final TransactionHistoryController transactionHistoryController;
-  DepositHistoryList({this.wallet})
-      : transactionHistoryController = Get.put(TransactionHistoryController(
-            currency: wallet.currency != null ? wallet.currency : ''));
-
-  final WalletController walletController = Get.find<WalletController>();
-  void _handleURLButtonPress(String currency, String txid) {
-    String blockchainLink = getBlockchainLink(currency, txid);
-    Get.to(WebViewContainer('Explorer', blockchainLink));
-  }
-
-  String getBlockchainLink(currency, txid) {
-    var wallets = walletController.walletsList;
-    WalletClass.Wallet currencyInfo =
-        wallets.firstWhere((wallet) => wallet.currency == currency);
-    if (currencyInfo != null) {
-      if ((txid != '' && txid != null) &&
-          (currencyInfo.explorerTransaction != '' &&
-              currencyInfo.explorerTransaction != null)) {
-        var bLink =
-            currencyInfo.explorerTransaction.replaceFirst('#{txid}', txid);
-        return bLink;
-      }
-    }
-    return '';
-  }
-
+class WithdrawHistory extends StatelessWidget {
+  final blockChainLink;
+  WithdrawHistory({this.blockChainLink});
+  final HistoryController historyController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (transactionHistoryController.isLoading.value)
+      if (historyController.isWithdrawHistoryLoading.value)
         return Container(
             width: double.infinity,
             height: 200,
             alignment: Alignment.center,
             child: CircularProgressIndicator());
       else
-        return transactionHistoryController.depositHistory.isEmpty
+        return historyController.withdrawHistory.isEmpty
             ? NoData()
             : Container(
                 child: ListView.builder(
@@ -56,37 +28,45 @@ class DepositHistoryList extends StatelessWidget {
                 primary: false,
                 padding: EdgeInsets.only(top: 0.0),
                 itemBuilder: (ctx, i) {
-                  return _depositHistoryList(
+                  return _withdrawHistoryList(
                     context,
-                    transactionHistoryController.depositHistory[i],
+                    historyController.withdrawHistory[i],
                   );
                 },
-                itemCount: transactionHistoryController.depositHistory.length,
+                itemCount: historyController.withdrawHistory.length,
               ));
     });
   }
 
-  Widget _depositHistoryList(
-      BuildContext context, DepositHistoryResponse depositHistoryItem) {
+  Widget _withdrawHistoryList(
+      BuildContext context, WithdrawHistoryResponse withdrawHistoryItem) {
     Color _color;
     IconData _icon;
-    if (depositHistoryItem.state == 'canceled' ||
-        depositHistoryItem.state == 'rejected') {
+    if (withdrawHistoryItem.state == 'canceled' ||
+        withdrawHistoryItem.state == 'rejected' ||
+        withdrawHistoryItem.state == 'failed' ||
+        withdrawHistoryItem.state == 'errored') {
       _color = Colors.redAccent.withOpacity(0.75);
       _icon = Icons.close;
-    } else if (depositHistoryItem.state == 'accepted' ||
-        depositHistoryItem.state == 'skipped' ||
-        depositHistoryItem.state == 'collected') {
+    } else if (withdrawHistoryItem.state == 'accepted' ||
+        withdrawHistoryItem.state == 'skipped' ||
+        withdrawHistoryItem.state == 'collected' ||
+        withdrawHistoryItem.state == 'succeed' ||
+        withdrawHistoryItem.state == 'confirming') {
       _color = Color(0xFF2ebd85);
       _icon = Icons.check;
+    } else {
+      _color = Theme.of(context).accentColor;
+      _icon = Icons.autorenew;
     }
     String formatedDate =
-        DateFormat('yyyy-MM-dd').format(depositHistoryItem.createdAt);
+        DateFormat('yyyy-MM-dd').format(withdrawHistoryItem.createdAt);
     String formatedTime =
-        DateFormat('hh:mm:ss').format(depositHistoryItem.createdAt);
+        DateFormat('hh:mm:ss').format(withdrawHistoryItem.createdAt);
+
     return InkWell(
       onTap: () {
-        _depositHistoryDetail(context, depositHistoryItem, _color, _icon,
+        _withdrawHistoryDetail(context, withdrawHistoryItem, _color, _icon,
             formatedDate, formatedTime);
       },
       child: Padding(
@@ -130,7 +110,7 @@ class DepositHistoryList extends StatelessWidget {
                           fontFamily: "Popins",
                         ),
                       ),
-                      // Text(depositHistoryItem.state,
+                      // Text(withdrawHistoryItem.state,
                       //     style:
                       //         TextStyle(fontFamily: "Popins", fontSize: 13.0))
                     ],
@@ -143,19 +123,15 @@ class DepositHistoryList extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 Text(
-                  depositHistoryItem.amount,
+                  withdrawHistoryItem.amount,
                   style: TextStyle(
                       fontSize: 19.5,
-                      letterSpacing: 1.6,
                       fontFamily: "Popins",
                       fontWeight: FontWeight.w600,
                       color: _color),
                 ),
-                Text(depositHistoryItem.currency.toUpperCase(),
-                    style: TextStyle(
-                        letterSpacing: 1.1,
-                        fontFamily: "Popins",
-                        fontSize: 13.0))
+                Text(withdrawHistoryItem.currency.toUpperCase(),
+                    style: TextStyle(fontFamily: "Popins", fontSize: 13.0))
               ],
             ),
           ],
@@ -164,15 +140,20 @@ class DepositHistoryList extends StatelessWidget {
     );
   }
 
-  void _depositHistoryDetail(context, DepositHistoryResponse depositHistoryItem,
-      Color _color, IconData _icon, String formatedDate, String formatedTime) {
-    bool isButtonEnabled =
-        depositHistoryItem.txid != null && depositHistoryItem.txid != '';
+  void _withdrawHistoryDetail(
+      context,
+      WithdrawHistoryResponse withdrawHistoryItem,
+      Color _color,
+      IconData _icon,
+      String formatedDate,
+      String formatedTime) {
+    bool isButtonEnabled = withdrawHistoryItem.blockchainTxid != null &&
+        withdrawHistoryItem.blockchainTxid != '';
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
           return Container(
-            padding: EdgeInsets.all(16),
+            padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
             child: new Wrap(
               children: <Widget>[
                 Padding(
@@ -190,7 +171,7 @@ class DepositHistoryList extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      depositHistoryItem.amount,
+                      withdrawHistoryItem.amount,
                       style: TextStyle(
                           fontFamily: "Popins",
                           fontSize: 24,
@@ -201,7 +182,7 @@ class DepositHistoryList extends StatelessWidget {
                       width: 4.0,
                     ),
                     Text(
-                      depositHistoryItem.currency.toUpperCase(),
+                      withdrawHistoryItem.currency.toUpperCase(),
                       style: TextStyle(
                         fontFamily: "Popins",
                         fontWeight: FontWeight.w600,
@@ -232,7 +213,7 @@ class DepositHistoryList extends StatelessWidget {
                       width: 4.0,
                     ),
                     Text(
-                      depositHistoryItem.state,
+                      withdrawHistoryItem.state,
                       style: TextStyle(
                           fontFamily: "Popins", fontSize: 18.0, color: _color),
                     )
@@ -256,7 +237,31 @@ class DepositHistoryList extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(right: 24),
                       child: Text(
-                        "wallet_deposit_history.screen.transaction_fee".tr,
+                        "wallet_withdraw_history.screen.address".tr,
+                        style: TextStyle(
+                            color: Theme.of(context).hintColor.withOpacity(0.5),
+                            fontFamily: "Popins",
+                            fontSize: 15.5),
+                      ),
+                    ),
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          withdrawHistoryItem.rid,
+                          style: TextStyle(fontFamily: "Popins"),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(right: 24),
+                      child: Text(
+                        "wallet_withdraw_history.screen.transaction_fee".tr,
                         style: TextStyle(
                             color: Theme.of(context).hintColor.withOpacity(0.5),
                             fontFamily: "Popins",
@@ -266,7 +271,7 @@ class DepositHistoryList extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerRight,
                       child: Text(
-                        depositHistoryItem.fee,
+                        withdrawHistoryItem.fee,
                         style: TextStyle(fontFamily: "Popins"),
                       ),
                     ),
@@ -278,7 +283,7 @@ class DepositHistoryList extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(right: 24),
                       child: Text(
-                        "wallet_deposit_history.screen.txid".tr,
+                        "wallet_withdraw_history.screen.txid".tr,
                         style: TextStyle(
                             color: Theme.of(context).hintColor.withOpacity(0.5),
                             fontFamily: "Popins",
@@ -289,7 +294,10 @@ class DepositHistoryList extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.centerRight,
                         child: Text(
-                          depositHistoryItem.txid,
+                          (withdrawHistoryItem.blockchainTxid != null &&
+                                  withdrawHistoryItem.blockchainTxid != ''
+                              ? withdrawHistoryItem.blockchainTxid
+                              : '---'),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(fontFamily: "Popins"),
@@ -304,7 +312,7 @@ class DepositHistoryList extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(right: 24),
                       child: Text(
-                        "wallet_deposit_history.screen.date".tr,
+                        "wallet_withdraw_history.screen.date".tr,
                         style: TextStyle(
                             color: Theme.of(context).hintColor.withOpacity(0.5),
                             fontFamily: "Popins",
@@ -323,7 +331,7 @@ class DepositHistoryList extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(top: 16.0),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       RawMaterialButton(
                         disabledElevation: 1,
@@ -333,12 +341,12 @@ class DepositHistoryList extends StatelessWidget {
                                 .scaffoldBackgroundColor
                                 .withOpacity(0.5),
                         onPressed: isButtonEnabled
-                            ? () =>
-                                Helper.copyToClipBoard(depositHistoryItem.txid)
+                            ? () => Helper.copyToClipBoard(
+                                withdrawHistoryItem.blockchainTxid)
                             : null,
                         child: Center(
                             child: Text(
-                          "wallet_deposit_history.screen.button.copy_txid".tr,
+                          "wallet_withdraw_history.screen.button.copy_txid".tr,
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontFamily: "Popins",
@@ -346,22 +354,18 @@ class DepositHistoryList extends StatelessWidget {
                               fontSize: 16.0),
                         )),
                       ),
-                      SizedBox(
-                        width: 8,
-                      ),
                       RawMaterialButton(
                         disabledElevation: 1,
                         fillColor: isButtonEnabled
                             ? Theme.of(context).primaryColor
                             : Theme.of(context).primaryColor.withOpacity(0.5),
                         onPressed: isButtonEnabled
-                            ? () => _handleURLButtonPress(
-                                depositHistoryItem.currency,
-                                depositHistoryItem.txid)
+                            ? () => blockChainLink(withdrawHistoryItem.currency,
+                                withdrawHistoryItem.blockchainTxid)
                             : null,
                         child: Center(
                             child: Text(
-                          "wallet_deposit_history.screen.button.check_explorer"
+                          "wallet_withdraw_history.screen.button.check_explorer"
                               .tr,
                           style: TextStyle(
                               color: Colors.white,

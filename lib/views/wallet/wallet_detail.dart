@@ -1,5 +1,3 @@
-import 'package:crypto_template/controllers/transaction_history_controller.dart';
-import 'package:crypto_template/controllers/wallet_controller.dart';
 import 'package:crypto_template/views/wallet/deposit/crypto.dart';
 import 'package:crypto_template/views/wallet/deposit/fiat.dart';
 import 'package:crypto_template/views/wallet/history/deposit_history_list.dart';
@@ -13,12 +11,7 @@ import 'package:crypto_template/views/wallet/wallet_amount_header.dart';
 import 'package:flutter/services.dart';
 
 class WalletDetail extends StatelessWidget {
-  final WalletClass.Wallet wallet;
-  final WalletController walletController = Get.find<WalletController>();
-  final TransactionHistoryController transactionHistoryController;
-  WalletDetail({Key key, this.wallet})
-      : transactionHistoryController =
-            Get.put(TransactionHistoryController(currency: wallet.currency));
+  final WalletClass.Wallet wallet = Get.arguments['wallet'];
 
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -52,12 +45,18 @@ class WalletDetail extends StatelessWidget {
                         length: 2,
                         child: Scaffold(
                           appBar: PreferredSize(
-                            preferredSize: Size.fromHeight(
-                                40.0), // here the desired height
+                            preferredSize: Size.fromHeight(40.0),
                             child: AppBar(
-                              backgroundColor: Theme.of(context).canvasColor,
-                              elevation: 2,
+                              backgroundColor:
+                                  Theme.of(context).scaffoldBackgroundColor,
+                              elevation: 0,
                               centerTitle: true,
+                              bottom: PreferredSize(
+                                  child: Container(
+                                    color: Theme.of(context).canvasColor,
+                                    height: 2.0,
+                                  ),
+                                  preferredSize: Size.fromHeight(4.0)),
                               flexibleSpace: SafeArea(
                                 child: Container(
                                   child: Padding(
@@ -65,7 +64,7 @@ class WalletDetail extends StatelessWidget {
                                     child: new TabBar(
                                       indicator: UnderlineTabIndicator(
                                           borderSide: BorderSide(
-                                            width: 2,
+                                            width: 4,
                                             color:
                                                 Theme.of(context).primaryColor,
                                           ),
@@ -84,16 +83,20 @@ class WalletDetail extends StatelessWidget {
                                           child: Text(
                                             "wallet_detail.screen.tabs.deposit_history"
                                                 .tr,
-                                            style:
-                                                TextStyle(fontFamily: "Popins"),
+                                            style: TextStyle(
+                                                fontFamily: "Popins",
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16.0),
                                           ),
                                         ),
                                         new Tab(
                                           child: Text(
                                             "wallet_detail.screen.tabs.withdraw_history"
                                                 .tr,
-                                            style:
-                                                TextStyle(fontFamily: "Popins"),
+                                            style: TextStyle(
+                                                fontFamily: "Popins",
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16.0),
                                           ),
                                         )
                                       ],
@@ -102,6 +105,18 @@ class WalletDetail extends StatelessWidget {
                                 ),
                               ),
                               automaticallyImplyLeading: false,
+                              actions: <Widget>[
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed('/history');
+                                  },
+                                  child: Icon(
+                                    Icons.history_edu,
+                                    color: Theme.of(context).textSelectionColor,
+                                    size: 30.0,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           body: Padding(

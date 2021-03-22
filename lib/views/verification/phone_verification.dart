@@ -3,11 +3,19 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:crypto_template/controllers/verification_controller.dart';
 import 'package:get/get.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 class PhoneVerification extends StatelessWidget {
   final GlobalKey<FormState> _phoneFormKey = GlobalKey();
   final GlobalKey<FormState> _pinFormKey = GlobalKey();
   final VerificationController verificationController = Get.find();
+
+  final _phoneValidator = MultiValidator([
+    LengthRangeValidator(
+        min: 10,
+        max: 10,
+        errorText: 'identification.screen.phone.phone.error'.tr)
+  ]);
 
   final _pinCodeValidator = MultiValidator([
     LengthRangeValidator(
@@ -42,14 +50,12 @@ class PhoneVerification extends StatelessWidget {
               child: Column(children: [
                 IntlPhoneField(
                   controller: verificationController.phoneTextController,
-                  // dropdownDecoration: BoxDecoration(
-                  //   border: Border.all(color: Theme.of(context).hintColor, width: 1),
-                  // ),
+                  autoValidate: false,
+                  validator: _phoneValidator,
+                  searchText:
+                      'identification.screen.phone.field.search.country'.tr,
                   decoration: InputDecoration(
                     labelText: 'identification.screen.phone.field.phone'.tr,
-                    // border: OutlineInputBorder(
-                    //   borderSide: BorderSide(),
-                    // ),
                   ),
                   initialCountryCode: 'PK',
                   onChanged: (phone) {
@@ -81,6 +87,7 @@ class PhoneVerification extends StatelessWidget {
             )
           else
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(
                   child: Text('identification.screen.phone.alert'.tr,
@@ -122,28 +129,78 @@ class PhoneVerification extends StatelessWidget {
                   ),
                 ]),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0),
-                  child: Form(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    key: _pinFormKey,
-                    child: TextFormField(
-                      obscureText: false,
-                      autofocus: true,
-                      keyboardType: TextInputType.number,
-                      validator: _pinCodeValidator,
-                      controller: verificationController.pinCodeTextController,
-                      decoration: InputDecoration(
-                          errorStyle: TextStyle(
-                            fontSize: 13.5,
-                          ),
-                          errorMaxLines: 3,
-                          filled: true,
-                          fillColor: Colors.transparent,
-                          labelText: 'identification.screen.phone.field.pin'.tr,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5))),
+                  padding: EdgeInsets.only(bottom: 8.0),
+                  child: Text(
+                    'identification.screen.phone.field.pin'.tr,
+                    style: TextStyle(
+                      color: Theme.of(context).hintColor.withOpacity(0.7),
+                      fontFamily: "Popins",
                     ),
                   ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: Form(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      key: _pinFormKey,
+                      child: PinCodeTextField(
+                        appContext: context,
+                        autoFocus: true,
+                        pastedTextStyle: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textStyle: TextStyle(
+                          color: Theme.of(context).textSelectionColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        length: 5,
+                        obscureText: false,
+                        animationType: AnimationType.fade,
+                        pinTheme: PinTheme(
+                          shape: PinCodeFieldShape.box,
+                          inactiveColor:
+                              Theme.of(context).hintColor.withOpacity(0.6),
+                          borderWidth: 1,
+                          borderRadius: BorderRadius.circular(5),
+                          fieldHeight: 50,
+                          fieldWidth: 40,
+                          selectedColor: Theme.of(context).primaryColor,
+                          activeColor: Theme.of(context).textSelectionColor,
+                        ),
+                        cursorColor: Theme.of(context).textSelectionColor,
+                        animationDuration: Duration(milliseconds: 300),
+                        backgroundColor:
+                            Theme.of(context).scaffoldBackgroundColor,
+                        controller:
+                            verificationController.pinCodeTextController,
+                        autoDisposeControllers: false,
+                        keyboardType: TextInputType.number,
+                        validator: _pinCodeValidator,
+                        onCompleted: (v) {},
+                        onChanged: (value) {},
+                        beforeTextPaste: (text) {
+                          return true;
+                        },
+                      )
+                      // TextFormField(
+                      //   obscureText: false,
+                      //   autofocus: true,
+                      //   keyboardType: TextInputType.number,
+                      //   validator: _pinCodeValidator,
+                      //   controller: verificationController.pinCodeTextController,
+                      //   decoration: InputDecoration(
+                      //       errorStyle: TextStyle(
+                      //         fontSize: 13.5,
+                      //       ),
+                      //       errorMaxLines: 3,
+                      //       filled: true,
+                      //       fillColor: Colors.transparent,
+                      //       labelText: 'identification.screen.phone.field.pin'.tr,
+                      //       border: OutlineInputBorder(
+                      //           borderRadius: BorderRadius.circular(5))),
+                      // ),
+                      ),
                 ),
                 Obx(() {
                   return Row(

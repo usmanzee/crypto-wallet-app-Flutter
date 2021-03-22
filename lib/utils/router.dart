@@ -9,6 +9,7 @@ import 'package:crypto_template/bindings/swap_history_binding.dart';
 import 'package:crypto_template/bindings/verification_binding.dart';
 import 'package:crypto_template/bindings/wallet_search_binding.dart';
 import 'package:crypto_template/views/DetailCryptoValue/market_detail.dart';
+import 'package:crypto_template/views/history/history.dart';
 import 'package:crypto_template/views/home/splash.dart';
 import 'package:crypto_template/views/home/on_boarding.dart';
 import 'package:crypto_template/views/auth/email_verification.dart';
@@ -24,6 +25,7 @@ import 'package:crypto_template/views/swap/swap.dart';
 import 'package:crypto_template/views/swap/swap_histroy.dart';
 import 'package:crypto_template/views/verification/verification.dart';
 import 'package:crypto_template/views/verification/verification_level.dart';
+import 'package:crypto_template/views/wallet/wallet_detail.dart';
 import 'package:crypto_template/views/wallet/wallet_search.dart';
 import 'package:get/get.dart';
 
@@ -81,6 +83,10 @@ class Router {
       page: () => BottomNavBar(),
     ),
     GetPage(
+      name: '/wallet-detail',
+      page: () => WalletDetail(),
+    ),
+    GetPage(
         name: '/wallets-search',
         page: () => WalletSearch(),
         binding: WalletSearchBinding()),
@@ -108,6 +114,10 @@ class Router {
       name: '/profile-verification',
       page: () => Verification(),
       binding: VerificationBinding(),
+    ),
+    GetPage(
+      name: '/history',
+      page: () => History(),
     ),
   ];
 }

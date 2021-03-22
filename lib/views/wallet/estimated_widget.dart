@@ -73,7 +73,7 @@ class EstimatedWidget extends StatelessWidget {
                 minWidth: 120.0,
                 textColor: Theme.of(context).accentColor,
                 child: Text(
-                  "wallets.screen.button.deposit".tr,
+                  "wallets.screen.button.withdraw".tr,
                   style: TextStyle(fontSize: 12),
                 ),
                 onPressed: () {

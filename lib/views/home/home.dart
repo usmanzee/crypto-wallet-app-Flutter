@@ -21,13 +21,14 @@ class Home extends StatelessWidget {
         CarouselSlider(
           options: CarouselOptions(
               viewportFraction: 1,
-              height: 180.0,
+              height: 220.0,
               enlargeCenterPage: true,
               autoPlay: true,
               aspectRatio: 16 / 9,
               autoPlayCurve: Curves.fastOutSlowIn,
               enableInfiniteScroll: true,
               autoPlayAnimationDuration: Duration(milliseconds: 800),
+              scrollDirection: Axis.horizontal,
               onPageChanged: (index, reason) {
                 homeController.currentPos.value = index;
               }),
@@ -39,11 +40,31 @@ class Home extends StatelessWidget {
                     margin: EdgeInsets.symmetric(horizontal: 5.0),
                     decoration: BoxDecoration(color: Colors.amber),
                     child: GestureDetector(
-                        child: Image.network(
-                            post['_embedded']['wp:featuredmedia'][0]
-                                    ['media_details']['sizes']['medium_large']
-                                ['source_url'],
-                            fit: BoxFit.fill),
+                        child:
+                            // Image.network(
+                            //     post['_embedded']['wp:featuredmedia'][0]
+                            //             ['media_details']['sizes']['medium_large']
+                            //         ['source_url'],
+                            //     fit: BoxFit.fill),
+                            Image.network(
+                          post['_embedded']['wp:featuredmedia'][0]
+                                  ['media_details']['sizes']['medium_large']
+                              ['source_url'],
+                          fit: BoxFit.cover,
+                          loadingBuilder: (BuildContext context, Widget child,
+                              ImageChunkEvent loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return Center(
+                              child: CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes !=
+                                        null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                        loadingProgress.expectedTotalBytes
+                                    : null,
+                              ),
+                            );
+                          },
+                        ),
                         onTap: () {
                           Get.to(WebViewContainer('Post', post['link']));
                         }));
@@ -117,19 +138,10 @@ class Home extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            // Text('learn.more'.tr),
-            // MaterialButton(
-            //     child: Text('change lang'),
-            //     onPressed: () {
-            //       Get.updateLocale(Locale('ru', 'RU'));
-            //     }),
-
             Container(
-                height: 205.0,
+                height: 245.0,
                 width: double.infinity,
-                decoration: BoxDecoration(
-                    // borderRadius: BorderRadius.circular(10),
-                    color: Theme.of(context).canvasColor),
+                decoration: BoxDecoration(color: Theme.of(context).canvasColor),
                 child: Obx(() {
                   if (homeController.isLoadingWpPosts.value)
                     return Container(
@@ -309,6 +321,7 @@ class Home extends StatelessWidget {
 
 class Card extends StatelessWidget {
   final FormatedMarket formatedMarket;
+  final MarketController marketController = Get.find<MarketController>();
   final data = [
     0.0,
     0.5,
@@ -332,7 +345,7 @@ class Card extends StatelessWidget {
       padding: const EdgeInsets.only(top: 3.0, bottom: 3.0),
       child: InkWell(
         onTap: () {
-          MarketController marketController = Get.find();
+          // MarketController marketController = Get.find();
           marketController.selectedMarket.value = formatedMarket;
           Get.toNamed('/market-detail');
         },
@@ -377,7 +390,7 @@ class Card extends StatelessWidget {
                                 color: formatedMarket.isPositiveChange
                                     ? Colors.greenAccent
                                     : Colors.redAccent,
-                                fontFamily: "Gotik",
+                                fontFamily: "Popins",
                                 fontSize: 13.5),
                           ),
                           Text(
@@ -398,16 +411,25 @@ class Card extends StatelessWidget {
                 child: Container(
                   height: 30.0,
                   child: new Sparkline(
-                    data: data,
+                    data: !marketController.isSparkLinesLoading.value
+                        ? formatedMarket.sparkLineData
+                        : data,
                     lineWidth: 0.3,
                     fillMode: FillMode.below,
-                    lineColor: Theme.of(context).accentColor,
+                    lineColor: marketController.isSparkLinesLoading.value
+                        ? Theme.of(context).hintColor.withOpacity(0.5)
+                        : Theme.of(context).accentColor,
                     fillGradient: new LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Theme.of(context).accentColor.withOpacity(0.2),
-                        Theme.of(context).accentColor.withOpacity(0.01)
+                        marketController.isSparkLinesLoading.value
+                            ? Theme.of(context).hintColor.withOpacity(0.5)
+                            : Theme.of(context).accentColor.withOpacity(0.2),
+                        marketController.isSparkLinesLoading.value
+                            ? Theme.of(context).hintColor.withOpacity(0.01)
+                            : Theme.of(context).accentColor.withOpacity(0.01),
+                        // Theme.of(context).accentColor.withOpacity(0.01)
                       ],
                     ),
                   ),
@@ -422,8 +444,21 @@ class Card extends StatelessWidget {
 }
 
 class CardLoading extends StatelessWidget {
-  // final gridHome item;
-  // CardLoading(this.item);
+  final data = [
+    0.0,
+    0.5,
+    0.9,
+    1.4,
+    2.2,
+    1.0,
+    3.3,
+    0.0,
+    -0.5,
+    -1.0,
+    -0.5,
+    2.0,
+    4.0
+  ];
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
@@ -437,14 +472,14 @@ class CardLoading extends StatelessWidget {
             color: Theme.of(context).canvasColor,
             boxShadow: [
               BoxShadow(
-                  color: Color(0xFF656565).withOpacity(0.15),
+                  color: Theme.of(context).hintColor.withOpacity(0.5),
                   blurRadius: 1.0,
                   spreadRadius: 1.0,
                   offset: Offset(0.1, 1.0))
             ]),
         child: Shimmer.fromColors(
-          baseColor: Color(0xFF3B4659),
-          highlightColor: Color(0xFF606B78),
+          baseColor: Theme.of(context).hintColor.withOpacity(0.5),
+          highlightColor: Theme.of(context).hintColor.withOpacity(0.5),
           child: Stack(
             children: <Widget>[
               Padding(
@@ -454,7 +489,7 @@ class CardLoading extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      color: Theme.of(context).hintColor,
+                      color: Theme.of(context).hintColor.withOpacity(0.5),
                       height: 20.0,
                       width: 70.0,
                     ),
@@ -469,7 +504,7 @@ class CardLoading extends StatelessWidget {
                             width: 70.0,
                           ),
                           Container(
-                            color: Theme.of(context).hintColor,
+                            color: Theme.of(context).hintColor.withOpacity(0.5),
                             height: 17.0,
                             width: 70.0,
                           ),
@@ -483,17 +518,20 @@ class CardLoading extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: Container(
                   height: 30.0,
-                  // child: new Sparkline(
-                  //   data: item.data,
-                  //   lineWidth: 0.3,
-                  //   fillMode: FillMode.below,
-                  //   lineColor: item.chartColor,
-                  //   fillGradient: new LinearGradient(
-                  //     begin: Alignment.topCenter,
-                  //     end: Alignment.bottomCenter,
-                  //     colors: item.chartColorGradient,
-                  //   ),
-                  // ),
+                  child: new Sparkline(
+                    data: data,
+                    lineWidth: 0.3,
+                    fillMode: FillMode.below,
+                    lineColor: Theme.of(context).hintColor.withOpacity(0.5),
+                    fillGradient: new LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Theme.of(context).hintColor.withOpacity(0.5),
+                        Theme.of(context).hintColor.withOpacity(0.5)
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ],

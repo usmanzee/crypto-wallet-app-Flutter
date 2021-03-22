@@ -4,13 +4,15 @@ import 'package:crypto_template/controllers/web_socket_controller.dart';
 import 'package:crypto_template/models/formated_market.dart';
 import 'package:crypto_template/models/market.dart';
 import 'package:crypto_template/models/market_ticker.dart';
+import 'package:crypto_template/models/sparkline_response.dart';
 import 'package:crypto_template/repository/market_repository.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:web_socket_channel/io.dart';
 
 class MarketController extends GetxController {
-  var isLoading = false.obs;
+  var isLoading = true.obs;
+  var isSparkLinesLoading = false.obs;
   var marketList = List<Market>().obs;
   var marketTickerList = Map<String, MarketTicker>().obs;
   var formatedMarketsList = List<FormatedMarket>().obs;
@@ -30,7 +32,7 @@ class MarketController extends GetxController {
 
   @override
   void onInit() async {
-    isLoading(true);
+    ever(isLoading, isMarketsLoaded);
     await fetchMarkets();
     webSocketController = Get.find<WebSocketController>();
     webSocketController.streamController.value.stream.listen((message) {
@@ -51,19 +53,32 @@ class MarketController extends GetxController {
     super.onReady();
   }
 
+  isMarketsLoaded(isLoading) async {
+    isSparkLinesLoading(true);
+    if (!isLoading && formatedMarketsList.length > 0) {
+      for (var i = 0; i < formatedMarketsList.length; i++) {
+        var data = await getSparkLineData(formatedMarketsList[i]);
+        formatedMarketsList[i].sparkLineData = data;
+        if (i == 3) {
+          isSparkLinesLoading(false);
+        }
+      }
+    }
+    formatedMarketsList.refresh();
+  }
+
   Future<void> fetchMarkets() async {
     MarketRepository _marketRepository = new MarketRepository();
     try {
-      isLoading(true);
+      isLoading.value = true;
       var markets = await _marketRepository.fetchMarkets();
       var marketsTickers = await _marketRepository.fetchMarketsTickers();
       marketList.assignAll(markets);
       marketTickerList.assignAll(marketsTickers);
       formateMarkets(markets, marketsTickers);
-
-      isLoading(false);
+      isLoading.value = false;
     } catch (error) {
-      isLoading(false);
+      isLoading.value = false;
       errorController.handleError(error);
     }
   }
@@ -94,27 +109,28 @@ class MarketController extends GetxController {
             ? priceInUsd = marketLast.toStringAsFixed(2)
             : getBaseUnitPriceInUsd(market.baseUnit, tickers, false);
         var formatedMarket = new FormatedMarket(
-            id: market.id,
-            name: market.name,
-            baseUnit: market.baseUnit,
-            quoteUnit: market.quoteUnit,
-            minPrice: market.minPrice,
-            maxPrice: market.maxPrice,
-            priceInUsd: priceInUsd,
-            amountPrecision: market.amountPrecision,
-            pricePrecision: market.pricePrecision,
-            state: market.state,
-            isPositiveChange: isPositiveChange,
-            buy: tickers[market.id].ticker.buy,
-            sell: tickers[market.id].ticker.sell,
-            low: marketLow,
-            high: marketHigh,
-            open: marketOpen,
-            last: marketLast,
-            volume: marketVolume,
-            avgPrice: tickers[market.id].ticker.avgPrice,
-            priceChangePercent: marketPriceChangePercent,
-            vol: tickers[market.id].ticker.vol);
+          id: market.id,
+          name: market.name,
+          baseUnit: market.baseUnit,
+          quoteUnit: market.quoteUnit,
+          minPrice: market.minPrice,
+          maxPrice: market.maxPrice,
+          priceInUsd: priceInUsd,
+          amountPrecision: market.amountPrecision,
+          pricePrecision: market.pricePrecision,
+          state: market.state,
+          isPositiveChange: isPositiveChange,
+          buy: tickers[market.id].ticker.buy,
+          sell: tickers[market.id].ticker.sell,
+          low: marketLow,
+          high: marketHigh,
+          open: marketOpen,
+          last: marketLast,
+          volume: marketVolume,
+          avgPrice: tickers[market.id].ticker.avgPrice,
+          priceChangePercent: marketPriceChangePercent,
+          vol: tickers[market.id].ticker.vol,
+        );
         if (isPositiveChange) {
           positivemarketsFormatedData.add(formatedMarket);
         } else {
@@ -128,6 +144,18 @@ class MarketController extends GetxController {
     selectedMarketTrading.value = formatedMarketsList[0];
     positiveMarketsList.assignAll(positivemarketsFormatedData);
     negativeMarketsList.assignAll(negativemarketsFormatedData);
+  }
+
+  Future<List<double>> getSparkLineData(FormatedMarket formatedMarket) async {
+    MarketRepository _marketRepository = new MarketRepository();
+    try {
+      SparkLineResponse response =
+          await _marketRepository.fetchMarketSparkLineData(formatedMarket.id);
+      return response.data[0].data;
+    } catch (error) {
+      print('error' + error);
+      return [];
+    }
   }
 
   String getBaseUnitPriceInUsd(

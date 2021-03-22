@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ColorStyle {
-  // static final primaryColor = Color(0xFF45C2DA);
   static final primaryColor = Color(0xFF6F2158);
   // static final background = Color(0xFF191B2A);
   static final secondaryColor = Color(0xFFF58220);

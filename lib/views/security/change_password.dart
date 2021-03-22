@@ -68,6 +68,7 @@ class ChangePassword extends StatelessWidget {
                         label: 'change.password.screen.field.old_password'.tr,
                         obscure: true,
                         keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
                         textAlign: TextAlign.start),
                   ),
                   Padding(
@@ -85,6 +86,7 @@ class ChangePassword extends StatelessWidget {
                         label: 'change.password.screen.field.new_password'.tr,
                         obscure: true,
                         keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.next,
                         textAlign: TextAlign.start),
                   ),
                   Padding(
@@ -111,6 +113,7 @@ class ChangePassword extends StatelessWidget {
                                 .tr,
                         obscure: true,
                         keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.done,
                         textAlign: TextAlign.start),
                   ),
                   Padding(

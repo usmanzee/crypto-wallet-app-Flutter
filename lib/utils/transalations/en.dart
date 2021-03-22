@@ -1,6 +1,8 @@
 const Map<String, String> en = {
   //General Messages
   'copy.to.clipboard': 'Copied to Clipboard',
+  'common_field_error': 'This field is required.',
+  'common_image_field_error': 'This image is required.',
   'logged_in': 'Logged In',
   'logged_out': 'Your login session has expired',
   'no.internet': 'No Internet connection',
@@ -81,9 +83,12 @@ const Map<String, String> en = {
   'referral.screen.referral_copy_link': 'Copy Link',
   'referral.screen.share': 'Share',
 
-  //App Notifications Screen
+  //App Identification Screen
   'identification.screen.title': 'Verification',
+  'identification.screen.phone.field.search.country': 'Search by Country Name',
   'identification.screen.phone.field.phone': 'Phone Number',
+  'identification.screen.phone.phone.error':
+      'Please Enter a valid Mobile Number',
   'identification.screen.phone.button.send_code': 'Send Verification Code',
   'identification.screen.phone.alert': 'Alert',
   'identification.screen.phone.alert.desc':
@@ -93,6 +98,44 @@ const Map<String, String> en = {
   'identification.screen.phone.secs': 'Secs',
   'identification.screen.phone.button.resend': 'Resend Code',
   'identification.screen.phone.button.verify': 'Verify',
+
+  'identification.screen.identity.step1.title': 'Name / DOB',
+  'identification.screen.identity.step1.field.first_name': 'First Name',
+  'identification.screen.identity.step1.field.first_name.error':
+      'This field is required',
+  'identification.screen.identity.step1.field.last_name': 'Last Name',
+  'identification.screen.identity.step1.field.last_name.error':
+      'This field is required',
+  'identification.screen.identity.step1.field.dob': 'Date of Birth',
+  'identification.screen.identity.step1.field.dob.error':
+      'This field is required',
+  'identification.screen.identity.step2.title': 'Country / Nationality',
+  'identification.screen.identity.step3.title': 'Address',
+  'identification.screen.identity.step3.field.address': 'Residential Address',
+  'identification.screen.identity.step3.field.address.error':
+      'This field is required',
+  'identification.screen.identity.step3.field.city': 'City',
+  'identification.screen.identity.step3.field.city.error':
+      'This field is required',
+  'identification.screen.identity.step3.field.post_code': 'Post Code',
+  'identification.screen.identity.step3.field.post_code.error':
+      'This field is required',
+  'identification.screen.identity.button.back': 'Back',
+  'identification.screen.identity.button.next': 'Next',
+
+  'identification.screen.document.field.document_type': 'Document Type',
+  'identification.screen.document.field.document_number': '@document Number',
+  'identification.screen.document.field.document_expiry': '@document Expiry',
+  'identification.screen.document.field.document_picture':
+      'Upload @document Clear Picture',
+  'identification.screen.document.field.utility_bill_picture':
+      'Upload Utility Bill Clear Picture',
+  'identification.screen.document.field.selfie': 'Take a Selfie',
+
+  'identification.screen.document.upload.option.upload_pic': 'Upload Picture',
+  'identification.screen.document.upload.option.camera': 'Camera',
+
+  'identification.screen.document.button.submit': 'Submit',
 
   //App Notifications Screen
   'notifications.screen.title': 'Notifications',
@@ -225,9 +268,9 @@ const Map<String, String> en = {
   'swap.screen.field.from': 'From',
   'swap.screen.field.to': 'To',
   'swap.screen.amount.error1':
-      'The amount has to be lower than @amount @currency',
-  'swap.screen.amount.error2':
       'The amount has to be higher than @amount @currency',
+  'swap.screen.amount.error2':
+      'The amount has to be lower than @amount @currency',
   'swap.screen.amount.error3':
       'Your balance is not enough. Please fund your wallet',
   'swap.screen.available': 'Available',

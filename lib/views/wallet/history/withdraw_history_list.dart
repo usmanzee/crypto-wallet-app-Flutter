@@ -1,7 +1,7 @@
 import 'package:crypto_template/component/no_data.dart';
 import 'package:crypto_template/controllers/transaction_history_controller.dart';
 import 'package:crypto_template/controllers/wallet_controller.dart';
-import 'package:crypto_template/models/withdraw_history.dart';
+import 'package:crypto_template/models/withdraw_history_response.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/models/wallet.dart' as WalletClass;
 import 'package:get/get.dart';
@@ -66,7 +66,7 @@ class WithdrawHistoryList extends StatelessWidget {
   }
 
   Widget _withdrawHistoryList(
-      BuildContext context, WithdrawHistory withdrawHistoryItem) {
+      BuildContext context, WithdrawHistoryResponse withdrawHistoryItem) {
     Color _color;
     IconData _icon;
     if (withdrawHistoryItem.state == 'canceled' ||
@@ -137,9 +137,9 @@ class WithdrawHistoryList extends StatelessWidget {
                           fontFamily: "Popins",
                         ),
                       ),
-                      Text(withdrawHistoryItem.state,
-                          style:
-                              TextStyle(fontFamily: "Popins", fontSize: 13.0))
+                      // Text(withdrawHistoryItem.state,
+                      //     style:
+                      //         TextStyle(fontFamily: "Popins", fontSize: 13.0))
                     ],
                   ),
                 ),
@@ -167,8 +167,13 @@ class WithdrawHistoryList extends StatelessWidget {
     );
   }
 
-  void _withdrawHistoryDetail(context, WithdrawHistory withdrawHistoryItem,
-      Color _color, IconData _icon, String formatedDate, String formatedTime) {
+  void _withdrawHistoryDetail(
+      context,
+      WithdrawHistoryResponse withdrawHistoryItem,
+      Color _color,
+      IconData _icon,
+      String formatedDate,
+      String formatedTime) {
     bool isButtonEnabled = withdrawHistoryItem.blockchainTxid != null &&
         withdrawHistoryItem.blockchainTxid != '';
     showModalBottomSheet(
@@ -178,71 +183,71 @@ class WithdrawHistoryList extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
             child: new Wrap(
               children: <Widget>[
+                Padding(
+                    padding: EdgeInsets.only(bottom: 4),
+                    child: Center(
+                      child: Text(
+                        "wallet_deposit_history.screen.amount".tr,
+                        style: TextStyle(
+                            color: Theme.of(context).hintColor.withOpacity(0.5),
+                            fontFamily: "Popins",
+                            fontSize: 15.5),
+                      ),
+                    )),
                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 4.0),
-                      child: wallet.iconUrl != null
-                          ? Image.network(
-                              wallet.iconUrl,
-                              height: 25.0,
-                              fit: BoxFit.contain,
-                              width: 25.0,
-                            )
-                          : Image.asset(
-                              'assets/image/market/BCH.png',
-                              height: 25.0,
-                              fit: BoxFit.contain,
-                              width: 25.0,
-                            ),
+                    Text(
+                      withdrawHistoryItem.amount,
+                      style: TextStyle(
+                          fontFamily: "Popins",
+                          fontSize: 24,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 1.5),
+                    ),
+                    SizedBox(
+                      width: 4.0,
                     ),
                     Text(
-                      wallet.currency.toUpperCase(),
+                      withdrawHistoryItem.currency.toUpperCase(),
                       style: TextStyle(
                         fontFamily: "Popins",
-                        fontWeight: FontWeight.w800,
-                        fontSize: 20.0,
-                        letterSpacing: 1.5,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18.0,
                       ),
                     )
                   ],
                 ),
-                SizedBox(
-                  height: 32,
-                ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      "wallet_withdraw_history.screen.amount".tr,
-                      style: TextStyle(
-                          color: Theme.of(context).hintColor.withOpacity(0.5),
-                          fontFamily: "Popins",
-                          fontSize: 15.5),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 20.0,
+                      width: 20.0,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(70.0)),
+                        border: Border.all(color: _color),
+                      ),
+                      child: Center(
+                        child: Icon(
+                          _icon,
+                          size: 14,
+                          color: _color,
+                        ),
+                      ),
                     ),
-                    Text(
-                      withdrawHistoryItem.amount,
-                      style: TextStyle(fontFamily: "Popins"),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      "wallet_withdraw_history.screen.status".tr,
-                      style: TextStyle(
-                          color: Theme.of(context).hintColor.withOpacity(0.5),
-                          fontFamily: "Popins",
-                          fontSize: 15.5),
+                    SizedBox(
+                      width: 4.0,
                     ),
                     Text(
                       withdrawHistoryItem.state,
-                      style: TextStyle(fontFamily: "Popins"),
-                    ),
+                      style: TextStyle(
+                          fontFamily: "Popins", fontSize: 18.0, color: _color),
+                    )
                   ],
+                ),
+                SizedBox(
+                  height: 16,
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 16.0),
@@ -256,18 +261,44 @@ class WithdrawHistoryList extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(
-                      "wallet_withdraw_history.screen.address".tr,
-                      style: TextStyle(
-                          color: Theme.of(context).hintColor.withOpacity(0.5),
-                          fontFamily: "Popins",
-                          fontSize: 15.5),
+                    Padding(
+                      padding: EdgeInsets.only(right: 24),
+                      child: Text(
+                        "wallet_withdraw_history.screen.address".tr,
+                        style: TextStyle(
+                            color: Theme.of(context).hintColor.withOpacity(0.5),
+                            fontFamily: "Popins",
+                            fontSize: 15.5),
+                      ),
                     ),
                     Expanded(
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          withdrawHistoryItem.rid,
+                          style: TextStyle(fontFamily: "Popins"),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(right: 24),
                       child: Text(
-                        withdrawHistoryItem.rid,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+                        "wallet_withdraw_history.screen.transaction_fee".tr,
+                        style: TextStyle(
+                            color: Theme.of(context).hintColor.withOpacity(0.5),
+                            fontFamily: "Popins",
+                            fontSize: 15.5),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        withdrawHistoryItem.fee,
                         style: TextStyle(fontFamily: "Popins"),
                       ),
                     ),
@@ -276,23 +307,8 @@ class WithdrawHistoryList extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(
-                      "wallet_withdraw_history.screen.transaction_fee".tr,
-                      style: TextStyle(
-                          color: Theme.of(context).hintColor.withOpacity(0.5),
-                          fontFamily: "Popins",
-                          fontSize: 15.5),
-                    ),
-                    Text(
-                      withdrawHistoryItem.fee,
-                      style: TextStyle(fontFamily: "Popins"),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Flexible(
+                    Padding(
+                      padding: EdgeInsets.only(right: 24),
                       child: Text(
                         "wallet_withdraw_history.screen.txid".tr,
                         style: TextStyle(
@@ -302,14 +318,17 @@ class WithdrawHistoryList extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: Text(
-                        (withdrawHistoryItem.blockchainTxid != null &&
-                                withdrawHistoryItem.blockchainTxid != ''
-                            ? withdrawHistoryItem.blockchainTxid
-                            : '---'),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontFamily: "Popins"),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          (withdrawHistoryItem.blockchainTxid != null &&
+                                  withdrawHistoryItem.blockchainTxid != ''
+                              ? withdrawHistoryItem.blockchainTxid
+                              : '---'),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontFamily: "Popins"),
+                        ),
                       ),
                     ),
                   ],
@@ -317,16 +336,22 @@ class WithdrawHistoryList extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(
-                      "wallet_withdraw_history.screen.date".tr,
-                      style: TextStyle(
-                          color: Theme.of(context).hintColor.withOpacity(0.5),
-                          fontFamily: "Popins",
-                          fontSize: 15.5),
+                    Padding(
+                      padding: EdgeInsets.only(right: 24),
+                      child: Text(
+                        "wallet_withdraw_history.screen.date".tr,
+                        style: TextStyle(
+                            color: Theme.of(context).hintColor.withOpacity(0.5),
+                            fontFamily: "Popins",
+                            fontSize: 15.5),
+                      ),
                     ),
-                    Text(
-                      formatedDate + ' ' + formatedTime,
-                      style: TextStyle(fontFamily: "Popins"),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        formatedDate + ' ' + formatedTime,
+                        style: TextStyle(fontFamily: "Popins"),
+                      ),
                     ),
                   ],
                 ),
@@ -362,7 +387,8 @@ class WithdrawHistoryList extends StatelessWidget {
                             ? Theme.of(context).primaryColor
                             : Theme.of(context).primaryColor.withOpacity(0.5),
                         onPressed: isButtonEnabled
-                            ? () => _handleURLButtonPress(wallet.currency,
+                            ? () => _handleURLButtonPress(
+                                withdrawHistoryItem.currency,
                                 withdrawHistoryItem.blockchainTxid)
                             : null,
                         child: Center(

@@ -15,8 +15,8 @@ class Swap extends StatelessWidget {
   final WalletController walletController = Get.find();
   final HomeController homeController = Get.find();
 
-  final FocusNode _fromFieldfocus = new FocusNode();
-  final FocusNode _toFieldfocus = new FocusNode();
+  // final FocusNode _fromFieldfocus = new FocusNode();
+  // final FocusNode _toFieldfocus = new FocusNode();
   final GlobalKey<FormState> _otpFormKey = GlobalKey<FormState>();
 
   final _twoFAValidator = MultiValidator([
@@ -26,7 +26,7 @@ class Swap extends StatelessWidget {
   ]);
 
   void _onKeyPressed(int key) {
-    if (_fromFieldfocus.hasFocus) {
+    if (swapController.fromFieldfocus.value.hasFocus) {
       if (key == NumericalKeyboard.backspaceKey) {
         if (swapController.fromAmountTextController.text.length > 0) {
           swapController.fromAmountTextController.text =
@@ -35,11 +35,17 @@ class Swap extends StatelessWidget {
         }
       } else {
         if (key == NumericalKeyboard.decimalPoint) {
-          swapController.fromAmountTextController.text += '.';
+          if (!swapController.fromAmountTextController.text.contains('.') &&
+              swapController.fromAmountTextController.text.length > 0) {
+            swapController.fromAmountTextController.text += '.';
+          }
         } else {
           swapController.fromAmountTextController.text += key.toString();
         }
       }
+      swapController.fromAmountTextController.selection =
+          TextSelection.fromPosition(TextPosition(
+              offset: swapController.fromAmountTextController.text.length));
     }
   }
 
@@ -107,11 +113,7 @@ class Swap extends StatelessWidget {
   Widget _otpDisabled(context) {
     return Container(
       padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
-      // height: 125.0,
       width: double.infinity,
-      decoration: BoxDecoration(
-          color: Theme.of(context).canvasColor,
-          borderRadius: BorderRadius.all(Radius.circular(10.0))),
       child: Column(children: <Widget>[
         SizedBox(
           height: 16.0,
@@ -154,11 +156,7 @@ class Swap extends StatelessWidget {
   Widget _accountNotConfirmed(context) {
     return Container(
       padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
-      // height: 125.0,
       width: double.infinity,
-      decoration: BoxDecoration(
-          color: Theme.of(context).canvasColor,
-          borderRadius: BorderRadius.all(Radius.circular(10.0))),
       child: Column(children: <Widget>[
         SizedBox(
           height: 16.0,
@@ -199,7 +197,6 @@ class Swap extends StatelessWidget {
   }
 
   Widget _swapForm(context) {
-    // print(homeController.publicMemberLevel.value.toString());
     return Obx(() {
       if (swapController.isLoading.value)
         return Container(
@@ -313,7 +310,7 @@ class Swap extends StatelessWidget {
                                 color: Theme.of(context).textSelectionColor)),
                         Flexible(
                           child: TextFormField(
-                            focusNode: _fromFieldfocus,
+                            focusNode: swapController.fromFieldfocus.value,
                             controller: swapController.fromAmountTextController,
                             autofocus: true,
                             showCursor: true,
@@ -434,7 +431,7 @@ class Swap extends StatelessWidget {
                                 color: Theme.of(context).textSelectionColor)),
                         Flexible(
                           child: TextFormField(
-                            focusNode: _toFieldfocus,
+                            focusNode: swapController.toFieldfocus.value,
                             cursorColor: Theme.of(context).textSelectionColor,
                             keyboardType: TextInputType.number,
                             showCursor: true,

@@ -4,9 +4,9 @@ import 'package:crypto_template/controllers/error_controller.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_template/models/user.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:crypto_template/repository/auth_repository.dart';
 import 'package:crypto_template/controllers/SnackbarController.dart';
+import 'package:get_storage/get_storage.dart';
 
 class LoginController extends GetxController {
   SnackbarController snackbarController;
@@ -47,7 +47,6 @@ class LoginController extends GetxController {
         requestObject['otp_code'] = twoFATextController.text;
       }
       var userData = await _authRepository.authenticate(requestObject);
-      print(userData);
       Get.back();
       if (userData.state == 'pending') {
         Get.toNamed('/email-verification',
@@ -55,17 +54,15 @@ class LoginController extends GetxController {
       } else {
         Codec<String, String> stringToBase64 = utf8.fuse(base64);
         var userToken = userData.token.split('\n')[0];
-        print(userToken);
         String decoded = stringToBase64.decode(userToken);
         var decodedStrArr = decoded.split(':');
-        print(decodedStrArr);
         homeController.authApiKey.value = decodedStrArr[0];
         homeController.authSecret.value = decodedStrArr[1];
         user.value = userData;
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setBool('loggedIn', true);
-        await prefs.setString('authApiKey', decodedStrArr[0]);
-        await prefs.setString('authSecret', decodedStrArr[1]);
+
+        GetStorage().write('loggedIn', true);
+        GetStorage().write('authApiKey', decodedStrArr[0]);
+        GetStorage().write('authSecret', decodedStrArr[1]);
         homeController.isLoggedIn.value = true;
         homeController.user.value = userData;
         if (loginScreenType == 1) {
@@ -82,22 +79,17 @@ class LoginController extends GetxController {
       print(error);
       Get.back();
       try {
-        var errorResponseObj = error.errorResponse();
-        print(errorResponseObj);
-        if (errorResponseObj['statusCode'] == 401 &&
-            errorResponseObj['originalMessage'] ==
-                'identity.session.missing_otp') {
+        var errorObj = json.decode(error.toString());
+        var statusCode = errorObj['statusCode'];
+        var errors = errorObj['errors'];
+        if (statusCode == 401 &&
+            errors.contains('identity.session.missing_otp')) {
           Get.toNamed('/2fa');
         } else {
-          snackbarController = new SnackbarController(
-              title: 'Error', message: errorResponseObj['message']);
-          snackbarController.showSnackbar();
+          errorController.handleError(error);
         }
       } catch (error) {
-        print(error);
-        snackbarController = new SnackbarController(
-            title: 'Error', message: 'Incorrect data formate from server side');
-        snackbarController.showSnackbar();
+        errorController.handleError(error);
       }
     }
   }

@@ -13,10 +13,10 @@ class DocumentVerification extends StatelessWidget {
   final GlobalKey<FormState> _documentFormKey = GlobalKey<FormState>();
 
   final _documentNumberValidator = MultiValidator([
-    RequiredValidator(errorText: 'This field is required.'),
+    RequiredValidator(errorText: 'common_field_error'.tr),
   ]);
   final _documentExpiryValidator = MultiValidator([
-    RequiredValidator(errorText: 'This field is required.'),
+    RequiredValidator(errorText: 'common_field_error'.tr),
   ]);
   final VerificationController verificationController = Get.find();
 
@@ -60,7 +60,12 @@ class DocumentVerification extends StatelessWidget {
                 children: <Widget>[
                   new ListTile(
                       leading: new Icon(Icons.photo_library),
-                      title: new Text('Upload Picture'),
+                      title: new Text(
+                        'identification.screen.document.upload.option.upload_pic'
+                            .tr,
+                        style: TextStyle(
+                            fontFamily: 'Popins', fontWeight: FontWeight.bold),
+                      ),
                       onTap: () async {
                         Get.back();
                         File image = await _imgFromGallery();
@@ -94,7 +99,11 @@ class DocumentVerification extends StatelessWidget {
                       }),
                   new ListTile(
                     leading: new Icon(Icons.photo_camera),
-                    title: new Text('Camera'),
+                    title: new Text(
+                        'identification.screen.document.upload.option.camera'
+                            .tr,
+                        style: TextStyle(
+                            fontFamily: 'Popins', fontWeight: FontWeight.bold)),
                     onTap: () async {
                       Get.back();
 
@@ -173,7 +182,7 @@ class DocumentVerification extends StatelessWidget {
     } else {
       verificationController.documentFileError.value = true;
       verificationController.documentFileErrorMessage.value =
-          'This Image is required.';
+          'common_image_field_error'.tr;
     }
   }
 
@@ -184,7 +193,7 @@ class DocumentVerification extends StatelessWidget {
     } else {
       verificationController.additionalFileError.value = true;
       verificationController.additionalFileErrorMessage.value =
-          'This Image is required.';
+          'common_image_field_error'.tr;
     }
   }
 
@@ -195,7 +204,7 @@ class DocumentVerification extends StatelessWidget {
     } else {
       verificationController.selfieError.value = true;
       verificationController.selfieErrorMessage.value =
-          'This Image is required.';
+          'common_image_field_error'.tr;
     }
   }
 
@@ -211,7 +220,7 @@ class DocumentVerification extends StatelessWidget {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(
-                "Document Type",
+                "identification.screen.document.field.document_type".tr,
                 style: TextStyle(
                   color: Theme.of(context).hintColor.withOpacity(0.7),
                   fontFamily: "Popins",
@@ -226,7 +235,6 @@ class DocumentVerification extends StatelessWidget {
                       decoration: InputDecoration(
                           errorStyle: TextStyle(
                               color: Colors.redAccent, fontSize: 16.0),
-                          hintText: 'Please select beneficiary',
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5.0))),
                       child: DropdownButtonHideUnderline(
@@ -257,7 +265,12 @@ class DocumentVerification extends StatelessWidget {
                 ),
               ),
               Text(
-                "${verificationController.selectedDocumentType['name']} Number",
+                // "${verificationController.selectedDocumentType['name']} Number",
+                "identification.screen.document.field.document_number"
+                    .trParams({
+                  'document':
+                      verificationController.selectedDocumentType['name']
+                }),
                 style: TextStyle(
                   color: Theme.of(context).hintColor.withOpacity(0.7),
                   fontFamily: "Popins",
@@ -285,7 +298,12 @@ class DocumentVerification extends StatelessWidget {
                 ),
               ),
               Text(
-                "${verificationController.selectedDocumentType['name']} Expiry",
+                // "${verificationController.selectedDocumentType['name']} Expiry",
+                "identification.screen.document.field.document_expiry"
+                    .trParams({
+                  'document':
+                      verificationController.selectedDocumentType['name']
+                }),
                 style: TextStyle(
                   color: Theme.of(context).hintColor.withOpacity(0.7),
                   fontFamily: "Popins",
@@ -329,7 +347,13 @@ class DocumentVerification extends StatelessWidget {
                             Border.all(color: Theme.of(context).accentColor)),
                     child: Center(
                         child: Text(
-                            "Upload ${verificationController.selectedDocumentType['name']} Clear Picture")),
+                      // "Upload ${verificationController.selectedDocumentType['name']} Clear Picture"
+                      "identification.screen.document.field.document_picture"
+                          .trParams({
+                        'document':
+                            verificationController.selectedDocumentType['name']
+                      }),
+                    )),
                   ),
                 ),
                 SizedBox(
@@ -349,7 +373,7 @@ class DocumentVerification extends StatelessWidget {
                       child: Text(
                         verificationController.documentFileName.value,
                         style: TextStyle(
-                            fontFamily: 'sans',
+                            fontFamily: 'Popins',
                             fontSize: 12,
                             fontWeight: FontWeight.bold),
                       ),
@@ -359,7 +383,7 @@ class DocumentVerification extends StatelessWidget {
                   Text(
                     verificationController.documentFileErrorMessage.value,
                     style: TextStyle(
-                        fontFamily: 'sans', fontSize: 12, color: Colors.red),
+                        fontFamily: 'Popins', fontSize: 12, color: Colors.red),
                   ),
               ]),
               if (verificationController.selectedDocumentType['type'] !=
@@ -377,7 +401,9 @@ class DocumentVerification extends StatelessWidget {
                           border:
                               Border.all(color: Theme.of(context).accentColor)),
                       child: Center(
-                          child: Text("Upload Utility Bill Clear Picture")),
+                          child: Text(
+                              "identification.screen.document.field.utility_bill_picture"
+                                  .tr)),
                     ),
                   ),
                   SizedBox(
@@ -397,7 +423,7 @@ class DocumentVerification extends StatelessWidget {
                         child: Text(
                           verificationController.additionalFileName.value,
                           style: TextStyle(
-                              fontFamily: 'sans',
+                              fontFamily: 'Popins',
                               fontSize: 12,
                               fontWeight: FontWeight.bold),
                         ),
@@ -407,7 +433,9 @@ class DocumentVerification extends StatelessWidget {
                     Text(
                       verificationController.additionalFileErrorMessage.value,
                       style: TextStyle(
-                          fontFamily: 'sans', fontSize: 12, color: Colors.red),
+                          fontFamily: 'Popins',
+                          fontSize: 12,
+                          color: Colors.red),
                     ),
                   SizedBox(height: 8),
                 ]),
@@ -432,7 +460,13 @@ class DocumentVerification extends StatelessWidget {
                     decoration: BoxDecoration(
                         border:
                             Border.all(color: Theme.of(context).accentColor)),
-                    child: Center(child: Text("Take your selfie")),
+                    child: Center(
+                        child: Text(
+                      "identification.screen.document.field.selfie".tr,
+                      style: TextStyle(
+                        fontFamily: 'Popins',
+                      ),
+                    )),
                   ),
                 ),
                 SizedBox(
@@ -452,7 +486,7 @@ class DocumentVerification extends StatelessWidget {
                       child: Text(
                         verificationController.selfieName.value,
                         style: TextStyle(
-                            fontFamily: 'sans',
+                            fontFamily: 'Popins',
                             fontSize: 12,
                             fontWeight: FontWeight.bold),
                       ),
@@ -462,12 +496,15 @@ class DocumentVerification extends StatelessWidget {
                   Text(
                     verificationController.selfieErrorMessage.value,
                     style: TextStyle(
-                        fontFamily: 'sans', fontSize: 12, color: Colors.red),
+                        fontFamily: 'Popins', fontSize: 12, color: Colors.red),
                   ),
               ]),
               MaterialButton(
                 minWidth: double.infinity,
-                child: Text('Submit'),
+                child: Text(
+                  'identification.screen.document.button.submit'.tr,
+                  style: TextStyle(fontFamily: 'Popins'),
+                ),
                 color: Theme.of(context).primaryColor,
                 textColor: Colors.white,
                 onPressed: () {

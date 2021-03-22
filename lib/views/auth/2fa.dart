@@ -83,6 +83,7 @@ class TwoFA extends StatelessWidget {
                                 ),
                                 PinCodeTextField(
                                   appContext: context,
+                                  autoFocus: true,
                                   pastedTextStyle: TextStyle(
                                     color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.bold,

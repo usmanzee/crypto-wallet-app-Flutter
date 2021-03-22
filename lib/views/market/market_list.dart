@@ -29,20 +29,26 @@ class MarketList extends StatelessWidget {
                     child: Text(
                   "markets.screen.column.pair".tr,
                   style: TextStyle(
-                      color: Theme.of(context).hintColor, fontFamily: "Popins"),
+                      color: Theme.of(context).hintColor,
+                      fontSize: 14.5,
+                      fontFamily: "Popins"),
                 )),
               ),
               Container(
                   child: Text(
                 "markets.screen.column.last_price".tr,
                 style: TextStyle(
-                    color: Theme.of(context).hintColor, fontFamily: "Popins"),
+                    color: Theme.of(context).hintColor,
+                    fontSize: 14.5,
+                    fontFamily: "Popins"),
               )),
               Container(
                   child: Text(
                 "markets.screen.column.24hr_change".tr,
                 style: TextStyle(
-                    color: Theme.of(context).hintColor, fontFamily: "Popins"),
+                    color: Theme.of(context).hintColor,
+                    fontSize: 14.5,
+                    fontFamily: "Popins"),
               )),
             ],
           ),
@@ -231,14 +237,14 @@ class MarketList extends StatelessWidget {
                                   formatedMarket.baseUnit.toUpperCase(),
                                   style: TextStyle(
                                       fontFamily: "Popins",
-                                      fontSize: 14.5,
+                                      fontSize: 16.5,
                                       fontWeight: FontWeight.w600),
                                 ),
                                 Text(
                                   " /" + formatedMarket.quoteUnit.toUpperCase(),
                                   style: TextStyle(
                                       fontFamily: "Popins",
-                                      fontSize: 10.5,
+                                      fontSize: 14.5,
                                       color: Theme.of(ctx).hintColor),
                                 ),
                               ],
@@ -249,7 +255,7 @@ class MarketList extends StatelessWidget {
                                   formatedMarket.volume.toStringAsFixed(2),
                               style: TextStyle(
                                   fontFamily: "Popins",
-                                  fontSize: 10.5,
+                                  fontSize: 12.5,
                                   color: Theme.of(ctx).hintColor),
                             )
                           ],
@@ -268,14 +274,14 @@ class MarketList extends StatelessWidget {
                         formatedMarket.last.toStringAsFixed(2),
                         style: TextStyle(
                             fontFamily: "Popins",
-                            fontSize: 12.5,
+                            fontSize: 14.5,
                             fontWeight: FontWeight.w600),
                       ),
                       Text(
                         '\$' + formatedMarket.priceInUsd,
                         style: TextStyle(
                             fontFamily: "Popins",
-                            fontSize: 11.5,
+                            fontSize: 12.5,
                             color: Theme.of(ctx).hintColor),
                       ),
                     ],
@@ -296,7 +302,9 @@ class MarketList extends StatelessWidget {
                         child: Text(
                           formatedMarket.priceChangePercent,
                           style: TextStyle(
-                              fontWeight: FontWeight.w600, color: Colors.white),
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14.5,
+                              color: Colors.white),
                         ),
                       ))),
                 )

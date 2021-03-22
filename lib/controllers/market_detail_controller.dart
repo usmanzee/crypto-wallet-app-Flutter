@@ -11,8 +11,6 @@ import 'package:crypto_template/utils/Helpers/ws_helper.dart';
 import 'package:crypto_template/utils/Helpers/helper.dart';
 
 class MarketDetailController extends GetxController {
-  // // final FormatedMarket formatedMarket = Get.arguments['formatedMarket'];
-
   var lineGraphTimeSlots = [
     {"key": "1m", "name": "1 minute", "valueInMinute": "1"},
     {"key": "5m", "name": "5 minutes", "valueInMinute": "5"},
@@ -26,16 +24,58 @@ class MarketDetailController extends GetxController {
     {"key": "1w", "name": "1 week", "valueInMinute": "10080"},
     {"key": "1M", "name": "1 month", "valueInMinute": "43800"},
   ].obs;
+  var states = [
+    // {"type": "line", "name": "Line", "isActive": false},
+    // {"type": "space", "name": "|", "isActive": false},
+    {"type": "main", "name": "MA", "state": MainState.MA, "isActive": false},
+    {
+      "type": "main",
+      "name": "BOLL",
+      "state": MainState.BOLL,
+      "isActive": false
+    },
+    {"type": "space", "name": "|", "isActive": false},
+    {
+      "type": "secondry",
+      "name": "MACD",
+      "state": SecondaryState.MACD,
+      "isActive": false
+    },
+    {
+      "type": "secondry",
+      "name": "RSI",
+      "state": SecondaryState.RSI,
+      "isActive": false
+    },
+    {
+      "type": "secondry",
+      "name": "WR",
+      "state": SecondaryState.WR,
+      "isActive": false
+    },
+    {
+      "type": "secondry",
+      "name": "KDJ",
+      "state": SecondaryState.KDJ,
+      "isActive": false
+    },
+    {"type": "space", "name": "|", "isActive": false},
+    {"type": "vol", "name": "Vol", "isActive": false},
+  ].obs;
+  var secondryStates = [
+    {"name": "MACD", "state": SecondaryState.MACD},
+    {"name": "RSI", "state": SecondaryState.RSI},
+    {"name": "KDJ", "state": SecondaryState.KDJ},
+  ].obs;
   var selectedOption = Map<String, String>().obs;
   Rx<FormatedMarket> market = FormatedMarket().obs;
   var formatedKLineData = List<KLineEntity>().obs;
   var isKLineLoading = true.obs;
-  var _mainState = MainState.MA.obs;
+  var _mainState = MainState.NONE.obs;
+  var _secondaryState = SecondaryState.NONE.obs;
+  var _volHidden = true.obs;
 
-  var _volHidden = false.obs;
-  var _secondaryState = SecondaryState.MACD.obs;
-
-  var _isLine = true.obs;
+  var _isLine = false.obs;
   var isChinese = false;
 
   var bidsData = List<DepthEntity>().obs;
@@ -61,7 +101,6 @@ class MarketDetailController extends GetxController {
   @override
   void onInit() async {
     market.value = marketController.selectedMarket.value;
-    print('init');
     await setDefaultValues();
     await getKlineData();
 
@@ -106,7 +145,7 @@ class MarketDetailController extends GetxController {
   }
 
   Future<void> setDefaultValues() async {
-    selectedOption.assignAll(lineGraphTimeSlots[2]);
+    selectedOption.assignAll(lineGraphTimeSlots[3]);
   }
 
   Future<Null> refreshPage() async {
@@ -121,13 +160,13 @@ class MarketDetailController extends GetxController {
       isKLineLoading(true);
       var period = selectedOption['valueInMinute'];
       var currentTime = DateTime.now();
-      // var from = currentTime.millisecondsSinceEpoch;
-      // var to = currentTime
-      //     .add(new Duration(minutes: int.parse(period)))
-      //     .millisecondsSinceEpoch;
       var from = currentTime.millisecondsSinceEpoch;
-      var to =
-          currentTime.subtract(new Duration(days: 3)).millisecondsSinceEpoch;
+      var to = currentTime
+          .add(new Duration(minutes: int.parse(period)))
+          .millisecondsSinceEpoch;
+      // var from = currentTime.millisecondsSinceEpoch;
+      // var to =
+      //     currentTime.subtract(new Duration(days: 3)).millisecondsSinceEpoch;
       var data = await _marketRepository.fetchKLineData(
           market.value.id, period, from, to);
       var keys = ['time', 'open', 'high', 'low', 'close', 'vol'];

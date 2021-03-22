@@ -82,6 +82,7 @@ class Login extends StatelessWidget {
                             label: 'login.screen.field.email'.tr,
                             obscure: false,
                             keyboardType: TextInputType.emailAddress,
+                            textInputAction: TextInputAction.next,
                             textAlign: TextAlign.start),
                       ),
                       Padding(
@@ -98,6 +99,7 @@ class Login extends StatelessWidget {
                             label: 'login.screen.field.password'.tr,
                             obscure: true,
                             keyboardType: TextInputType.text,
+                            textInputAction: TextInputAction.done,
                             textAlign: TextAlign.start),
                       ),
 

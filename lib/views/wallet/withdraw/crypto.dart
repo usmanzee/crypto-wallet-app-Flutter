@@ -391,9 +391,6 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
     return Container(
       padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
       width: double.infinity,
-      decoration: BoxDecoration(
-          color: Theme.of(context).canvasColor,
-          borderRadius: BorderRadius.all(Radius.circular(10.0))),
       child: Column(children: <Widget>[
         SizedBox(
           height: 16.0,
@@ -423,11 +420,7 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
   Widget _otpDisabled(context) {
     return Container(
       padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
-      // height: 125.0,
       width: double.infinity,
-      decoration: BoxDecoration(
-          color: Theme.of(context).canvasColor,
-          borderRadius: BorderRadius.all(Radius.circular(10.0))),
       child: Column(children: <Widget>[
         SizedBox(
           height: 16.0,
@@ -470,11 +463,7 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
   Widget _accountNotConfirmed(context) {
     return Container(
       padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
-      // height: 125.0,
       width: double.infinity,
-      decoration: BoxDecoration(
-          color: Theme.of(context).canvasColor,
-          borderRadius: BorderRadius.all(Radius.circular(10.0))),
       child: Column(children: <Widget>[
         SizedBox(
           height: 16.0,
@@ -494,7 +483,7 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
           highlightColor: Colors.black12,
           color: Theme.of(context).primaryColor,
           onPressed: () {
-            _confirmAccountInfo(context);
+            Get.toNamed('/profile-verification');
           },
           child: Center(
               child: Text(
@@ -512,18 +501,5 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
         ),
       ]),
     );
-  }
-
-  void _confirmAccountInfo(BuildContext context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (ctx) {
-          return Container(
-            height: MediaQuery.of(context).size.height * 0.4,
-            child: Center(
-              child: Text("Feature under development!"),
-            ),
-          );
-        });
   }
 }

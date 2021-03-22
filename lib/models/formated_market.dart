@@ -23,6 +23,8 @@ class FormatedMarket {
   String avgPrice;
   String priceChangePercent;
   String vol;
+  bool isSparkLineLoading;
+  List<double> sparkLineData;
 
   FormatedMarket(
       {this.id,
@@ -46,5 +48,7 @@ class FormatedMarket {
       this.volume,
       this.avgPrice,
       this.priceChangePercent,
-      this.vol});
+      this.vol,
+      this.isSparkLineLoading,
+      this.sparkLineData});
 }

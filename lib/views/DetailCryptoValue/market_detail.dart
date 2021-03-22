@@ -5,6 +5,7 @@ import 'package:crypto_template/models/formated_market.dart';
 import 'package:crypto_template/views/DetailCryptoValue/order_book.dart';
 import 'package:crypto_template/views/market/market_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 
 import 'package:k_chart/flutter_k_chart.dart';
@@ -70,157 +71,195 @@ class MarketDetail extends StatelessWidget {
           body: Column(
             children: <Widget>[
               Flexible(
-                child: ListView(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          _headerValue(
-                              context, marketController.selectedMarket.value),
-                          SizedBox(
-                            height: 8.0,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: double.infinity,
-                      height: 4,
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).hintColor.withOpacity(0.1)),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 8.0, right: 8.0),
-                      child: DefaultTabController(
-                        length: 2,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Container(
-                              child: TabBar(
-                                indicator: UnderlineTabIndicator(
-                                    borderSide: BorderSide(
-                                      width: 2,
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                    insets: EdgeInsets.only(
-                                        left: -8, right: 8, bottom: 8)),
-                                isScrollable: true,
-                                labelPadding:
-                                    EdgeInsets.only(left: 0, right: 16),
-                                labelColor: Theme.of(context).primaryColor,
-                                unselectedLabelColor:
-                                    Theme.of(context).textSelectionColor,
-                                indicatorSize: TabBarIndicatorSize.label,
-                                tabs: [
-                                  new Tab(
-                                    child: Text(
-                                      "market_detail.tabs.line".tr,
-                                      style: TextStyle(
-                                          fontFamily: "Popins", fontSize: 14),
-                                    ),
-                                  ),
-                                  new Tab(
-                                    child: Text(
-                                      "market_detail.tabs.depth".tr,
-                                      style: TextStyle(
-                                          fontFamily: "Popins", fontSize: 14),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            Container(
-                              height: 320,
-                              child: TabBarView(children: [
-                                Obx(() {
-                                  if (controller.isKLineLoading.value) {
-                                    return Container(
-                                        width: double.infinity,
-                                        height: 200,
-                                        alignment: Alignment.center,
-                                        child: CircularProgressIndicator());
-                                  } else {
-                                    return Column(children: [
-                                      loadGraphOption(
-                                          context,
-                                          controller.lineGraphTimeSlots,
-                                          controller.selectedOption),
-                                      Container(
-                                        height: 200,
-                                        child: KChartWidget(
-                                          controller.formatedKLineData,
-                                          isLine: controller.isLine,
-                                          mainState: controller.mainState,
-                                          volHidden: controller.volHidden,
-                                          secondaryState:
-                                              controller.secondaryState,
-                                          fixedLength: 2,
-                                          timeFormat: TimeFormat.YEAR_MONTH_DAY,
-                                          isChinese: false,
-                                          bgColor: [
-                                            Theme.of(context)
-                                                .scaffoldBackgroundColor,
-                                            Theme.of(context)
-                                                .scaffoldBackgroundColor,
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                          margin: EdgeInsets.symmetric(
-                                              vertical: 20.0),
-                                          height: 40.0,
-                                          child:
-                                              buildGraphTypeButtons(context)),
-                                    ]);
-                                  }
-                                }),
-                                Container(
-                                  height: 200,
-                                  width: double.infinity,
-                                  child: DepthChart(
-                                      controller.bidsData, controller.asksData),
-                                )
-                              ]),
-                            ),
-                          ],
+                child: ListView(shrinkWrap: true, children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        _headerValue(
+                            context, marketController.selectedMarket.value),
+                        SizedBox(
+                          height: 8.0,
                         ),
-                      ),
+                      ],
                     ),
-                    Container(
-                      width: double.infinity,
-                      height: 4,
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).hintColor.withOpacity(0.1)),
-                    ),
-                    Container(
-                      height: 240.0,
-                      padding: EdgeInsets.fromLTRB(8, 0, 0, 8),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    height: 4,
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).hintColor.withOpacity(0.1)),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                    child: DefaultTabController(
+                      length: 2,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          SizedBox(height: 8.0),
-                          Text(
-                            'market_detail.order_book'.tr,
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                          Container(
+                            child: TabBar(
+                              indicator: UnderlineTabIndicator(
+                                  borderSide: BorderSide(
+                                    width: 2,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                  insets: EdgeInsets.only(
+                                      left: -8, right: 8, bottom: 8)),
+                              isScrollable: true,
+                              labelPadding: EdgeInsets.only(left: 0, right: 16),
+                              labelColor: Theme.of(context).primaryColor,
+                              unselectedLabelColor:
+                                  Theme.of(context).textSelectionColor,
+                              indicatorSize: TabBarIndicatorSize.label,
+                              tabs: [
+                                new Tab(
+                                  child: Text(
+                                    "market_detail.tabs.line".tr,
+                                    style: TextStyle(
+                                        fontFamily: "Popins", fontSize: 14),
+                                  ),
+                                ),
+                                new Tab(
+                                  child: Text(
+                                    "market_detail.tabs.depth".tr,
+                                    style: TextStyle(
+                                        fontFamily: "Popins", fontSize: 14),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
-                          OrderBook(
-                              isTrading: false,
-                              formatedMarket:
-                                  marketController.selectedMarket.value,
-                              asks: marketController.asks,
-                              bids: marketController.bids),
+                          Container(
+                            height: 400,
+                            child: TabBarView(children: [
+                              Obx(() {
+                                return Column(children: [
+                                  Container(
+                                    height: 40,
+                                    child: loadGraphOption(
+                                        context,
+                                        controller.lineGraphTimeSlots,
+                                        controller.selectedOption),
+                                  ),
+                                  if (controller.isKLineLoading.value)
+                                    Container(
+                                        width: double.infinity,
+                                        height: 320,
+                                        alignment: Alignment.center,
+                                        child: SizedBox(
+                                            height: 20.0,
+                                            width: 20.0,
+                                            child: CircularProgressIndicator()))
+                                  else
+                                    Container(
+                                      height: 320,
+                                      child: KChartWidget(
+                                        controller.formatedKLineData,
+                                        isLine: controller.isLine,
+                                        mainState: controller.mainState,
+                                        volHidden: controller.volHidden,
+                                        secondaryState:
+                                            controller.secondaryState,
+                                        fixedLength: 2,
+                                        timeFormat: TimeFormat.YEAR_MONTH_DAY,
+                                        isChinese: false,
+                                        bgColor: [
+                                          Theme.of(context)
+                                              .scaffoldBackgroundColor,
+                                          Theme.of(context)
+                                              .scaffoldBackgroundColor,
+                                        ],
+                                      ),
+                                    ),
+
+                                  // Container(
+                                  //     margin:
+                                  //         EdgeInsets.symmetric(vertical: 20.0),
+                                  //     height: 40.0,
+                                  //     child: buildGraphTypeButtons(context)),
+                                  Container(
+                                    height: 40.0,
+                                    child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children:
+                                            controller.states.map((stateEl) {
+                                          return GestureDetector(
+                                            onTap: () {
+                                              if (stateEl['type'] == 'main') {
+                                                buildMainState(stateEl);
+                                              } else if (stateEl['type'] ==
+                                                  'secondry') {
+                                                buildSecondryState(stateEl);
+                                              } else if (stateEl['type'] ==
+                                                  'vol') {
+                                                hideShowVol(stateEl);
+                                              } else if (stateEl['type'] ==
+                                                  'line') {
+                                                hideShowLine(stateEl);
+                                              }
+                                              controller.states.refresh();
+                                            },
+                                            child: Text(
+                                              stateEl['name'],
+                                              style: TextStyle(
+                                                  fontFamily: 'Popins',
+                                                  fontSize: 12,
+                                                  fontWeight:
+                                                      stateEl['isActive']
+                                                          ? FontWeight.w700
+                                                          : FontWeight.normal),
+                                            ),
+                                          );
+                                        }).toList()),
+                                  ),
+                                ]);
+                              }),
+                              Container(
+                                height: 200,
+                                width: double.infinity,
+                                child: DepthChart(
+                                    controller.bidsData, controller.asksData),
+                              )
+                            ]),
+                          ),
                         ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    height: 4,
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).hintColor.withOpacity(0.1)),
+                  ),
+                  Container(
+                    height: 240.0,
+                    padding: EdgeInsets.fromLTRB(8, 0, 0, 8),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(height: 8.0),
+                        Text(
+                          'market_detail.order_book'.tr,
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        OrderBook(
+                            isTrading: false,
+                            formatedMarket:
+                                marketController.selectedMarket.value,
+                            asks: marketController.asks,
+                            bids: marketController.bids),
+                      ],
+                    ),
+                  ),
+                ]),
               ),
               _buttonBottom(context, marketController.selectedMarket.value)
             ],
@@ -228,6 +267,41 @@ class MarketDetail extends StatelessWidget {
         );
       }),
     );
+  }
+
+  void hideShowLine(stateEl) {
+    stateEl['isActive'] = !stateEl['isActive'];
+    controller.isLine = !controller.isLine;
+  }
+
+  void buildMainState(stateEl) {
+    makeStatesInActive(stateEl);
+    stateEl['isActive'] = !stateEl['isActive'];
+    stateEl['isActive']
+        ? controller.mainState = stateEl['state']
+        : controller.mainState = MainState.NONE;
+  }
+
+  void buildSecondryState(stateEl) {
+    makeStatesInActive(stateEl);
+    stateEl['isActive'] = !stateEl['isActive'];
+    stateEl['isActive']
+        ? controller.secondaryState = stateEl['state']
+        : controller.secondaryState = SecondaryState.NONE;
+  }
+
+  void hideShowVol(stateEl) {
+    stateEl['isActive'] = !stateEl['isActive'];
+    controller.volHidden = !controller.volHidden;
+  }
+
+  void makeStatesInActive(stateEL) {
+    for (var element in controller.states) {
+      if (element['name'] != stateEL['name'] &&
+          element['type'] == stateEL['type']) {
+        element['isActive'] = false;
+      }
+    }
   }
 
   Widget _headerValue(context, FormatedMarket formatedMarket) {
@@ -352,44 +426,41 @@ class MarketDetail extends StatelessWidget {
   }
 
   Widget loadGraphOption(context, var lineGraphTimeSlots, var selectedOption) {
-    return Container(
-      height: 40,
-      child: Column(children: [
-        SizedBox(
-          height: 8,
-        ),
-        Expanded(
-          child: Scrollbar(
-            isAlwaysShown: true,
+    return Column(children: [
+      SizedBox(
+        height: 8,
+      ),
+      Expanded(
+        child: Scrollbar(
+          isAlwaysShown: true,
+          controller: _scrollController,
+          child: ListView.builder(
             controller: _scrollController,
-            child: ListView.builder(
-              controller: _scrollController,
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: lineGraphTimeSlots.length,
-              itemBuilder: (BuildContext context, int index) => Card(
-                child: InkWell(
-                  onTap: () {
-                    controller.updateKlineTimeOption(lineGraphTimeSlots[index]);
-                  },
-                  child: Container(
-                    width: 50,
-                    color: selectedOption['key'] ==
-                            lineGraphTimeSlots[index]['key']
-                        ? Theme.of(context).accentColor
-                        : Theme.of(context).canvasColor,
-                    padding: EdgeInsets.all(4.0),
-                    child: Center(
-                      child: Text(
-                        lineGraphTimeSlots[index]['key'],
-                        style: TextStyle(
-                            fontSize: 10,
-                            color: selectedOption['key'] ==
-                                    lineGraphTimeSlots[index]['key']
-                                ? Colors.white
-                                : Theme.of(context).textSelectionColor,
-                            fontWeight: FontWeight.w500),
-                      ),
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemCount: lineGraphTimeSlots.length,
+            itemBuilder: (BuildContext context, int index) => Card(
+              child: InkWell(
+                onTap: () {
+                  controller.updateKlineTimeOption(lineGraphTimeSlots[index]);
+                },
+                child: Container(
+                  width: 50,
+                  color:
+                      selectedOption['key'] == lineGraphTimeSlots[index]['key']
+                          ? Theme.of(context).accentColor
+                          : Theme.of(context).canvasColor,
+                  padding: EdgeInsets.all(4.0),
+                  child: Center(
+                    child: Text(
+                      lineGraphTimeSlots[index]['key'],
+                      style: TextStyle(
+                          fontSize: 10,
+                          color: selectedOption['key'] ==
+                                  lineGraphTimeSlots[index]['key']
+                              ? Colors.white
+                              : Theme.of(context).textSelectionColor,
+                          fontWeight: FontWeight.w500),
                     ),
                   ),
                 ),
@@ -397,8 +468,8 @@ class MarketDetail extends StatelessWidget {
             ),
           ),
         ),
-      ]),
-    );
+      ),
+    ]);
   }
 
   Widget buildGraphTypeButtons(context) {
@@ -409,10 +480,8 @@ class MarketDetail extends StatelessWidget {
         controller: _scrollController1,
         scrollDirection: Axis.horizontal,
         children: <Widget>[
-          // button(context, "Time sharing",
-          //     onPressed: () => controller.isLine = true),
-          button(context, controller.isLine ? "K-Line" : 'Time Sharing',
-              onPressed: () => controller.isLine = !controller.isLine),
+          // button(context, controller.isLine ? "K-Line" : 'Time Sharing',
+          //     onPressed: () => controller.isLine = !controller.isLine),
           button(context, "MA",
               onPressed: () => controller.mainState = MainState.MA),
           button(context, "BOLL",

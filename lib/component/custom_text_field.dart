@@ -13,6 +13,7 @@ class CustomTextField extends StatelessWidget {
   final Widget widgetIcon;
   final int maxLines;
   final int maxLength;
+  final TextInputAction textInputAction;
 
   CustomTextField(
       {this.label,
@@ -26,7 +27,8 @@ class CustomTextField extends StatelessWidget {
       this.textAlign,
       this.widgetIcon,
       this.maxLines,
-      this.maxLength});
+      this.maxLength,
+      this.textInputAction});
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +46,7 @@ class CustomTextField extends StatelessWidget {
             keyboardType: keyboardType,
             autocorrect: false,
             autofocus: false,
+            textInputAction: textInputAction,
             // maxLines: maxLines,
             // maxLength: maxLength,
             decoration: InputDecoration(
@@ -55,6 +58,7 @@ class CustomTextField extends StatelessWidget {
                 fillColor: Colors.transparent,
                 labelText: label,
                 hintText: hint,
+
                 /* hintStyle: TextStyle(color: colorStyle.fontColorDarkTitle),
                 labelStyle: TextStyle(
                   color: colorStyle.fontColorDarkTitle,

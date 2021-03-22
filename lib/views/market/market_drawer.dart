@@ -52,7 +52,7 @@ class _MarketDrawerState extends State<MarketDrawer>
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 24, 0, 0),
             child: Text(
-              'Markets',
+              "markets.screen.title".tr,
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
           ),
@@ -96,16 +96,17 @@ class _MarketDrawerState extends State<MarketDrawer>
           //     ],
           //   ),
           // ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-            child: Obx(() {
-              if (marketController.isLoading.value)
-                return _loadingData(context);
-              else
-                return _dataLoaded(
-                    context, marketController.formatedMarketsList, screen);
-            }),
-          ),
+          Obx(() {
+            if (marketController.isLoading.value)
+              return _loadingData(context);
+            else
+              return Padding(
+                padding: EdgeInsets.only(top: 16.0),
+                child: _dataLoaded(
+                    context, marketController.formatedMarketsList, screen),
+              );
+          }),
+
           // TabBar(
           //   controller: _tabController,
           //   tabs: myTabs,
@@ -267,46 +268,56 @@ Widget loadingCard(BuildContext ctx) {
 
 Widget _dataLoaded(BuildContext context,
     List<FormatedMarket> formatedMarketList, String screenType) {
-  return Container(
-    child: ListView.builder(
-      shrinkWrap: true,
-      primary: false,
-      itemCount: formatedMarketList.length,
-      itemBuilder: (ctx, i) {
-        return card(ctx, formatedMarketList[i], screenType);
-      },
-    ),
+  return ListView.builder(
+    shrinkWrap: true,
+    primary: false,
+    itemCount: formatedMarketList.length,
+    itemBuilder: (ctx, i) {
+      return card(ctx, formatedMarketList[i], screenType);
+    },
   );
 }
 
 Widget card(BuildContext context, FormatedMarket formatedMarket, screenType) {
+  final MarketController marketController = Get.find();
+  var selectedMarket = screenType == 'market_detail'
+      ? marketController.selectedMarket.value
+      : marketController.selectedMarketTrading.value;
   return Column(
     children: <Widget>[
-      InkWell(
-        onTap: () {
-          Get.back();
-          if (screenType == 'market_detail') {
-            MarketDetailController marketDetailController = Get.find();
-            marketDetailController.updateCurrentMarket(formatedMarket);
-          } else {
-            TradingController tradingController = Get.find<TradingController>();
-            tradingController.updateCurrentMarket(formatedMarket);
-            bool openOrdersInstance = Get.isRegistered<OpenOrdersController>();
-            if (openOrdersInstance) {
-              Get.delete<OpenOrdersController>(force: true);
-              Get.put(OpenOrdersController(formatedMarket: formatedMarket));
-            }
-          }
-        },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Container(
-                  width: 95.0,
-                  child: Column(
+      Container(
+        padding: const EdgeInsets.all(8),
+        color: selectedMarket.id == formatedMarket.id
+            ? Theme.of(context).canvasColor
+            : Theme.of(context).scaffoldBackgroundColor,
+        child: InkWell(
+          onTap: selectedMarket.id == formatedMarket.id
+              ? null
+              : () {
+                  Get.back();
+                  if (screenType == 'market_detail') {
+                    MarketDetailController marketDetailController = Get.find();
+                    marketDetailController.updateCurrentMarket(formatedMarket);
+                  } else {
+                    TradingController tradingController =
+                        Get.find<TradingController>();
+                    tradingController.updateCurrentMarket(formatedMarket);
+                    bool openOrdersInstance =
+                        Get.isRegistered<OpenOrdersController>();
+                    if (openOrdersInstance) {
+                      Get.delete<OpenOrdersController>(force: true);
+                      Get.put(
+                          OpenOrdersController(formatedMarket: formatedMarket));
+                    }
+                  }
+                },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
@@ -335,43 +346,41 @@ Widget card(BuildContext context, FormatedMarket formatedMarket, screenType) {
                       )
                     ],
                   ),
-                ),
-              ],
-            ),
-            Spacer(
-              flex: 1,
-            ),
-            Column(
-              children: <Widget>[
-                Text(
-                  formatedMarket.last.toStringAsFixed(2),
-                  style: TextStyle(
-                      fontFamily: "Popins",
-                      fontSize: 14.5,
-                      fontWeight: FontWeight.w600),
-                ),
-                Text(
-                  formatedMarket.priceChangePercent,
-                  style: TextStyle(
-                      fontFamily: "Popins",
-                      fontSize: 11.5,
-                      color: formatedMarket.isPositiveChange
-                          ? Color(0xFF00C087)
-                          : Colors.redAccent),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+              Spacer(
+                flex: 1,
+              ),
+              Column(
+                children: <Widget>[
+                  Text(
+                    formatedMarket.last.toStringAsFixed(2),
+                    style: TextStyle(
+                        fontFamily: "Popins",
+                        fontSize: 14.5,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  Text(
+                    formatedMarket.priceChangePercent,
+                    style: TextStyle(
+                        fontFamily: "Popins",
+                        fontSize: 11.5,
+                        color: formatedMarket.isPositiveChange
+                            ? Color(0xFF00C087)
+                            : Colors.redAccent),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
-      Padding(
+      Container(
         padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-        child: Container(
-          width: double.infinity,
-          height: 0.5,
-          decoration: BoxDecoration(
-              color: Theme.of(context).hintColor.withOpacity(0.2)),
-        ),
+        width: double.infinity,
+        height: 0.5,
+        decoration:
+            BoxDecoration(color: Theme.of(context).hintColor.withOpacity(0.2)),
       ),
     ],
   );

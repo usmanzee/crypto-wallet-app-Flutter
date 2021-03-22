@@ -1,7 +1,7 @@
 import 'package:crypto_template/controllers/SnackbarController.dart';
 import 'package:crypto_template/controllers/error_controller.dart';
-import 'package:crypto_template/models/deposit_histroy.dart';
-import 'package:crypto_template/models/withdraw_history.dart';
+import 'package:crypto_template/models/deposit_histroy_response.dart';
+import 'package:crypto_template/models/withdraw_history_response.dart';
 import 'package:crypto_template/repository/wallet_repository.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -14,8 +14,8 @@ class TransactionHistoryController extends GetxController {
   var isDepositHistoryLoading = true.obs;
   var isWithdrawHistoryLoading = true.obs;
   var isAddressLoading = true.obs;
-  var depositHistory = List<DepositHistory>().obs;
-  var withdrawHistory = List<WithdrawHistory>().obs;
+  var depositHistory = List<DepositHistoryResponse>().obs;
+  var withdrawHistory = List<WithdrawHistoryResponse>().obs;
   SnackbarController snackbarController;
   ErrorController errorController = new ErrorController();
 

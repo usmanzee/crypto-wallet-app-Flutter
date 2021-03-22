@@ -5,14 +5,11 @@ import 'package:crypto_template/views/webview_container.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share/share.dart';
+import 'package:get_storage/get_storage.dart';
 
 class Setting extends StatelessWidget {
   final HomeController homeController = Get.find();
 
-  final languages = [
-    {"name": 'English', "locale": Locale('en', 'US')},
-    {"name": 'Pусский', "locale": Locale('ru', 'RU')}
-  ];
   void _handleLogoutClick() async {
     homeController.logoutUser();
     Get.back();
@@ -46,10 +43,12 @@ class Setting extends StatelessWidget {
           Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
-                onTap: () {
+                onTap: () async {
                   if (Get.isDarkMode) {
                     Get.changeTheme(Themes.lightTheme);
+                    GetStorage().write('isLightTheme', true);
                   } else {
+                    GetStorage().write('isLightTheme', false);
                     Get.changeTheme(Themes.darkTheme);
                   }
                 },
@@ -375,7 +374,13 @@ class Setting extends StatelessWidget {
                 shrinkWrap: true,
                 itemBuilder: (context, index) => InkWell(
                   onTap: () {
-                    Get.updateLocale(languages[index]['locale']);
+                    GetStorage().write('lang_code',
+                        homeController.languages[index]['lang_code']);
+                    GetStorage().write('country_code',
+                        homeController.languages[index]['country_code']);
+                    Get.updateLocale(Locale(
+                        homeController.languages[index]['lang_code'],
+                        homeController.languages[index]['country_code']));
                     Get.back();
                   },
                   child: Padding(
@@ -384,10 +389,14 @@ class Setting extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            languages[index]['name'],
+                            homeController.languages[index]['name'],
                             style: TextStyle(fontFamily: 'Popins'),
                           ),
-                          if (Get.locale == languages[index]['locale'])
+                          if (Get.locale ==
+                              Locale(
+                                  homeController.languages[index]['lang_code'],
+                                  homeController.languages[index]
+                                      ['country_code']))
                             Icon(
                               Icons.done,
                               size: 20.0,
@@ -399,7 +408,7 @@ class Setting extends StatelessWidget {
                 separatorBuilder: (context, index) => Divider(
                   color: Colors.black,
                 ),
-                itemCount: languages.length,
+                itemCount: homeController.languages.length,
               ),
             ),
           );

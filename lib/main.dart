@@ -7,7 +7,7 @@ import 'package:crypto_template/utils/router.dart' as RouterFile;
 import 'package:crypto_template/views/setting/themes.dart';
 import 'package:flutter/services.dart';
 import 'package:oktoast/oktoast.dart';
-// import 'package:upgrader/upgrader.dart';
+import 'package:get_storage/get_storage.dart';
 
 Future<void> main() async {
   await DotEnv.load(fileName: ".env");
@@ -17,11 +17,14 @@ Future<void> main() async {
     DeviceOrientation.portraitDown,
   ]);
   SocketBinding().dependencies();
-
+  await GetStorage.init();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  final isLightTheme = GetStorage().read('isLightTheme');
+  final langCode = GetStorage().read('lang_code');
+  final countryCode = GetStorage().read('country_code');
   @override
   Widget build(BuildContext context) {
     return OKToast(
@@ -29,23 +32,16 @@ class MyApp extends StatelessWidget {
       title: 'B4U Wallet',
       debugShowCheckedModeBanner: false,
       translations: Messages(),
-      locale: Locale('en', 'US'),
-      // fallbackLocale: Locale('en', 'UK'),
+      locale: langCode == null && countryCode == null
+          ? Get.deviceLocale
+          : Locale(langCode, countryCode),
       defaultTransition: Transition.downToUp,
       getPages: RouterFile.Router.route,
       initialRoute: '/splash',
-      theme: Themes.lightTheme,
-    )
-        // UpgradeAlert(
-        //   child: GetMaterialApp(
-        //     title: 'B4U Wallet',
-        //     debugShowCheckedModeBanner: false,
-        //     defaultTransition: Transition.downToUp,
-        //     getPages: RouterFile.Router.route,
-        //     initialRoute: '/splash',
-        //     theme: Themes.lightTheme,
-        //   ),
-        // ),
-        );
+      routingCallback: (routing) {},
+      theme: isLightTheme == null || isLightTheme
+          ? Themes.lightTheme
+          : Themes.darkTheme,
+    ));
   }
 }

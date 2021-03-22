@@ -1,7 +1,7 @@
 import 'package:crypto_template/controllers/SnackbarController.dart';
 import 'package:get/get.dart';
 import 'dart:async';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get_storage/get_storage.dart';
 
 class SplashController extends GetxController {
   SnackbarController snackbarController;
@@ -17,13 +17,12 @@ class SplashController extends GetxController {
   }
 
   void isNewUser() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool _seenOnBoarding = (prefs.getBool('seen_on_boarding') ?? false);
+    var _seenOnBoarding = GetStorage().read('seenOnBoarding');
     _seenOnBoarding = _seenOnBoarding != null ? _seenOnBoarding : false;
     if (_seenOnBoarding) {
       Get.offNamed('/home', arguments: {'selectedNavIndex': 0});
     } else {
-      await prefs.setBool('seen_on_boarding', true);
+      GetStorage().write('seenOnBoarding', true);
       Get.offNamed('/on_boarding');
     }
   }

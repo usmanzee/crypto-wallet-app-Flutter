@@ -42,14 +42,25 @@ class NotificationList extends GetView<NotificationController> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(
-            notification.subject,
-            style: TextStyle(
-                fontFamily: 'Popins',
-                fontSize: 16.5,
-                color: Theme.of(context).textSelectionColor,
-                fontWeight: FontWeight.w500),
-          ),
+          title:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(
+              notification.subject,
+              style: TextStyle(
+                  fontFamily: 'Popins',
+                  fontSize: 16.5,
+                  color: Theme.of(context).textSelectionColor,
+                  fontWeight: FontWeight.w500),
+            ),
+            Text(
+              DateFormat('yyyy-MM-dd hh:mm').format(notification.createdAt),
+              style: new TextStyle(
+                  letterSpacing: 1.3,
+                  fontFamily: 'Popins',
+                  fontSize: 13.0,
+                  color: Theme.of(context).hintColor),
+            ),
+          ]),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -88,31 +99,34 @@ class NotificationList extends GetView<NotificationController> {
 
   Widget noItemNotifications(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
-    return Container(
-      width: 500.0,
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-                padding:
-                    EdgeInsets.only(top: mediaQueryData.padding.top + 10.0)),
-            Image.asset(
-              "assets/image/Template_4/notifications.png",
-              height: 200.0,
-            ),
-            Padding(padding: EdgeInsets.only(bottom: 30.0)),
-            Text(
-              "notifications.screen.empty.content1".tr,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Center(
+          child: Text(
+            "notifications.screen.empty.content1".tr,
+            style: TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 18.5,
+                color: Theme.of(context).textSelectionColor,
+                fontFamily: "Popins"),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
+          child: Center(
+            child: Text(
+              "notifications.screen.empty.content2".tr,
               style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18.5,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14.5,
                   color: Theme.of(context).textSelectionColor,
                   fontFamily: "Popins"),
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 

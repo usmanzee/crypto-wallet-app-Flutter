@@ -3,11 +3,12 @@ import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/models/Beneficiary.dart';
 import 'package:crypto_template/models/DepositAddress.dart';
 import 'package:crypto_template/models/fiat_deposit_details.dart';
-import 'package:crypto_template/models/withdraw_history.dart';
+import 'package:crypto_template/models/trade_histroy_response.dart';
+import 'package:crypto_template/models/withdraw_history_response.dart';
 import 'package:crypto_template/network/api_provider.dart';
 import 'package:crypto_template/models/balance.dart';
 import 'package:crypto_template/models/currency.dart';
-import 'package:crypto_template/models/deposit_histroy.dart';
+import 'package:crypto_template/models/deposit_histroy_response.dart';
 import 'package:crypto_template/network/request_headers.dart';
 import 'package:get/get.dart';
 
@@ -38,22 +39,40 @@ class WalletRepository {
     return depositAddressFromJson(response);
   }
 
-  Future<List<DepositHistory>> fetchDepositHistory(currency) async {
+  Future<List<DepositHistoryResponse>> fetchDepositHistory(currency) async {
     apiProvider = new ApiProvider();
     RequestHeaders requestHeaders = new RequestHeaders();
     apiProvider.headers = requestHeaders.setAuthHeaders();
-    final response = await apiProvider
-        .get('peatio/account/deposits/?page=1&currency=$currency&limit=6');
+    var url = 'peatio/account/deposits';
+    if (currency != '') {
+      url += '/?page=1&currency=$currency&limit=6';
+    }
+    final response = await apiProvider.get(url);
     return depositHistoryFromJson(response);
   }
 
-  Future<List<WithdrawHistory>> fetchWithdrawHistory(currency) async {
+  Future<List<WithdrawHistoryResponse>> fetchWithdrawHistory(currency) async {
     apiProvider = new ApiProvider();
     RequestHeaders requestHeaders = new RequestHeaders();
     apiProvider.headers = requestHeaders.setAuthHeaders();
-    final response = await apiProvider
-        .get('peatio/account/withdraws/?page=1&currency=$currency&limit=6');
+    var url = 'peatio/account/withdraws';
+    if (currency != '') {
+      url += '/?page=1&currency=$currency&limit=6';
+    }
+    final response = await apiProvider.get(url);
     return withdrawHistoryFromJson(response);
+  }
+
+  Future<List<TradeHistoryResponse>> fetchTradeHistory(currency) async {
+    apiProvider = new ApiProvider();
+    RequestHeaders requestHeaders = new RequestHeaders();
+    apiProvider.headers = requestHeaders.setAuthHeaders();
+    var url = 'peatio/market/trades';
+    if (currency != '') {
+      url += '/?page=1&currency=$currency&limit=6';
+    }
+    final response = await apiProvider.get(url);
+    return tradeHistoryResponseFromJson(response);
   }
 
   Future<dynamic> withdrawCrypto(data) async {

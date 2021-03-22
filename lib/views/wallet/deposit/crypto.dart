@@ -237,38 +237,33 @@ class _WalletState extends State<DepositCrypto> {
   }
 
   Widget _addressNotFound(context) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
-      // height: 125.0,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Theme.of(context).canvasColor,
-      ),
-      child: Column(children: <Widget>[
-        SizedBox(
-          height: 16.0,
-        ),
-        Container(
-          height: 40.0,
-          width: 150.0,
-          color: Theme.of(context).primaryColor,
-          child: GestureDetector(
-            onTap: () {
-              depositController.fetchDepositAddress(wallet.currency);
-            },
-            child: Center(
-              child: Text(
-                "crypto_deposit.screen.button.generate_address".tr,
-                style: TextStyle(color: Colors.white),
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          SizedBox(
+            height: 16.0,
+          ),
+          Container(
+            height: 40.0,
+            width: 150.0,
+            color: Theme.of(context).primaryColor,
+            child: GestureDetector(
+              onTap: () {
+                depositController.fetchDepositAddress(wallet.currency);
+              },
+              child: Center(
+                child: Text(
+                  "crypto_deposit.screen.button.generate_address".tr,
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ),
           ),
-        ),
-        SizedBox(
-          height: 16.0,
-        ),
-      ]),
-    );
+          SizedBox(
+            height: 16.0,
+          ),
+        ]);
   }
 
   Widget _showAddress(context) {

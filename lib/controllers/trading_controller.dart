@@ -16,6 +16,23 @@ import 'package:crypto_template/models/wallet.dart';
 import 'package:crypto_template/utils/Helpers/helper.dart';
 
 class TradingController extends GetxController {
+  var limitBuyFormKey;
+  var limitSellFormKey;
+  var marketBuyFormKey;
+  var marketSellFormKey;
+
+  var limitBuyPriceFocusNode;
+  var limitBuyAmountFocusNode;
+  var limitBuyTotalFocusNode;
+  var limitSellPriceFocusNode;
+  var limitSellAmountFocusNode;
+  var limitSellTotalFocusNode;
+
+  var marketBuyAmountFocusNode;
+  var marketBuyTotalFocusNode;
+  var marketSellAmountFocusNode;
+  var marketSellTotalFocusNode;
+
   var limitBuyFormPercentageOptions = List<FormPercentageOption>().obs;
   var limitSellFormPercentageOptions = List<FormPercentageOption>().obs;
   var marketBuyFormPercentageOptions = List<FormPercentageOption>().obs;
@@ -57,6 +74,23 @@ class TradingController extends GetxController {
   ErrorController errorController = new ErrorController();
   @override
   void onInit() async {
+    limitBuyFormKey = GlobalKey<FormState>();
+    limitSellFormKey = GlobalKey<FormState>();
+    marketBuyFormKey = GlobalKey<FormState>();
+    marketSellFormKey = GlobalKey<FormState>();
+
+    limitBuyPriceFocusNode = FocusNode();
+    limitBuyAmountFocusNode = FocusNode();
+    limitBuyTotalFocusNode = FocusNode();
+    limitSellPriceFocusNode = FocusNode();
+    limitSellAmountFocusNode = FocusNode();
+    limitSellTotalFocusNode = FocusNode();
+
+    marketBuyAmountFocusNode = FocusNode();
+    marketBuyTotalFocusNode = FocusNode();
+    marketSellAmountFocusNode = FocusNode();
+    marketSellTotalFocusNode = FocusNode();
+
     limitOrderBuyPriceTextController = TextEditingController();
     limitOrderBuyAmountTextController = TextEditingController();
     limitOrderBuyTotalTextController = TextEditingController();
@@ -643,11 +677,11 @@ class TradingController extends GetxController {
     TradingRepository _tradingRepository = new TradingRepository();
     try {
       var orderObj = {
-        'amount': limitOrderBuyAmountTextController.text,
+        'volume': limitOrderBuyAmountTextController.text,
         'market': market.value.id,
         'price': limitOrderBuyPriceTextController.text,
         'side': 'buy',
-        'type': 'limit',
+        'ord_type': 'limit',
       };
 
       var orderResponseResponse =
@@ -675,11 +709,11 @@ class TradingController extends GetxController {
     TradingRepository _tradingRepository = new TradingRepository();
     try {
       var orderObj = {
-        'amount': limitOrderSellAmountTextController.text,
+        'volume': limitOrderSellAmountTextController.text,
         'market': market.value.id,
         'price': limitOrderSellPriceTextController.text,
         'side': 'sell',
-        'type': 'limit',
+        'ord_type': 'limit',
       };
       var orderResponseResponse =
           await _tradingRepository.placeTradingOrder(orderObj);
@@ -723,10 +757,10 @@ class TradingController extends GetxController {
     TradingRepository _tradingRepository = new TradingRepository();
     try {
       var orderObj = {
-        'amount': marketOrderBuyAmountTextController.text,
+        'volume': marketOrderBuyAmountTextController.text,
         'market': market.value.id,
         'side': 'buy',
-        'type': 'market',
+        'ord_type': 'market',
       };
 
       var orderResponseResponse =
@@ -753,10 +787,10 @@ class TradingController extends GetxController {
     TradingRepository _tradingRepository = new TradingRepository();
     try {
       var orderObj = {
-        'amount': marketOrderSellAmountTextController.text,
+        'volume': marketOrderSellAmountTextController.text,
         'market': market.value.id,
         'side': 'sell',
-        'type': 'market',
+        'ord_type': 'market',
       };
       var orderResponseResponse =
           await _tradingRepository.placeTradingOrder(orderObj);
@@ -778,6 +812,18 @@ class TradingController extends GetxController {
 
   @override
   void onClose() {
+    // limitBuyPriceFocusNode.dispose();
+    // limitBuyAmountFocusNode.dispose();
+    // limitBuyTotalFocusNode.dispose();
+    // limitSellPriceFocusNode.dispose();
+    // limitSellAmountFocusNode.dispose();
+    // limitSellTotalFocusNode.dispose();
+
+    // marketBuyAmountFocusNode.dispose();
+    // marketBuyTotalFocusNode.dispose();
+    // marketSellAmountFocusNode.dispose();
+    // marketSellTotalFocusNode.dispose();
+
     // limitOrderBuyPriceTextController?.dispose();
     // limitOrderBuyAmountTextController?.dispose();
     // limitOrderBuyTotalTextController?.dispose();

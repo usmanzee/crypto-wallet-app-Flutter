@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:crypto_template/models/Error.dart';
 import 'package:crypto_template/utils/Helpers/environment.dart';
 import 'package:http/http.dart' as http;
 import 'package:crypto_template/network/app_exception.dart';
@@ -29,12 +30,12 @@ class ApiProvider {
           await http.get(_baseUrl + _appVersion + url, headers: headers);
       responseJson = _returnResponse(response);
     } on SocketException {
-      throw FetchDataException({'statusCode': 1, 'message': 'no.internet'.tr});
+      throw FetchDataException({'statusCode': 1, 'message': 'no.internet'});
     } on HttpException {
       throw FetchDataException(
-          {'statusCode': 2, 'message': 'server.not.available'.tr});
+          {'statusCode': 2, 'message': 'server.not.available'});
     } on FormatException {
-      throw FetchDataException({'statusCode': 3, 'message': 'server.error'.tr});
+      throw FetchDataException({'statusCode': 3, 'message': 'server.error'});
     }
     return responseJson;
   }
@@ -47,12 +48,12 @@ class ApiProvider {
           body: body, headers: headers);
       responseJson = _returnResponse(response);
     } on SocketException {
-      throw FetchDataException({'statusCode': 1, 'message': 'no.internet'.tr});
+      throw FetchDataException({'statusCode': 1, 'message': 'no.internet'});
     } on HttpException {
       throw FetchDataException(
-          {'statusCode': 2, 'message': 'server.not.available'.tr});
+          {'statusCode': 2, 'message': 'server.not.available'});
     } on FormatException {
-      throw FetchDataException({'statusCode': 3, 'message': 'server.error'.tr});
+      throw FetchDataException({'statusCode': 3, 'message': 'server.error'});
     }
     return responseJson;
   }
@@ -64,12 +65,12 @@ class ApiProvider {
           body: body, headers: headers);
       responseJson = _returnResponse(response);
     } on SocketException {
-      throw FetchDataException({'statusCode': 1, 'message': 'no.internet'.tr});
+      throw FetchDataException({'statusCode': 1, 'message': 'no.internet'});
     } on HttpException {
       throw FetchDataException(
-          {'statusCode': 2, 'message': 'server.not.available'.tr});
+          {'statusCode': 2, 'message': 'server.not.available'});
     } on FormatException {
-      throw FetchDataException({'statusCode': 3, 'message': 'server.error'.tr});
+      throw FetchDataException({'statusCode': 3, 'message': 'server.error'});
     }
     return responseJson;
   }
@@ -81,12 +82,12 @@ class ApiProvider {
           await http.delete(_baseUrl + _appVersion + url, headers: headers);
       responseJson = _returnResponse(response);
     } on SocketException {
-      throw FetchDataException({'statusCode': 1, 'message': 'no.internet'.tr});
+      throw FetchDataException({'statusCode': 1, 'message': 'no.internet'});
     } on HttpException {
       throw FetchDataException(
-          {'statusCode': 2, 'message': 'server.not.available'.tr});
+          {'statusCode': 2, 'message': 'server.not.available'});
     } on FormatException {
-      throw FetchDataException({'statusCode': 3, 'message': 'server.error'.tr});
+      throw FetchDataException({'statusCode': 3, 'message': 'server.error'});
     }
     return responseJson;
   }
@@ -98,13 +99,12 @@ class ApiProvider {
       final res = await http.Response.fromStream(response);
       responseJson = _returnResponse(res);
     } on SocketException {
-      throw FetchDataException({'statusCode': 1, 'message': 'no.internet'.tr});
+      throw FetchDataException({'statusCode': 1, 'message': 'no.internet'});
     } on HttpException {
       throw FetchDataException(
-          {'statusCode': 2, 'message': 'server.not.available'.tr});
+          {'statusCode': 2, 'message': 'server.not.available'});
     } on FormatException {
-      throw FetchDataException(
-          {'statusCode': 3, 'message': 'Server not responding correctly!'});
+      throw FetchDataException({'statusCode': 3, 'message': 'server.error'});
     }
     return responseJson;
   }
@@ -144,13 +144,10 @@ dynamic _returnResponse(http.Response response) {
 
 dynamic makeErrorResponse(response) {
   var errorResponseObject = {};
-  var errorResponse = json.decode(response.body);
-  var errors = errorResponse['errors'];
-  for (var i = 0; i < errors.length; i++) {
-    errorResponseObject = {
-      'statusCode': response.statusCode,
-      'message': errors[i]
-    };
-  }
+  Error errorObj = errorFromJson(response.body);
+  errorResponseObject = {
+    'statusCode': response.statusCode,
+    'errors': errorObj.errors,
+  };
   return errorResponseObject;
 }

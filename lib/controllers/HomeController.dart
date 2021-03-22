@@ -8,10 +8,8 @@ import 'package:crypto_template/models/market.dart';
 import 'package:crypto_template/models/user.dart';
 import 'package:crypto_template/repository/public_repository.dart';
 import 'package:crypto_template/repository/user_repository.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:crypto_template/controllers/wallet_controller.dart';
 // import 'package:get_mac/get_mac.dart';
@@ -19,9 +17,9 @@ import 'package:connectivity/connectivity.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
+import 'package:get_storage/get_storage.dart';
 
 class HomeController extends GetxController {
-  // final int activeNavIndex = Get.arguments['selectedNavIndex'];
   final _hasConnection = true.obs;
   final _previousConnection = false.obs;
   final isLoggedIn = false.obs;
@@ -32,7 +30,7 @@ class HomeController extends GetxController {
   var deviceMacAddress = 'unknown'.obs;
   var authApiKey = 'unknown'.obs;
   var authSecret = 'unknown'.obs;
-  var fetchingMemberLevel = true.obs;
+  var fetchingMemberLevel = false.obs;
   var publicMemberLevel = MemberLevel().obs;
 
   var currentPos = 0.obs;
@@ -54,6 +52,13 @@ class HomeController extends GetxController {
 
   get previousConnection => this._previousConnection.value;
   set previousConnection(value) => this._previousConnection.value = value;
+
+  var languages = [
+    {"name": "English", "lang_code": "en", "country_code": "US"},
+    {"name": "Pусский", "lang_code": "ru", "country_code": "RU"},
+    {"name": "Español", "lang_code": "es", "country_code": "ES"},
+    {"name": "Bahasa Melayu", "lang_code": "ms", "country_code": "MY"}
+  ].obs;
 
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
@@ -84,20 +89,15 @@ class HomeController extends GetxController {
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
-        // _showItemDialog(message);
       },
       onBackgroundMessage: myBackgroundMessageHandler,
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
-        // isLoggedIn ?? Get.toNamed('/notifications');
-        Get.toNamed('/notifications');
-        // _navigateToItemDetail(message);
+        isLoggedIn ?? Get.toNamed('/notifications');
       },
       onResume: (Map<String, dynamic> message) async {
         print("onResume: $message");
-        // isLoggedIn ?? Get.toNamed('/notifications');
-        Get.toNamed('/notifications');
-        // _navigateToItemDetail(message);
+        isLoggedIn ?? Get.toNamed('/notifications');
       },
     );
 
@@ -144,18 +144,17 @@ class HomeController extends GetxController {
   // }
 
   Future<bool> isUserLoggedIn() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    isLoggedIn.value = prefs.getBool('loggedIn' ?? false);
-    authApiKey.value = prefs.getString('authApiKey');
-    authSecret.value = prefs.getString('authSecret');
+    isLoggedIn.value = GetStorage().read('loggedIn');
+    authApiKey.value = GetStorage().read('authApiKey');
+    authSecret.value = GetStorage().read('authSecret');
+
     isLoggedIn.value = isLoggedIn.value != null ? isLoggedIn.value : false;
     return isLoggedIn.value;
   }
 
   void logoutUser() async {
     user.value = null;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('loggedIn');
+    GetStorage().remove('loggedIn');
     isLoggedIn.value = false;
     snackbarController =
         new SnackbarController(title: 'Error', message: 'logged_out'.tr);

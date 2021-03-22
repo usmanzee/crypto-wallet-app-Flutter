@@ -1,54 +1,26 @@
 import 'package:crypto_template/component/no_data.dart';
-import 'package:crypto_template/controllers/transaction_history_controller.dart';
-import 'package:crypto_template/controllers/wallet_controller.dart';
+import 'package:crypto_template/controllers/history_controller.dart';
 import 'package:crypto_template/models/deposit_histroy_response.dart';
-import 'package:flutter/material.dart';
-import 'package:crypto_template/models/wallet.dart' as WalletClass;
-import 'package:get/get.dart';
-import 'package:crypto_template/views/webview_container.dart';
 import 'package:crypto_template/utils/Helpers/helper.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class DepositHistoryList extends StatelessWidget {
-  final WalletClass.Wallet wallet;
-  final TransactionHistoryController transactionHistoryController;
-  DepositHistoryList({this.wallet})
-      : transactionHistoryController = Get.put(TransactionHistoryController(
-            currency: wallet.currency != null ? wallet.currency : ''));
-
-  final WalletController walletController = Get.find<WalletController>();
-  void _handleURLButtonPress(String currency, String txid) {
-    String blockchainLink = getBlockchainLink(currency, txid);
-    Get.to(WebViewContainer('Explorer', blockchainLink));
-  }
-
-  String getBlockchainLink(currency, txid) {
-    var wallets = walletController.walletsList;
-    WalletClass.Wallet currencyInfo =
-        wallets.firstWhere((wallet) => wallet.currency == currency);
-    if (currencyInfo != null) {
-      if ((txid != '' && txid != null) &&
-          (currencyInfo.explorerTransaction != '' &&
-              currencyInfo.explorerTransaction != null)) {
-        var bLink =
-            currencyInfo.explorerTransaction.replaceFirst('#{txid}', txid);
-        return bLink;
-      }
-    }
-    return '';
-  }
-
+class DepositHistory extends StatelessWidget {
+  final blockChainLink;
+  DepositHistory({this.blockChainLink});
+  final HistoryController historyController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (transactionHistoryController.isLoading.value)
+      if (historyController.isDepositHistoryLoading.value)
         return Container(
             width: double.infinity,
             height: 200,
             alignment: Alignment.center,
             child: CircularProgressIndicator());
       else
-        return transactionHistoryController.depositHistory.isEmpty
+        return historyController.depositHistory.isEmpty
             ? NoData()
             : Container(
                 child: ListView.builder(
@@ -58,10 +30,10 @@ class DepositHistoryList extends StatelessWidget {
                 itemBuilder: (ctx, i) {
                   return _depositHistoryList(
                     context,
-                    transactionHistoryController.depositHistory[i],
+                    historyController.depositHistory[i],
                   );
                 },
-                itemCount: transactionHistoryController.depositHistory.length,
+                itemCount: historyController.depositHistory.length,
               ));
     });
   }
@@ -355,8 +327,7 @@ class DepositHistoryList extends StatelessWidget {
                             ? Theme.of(context).primaryColor
                             : Theme.of(context).primaryColor.withOpacity(0.5),
                         onPressed: isButtonEnabled
-                            ? () => _handleURLButtonPress(
-                                depositHistoryItem.currency,
+                            ? () => blockChainLink(depositHistoryItem.currency,
                                 depositHistoryItem.txid)
                             : null,
                         child: Center(

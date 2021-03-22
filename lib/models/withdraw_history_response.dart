@@ -1,14 +1,14 @@
 import 'dart:convert';
 
-List<WithdrawHistory> withdrawHistoryFromJson(String str) =>
-    List<WithdrawHistory>.from(
-        json.decode(str).map((x) => WithdrawHistory.fromJson(x)));
+List<WithdrawHistoryResponse> withdrawHistoryFromJson(String str) =>
+    List<WithdrawHistoryResponse>.from(
+        json.decode(str).map((x) => WithdrawHistoryResponse.fromJson(x)));
 
-String withdrawHistoryToJson(List<WithdrawHistory> data) =>
+String withdrawHistoryToJson(List<WithdrawHistoryResponse> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class WithdrawHistory {
-  WithdrawHistory({
+class WithdrawHistoryResponse {
+  WithdrawHistoryResponse({
     this.id,
     this.currency,
     this.type,
@@ -36,8 +36,8 @@ class WithdrawHistory {
   DateTime completedAt;
   DateTime doneAt;
 
-  factory WithdrawHistory.fromJson(Map<String, dynamic> json) =>
-      WithdrawHistory(
+  factory WithdrawHistoryResponse.fromJson(Map<String, dynamic> json) =>
+      WithdrawHistoryResponse(
         id: json["id"],
         currency: json["currency"],
         type: json["type"],

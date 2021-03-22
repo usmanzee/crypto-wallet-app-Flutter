@@ -217,7 +217,6 @@ class Security extends GetView<HomeController> {
                       onCompleted: (v) {},
                       onChanged: (value) {},
                       beforeTextPaste: (text) {
-                        print("Allowing to paste $text");
                         return true;
                       },
                     )

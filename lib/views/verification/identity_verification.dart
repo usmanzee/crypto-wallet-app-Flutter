@@ -14,17 +14,21 @@ class IdentityVerification extends StatelessWidget {
 
   final myFormat = DateFormat('d/MM/yyyy');
 
-  final _firstNameValidator =
-      RequiredValidator(errorText: 'This field is required');
-  final _lastNameValidator =
-      RequiredValidator(errorText: 'This field is required');
-  final _dateOfBirthValidator =
-      RequiredValidator(errorText: 'This field is required');
-  final _addressValidator =
-      RequiredValidator(errorText: 'This field is required');
-  final _cityValidator = RequiredValidator(errorText: 'This field is required');
-  final _postCodeValidator =
-      RequiredValidator(errorText: 'This field is required');
+  final _firstNameValidator = RequiredValidator(
+      errorText:
+          'identification.screen.identity.step1.field.first_name.error'.tr);
+  final _lastNameValidator = RequiredValidator(
+      errorText:
+          'identification.screen.identity.step1.field.last_name.error'.tr);
+  final _dateOfBirthValidator = RequiredValidator(
+      errorText: 'identification.screen.identity.step1.field.dob.error'.tr);
+  final _addressValidator = RequiredValidator(
+      errorText: 'identification.screen.identity.step1.field.address.error'.tr);
+  final _cityValidator = RequiredValidator(
+      errorText: 'identification.screen.identity.step1.field.city.error'.tr);
+  final _postCodeValidator = RequiredValidator(
+      errorText:
+          'identification.screen.identity.step1.field.post_code.error'.tr);
 
   Future<void> _selectDate(BuildContext context) async {
     var themeData = Get.isDarkMode ? ThemeData.dark() : ThemeData.light();
@@ -65,9 +69,9 @@ class IdentityVerification extends StatelessWidget {
             onStepTapped: (step) {},
             controlsBuilder: _createEventControlBuilder,
             onStepContinue: () {
+              FocusScope.of(context).unfocus();
               if (verificationController.currentStep <
                   this._myStep(context).length - 1) {
-                print(verificationController.currentStep);
                 if (verificationController.currentStep == 0) {
                   final _formState = _nameForm.currentState;
                   if (_formState.validate()) {
@@ -113,7 +117,7 @@ class IdentityVerification extends StatelessWidget {
               minWidth: 40.0,
               color: Theme.of(context).hintColor,
               child: Text(
-                "Back",
+                "identification.screen.identity.button.back".tr,
                 style: TextStyle(fontSize: 10),
               ),
             )
@@ -126,7 +130,7 @@ class IdentityVerification extends StatelessWidget {
             color: Theme.of(context).primaryColor,
             textColor: Colors.white,
             child: Text(
-              "Next",
+              "identification.screen.identity.button.back".tr,
               style: TextStyle(fontSize: 10),
             ),
           ),
@@ -136,7 +140,7 @@ class IdentityVerification extends StatelessWidget {
   List<Step> _myStep(context) {
     List<Step> _steps = [
       Step(
-          title: Text('Name/DOB'),
+          title: Text('identification.screen.identity.step1.title'.tr),
           content: Column(
             children: <Widget>[
               Form(
@@ -152,8 +156,10 @@ class IdentityVerification extends StatelessWidget {
                       keyboardType: TextInputType.text,
                       textAlign: TextAlign.start,
                       decoration: InputDecoration(
-                          labelText: 'First Name',
-                          hintText: 'Enter Your First Name'),
+                        labelText:
+                            'identification.screen.identity.step1.field.first_name'
+                                .tr,
+                      ),
                     ),
                     TextFormField(
                       controller: verificationController.lastNameTextController,
@@ -162,8 +168,10 @@ class IdentityVerification extends StatelessWidget {
                       keyboardType: TextInputType.text,
                       textAlign: TextAlign.start,
                       decoration: InputDecoration(
-                          labelText: 'Last Name',
-                          hintText: 'Enter Your Last Name'),
+                        labelText:
+                            'identification.screen.identity.step1.field.last_name'
+                                .tr,
+                      ),
                     ),
                     GestureDetector(
                       onTap: () {
@@ -178,8 +186,10 @@ class IdentityVerification extends StatelessWidget {
                         keyboardType: TextInputType.text,
                         textAlign: TextAlign.start,
                         decoration: InputDecoration(
-                            labelText: 'Date of Birth',
-                            hintText: 'Enter Your Date of Birth'),
+                          labelText:
+                              'identification.screen.identity.step1.field.dob'
+                                  .tr,
+                        ),
                       ),
                     ),
                   ],
@@ -190,7 +200,7 @@ class IdentityVerification extends StatelessWidget {
           isActive: verificationController.currentStep >= 0,
           state: StepState.indexed),
       Step(
-          title: Text('Country/Nationality'),
+          title: Text('identification.screen.identity.step2.title'.tr),
           content: Column(
             children: <Widget>[
               InkWell(
@@ -239,7 +249,7 @@ class IdentityVerification extends StatelessWidget {
           isActive: verificationController.currentStep >= 1,
           state: StepState.indexed),
       Step(
-          title: Text('Address'),
+          title: Text('identification.screen.identity.step3.title'.tr),
           content: Column(
             children: <Widget>[
               Form(
@@ -254,7 +264,9 @@ class IdentityVerification extends StatelessWidget {
                       keyboardType: TextInputType.text,
                       textAlign: TextAlign.start,
                       decoration: InputDecoration(
-                          labelText: 'Address', hintText: 'Enter Your Address'),
+                          labelText:
+                              'identification.screen.identity.step3.field.address'
+                                  .tr),
                     ),
                     TextFormField(
                       controller: verificationController.cityTextController,
@@ -263,7 +275,9 @@ class IdentityVerification extends StatelessWidget {
                       keyboardType: TextInputType.text,
                       textAlign: TextAlign.start,
                       decoration: InputDecoration(
-                          labelText: 'Enter City', hintText: 'Enter Your City'),
+                          labelText:
+                              'identification.screen.identity.step3.field.city'
+                                  .tr),
                     ),
                     TextFormField(
                       controller: verificationController.postCodeTextController,
@@ -272,8 +286,10 @@ class IdentityVerification extends StatelessWidget {
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.start,
                       decoration: InputDecoration(
-                          labelText: 'Enter Pin Code',
-                          hintText: 'Enter Your Area Pin Code'),
+                        labelText:
+                            'identification.screen.identity.step3.field.post_code'
+                                .tr,
+                      ),
                     ),
                   ],
                 ),

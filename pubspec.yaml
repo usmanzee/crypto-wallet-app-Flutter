@@ -46,12 +46,12 @@ dependencies:
   oktoast: ^2.3.2
   image_picker: ^0.6.7+22
   introduction_screen: ^1.0.9
-  upgrader: ^2.8.2
   firebase_messaging: ^7.0.3
   badges: ^1.1.6
   flutter_dotenv: ^3.1.0
   pin_code_fields: ^6.1.0
   sentry_flutter: ^4.0.6
+  get_storage: ^1.4.0
 
 
 
@@ -79,70 +79,12 @@ flutter:
   uses-material-design: true
 
   fonts:
-    - family: gainers
-      fonts:
-        - asset: assets/icon/ic_gainers.ttf
-    - family: message
-      fonts:
-        - asset: assets/icon/ic_message.ttf
-    - family: tab
-      fonts:
-        - asset: assets/icon/ic_tab.ttf
-    - family: wallet
-      fonts:
-        - asset: assets/icon/ic_wallet.ttf
-    - family: tab1
-      fonts:
-        - asset: assets/icon/ic_tab1.ttf
-    - family: tab2
-      fonts:
-        - asset: assets/icon/ic_tab2.ttf
-    - family: tab3
-      fonts:
-        - asset: assets/icon/ic_tab3.ttf
-    - family: tab4
-      fonts:
-        - asset: assets/icon/ic_tab4.ttf
-    - family: tab5
-      fonts:
-        - asset: assets/icon/ic_tab5.ttf
-    - family: loser
-      fonts:
-        - asset: assets/icon/ic_loser.ttf
-    - family: Sans
-      fonts:
-        - asset: assets/font/OpenSans-Bold.ttf
-          weight: 800
-        - asset: assets/font/OpenSans-Semibold.ttf
-          weight: 600
-        - asset: assets/font/OpenSans-Regular.ttf
-          weight: 400
-        - asset: assets/font/OpenSans-Light.ttf
-          weight: 200
     - family : Popins
       fonts:
         - asset: assets/font/Poppins-Regular.ttf
           weight: 400
         - asset: assets/font/Poppins-SemiBold.ttf
           weight : 600
-    - family : Berlin
-      fonts:
-        - asset: assets/font/BRLNSDB.TTF
-          weight: 700
-    - family : Lemon
-      fonts:
-        - asset: assets/font/Lemon-Regular.ttf
-          weight: 400
-    - family : Gotik
-      fonts:
-        - asset: assets/font/GOTHIC.TTF
-          weight: 400
-        - asset: assets/font/GOTHICB.TTF
-          weight : 600
-    - family : Pragmatica
-      fonts:
-        - asset: assets/font/pragmatica_bold.ttf
-          weight: 500
     - family: CryptoFont
       fonts:
         - asset: assets/font/cryptofont-webfont.ttf

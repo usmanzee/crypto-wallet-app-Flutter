@@ -33,6 +33,9 @@ class SwapController extends GetxController {
   var exchangeRate = ''.obs;
   var receivableAmount = ''.obs;
 
+  var fromFieldfocus = FocusNode().obs;
+  var toFieldfocus = FocusNode().obs;
+
   SnackbarController snackbarController;
   ErrorController errorController = new ErrorController();
   HomeController homeController = Get.find();
@@ -88,8 +91,6 @@ class SwapController extends GetxController {
         currencies.add(market.quoteUnit.toLowerCase());
       }
     }
-
-    print(currencies);
 
     newList = walletsList.where((Wallet wallet) {
       return currencies.contains(wallet.currency.toLowerCase());
@@ -267,15 +268,14 @@ class SwapController extends GetxController {
     Get.dialog(Center(child: CircularProgressIndicator()),
         barrierDismissible: false);
     try {
-      var exchangeRequestObj = {
-        'base_currency': toSelectedWallet.value.currency,
-        'qoute_currency': fromSelectedWallet.value.currency,
-        'qoute_amount': fromAmountTextController.text,
-        'otp': otpCodeTextController.text
-      };
-
       if (fromSelectedWallet.value.type == 'fiat' &&
           toSelectedWallet.value.type == 'fiat') {
+        var exchangeRequestObj = {
+          'base_currency': toSelectedWallet.value.currency,
+          'qoute_currency': fromSelectedWallet.value.currency,
+          'qoute_amount': fromAmountTextController.text,
+          'otp': otpCodeTextController.text
+        };
         await _swapRepository.exchangeRequest(exchangeRequestObj);
       } else {
         TradingRepository _tradingRepository = new TradingRepository();
@@ -299,11 +299,11 @@ class SwapController extends GetxController {
               orElse: () => null);
         }
         var orderObj = {
-          'amount': fromAmountTextController.text,
+          'volume': fromAmountTextController.text,
           'market': existingMarket.id,
           'price': existingMarket.last.toString(),
           'side': orderSide,
-          'type': 'limit'
+          'ord_type': 'limit'
         };
         await _tradingRepository.placeTradingOrder(orderObj);
       }
@@ -330,6 +330,8 @@ class SwapController extends GetxController {
     if (isWalletControllerRegistered) {
       Get.delete<WalletController>(force: true);
     }
+    fromFieldfocus.value.dispose();
+    toFieldfocus.value.dispose();
     // fromAmountTextController?.dispose();
     // toAmountTextController?.dispose();
     // otpCodeTextController?.dispose();

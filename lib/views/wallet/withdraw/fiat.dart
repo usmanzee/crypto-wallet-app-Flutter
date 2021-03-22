@@ -450,7 +450,7 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
           highlightColor: Colors.black12,
           color: Theme.of(context).primaryColor,
           onPressed: () {
-            _confirmAccountInfo(context);
+            Get.toNamed('/profile-verification');
           },
           child: Center(
               child: Text(
@@ -511,18 +511,5 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
         ),
       ]),
     );
-  }
-
-  void _confirmAccountInfo(BuildContext context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (ctx) {
-          return Container(
-            height: MediaQuery.of(context).size.height * 0.4,
-            child: Center(
-              child: Text("Feature under development!"),
-            ),
-          );
-        });
   }
 }

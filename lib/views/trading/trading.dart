@@ -12,6 +12,7 @@ import 'package:crypto_template/views/DetailCryptoValue/open_orders.dart';
 class Trading extends StatelessWidget {
   static final GlobalKey<ScaffoldState> _scaffoldKey =
       GlobalKey<ScaffoldState>();
+
   final TradingController tradingController =
       Get.put<TradingController>(TradingController());
   final HomeController homeController = Get.find();
@@ -206,8 +207,9 @@ class Trading extends StatelessWidget {
                       height: homeController.isLoggedIn.value ? 300 : 250,
                       child: TabBarView(children: [
                         LimitOrderForm(
-                            formatedMarket:
-                                marketController.selectedMarketTrading.value),
+                          formatedMarket:
+                              marketController.selectedMarketTrading.value,
+                        ),
                         MarketOrderForm(
                             formatedMarket:
                                 marketController.selectedMarketTrading.value),

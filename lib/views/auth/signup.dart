@@ -85,6 +85,7 @@ class SignUp extends StatelessWidget {
                             label: 'register.screen.field.email'.tr,
                             obscure: false,
                             keyboardType: TextInputType.emailAddress,
+                            textInputAction: TextInputAction.next,
                             textAlign: TextAlign.start),
                       ),
                       Padding(
@@ -103,6 +104,7 @@ class SignUp extends StatelessWidget {
                             label: 'register.screen.field.password'.tr,
                             obscure: true,
                             keyboardType: TextInputType.text,
+                            textInputAction: TextInputAction.next,
                             textAlign: TextAlign.start),
                       ),
                       Padding(
@@ -128,6 +130,7 @@ class SignUp extends StatelessWidget {
                             label: 'register.screen.field.confirm_password'.tr,
                             obscure: true,
                             keyboardType: TextInputType.text,
+                            textInputAction: TextInputAction.next,
                             textAlign: TextAlign.start),
                       ),
                       Padding(
@@ -145,6 +148,7 @@ class SignUp extends StatelessWidget {
                             label: 'register.screen.field.referral_code'.tr,
                             obscure: false,
                             keyboardType: TextInputType.text,
+                            textInputAction: TextInputAction.done,
                             textAlign: TextAlign.start),
                       ),
                       Padding(

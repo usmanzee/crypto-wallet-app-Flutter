@@ -1,6 +1,8 @@
 const Map<String, String> ru = {
   //General Messages
   'copy.to.clipboard': 'Скопировано в буфер обмена',
+  'common_field_error': 'Это поле обязательно к заполнению.',
+  'common_image_field_error': 'Это изображение обязательно.',
   'logged_in': 'Авторизован',
   'logged_out': 'Срок вашего сеанса входа истек',
   'no.internet': 'Подключение к Интернету отсутствует',
@@ -85,9 +87,13 @@ const Map<String, String> ru = {
   'referral.screen.referral_copy_link': 'Копировать ссылку',
   'referral.screen.share': 'доля',
 
-  //App Notifications Screen
+  //App Identification Screen
   'identification.screen.title': 'Проверка',
+  'identification.screen.phone.field.search.country':
+      'Поиск по названию страны',
   'identification.screen.phone.field.phone': 'Телефонный номер',
+  'identification.screen.phone.phone.error':
+      'Пожалуйста, введите действующий номер мобильного телефона',
   'identification.screen.phone.button.send_code': 'Отправить код подтверждения',
   'identification.screen.phone.alert': 'Тревога',
   'identification.screen.phone.alert.desc':
@@ -98,6 +104,45 @@ const Map<String, String> ru = {
   'identification.screen.phone.secs': 'Сек',
   'identification.screen.phone.button.resend': 'Отправить код еще раз',
   'identification.screen.phone.button.verify': 'Проверять',
+
+  'identification.screen.identity.step1.title': 'Имя / Дата рождения',
+  'identification.screen.identity.step1.field.first_name': 'Имя',
+  'identification.screen.identity.step1.field.first_name.error':
+      'Это поле обязательно к заполнению',
+  'identification.screen.identity.step1.field.last_name': 'Фамилия',
+  'identification.screen.identity.step1.field.last_name.error':
+      'Это поле обязательно к заполнению',
+  'identification.screen.identity.step1.field.dob': 'Дата рождения',
+  'identification.screen.identity.step1.field.dob.error':
+      'Это поле обязательно к заполнению',
+  'identification.screen.identity.step2.title': 'Национальность страны',
+  'identification.screen.identity.step3.title': 'Адрес',
+  'identification.screen.identity.step3.field.address': 'Адрес проживания',
+  'identification.screen.identity.step3.field.address.error':
+      'Это поле обязательно к заполнению',
+  'identification.screen.identity.step3.field.city': 'Город',
+  'identification.screen.identity.step3.field.city.error':
+      'Это поле обязательно к заполнению',
+  'identification.screen.identity.step3.field.post_code': 'Почтовый индекс',
+  'identification.screen.identity.step3.field.post_code.error':
+      'Это поле обязательно к заполнению',
+  'identification.screen.identity.button.back': 'Назад',
+  'identification.screen.identity.button.next': 'Следующий',
+
+  'identification.screen.document.field.document_type': 'тип документа',
+  'identification.screen.document.field.document_number': '@document Номер',
+  'identification.screen.document.field.document_expiry':
+      '@document Срок действия',
+  'identification.screen.document.field.document_picture':
+      'Загрузить @document Очистить изображение',
+  'identification.screen.document.field.utility_bill_picture':
+      'Загрузить счет за коммунальные услуги Четкое изображение',
+  'identification.screen.document.field.selfie': 'Сделать селфи',
+  'identification.screen.document.upload.option.upload_pic':
+      'Загрузить изображение',
+  'identification.screen.document.upload.option.camera': 'Камера',
+  'identification.screen.document.button.submit':
+      'Представлять на рассмотрение',
 
   //App Notifications Screen
   'notifications.screen.title': 'Уведомления',
@@ -231,8 +276,9 @@ const Map<String, String> ru = {
   'swap.screen.account_not_confirmed_button': 'Подтвердить Аккаунт',
   'swap.screen.field.from': 'Из',
   'swap.screen.field.to': 'К',
-  'swap.screen.amount.error1': 'Сумма должна быть меньше @amount @currency.',
-  'swap.screen.amount.error2': 'Сумма должна быть больше @amount @currency.',
+  'swap.screen.amount.error1':
+      'Сумма должна быть больше, чем @amount @currency.',
+  'swap.screen.amount.error2': 'Сумма должна быть меньше @amount @currency.',
   'swap.screen.amount.error3':
       'На вашем балансе недостаточно. Пожалуйста, пополните свой кошелек',
   'swap.screen.available': 'Имеется в наличии',

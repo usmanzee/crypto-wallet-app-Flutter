@@ -116,7 +116,7 @@ Widget walletList(WalletClass.Wallet wallet, BuildContext ctx) {
       children: <Widget>[
         InkWell(
           onTap: () {
-            Get.to(WalletDetail(wallet: wallet));
+            Get.toNamed('/wallet-detail', arguments: {'wallet': wallet});
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

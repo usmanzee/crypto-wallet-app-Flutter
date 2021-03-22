@@ -1,14 +1,14 @@
 import 'dart:convert';
 
-List<DepositHistory> depositHistoryFromJson(String str) =>
-    List<DepositHistory>.from(
-        json.decode(str).map((x) => DepositHistory.fromJson(x)));
+List<DepositHistoryResponse> depositHistoryFromJson(String str) =>
+    List<DepositHistoryResponse>.from(
+        json.decode(str).map((x) => DepositHistoryResponse.fromJson(x)));
 
-String depositHistoryToJson(List<DepositHistory> data) =>
+String depositHistoryToJson(List<DepositHistoryResponse> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class DepositHistory {
-  DepositHistory({
+class DepositHistoryResponse {
+  DepositHistoryResponse({
     this.id,
     this.currency,
     this.amount,
@@ -30,7 +30,8 @@ class DepositHistory {
   DateTime completedAt;
   String state;
 
-  factory DepositHistory.fromJson(Map<String, dynamic> json) => DepositHistory(
+  factory DepositHistoryResponse.fromJson(Map<String, dynamic> json) =>
+      DepositHistoryResponse(
         id: json["id"],
         currency: json["currency"],
         amount: json["amount"],
