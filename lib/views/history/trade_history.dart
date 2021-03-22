@@ -1,8 +1,6 @@
 import 'package:crypto_template/component/no_data.dart';
 import 'package:crypto_template/controllers/history_controller.dart';
-import 'package:crypto_template/models/deposit_histroy_response.dart';
 import 'package:crypto_template/models/trade_histroy_response.dart';
-import 'package:crypto_template/utils/Helpers/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -77,7 +75,7 @@ class TradeHistory extends StatelessWidget {
           ]),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text(
-              'Price',
+              'history.screen.price'.tr,
               style: TextStyle(
                   fontSize: 14.5,
                   fontFamily: "Popins",
@@ -91,7 +89,7 @@ class TradeHistory extends StatelessWidget {
           ]),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text(
-              'Amount',
+              'history.screen.amount'.tr,
               style: TextStyle(
                   fontSize: 14.5,
                   fontFamily: "Popins",
@@ -105,7 +103,7 @@ class TradeHistory extends StatelessWidget {
           ]),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text(
-              'Total',
+              'history.screen.total'.tr,
               style: TextStyle(
                   fontSize: 14.5,
                   fontFamily: "Popins",

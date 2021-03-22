@@ -143,6 +143,7 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
                     validator: _withDrawAddressValidator,
                     obscureText: false,
                     keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
                         errorStyle: TextStyle(
                           fontSize: 13.5,
@@ -172,6 +173,7 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
                           validator: _withDrawTagValidator,
                           obscureText: false,
                           keyboardType: TextInputType.text,
+                          textInputAction: TextInputAction.next,
                           decoration: InputDecoration(
                               errorStyle: TextStyle(
                                 fontSize: 13.5,
@@ -197,6 +199,7 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
                   child: TextFormField(
                     obscureText: false,
                     keyboardType: TextInputType.number,
+                    textInputAction: TextInputAction.next,
                     validator: (amount) {
                       if (withdrawController.totalWithdrawlAmount.value >
                               double.parse(wallet.balance) ||
@@ -235,6 +238,7 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
                 ),
                 PinCodeTextField(
                   appContext: context,
+                  textInputAction: TextInputAction.done,
                   pastedTextStyle: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.bold,

@@ -75,6 +75,7 @@ class _AddBeneficiaryState extends State<AddBeneficiary> {
                         label: 'beneficiary.screen.field.full_name'.tr,
                         obscure: false,
                         keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.next,
                         textAlign: TextAlign.start),
                   ),
                   Padding(
@@ -87,6 +88,7 @@ class _AddBeneficiaryState extends State<AddBeneficiary> {
                         label: 'beneficiary.screen.field.account_number'.tr,
                         obscure: false,
                         keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.next,
                         textAlign: TextAlign.start),
                   ),
                   Padding(
@@ -99,6 +101,7 @@ class _AddBeneficiaryState extends State<AddBeneficiary> {
                         label: 'beneficiary.screen.field.bank_name'.tr,
                         obscure: false,
                         keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.next,
                         textAlign: TextAlign.start),
                   ),
                   Padding(
@@ -110,6 +113,7 @@ class _AddBeneficiaryState extends State<AddBeneficiary> {
                         label: 'beneficiary.screen.field.bank_swift_code'.tr,
                         obscure: false,
                         keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.next,
                         textAlign: TextAlign.start),
                   ),
                   Padding(
@@ -121,6 +125,7 @@ class _AddBeneficiaryState extends State<AddBeneficiary> {
                         label: 'beneficiary.screen.field.bank_inter_name'.tr,
                         obscure: false,
                         keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.next,
                         textAlign: TextAlign.start),
                   ),
                   Padding(
@@ -133,6 +138,7 @@ class _AddBeneficiaryState extends State<AddBeneficiary> {
                             'beneficiary.screen.field.bank_inter_swift_code'.tr,
                         obscure: false,
                         keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.next,
                         textAlign: TextAlign.start),
                   ),
                   Padding(
@@ -147,6 +153,7 @@ class _AddBeneficiaryState extends State<AddBeneficiary> {
                         label: 'beneficiary.screen.field.bank_inter_desc'.tr,
                         obscure: false,
                         keyboardType: TextInputType.multiline,
+                        textInputAction: TextInputAction.done,
                         textAlign: TextAlign.start),
                   ),
                   Padding(

@@ -313,6 +313,15 @@ const Map<String, String> en = {
   'wallet_detail.screen.button.deposit': 'Deposit',
   'wallet_detail.screen.button.withdraw': 'Withdraw',
 
+  //App All History Screen
+  'history.screen.title': 'History',
+  'history.screen.tabs.deposit_history': 'Deposit History',
+  'history.screen.tabs.withdraw_history': 'Withdraw History',
+  'history.screen.tabs.trade_history': 'Trade History',
+  'history.screen.price': 'Price',
+  'history.screen.amount': 'Amount',
+  'history.screen.total': 'Total',
+
   //App Crypto Deposit Screen
   'crypto_deposit.screen.title': 'Deposit',
   'crypto_deposit.screen.address': 'Address',

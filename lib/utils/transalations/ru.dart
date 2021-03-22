@@ -321,6 +321,15 @@ const Map<String, String> ru = {
   'wallet_detail.screen.button.deposit': 'Депозит',
   'wallet_detail.screen.button.withdraw': 'Снять со счета',
 
+  //App All History Screen
+  'history.screen.title': 'История',
+  'history.screen.tabs.deposit_history': 'История депозита',
+  'history.screen.tabs.withdraw_history': 'История вывода',
+  'history.screen.tabs.trade_history': 'История торговли',
+  'history.screen.price': 'Цена',
+  'history.screen.amount': 'Количество',
+  'history.screen.total': 'Общий',
+
   //App wallet Deposit History Screen
   'wallet_deposit_history.screen.amount': 'Количество',
   'wallet_deposit_history.screen.status': 'Положение дел',

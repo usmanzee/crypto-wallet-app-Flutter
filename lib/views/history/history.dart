@@ -57,7 +57,7 @@ class _HistoryState extends State<History> with TickerProviderStateMixin {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'History',
+          'history.screen.title'.tr,
           style: TextStyle(
               color: Theme.of(context).textSelectionColor,
               fontFamily: "Gotik",
@@ -118,7 +118,7 @@ class _HistoryState extends State<History> with TickerProviderStateMixin {
                                       tabs: [
                                         new Tab(
                                           child: Text(
-                                            "wallet_detail.screen.tabs.deposit_history"
+                                            "history.screen.tabs.deposit_history"
                                                 .tr,
                                             style: TextStyle(
                                                 fontFamily: "Popins",
@@ -128,7 +128,7 @@ class _HistoryState extends State<History> with TickerProviderStateMixin {
                                         ),
                                         new Tab(
                                           child: Text(
-                                            "wallet_detail.screen.tabs.withdraw_history"
+                                            "history.screen.tabs.withdraw_history"
                                                 .tr,
                                             style: TextStyle(
                                                 fontFamily: "Popins",
@@ -138,7 +138,8 @@ class _HistoryState extends State<History> with TickerProviderStateMixin {
                                         ),
                                         new Tab(
                                           child: Text(
-                                            "Trade History".tr,
+                                            "history.screen.tabs.trade_history"
+                                                .tr,
                                             style: TextStyle(
                                                 fontFamily: "Popins",
                                                 fontWeight: FontWeight.w500,

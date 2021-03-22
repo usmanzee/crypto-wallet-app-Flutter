@@ -219,6 +219,7 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
                         child: TextFormField(
                           obscureText: false,
                           keyboardType: TextInputType.number,
+                          textInputAction: TextInputAction.next,
                           validator: (amount) {
                             if (withdrawController.totalWithdrawlAmount.value >
                                     double.parse(wallet.balance) ||
@@ -259,6 +260,7 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
                       ),
                       PinCodeTextField(
                         appContext: context,
+                        textInputAction: TextInputAction.done,
                         pastedTextStyle: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.bold,

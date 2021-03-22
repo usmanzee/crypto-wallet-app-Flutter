@@ -306,6 +306,15 @@ const Map<String, String> ml = {
   'wallet_detail.screen.button.deposit': 'Deposit',
   'wallet_detail.screen.button.withdraw': 'Tarik balik',
 
+  //App All History Screen
+  'history.screen.title': 'Sejarah',
+  'history.screen.tabs.deposit_history': 'Sejarah Deposit',
+  'history.screen.tabs.withdraw_history': 'Pengeluaran Sejarah',
+  'history.screen.tabs.trade_history': 'Sejarah Perdagangan',
+  'history.screen.price': 'Harga',
+  'history.screen.amount': 'Jumlah',
+  'history.screen.total': 'Jumlah',
+
   //App Crypto Deposit Screen
   'crypto_deposit.screen.title': 'Deposit',
   'crypto_deposit.screen.address': 'Alamat',
