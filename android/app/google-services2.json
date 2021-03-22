@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "912103934466",
+    "project_id": "b4u-wallet-9c2f6",
+    "storage_bucket": "b4u-wallet-9c2f6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:912103934466:android:3b73c175347f8771ec351b",
+        "android_client_info": {
+          "package_name": "com.b4uwallet.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "912103934466-2flof58s92tehq7kbrjpif6embnslrev.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4QOgkHoWVgyuVASU0QSC6J-fam61Q1rU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "912103934466-2flof58s92tehq7kbrjpif6embnslrev.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

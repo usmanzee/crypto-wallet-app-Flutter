@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "920095558617",
+    "project_id": "disco-genius-213307",
+    "storage_bucket": "disco-genius-213307.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:920095558617:android:99fd94867bd12b000327c8",
+        "android_client_info": {
+          "package_name": "com.b4uwallet.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "920095558617-p9iuuvjrsisuvr0lkc6tu3v2id18ccsd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZpIgWxJIV4q2Gfy3Fjmkpy5SBkin9zR4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "920095558617-p9iuuvjrsisuvr0lkc6tu3v2id18ccsd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

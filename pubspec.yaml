@@ -10,7 +10,7 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+  sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -25,12 +25,46 @@ dependencies:
   shimmer: ^0.0.6
   rxdart: ^0.21.0
   bmnav: ^0.3.4
-  carousel_slider: ^1.3.0
+  carousel_slider: ^3.0.0
   percent_indicator: ^1.0.15
+  shared_preferences: ^0.5.12+4
+  form_field_validator: ^1.0.1
+  http: ^0.12.2
+  flushbar: ^1.10.4
+  get: ^3.22.2
+  qr_flutter: ^3.1.0
+  # get_mac: ^0.0.1
+  webview_flutter: ^1.0.7
+  crypto: ^2.1.5
+  crypto_font_icons: ^0.1.0+1
+  share: ^0.6.5+4
+  connectivity: ^2.0.2
+  k_chart: ^0.1.2
+  intl: ^0.16.1
+  web_socket_channel: ^1.2.0
+  intl_phone_field: ^1.4.2
+  oktoast: ^2.3.2
+  image_picker: ^0.6.7+22
+  introduction_screen: ^1.0.9
+  firebase_messaging: ^7.0.3
+  badges: ^1.1.6
+  flutter_dotenv: ^3.1.0
+  pin_code_fields: ^6.1.0
+  sentry_flutter: ^4.0.6
+  get_storage: ^1.4.0
 
-dev_dependencies:
+
+
+dev_dependencies: 
   flutter_test:
     sdk: flutter
+
+  flutter_launcher_icons: "^0.8.1"
+
+flutter_icons:
+  image_path: "assets/image/b4u_logo.png" 
+  android: true
+  ios: true
 
 
 # For information on the generic Dart part of this file, see the
@@ -45,103 +79,30 @@ flutter:
   uses-material-design: true
 
   fonts:
-    - family: gainers
-      fonts:
-        - asset: assets/icon/ic_gainers.ttf
-    - family: message
-      fonts:
-        - asset: assets/icon/ic_message.ttf
-    - family: tab
-      fonts:
-        - asset: assets/icon/ic_tab.ttf
-    - family: wallet
-      fonts:
-        - asset: assets/icon/ic_wallet.ttf
-    - family: tab1
-      fonts:
-        - asset: assets/icon/ic_tab1.ttf
-    - family: tab2
-      fonts:
-        - asset: assets/icon/ic_tab2.ttf
-    - family: tab3
-      fonts:
-        - asset: assets/icon/ic_tab3.ttf
-    - family: tab4
-      fonts:
-        - asset: assets/icon/ic_tab4.ttf
-    - family: tab5
-      fonts:
-        - asset: assets/icon/ic_tab5.ttf
-    - family: loser
-      fonts:
-        - asset: assets/icon/ic_loser.ttf
-    - family: Sans
-      fonts:
-        - asset: assets/font/OpenSans-Bold.ttf
-          weight: 800
-        - asset: assets/font/OpenSans-Semibold.ttf
-          weight: 600
-        - asset: assets/font/OpenSans-Regular.ttf
-          weight: 400
-        - asset: assets/font/OpenSans-Light.ttf
-          weight: 200
     - family : Popins
       fonts:
         - asset: assets/font/Poppins-Regular.ttf
           weight: 400
         - asset: assets/font/Poppins-SemiBold.ttf
           weight : 600
-    - family : Berlin
+    - family: CryptoFont
       fonts:
-        - asset: assets/font/BRLNSDB.TTF
-          weight: 700
-    - family : Lemon
-      fonts:
-        - asset: assets/font/Lemon-Regular.ttf
-          weight: 400
-    - family : Gotik
-      fonts:
-        - asset: assets/font/GOTHIC.TTF
-          weight: 400
-        - asset: assets/font/GOTHICB.TTF
-          weight : 600
-    - family : Pragmatica
-      fonts:
-        - asset: assets/font/pragmatica_bold.ttf
+        - asset: assets/font/cryptofont-webfont.ttf
           weight: 500
 
   assets:
-    - assets/ilustration/boarding1.png
+    - assets/ilustration/b1.png
+    - assets/ilustration/b2.png
+    - assets/ilustration/b3.png
     - assets/ilustration/noData.png
-    - assets/ilustration/boarding2.png
-    - assets/ilustration/boarding3.png
     - assets/image/banner/banner1.png
     - assets/image/banner/banner2.png
     - assets/image/banner/banner3.jpg
     - assets/image/banner/banner4.png
-    - assets/image/splash_screen.png
-    - assets/image/loginHeader.png
-    - assets/image/logo.png
-    - assets/image/signupHeader.png
+    - assets/image/b4u_logo.png
+    - assets/image/b4u_wallet_logo.png
     - assets/image/gainers.png
     - assets/image/losers.png
-    - assets/image/market/ae.png
-    - assets/image/market/aion.png
-    - assets/image/market/bat.png
-    - assets/image/market/BCH.png
-    - assets/image/market/bee.png
-    - assets/image/market/bnt.png
-    - assets/image/market/btc.png
-    - assets/image/market/dnt.png
-    - assets/image/market/elf.png
-    - assets/image/market/EOS.png
-    - assets/image/market/ETC.png
-    - assets/image/market/eth.png
-    - assets/image/market/NEO.png
-    - assets/image/market/RIPLE.png
-    - assets/image/market/bitcoin.png
-    - assets/image/article1.jpg
-    - assets/image/create_wallet.png
     - assets/image/News_Image/Asia.jpg
     - assets/image/News_Image/BlockStream.jpg
     - assets/image/News_Image/BNB.jpg
@@ -154,72 +115,10 @@ flutter:
     - assets/image/News_Image/Twitter.jpg
     - assets/image/News_Image/YouCan.jpg
     - assets/image/News_Image/Ziliqa.jpg
-    - assets/image/setting/lightMode.png
-    - assets/image/setting/nightMode.png
-    - assets/image/qrCode.png
-    - assets/image/messageAppbar.png
-    - assets/image/T1_noMessage.png
-    - assets/image/icon/icon_file.png
-    - assets/image/icon/icon_image.png
-    - assets/image/icon/icon_microphone.png
-    - assets/image/icon/icon_monitor.png
-    - assets/image/icon/icon_video.png
-    - assets/avatars/avatar-1.jpg
-    - assets/avatars/avatar-2.jpg
-    - assets/avatars/avatar-3.jpg
-    - assets/avatars/avatar-4.jpg
-    - assets/avatars/avatar-5.jpg
-    - assets/avatars/avatar-6.jpg
-    - assets/avatars/avatar-7.png
-    - assets/avatars/avatar-7-line.png
-    - assets/avatars/default-avatar.jpg
-    - assets/image/crypto_icon/icon_bitcoin.png
-    - assets/image/crypto_icon/icon_bee.png
-    - assets/image/crypto_icon/icon_elf.png
-    - assets/image/crypto_icon/icon_eth.png
-    - assets/image/crypto_icon/icon_lnc.png
-    - assets/image/Template_2_image/tabBar.png
-    - assets/image/Template_3/people.png
-    - assets/image/Template_3/scan.png
-    - assets/image/Template_3/transfer.png
-    - assets/image/Template_3/menu_bus.png
-    - assets/image/Template_3/menu_home.png
-    - assets/image/Template_3/menu_shopping.png
-    - assets/image/Template_3/menu_tv.png
-    - assets/image/Template_3/slackLogo.png
-    - assets/image/Template_3/solariaLogo.jpg
-    - assets/image/Template_3/twitchLogo.png
-    - assets/image/Template_3/finance_layout/bils_finance.png
-    - assets/image/Template_3/finance_layout/doctor_finance.png
-    - assets/image/Template_3/finance_layout/hangout_finance.png
-    - assets/image/Template_3/finance_layout/lifeStyle_finance.png
-    - assets/image/Template_3/finance_layout/workout_finance.png
-    - assets/image/Template_3/deals_layout/buildingMenu.png
-    - assets/image/Template_3/deals_layout/cardMenu.png
-    - assets/image/Template_3/deals_layout/financeMenu.png
-    - assets/image/Template_3/deals_layout/findMenu.png
-    - assets/image/Template_3/deals_layout/giveMenu.png
-    - assets/image/Template_3/deals_layout/growthMenu.png
-    - assets/image/Template_3/deals_layout/locationMenu.png
-    - assets/image/Template_3/deals_layout/moneyMenu.png
-    - assets/image/Template_3/deals_layout/saveMenu.png
-    - assets/image/Template_3/deals_layout/shareMenu.png
-    - assets/image/Template_3/historyEmpty.png
-    - assets/icon/Template4/aboutapp.png
-    - assets/icon/Template4/callcenter.png
-    - assets/icon/Template4/chat.png
-    - assets/icon/Template4/creditAcount.png
-    - assets/icon/Template4/notification.png
-    - assets/icon/Template4/setting.png
-    - assets/icon/Template4/truck.png
-    - assets/image/Template_4/notifications.png
-    - assets/image/Template_4/creditCardVisa.png
-    - assets/image/Template_4/credit.png
-    - assets/image/Template_4/contact_us.png
-    - assets/image/Template_4/noMessage.png
-    - assets/image/Template_5/noTransaction.png
-    - assets/image/Template_5/alarm.png
-    - assets/image/Template_5/creditCard.png
+    - assets/image/google_authenticator.png
+    - assets/depth.json
+    - assets/graph_type.json
+    - .env
 
   # To add assets to your application, add an assets section, like this:
   # assets:

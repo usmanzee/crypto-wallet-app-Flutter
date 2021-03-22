@@ -1,0 +1,6 @@
+[
+    {"name": "English", "lang": "en", "country": "US"},
+    {"name": "Pусский", "lang": "ru", "country": "RU"},
+    {"name": "Español", "lang": "es", "country": "ES"},
+    {"name": "Bahasa Melayu", "lang": "ms", "country": "MY"}
+  ]
