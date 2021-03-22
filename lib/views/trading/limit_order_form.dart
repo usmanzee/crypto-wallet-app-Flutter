@@ -359,8 +359,9 @@ class LimitOrderForm extends StatelessWidget {
                           cursorColor: Theme.of(context).textSelectionColor,
                           keyboardType: TextInputType.number,
                           textInputAction: TextInputAction.next,
-                          onEditingComplete: () =>
-                              tradingController.limitSellAmountFocusNode,
+                          onEditingComplete: () => tradingController
+                              .limitSellAmountFocusNode
+                              .requestFocus(),
                           textAlign: TextAlign.center,
                           decoration: new InputDecoration(
                               border: InputBorder.none,

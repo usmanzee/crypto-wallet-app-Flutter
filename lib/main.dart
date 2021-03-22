@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       translations: Messages(),
       locale: langCode == null && countryCode == null
-          ? Get.deviceLocale
+          ? Locale('en', 'US')
           : Locale(langCode, countryCode),
       defaultTransition: Transition.downToUp,
       getPages: RouterFile.Router.route,

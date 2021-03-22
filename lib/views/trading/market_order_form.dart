@@ -301,7 +301,7 @@ class MarketOrderForm extends StatelessWidget {
         width: 8.0,
       ),
       Form(
-        key: tradingController.marketSellFormKey.value,
+        key: tradingController.marketSellFormKey,
         child: Expanded(
           flex: 50,
           child: Column(

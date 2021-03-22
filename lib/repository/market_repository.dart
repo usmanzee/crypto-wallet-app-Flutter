@@ -33,12 +33,10 @@ class MarketRepository {
     apiProvider = new ApiProvider();
     RequestHeaders requestHeaders = new RequestHeaders();
     apiProvider.headers = requestHeaders.setAuthHeaders();
-    // final response = await apiProvider
-    //     .get('peatio/public/markets/${market}/k-line?period=${period}');
-    final response = await apiProvider.get(
-        'peatio/public/markets/${market}/k-line?period=${period}&time_from=${from}&time_to=${to}');
+    final response = await apiProvider
+        .get('peatio/public/markets/${market}/k-line?period=${period}');
     // final response = await apiProvider.get(
-    //     'peatio/public/markets/${market}/k-line?period=15&time_from=1611172371&time_to=1611285831');
+    //     'peatio/public/markets/${market}/k-line?period=${period}&time_from=${from}&time_to=${to}');
     return kLineFromJson(response);
   }
 }

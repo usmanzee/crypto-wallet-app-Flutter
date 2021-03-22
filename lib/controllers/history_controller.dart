@@ -80,7 +80,6 @@ class HistoryController extends GetxController {
         return -adate.compareTo(bdate);
       });
       tradeHistory.assignAll(tradeHistoryResponse);
-
       isTradeHistoryLoading(false);
     } catch (error) {
       isTradeHistoryLoading(false);
