@@ -83,6 +83,18 @@ const Map<String, String> ml = {
   'referral.screen.share': 'Berkongsi',
 
   //App Identification Screen
+  'identification.screen.email.title': 'E-mel disahkan',
+  'identification.screen.deposit': 'Deposit',
+  'identification.screen.withdraw': 'Tarik balik',
+  'identification.screen.trade': 'Perdagangan',
+  'identification.screen.enabled': 'Diaktifkan',
+  'identification.screen.phone.unverified.title': 'Pengesahan telefon',
+  'identification.screen.phone.title': 'Telefon disahkan',
+  'identification.screen.identity.unverified.title': 'Pengesahan identiti',
+  'identification.screen.identity.title': 'Identiti disahkan',
+  'identification.screen.pending': 'Yang belum selesai',
+  'identification.screen.rejected': 'Ditolak',
+
   'identification.screen.title': 'Pengesahan',
   'identification.screen.phone.field.search.country':
       'Cari mengikut Nama Negara',
@@ -311,6 +323,7 @@ const Map<String, String> ml = {
   'history.screen.tabs.deposit_history': 'Sejarah Deposit',
   'history.screen.tabs.withdraw_history': 'Pengeluaran Sejarah',
   'history.screen.tabs.trade_history': 'Sejarah Perdagangan',
+  'history.screen.side': 'Sebelah',
   'history.screen.price': 'Harga',
   'history.screen.amount': 'Jumlah',
   'history.screen.total': 'Jumlah',

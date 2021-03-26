@@ -105,11 +105,11 @@ class Router {
       page: () => SwapHistory(),
       binding: SwapHistoryBinding(),
     ),
-    // GetPage(
-    //   name: '/verification-level',
-    //   page: () => VerificationLevel(),
-    //   binding: VerificationBinding(),
-    // ),
+    GetPage(
+      name: '/verification-level',
+      page: () => VerificationLevel(),
+      binding: VerificationBinding(),
+    ),
     GetPage(
       name: '/profile-verification',
       page: () => Verification(),

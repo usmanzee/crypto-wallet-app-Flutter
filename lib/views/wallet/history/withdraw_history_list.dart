@@ -1,3 +1,4 @@
+import 'package:crypto_template/component/history_detail.dart';
 import 'package:crypto_template/component/no_data.dart';
 import 'package:crypto_template/controllers/transaction_history_controller.dart';
 import 'package:crypto_template/controllers/wallet_controller.dart';
@@ -16,7 +17,7 @@ class WithdrawHistoryList extends StatelessWidget {
   final TransactionHistoryController transactionHistoryController =
       Get.find<TransactionHistoryController>();
   final WalletController walletController = Get.find<WalletController>();
-  void _handleURLButtonPress(String currency, String txid) {
+  void handleURLButtonPress(String currency, String txid) {
     String blockchainLink = getBlockchainLink(currency, txid);
     Get.to(WebViewContainer('Explorer', blockchainLink));
   }
@@ -93,8 +94,15 @@ class WithdrawHistoryList extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        _withdrawHistoryDetail(context, withdrawHistoryItem, _color, _icon,
-            formatedDate, formatedTime);
+        HistoryDetail.showWithdrawlHistoryDetail(
+            context,
+            withdrawHistoryItem,
+            _color,
+            _icon,
+            formatedDate,
+            formatedTime,
+            () => handleURLButtonPress(withdrawHistoryItem.currency,
+                withdrawHistoryItem.blockchainTxid));
       },
       child: Padding(
         padding: const EdgeInsets.only(top: 8.0),
@@ -150,7 +158,7 @@ class WithdrawHistoryList extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 Text(
-                  withdrawHistoryItem.amount,
+                  double.parse(withdrawHistoryItem.amount).toStringAsFixed(2),
                   style: TextStyle(
                       fontSize: 19.5,
                       fontFamily: "Popins",
@@ -165,250 +173,5 @@ class WithdrawHistoryList extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void _withdrawHistoryDetail(
-      context,
-      WithdrawHistoryResponse withdrawHistoryItem,
-      Color _color,
-      IconData _icon,
-      String formatedDate,
-      String formatedTime) {
-    bool isButtonEnabled = withdrawHistoryItem.blockchainTxid != null &&
-        withdrawHistoryItem.blockchainTxid != '';
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext bc) {
-          return Container(
-            padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
-            child: new Wrap(
-              children: <Widget>[
-                Padding(
-                    padding: EdgeInsets.only(bottom: 4),
-                    child: Center(
-                      child: Text(
-                        "wallet_deposit_history.screen.amount".tr,
-                        style: TextStyle(
-                            color: Theme.of(context).hintColor.withOpacity(0.5),
-                            fontFamily: "Popins",
-                            fontSize: 15.5),
-                      ),
-                    )),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      withdrawHistoryItem.amount,
-                      style: TextStyle(
-                          fontFamily: "Popins",
-                          fontSize: 24,
-                          fontWeight: FontWeight.w800,
-                          letterSpacing: 1.5),
-                    ),
-                    SizedBox(
-                      width: 4.0,
-                    ),
-                    Text(
-                      withdrawHistoryItem.currency.toUpperCase(),
-                      style: TextStyle(
-                        fontFamily: "Popins",
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18.0,
-                      ),
-                    )
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 20.0,
-                      width: 20.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(70.0)),
-                        border: Border.all(color: _color),
-                      ),
-                      child: Center(
-                        child: Icon(
-                          _icon,
-                          size: 14,
-                          color: _color,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 4.0,
-                    ),
-                    Text(
-                      withdrawHistoryItem.state,
-                      style: TextStyle(
-                          fontFamily: "Popins", fontSize: 18.0, color: _color),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 16.0),
-                  child: Container(
-                    width: double.infinity,
-                    height: 0.5,
-                    decoration:
-                        BoxDecoration(color: Theme.of(context).hintColor),
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(right: 24),
-                      child: Text(
-                        "wallet_withdraw_history.screen.address".tr,
-                        style: TextStyle(
-                            color: Theme.of(context).hintColor.withOpacity(0.5),
-                            fontFamily: "Popins",
-                            fontSize: 15.5),
-                      ),
-                    ),
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          withdrawHistoryItem.rid,
-                          style: TextStyle(fontFamily: "Popins"),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(right: 24),
-                      child: Text(
-                        "wallet_withdraw_history.screen.transaction_fee".tr,
-                        style: TextStyle(
-                            color: Theme.of(context).hintColor.withOpacity(0.5),
-                            fontFamily: "Popins",
-                            fontSize: 15.5),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        withdrawHistoryItem.fee,
-                        style: TextStyle(fontFamily: "Popins"),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(right: 24),
-                      child: Text(
-                        "wallet_withdraw_history.screen.txid".tr,
-                        style: TextStyle(
-                            color: Theme.of(context).hintColor.withOpacity(0.5),
-                            fontFamily: "Popins",
-                            fontSize: 15.5),
-                      ),
-                    ),
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          (withdrawHistoryItem.blockchainTxid != null &&
-                                  withdrawHistoryItem.blockchainTxid != ''
-                              ? withdrawHistoryItem.blockchainTxid
-                              : '---'),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontFamily: "Popins"),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(right: 24),
-                      child: Text(
-                        "wallet_withdraw_history.screen.date".tr,
-                        style: TextStyle(
-                            color: Theme.of(context).hintColor.withOpacity(0.5),
-                            fontFamily: "Popins",
-                            fontSize: 15.5),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        formatedDate + ' ' + formatedTime,
-                        style: TextStyle(fontFamily: "Popins"),
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 16.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      RawMaterialButton(
-                        disabledElevation: 1,
-                        fillColor: isButtonEnabled
-                            ? Theme.of(context).scaffoldBackgroundColor
-                            : Theme.of(context)
-                                .scaffoldBackgroundColor
-                                .withOpacity(0.5),
-                        onPressed: isButtonEnabled
-                            ? () => Helper.copyToClipBoard(
-                                withdrawHistoryItem.blockchainTxid)
-                            : null,
-                        child: Center(
-                            child: Text(
-                          "wallet_withdraw_history.screen.button.copy_txid".tr,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontFamily: "Popins",
-                              letterSpacing: 1.3,
-                              fontSize: 16.0),
-                        )),
-                      ),
-                      RawMaterialButton(
-                        disabledElevation: 1,
-                        fillColor: isButtonEnabled
-                            ? Theme.of(context).primaryColor
-                            : Theme.of(context).primaryColor.withOpacity(0.5),
-                        onPressed: isButtonEnabled
-                            ? () => _handleURLButtonPress(
-                                withdrawHistoryItem.currency,
-                                withdrawHistoryItem.blockchainTxid)
-                            : null,
-                        child: Center(
-                            child: Text(
-                          "wallet_withdraw_history.screen.button.check_explorer"
-                              .tr,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: "Popins",
-                              letterSpacing: 1.3,
-                              fontSize: 16.0),
-                        )),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        });
   }
 }

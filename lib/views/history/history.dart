@@ -159,8 +159,7 @@ class _HistoryState extends State<History> with TickerProviderStateMixin {
                             child: new TabBarView(
                               controller: myTabController,
                               children: [
-                                DepositHistory(
-                                    blockChainLink: _handleURLButtonPress),
+                                DepositHistory(),
                                 WithdrawHistory(),
                                 TradeHistory()
                               ],

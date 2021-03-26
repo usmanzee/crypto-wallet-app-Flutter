@@ -60,7 +60,8 @@ class SwapController extends GetxController {
     homeController.fetchMemberLevels();
     if (!walletController.isLoading.value) {
       walletsList.assignAll(walletController.walletsList);
-      await matchWalletsWithMarkets();
+      // await matchWalletsWithMarkets();
+      searchWalletsList.assignAll(walletsList);
       await assignFromWallets(searchWalletsList);
       var newList = await matchWalletsWithSelectedFromCurrency();
       await assignToWallets(newList);
@@ -91,21 +92,38 @@ class SwapController extends GetxController {
         currencies.add(market.quoteUnit.toLowerCase());
       }
     }
-
     newList = walletsList.where((Wallet wallet) {
       return currencies.contains(wallet.currency.toLowerCase());
     }).toList();
+    if (fromSelectedWallet.value.type == 'fiat') {
+      var fiatWalletsList = walletsList.where((Wallet wallet) {
+        return wallet.type == 'fiat' &&
+            fromSelectedWallet.value.currency.toLowerCase() !=
+                wallet.currency.toLowerCase() &&
+            !checkIfWalletExistsInWallets(wallet, newList);
+      });
+      newList.addAll(fiatWalletsList);
+    }
     return newList;
+  }
+
+  bool checkIfWalletExistsInWallets(Wallet wallet, List<Wallet> wallets) {
+    var walletExists = wallets.firstWhere(
+        (walletItem) =>
+            walletItem.currency.toLowerCase() == wallet.currency.toLowerCase(),
+        orElse: () => null);
+
+    return walletExists != null ? true : false;
   }
 
   setWalletValues(isWalletsLoading) async {
     if (!isWalletsLoading && walletController.walletsList.length > 0) {
       walletsList.assignAll(walletController.walletsList);
-      await matchWalletsWithMarkets();
+      // await matchWalletsWithMarkets();
+      searchWalletsList.assignAll(walletsList);
       await assignFromWallets(searchWalletsList);
       var newList = await matchWalletsWithSelectedFromCurrency();
       await assignToWallets(newList);
-
       isLoading(false);
     }
   }
@@ -119,9 +137,7 @@ class SwapController extends GetxController {
 
   Future<void> assignToWallets(List<Wallet> wallets) async {
     fromWalletsList.assignAll(wallets);
-    if (wallets.length > 0) {
-      toSelectedWallet.value = wallets[0];
-    }
+    toSelectedWallet.value = wallets.length > 0 ? wallets[0] : null;
   }
 
   Future<void> matchWalletsWithMarkets() async {
@@ -214,7 +230,6 @@ class SwapController extends GetxController {
       double receivedAmount = double.parse(amount);
       if (receivedAmount < minSwapAmount) {
         fromFieldError = true;
-
         fromFieldErrorText.value = 'swap.screen.amount.error1'.trParams(
             {'amount': minSwapAmount.toString(), 'currency': currency});
       } else if (receivedAmount > maxSwapAmount) {
@@ -330,8 +345,8 @@ class SwapController extends GetxController {
     if (isWalletControllerRegistered) {
       Get.delete<WalletController>(force: true);
     }
-    fromFieldfocus.value.dispose();
-    toFieldfocus.value.dispose();
+    // fromFieldfocus.value.dispose();
+    // toFieldfocus.value.dispose();
     // fromAmountTextController?.dispose();
     // toAmountTextController?.dispose();
     // otpCodeTextController?.dispose();

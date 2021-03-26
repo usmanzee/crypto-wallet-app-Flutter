@@ -113,25 +113,29 @@ class Home extends StatelessWidget {
               },
             ),
             Spacer(flex: 1),
-            InkWell(
-              onTap: () {
-                homeController.isLoggedIn.value
-                    ? Get.toNamed('/notifications')
-                    : Get.toNamed('/login');
-              },
-              child: Badge(
-                position: BadgePosition.topEnd(top: 10, end: 10),
-                badgeContent: null,
-                child: IconButton(
-                  icon: Icon(Icons.notifications_none),
-                  onPressed: () {
-                    homeController.isLoggedIn.value
-                        ? Get.toNamed('/notifications')
-                        : Get.toNamed('/login');
-                  },
-                ),
-              ),
-            )
+            Obx(() {
+              return !homeController.notificationSeen.value
+                  ? Badge(
+                      position: BadgePosition.topEnd(top: 10, end: 10),
+                      badgeContent: null,
+                      child: IconButton(
+                        icon: Icon(Icons.notifications_none),
+                        onPressed: () {
+                          Get.toNamed('/notifications');
+                          homeController.notificationSeen.value = true;
+                          // homeController.isLoggedIn.value
+                          //     ? Get.toNamed('/notifications')
+                          //     : Get.toNamed('/login');
+                        },
+                      ),
+                    )
+                  : IconButton(
+                      icon: Icon(Icons.notifications_none),
+                      onPressed: () {
+                        Get.toNamed('/notifications');
+                      },
+                    );
+            })
           ],
         ),
       ),

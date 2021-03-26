@@ -190,7 +190,7 @@ class Setting extends StatelessWidget {
               return (homeController.isLoggedIn.value)
                   ? InkWell(
                       onTap: () {
-                        Get.toNamed('/profile-verification');
+                        Get.toNamed('/verification-level');
                       },
                       child: listSetting(
                           context,

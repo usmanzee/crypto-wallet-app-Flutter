@@ -8,7 +8,6 @@ import 'package:crypto_template/models/market.dart';
 import 'package:crypto_template/models/user.dart';
 import 'package:crypto_template/repository/public_repository.dart';
 import 'package:crypto_template/repository/user_repository.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:crypto_template/controllers/market_controller.dart';
 import 'package:crypto_template/controllers/wallet_controller.dart';
@@ -32,6 +31,7 @@ class HomeController extends GetxController {
   var authSecret = 'unknown'.obs;
   var fetchingMemberLevel = false.obs;
   var publicMemberLevel = MemberLevel().obs;
+  var notificationSeen = false.obs;
 
   var currentPos = 0.obs;
   var isLoadingWpPosts = false.obs;
@@ -72,7 +72,7 @@ class HomeController extends GetxController {
     }
     connectivity = new Connectivity();
     subscription = connectivity.onConnectivityChanged.listen(_connectionChange);
-    firebaseeMessagingConfig();
+    firebaseMessagingConfig();
     ever(isLoggedIn, setValuesAfterLogin);
 
     getWPPosts();
@@ -85,19 +85,20 @@ class HomeController extends GetxController {
     }
   }
 
-  void firebaseeMessagingConfig() {
+  void firebaseMessagingConfig() {
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
+        notificationSeen.value = false;
       },
       onBackgroundMessage: myBackgroundMessageHandler,
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
-        isLoggedIn ?? Get.toNamed('/notifications');
+        Get.toNamed('/notifications');
       },
       onResume: (Map<String, dynamic> message) async {
         print("onResume: $message");
-        isLoggedIn ?? Get.toNamed('/notifications');
+        Get.toNamed('/notifications');
       },
     );
 
@@ -222,7 +223,7 @@ class HomeController extends GetxController {
     }
   }
 
-  void fetchMemberLevels() async {
+  Future<void> fetchMemberLevels() async {
     try {
       fetchingMemberLevel(true);
       PublicRepository _publicRepository = new PublicRepository();

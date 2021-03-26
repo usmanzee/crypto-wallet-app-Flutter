@@ -24,7 +24,8 @@ class ErrorController {
             } else {
               if (errors.contains('authz.client_session_mismatch') ||
                   errors.contains('authz.csrf_token_mismatch') ||
-                  errors.contains('authz.unexistent_apikey')) {
+                  errors.contains('authz.unexistent_apikey') ||
+                  errors.contains('authz.apikey_not_active')) {
                 logoutUser();
               } else {
                 showMessage(errors);

@@ -1,4 +1,5 @@
 import 'package:crypto_template/component/no_data.dart';
+import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/controllers/history_controller.dart';
 import 'package:crypto_template/models/trade_histroy_response.dart';
 import 'package:flutter/material.dart';
@@ -7,32 +8,37 @@ import 'package:intl/intl.dart';
 
 class TradeHistory extends StatelessWidget {
   final HistoryController historyController = Get.find();
+  final HomeController homeController = Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      if (historyController.isTradeHistoryLoading.value)
-        return Container(
-            width: double.infinity,
-            height: 200,
-            alignment: Alignment.center,
-            child: CircularProgressIndicator());
-      else
-        return historyController.depositHistory.isEmpty
-            ? NoData()
-            : Container(
-                child: ListView.builder(
-                shrinkWrap: true,
-                primary: false,
-                padding: EdgeInsets.only(top: 0.0),
-                itemBuilder: (ctx, i) {
-                  return _tradeHistoryList(
-                    context,
-                    historyController.tradeHistory[i],
-                  );
-                },
-                itemCount: historyController.tradeHistory.length,
-              ));
-    });
+    return RefreshIndicator(
+      onRefresh: historyController.refreshTradeHistory,
+      child: Obx(() {
+        if (historyController.isTradeHistoryLoading.value ||
+            homeController.fetchingMemberLevel.value)
+          return Container(
+              width: double.infinity,
+              height: 200,
+              alignment: Alignment.center,
+              child: CircularProgressIndicator());
+        else
+          return historyController.depositHistory.isEmpty
+              ? NoData()
+              : Container(
+                  child: ListView.builder(
+                  shrinkWrap: true,
+                  primary: false,
+                  padding: EdgeInsets.only(top: 0.0),
+                  itemBuilder: (ctx, i) {
+                    return _tradeHistoryList(
+                      context,
+                      historyController.tradeHistory[i],
+                    );
+                  },
+                  itemCount: historyController.tradeHistory.length,
+                ));
+      }),
+    );
   }
 
   Widget _tradeHistoryList(
@@ -62,6 +68,13 @@ class TradeHistory extends StatelessWidget {
             ),
           ]),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text(
+              'history.screen.side'.tr,
+              style: TextStyle(
+                  fontSize: 14.5,
+                  fontFamily: "Popins",
+                  color: Theme.of(context).hintColor),
+            ),
             Text(
               tradeHistoryItem.side.toString().capitalizeFirst,
               style: TextStyle(

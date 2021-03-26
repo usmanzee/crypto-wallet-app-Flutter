@@ -84,6 +84,19 @@ const Map<String, String> en = {
   'referral.screen.share': 'Share',
 
   //App Identification Screen
+
+  'identification.screen.email.title': 'Email verified',
+  'identification.screen.deposit': 'Deposit',
+  'identification.screen.withdraw': 'Withdraw',
+  'identification.screen.trade': 'Trade',
+  'identification.screen.enabled': 'Enabled',
+  'identification.screen.phone.unverified.title': 'Phone verification',
+  'identification.screen.phone.title': 'Phone verified',
+  'identification.screen.identity.unverified.title': 'Identity verification',
+  'identification.screen.identity.title': 'Identity verified',
+  'identification.screen.pending': 'Pending',
+  'identification.screen.rejected': 'Rejected',
+
   'identification.screen.title': 'Verification',
   'identification.screen.phone.field.search.country': 'Search by Country Name',
   'identification.screen.phone.field.phone': 'Phone Number',
@@ -318,6 +331,7 @@ const Map<String, String> en = {
   'history.screen.tabs.deposit_history': 'Deposit History',
   'history.screen.tabs.withdraw_history': 'Withdraw History',
   'history.screen.tabs.trade_history': 'Trade History',
+  'history.screen.side': 'Side',
   'history.screen.price': 'Price',
   'history.screen.amount': 'Amount',
   'history.screen.total': 'Total',

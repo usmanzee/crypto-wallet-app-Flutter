@@ -518,9 +518,9 @@ class VerificationController extends GetxController {
     residencyTextController.text = countries[0];
 
     selectedDocumentType.assignAll(documentTypes[0]);
-
+    homeController.fetchUser();
+    homeController.fetchMemberLevels();
     fetchLabels();
-
     super.onInit();
   }
 
@@ -535,7 +535,7 @@ class VerificationController extends GetxController {
       isLoadingLables(true);
       var response = await _userRepository.fetchLables();
       labelsList.assignAll(response);
-      await handleCheckPendingLabel(labelsList);
+      // await handleCheckPendingLabel(labelsList);
       isLoadingLables(false);
     } catch (error) {
       isLoadingLables(false);
@@ -557,8 +557,6 @@ class VerificationController extends GetxController {
             label.value == 'pending' &&
             label.scope == 'private',
         orElse: () => null);
-    print(isProfileSubmitted);
-    print(isDocumentPending);
     if (isProfileSubmitted != null && isDocumentPending != null) {
       Get.back();
       // Get.back();

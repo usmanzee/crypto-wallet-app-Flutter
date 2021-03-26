@@ -91,7 +91,7 @@ class Swap extends StatelessWidget {
         ),
         body: Obx(() {
           return Container(
-            child: homeController.fetchingUser.value &&
+            child: homeController.fetchingUser.value ||
                     homeController.fetchingMemberLevel.value
                 ? Container(
                     width: double.infinity,
@@ -358,7 +358,7 @@ class Swap extends StatelessWidget {
                   ),
                 ),
               ),
-              if (swapController.fromFieldErrorText.value != '')
+              if (swapController.fromFieldError)
                 Text(
                   swapController.fromFieldErrorText.value,
                   style: TextStyle(
@@ -394,8 +394,7 @@ class Swap extends StatelessWidget {
                           },
                           child: Row(
                             children: [
-                              swapController.toSelectedWallet.value.iconUrl !=
-                                      null
+                              swapController.toSelectedWallet.value != null
                                   ? Image.network(
                                       swapController
                                           .toSelectedWallet.value.iconUrl,
@@ -412,8 +411,11 @@ class Swap extends StatelessWidget {
                               Padding(
                                 padding: EdgeInsets.only(left: 8),
                                 child: Text(
-                                  swapController.toSelectedWallet.value.currency
-                                      .toUpperCase(),
+                                  swapController.toSelectedWallet.value != null
+                                      ? swapController
+                                          .toSelectedWallet.value.currency
+                                          .toUpperCase()
+                                      : '--',
                                   style: TextStyle(
                                       fontFamily: "Popins",
                                       color:
@@ -630,8 +632,7 @@ class Swap extends StatelessWidget {
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),
-                                      swapController.toSelectedWallet.value
-                                                  .iconUrl !=
+                                      swapController.toSelectedWallet.value !=
                                               null
                                           ? Image.network(
                                               swapController.toSelectedWallet
@@ -650,8 +651,12 @@ class Swap extends StatelessWidget {
                                         padding: EdgeInsets.only(left: 8),
                                         child: Text(
                                           swapController
-                                              .toSelectedWallet.value.currency
-                                              .toUpperCase(),
+                                                      .toSelectedWallet.value !=
+                                                  null
+                                              ? swapController.toSelectedWallet
+                                                  .value.currency
+                                                  .toUpperCase()
+                                              : '--',
                                           style: TextStyle(
                                               fontFamily: "Popins",
                                               color: Theme.of(context)

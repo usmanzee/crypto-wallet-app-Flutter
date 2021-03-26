@@ -1,3 +1,4 @@
+import 'package:crypto_template/controllers/HomeController.dart';
 import 'package:crypto_template/controllers/SnackbarController.dart';
 import 'package:crypto_template/controllers/error_controller.dart';
 import 'package:crypto_template/models/deposit_histroy_response.dart';
@@ -8,22 +9,46 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class HistoryController extends GetxController {
-  var isLoading = true.obs;
-  var isDepositHistoryLoading = true.obs;
-  var isWithdrawHistoryLoading = true.obs;
-  var isTradeHistoryLoading = true.obs;
+  var isLoading = false.obs;
+  var isDepositHistoryLoading = false.obs;
+  var isWithdrawHistoryLoading = false.obs;
+  var isTradeHistoryLoading = false.obs;
   var depositHistory = List<DepositHistoryResponse>().obs;
   var withdrawHistory = List<WithdrawHistoryResponse>().obs;
   var tradeHistory = List<TradeHistoryResponse>().obs;
   SnackbarController snackbarController;
   ErrorController errorController = new ErrorController();
+  HomeController homeController = Get.find<HomeController>();
 
   @override
-  void onInit() {
-    fetchDepositHistory();
-    fetchWithdrawHistory();
-    fetchTradeHistory();
+  void onInit() async {
+    await homeController.fetchMemberLevels();
+    if (!homeController.fetchingMemberLevel.value &&
+        !homeController.publicMemberLevel.value.isBlank) {
+      if (homeController.user.value.level >=
+          homeController.publicMemberLevel.value.deposit.minimumLevel) {
+        fetchDepositHistory();
+      }
+      if (homeController.user.value.level >=
+          homeController.publicMemberLevel.value.withdraw.minimumLevel) {
+        fetchWithdrawHistory();
+      }
+      if (homeController.user.value.level >=
+          homeController.publicMemberLevel.value.trading.minimumLevel) {
+        fetchTradeHistory();
+      }
+    }
+    // ever(homeController.fetchingMemberLevel, fetchHistory);
     super.onInit();
+  }
+
+  fetchHistory(bool isMemberLevelFetched) {
+    if (!isMemberLevelFetched &&
+        !homeController.publicMemberLevel.value.isBlank) {
+      fetchDepositHistory();
+      fetchWithdrawHistory();
+      fetchTradeHistory();
+    }
   }
 
   void fetchDepositHistory() async {
@@ -85,6 +110,18 @@ class HistoryController extends GetxController {
       isTradeHistoryLoading(false);
       errorController.handleError(error);
     }
+  }
+
+  Future<Null> refreshDepositHistory() async {
+    fetchDepositHistory();
+  }
+
+  Future<Null> refreshWithdrawlHistory() async {
+    fetchWithdrawHistory();
+  }
+
+  Future<Null> refreshTradeHistory() async {
+    fetchTradeHistory();
   }
 
   @override

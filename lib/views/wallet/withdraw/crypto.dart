@@ -82,7 +82,7 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
               child: ListView(children: [
                 Padding(
                     padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                    child: homeController.fetchingUser.value &&
+                    child: homeController.fetchingUser.value ||
                             homeController.fetchingMemberLevel.value
                         ? Container(
                             width: double.infinity,

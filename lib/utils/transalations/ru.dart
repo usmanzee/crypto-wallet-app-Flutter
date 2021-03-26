@@ -88,6 +88,18 @@ const Map<String, String> ru = {
   'referral.screen.share': 'доля',
 
   //App Identification Screen
+  'identification.screen.email.title': 'Электронная почта подтверждена',
+  'identification.screen.deposit': 'Депозит',
+  'identification.screen.withdraw': 'Снять со счета',
+  'identification.screen.trade': 'Торговля',
+  'identification.screen.enabled': 'Включено',
+  'identification.screen.phone.unverified.title': 'Проверка телефона',
+  'identification.screen.phone.title': 'Телефон подтвержден',
+  'identification.screen.identity.unverified.title': 'Подтверждение личности',
+  'identification.screen.identity.title': 'Личность подтверждена',
+  'identification.screen.pending': 'В ожидании',
+  'identification.screen.rejected': 'Отклоненный',
+
   'identification.screen.title': 'Проверка',
   'identification.screen.phone.field.search.country':
       'Поиск по названию страны',
@@ -326,6 +338,7 @@ const Map<String, String> ru = {
   'history.screen.tabs.deposit_history': 'История депозита',
   'history.screen.tabs.withdraw_history': 'История вывода',
   'history.screen.tabs.trade_history': 'История торговли',
+  'history.screen.side': 'Сторона',
   'history.screen.price': 'Цена',
   'history.screen.amount': 'Количество',
   'history.screen.total': 'Общий',

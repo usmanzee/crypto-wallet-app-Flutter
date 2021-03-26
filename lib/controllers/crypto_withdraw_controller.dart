@@ -60,9 +60,7 @@ class CryptoWithdrawController extends GetxController {
         requestData['rid'] =
             requestData['rid'] + '?dt=' + withdrawTagController.text;
       }
-      print(requestData);
-      var response = await _walletRepository.withdrawCrypto(requestData);
-      print(response);
+      await _walletRepository.withdrawCrypto(requestData);
       resetWithdrawForm();
       withdrawingCrypto(false);
       Get.back();
