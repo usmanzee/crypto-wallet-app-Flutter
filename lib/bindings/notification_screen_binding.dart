@@ -1,4 +1,4 @@
-import 'package:crypto_template/controllers/notification_controller.dart';
+import 'package:b4u_wallet/controllers/notification_controller.dart';
 import 'package:get/get.dart';
 
 class NotificationScreenBinding extends Bindings {

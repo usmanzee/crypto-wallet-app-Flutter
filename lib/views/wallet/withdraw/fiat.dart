@@ -1,13 +1,13 @@
-import 'package:crypto_template/controllers/fiat_withdraw_controller.dart';
-import 'package:crypto_template/models/Beneficiary.dart';
-import 'package:crypto_template/views/beneficiary/add_beneficiary.dart';
-import 'package:crypto_template/views/wallet/search_wallet_header.dart';
+import 'package:b4u_wallet/controllers/fiat_withdraw_controller.dart';
+import 'package:b4u_wallet/models/Beneficiary.dart';
+import 'package:b4u_wallet/views/beneficiary/add_beneficiary.dart';
+import 'package:b4u_wallet/views/wallet/search_wallet_header.dart';
 import 'package:flutter/material.dart';
-import 'package:crypto_template/models/wallet.dart' as WalletClass;
+import 'package:b4u_wallet/models/wallet.dart' as WalletClass;
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
-import 'package:crypto_template/component/custom_button.dart';
-import 'package:crypto_template/controllers/HomeController.dart';
+import 'package:b4u_wallet/component/custom_button.dart';
+import 'package:b4u_wallet/controllers/HomeController.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -293,9 +293,15 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
                         onCompleted: (v) {},
                         onChanged: (value) {},
                         beforeTextPaste: (text) {
-                          print("Allowing to paste $text");
                           return true;
                         },
+                        dialogConfig: DialogConfig(
+                            dialogTitle: '2fa.paste_code_dialog.title'.tr,
+                            dialogContent: '2fa.paste_code_dialog.content'.tr,
+                            affirmativeText:
+                                '2fa.paste_code_dialog.button.paste'.tr,
+                            negativeText:
+                                '2fa.paste_code_dialog.button.cancel'.tr),
                       ),
                       SizedBox(
                         height: 16.0,

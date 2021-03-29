@@ -1,8 +1,8 @@
 import 'dart:io';
-import 'package:crypto_template/models/Error.dart';
-import 'package:crypto_template/utils/Helpers/environment.dart';
+import 'package:b4u_wallet/models/Error.dart';
+import 'package:b4u_wallet/utils/Helpers/environment.dart';
 import 'package:http/http.dart' as http;
-import 'package:crypto_template/network/app_exception.dart';
+import 'package:b4u_wallet/network/app_exception.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:get/get.dart';

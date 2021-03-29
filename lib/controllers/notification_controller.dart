@@ -1,6 +1,6 @@
-import 'package:crypto_template/controllers/error_controller.dart';
-import 'package:crypto_template/models/notification_response.dart';
-import 'package:crypto_template/repository/notification_repository.dart';
+import 'package:b4u_wallet/controllers/error_controller.dart';
+import 'package:b4u_wallet/models/notification_response.dart';
+import 'package:b4u_wallet/repository/notification_repository.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 

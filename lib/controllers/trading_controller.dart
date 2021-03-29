@@ -1,19 +1,19 @@
-import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/controllers/SnackbarController.dart';
-import 'package:crypto_template/controllers/error_controller.dart';
-import 'package:crypto_template/controllers/market_controller.dart';
-import 'package:crypto_template/controllers/open_orders_controller.dart';
-import 'package:crypto_template/controllers/wallet_controller.dart';
-import 'package:crypto_template/models/formated_market.dart';
-import 'package:crypto_template/models/trading_fee.dart';
-import 'package:crypto_template/repository/trading_repository.dart';
+import 'package:b4u_wallet/controllers/HomeController.dart';
+import 'package:b4u_wallet/controllers/SnackbarController.dart';
+import 'package:b4u_wallet/controllers/error_controller.dart';
+import 'package:b4u_wallet/controllers/market_controller.dart';
+import 'package:b4u_wallet/controllers/open_orders_controller.dart';
+import 'package:b4u_wallet/controllers/wallet_controller.dart';
+import 'package:b4u_wallet/models/formated_market.dart';
+import 'package:b4u_wallet/models/trading_fee.dart';
+import 'package:b4u_wallet/repository/trading_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
-import 'package:crypto_template/controllers/web_socket_controller.dart';
-import 'package:crypto_template/utils/Helpers/ws_helper.dart';
-import 'package:crypto_template/models/wallet.dart';
-import 'package:crypto_template/utils/Helpers/helper.dart';
+import 'package:b4u_wallet/controllers/web_socket_controller.dart';
+import 'package:b4u_wallet/utils/Helpers/ws_helper.dart';
+import 'package:b4u_wallet/models/wallet.dart';
+import 'package:b4u_wallet/utils/Helpers/helper.dart';
 
 class TradingController extends GetxController {
   var limitBuyFormKey;

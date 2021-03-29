@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:crypto_template/utils/Helpers/readable_message.dart';
+import 'package:b4u_wallet/utils/Helpers/readable_message.dart';
 
 class SnackbarController extends GetxController {
   String title;

@@ -1,15 +1,17 @@
-import 'package:crypto_template/controllers/SnackbarController.dart';
-import 'package:crypto_template/controllers/error_controller.dart';
+import 'package:b4u_wallet/controllers/SnackbarController.dart';
+import 'package:b4u_wallet/controllers/error_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:crypto_template/repository/auth_repository.dart';
-import 'package:crypto_template/models/user.dart';
+import 'package:b4u_wallet/repository/auth_repository.dart';
+import 'package:b4u_wallet/models/user.dart';
 
 class RegisterController extends GetxController {
   TextEditingController emailTextController;
   TextEditingController passwordTextController;
   TextEditingController confirmPasswordTextController;
   TextEditingController referralCodeController;
+  var termsOfUse = true.obs;
+  var termsOfUseError = false.obs;
   SnackbarController snackbarController;
   ErrorController errorController = new ErrorController();
   var user = new User().obs;

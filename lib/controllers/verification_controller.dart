@@ -1,16 +1,16 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/controllers/SnackbarController.dart';
-import 'package:crypto_template/controllers/error_controller.dart';
-import 'package:crypto_template/models/verification_label.dart';
-import 'package:crypto_template/repository/user_repository.dart';
+import 'package:b4u_wallet/controllers/HomeController.dart';
+import 'package:b4u_wallet/controllers/SnackbarController.dart';
+import 'package:b4u_wallet/controllers/error_controller.dart';
+import 'package:b4u_wallet/models/verification_label.dart';
+import 'package:b4u_wallet/repository/user_repository.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:crypto_template/utils/Helpers/environment.dart';
+import 'package:b4u_wallet/utils/Helpers/environment.dart';
 import 'package:http/http.dart' as http;
-import 'package:crypto_template/network/request_headers.dart';
+import 'package:b4u_wallet/network/request_headers.dart';
 
 class VerificationController extends GetxController {
   var nationalities = [

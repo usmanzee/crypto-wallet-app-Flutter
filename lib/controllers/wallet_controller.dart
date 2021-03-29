@@ -1,10 +1,10 @@
-import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/controllers/error_controller.dart';
-import 'package:crypto_template/controllers/market_controller.dart';
-import 'package:crypto_template/models/balance.dart';
-import 'package:crypto_template/models/currency.dart';
-import 'package:crypto_template/repository/wallet_repository.dart';
-import 'package:crypto_template/models/wallet.dart';
+import 'package:b4u_wallet/controllers/HomeController.dart';
+import 'package:b4u_wallet/controllers/error_controller.dart';
+import 'package:b4u_wallet/controllers/market_controller.dart';
+import 'package:b4u_wallet/models/balance.dart';
+import 'package:b4u_wallet/models/currency.dart';
+import 'package:b4u_wallet/repository/wallet_repository.dart';
+import 'package:b4u_wallet/models/wallet.dart';
 import 'package:get/get.dart';
 
 class WalletController extends GetxController {

@@ -1,10 +1,10 @@
-import 'package:crypto_template/utils/transalations/messages.dart';
+import 'package:b4u_wallet/utils/transalations/messages.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
-import 'package:crypto_template/bindings/socket_binding.dart';
+import 'package:b4u_wallet/bindings/socket_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:crypto_template/utils/router.dart' as RouterFile;
-import 'package:crypto_template/views/setting/themes.dart';
+import 'package:b4u_wallet/utils/router.dart' as RouterFile;
+import 'package:b4u_wallet/views/setting/themes.dart';
 import 'package:flutter/services.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:get_storage/get_storage.dart';

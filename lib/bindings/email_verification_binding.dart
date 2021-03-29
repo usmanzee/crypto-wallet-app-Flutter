@@ -1,4 +1,4 @@
-import 'package:crypto_template/controllers/RegisterController.dart';
+import 'package:b4u_wallet/controllers/RegisterController.dart';
 import 'package:get/get.dart';
 
 class EmailVerificationBinding extends Bindings {

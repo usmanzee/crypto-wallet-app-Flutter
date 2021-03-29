@@ -1,8 +1,9 @@
+import 'package:b4u_wallet/views/webview_container.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:crypto_template/views/setting/themes.dart';
-import 'package:crypto_template/component/custom_text_field.dart';
-import 'package:crypto_template/controllers/RegisterController.dart';
+import 'package:b4u_wallet/views/setting/themes.dart';
+import 'package:b4u_wallet/component/custom_text_field.dart';
+import 'package:b4u_wallet/controllers/RegisterController.dart';
 
 import 'package:form_field_validator/form_field_validator.dart';
 
@@ -10,7 +11,7 @@ class SignUp extends StatelessWidget {
   final ThemeBloc themeBloc;
   SignUp({this.themeBloc});
 
-  final RegisterController _registerController = Get.put(RegisterController());
+  final RegisterController registerController = Get.put(RegisterController());
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -27,200 +28,274 @@ class SignUp extends StatelessWidget {
     final _formState = _formKey.currentState;
     if (_formState.validate()) {
       _formState.save();
-      _registerController.register();
+      registerController.register();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    MediaQueryData mediaQuery = MediaQuery.of(context);
-    return Form(
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      key: _formKey,
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
+    return Scaffold(
         appBar: AppBar(
+          leading: InkWell(
+            onTap: () => Get.back(),
+            child: Icon(
+              Icons.clear,
+              size: 24,
+            ),
+          ),
           brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
-          iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
+          iconTheme: IconThemeData(color: Theme.of(context).hintColor),
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           automaticallyImplyLeading: true,
+          actions: [
+            Padding(
+              padding: EdgeInsets.only(top: 16.0, right: 16.0),
+              child: GestureDetector(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: Text(
+                    'register.screen.login'.tr,
+                    style: TextStyle(
+                      fontFamily: 'Popins',
+                      fontSize: 16.0,
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  )),
+            )
+          ],
         ),
-        body: Container(
-          height: double.infinity,
-          width: double.infinity,
-          child: Stack(
-            children: <Widget>[
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Padding(
-                        padding:
-                            EdgeInsets.only(top: mediaQuery.padding.top + 80.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Image.asset("assets/image/b4u_wallet_logo.png",
-                                height: 50.0),
-                          ],
-                        ),
+        body: SingleChildScrollView(
+          child: Form(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                    padding: EdgeInsets.only(left: 24.0),
+                    child: Text(
+                      'register.screen.register'.tr,
+                      style: TextStyle(
+                        fontFamily: 'Popins',
+                        fontSize: 32.0,
+                        color: Theme.of(context).textSelectionColor,
+                        fontWeight: FontWeight.w600,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 16.0, right: 16.0, top: 32.0),
-                        child: CustomTextField(
-                            widgetIcon: Icon(
-                              Icons.email,
-                              color: Theme.of(context).primaryColor,
-                              size: 20,
-                            ),
-                            validator: emailValidator,
-                            // onChanged: (input) => _email = input,
-                            controller: _registerController.emailTextController,
-                            label: 'register.screen.field.email'.tr,
-                            obscure: false,
-                            keyboardType: TextInputType.emailAddress,
-                            textInputAction: TextInputAction.next,
-                            textAlign: TextAlign.start),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 16.0, right: 16.0, top: 16.0),
-                        child: CustomTextField(
-                            widgetIcon: Icon(
-                              Icons.vpn_key,
-                              size: 20,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            validator: _passwordValidator,
-                            // onChanged: (input) => _password = input,
-                            controller:
-                                _registerController.passwordTextController,
-                            label: 'register.screen.field.password'.tr,
-                            obscure: true,
-                            keyboardType: TextInputType.text,
-                            textInputAction: TextInputAction.next,
-                            textAlign: TextAlign.start),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 16.0, right: 16.0, top: 16.0),
-                        child: CustomTextField(
-                            widgetIcon: Icon(
-                              Icons.vpn_key,
-                              size: 20,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            controller: _registerController
-                                .confirmPasswordTextController,
-                            validator: (val) => MatchValidator(
-                                    errorText:
-                                        'register.screen.confirm_password.error'
-                                            .tr)
-                                .validateMatch(
-                                    val,
-                                    _registerController
-                                        .passwordTextController.text),
-                            // onChanged: (input) => _confirmPassword = input,
-                            label: 'register.screen.field.confirm_password'.tr,
-                            obscure: true,
-                            keyboardType: TextInputType.text,
-                            textInputAction: TextInputAction.next,
-                            textAlign: TextAlign.start),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 16.0, right: 16.0, top: 16.0),
-                        child: CustomTextField(
-                            widgetIcon: Icon(
-                              Icons.group_add,
-                              size: 20,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            // onChanged: (input) => _referralCode = input,
-                            controller:
-                                _registerController.referralCodeController,
-                            label: 'register.screen.field.referral_code'.tr,
-                            obscure: false,
-                            keyboardType: TextInputType.text,
-                            textInputAction: TextInputAction.done,
-                            textAlign: TextAlign.start),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 16.0, right: 16.0, top: 40.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            FocusScope.of(context).unfocus();
-                            _onSignFormSubmit();
-                          },
-                          child: Container(
-                            height: 50.0,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(0.0)),
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            child: Center(
-                              child: Text(
-                                "register.screen.button.register".tr,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 20.0,
-                                    letterSpacing: 1.0),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            Get.back();
-                          },
-                          child: Container(
-                            height: 50.0,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(0.0)),
-                              border: Border.all(
-                                color: Theme.of(context).primaryColor,
-                                width: 0.35,
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                "register.screen.button.login".tr,
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 17.5,
-                                    letterSpacing: 1.9),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                    )),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 16.0, right: 16.0, top: 24.0),
+                  child: Text(
+                    'register.screen.field.email'.tr,
+                    style: TextStyle(
+                      fontFamily: 'Popins',
+                      fontSize: 16.0,
+                      color: Theme.of(context).textSelectionColor,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 16.0,
+                    right: 16.0,
+                  ),
+                  child: CustomTextField(
+                      widgetIcon: Icon(
+                        Icons.email,
+                        color: Theme.of(context).primaryColor,
+                        size: 20,
+                      ),
+                      validator: emailValidator,
+                      controller: registerController.emailTextController,
+                      obscure: false,
+                      keyboardType: TextInputType.emailAddress,
+                      hint: "register.screen.field.email_hint".tr,
+                      textInputAction: TextInputAction.next,
+                      textAlign: TextAlign.start),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
+                  child: Text(
+                    'register.screen.field.password'.tr,
+                    style: TextStyle(
+                      fontFamily: 'Popins',
+                      fontSize: 16.0,
+                      color: Theme.of(context).textSelectionColor,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 16.0,
+                    right: 16.0,
+                  ),
+                  child: CustomTextField(
+                      widgetIcon: Icon(
+                        Icons.vpn_key,
+                        size: 20,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      validator: _passwordValidator,
+                      controller: registerController.passwordTextController,
+                      obscure: true,
+                      keyboardType: TextInputType.text,
+                      hint: "register.screen.field.password_hint".tr,
+                      textInputAction: TextInputAction.next,
+                      textAlign: TextAlign.start),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
+                  child: Text(
+                    'register.screen.field.confirm_password'.tr,
+                    style: TextStyle(
+                      fontFamily: 'Popins',
+                      fontSize: 16.0,
+                      color: Theme.of(context).textSelectionColor,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 16.0,
+                    right: 16.0,
+                  ),
+                  child: CustomTextField(
+                      widgetIcon: Icon(
+                        Icons.vpn_key,
+                        size: 20,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      controller:
+                          registerController.confirmPasswordTextController,
+                      validator: (val) => MatchValidator(
+                              errorText:
+                                  'register.screen.confirm_password.error'.tr)
+                          .validateMatch(val,
+                              registerController.passwordTextController.text),
+                      obscure: true,
+                      keyboardType: TextInputType.text,
+                      hint: "register.screen.field.confirm_password_hint".tr,
+                      textInputAction: TextInputAction.next,
+                      textAlign: TextAlign.start),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
+                  child: Text(
+                    'register.screen.field.referral_id'.tr,
+                    style: TextStyle(
+                      fontFamily: 'Popins',
+                      fontSize: 16.0,
+                      color: Theme.of(context).textSelectionColor,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 16.0,
+                    right: 16.0,
+                  ),
+                  child: CustomTextField(
+                      widgetIcon: Icon(
+                        Icons.group_add,
+                        size: 20,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      controller: registerController.referralCodeController,
+                      obscure: false,
+                      keyboardType: TextInputType.text,
+                      hint: "register.screen.field.referral_id_hint".tr,
+                      textInputAction: TextInputAction.done,
+                      textAlign: TextAlign.start),
+                ),
+                Obx(() {
+                  return Row(children: [
+                    Checkbox(
+                      activeColor: Theme.of(context).primaryColor,
+                      value: registerController.termsOfUse.value,
+                      onChanged: (bool value) {
+                        registerController.termsOfUse.value =
+                            !registerController.termsOfUse.value;
+                      },
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        registerController.termsOfUse.value =
+                            !registerController.termsOfUse.value;
+                      },
+                      child: Text(
+                        "register.screen.field.agree".tr,
+                        style: TextStyle(
+                            color: Theme.of(context).textSelectionColor,
+                            fontFamily: "Popins",
+                            fontSize: 12.0),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 4.0,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(WebViewContainer('Terms and Conditions',
+                            'https://b4uwallet.com/terms-and-conditions/'));
+                      },
+                      child: Text(
+                        "register.screen.field.terms".tr,
+                        style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontFamily: "Popins",
+                            fontSize: 14.0),
+                      ),
+                    ),
+                  ]);
+                }),
+                Obx(() {
+                  if (!registerController.termsOfUse.value)
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                        left: 16.0,
+                        right: 16.0,
+                      ),
+                      child: Text(
+                        'register.screen.field.terms.error'.tr,
+                        style: TextStyle(
+                          fontFamily: 'Popins',
+                          fontSize: 12.0,
+                          color: Theme.of(context).errorColor,
+                        ),
+                      ),
+                    );
+                  else
+                    return Container(
+                      width: 0,
+                      height: 0,
+                    );
+                })
+              ],
+            ),
           ),
         ),
-      ),
-    );
+        floatingActionButton: FloatingActionButton(
+            elevation: 1.0,
+            child: Icon(
+              Icons.east,
+              color: Colors.white,
+            ),
+            backgroundColor: Theme.of(context).primaryColor,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.0))),
+            onPressed: () {
+              FocusScope.of(context).unfocus();
+              _onSignFormSubmit();
+            }));
   }
 }

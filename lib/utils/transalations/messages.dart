@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import 'package:crypto_template/utils/transalations/en.dart';
-import 'package:crypto_template/utils/transalations/ru.dart';
-import 'package:crypto_template/utils/transalations/es.dart';
-import 'package:crypto_template/utils/transalations/ml.dart';
+import 'package:b4u_wallet/utils/transalations/en.dart';
+import 'package:b4u_wallet/utils/transalations/ru.dart';
+import 'package:b4u_wallet/utils/transalations/es.dart';
+import 'package:b4u_wallet/utils/transalations/ml.dart';
 
 class Messages extends Translations {
   @override

@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:crypto_template/network/api_provider.dart';
-import 'package:crypto_template/models/user.dart';
+import 'package:b4u_wallet/network/api_provider.dart';
+import 'package:b4u_wallet/models/user.dart';
 
 class AuthRepository {
   ApiProvider apiProvider = new ApiProvider();

@@ -1,4 +1,4 @@
-import 'package:crypto_template/controllers/verification_controller.dart';
+import 'package:b4u_wallet/controllers/verification_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';

@@ -1,6 +1,6 @@
-import 'package:crypto_template/models/deposit_histroy_response.dart';
-import 'package:crypto_template/models/withdraw_history_response.dart';
-import 'package:crypto_template/utils/Helpers/helper.dart';
+import 'package:b4u_wallet/models/deposit_histroy_response.dart';
+import 'package:b4u_wallet/models/withdraw_history_response.dart';
+import 'package:b4u_wallet/utils/Helpers/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

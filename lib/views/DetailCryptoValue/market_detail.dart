@@ -1,9 +1,9 @@
-import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/controllers/market_controller.dart';
-import 'package:crypto_template/controllers/market_detail_controller.dart';
-import 'package:crypto_template/models/formated_market.dart';
-import 'package:crypto_template/views/DetailCryptoValue/order_book.dart';
-import 'package:crypto_template/views/market/market_drawer.dart';
+import 'package:b4u_wallet/controllers/HomeController.dart';
+import 'package:b4u_wallet/controllers/market_controller.dart';
+import 'package:b4u_wallet/controllers/market_detail_controller.dart';
+import 'package:b4u_wallet/models/formated_market.dart';
+import 'package:b4u_wallet/views/DetailCryptoValue/order_book.dart';
+import 'package:b4u_wallet/views/market/market_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
@@ -183,6 +183,8 @@ class MarketDetail extends StatelessWidget {
                                   //     child: buildGraphTypeButtons(context)),
                                   Container(
                                     height: 40.0,
+                                    padding:
+                                        EdgeInsets.only(left: 4.0, right: 4.0),
                                     child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,

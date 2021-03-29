@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:crypto_template/models/KLine.dart';
-import 'package:crypto_template/models/sparkline_response.dart';
-import 'package:crypto_template/network/api_provider.dart';
-import 'package:crypto_template/models/market.dart';
-import 'package:crypto_template/models/market_ticker.dart';
-import 'package:crypto_template/network/request_headers.dart';
+import 'package:b4u_wallet/models/KLine.dart';
+import 'package:b4u_wallet/models/sparkline_response.dart';
+import 'package:b4u_wallet/network/api_provider.dart';
+import 'package:b4u_wallet/models/market.dart';
+import 'package:b4u_wallet/models/market_ticker.dart';
+import 'package:b4u_wallet/network/request_headers.dart';
 
 class MarketRepository {
   ApiProvider apiProvider;

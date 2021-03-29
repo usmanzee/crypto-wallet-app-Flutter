@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'package:crypto_template/models/notification_response.dart';
-import 'package:crypto_template/network/api_provider.dart';
-import 'package:crypto_template/network/request_headers.dart';
+import 'package:b4u_wallet/models/notification_response.dart';
+import 'package:b4u_wallet/network/api_provider.dart';
+import 'package:b4u_wallet/network/request_headers.dart';
 
 class NotificationRepository {
   ApiProvider apiProvider;

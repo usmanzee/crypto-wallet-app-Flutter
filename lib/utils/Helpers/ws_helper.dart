@@ -1,4 +1,4 @@
-import 'package:crypto_template/models/open_order.dart';
+import 'package:b4u_wallet/models/open_order.dart';
 
 class WsHelper {
   static bool isArray(String type) {

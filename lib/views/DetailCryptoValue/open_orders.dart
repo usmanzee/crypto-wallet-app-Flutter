@@ -1,7 +1,7 @@
-import 'package:crypto_template/component/no_data.dart';
-import 'package:crypto_template/controllers/open_orders_controller.dart';
-import 'package:crypto_template/models/formated_market.dart';
-import 'package:crypto_template/models/open_order.dart';
+import 'package:b4u_wallet/component/no_data.dart';
+import 'package:b4u_wallet/controllers/open_orders_controller.dart';
+import 'package:b4u_wallet/models/formated_market.dart';
+import 'package:b4u_wallet/models/open_order.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';

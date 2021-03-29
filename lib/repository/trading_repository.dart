@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:crypto_template/models/trading_fee.dart';
+import 'package:b4u_wallet/models/trading_fee.dart';
 import 'package:get/get.dart';
-import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/network/api_provider.dart';
-import 'package:crypto_template/network/request_headers.dart';
-import 'package:crypto_template/models/open_order.dart';
+import 'package:b4u_wallet/controllers/HomeController.dart';
+import 'package:b4u_wallet/network/api_provider.dart';
+import 'package:b4u_wallet/network/request_headers.dart';
+import 'package:b4u_wallet/models/open_order.dart';
 
 class TradingRepository {
   HomeController homeController = Get.find();

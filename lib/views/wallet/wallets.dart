@@ -1,10 +1,10 @@
-import 'package:crypto_template/controllers/market_controller.dart';
-import 'package:crypto_template/controllers/wallet_controller.dart';
-import 'package:crypto_template/views/wallet/estimated_widget.dart';
-import 'package:crypto_template/views/wallet/wallet_detail.dart';
-import 'package:crypto_template/views/wallet/wallet_loading_animation.dart';
+import 'package:b4u_wallet/controllers/market_controller.dart';
+import 'package:b4u_wallet/controllers/wallet_controller.dart';
+import 'package:b4u_wallet/views/wallet/estimated_widget.dart';
+import 'package:b4u_wallet/views/wallet/wallet_detail.dart';
+import 'package:b4u_wallet/views/wallet/wallet_loading_animation.dart';
 import 'package:flutter/material.dart';
-import 'package:crypto_template/models/wallet.dart' as WalletClass;
+import 'package:b4u_wallet/models/wallet.dart' as WalletClass;
 import 'package:get/get.dart';
 
 class Wallets extends StatelessWidget {

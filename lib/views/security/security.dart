@@ -1,6 +1,6 @@
-import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/controllers/otp_controller.dart';
-import 'package:crypto_template/views/security/change_password.dart';
+import 'package:b4u_wallet/controllers/HomeController.dart';
+import 'package:b4u_wallet/controllers/otp_controller.dart';
+import 'package:b4u_wallet/views/security/change_password.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -219,6 +219,13 @@ class Security extends GetView<HomeController> {
                       beforeTextPaste: (text) {
                         return true;
                       },
+                      dialogConfig: DialogConfig(
+                          dialogTitle: '2fa.paste_code_dialog.title'.tr,
+                          dialogContent: '2fa.paste_code_dialog.content'.tr,
+                          affirmativeText:
+                              '2fa.paste_code_dialog.button.paste'.tr,
+                          negativeText:
+                              '2fa.paste_code_dialog.button.cancel'.tr),
                     )
                   ]),
                 ),

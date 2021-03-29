@@ -1,13 +1,13 @@
-import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/controllers/market_controller.dart';
-import 'package:crypto_template/controllers/trading_controller.dart';
-import 'package:crypto_template/views/DetailCryptoValue/order_book.dart';
-import 'package:crypto_template/views/market/market_drawer.dart';
-import 'package:crypto_template/views/trading/limit_order_form.dart';
-import 'package:crypto_template/views/trading/market_order_form.dart';
+import 'package:b4u_wallet/controllers/HomeController.dart';
+import 'package:b4u_wallet/controllers/market_controller.dart';
+import 'package:b4u_wallet/controllers/trading_controller.dart';
+import 'package:b4u_wallet/views/DetailCryptoValue/order_book.dart';
+import 'package:b4u_wallet/views/market/market_drawer.dart';
+import 'package:b4u_wallet/views/trading/limit_order_form.dart';
+import 'package:b4u_wallet/views/trading/market_order_form.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:crypto_template/views/DetailCryptoValue/open_orders.dart';
+import 'package:b4u_wallet/views/DetailCryptoValue/open_orders.dart';
 
 class Trading extends StatelessWidget {
   static final GlobalKey<ScaffoldState> _scaffoldKey =

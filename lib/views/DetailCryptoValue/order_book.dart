@@ -1,9 +1,9 @@
-import 'package:crypto_template/controllers/market_controller.dart';
-import 'package:crypto_template/controllers/trading_controller.dart';
-import 'package:crypto_template/models/formated_market.dart';
+import 'package:b4u_wallet/controllers/market_controller.dart';
+import 'package:b4u_wallet/controllers/trading_controller.dart';
+import 'package:b4u_wallet/models/formated_market.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:crypto_template/utils/Helpers/helper.dart';
+import 'package:b4u_wallet/utils/Helpers/helper.dart';
 
 class OrderBook extends StatelessWidget {
   final bool isTrading;

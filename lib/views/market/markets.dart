@@ -1,4 +1,4 @@
-import 'package:crypto_template/views/market/market_list.dart';
+import 'package:b4u_wallet/views/market/market_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

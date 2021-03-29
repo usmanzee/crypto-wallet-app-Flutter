@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:crypto_template/component/News/newsHeaderModel.dart';
-import 'package:crypto_template/component/News/newsListBottom.dart';
-import 'package:crypto_template/views/news/news_header_slider/intro_page_item.dart';
-import 'package:crypto_template/views/news/news_header_slider/page_transformer.dart';
-import 'package:crypto_template/views/news/news_list_detail/news_list_detail.dart';
+import 'package:b4u_wallet/component/News/newsHeaderModel.dart';
+import 'package:b4u_wallet/component/News/newsListBottom.dart';
+import 'package:b4u_wallet/views/news/news_header_slider/intro_page_item.dart';
+import 'package:b4u_wallet/views/news/news_header_slider/page_transformer.dart';
+import 'package:b4u_wallet/views/news/news_list_detail/news_list_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 

@@ -1,7 +1,7 @@
-import 'package:crypto_template/models/currency.dart';
-import 'package:crypto_template/models/market.dart';
-import 'package:crypto_template/models/market_ticker.dart';
-import 'package:crypto_template/models/wallet.dart';
+import 'package:b4u_wallet/models/currency.dart';
+import 'package:b4u_wallet/models/market.dart';
+import 'package:b4u_wallet/models/market_ticker.dart';
+import 'package:b4u_wallet/models/wallet.dart';
 
 class EstimatedValue {
   static final defaultCCYPercision = 5;

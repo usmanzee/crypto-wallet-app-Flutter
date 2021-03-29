@@ -1,15 +1,15 @@
 import 'dart:async';
-import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/models/Beneficiary.dart';
-import 'package:crypto_template/models/DepositAddress.dart';
-import 'package:crypto_template/models/fiat_deposit_details.dart';
-import 'package:crypto_template/models/trade_histroy_response.dart';
-import 'package:crypto_template/models/withdraw_history_response.dart';
-import 'package:crypto_template/network/api_provider.dart';
-import 'package:crypto_template/models/balance.dart';
-import 'package:crypto_template/models/currency.dart';
-import 'package:crypto_template/models/deposit_histroy_response.dart';
-import 'package:crypto_template/network/request_headers.dart';
+import 'package:b4u_wallet/controllers/HomeController.dart';
+import 'package:b4u_wallet/models/Beneficiary.dart';
+import 'package:b4u_wallet/models/DepositAddress.dart';
+import 'package:b4u_wallet/models/fiat_deposit_details.dart';
+import 'package:b4u_wallet/models/trade_histroy_response.dart';
+import 'package:b4u_wallet/models/withdraw_history_response.dart';
+import 'package:b4u_wallet/network/api_provider.dart';
+import 'package:b4u_wallet/models/balance.dart';
+import 'package:b4u_wallet/models/currency.dart';
+import 'package:b4u_wallet/models/deposit_histroy_response.dart';
+import 'package:b4u_wallet/network/request_headers.dart';
 import 'package:get/get.dart';
 
 class WalletRepository {

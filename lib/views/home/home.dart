@@ -1,11 +1,11 @@
-import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/models/formated_market.dart';
-import 'package:crypto_template/views/webview_container.dart';
+import 'package:b4u_wallet/controllers/HomeController.dart';
+import 'package:b4u_wallet/models/formated_market.dart';
+import 'package:b4u_wallet/views/webview_container.dart';
 import 'package:get/get.dart';
-import 'package:crypto_template/controllers/market_controller.dart';
+import 'package:b4u_wallet/controllers/market_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:crypto_template/views/home/gainer.dart';
-import 'package:crypto_template/views/home/loser.dart';
+import 'package:b4u_wallet/views/home/gainer.dart';
+import 'package:b4u_wallet/views/home/loser.dart';
 import 'package:flutter_sparkline/flutter_sparkline.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:badges/badges.dart';
@@ -15,80 +15,109 @@ class Home extends StatelessWidget {
   final MarketController marketController = Get.find();
   final HomeController homeController = Get.find();
 
+  final banners = [
+    "assets/image/banner/banner2.png",
+    "assets/image/banner/banner3.jpg",
+  ];
+
   Widget imageCarousel(BuildContext context, List<dynamic> posts) {
     return Column(
       children: [
         CarouselSlider(
-          options: CarouselOptions(
-              viewportFraction: 1,
-              height: 220.0,
-              enlargeCenterPage: true,
-              autoPlay: true,
-              aspectRatio: 16 / 9,
-              autoPlayCurve: Curves.fastOutSlowIn,
-              enableInfiniteScroll: true,
-              autoPlayAnimationDuration: Duration(milliseconds: 800),
-              scrollDirection: Axis.horizontal,
-              onPageChanged: (index, reason) {
-                homeController.currentPos.value = index;
-              }),
-          items: posts.map((post) {
-            return Builder(
-              builder: (BuildContext context) {
-                return Container(
-                    width: MediaQuery.of(context).size.width,
-                    margin: EdgeInsets.symmetric(horizontal: 5.0),
-                    decoration: BoxDecoration(color: Colors.amber),
-                    child: GestureDetector(
-                        child:
-                            // Image.network(
-                            //     post['_embedded']['wp:featuredmedia'][0]
-                            //             ['media_details']['sizes']['medium_large']
-                            //         ['source_url'],
-                            //     fit: BoxFit.fill),
-                            Image.network(
-                          post['_embedded']['wp:featuredmedia'][0]
-                                  ['media_details']['sizes']['medium_large']
-                              ['source_url'],
-                          fit: BoxFit.cover,
-                          loadingBuilder: (BuildContext context, Widget child,
-                              ImageChunkEvent loadingProgress) {
-                            if (loadingProgress == null) return child;
-                            return Center(
-                              child: CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes !=
-                                        null
-                                    ? loadingProgress.cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes
-                                    : null,
-                              ),
-                            );
-                          },
-                        ),
-                        onTap: () {
-                          Get.to(WebViewContainer('Post', post['link']));
-                        }));
-              },
-            );
-          }).toList(),
-        ),
+            options: CarouselOptions(
+                viewportFraction: 1,
+                height: 220.0,
+                enlargeCenterPage: true,
+                autoPlay: true,
+                aspectRatio: 16 / 9,
+                autoPlayCurve: Curves.fastOutSlowIn,
+                enableInfiniteScroll: true,
+                autoPlayAnimationDuration: Duration(milliseconds: 800),
+                scrollDirection: Axis.horizontal,
+                onPageChanged: (index, reason) {
+                  homeController.currentPos.value = index;
+                }),
+            items: posts.length > 0
+                ? posts.map((post) {
+                    return Builder(
+                      builder: (BuildContext context) {
+                        return Container(
+                            width: MediaQuery.of(context).size.width,
+                            margin: EdgeInsets.symmetric(horizontal: 5.0),
+                            decoration: BoxDecoration(color: Colors.amber),
+                            child: GestureDetector(
+                                child: Image.network(
+                                  post['_embedded']['wp:featuredmedia'][0]
+                                          ['media_details']['sizes']
+                                      ['medium_large']['source_url'],
+                                  fit: BoxFit.cover,
+                                  loadingBuilder: (BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        value: loadingProgress
+                                                    .expectedTotalBytes !=
+                                                null
+                                            ? loadingProgress
+                                                    .cumulativeBytesLoaded /
+                                                loadingProgress
+                                                    .expectedTotalBytes
+                                            : null,
+                                      ),
+                                    );
+                                  },
+                                ),
+                                onTap: () {
+                                  Get.to(
+                                      WebViewContainer('Post', post['link']));
+                                }));
+                      },
+                    );
+                  }).toList()
+                : banners
+                    .map((item) => Container(
+                          child: Center(
+                              child: Image.asset(item,
+                                  fit: BoxFit.cover, width: 1000)),
+                        ))
+                    .toList()),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: posts.map(
-            (image) {
-              int index = posts.indexOf(image);
-              return Container(
-                width: 8.0,
-                height: 8.0,
-                margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 2.0),
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: homeController.currentPos.value == index
-                        ? Theme.of(context).textSelectionColor
-                        : Theme.of(context).hintColor),
-              );
-            },
-          ).toList(),
+          children: posts.length > 0
+              ? posts.map(
+                  (image) {
+                    int index = posts.indexOf(image);
+                    return Container(
+                      width: 8.0,
+                      height: 8.0,
+                      margin:
+                          EdgeInsets.symmetric(vertical: 8.0, horizontal: 2.0),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: homeController.currentPos.value == index
+                              ? Theme.of(context).textSelectionColor
+                              : Theme.of(context).hintColor),
+                    );
+                  },
+                ).toList()
+              : banners.map(
+                  (image) {
+                    int index = posts.indexOf(image);
+                    return Container(
+                      width: 8.0,
+                      height: 8.0,
+                      margin:
+                          EdgeInsets.symmetric(vertical: 8.0, horizontal: 2.0),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: homeController.currentPos.value == index
+                              ? Theme.of(context).textSelectionColor
+                              : Theme.of(context).hintColor),
+                    );
+                  },
+                ).toList(),
         )
       ],
     );

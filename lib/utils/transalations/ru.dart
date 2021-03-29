@@ -10,6 +10,11 @@ const Map<String, String> ru = {
   'server.error': 'Ошибка сервера',
   'server_exception': 'Что-то пошло не так на стороне сервера',
 
+  '2fa.paste_code_dialog.title': 'Вставить код',
+  '2fa.paste_code_dialog.content': 'Вы хотите вставить ',
+  '2fa.paste_code_dialog.button.cancel': 'Отмена',
+  '2fa.paste_code_dialog.button.paste': 'Вставить',
+
   //App Bottom Navbar
   'bottom.navbar.home': 'Дома',
   'bottom.navbar.markets': 'Рынки',
@@ -17,9 +22,20 @@ const Map<String, String> ru = {
   'bottom.navbar.buy_sell': 'Купить Продать',
   'bottom.navbar.wallets': 'Кошельки',
 
+  //No Internet Screen
+  'no_internet.title': 'Подключение к Интернету отсутствует.',
+  'no_internet.desc':
+      'Пожалуйста, проверьте ваше соединение и попробуйте еще раз',
+  'no_internet.button.check': 'Проверьте еще раз',
+
   //App Login Screen
+  'login.screen.register': 'регистр',
+  'login.screen.log_in': 'Авторизоваться',
   'login.screen.field.email': 'Электронное письмо',
   'login.screen.field.password': 'Пароль',
+  'login.screen.field.email_hint':
+      'Пожалуйста, введите адрес электронной почты',
+  'login.screen.field.password_hint': 'Пожалуйста введите пароль',
   'login.screen.email.error':
       'Пожалуйста, введите действующий адрес электронной почты',
   'login.screen.password.error':
@@ -29,20 +45,36 @@ const Map<String, String> ru = {
   'login.screen.button.register': 'регистр',
 
   //App Register Screen
+  'register.screen.login': 'Авторизоваться',
+  'register.screen.register': 'регистр',
   'register.screen.field.email': 'Электронное письмо',
   'register.screen.field.password': 'Пароль',
   'register.screen.field.confirm_password': 'Подтвердить Пароль',
-  'register.screen.field.referral_code': 'Промо-код',
+  'register.screen.field.referral_id':
+      'Реферальный идентификатор (необязательно)',
+  'register.screen.field.email_hint':
+      'Пожалуйста, введите адрес электронной почты',
+  'register.screen.field.password_hint': 'Пожалуйста введите пароль',
+  'register.screen.field.confirm_password_hint':
+      'Пожалуйста, подтвердите пароль',
+  'register.screen.field.referral_id_hint':
+      'Пожалуйста, введите реферальный ID',
+  'register.screen.field.agree': "Я согласен с B4U's",
+  'register.screen.field.terms': "Условия эксплуатации",
+  'register.screen.field.terms.error':
+      "Чтобы продолжить, вам необходимо ознакомиться с условиями использования.",
   'register.screen.email.error':
       'Пожалуйста, введите действующий адрес электронной почты',
   'register.screen.password.error':
       'Пароли должны состоять из 8 символов с прописными и специальными буквами.',
   'register.screen.confirm_password.error': 'Пароли не соответствуют',
-  'register.screen.button.register': 'регистр',
-  'register.screen.button.login': 'Авторизоваться',
 
   //App Forget Password Screen
+  'forget_password.screen.login': 'Авторизоваться',
+  'forget_password.screen.reset_password': 'Сброс пароля',
   'forget_password.screen.field.email': 'Электронное письмо',
+  'forget_password.screen.field.email_hint':
+      'Пожалуйста, введите адрес электронной почты',
   'forget_password.screen.email.error':
       'Пожалуйста, введите действующий адрес электронной почты',
   'forget_password.screen.button.send_code': 'Отправить код подтверждения',
@@ -71,6 +103,8 @@ const Map<String, String> ru = {
   'account.screen.share': 'Поделиться приложением',
   'account.screen.login_register': 'Войти/Зарегистрироваться',
   'account.screen.logout': 'Выйти',
+  'account.screen.instructions':
+      'Пожалуйста, не разглашайте коды SMS и аутентификации Google никому, включая службу поддержки B4U Wallet.',
 
   //App Referral Screen
   'referral.screen.title': 'Направления',

@@ -1,4 +1,4 @@
-import 'package:crypto_template/controllers/otp_controller.dart';
+import 'package:b4u_wallet/controllers/otp_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
@@ -87,9 +87,13 @@ class OTPModal extends StatelessWidget {
                 onCompleted: (v) {},
                 onChanged: (value) {},
                 beforeTextPaste: (text) {
-                  print("Allowing to paste $text");
                   return true;
                 },
+                dialogConfig: DialogConfig(
+                    dialogTitle: '2fa.paste_code_dialog.title'.tr,
+                    dialogContent: '2fa.paste_code_dialog.content'.tr,
+                    affirmativeText: '2fa.paste_code_dialog.button.paste'.tr,
+                    negativeText: '2fa.paste_code_dialog.button.cancel'.tr),
               )
             ]),
           ),

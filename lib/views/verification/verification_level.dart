@@ -1,5 +1,5 @@
-import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/controllers/verification_controller.dart';
+import 'package:b4u_wallet/controllers/HomeController.dart';
+import 'package:b4u_wallet/controllers/verification_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

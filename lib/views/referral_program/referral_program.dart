@@ -1,10 +1,10 @@
-import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/models/user.dart';
+import 'package:b4u_wallet/controllers/HomeController.dart';
+import 'package:b4u_wallet/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 import 'package:share/share.dart';
-import 'package:crypto_template/utils/Helpers/helper.dart';
+import 'package:b4u_wallet/utils/Helpers/helper.dart';
 
 class ReferralProgram extends StatelessWidget {
   final HomeController homeController = Get.find();

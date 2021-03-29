@@ -1,7 +1,7 @@
-import 'package:crypto_template/controllers/SnackbarController.dart';
-import 'package:crypto_template/controllers/error_controller.dart';
-import 'package:crypto_template/models/swap_history_response.dart';
-import 'package:crypto_template/repository/swap_repository.dart';
+import 'package:b4u_wallet/controllers/SnackbarController.dart';
+import 'package:b4u_wallet/controllers/error_controller.dart';
+import 'package:b4u_wallet/models/swap_history_response.dart';
+import 'package:b4u_wallet/repository/swap_repository.dart';
 import 'package:get/get.dart';
 
 class SwapHistoryController extends GetxController {

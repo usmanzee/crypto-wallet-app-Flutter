@@ -1,9 +1,9 @@
-import 'package:crypto_template/controllers/beneficiary_controller.dart';
+import 'package:b4u_wallet/controllers/beneficiary_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:crypto_template/component/custom_text_field.dart';
+import 'package:b4u_wallet/component/custom_text_field.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:crypto_template/models/wallet.dart' as WalletClass;
+import 'package:b4u_wallet/models/wallet.dart' as WalletClass;
 
 class AddBeneficiary extends StatefulWidget {
   final WalletClass.Wallet wallet;

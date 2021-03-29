@@ -9,6 +9,11 @@ const Map<String, String> ml = {
   'server.error': 'Ralat Pelayan',
   'server_exception': 'Kesalahan berlaku di sisi pelayan',
 
+  '2fa.paste_code_dialog.title': 'Tampal Kod',
+  '2fa.paste_code_dialog.content': 'Adakah anda mahu menampal ',
+  '2fa.paste_code_dialog.button.cancel': 'Batal',
+  '2fa.paste_code_dialog.button.paste': 'Tampal',
+
   //App Bottom Navbar
   'bottom.navbar.home': 'Rumah',
   'bottom.navbar.markets': 'Pasaran',
@@ -16,9 +21,18 @@ const Map<String, String> ml = {
   'bottom.navbar.buy_sell': 'Jual beli',
   'bottom.navbar.wallets': 'Dompet',
 
+  //No Internet Screen
+  'no_internet.title': 'Tiada sambungan internet.',
+  'no_internet.desc': 'Sila periksa sambungan anda dan cuba lagi',
+  'no_internet.button.check': 'Semak Lagi',
+
   //App Login Screen
+  'login.screen.register': 'Daftar',
+  'login.screen.log_in': 'Log masuk',
   'login.screen.field.email': 'E-mel',
   'login.screen.field.password': 'Kata Laluan',
+  'login.screen.field.email_hint': 'Sila masukkan e-mel',
+  'login.screen.field.password_hint': 'Sila masukkan kata laluan',
   'login.screen.email.error': 'Sila taipkan alamat e-mel yang sah',
   'login.screen.password.error':
       'Kata laluan mestilah 8 aksara dengan huruf besar dan huruf khas',
@@ -27,19 +41,30 @@ const Map<String, String> ml = {
   'login.screen.button.register': 'Daftar',
 
   //App Register Screen
+  'register.screen.login': 'Log masuk',
+  'register.screen.register': 'Daftar',
   'register.screen.field.email': 'E-mel',
   'register.screen.field.password': 'Kata Laluan',
   'register.screen.field.confirm_password': 'Sahkan Kata Laluan',
-  'register.screen.field.referral_code': 'Kod rujukan',
+  'register.screen.field.referral_id': 'ID Rujukan (Pilihan)',
+  'register.screen.field.email_hint': 'Sila masukkan e-mel',
+  'register.screen.field.password_hint': 'Sila masukkan kata laluan',
+  'register.screen.field.confirm_password_hint': 'Sila sahkan kata laluan',
+  'register.screen.field.referral_id_hint': 'Sila masukkan ID rujukan',
+  'register.screen.field.agree': "Saya bersetuju dengan B4U",
+  'register.screen.field.terms': "Syarat Penggunaan",
+  'register.screen.field.terms.error':
+      "Anda perlu menyemak syarat penggunaan untuk meneruskan.",
   'register.screen.email.error': 'Sila taipkan alamat e-mel yang sah',
   'register.screen.password.error':
       'Kata laluan mestilah 8 aksara dengan huruf besar dan huruf khas',
   'register.screen.confirm_password.error': 'Kata laluan tidak sepadan',
-  'register.screen.button.register': 'Daftar',
-  'register.screen.button.login': 'Log masuk',
 
   //App Forget Password Screen
+  'forget_password.screen.login': 'Log masuk',
+  'forget_password.screen.reset_password': 'Menetapkan semula kata laluan',
   'forget_password.screen.field.email': 'E-mel',
+  'forget_password.screen.field.email_hint': 'Sila masukkan e-mel',
   'forget_password.screen.email.error': 'Sila taipkan alamat e-mel yang sah',
   'forget_password.screen.button.send_code': 'Hantar Kod Pengesahan',
   'forget_password.screen.button.login': 'Kembali ke Log Masuk',
@@ -67,6 +92,8 @@ const Map<String, String> ml = {
   'account.screen.share': 'Kongsi Aplikasi',
   'account.screen.login_register': 'Log masuk / Daftar',
   'account.screen.logout': 'Log keluar',
+  'account.screen.instructions':
+      'Jangan dedahkan SMS dan kod Pengesahan Google kepada sesiapa sahaja, termasuk sokongan Dompet B4U.',
 
   //App Referral Screen
   'referral.screen.title': 'Rujukan',

@@ -1,16 +1,16 @@
 import 'dart:async';
-import 'package:crypto_template/controllers/SnackbarController.dart';
-import 'package:crypto_template/controllers/error_controller.dart';
-import 'package:crypto_template/controllers/open_orders_controller.dart';
-import 'package:crypto_template/controllers/trading_controller.dart';
-import 'package:crypto_template/models/MemberLevel.dart';
-import 'package:crypto_template/models/market.dart';
-import 'package:crypto_template/models/user.dart';
-import 'package:crypto_template/repository/public_repository.dart';
-import 'package:crypto_template/repository/user_repository.dart';
+import 'package:b4u_wallet/controllers/SnackbarController.dart';
+import 'package:b4u_wallet/controllers/error_controller.dart';
+import 'package:b4u_wallet/controllers/open_orders_controller.dart';
+import 'package:b4u_wallet/controllers/trading_controller.dart';
+import 'package:b4u_wallet/models/MemberLevel.dart';
+import 'package:b4u_wallet/models/market.dart';
+import 'package:b4u_wallet/models/user.dart';
+import 'package:b4u_wallet/repository/public_repository.dart';
+import 'package:b4u_wallet/repository/user_repository.dart';
 import 'package:get/get.dart';
-import 'package:crypto_template/controllers/market_controller.dart';
-import 'package:crypto_template/controllers/wallet_controller.dart';
+import 'package:b4u_wallet/controllers/market_controller.dart';
+import 'package:b4u_wallet/controllers/wallet_controller.dart';
 // import 'package:get_mac/get_mac.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -70,7 +70,7 @@ class HomeController extends GetxController {
     if (isLoggedIn.value) {
       fetchUser();
     }
-    connectivity = new Connectivity();
+    connectivity = Connectivity();
     subscription = connectivity.onConnectivityChanged.listen(_connectionChange);
     firebaseMessagingConfig();
     ever(isLoggedIn, setValuesAfterLogin);

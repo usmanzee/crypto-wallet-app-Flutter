@@ -1,10 +1,10 @@
-import 'package:crypto_template/controllers/error_controller.dart';
-import 'package:crypto_template/controllers/market_controller.dart';
-import 'package:crypto_template/controllers/web_socket_controller.dart';
+import 'package:b4u_wallet/controllers/error_controller.dart';
+import 'package:b4u_wallet/controllers/market_controller.dart';
+import 'package:b4u_wallet/controllers/web_socket_controller.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:k_chart/flutter_k_chart.dart';
-import 'package:crypto_template/utils/Helpers/ws_helper.dart';
+import 'package:b4u_wallet/utils/Helpers/ws_helper.dart';
 
 class OrderBookController extends GetxController {
   final market;

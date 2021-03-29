@@ -1,5 +1,5 @@
-import 'package:crypto_template/component/no_data.dart';
-import 'package:crypto_template/controllers/verification_controller.dart';
+import 'package:b4u_wallet/component/no_data.dart';
+import 'package:b4u_wallet/controllers/verification_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';

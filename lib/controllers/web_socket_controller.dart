@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:crypto_template/models/formated_market.dart';
-import 'package:crypto_template/utils/Helpers/environment.dart';
+import 'package:b4u_wallet/models/formated_market.dart';
+import 'package:b4u_wallet/utils/Helpers/environment.dart';
 import 'package:get/get.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/status.dart' as status;

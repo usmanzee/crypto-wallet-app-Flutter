@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
-import 'package:crypto_template/controllers/otp_controller.dart';
-import 'package:crypto_template/utils/Helpers/helper.dart';
+import 'package:b4u_wallet/controllers/otp_controller.dart';
+import 'package:b4u_wallet/utils/Helpers/helper.dart';
 
 class EnableOTP extends GetView<OTPController> {
   final GlobalKey<FormState> _secretFormKey = GlobalKey<FormState>();

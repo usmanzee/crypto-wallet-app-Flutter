@@ -1,7 +1,7 @@
-import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/views/referral_program/referral_program.dart';
-import 'package:crypto_template/views/setting/themes.dart';
-import 'package:crypto_template/views/webview_container.dart';
+import 'package:b4u_wallet/controllers/HomeController.dart';
+import 'package:b4u_wallet/views/referral_program/referral_program.dart';
+import 'package:b4u_wallet/views/setting/themes.dart';
+import 'package:b4u_wallet/views/webview_container.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share/share.dart';
@@ -130,30 +130,29 @@ class Setting extends StatelessWidget {
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(children: [
-                            Icon(
-                              Icons.account_circle,
-                              size: 24.0,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 4.0),
-                              child: Text(
-                                'account.screen.login_register'.tr,
-                                overflow: TextOverflow.ellipsis,
-                                softWrap: true,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w300,
-                                  fontFamily: "Popins",
-                                  letterSpacing: 1.5,
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Container(
+                                    padding:
+                                        EdgeInsets.only(left: 4.0, right: 16),
+                                    child: Text(
+                                      'account.screen.login_register'.tr,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: "Popins",
+                                        letterSpacing: 1.5,
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            Spacer(flex: 1),
-                            Icon(
-                              Icons.keyboard_arrow_right,
-                            ),
-                          ]),
+                                Icon(
+                                  Icons.keyboard_arrow_right,
+                                ),
+                              ]),
                         ]),
                   ),
                 );
@@ -168,7 +167,7 @@ class Setting extends StatelessWidget {
                     context,
                     Icon(
                       Icons.event_note,
-                      size: 20.0,
+                      size: 24.0,
                     ),
                     "account.screen.fee_schedule".tr)),
             Obx(() {
@@ -181,7 +180,7 @@ class Setting extends StatelessWidget {
                           context,
                           Icon(
                             Icons.group_add,
-                            size: 20.0,
+                            size: 24.0,
                           ),
                           "account.screen.referral_id".tr))
                   : Container();
@@ -196,7 +195,7 @@ class Setting extends StatelessWidget {
                           context,
                           Icon(
                             Icons.perm_identity,
-                            size: 20.0,
+                            size: 24.0,
                           ),
                           "account.screen.identification".tr))
                   : Container();
@@ -211,7 +210,7 @@ class Setting extends StatelessWidget {
                           context,
                           Icon(
                             Icons.notifications_active,
-                            size: 20.0,
+                            size: 24.0,
                           ),
                           "account.screen.notifications".tr))
                   : Container();
@@ -226,7 +225,7 @@ class Setting extends StatelessWidget {
                           context,
                           Icon(
                             Icons.security,
-                            size: 20.0,
+                            size: 24.0,
                           ),
                           "account.screen.security".tr))
                   : Container();
@@ -239,7 +238,7 @@ class Setting extends StatelessWidget {
                     context,
                     Icon(
                       Icons.language,
-                      size: 20.0,
+                      size: 24.0,
                     ),
                     "account.screen.languages".tr)),
             InkWell(
@@ -251,7 +250,7 @@ class Setting extends StatelessWidget {
                     context,
                     Icon(
                       Icons.live_help,
-                      size: 20.0,
+                      size: 24.0,
                     ),
                     "account.screen.help_support".tr)),
             InkWell(
@@ -262,7 +261,7 @@ class Setting extends StatelessWidget {
                     context,
                     Icon(
                       Icons.share,
-                      size: 20.0,
+                      size: 24.0,
                     ),
                     "account.screen.share".tr)),
             SizedBox(
@@ -284,7 +283,7 @@ class Setting extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(0.0)),
                         border: Border.all(
                           color: Theme.of(context).primaryColor,
-                          width: 0.35,
+                          width: 1,
                         ),
                       ),
                       child: Center(
@@ -303,6 +302,18 @@ class Setting extends StatelessWidget {
               else
                 return Container();
             }),
+            SizedBox(
+              height: 24.0,
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 0.0),
+              child: Text('account.screen.instructions'.tr,
+                  style: TextStyle(
+                    fontFamily: "Popins",
+                    fontSize: 12,
+                    color: Theme.of(context).hintColor,
+                  )),
+            ),
             SizedBox(
               height: 24.0,
             ),
@@ -340,6 +351,11 @@ class Setting extends StatelessWidget {
                 ),
               ),
               Spacer(flex: 1),
+              Icon(
+                Icons.keyboard_arrow_right,
+                size: 24.0,
+                color: Theme.of(context).hintColor,
+              ),
             ],
           ),
           SizedBox(
@@ -399,7 +415,7 @@ class Setting extends StatelessWidget {
                                       ['country_code']))
                             Icon(
                               Icons.done,
-                              size: 20.0,
+                              size: 24.0,
                               color: Theme.of(context).accentColor,
                             ),
                         ]),

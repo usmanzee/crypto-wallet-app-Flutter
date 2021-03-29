@@ -1,6 +1,6 @@
-import 'package:crypto_template/component/News/newsHeaderModel.dart';
-import 'package:crypto_template/views/news/news_header_slider/news_header_slider_detail.dart';
-import 'package:crypto_template/views/news/news_header_slider/page_transformer.dart';
+import 'package:b4u_wallet/component/News/newsHeaderModel.dart';
+import 'package:b4u_wallet/views/news/news_header_slider/news_header_slider_detail.dart';
+import 'package:b4u_wallet/views/news/news_header_slider/page_transformer.dart';
 
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';

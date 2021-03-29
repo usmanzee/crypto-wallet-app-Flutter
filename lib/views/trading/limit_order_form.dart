@@ -1,6 +1,6 @@
-import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/controllers/trading_controller.dart';
-import 'package:crypto_template/models/formated_market.dart';
+import 'package:b4u_wallet/controllers/HomeController.dart';
+import 'package:b4u_wallet/controllers/trading_controller.dart';
+import 'package:b4u_wallet/models/formated_market.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

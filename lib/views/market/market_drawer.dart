@@ -1,8 +1,8 @@
-import 'package:crypto_template/controllers/market_controller.dart';
-import 'package:crypto_template/controllers/market_detail_controller.dart';
-import 'package:crypto_template/controllers/open_orders_controller.dart';
-import 'package:crypto_template/controllers/trading_controller.dart';
-import 'package:crypto_template/models/formated_market.dart';
+import 'package:b4u_wallet/controllers/market_controller.dart';
+import 'package:b4u_wallet/controllers/market_detail_controller.dart';
+import 'package:b4u_wallet/controllers/open_orders_controller.dart';
+import 'package:b4u_wallet/controllers/trading_controller.dart';
+import 'package:b4u_wallet/models/formated_market.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:get/get.dart';

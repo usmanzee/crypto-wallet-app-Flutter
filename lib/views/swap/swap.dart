@@ -1,11 +1,11 @@
-import 'package:crypto_template/component/no_data.dart';
-import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/controllers/swap_controller.dart';
-import 'package:crypto_template/controllers/wallet_controller.dart';
+import 'package:b4u_wallet/component/no_data.dart';
+import 'package:b4u_wallet/controllers/HomeController.dart';
+import 'package:b4u_wallet/controllers/swap_controller.dart';
+import 'package:b4u_wallet/controllers/wallet_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
-import 'package:crypto_template/models/wallet.dart';
+import 'package:b4u_wallet/models/wallet.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -1007,9 +1007,20 @@ class Swap extends StatelessWidget {
                                       onCompleted: (v) {},
                                       onChanged: (value) {},
                                       beforeTextPaste: (text) {
-                                        print("Allowing to paste $text");
                                         return true;
                                       },
+                                      dialogConfig: DialogConfig(
+                                          dialogTitle:
+                                              '2fa.paste_code_dialog.title'.tr,
+                                          dialogContent:
+                                              '2fa.paste_code_dialog.content'
+                                                  .tr,
+                                          affirmativeText:
+                                              '2fa.paste_code_dialog.button.paste'
+                                                  .tr,
+                                          negativeText:
+                                              '2fa.paste_code_dialog.button.cancel'
+                                                  .tr),
                                     ),
                                   ),
                                 )

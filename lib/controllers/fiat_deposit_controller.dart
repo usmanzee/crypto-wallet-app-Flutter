@@ -1,7 +1,7 @@
-import 'package:crypto_template/controllers/SnackbarController.dart';
-import 'package:crypto_template/controllers/error_controller.dart';
-import 'package:crypto_template/models/fiat_deposit_details.dart';
-import 'package:crypto_template/repository/wallet_repository.dart';
+import 'package:b4u_wallet/controllers/SnackbarController.dart';
+import 'package:b4u_wallet/controllers/error_controller.dart';
+import 'package:b4u_wallet/models/fiat_deposit_details.dart';
+import 'package:b4u_wallet/repository/wallet_repository.dart';
 import 'package:get/get.dart';
 
 class FiatDepositController extends GetxController {

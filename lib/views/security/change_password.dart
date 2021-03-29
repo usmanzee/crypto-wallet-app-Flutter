@@ -1,7 +1,7 @@
-import 'package:crypto_template/controllers/change_password_controller.dart';
+import 'package:b4u_wallet/controllers/change_password_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:crypto_template/component/custom_text_field.dart';
+import 'package:b4u_wallet/component/custom_text_field.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
 class ChangePassword extends StatelessWidget {

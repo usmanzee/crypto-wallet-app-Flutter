@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:crypto_template/controllers/verification_controller.dart';
+import 'package:b4u_wallet/controllers/verification_controller.dart';
 import 'package:get/get.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -182,25 +182,14 @@ class PhoneVerification extends StatelessWidget {
                         beforeTextPaste: (text) {
                           return true;
                         },
-                      )
-                      // TextFormField(
-                      //   obscureText: false,
-                      //   autofocus: true,
-                      //   keyboardType: TextInputType.number,
-                      //   validator: _pinCodeValidator,
-                      //   controller: verificationController.pinCodeTextController,
-                      //   decoration: InputDecoration(
-                      //       errorStyle: TextStyle(
-                      //         fontSize: 13.5,
-                      //       ),
-                      //       errorMaxLines: 3,
-                      //       filled: true,
-                      //       fillColor: Colors.transparent,
-                      //       labelText: 'identification.screen.phone.field.pin'.tr,
-                      //       border: OutlineInputBorder(
-                      //           borderRadius: BorderRadius.circular(5))),
-                      // ),
-                      ),
+                        dialogConfig: DialogConfig(
+                            dialogTitle: '2fa.paste_code_dialog.title'.tr,
+                            dialogContent: '2fa.paste_code_dialog.content'.tr,
+                            affirmativeText:
+                                '2fa.paste_code_dialog.button.paste'.tr,
+                            negativeText:
+                                '2fa.paste_code_dialog.button.cancel'.tr),
+                      )),
                 ),
                 Obx(() {
                   return Row(

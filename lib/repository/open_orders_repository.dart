@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:crypto_template/models/open_order.dart';
-import 'package:crypto_template/network/api_provider.dart';
-import 'package:crypto_template/network/request_headers.dart';
+import 'package:b4u_wallet/models/open_order.dart';
+import 'package:b4u_wallet/network/api_provider.dart';
+import 'package:b4u_wallet/network/request_headers.dart';
 
 class OpenOrdersRepository {
   ApiProvider apiProvider;

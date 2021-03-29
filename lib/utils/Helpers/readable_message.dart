@@ -1,4 +1,4 @@
-import 'package:crypto_template/utils/server_messages_data.dart';
+import 'package:b4u_wallet/utils/server_messages_data.dart';
 
 class ReadAbleMessage {
   final String message;

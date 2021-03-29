@@ -1,12 +1,12 @@
-import 'package:crypto_template/controllers/crypto_deposit_controller.dart';
-import 'package:crypto_template/views/wallet/custom_appbar.dart';
-import 'package:crypto_template/views/wallet/search_wallet_header.dart';
+import 'package:b4u_wallet/controllers/crypto_deposit_controller.dart';
+import 'package:b4u_wallet/views/wallet/custom_appbar.dart';
+import 'package:b4u_wallet/views/wallet/search_wallet_header.dart';
 import 'package:flutter/material.dart';
-import 'package:crypto_template/models/wallet.dart' as WalletClass;
+import 'package:b4u_wallet/models/wallet.dart' as WalletClass;
 import 'package:get/get.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share/share.dart';
-import 'package:crypto_template/utils/Helpers/helper.dart';
+import 'package:b4u_wallet/utils/Helpers/helper.dart';
 
 class DepositCrypto extends StatefulWidget {
   final WalletClass.Wallet wallet;

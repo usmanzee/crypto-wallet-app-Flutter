@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:crypto_template/models/wallet.dart' as WalletClass;
+import 'package:b4u_wallet/models/wallet.dart' as WalletClass;
 
 class SearchHeader extends StatelessWidget {
   final String screenType;

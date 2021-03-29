@@ -10,6 +10,11 @@ const Map<String, String> en = {
   'server.error': 'Server Error',
   'server_exception': 'Something went wrong on the server side',
 
+  '2fa.paste_code_dialog.title': 'Paste Code',
+  '2fa.paste_code_dialog.content': 'Do you want to paste ',
+  '2fa.paste_code_dialog.button.cancel': 'Cancel',
+  '2fa.paste_code_dialog.button.paste': 'Paste',
+
   //App Bottom Navbar
   'bottom.navbar.home': 'Home',
   'bottom.navbar.markets': 'Markets',
@@ -17,30 +22,48 @@ const Map<String, String> en = {
   'bottom.navbar.buy_sell': 'Buy/Sell',
   'bottom.navbar.wallets': 'Wallets',
 
+  //No Internet Screen
+  'no_internet.title': 'No Internet Connection.',
+  'no_internet.desc': 'Please check your connection and try again',
+  'no_internet.button.check': 'Check Again',
+
   //App Login Screen
+  'login.screen.register': 'Register',
+  'login.screen.log_in': 'Log In',
   'login.screen.field.email': 'Email',
   'login.screen.field.password': 'Password',
+  'login.screen.field.email_hint': 'Please enter email',
+  'login.screen.field.password_hint': 'Please enter password',
   'login.screen.email.error': 'Please type a valid email address',
   'login.screen.password.error':
       'Passwords must be 8 characters with uppercase and special letters',
   'login.screen.forget_password': 'Forget Password',
-  'login.screen.button.login': 'Login',
-  'login.screen.button.register': 'Register',
 
   //App Register Screen
+  'register.screen.login': 'Login',
+  'register.screen.register': 'Register',
   'register.screen.field.email': 'Email',
   'register.screen.field.password': 'Password',
   'register.screen.field.confirm_password': 'Confirm Password',
-  'register.screen.field.referral_code': 'Referral Code',
+  'register.screen.field.referral_id': 'Referral ID (Optional)',
+  'register.screen.field.email_hint': 'Please enter email',
+  'register.screen.field.password_hint': 'Please enter password',
+  'register.screen.field.confirm_password_hint': 'Please confirm password',
+  'register.screen.field.referral_id_hint': 'Please Enter referral ID',
+  'register.screen.field.agree': "I agree to B4U's",
+  'register.screen.field.terms': "Terms of Use",
+  'register.screen.field.terms.error':
+      "You need to check the terms of use to proceed.",
   'register.screen.email.error': 'Please type a valid email address',
   'register.screen.password.error':
       'Passwords must be 8 characters with uppercase and special letters',
   'register.screen.confirm_password.error': 'Passwords do not match',
-  'register.screen.button.register': 'Register',
-  'register.screen.button.login': 'Login',
 
   //App Forget Password Screen
+  'forget_password.screen.login': 'Login',
+  'forget_password.screen.reset_password': 'Reset Password',
   'forget_password.screen.field.email': 'Email',
+  'forget_password.screen.field.email_hint': 'Please enter email',
   'forget_password.screen.email.error': 'Please type a valid email address',
   'forget_password.screen.button.send_code': 'Send Verification Code',
   'forget_password.screen.button.login': 'Back to Login',
@@ -68,6 +91,8 @@ const Map<String, String> en = {
   'account.screen.share': 'Share the App',
   'account.screen.login_register': 'Login/Register',
   'account.screen.logout': 'Logout',
+  'account.screen.instructions':
+      'Please do not disclose SMS and Google Authentication codes to anyone, including B4U Wallet support.',
 
   //App Referral Screen
   'referral.screen.title': 'Referral',

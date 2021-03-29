@@ -1,4 +1,4 @@
-import 'package:crypto_template/component/News/newsListBottom.dart';
+import 'package:b4u_wallet/component/News/newsListBottom.dart';
 import 'package:flutter/material.dart';
 
 class newsListDetail extends StatefulWidget {
@@ -43,20 +43,18 @@ class _newsListDetailState extends State<newsListDetail> {
       ),
     );
 
-
     double _height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       body: SafeArea(
-              child: CustomScrollView(
+        child: CustomScrollView(
           scrollDirection: Axis.vertical,
           slivers: <Widget>[
-            
-             SliverPersistentHeader( 
-                delegate:  MySliverAppBar(expandedHeight: _height-0.0,img: item.img,id:item.id),
-                pinned: true,
-              ),
-
+            SliverPersistentHeader(
+              delegate: MySliverAppBar(
+                  expandedHeight: _height - 0.0, img: item.img, id: item.id),
+              pinned: true,
+            ),
 
             // /// Appbar Custom using a SliverAppBar
             // SliverAppBar(
@@ -109,7 +107,7 @@ class _newsListDetailState extends State<newsListDetail> {
             /// Container for description to Sort and Refine
             SliverToBoxAdapter(
                 child: Column(children: <Widget>[
-                               Padding(
+              Padding(
                 padding: const EdgeInsets.only(
                     top: 40.0, left: 20.0, right: 20.0, bottom: 20.0),
                 child: Text(
@@ -172,88 +170,87 @@ class _newsListDetailState extends State<newsListDetail> {
   }
 }
 
-
 class MySliverAppBar extends SliverPersistentHeaderDelegate {
   final double expandedHeight;
 
-  String img,id;
+  String img, id;
 
-  MySliverAppBar({@required this.expandedHeight,this.img,this.id});
+  MySliverAppBar({@required this.expandedHeight, this.img, this.id});
 
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Stack(
-        fit: StackFit.expand,
-        overflow: Overflow.clip,
-        children: [
-          Container(
-            height: 50.0,
-            width: double.infinity,
-            color: Color(0xFF172E4D),
-          ),
-    Opacity(
-       opacity: (1 - shrinkOffset / expandedHeight),
+      fit: StackFit.expand,
+      overflow: Overflow.clip,
+      children: [
+        Container(
+          height: 50.0,
+          width: double.infinity,
+          color: Color(0xFF172E4D),
+        ),
+        Opacity(
+          opacity: (1 - shrinkOffset / expandedHeight),
           child: Hero(
-      transitionOnUserGestures: true,
-      tag: 'hero-tag-list-${id}',
-      child: new DecoratedBox(
-        decoration: new BoxDecoration(
-          image: new DecorationImage(
-      fit: BoxFit.cover,
-      image: new AssetImage(img),
+            transitionOnUserGestures: true,
+            tag: 'hero-tag-list-${id}',
+            child: new DecoratedBox(
+              decoration: new BoxDecoration(
+                image: new DecorationImage(
+                  fit: BoxFit.cover,
+                  image: new AssetImage(img),
+                ),
+                shape: BoxShape.rectangle,
+              ),
+              child: Container(
+                margin: EdgeInsets.only(top: 130.0),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: FractionalOffset.bottomCenter,
+                    end: FractionalOffset.topCenter,
+                    colors: <Color>[
+                      const Color(0xFF000000),
+                      const Color(0x00000000),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ),
-          shape: BoxShape.rectangle,
         ),
-        child: Container(
-          margin: EdgeInsets.only(top: 130.0),
-          decoration: BoxDecoration(
-      gradient: LinearGradient(
-              begin: FractionalOffset.bottomCenter,
-              end: FractionalOffset.topCenter,
-          colors: <Color>[
-           const Color(0xFF000000),
-                const Color(0x00000000),
-          ],
-        
-          ),
-          ),
-        ),
-      ),
-          ),
-    ),
-    Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                InkWell(
-                  onTap: (){
-                    Navigator.of(context).pop();
-                  },
-                  child: Align(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            InkWell(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                child: Align(
                     alignment: Alignment.topLeft,
                     child: Padding(
-                      padding: const EdgeInsets.only(top:20.0,left:20.0 ),
+                      padding: const EdgeInsets.only(top: 20.0, left: 20.0),
                       child: Icon(Icons.arrow_back),
                     ))),
-      Align(
-          alignment: Alignment.center,
-                      child: Text(
-          "News",
-          style: TextStyle(
-            color: Colors.white,
-            fontFamily: "Gotik",
-            fontWeight: FontWeight.w700,
-            fontSize: (expandedHeight/40)-(shrinkOffset/40)+18,
-          ),
-      ),
-      ), 
-                SizedBox(width: 36.0,)
-],
-    ),
- 
-        ],
-      );
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                "News",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: "Gotik",
+                  fontWeight: FontWeight.w700,
+                  fontSize: (expandedHeight / 40) - (shrinkOffset / 40) + 18,
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 36.0,
+            )
+          ],
+        ),
+      ],
+    );
   }
 
   @override

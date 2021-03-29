@@ -1,10 +1,10 @@
-import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/controllers/SnackbarController.dart';
-import 'package:crypto_template/controllers/error_controller.dart';
-import 'package:crypto_template/models/deposit_histroy_response.dart';
-import 'package:crypto_template/models/trade_histroy_response.dart';
-import 'package:crypto_template/models/withdraw_history_response.dart';
-import 'package:crypto_template/repository/wallet_repository.dart';
+import 'package:b4u_wallet/controllers/HomeController.dart';
+import 'package:b4u_wallet/controllers/SnackbarController.dart';
+import 'package:b4u_wallet/controllers/error_controller.dart';
+import 'package:b4u_wallet/models/deposit_histroy_response.dart';
+import 'package:b4u_wallet/models/trade_histroy_response.dart';
+import 'package:b4u_wallet/models/withdraw_history_response.dart';
+import 'package:b4u_wallet/repository/wallet_repository.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 

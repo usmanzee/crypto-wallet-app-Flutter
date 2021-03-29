@@ -1,14 +1,14 @@
-import 'package:crypto_template/controllers/error_controller.dart';
-import 'package:crypto_template/controllers/market_controller.dart';
-import 'package:crypto_template/controllers/web_socket_controller.dart';
-import 'package:crypto_template/models/formated_market.dart';
-import 'package:crypto_template/repository/market_repository.dart';
+import 'package:b4u_wallet/controllers/error_controller.dart';
+import 'package:b4u_wallet/controllers/market_controller.dart';
+import 'package:b4u_wallet/controllers/web_socket_controller.dart';
+import 'package:b4u_wallet/models/formated_market.dart';
+import 'package:b4u_wallet/repository/market_repository.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:k_chart/flutter_k_chart.dart';
 import 'package:k_chart/k_chart_widget.dart';
-import 'package:crypto_template/utils/Helpers/ws_helper.dart';
-import 'package:crypto_template/utils/Helpers/helper.dart';
+import 'package:b4u_wallet/utils/Helpers/ws_helper.dart';
+import 'package:b4u_wallet/utils/Helpers/helper.dart';
 
 class MarketDetailController extends GetxController {
   var lineGraphTimeSlots = [

@@ -1,17 +1,17 @@
-import 'package:crypto_template/component/no_internet.dart';
-import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/controllers/market_controller.dart';
-import 'package:crypto_template/controllers/swap_controller.dart';
-import 'package:crypto_template/controllers/trading_controller.dart';
-import 'package:crypto_template/controllers/web_socket_controller.dart';
-import 'package:crypto_template/views/swap/swap.dart';
-import 'package:crypto_template/views/trading/trading.dart';
+import 'package:b4u_wallet/component/no_internet.dart';
+import 'package:b4u_wallet/controllers/HomeController.dart';
+import 'package:b4u_wallet/controllers/market_controller.dart';
+import 'package:b4u_wallet/controllers/swap_controller.dart';
+import 'package:b4u_wallet/controllers/trading_controller.dart';
+import 'package:b4u_wallet/controllers/web_socket_controller.dart';
+import 'package:b4u_wallet/views/swap/swap.dart';
+import 'package:b4u_wallet/views/trading/trading.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:crypto_template/views/home/home.dart';
-import 'package:crypto_template/views/market/markets.dart';
-import 'package:crypto_template/views/wallet/wallets.dart';
-import 'package:crypto_template/controllers/SnackbarController.dart';
+import 'package:b4u_wallet/views/home/home.dart';
+import 'package:b4u_wallet/views/market/markets.dart';
+import 'package:b4u_wallet/views/wallet/wallets.dart';
+import 'package:b4u_wallet/controllers/SnackbarController.dart';
 
 class BottomNavBar extends GetView<HomeController> {
   final MarketController marketController = Get.put(MarketController());
@@ -100,31 +100,33 @@ class BottomNavBar extends GetView<HomeController> {
                   ),
                 ],
                 currentIndex: controller.selectedNavIndex,
-                onTap: (index) {
-                  var isLoggedIn = controller.isLoggedIn;
+                onTap: controller.hasConnection
+                    ? (index) {
+                        var isLoggedIn = controller.isLoggedIn;
 
-                  if (index == 4 && !isLoggedIn.value) {
-                    Get.toNamed('/login');
-                  } else if (index == 3 && !isLoggedIn.value) {
-                    Get.toNamed('/login');
-                  } else {
-                    controller.selectedNavIndex = index;
-                  }
-                  if (index != 2) {
-                    bool tradingControllerInstance =
-                        Get.isRegistered<TradingController>();
-                    if (tradingControllerInstance) {
-                      Get.delete<TradingController>(force: true);
-                    }
-                  }
-                  if (index != 3) {
-                    bool swapControllerInstance =
-                        Get.isRegistered<SwapController>();
-                    if (swapControllerInstance) {
-                      Get.delete<SwapController>(force: true);
-                    }
-                  }
-                }),
+                        if (index == 4 && !isLoggedIn.value) {
+                          Get.toNamed('/login');
+                        } else if (index == 3 && !isLoggedIn.value) {
+                          Get.toNamed('/login');
+                        } else {
+                          controller.selectedNavIndex = index;
+                        }
+                        if (index != 2) {
+                          bool tradingControllerInstance =
+                              Get.isRegistered<TradingController>();
+                          if (tradingControllerInstance) {
+                            Get.delete<TradingController>(force: true);
+                          }
+                        }
+                        if (index != 3) {
+                          bool swapControllerInstance =
+                              Get.isRegistered<SwapController>();
+                          if (swapControllerInstance) {
+                            Get.delete<SwapController>(force: true);
+                          }
+                        }
+                      }
+                    : null),
           ),
         ),
       ),

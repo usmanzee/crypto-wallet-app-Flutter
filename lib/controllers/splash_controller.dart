@@ -1,4 +1,4 @@
-import 'package:crypto_template/controllers/SnackbarController.dart';
+import 'package:b4u_wallet/controllers/SnackbarController.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 import 'package:get_storage/get_storage.dart';

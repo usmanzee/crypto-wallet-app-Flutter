@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:crypto_template/component/style.dart';
+import 'package:b4u_wallet/component/style.dart';
 
 class DemoTheme {
   final String name;

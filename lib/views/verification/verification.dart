@@ -1,9 +1,9 @@
-import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/controllers/verification_controller.dart';
-import 'package:crypto_template/models/verification_label.dart';
-import 'package:crypto_template/views/verification/document_verification.dart';
-import 'package:crypto_template/views/verification/identity_verification.dart';
-import 'package:crypto_template/views/verification/phone_verification.dart';
+import 'package:b4u_wallet/controllers/HomeController.dart';
+import 'package:b4u_wallet/controllers/verification_controller.dart';
+import 'package:b4u_wallet/models/verification_label.dart';
+import 'package:b4u_wallet/views/verification/document_verification.dart';
+import 'package:b4u_wallet/views/verification/identity_verification.dart';
+import 'package:b4u_wallet/views/verification/phone_verification.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

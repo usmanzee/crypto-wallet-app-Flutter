@@ -1,13 +1,13 @@
-import 'package:crypto_template/component/no_data.dart';
-import 'package:crypto_template/controllers/wallet_controller.dart';
-import 'package:crypto_template/controllers/wallet_search_controller.dart';
-import 'package:crypto_template/views/wallet/deposit/crypto.dart';
-import 'package:crypto_template/views/wallet/deposit/fiat.dart';
-import 'package:crypto_template/views/wallet/withdraw/crypto.dart';
-import 'package:crypto_template/views/wallet/withdraw/fiat.dart';
+import 'package:b4u_wallet/component/no_data.dart';
+import 'package:b4u_wallet/controllers/wallet_controller.dart';
+import 'package:b4u_wallet/controllers/wallet_search_controller.dart';
+import 'package:b4u_wallet/views/wallet/deposit/crypto.dart';
+import 'package:b4u_wallet/views/wallet/deposit/fiat.dart';
+import 'package:b4u_wallet/views/wallet/withdraw/crypto.dart';
+import 'package:b4u_wallet/views/wallet/withdraw/fiat.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:crypto_template/models/wallet.dart' as WalletClass;
+import 'package:b4u_wallet/models/wallet.dart' as WalletClass;
 
 class WalletSearch extends GetView<WalletController> {
   final searchFrom = Get.arguments['searchFrom'];

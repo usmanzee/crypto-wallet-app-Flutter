@@ -1,11 +1,11 @@
 import 'dart:convert';
-import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/controllers/error_controller.dart';
+import 'package:b4u_wallet/controllers/HomeController.dart';
+import 'package:b4u_wallet/controllers/error_controller.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:crypto_template/models/user.dart';
-import 'package:crypto_template/repository/auth_repository.dart';
-import 'package:crypto_template/controllers/SnackbarController.dart';
+import 'package:b4u_wallet/models/user.dart';
+import 'package:b4u_wallet/repository/auth_repository.dart';
+import 'package:b4u_wallet/controllers/SnackbarController.dart';
 import 'package:get_storage/get_storage.dart';
 
 class LoginController extends GetxController {

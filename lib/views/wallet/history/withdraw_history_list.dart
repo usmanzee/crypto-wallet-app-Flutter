@@ -1,13 +1,12 @@
-import 'package:crypto_template/component/history_detail.dart';
-import 'package:crypto_template/component/no_data.dart';
-import 'package:crypto_template/controllers/transaction_history_controller.dart';
-import 'package:crypto_template/controllers/wallet_controller.dart';
-import 'package:crypto_template/models/withdraw_history_response.dart';
+import 'package:b4u_wallet/component/history_detail.dart';
+import 'package:b4u_wallet/component/no_data.dart';
+import 'package:b4u_wallet/controllers/transaction_history_controller.dart';
+import 'package:b4u_wallet/controllers/wallet_controller.dart';
+import 'package:b4u_wallet/models/withdraw_history_response.dart';
 import 'package:flutter/material.dart';
-import 'package:crypto_template/models/wallet.dart' as WalletClass;
+import 'package:b4u_wallet/models/wallet.dart' as WalletClass;
 import 'package:get/get.dart';
-import 'package:crypto_template/views/webview_container.dart';
-import 'package:crypto_template/utils/Helpers/helper.dart';
+import 'package:b4u_wallet/views/webview_container.dart';
 import 'package:intl/intl.dart';
 
 class WithdrawHistoryList extends StatelessWidget {
@@ -41,7 +40,7 @@ class WithdrawHistoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (transactionHistoryController.isLoading.value)
+      if (transactionHistoryController.fetchingWithdrawHistory.value)
         return Container(
             width: double.infinity,
             height: 200,

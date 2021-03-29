@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:crypto_template/models/wallet.dart' as WalletClass;
+import 'package:b4u_wallet/models/wallet.dart' as WalletClass;
 import 'package:get/get.dart';
 
 class WalletAmountHeader extends StatelessWidget {

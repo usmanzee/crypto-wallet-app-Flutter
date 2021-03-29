@@ -1,7 +1,7 @@
-import 'package:crypto_template/component/no_data.dart';
-import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/controllers/history_controller.dart';
-import 'package:crypto_template/models/trade_histroy_response.dart';
+import 'package:b4u_wallet/component/no_data.dart';
+import 'package:b4u_wallet/controllers/HomeController.dart';
+import 'package:b4u_wallet/controllers/history_controller.dart';
+import 'package:b4u_wallet/models/trade_histroy_response.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';

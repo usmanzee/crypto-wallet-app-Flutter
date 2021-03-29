@@ -1,6 +1,6 @@
-import 'package:crypto_template/component/no_data.dart';
-import 'package:crypto_template/controllers/swap_history_controller.dart';
-import 'package:crypto_template/models/swap_history_response.dart';
+import 'package:b4u_wallet/component/no_data.dart';
+import 'package:b4u_wallet/controllers/swap_history_controller.dart';
+import 'package:b4u_wallet/models/swap_history_response.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';

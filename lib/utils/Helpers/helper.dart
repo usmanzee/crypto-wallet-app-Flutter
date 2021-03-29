@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:crypto_template/controllers/SnackbarController.dart';
+import 'package:b4u_wallet/controllers/SnackbarController.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 

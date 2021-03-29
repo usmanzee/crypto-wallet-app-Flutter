@@ -1,11 +1,11 @@
-import 'package:crypto_template/controllers/history_controller.dart';
-import 'package:crypto_template/controllers/wallet_controller.dart';
-import 'package:crypto_template/views/history/deposit_history.dart';
-import 'package:crypto_template/views/history/trade_history.dart';
-import 'package:crypto_template/views/history/withdraw_history.dart';
-import 'package:crypto_template/views/webview_container.dart';
+import 'package:b4u_wallet/controllers/history_controller.dart';
+import 'package:b4u_wallet/controllers/wallet_controller.dart';
+import 'package:b4u_wallet/views/history/deposit_history.dart';
+import 'package:b4u_wallet/views/history/trade_history.dart';
+import 'package:b4u_wallet/views/history/withdraw_history.dart';
+import 'package:b4u_wallet/views/webview_container.dart';
 import 'package:flutter/material.dart';
-import 'package:crypto_template/models/wallet.dart' as WalletClass;
+import 'package:b4u_wallet/models/wallet.dart' as WalletClass;
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 

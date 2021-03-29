@@ -9,6 +9,11 @@ const Map<String, String> es = {
   'server.error': 'Error del Servidor',
   'server_exception': 'Algo salió mal en el lado del servidor',
 
+  '2fa.paste_code_dialog.title': 'Pegar código',
+  '2fa.paste_code_dialog.content': 'Quieres pegar ',
+  '2fa.paste_code_dialog.button.cancel': 'Cancelar',
+  '2fa.paste_code_dialog.button.paste': 'Pegar',
+
   //App Bottom Navbar
   'bottom.navbar.home': 'Hogar',
   'bottom.navbar.markets': 'Mercados',
@@ -16,9 +21,18 @@ const Map<String, String> es = {
   'bottom.navbar.buy_sell': 'Compra venta',
   'bottom.navbar.wallets': 'Carteras',
 
+  //No Internet Screen
+  'no_internet.title': 'Sin conexión a Internet',
+  'no_internet.desc': 'Por favor, compruebe la conexión y vuelva a intentarlo',
+  'no_internet.button.check': 'Revisar otra vez',
+
   //App Login Screen
+  'login.screen.register': 'Registrarse',
+  'login.screen.log_in': 'Iniciar sesión',
   'login.screen.field.email': 'Correo electrónico',
   'login.screen.field.password': 'Contraseña',
+  'login.screen.field.email_hint': 'Por favor ingrese su correo electrónico',
+  'login.screen.field.password_hint': 'Por favor, ingrese contraseña',
   'login.screen.email.error':
       'Escriba una dirección de correo electrónico válida',
   'login.screen.password.error':
@@ -28,20 +42,32 @@ const Map<String, String> es = {
   'login.screen.button.register': 'Registrarse',
 
   //App Register Screen
+  'register.screen.login': 'Acceso',
+  'register.screen.register': 'Registrarse',
   'register.screen.field.email': 'Correo electrónico',
   'register.screen.field.password': 'Contraseña',
   'register.screen.field.confirm_password': 'confirmar Contraseña',
-  'register.screen.field.referral_code': 'código de referencia',
+  'register.screen.field.referral_id': 'ID de referencia (opcional)',
+  'register.screen.field.email_hint': 'Por favor ingrese su correo electrónico',
+  'register.screen.field.password_hint': 'Por favor, ingrese contraseña',
+  'register.screen.field.confirm_password_hint': 'Confirme la contraseña',
+  'register.screen.field.referral_id_hint': 'Ingrese el ID de referencia',
+  'register.screen.field.agree': "Estoy de acuerdo con B4U's",
+  'register.screen.field.terms': "Condiciones de uso",
+  'register.screen.field.terms.error':
+      "Debe consultar los términos de uso para continuar.",
   'register.screen.email.error':
       'Escriba una dirección de correo electrónico válida',
   'register.screen.password.error':
       'Las contraseñas deben tener 8 caracteres con mayúsculas y letras especiales',
   'register.screen.confirm_password.error': 'Las contraseñas no coinciden',
-  'register.screen.button.register': 'Registrarse',
-  'register.screen.button.login': 'Acceso',
 
   //App Forget Password Screen
+  'forget_password.screen.login': 'Acceso',
+  'forget_password.screen.reset_password': 'Restablecer la contraseña',
   'forget_password.screen.field.email': 'Correo electrónico',
+  'forget_password.screen.field.email_hint':
+      'Por favor ingrese su correo electrónico',
   'forget_password.screen.email.error':
       'Escriba una dirección de correo electrónico válida',
   'forget_password.screen.button.send_code': 'Envíe el código de verificación',
@@ -70,6 +96,8 @@ const Map<String, String> es = {
   'account.screen.share': 'Comparte la APP',
   'account.screen.login_register': 'Iniciar sesión / Registrarse',
   'account.screen.logout': 'Cerrar sesión',
+  'account.screen.instructions':
+      'No revele los códigos SMS ni de autenticación de Google a nadie, incluido el soporte de B4U Wallet.',
 
   //App Referral Screen
   'referral.screen.title': 'Remisión',

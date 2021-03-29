@@ -2,9 +2,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Environment {
   static String getApiBaseUrl() {
-    String url = env['LOCAL_URL'];
+    String url = env['DEV_URL'];
     if (env['APP_ENV'] == 'dev') {
-      url = env['LOCAL_URL'];
+      url = env['DEV_URL'];
     }
     if (env['APP_ENV'] == 'staging') {
       url = env['STAGING_URL'];
@@ -16,9 +16,9 @@ class Environment {
   }
 
   static String getWSBaseUrl() {
-    String url = env['WS_LOCAL_URL'];
+    String url = env['WS_DEV_URL'];
     if (env['APP_ENV'] == 'dev') {
-      url = env['WS_LOCAL_URL'];
+      url = env['WS_DEV_URL'];
     }
     if (env['APP_ENV'] == 'staging') {
       url = env['WS_STAGING_URL'];

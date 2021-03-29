@@ -1,13 +1,13 @@
-import 'package:crypto_template/views/wallet/deposit/crypto.dart';
-import 'package:crypto_template/views/wallet/deposit/fiat.dart';
-import 'package:crypto_template/views/wallet/history/deposit_history_list.dart';
-import 'package:crypto_template/views/wallet/history/withdraw_history_list.dart';
-import 'package:crypto_template/views/wallet/withdraw/crypto.dart';
-import 'package:crypto_template/views/wallet/withdraw/fiat.dart';
+import 'package:b4u_wallet/views/wallet/deposit/crypto.dart';
+import 'package:b4u_wallet/views/wallet/deposit/fiat.dart';
+import 'package:b4u_wallet/views/wallet/history/deposit_history_list.dart';
+import 'package:b4u_wallet/views/wallet/history/withdraw_history_list.dart';
+import 'package:b4u_wallet/views/wallet/withdraw/crypto.dart';
+import 'package:b4u_wallet/views/wallet/withdraw/fiat.dart';
 import 'package:flutter/material.dart';
-import 'package:crypto_template/models/wallet.dart' as WalletClass;
+import 'package:b4u_wallet/models/wallet.dart' as WalletClass;
 import 'package:get/get.dart';
-import 'package:crypto_template/views/wallet/wallet_amount_header.dart';
+import 'package:b4u_wallet/views/wallet/wallet_amount_header.dart';
 import 'package:flutter/services.dart';
 
 class WalletDetail extends StatelessWidget {

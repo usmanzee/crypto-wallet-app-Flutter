@@ -1,14 +1,14 @@
-import 'package:crypto_template/controllers/HomeController.dart';
-import 'package:crypto_template/controllers/SnackbarController.dart';
-import 'package:crypto_template/controllers/error_controller.dart';
-import 'package:crypto_template/controllers/web_socket_controller.dart';
-import 'package:crypto_template/models/formated_market.dart';
-import 'package:crypto_template/models/open_order.dart';
-import 'package:crypto_template/repository/open_orders_repository.dart';
+import 'package:b4u_wallet/controllers/HomeController.dart';
+import 'package:b4u_wallet/controllers/SnackbarController.dart';
+import 'package:b4u_wallet/controllers/error_controller.dart';
+import 'package:b4u_wallet/controllers/web_socket_controller.dart';
+import 'package:b4u_wallet/models/formated_market.dart';
+import 'package:b4u_wallet/models/open_order.dart';
+import 'package:b4u_wallet/repository/open_orders_repository.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:crypto_template/utils/Helpers/ws_helper.dart';
+import 'package:b4u_wallet/utils/Helpers/ws_helper.dart';
 
 class OpenOrdersController extends GetxController {
   HomeController homeController = Get.find();
@@ -35,22 +35,33 @@ class OpenOrdersController extends GetxController {
   @override
   void onReady() async {
     if (homeController.isLoggedIn.value) {
-      fetchOpenOrders();
+      await homeController.fetchMemberLevels();
+      if (!homeController.fetchingMemberLevel.value &&
+          !homeController.publicMemberLevel.value.isBlank) {
+        if (homeController.user.value.level >=
+            homeController.publicMemberLevel.value.trading.minimumLevel) {
+          fetchOpenOrders();
+          await webSocketController.subscribeOrder();
+          getOpenOrdersDataFromWS();
+        }
+      }
     }
     ever(homeController.isLoggedIn, fetchOrderOnLoggedIn);
-    if (homeController.isLoggedIn.value) {
-      print(webSocketController.channel.value);
-      await webSocketController.subscribeOrder();
-      getOpenOrdersDataFromWS();
-    }
     super.onReady();
   }
 
   fetchOrderOnLoggedIn(isUserLoggedIn) async {
     if (isUserLoggedIn) {
-      fetchOpenOrders();
-      await webSocketController.subscribeOrder();
-      getOpenOrdersDataFromWS();
+      await homeController.fetchMemberLevels();
+      if (!homeController.fetchingMemberLevel.value &&
+          !homeController.publicMemberLevel.value.isBlank) {
+        if (homeController.user.value.level >=
+            homeController.publicMemberLevel.value.trading.minimumLevel) {
+          fetchOpenOrders();
+          await webSocketController.subscribeOrder();
+          getOpenOrdersDataFromWS();
+        }
+      }
     } else {
       openOrdersList.clear();
       openOrdersSortedList.clear();

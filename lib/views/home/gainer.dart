@@ -1,9 +1,9 @@
-import 'package:crypto_template/controllers/market_controller.dart';
-import 'package:crypto_template/models/formated_market.dart';
+import 'package:b4u_wallet/controllers/market_controller.dart';
+import 'package:b4u_wallet/models/formated_market.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:crypto_template/views/home/markets_loading_animation.dart';
-import 'package:crypto_template/views/home/empty_markets.dart';
+import 'package:b4u_wallet/views/home/markets_loading_animation.dart';
+import 'package:b4u_wallet/views/home/empty_markets.dart';
 
 class Gainer extends StatelessWidget {
   final Widget child;
