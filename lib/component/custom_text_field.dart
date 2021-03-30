@@ -38,7 +38,8 @@ class CustomTextField extends StatelessWidget {
           child: TextFormField(
             onChanged: onChanged,
             // onSaved: onSaved,
-            style: new TextStyle(color: Theme.of(context).textSelectionColor),
+            style: new TextStyle(
+                color: Theme.of(context).textSelectionTheme.selectionColor),
             textAlign: textAlign,
             obscureText: obscure,
             validator: validator,

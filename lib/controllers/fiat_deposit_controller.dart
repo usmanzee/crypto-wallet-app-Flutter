@@ -10,7 +10,7 @@ class FiatDepositController extends GetxController {
 
   var isLoading = true.obs;
   var isDepositDetailLoading = true.obs;
-  var depositDetails = List<FiatDepositDetails>().obs;
+  var depositDetails = <FiatDepositDetails>[].obs;
   SnackbarController snackbarController;
   ErrorController errorController = new ErrorController();
 

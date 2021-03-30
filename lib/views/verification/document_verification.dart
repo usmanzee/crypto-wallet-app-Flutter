@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:async';
 import 'dart:io';
-import 'dart:convert';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:path/path.dart';
 
@@ -68,7 +67,7 @@ class DocumentVerification extends StatelessWidget {
                       ),
                       onTap: () async {
                         Get.back();
-                        File image = await _imgFromGallery();
+                        PickedFile image = await _imgFromGallery();
                         if (image != null) {
                           String fileName = basename(image.path);
                           if (isDocument) {
@@ -78,7 +77,7 @@ class DocumentVerification extends StatelessWidget {
                             verificationController.documentFilePath.value =
                                 image.path;
                             var fileBytes = await image.readAsBytes();
-                            final encoded = base64.encode(fileBytes);
+                            // final encoded = base64.encode(fileBytes);
                             verificationController.documentFileBytes
                                 .assignAll(fileBytes);
                             documentImageValidation();
@@ -90,7 +89,7 @@ class DocumentVerification extends StatelessWidget {
                             verificationController.additionalFilePath.value =
                                 image.path;
                             var fileBytes = await image.readAsBytes();
-                            final encoded = base64.encode(fileBytes);
+                            // final encoded = base64.encode(fileBytes);
                             verificationController.additionalFileBytes
                                 .assignAll(fileBytes);
                             additionalImageValidation();
@@ -107,7 +106,7 @@ class DocumentVerification extends StatelessWidget {
                     onTap: () async {
                       Get.back();
 
-                      File image = await _imgFromCamera();
+                      PickedFile image = await _imgFromCamera();
                       if (image != null) {
                         String fileName = basename(image.path);
                         if (isDocument) {
@@ -117,7 +116,7 @@ class DocumentVerification extends StatelessWidget {
                           verificationController.documentFilePath.value =
                               image.path;
                           var fileBytes = await image.readAsBytes();
-                          final encoded = base64.encode(fileBytes);
+                          // final encoded = base64.encode(fileBytes);
                           verificationController.documentFileBytes
                               .assignAll(fileBytes);
                           documentImageValidation();
@@ -129,7 +128,7 @@ class DocumentVerification extends StatelessWidget {
                           verificationController.additionalFilePath.value =
                               image.path;
                           var fileBytes = await image.readAsBytes();
-                          final encoded = base64.encode(fileBytes);
+                          // final encoded = base64.encode(fileBytes);
                           verificationController.additionalFileBytes
                               .assignAll(fileBytes);
                           additionalImageValidation();
@@ -144,17 +143,17 @@ class DocumentVerification extends StatelessWidget {
         });
   }
 
-  Future<File> _imgFromCamera() async {
-    File image = await ImagePicker.pickImage(
+  Future<PickedFile> _imgFromCamera() async {
+    PickedFile image = await ImagePicker().getImage(
         source: ImageSource.camera,
         imageQuality: 50,
         preferredCameraDevice: CameraDevice.front);
     return image;
   }
 
-  Future<File> _imgFromGallery() async {
-    File image = await ImagePicker.pickImage(
-        source: ImageSource.gallery, imageQuality: 50);
+  Future<PickedFile> _imgFromGallery() async {
+    PickedFile image = await ImagePicker()
+        .getImage(source: ImageSource.gallery, imageQuality: 50);
     return image;
   }
 
@@ -442,14 +441,14 @@ class DocumentVerification extends StatelessWidget {
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 InkWell(
                   onTap: () async {
-                    File image = await _imgFromCamera();
+                    PickedFile image = await _imgFromCamera();
                     if (image != null) {
                       String fileName = basename(image.path);
                       verificationController.selfie.value = image;
                       verificationController.selfieName.value = fileName;
                       verificationController.selfiePath.value = image.path;
                       var fileBytes = await image.readAsBytes();
-                      final encoded = base64.encode(fileBytes);
+                      // final encoded = base64.encode(fileBytes);
                       verificationController.selfieBytes.assignAll(fileBytes);
                       selfieValidation();
                     }

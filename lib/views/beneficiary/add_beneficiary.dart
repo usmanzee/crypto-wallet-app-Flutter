@@ -46,12 +46,13 @@ class _AddBeneficiaryState extends State<AddBeneficiary> {
         title: Text(
           'beneficiary.screen.title'.tr,
           style: TextStyle(
-              color: Theme.of(context).textSelectionColor,
+              color: Theme.of(context).textSelectionTheme.selectionColor,
               fontFamily: "Gotik",
               fontWeight: FontWeight.w600,
               fontSize: 18.5),
         ),
-        iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
+        iconTheme: IconThemeData(
+            color: Theme.of(context).textSelectionTheme.selectionColor),
         elevation: 1.0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),

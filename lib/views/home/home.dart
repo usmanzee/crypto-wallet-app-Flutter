@@ -97,7 +97,9 @@ class Home extends StatelessWidget {
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: homeController.currentPos.value == index
-                              ? Theme.of(context).textSelectionColor
+                              ? Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor
                               : Theme.of(context).hintColor),
                     );
                   },
@@ -113,7 +115,9 @@ class Home extends StatelessWidget {
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: homeController.currentPos.value == index
-                              ? Theme.of(context).textSelectionColor
+                              ? Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor
                               : Theme.of(context).hintColor),
                     );
                   },
@@ -131,7 +135,10 @@ class Home extends StatelessWidget {
         backgroundColor: Theme.of(context).canvasColor,
         // elevation: 1.0,
         iconTheme: IconThemeData(
-            color: Theme.of(context).textSelectionColor.withOpacity(0.6)),
+            color: Theme.of(context)
+                .textSelectionTheme
+                .selectionColor
+                .withOpacity(0.6)),
         title: Row(
           children: [
             IconButton(
@@ -288,8 +295,9 @@ class Home extends StatelessWidget {
                                     indicatorColor:
                                         Theme.of(context).primaryColor,
                                     labelColor: Theme.of(context).primaryColor,
-                                    unselectedLabelColor:
-                                        Theme.of(context).textSelectionColor,
+                                    unselectedLabelColor: Theme.of(context)
+                                        .textSelectionTheme
+                                        .selectionColor,
                                     indicatorSize: TabBarIndicatorSize.label,
                                     tabs: [
                                       new Tab(
@@ -406,7 +414,9 @@ class Card extends StatelessWidget {
                     Text(
                       formatedMarket.name.toUpperCase(),
                       style: TextStyle(
-                          color: Theme.of(context).textSelectionColor,
+                          color: Theme.of(context)
+                              .textSelectionTheme
+                              .selectionColor,
                           fontFamily: "Popins",
                           fontWeight: FontWeight.w500,
                           fontSize: 14.0),
@@ -505,14 +515,14 @@ class CardLoading extends StatelessWidget {
             color: Theme.of(context).canvasColor,
             boxShadow: [
               BoxShadow(
-                  color: Theme.of(context).hintColor.withOpacity(0.5),
+                  color: Theme.of(context).hintColor.withOpacity(0.1),
                   blurRadius: 1.0,
                   spreadRadius: 1.0,
                   offset: Offset(0.1, 1.0))
             ]),
         child: Shimmer.fromColors(
-          baseColor: Theme.of(context).hintColor.withOpacity(0.5),
-          highlightColor: Theme.of(context).hintColor.withOpacity(0.5),
+          baseColor: Theme.of(context).hintColor.withOpacity(0.1),
+          highlightColor: Theme.of(context).hintColor.withOpacity(0.1),
           child: Stack(
             children: <Widget>[
               Padding(
@@ -522,7 +532,7 @@ class CardLoading extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      color: Theme.of(context).hintColor.withOpacity(0.5),
+                      color: Theme.of(context).hintColor.withOpacity(0.2),
                       height: 20.0,
                       width: 70.0,
                     ),
@@ -537,7 +547,7 @@ class CardLoading extends StatelessWidget {
                             width: 70.0,
                           ),
                           Container(
-                            color: Theme.of(context).hintColor.withOpacity(0.5),
+                            color: Theme.of(context).hintColor.withOpacity(0.2),
                             height: 17.0,
                             width: 70.0,
                           ),
@@ -555,13 +565,13 @@ class CardLoading extends StatelessWidget {
                     data: data,
                     lineWidth: 0.3,
                     fillMode: FillMode.below,
-                    lineColor: Theme.of(context).hintColor.withOpacity(0.5),
+                    lineColor: Theme.of(context).hintColor.withOpacity(0.2),
                     fillGradient: new LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Theme.of(context).hintColor.withOpacity(0.5),
-                        Theme.of(context).hintColor.withOpacity(0.5)
+                        Theme.of(context).hintColor.withOpacity(0.2),
+                        Theme.of(context).hintColor.withOpacity(0.2)
                       ],
                     ),
                   ),
@@ -651,7 +661,8 @@ Widget _linksCard(context, Widget icon, VoidCallback onPressed, String name) {
               ),
               Text(name,
                   style: TextStyle(
-                      color: Theme.of(context).textSelectionColor,
+                      color:
+                          Theme.of(context).textSelectionTheme.selectionColor,
                       fontWeight: FontWeight.w600,
                       fontFamily: "Popins"))
             ],

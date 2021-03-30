@@ -16,7 +16,7 @@ class FiatWithdrawController extends GetxController {
   TextEditingController withdrawOtpController;
 
   var isBeneficiariesLoading = true.obs;
-  var beneficiariesList = List<Beneficiary>().obs;
+  var beneficiariesList = <Beneficiary>[].obs;
   var amount = '0.0'.obs;
   var totalWithdrawlAmount = 0.0.obs;
   var withdrawingFiat = false.obs;

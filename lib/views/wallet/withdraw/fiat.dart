@@ -32,10 +32,10 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
     LengthRangeValidator(
         min: 6, max: 6, errorText: 'fiat_withdraw.screen.field.2fa.error'.tr)
   ]);
-  final _beneficiaryValidator = MultiValidator([
-    RequiredValidator(
-        errorText: 'fiat_withdraw.screen.field.beneficiary.error'.tr),
-  ]);
+  // final _beneficiaryValidator = MultiValidator([
+  //   RequiredValidator(
+  //       errorText: 'fiat_withdraw.screen.field.beneficiary.error'.tr),
+  // ]);
 
   void isFormValid() {}
 
@@ -59,13 +59,14 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
         title: Text(
           'fiat_withdraw.screen.title'.tr,
           style: TextStyle(
-              color: Theme.of(context).textSelectionColor,
+              color: Theme.of(context).textSelectionTheme.selectionColor,
               fontFamily: "Gotik",
               fontWeight: FontWeight.w600,
               fontSize: 18.5),
         ),
         centerTitle: true,
-        iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
+        iconTheme: IconThemeData(
+            color: Theme.of(context).textSelectionTheme.selectionColor),
         elevation: 1.0,
         brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
         backgroundColor: Theme.of(context).canvasColor,
@@ -266,7 +267,9 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
                           fontWeight: FontWeight.bold,
                         ),
                         textStyle: TextStyle(
-                          color: Theme.of(context).textSelectionColor,
+                          color: Theme.of(context)
+                              .textSelectionTheme
+                              .selectionColor,
                           fontWeight: FontWeight.w600,
                         ),
                         length: 6,
@@ -281,8 +284,11 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
                             fieldHeight: 50,
                             fieldWidth: 40,
                             selectedColor: Theme.of(context).primaryColor,
-                            activeColor: Theme.of(context).textSelectionColor),
-                        cursorColor: Theme.of(context).textSelectionColor,
+                            activeColor: Theme.of(context)
+                                .textSelectionTheme
+                                .selectionColor),
+                        cursorColor:
+                            Theme.of(context).textSelectionTheme.selectionColor,
                         animationDuration: Duration(milliseconds: 300),
                         backgroundColor:
                             Theme.of(context).scaffoldBackgroundColor,
@@ -328,7 +334,9 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
                                       ' ' +
                                       wallet.currency.toUpperCase(),
                                   style: TextStyle(
-                                    color: Theme.of(context).textSelectionColor,
+                                    color: Theme.of(context)
+                                        .textSelectionTheme
+                                        .selectionColor,
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
                                     fontFamily: "Popins",
@@ -357,7 +365,9 @@ class _WithdrawFiatState extends State<WithdrawFiat> {
                                           .totalWithdrawlAmount.value)
                                       .toString(),
                                   style: TextStyle(
-                                    color: Theme.of(context).textSelectionColor,
+                                    color: Theme.of(context)
+                                        .textSelectionTheme
+                                        .selectionColor,
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
                                     fontFamily: "Popins",

@@ -11,19 +11,55 @@ import 'package:b4u_wallet/utils/Helpers/ws_helper.dart';
 import 'package:b4u_wallet/utils/Helpers/helper.dart';
 
 class MarketDetailController extends GetxController {
-  var lineGraphTimeSlots = [
-    {"key": "1m", "name": "1 minute", "valueInMinute": "1"},
-    {"key": "5m", "name": "5 minutes", "valueInMinute": "5"},
-    {"key": "15m", "name": "15 minutes", "valueInMinute": "15"},
-    {"key": "30m", "name": "30 minutes", "valueInMinute": "30"},
-    {"key": "1h", "name": "1 hour", "valueInMinute": "60"},
-    {"key": "2h", "name": "2 hours", "valueInMinute": "120"},
-    {"key": "6h", "name": "6 hours", "valueInMinute": "360"},
-    {"key": "12h", "name": "12 hour", "valueInMinute": "720"},
-    {"key": "3D", "name": "3 days", "valueInMinute": "4320"},
-    {"key": "1w", "name": "1 week", "valueInMinute": "10080"},
-    {"key": "1M", "name": "1 month", "valueInMinute": "43800"},
+  var initialLineGraphTimeSlots = [
+    {
+      "key": "15m",
+      "name": "15 minutes",
+      "valueInMinute": "15",
+      "isActive": false
+    },
+    {"key": "1h", "name": "1 hour", "valueInMinute": "60", "isActive": false},
+    {"key": "4h", "name": "4 hour", "valueInMinute": "240", "isActive": false},
+    {
+      "key": "12h",
+      "name": "12 hour",
+      "valueInMinute": "720",
+      "isActive": false
+    },
+    {"key": "1D", "name": "1 day", "valueInMinute": "1440", "isActive": false},
+    {
+      "key": "1w",
+      "name": "1 week",
+      "valueInMinute": "10080",
+      "isActive": false
+    },
+    {
+      "key": "More",
+      "name": "show_more",
+      "valueInMinute": "0",
+      "isActive": false
+    },
   ].obs;
+  var lineGraphTimeSlots = [
+    {"key": "1m", "name": "1 minute", "valueInMinute": "1", "isActive": false},
+    {"key": "5m", "name": "5 minutes", "valueInMinute": "5", "isActive": false},
+    {
+      "key": "30m",
+      "name": "30 minutes",
+      "valueInMinute": "30",
+      "isActive": false
+    },
+    {"key": "2h", "name": "2 hours", "valueInMinute": "120", "isActive": false},
+    {"key": "6h", "name": "6 hours", "valueInMinute": "360", "isActive": false},
+    {"key": "3D", "name": "3 days", "valueInMinute": "4320", "isActive": false},
+    {
+      "key": "1M",
+      "name": "1 month",
+      "valueInMinute": "43800",
+      "isActive": false
+    },
+  ].obs;
+  var dropdownShown = false.obs;
   var states = [
     // {"type": "line", "name": "Line", "isActive": false},
     // {"type": "space", "name": "|", "isActive": false},
@@ -67,9 +103,9 @@ class MarketDetailController extends GetxController {
     {"name": "RSI", "state": SecondaryState.RSI},
     {"name": "KDJ", "state": SecondaryState.KDJ},
   ].obs;
-  var selectedOption = Map<String, String>().obs;
+  var selectedOption = Map<String, dynamic>().obs;
   Rx<FormatedMarket> market = FormatedMarket().obs;
-  var formatedKLineData = List<KLineEntity>().obs;
+  var formatedKLineData = <KLineEntity>[].obs;
   var isKLineLoading = true.obs;
   var _mainState = MainState.NONE.obs;
   var _secondaryState = SecondaryState.NONE.obs;
@@ -78,8 +114,8 @@ class MarketDetailController extends GetxController {
   var _isLine = false.obs;
   var isChinese = false;
 
-  var bidsData = List<DepthEntity>().obs;
-  var asksData = List<DepthEntity>().obs;
+  var bidsData = <DepthEntity>[].obs;
+  var asksData = <DepthEntity>[].obs;
 
   MarketController marketController = Get.find();
   WebSocketController webSocketController = Get.find();
@@ -145,7 +181,7 @@ class MarketDetailController extends GetxController {
   }
 
   Future<void> setDefaultValues() async {
-    selectedOption.assignAll(lineGraphTimeSlots[3]);
+    selectedOption.assignAll(initialLineGraphTimeSlots[0]);
   }
 
   Future<Null> refreshPage() async {

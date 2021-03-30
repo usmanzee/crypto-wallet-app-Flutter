@@ -14,31 +14,38 @@ class TransactionHistoryController extends GetxController {
   var fetchingDepositHistory = false.obs;
   var fetchingWithdrawHistory = false.obs;
   var isAddressLoading = true.obs;
-  var depositHistory = List<DepositHistoryResponse>().obs;
-  var withdrawHistory = List<WithdrawHistoryResponse>().obs;
+  var depositHistory = <DepositHistoryResponse>[].obs;
+  var withdrawHistory = <WithdrawHistoryResponse>[].obs;
   SnackbarController snackbarController;
   ErrorController errorController = new ErrorController();
   HomeController homeController = Get.find();
 
   @override
   void onInit() async {
+    fetchingDepositHistory(true);
+    fetchingWithdrawHistory(true);
+    await Future.delayed(Duration(seconds: 2));
     await homeController.fetchMemberLevels();
     if (!homeController.fetchingMemberLevel.value &&
         !homeController.publicMemberLevel.value.isBlank) {
       if (homeController.user.value.level >=
           homeController.publicMemberLevel.value.deposit.minimumLevel) {
         fetchDepositHistory(currency);
+      } else {
+        fetchingDepositHistory(false);
       }
       if (homeController.user.value.level >=
           homeController.publicMemberLevel.value.withdraw.minimumLevel) {
         fetchWithdrawHistory(currency);
+      } else {
+        fetchingWithdrawHistory(false);
       }
     }
     super.onInit();
   }
 
   @override
-  void onReady() {
+  void onReady() async {
     super.onReady();
   }
 

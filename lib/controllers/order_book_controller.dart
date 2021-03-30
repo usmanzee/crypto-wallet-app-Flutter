@@ -9,10 +9,10 @@ import 'package:b4u_wallet/utils/Helpers/ws_helper.dart';
 class OrderBookController extends GetxController {
   final market;
   OrderBookController({this.market});
-  var bids = List<dynamic>().obs;
-  var asks = List<dynamic>().obs;
-  var bidsData = List<DepthEntity>().obs;
-  var asksData = List<DepthEntity>().obs;
+  var bids = <dynamic>[].obs;
+  var asks = <dynamic>[].obs;
+  var bidsData = <DepthEntity>[].obs;
+  var asksData = <DepthEntity>[].obs;
 
   MarketController marketController = Get.find();
   WebSocketController webSocketController = Get.find();

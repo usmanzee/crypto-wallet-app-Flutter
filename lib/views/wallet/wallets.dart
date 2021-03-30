@@ -1,7 +1,6 @@
 import 'package:b4u_wallet/controllers/market_controller.dart';
 import 'package:b4u_wallet/controllers/wallet_controller.dart';
 import 'package:b4u_wallet/views/wallet/estimated_widget.dart';
-import 'package:b4u_wallet/views/wallet/wallet_detail.dart';
 import 'package:b4u_wallet/views/wallet/wallet_loading_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:b4u_wallet/models/wallet.dart' as WalletClass;
@@ -18,12 +17,13 @@ class Wallets extends StatelessWidget {
         title: Text(
           'wallets.screen.title'.tr,
           style: TextStyle(
-              color: Theme.of(context).textSelectionColor,
+              color: Theme.of(context).textSelectionTheme.selectionColor,
               fontFamily: "Gotik",
               fontWeight: FontWeight.w600,
               fontSize: 18.5),
         ),
-        iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
+        iconTheme: IconThemeData(
+            color: Theme.of(context).textSelectionTheme.selectionColor),
         elevation: 1.0,
         brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
         backgroundColor: Theme.of(context).canvasColor,

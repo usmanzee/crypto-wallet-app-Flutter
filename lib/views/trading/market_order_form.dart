@@ -32,7 +32,9 @@ class MarketOrderForm extends StatelessWidget {
                                     formatedMarket.amountPrecision)
                             : '--',
                         style: TextStyle(
-                            color: Theme.of(context).textSelectionColor,
+                            color: Theme.of(context)
+                                .textSelectionTheme
+                                .selectionColor,
                             fontWeight: FontWeight.w500,
                             fontFamily: "Popins",
                             letterSpacing: 1.3,
@@ -58,7 +60,9 @@ class MarketOrderForm extends StatelessWidget {
                               .marketOrderBuyAmountTextController,
                           onChanged:
                               tradingController.onMarketOrderBuyAmountChange,
-                          cursorColor: Theme.of(context).textSelectionColor,
+                          cursorColor: Theme.of(context)
+                              .textSelectionTheme
+                              .selectionColor,
                           keyboardType: TextInputType.number,
                           textInputAction: TextInputAction.next,
                           onEditingComplete: () => tradingController
@@ -115,7 +119,9 @@ class MarketOrderForm extends StatelessWidget {
                                 style: TextStyle(
                                     color: option.isActive
                                         ? Colors.white
-                                        : Theme.of(context).textSelectionColor,
+                                        : Theme.of(context)
+                                            .textSelectionTheme
+                                            .selectionColor,
                                     fontSize: 10,
                                     fontWeight: FontWeight.w500),
                               ),
@@ -138,7 +144,9 @@ class MarketOrderForm extends StatelessWidget {
                               .marketOrderBuyTotalTextController,
                           onChanged:
                               tradingController.onMarketOrderBuyTotalChange,
-                          cursorColor: Theme.of(context).textSelectionColor,
+                          cursorColor: Theme.of(context)
+                              .textSelectionTheme
+                              .selectionColor,
                           keyboardType: TextInputType.number,
                           textInputAction: TextInputAction.done,
                           textAlign: TextAlign.center,
@@ -188,7 +196,9 @@ class MarketOrderForm extends StatelessWidget {
                                   ? tradingController.walletQuote.value.balance
                                   : '--',
                               style: TextStyle(
-                                color: Theme.of(context).textSelectionColor,
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor,
                                 fontSize: 10,
                                 fontWeight: FontWeight.w600,
                                 fontFamily: "Popins",
@@ -199,7 +209,9 @@ class MarketOrderForm extends StatelessWidget {
                                   ? ' ' + formatedMarket.quoteUnit.toUpperCase()
                                   : ' --',
                               style: TextStyle(
-                                color: Theme.of(context).textSelectionColor,
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor,
                                 fontSize: 10,
                                 fontWeight: FontWeight.w600,
                                 fontFamily: "Popins",
@@ -239,7 +251,9 @@ class MarketOrderForm extends StatelessWidget {
                                     '%'
                                 : '--%',
                             style: TextStyle(
-                              color: Theme.of(context).textSelectionColor,
+                              color: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor,
                               fontSize: 10,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Popins",
@@ -320,7 +334,9 @@ class MarketOrderForm extends StatelessWidget {
                                     formatedMarket.amountPrecision)
                             : '--',
                         style: TextStyle(
-                            color: Theme.of(context).textSelectionColor,
+                            color: Theme.of(context)
+                                .textSelectionTheme
+                                .selectionColor,
                             fontWeight: FontWeight.w500,
                             fontFamily: "Popins",
                             letterSpacing: 1.3,
@@ -346,7 +362,9 @@ class MarketOrderForm extends StatelessWidget {
                               .marketOrderSellAmountTextController,
                           onChanged:
                               tradingController.onMarketOrderSellAmountChange,
-                          cursorColor: Theme.of(context).textSelectionColor,
+                          cursorColor: Theme.of(context)
+                              .textSelectionTheme
+                              .selectionColor,
                           keyboardType: TextInputType.number,
                           textInputAction: TextInputAction.next,
                           onEditingComplete: () => tradingController
@@ -403,7 +421,9 @@ class MarketOrderForm extends StatelessWidget {
                               style: TextStyle(
                                   color: option.isActive
                                       ? Colors.white
-                                      : Theme.of(context).textSelectionColor,
+                                      : Theme.of(context)
+                                          .textSelectionTheme
+                                          .selectionColor,
                                   fontSize: 10,
                                   fontWeight: FontWeight.w500),
                             ),
@@ -427,7 +447,9 @@ class MarketOrderForm extends StatelessWidget {
                               .marketOrderSellTotalTextController,
                           onChanged:
                               tradingController.onMarketOrderSellTotalChange,
-                          cursorColor: Theme.of(context).textSelectionColor,
+                          cursorColor: Theme.of(context)
+                              .textSelectionTheme
+                              .selectionColor,
                           keyboardType: TextInputType.number,
                           textInputAction: TextInputAction.done,
                           textAlign: TextAlign.center,
@@ -476,7 +498,9 @@ class MarketOrderForm extends StatelessWidget {
                                 ? tradingController.walletBase.value.balance
                                 : '--',
                             style: TextStyle(
-                              color: Theme.of(context).textSelectionColor,
+                              color: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor,
                               fontSize: 10,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Popins",
@@ -487,7 +511,9 @@ class MarketOrderForm extends StatelessWidget {
                                 ? ' ' + formatedMarket.baseUnit.toUpperCase()
                                 : ' --',
                             style: TextStyle(
-                              color: Theme.of(context).textSelectionColor,
+                              color: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor,
                               fontSize: 10,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Popins",
@@ -526,7 +552,9 @@ class MarketOrderForm extends StatelessWidget {
                                     '%'
                                 : '--%',
                             style: TextStyle(
-                              color: Theme.of(context).textSelectionColor,
+                              color: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor,
                               fontSize: 10,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Popins",

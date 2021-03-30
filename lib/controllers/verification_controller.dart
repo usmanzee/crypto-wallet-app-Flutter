@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:b4u_wallet/controllers/HomeController.dart';
 import 'package:b4u_wallet/controllers/SnackbarController.dart';
 import 'package:b4u_wallet/controllers/error_controller.dart';
@@ -7,10 +6,10 @@ import 'package:b4u_wallet/models/verification_label.dart';
 import 'package:b4u_wallet/repository/user_repository.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:b4u_wallet/utils/Helpers/environment.dart';
 import 'package:http/http.dart' as http;
-import 'package:b4u_wallet/network/request_headers.dart';
 
 class VerificationController extends GetxController {
   var nationalities = [
@@ -443,7 +442,7 @@ class VerificationController extends GetxController {
   var isLoadingLables = false.obs;
   var _codeSent = false.obs;
   var _codeCountDownCompleted = false.obs;
-  var labelsList = List<VerificationLabel>().obs;
+  var labelsList = <VerificationLabel>[].obs;
   var _codeCountDown = 10.obs;
   var phoneNumberText = ''.obs;
   var selectedNationality = ''.obs;
@@ -453,24 +452,24 @@ class VerificationController extends GetxController {
   var selectedDocumentType = Map<String, Object>().obs;
   var currentDate = DateTime.now().obs;
 
-  Rx<File> documentFile = File('').obs;
+  Rx<PickedFile> documentFile = PickedFile('').obs;
   var documentFileName = ''.obs;
   var documentFilePath = ''.obs;
-  var documentFileBytes = List<int>().obs;
+  var documentFileBytes = <int>[].obs;
   var documentFileError = false.obs;
   var documentFileErrorMessage = ''.obs;
 
-  Rx<File> additionalFile = File('').obs;
+  Rx<PickedFile> additionalFile = PickedFile('').obs;
   var additionalFileName = ''.obs;
   var additionalFilePath = ''.obs;
-  var additionalFileBytes = List<int>().obs;
+  var additionalFileBytes = <int>[].obs;
   var additionalFileError = false.obs;
   var additionalFileErrorMessage = ''.obs;
 
-  Rx<File> selfie = File('').obs;
+  Rx<PickedFile> selfie = PickedFile('').obs;
   var selfieName = ''.obs;
   var selfiePath = ''.obs;
-  var selfieBytes = List<int>().obs;
+  var selfieBytes = <int>[].obs;
   var selfieError = false.obs;
   var selfieErrorMessage = ''.obs;
 
@@ -685,21 +684,6 @@ class VerificationController extends GetxController {
       if (selectedDocumentType['type'] != 'utility_bill') {
         files.add(additionalFilePath.value);
       }
-      var fieldsObj = [
-        {
-          'name': 'doc_type',
-          'data': selectedDocumentType['name'],
-        },
-        {
-          'name': 'doc_number',
-          'data': documentNumberTextController.text,
-        },
-        {
-          'name': 'doc_expire',
-          'data': documentExpiryTextController.text,
-        },
-      ];
-      var filesObj = {'upload': files.toString()};
 
       final String _baseUrl = Environment.getApiBaseUrl();
       final String _appVersion = Environment.getApiAppVersion();
@@ -710,7 +694,7 @@ class VerificationController extends GetxController {
       request.fields['doc_type'] = selectedDocumentType['name'];
       request.fields['doc_number'] = documentNumberTextController.text;
       request.fields['doc_expire'] = documentExpiryTextController.text;
-      List<http.MultipartFile> newList = new List<http.MultipartFile>();
+      List<http.MultipartFile> newList = <http.MultipartFile>[];
       for (int i = 0; i < files.length; i++) {
         http.MultipartFile multipartFile =
             await http.MultipartFile.fromPath('upload[]', files[i]);
@@ -718,13 +702,6 @@ class VerificationController extends GetxController {
       }
 
       request.files.addAll(newList);
-
-      // var response = await request.send();
-
-      // print(response.stream);
-      // print(response.statusCode);
-      // final res = await http.Response.fromStream(response);
-      // print(res.body);
 
       await _userRepository.verifyDocuments(request);
       Get.back();

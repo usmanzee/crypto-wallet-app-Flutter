@@ -13,17 +13,17 @@ import 'package:web_socket_channel/io.dart';
 class MarketController extends GetxController {
   var isLoading = true.obs;
   var isSparkLinesLoading = false.obs;
-  var marketList = List<Market>().obs;
+  var marketList = <Market>[].obs;
   var marketTickerList = Map<String, MarketTicker>().obs;
-  var formatedMarketsList = List<FormatedMarket>().obs;
-  var positiveMarketsList = List<FormatedMarket>().obs;
-  var negativeMarketsList = List<FormatedMarket>().obs;
+  var formatedMarketsList = <FormatedMarket>[].obs;
+  var positiveMarketsList = <FormatedMarket>[].obs;
+  var negativeMarketsList = <FormatedMarket>[].obs;
   var orderBookSequence = -1.obs;
-  var bids = List<dynamic>().obs;
-  var asks = List<dynamic>().obs;
+  var bids = <dynamic>[].obs;
+  var asks = <dynamic>[].obs;
   var maxVolume = 0.0.obs;
-  var orderBookEntryBids = List<dynamic>().obs;
-  var orderBookEntryAsks = List<dynamic>().obs;
+  var orderBookEntryBids = <dynamic>[].obs;
+  var orderBookEntryAsks = <dynamic>[].obs;
   Rx<IOWebSocketChannel> channel;
   Rx<FormatedMarket> selectedMarket = FormatedMarket().obs;
   Rx<FormatedMarket> selectedMarketTrading = FormatedMarket().obs;
@@ -85,9 +85,9 @@ class MarketController extends GetxController {
 
   void formateMarkets(
       List<Market> markets, Map<String, dynamic> tickers) async {
-    var marketsFormatedData = new List<FormatedMarket>();
-    var positivemarketsFormatedData = new List<FormatedMarket>();
-    var negativemarketsFormatedData = new List<FormatedMarket>();
+    var marketsFormatedData = <FormatedMarket>[];
+    var positivemarketsFormatedData = <FormatedMarket>[];
+    var negativemarketsFormatedData = <FormatedMarket>[];
     for (Market market in markets) {
       if (tickers[market.id] != null) {
         var priceInUsd = '---';

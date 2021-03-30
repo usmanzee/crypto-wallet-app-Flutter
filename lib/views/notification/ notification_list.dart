@@ -15,12 +15,13 @@ class NotificationList extends GetView<NotificationController> {
         title: Text(
           'notifications.screen.title'.tr,
           style: TextStyle(
-              color: Theme.of(context).textSelectionColor,
+              color: Theme.of(context).textSelectionTheme.selectionColor,
               fontFamily: "Gotik",
               fontWeight: FontWeight.w600,
               fontSize: 18.5),
         ),
-        iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
+        iconTheme: IconThemeData(
+            color: Theme.of(context).textSelectionTheme.selectionColor),
         elevation: 0.8,
       ),
       body: Obx(() {
@@ -49,7 +50,7 @@ class NotificationList extends GetView<NotificationController> {
               style: TextStyle(
                   fontFamily: 'Popins',
                   fontSize: 16.5,
-                  color: Theme.of(context).textSelectionColor,
+                  color: Theme.of(context).textSelectionTheme.selectionColor,
                   fontWeight: FontWeight.w500),
             ),
             Text(
@@ -69,13 +70,13 @@ class NotificationList extends GetView<NotificationController> {
                   style: TextStyle(
                     fontFamily: 'Popins',
                     fontSize: 14.5,
-                    color: Theme.of(context).textSelectionColor,
+                    color: Theme.of(context).textSelectionTheme.selectionColor,
                     // fontWeight: FontWeight.w500
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 8.0),
-                  child: RaisedButton(
+                  child: MaterialButton(
                     child: new Text(
                       'notifications.screen.detail.seen.button.text'.tr,
                       style: TextStyle(color: Colors.white),
@@ -98,35 +99,32 @@ class NotificationList extends GetView<NotificationController> {
   }
 
   Widget noItemNotifications(BuildContext context) {
-    MediaQueryData mediaQueryData = MediaQuery.of(context);
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Center(
-          child: Text(
-            "notifications.screen.empty.content1".tr,
-            style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 18.5,
-                color: Theme.of(context).textSelectionColor,
-                fontFamily: "Popins"),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
-          child: Center(
-            child: Text(
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "notifications.screen.empty.content1".tr,
+              style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18.5,
+                  color: Theme.of(context).textSelectionTheme.selectionColor,
+                  fontFamily: "Popins"),
+            ),
+            Text(
               "notifications.screen.empty.content2".tr,
               style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 14.5,
-                  color: Theme.of(context).textSelectionColor,
+                  color: Theme.of(context).textSelectionTheme.selectionColor,
                   fontFamily: "Popins"),
             ),
-          ),
+          ],
         ),
-      ],
+      ),
     );
   }
 
@@ -154,7 +152,9 @@ class NotificationList extends GetView<NotificationController> {
                               style: TextStyle(
                                   fontFamily: 'Popins',
                                   fontSize: 16.5,
-                                  color: Theme.of(context).textSelectionColor,
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor,
                                   fontWeight: FontWeight.w500),
                             ),
                             subtitle: Column(children: [
@@ -168,7 +168,8 @@ class NotificationList extends GetView<NotificationController> {
                                         fontFamily: 'Popins',
                                         fontSize: 14.0,
                                         color: Theme.of(context)
-                                            .textSelectionColor
+                                            .textSelectionTheme
+                                            .selectionColor
                                             .withOpacity(0.7)),
                                     overflow: TextOverflow.ellipsis,
                                   ),

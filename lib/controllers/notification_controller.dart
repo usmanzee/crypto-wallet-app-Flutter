@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 class NotificationController extends GetxController {
   var isLoading = true.obs;
   var showReload = false.obs;
-  var notificationList = List<NotificationResponse>().obs;
+  var notificationList = <NotificationResponse>[].obs;
   ErrorController errorController = new ErrorController();
 
   @override

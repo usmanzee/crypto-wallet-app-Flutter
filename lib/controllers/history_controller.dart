@@ -13,29 +13,39 @@ class HistoryController extends GetxController {
   var isDepositHistoryLoading = false.obs;
   var isWithdrawHistoryLoading = false.obs;
   var isTradeHistoryLoading = false.obs;
-  var depositHistory = List<DepositHistoryResponse>().obs;
-  var withdrawHistory = List<WithdrawHistoryResponse>().obs;
-  var tradeHistory = List<TradeHistoryResponse>().obs;
+  var depositHistory = <DepositHistoryResponse>[].obs;
+  var withdrawHistory = <WithdrawHistoryResponse>[].obs;
+  var tradeHistory = <TradeHistoryResponse>[].obs;
   SnackbarController snackbarController;
   ErrorController errorController = new ErrorController();
   HomeController homeController = Get.find<HomeController>();
 
   @override
   void onInit() async {
+    isDepositHistoryLoading(true);
+    isWithdrawHistoryLoading(true);
+    isTradeHistoryLoading(true);
+    await Future.delayed(Duration(seconds: 2));
     await homeController.fetchMemberLevels();
     if (!homeController.fetchingMemberLevel.value &&
         !homeController.publicMemberLevel.value.isBlank) {
       if (homeController.user.value.level >=
           homeController.publicMemberLevel.value.deposit.minimumLevel) {
         fetchDepositHistory();
+      } else {
+        isDepositHistoryLoading(false);
       }
       if (homeController.user.value.level >=
           homeController.publicMemberLevel.value.withdraw.minimumLevel) {
         fetchWithdrawHistory();
+      } else {
+        isWithdrawHistoryLoading(false);
       }
       if (homeController.user.value.level >=
           homeController.publicMemberLevel.value.trading.minimumLevel) {
         fetchTradeHistory();
+      } else {
+        isTradeHistoryLoading(false);
       }
     }
     // ever(homeController.fetchingMemberLevel, fetchHistory);

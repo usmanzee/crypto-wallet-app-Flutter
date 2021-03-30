@@ -72,7 +72,8 @@ class ForgetPassword extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'Popins',
                       fontSize: 32.0,
-                      color: Theme.of(context).textSelectionColor,
+                      color:
+                          Theme.of(context).textSelectionTheme.selectionColor,
                       fontWeight: FontWeight.w600,
                     ),
                   )),
@@ -84,7 +85,7 @@ class ForgetPassword extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'Popins',
                     fontSize: 16.0,
-                    color: Theme.of(context).textSelectionColor,
+                    color: Theme.of(context).textSelectionTheme.selectionColor,
                     fontWeight: FontWeight.w600,
                   ),
                 ),

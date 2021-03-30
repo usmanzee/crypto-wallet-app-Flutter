@@ -37,7 +37,9 @@ class LimitOrderForm extends StatelessWidget {
                               .limitOrderBuyPriceTextController,
                           onChanged:
                               tradingController.onLimitOrderBuyPriceChange,
-                          cursorColor: Theme.of(context).textSelectionColor,
+                          cursorColor: Theme.of(context)
+                              .textSelectionTheme
+                              .selectionColor,
                           keyboardType: TextInputType.number,
                           textInputAction: TextInputAction.next,
                           onEditingComplete: () => tradingController
@@ -86,7 +88,9 @@ class LimitOrderForm extends StatelessWidget {
                               .limitOrderBuyAmountTextController,
                           onChanged:
                               tradingController.onLimitOrderBuyAmountChange,
-                          cursorColor: Theme.of(context).textSelectionColor,
+                          cursorColor: Theme.of(context)
+                              .textSelectionTheme
+                              .selectionColor,
                           keyboardType: TextInputType.number,
                           textInputAction: TextInputAction.next,
                           onEditingComplete: () => tradingController
@@ -143,7 +147,9 @@ class LimitOrderForm extends StatelessWidget {
                                 style: TextStyle(
                                     color: option.isActive
                                         ? Colors.white
-                                        : Theme.of(context).textSelectionColor,
+                                        : Theme.of(context)
+                                            .textSelectionTheme
+                                            .selectionColor,
                                     fontSize: 10,
                                     fontWeight: FontWeight.w500),
                               ),
@@ -166,7 +172,9 @@ class LimitOrderForm extends StatelessWidget {
                               .limitOrderBuyTotalTextController,
                           onChanged:
                               tradingController.onLimitOrderBuyTotalChange,
-                          cursorColor: Theme.of(context).textSelectionColor,
+                          cursorColor: Theme.of(context)
+                              .textSelectionTheme
+                              .selectionColor,
                           keyboardType: TextInputType.number,
                           textInputAction: TextInputAction.done,
                           textAlign: TextAlign.center,
@@ -216,7 +224,9 @@ class LimitOrderForm extends StatelessWidget {
                                   ? tradingController.walletQuote.value.balance
                                   : '--',
                               style: TextStyle(
-                                color: Theme.of(context).textSelectionColor,
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor,
                                 fontSize: 10,
                                 fontWeight: FontWeight.w600,
                                 fontFamily: "Popins",
@@ -227,7 +237,9 @@ class LimitOrderForm extends StatelessWidget {
                                   ? ' ' + formatedMarket.quoteUnit.toUpperCase()
                                   : ' --',
                               style: TextStyle(
-                                color: Theme.of(context).textSelectionColor,
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor,
                                 fontSize: 10,
                                 fontWeight: FontWeight.w600,
                                 fontFamily: "Popins",
@@ -267,7 +279,9 @@ class LimitOrderForm extends StatelessWidget {
                                     '%'
                                 : '--%',
                             style: TextStyle(
-                              color: Theme.of(context).textSelectionColor,
+                              color: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor,
                               fontSize: 10,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Popins",
@@ -356,7 +370,9 @@ class LimitOrderForm extends StatelessWidget {
                               .limitOrderSellPriceTextController,
                           onChanged:
                               tradingController.onLimitOrderSellPriceChange,
-                          cursorColor: Theme.of(context).textSelectionColor,
+                          cursorColor: Theme.of(context)
+                              .textSelectionTheme
+                              .selectionColor,
                           keyboardType: TextInputType.number,
                           textInputAction: TextInputAction.next,
                           onEditingComplete: () => tradingController
@@ -405,7 +421,9 @@ class LimitOrderForm extends StatelessWidget {
                               .limitOrderSellAmountTextController,
                           onChanged:
                               tradingController.onLimitOrderSellAmountChange,
-                          cursorColor: Theme.of(context).textSelectionColor,
+                          cursorColor: Theme.of(context)
+                              .textSelectionTheme
+                              .selectionColor,
                           keyboardType: TextInputType.number,
                           textInputAction: TextInputAction.next,
                           onEditingComplete: () => tradingController
@@ -462,7 +480,9 @@ class LimitOrderForm extends StatelessWidget {
                                 style: TextStyle(
                                     color: option.isActive
                                         ? Colors.white
-                                        : Theme.of(context).textSelectionColor,
+                                        : Theme.of(context)
+                                            .textSelectionTheme
+                                            .selectionColor,
                                     fontSize: 10,
                                     fontWeight: FontWeight.w500),
                               ),
@@ -485,7 +505,9 @@ class LimitOrderForm extends StatelessWidget {
                               .limitOrderSellTotalTextController,
                           onChanged:
                               tradingController.onLimitOrderSellTotalChange,
-                          cursorColor: Theme.of(context).textSelectionColor,
+                          cursorColor: Theme.of(context)
+                              .textSelectionTheme
+                              .selectionColor,
                           keyboardType: TextInputType.number,
                           textInputAction: TextInputAction.done,
                           textAlign: TextAlign.center,
@@ -534,7 +556,9 @@ class LimitOrderForm extends StatelessWidget {
                                 ? tradingController.walletBase.value.balance
                                 : '--',
                             style: TextStyle(
-                              color: Theme.of(context).textSelectionColor,
+                              color: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor,
                               fontSize: 10,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Popins",
@@ -545,7 +569,9 @@ class LimitOrderForm extends StatelessWidget {
                                 ? ' ' + formatedMarket.baseUnit.toUpperCase()
                                 : ' --',
                             style: TextStyle(
-                              color: Theme.of(context).textSelectionColor,
+                              color: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor,
                               fontSize: 10,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Popins",
@@ -584,7 +610,9 @@ class LimitOrderForm extends StatelessWidget {
                                     '%'
                                 : '--%',
                             style: TextStyle(
-                              color: Theme.of(context).textSelectionColor,
+                              color: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor,
                               fontSize: 10,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Popins",

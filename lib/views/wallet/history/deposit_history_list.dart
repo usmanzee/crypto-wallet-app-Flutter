@@ -1,5 +1,6 @@
 import 'package:b4u_wallet/component/history_detail.dart';
 import 'package:b4u_wallet/component/no_data.dart';
+import 'package:b4u_wallet/controllers/HomeController.dart';
 import 'package:b4u_wallet/controllers/transaction_history_controller.dart';
 import 'package:b4u_wallet/controllers/wallet_controller.dart';
 import 'package:b4u_wallet/models/deposit_histroy_response.dart';
@@ -17,6 +18,7 @@ class DepositHistoryList extends StatelessWidget {
             currency: wallet.currency != null ? wallet.currency : ''));
 
   final WalletController walletController = Get.find<WalletController>();
+  final HomeController homeController = Get.find<HomeController>();
   void handleURLButtonPress(String currency, String txid) {
     String blockchainLink = getBlockchainLink(currency, txid);
     Get.to(WebViewContainer('Explorer', blockchainLink));
@@ -41,14 +43,15 @@ class DepositHistoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (transactionHistoryController.fetchingDepositHistory.value)
+      if (transactionHistoryController.fetchingDepositHistory.value ||
+          homeController.fetchingMemberLevel.value)
         return Container(
             width: double.infinity,
             height: 200,
             alignment: Alignment.center,
             child: CircularProgressIndicator());
       else
-        return transactionHistoryController.depositHistory.isEmpty
+        return transactionHistoryController.depositHistory.length <= 0
             ? NoData()
             : Container(
                 child: ListView.builder(

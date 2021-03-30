@@ -3,7 +3,6 @@ import 'package:b4u_wallet/controllers/wallet_controller.dart';
 import 'package:b4u_wallet/views/history/deposit_history.dart';
 import 'package:b4u_wallet/views/history/trade_history.dart';
 import 'package:b4u_wallet/views/history/withdraw_history.dart';
-import 'package:b4u_wallet/views/webview_container.dart';
 import 'package:flutter/material.dart';
 import 'package:b4u_wallet/models/wallet.dart' as WalletClass;
 import 'package:get/get.dart';
@@ -18,11 +17,6 @@ class _HistoryState extends State<History> with TickerProviderStateMixin {
   final WalletController walletController = Get.find<WalletController>();
   final HistoryController historyController = Get.put(HistoryController());
   TabController myTabController;
-
-  void _handleURLButtonPress(String currency, String txid) {
-    String blockchainLink = getBlockchainLink(currency, txid);
-    Get.to(WebViewContainer('Explorer', blockchainLink));
-  }
 
   String getBlockchainLink(currency, txid) {
     var wallets = walletController.walletsList;
@@ -59,12 +53,13 @@ class _HistoryState extends State<History> with TickerProviderStateMixin {
         title: Text(
           'history.screen.title'.tr,
           style: TextStyle(
-              color: Theme.of(context).textSelectionColor,
+              color: Theme.of(context).textSelectionTheme.selectionColor,
               fontFamily: "Gotik",
               fontWeight: FontWeight.w600,
               fontSize: 18.5),
         ),
-        iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
+        iconTheme: IconThemeData(
+            color: Theme.of(context).textSelectionTheme.selectionColor),
         elevation: 1.0,
         brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
         backgroundColor: Theme.of(context).canvasColor,
@@ -112,8 +107,9 @@ class _HistoryState extends State<History> with TickerProviderStateMixin {
                                           EdgeInsets.only(left: 0, right: 16),
                                       labelColor:
                                           Theme.of(context).primaryColor,
-                                      unselectedLabelColor:
-                                          Theme.of(context).textSelectionColor,
+                                      unselectedLabelColor: Theme.of(context)
+                                          .textSelectionTheme
+                                          .selectionColor,
                                       indicatorSize: TabBarIndicatorSize.label,
                                       tabs: [
                                         new Tab(

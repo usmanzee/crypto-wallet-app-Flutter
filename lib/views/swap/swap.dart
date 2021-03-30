@@ -68,12 +68,13 @@ class Swap extends StatelessWidget {
           title: Text(
             'swap.screen.title'.tr,
             style: TextStyle(
-                color: Theme.of(context).textSelectionColor,
+                color: Theme.of(context).textSelectionTheme.selectionColor,
                 fontFamily: "Gotik",
                 fontWeight: FontWeight.w600,
                 fontSize: 18.5),
           ),
-          iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
+          iconTheme: IconThemeData(
+              color: Theme.of(context).textSelectionTheme.selectionColor),
           elevation: 0.8,
           actions: <Widget>[
             Padding(
@@ -237,7 +238,9 @@ class Swap extends StatelessWidget {
                           swapController.fromSelectedWallet.value.balance,
                           style: TextStyle(
                               fontFamily: "Popins",
-                              color: Theme.of(context).textSelectionColor,
+                              color: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor,
                               fontSize: 12,
                               fontWeight: FontWeight.bold),
                         ),
@@ -248,7 +251,9 @@ class Swap extends StatelessWidget {
                                 .toUpperCase(),
                             style: TextStyle(
                                 fontFamily: "Popins",
-                                color: Theme.of(context).textSelectionColor,
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor,
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -295,8 +300,9 @@ class Swap extends StatelessWidget {
                                       .toUpperCase(),
                                   style: TextStyle(
                                       fontFamily: "Popins",
-                                      color:
-                                          Theme.of(context).textSelectionColor,
+                                      color: Theme.of(context)
+                                          .textSelectionTheme
+                                          .selectionColor,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -307,7 +313,9 @@ class Swap extends StatelessWidget {
                         Container(
                             height: 16,
                             child: VerticalDivider(
-                                color: Theme.of(context).textSelectionColor)),
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor)),
                         Flexible(
                           child: TextFormField(
                             focusNode: swapController.fromFieldfocus.value,
@@ -315,7 +323,9 @@ class Swap extends StatelessWidget {
                             autofocus: true,
                             showCursor: true,
                             readOnly: true,
-                            cursorColor: Theme.of(context).textSelectionColor,
+                            cursorColor: Theme.of(context)
+                                .textSelectionTheme
+                                .selectionColor,
                             keyboardType: TextInputType.number,
                             decoration: new InputDecoration(
                                 border: InputBorder.none,
@@ -337,7 +347,9 @@ class Swap extends StatelessWidget {
                           child: Container(
                               height: 16,
                               child: VerticalDivider(
-                                  color: Theme.of(context).textSelectionColor)),
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor)),
                         ),
                         GestureDetector(
                           onTap: () {
@@ -418,8 +430,9 @@ class Swap extends StatelessWidget {
                                       : '--',
                                   style: TextStyle(
                                       fontFamily: "Popins",
-                                      color:
-                                          Theme.of(context).textSelectionColor,
+                                      color: Theme.of(context)
+                                          .textSelectionTheme
+                                          .selectionColor,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -430,11 +443,15 @@ class Swap extends StatelessWidget {
                         Container(
                             height: 16,
                             child: VerticalDivider(
-                                color: Theme.of(context).textSelectionColor)),
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor)),
                         Flexible(
                           child: TextFormField(
                             focusNode: swapController.toFieldfocus.value,
-                            cursorColor: Theme.of(context).textSelectionColor,
+                            cursorColor: Theme.of(context)
+                                .textSelectionTheme
+                                .selectionColor,
                             keyboardType: TextInputType.number,
                             showCursor: true,
                             readOnly: true,
@@ -540,7 +557,7 @@ class Swap extends StatelessWidget {
                               Expanded(
                                 child: Container(
                                   height: 56,
-                                  child: FlatButton(
+                                  child: MaterialButton(
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(50.0),
                                     ),
@@ -564,7 +581,8 @@ class Swap extends StatelessWidget {
                                           style: TextStyle(
                                               fontFamily: "Popins",
                                               color: Theme.of(context)
-                                                  .textSelectionColor,
+                                                  .textSelectionTheme
+                                                  .selectionColor,
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),
@@ -593,7 +611,8 @@ class Swap extends StatelessWidget {
                                           style: TextStyle(
                                               fontFamily: "Popins",
                                               color: Theme.of(context)
-                                                  .textSelectionColor,
+                                                  .textSelectionTheme
+                                                  .selectionColor,
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),
@@ -604,7 +623,7 @@ class Swap extends StatelessWidget {
                               Expanded(
                                 child: Container(
                                   height: 56,
-                                  child: FlatButton(
+                                  child: MaterialButton(
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(50.0),
                                     ),
@@ -628,7 +647,8 @@ class Swap extends StatelessWidget {
                                           style: TextStyle(
                                               fontFamily: "Popins",
                                               color: Theme.of(context)
-                                                  .textSelectionColor,
+                                                  .textSelectionTheme
+                                                  .selectionColor,
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),
@@ -660,7 +680,8 @@ class Swap extends StatelessWidget {
                                           style: TextStyle(
                                               fontFamily: "Popins",
                                               color: Theme.of(context)
-                                                  .textSelectionColor,
+                                                  .textSelectionTheme
+                                                  .selectionColor,
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),
@@ -678,7 +699,9 @@ class Swap extends StatelessWidget {
                               : 'swap.screen.select.convert_to'.tr,
                           style: TextStyle(
                               fontFamily: "Popins",
-                              color: Theme.of(context).textSelectionColor,
+                              color: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor,
                               fontWeight: FontWeight.bold),
                         ),
                         SizedBox(height: 8.0),
@@ -702,7 +725,7 @@ class Swap extends StatelessWidget {
                               Expanded(
                                 child: Container(
                                   height: 40,
-                                  child: FlatButton(
+                                  child: MaterialButton(
                                     color: Theme.of(context).canvasColor,
                                     onPressed: () {
                                       Get.back();
@@ -713,7 +736,8 @@ class Swap extends StatelessWidget {
                                         style: TextStyle(
                                             fontFamily: "Popins",
                                             color: Theme.of(context)
-                                                .textSelectionColor,
+                                                .textSelectionTheme
+                                                .selectionColor,
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ),
@@ -726,7 +750,7 @@ class Swap extends StatelessWidget {
                               Expanded(
                                 child: Container(
                                   height: 40,
-                                  child: FlatButton(
+                                  child: MaterialButton(
                                     color: Theme.of(context).primaryColor,
                                     onPressed: () {
                                       Get.back();
@@ -817,7 +841,9 @@ class Swap extends StatelessWidget {
                             child: Text(
                                 'swap.screen.preview.confirm_conversion'.tr,
                                 style: TextStyle(
-                                    color: Theme.of(context).textSelectionColor,
+                                    color: Theme.of(context)
+                                        .textSelectionTheme
+                                        .selectionColor,
                                     fontWeight: FontWeight.bold,
                                     fontFamily: "Popins",
                                     letterSpacing: 1.3,
@@ -845,7 +871,9 @@ class Swap extends StatelessWidget {
                                         .toSelectedWallet.value.currency
                                         .toUpperCase(),
                                 style: TextStyle(
-                                    color: Theme.of(context).textSelectionColor,
+                                    color: Theme.of(context)
+                                        .textSelectionTheme
+                                        .selectionColor,
                                     fontWeight: FontWeight.bold,
                                     fontFamily: "Popins",
                                     fontSize: 24.0)),
@@ -880,7 +908,8 @@ class Swap extends StatelessWidget {
                                           style: TextStyle(
                                               fontFamily: "Popins",
                                               color: Theme.of(context)
-                                                  .textSelectionColor,
+                                                  .textSelectionTheme
+                                                  .selectionColor,
                                               fontSize: 14,
                                               fontWeight: FontWeight.bold),
                                         ),
@@ -889,7 +918,8 @@ class Swap extends StatelessWidget {
                                           style: TextStyle(
                                               fontFamily: "Popins",
                                               color: Theme.of(context)
-                                                  .textSelectionColor,
+                                                  .textSelectionTheme
+                                                  .selectionColor,
                                               fontSize: 14,
                                               fontWeight: FontWeight.bold),
                                         ),
@@ -904,7 +934,8 @@ class Swap extends StatelessWidget {
                                           style: TextStyle(
                                               fontFamily: "Popins",
                                               color: Theme.of(context)
-                                                  .textSelectionColor,
+                                                  .textSelectionTheme
+                                                  .selectionColor,
                                               fontSize: 14,
                                               fontWeight: FontWeight.bold),
                                         )
@@ -934,7 +965,8 @@ class Swap extends StatelessWidget {
                                       style: TextStyle(
                                           fontFamily: "Popins",
                                           color: Theme.of(context)
-                                              .textSelectionColor,
+                                              .textSelectionTheme
+                                              .selectionColor,
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold),
                                     )
@@ -973,7 +1005,8 @@ class Swap extends StatelessWidget {
                                       ),
                                       textStyle: TextStyle(
                                         color: Theme.of(context)
-                                            .textSelectionColor,
+                                            .textSelectionTheme
+                                            .selectionColor,
                                         fontWeight: FontWeight.w600,
                                       ),
                                       length: 6,
@@ -992,9 +1025,11 @@ class Swap extends StatelessWidget {
                                           selectedColor:
                                               Theme.of(context).primaryColor,
                                           activeColor: Theme.of(context)
-                                              .textSelectionColor),
-                                      cursorColor:
-                                          Theme.of(context).textSelectionColor,
+                                              .textSelectionTheme
+                                              .selectionColor),
+                                      cursorColor: Theme.of(context)
+                                          .textSelectionTheme
+                                          .selectionColor,
                                       animationDuration:
                                           Duration(milliseconds: 300),
                                       backgroundColor: Theme.of(context)
@@ -1046,7 +1081,8 @@ class Swap extends StatelessWidget {
                                           style: TextStyle(
                                               fontFamily: "Popins",
                                               color: Theme.of(context)
-                                                  .textSelectionColor,
+                                                  .textSelectionTheme
+                                                  .selectionColor,
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),
@@ -1137,7 +1173,8 @@ class NumericalKeyboard extends StatelessWidget {
                     '.',
                     style: TextStyle(
                         fontFamily: "Popins",
-                        color: Theme.of(context).textSelectionColor,
+                        color:
+                            Theme.of(context).textSelectionTheme.selectionColor,
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),
@@ -1156,7 +1193,7 @@ class NumericalKeyboard extends StatelessWidget {
       Text('$n',
           style: TextStyle(
               fontFamily: "Popins",
-              color: Theme.of(context).textSelectionColor,
+              color: Theme.of(context).textSelectionTheme.selectionColor,
               fontSize: 20,
               fontWeight: FontWeight.bold)),
       n,

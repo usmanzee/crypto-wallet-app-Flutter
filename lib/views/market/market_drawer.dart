@@ -76,13 +76,13 @@ class _MarketDrawerState extends State<MarketDrawer>
           //       ),
           //       new Expanded(
           //         child: TextField(
-          //           cursorColor: Theme.of(context).textSelectionColor,
+          //           cursorColor: Theme.of(context).textSelectionTheme.selectionColor,
           //           keyboardType: TextInputType.text,
           //           decoration: InputDecoration(
           //             border: InputBorder.none,
           //             hintText: "Search...",
           //             hintStyle: TextStyle(
-          //                 color: Theme.of(context).textSelectionColor),
+          //                 color: Theme.of(context).textSelectionTheme.selectionColor),
           //             contentPadding:
           //                 EdgeInsets.symmetric(vertical: 8, horizontal: 8),
           //             isDense: true,
@@ -112,7 +112,7 @@ class _MarketDrawerState extends State<MarketDrawer>
           //   tabs: myTabs,
           //   indicatorColor: Theme.of(context).primaryColor,
           //   labelColor: Theme.of(context).primaryColor,
-          //   unselectedLabelColor: Theme.of(context).textSelectionColor,
+          //   unselectedLabelColor: Theme.of(context).textSelectionTheme.selectionColor,
           //   indicatorSize: TabBarIndicatorSize.label,
           // ),
           // Center(

@@ -31,12 +31,13 @@ class _WebViewContainerState extends State<WebViewContainer> {
           title: Text(
             _appBarTitle != null ? _appBarTitle : 'B4U Wallet',
             style: TextStyle(
-                color: Theme.of(context).textSelectionColor,
+                color: Theme.of(context).textSelectionTheme.selectionColor,
                 fontFamily: "Gotik",
                 fontWeight: FontWeight.w600,
                 fontSize: 18.5),
           ),
-          iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
+          iconTheme: IconThemeData(
+              color: Theme.of(context).textSelectionTheme.selectionColor),
           elevation: 0.8,
         ),
         body: Stack(

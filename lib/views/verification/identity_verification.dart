@@ -111,7 +111,7 @@ class IdentityVerification extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           if (verificationController.currentStep != 0)
-            FlatButton(
+            MaterialButton(
               onPressed: onStepCancel,
               height: 30.0,
               minWidth: 40.0,
@@ -123,7 +123,7 @@ class IdentityVerification extends StatelessWidget {
             )
           else
             Container(),
-          FlatButton(
+          MaterialButton(
             onPressed: onStepContinue,
             height: 30.0,
             minWidth: 40.0,
@@ -212,8 +212,10 @@ class IdentityVerification extends StatelessWidget {
                   decoration: BoxDecoration(
                       border: Border(
                     bottom: BorderSide(
-                      color:
-                          Theme.of(context).textSelectionColor.withOpacity(0.7),
+                      color: Theme.of(context)
+                          .textSelectionTheme
+                          .selectionColor
+                          .withOpacity(0.7),
                       width: 1.0,
                     ),
                   )),
@@ -234,8 +236,10 @@ class IdentityVerification extends StatelessWidget {
                   decoration: BoxDecoration(
                       border: Border(
                     bottom: BorderSide(
-                      color:
-                          Theme.of(context).textSelectionColor.withOpacity(0.7),
+                      color: Theme.of(context)
+                          .textSelectionTheme
+                          .selectionColor
+                          .withOpacity(0.7),
                       width: 1.0,
                     ),
                   )),

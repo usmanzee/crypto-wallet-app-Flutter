@@ -22,7 +22,7 @@ class OpenOrdersRepository {
     RequestHeaders requestHeaders = new RequestHeaders();
     apiProvider.headers = requestHeaders.setAuthHeaders();
     // var url = 'peatio/market/orders/cancel/${orderId}';
-    var url = 'peatio/market/orders/${orderId}/cancel';
+    var url = 'peatio/market/orders/$orderId/cancel';
     final response = await apiProvider.post(url, reqObj);
     return OpenOrder.fromJson(json.decode(response));
   }

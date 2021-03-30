@@ -30,7 +30,7 @@ class WalletAmountHeader extends StatelessWidget {
                 (double.parse(wallet.balance) + double.parse(wallet.locked))
                     .toStringAsFixed(wallet.precision),
                 style: TextStyle(
-                    color: Theme.of(context).textSelectionColor,
+                    color: Theme.of(context).textSelectionTheme.selectionColor,
                     fontSize: 15.5,
                     fontWeight: FontWeight.w600,
                     fontFamily: "Popins"),
@@ -50,7 +50,7 @@ class WalletAmountHeader extends StatelessWidget {
               Text(
                 wallet.balance,
                 style: TextStyle(
-                    color: Theme.of(context).textSelectionColor,
+                    color: Theme.of(context).textSelectionTheme.selectionColor,
                     fontSize: 15.5,
                     fontWeight: FontWeight.w600,
                     fontFamily: "Popins"),
@@ -71,7 +71,7 @@ class WalletAmountHeader extends StatelessWidget {
                 wallet.locked,
                 style: TextStyle(
                   fontFamily: "Popins",
-                  color: Theme.of(context).textSelectionColor,
+                  color: Theme.of(context).textSelectionTheme.selectionColor,
                   fontSize: 15.5,
                   fontWeight: FontWeight.w600,
                 ),

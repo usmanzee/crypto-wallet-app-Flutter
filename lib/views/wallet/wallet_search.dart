@@ -24,13 +24,14 @@ class WalletSearch extends GetView<WalletController> {
           title: Text(
             'Search Wallet',
             style: TextStyle(
-                color: Theme.of(context).textSelectionColor,
+                color: Theme.of(context).textSelectionTheme.selectionColor,
                 fontFamily: "Gotik",
                 fontWeight: FontWeight.w600,
                 fontSize: 18.5),
           ),
           brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
-          iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
+          iconTheme: IconThemeData(
+              color: Theme.of(context).textSelectionTheme.selectionColor),
           elevation: 0.8,
         ),
         body: Obx(() {
@@ -66,13 +67,17 @@ class WalletSearch extends GetView<WalletController> {
                         child: TextField(
                           controller: _textController,
                           onChanged: controller.handleSearchInputChangeEvent,
-                          cursorColor: Theme.of(context).textSelectionColor,
+                          cursorColor: Theme.of(context)
+                              .textSelectionTheme
+                              .selectionColor,
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: "Search...",
                             hintStyle: TextStyle(
-                                color: Theme.of(context).textSelectionColor),
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor),
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 8),
                             isDense: true,

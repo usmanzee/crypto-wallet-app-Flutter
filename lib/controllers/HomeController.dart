@@ -23,7 +23,7 @@ class HomeController extends GetxController {
   final _previousConnection = false.obs;
   final isLoggedIn = false.obs;
   var _selectedNavIndex = 0.obs;
-  var marketList = List<Market>().obs;
+  var marketList = <Market>[].obs;
   var fetchingUser = false.obs;
   var user = new User().obs;
   var deviceMacAddress = 'unknown'.obs;
@@ -35,7 +35,8 @@ class HomeController extends GetxController {
 
   var currentPos = 0.obs;
   var isLoadingWpPosts = false.obs;
-  var wpPosts = List<dynamic>().obs;
+  var wpPosts = <dynamic>[].obs;
+  var currentBackPressTime = null.obs;
 
   SnackbarController snackbarController;
   ErrorController errorController = new ErrorController();
@@ -273,11 +274,13 @@ Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) async {
   if (message.containsKey('data')) {
     // Handle data message
     final dynamic data = message['data'];
+    print(data);
   }
 
   if (message.containsKey('notification')) {
     // Handle notification message
     final dynamic notification = message['notification'];
+    print(notification);
   }
 
   // Or do other work.

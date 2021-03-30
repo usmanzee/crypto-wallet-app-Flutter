@@ -9,7 +9,8 @@ class EmailVerification extends GetView<RegisterController> {
     return Scaffold(
       appBar: AppBar(
         brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
-        iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
+        iconTheme: IconThemeData(
+            color: Theme.of(context).textSelectionTheme.selectionColor),
         backgroundColor: Theme.of(context).canvasColor,
         elevation: 1.0,
         automaticallyImplyLeading: true,
@@ -27,7 +28,8 @@ class EmailVerification extends GetView<RegisterController> {
                     style: TextStyle(
                       fontFamily: 'Popins',
                       fontSize: 24.0,
-                      color: Theme.of(context).textSelectionColor,
+                      color:
+                          Theme.of(context).textSelectionTheme.selectionColor,
                       fontWeight: FontWeight.w600,
                     ),
                   )),
@@ -38,7 +40,7 @@ class EmailVerification extends GetView<RegisterController> {
                   style: TextStyle(
                     fontFamily: 'Popins',
                     fontSize: 14.0,
-                    color: Theme.of(context).textSelectionColor,
+                    color: Theme.of(context).textSelectionTheme.selectionColor,
                   ),
                 ),
               ),

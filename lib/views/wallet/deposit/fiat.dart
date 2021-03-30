@@ -65,13 +65,14 @@ class _DepositFiatState extends State<DepositFiat> {
         title: Text(
           'fiat_deposit.screen.title'.tr,
           style: TextStyle(
-              color: Theme.of(context).textSelectionColor,
+              color: Theme.of(context).textSelectionTheme.selectionColor,
               fontFamily: "Gotik",
               fontWeight: FontWeight.w600,
               fontSize: 18.5),
         ),
         centerTitle: true,
-        iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
+        iconTheme: IconThemeData(
+            color: Theme.of(context).textSelectionTheme.selectionColor),
         elevation: 1.0,
         brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
         backgroundColor: Theme.of(context).canvasColor,
@@ -180,7 +181,8 @@ class _DepositFiatState extends State<DepositFiat> {
                                                 homeController.user.value.uid,
                                                 style: TextStyle(
                                                     color: Theme.of(context)
-                                                        .textSelectionColor,
+                                                        .textSelectionTheme
+                                                        .selectionColor,
                                                     fontFamily: "Popins",
                                                     fontWeight: FontWeight.w600,
                                                     fontSize: 15.5),
@@ -268,9 +270,10 @@ class _DepositFiatState extends State<DepositFiat> {
                                                       labelColor:
                                                           Theme.of(context)
                                                               .primaryColor,
-                                                      unselectedLabelColor: Theme
-                                                              .of(context)
-                                                          .textSelectionColor,
+                                                      unselectedLabelColor:
+                                                          Theme.of(context)
+                                                              .textSelectionTheme
+                                                              .selectionColor,
                                                       indicatorSize:
                                                           TabBarIndicatorSize
                                                               .label,
@@ -292,7 +295,8 @@ class _DepositFiatState extends State<DepositFiat> {
                                                               style: TextStyle(
                                                                   color: Theme.of(
                                                                           context)
-                                                                      .textSelectionColor,
+                                                                      .textSelectionTheme
+                                                                      .selectionColor,
                                                                   fontFamily:
                                                                       "Popins",
                                                                   fontWeight:
@@ -325,7 +329,8 @@ class _DepositFiatState extends State<DepositFiat> {
                                                             style: TextStyle(
                                                                 color: Theme.of(
                                                                         context)
-                                                                    .textSelectionColor,
+                                                                    .textSelectionTheme
+                                                                    .selectionColor,
                                                                 fontFamily:
                                                                     "Popins",
                                                                 fontSize:
@@ -354,7 +359,8 @@ class _DepositFiatState extends State<DepositFiat> {
                                                                 size: 20.0,
                                                                 color: Theme.of(
                                                                         context)
-                                                                    .textSelectionColor),
+                                                                    .textSelectionTheme
+                                                                    .selectionColor),
                                                             onPressed: () {
                                                               _copyToClipboard(
                                                                   bank[item]

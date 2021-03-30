@@ -11,7 +11,7 @@ class Market extends StatelessWidget {
           title: Text(
             "markets.screen.title".tr,
             style: TextStyle(
-                color: Theme.of(context).textSelectionColor,
+                color: Theme.of(context).textSelectionTheme.selectionColor,
                 fontFamily: "Gotik",
                 fontWeight: FontWeight.w600,
                 fontSize: 18.5),

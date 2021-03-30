@@ -33,10 +33,10 @@ class TradingController extends GetxController {
   var marketSellAmountFocusNode;
   var marketSellTotalFocusNode;
 
-  var limitBuyFormPercentageOptions = List<FormPercentageOption>().obs;
-  var limitSellFormPercentageOptions = List<FormPercentageOption>().obs;
-  var marketBuyFormPercentageOptions = List<FormPercentageOption>().obs;
-  var marketSellFormPercentageOptions = List<FormPercentageOption>().obs;
+  var limitBuyFormPercentageOptions = <FormPercentageOption>[].obs;
+  var limitSellFormPercentageOptions = <FormPercentageOption>[].obs;
+  var marketBuyFormPercentageOptions = <FormPercentageOption>[].obs;
+  var marketSellFormPercentageOptions = <FormPercentageOption>[].obs;
 
   var selectedLimitBuyFormPercentageOption = FormPercentageOption().obs;
   var selectedLimitSellFormPercentageOption = FormPercentageOption().obs;
@@ -57,11 +57,11 @@ class TradingController extends GetxController {
   TextEditingController marketOrderSellPriceTextController;
   TextEditingController marketOrderSellTotalTextController;
 
-  var walletsList = List<Wallet>().obs;
+  var walletsList = <Wallet>[].obs;
   var walletBase = Wallet().obs;
   var walletQuote = Wallet().obs;
   var isLoadingTradingFee = false.obs;
-  var tradingFeeList = List<TradingFee>().obs();
+  var tradingFeeList = <TradingFee>[].obs();
   var marketTradingFee = TradingFee().obs();
 
   var market = FormatedMarket().obs;

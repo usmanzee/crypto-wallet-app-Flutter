@@ -1,5 +1,4 @@
 import 'package:b4u_wallet/controllers/crypto_deposit_controller.dart';
-import 'package:b4u_wallet/views/wallet/custom_appbar.dart';
 import 'package:b4u_wallet/views/wallet/search_wallet_header.dart';
 import 'package:flutter/material.dart';
 import 'package:b4u_wallet/models/wallet.dart' as WalletClass;
@@ -50,13 +49,14 @@ class _WalletState extends State<DepositCrypto> {
         title: Text(
           'crypto_deposit.screen.title'.tr,
           style: TextStyle(
-              color: Theme.of(context).textSelectionColor,
+              color: Theme.of(context).textSelectionTheme.selectionColor,
               fontFamily: "Gotik",
               fontWeight: FontWeight.w600,
               fontSize: 18.5),
         ),
         centerTitle: true,
-        iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
+        iconTheme: IconThemeData(
+            color: Theme.of(context).textSelectionTheme.selectionColor),
         elevation: 1.0,
         brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
         backgroundColor: Theme.of(context).canvasColor,
@@ -144,7 +144,8 @@ class _WalletState extends State<DepositCrypto> {
                                         style: TextStyle(
                                           fontWeight: FontWeight.w600,
                                           color: Theme.of(context)
-                                              .textSelectionColor,
+                                              .textSelectionTheme
+                                              .selectionColor,
                                           fontSize: 12,
                                           fontFamily: "Popins",
                                         ),
@@ -159,7 +160,8 @@ class _WalletState extends State<DepositCrypto> {
                                             }),
                                         style: TextStyle(
                                           color: Theme.of(context)
-                                              .textSelectionColor,
+                                              .textSelectionTheme
+                                              .selectionColor,
                                           fontSize: 12,
                                           fontFamily: "Popins",
                                         ),
@@ -172,7 +174,8 @@ class _WalletState extends State<DepositCrypto> {
                                                     {'confirmations': '6'}),
                                         style: TextStyle(
                                           color: Theme.of(context)
-                                              .textSelectionColor,
+                                              .textSelectionTheme
+                                              .selectionColor,
                                           fontSize: 12,
                                           fontFamily: "Popins",
                                         ),
@@ -283,21 +286,21 @@ class _WalletState extends State<DepositCrypto> {
                     ' ' +
                     'crypto_deposit.screen.address'.tr,
                 style: TextStyle(
-                  color: Theme.of(context).textSelectionColor,
+                  color: Theme.of(context).textSelectionTheme.selectionColor,
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                   fontFamily: "Popins",
                 ),
               ),
               Spacer(flex: 1),
-              FlatButton(
+              MaterialButton(
                 height: 30.0,
                 minWidth: 40.0,
                 color: Theme.of(context).canvasColor,
                 child: Text(
                   "crypto_deposit.screen.button.copy_address".tr,
                   style: TextStyle(
-                    color: Theme.of(context).textSelectionColor,
+                    color: Theme.of(context).textSelectionTheme.selectionColor,
                     fontSize: 10,
                     // fontWeight: FontWeight.w600,
                     fontFamily: "Popins",
@@ -335,14 +338,14 @@ class _WalletState extends State<DepositCrypto> {
       SizedBox(
         height: 16.0,
       ),
-      FlatButton(
+      MaterialButton(
         height: 40.0,
         minWidth: 150.0,
         color: Theme.of(context).canvasColor,
         child: new Text(
           "crypto_deposit.screen.button.share".tr,
           style: TextStyle(
-            color: Theme.of(context).textSelectionColor,
+            color: Theme.of(context).textSelectionTheme.selectionColor,
             fontSize: 10,
             fontFamily: "Popins",
           ),
@@ -401,7 +404,7 @@ class _WalletState extends State<DepositCrypto> {
             children: <Widget>[
               Text(wallet.currency.toUpperCase() + ' Tag'),
               Spacer(flex: 1),
-              FlatButton(
+              MaterialButton(
                 height: 30.0,
                 minWidth: 40.0,
                 color: Theme.of(context).canvasColor,

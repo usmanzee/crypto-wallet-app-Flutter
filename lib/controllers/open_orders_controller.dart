@@ -19,8 +19,8 @@ class OpenOrdersController extends GetxController {
 
   var isLoading = false.obs;
   var hideOtherOrders = false.obs;
-  var openOrdersList = List<OpenOrder>().obs;
-  var openOrdersSortedList = List<OpenOrder>().obs;
+  var openOrdersList = <OpenOrder>[].obs;
+  var openOrdersSortedList = <OpenOrder>[].obs;
 
   WebSocketController webSocketController = Get.find();
 

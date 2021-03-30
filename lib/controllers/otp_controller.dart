@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:b4u_wallet/controllers/HomeController.dart';
 import 'package:b4u_wallet/controllers/error_controller.dart';
 import 'package:b4u_wallet/repository/user_repository.dart';
@@ -8,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:b4u_wallet/models/user.dart';
 import 'package:b4u_wallet/models/otp.dart';
 import 'package:b4u_wallet/controllers/SnackbarController.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OTPController extends GetxController {
   HomeController homeController;

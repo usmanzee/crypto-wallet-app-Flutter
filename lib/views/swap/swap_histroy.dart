@@ -16,12 +16,13 @@ class SwapHistory extends GetView<SwapHistoryController> {
           title: Text(
             'swap_history.screen.title'.tr,
             style: TextStyle(
-                color: Theme.of(context).textSelectionColor,
+                color: Theme.of(context).textSelectionTheme.selectionColor,
                 fontFamily: "Gotik",
                 fontWeight: FontWeight.w600,
                 fontSize: 18.5),
           ),
-          iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
+          iconTheme: IconThemeData(
+              color: Theme.of(context).textSelectionTheme.selectionColor),
           elevation: 0.8,
         ),
         body: Container(
@@ -120,7 +121,7 @@ class SwapHistory extends GetView<SwapHistoryController> {
                 style: TextStyle(
                   fontFamily: 'Popins',
                   fontSize: 16,
-                  color: Theme.of(context).textSelectionColor,
+                  color: Theme.of(context).textSelectionTheme.selectionColor,
                 ),
                 children: <TextSpan>[
                   TextSpan(
@@ -139,7 +140,7 @@ class SwapHistory extends GetView<SwapHistoryController> {
                   fontFamily: 'Popins',
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  color: Theme.of(context).textSelectionColor,
+                  color: Theme.of(context).textSelectionTheme.selectionColor,
                 ),
                 children: <TextSpan>[
                   TextSpan(

@@ -54,7 +54,7 @@ class Trading extends StatelessWidget {
                         .toUpperCase()
                     : '--',
                 style: TextStyle(
-                    color: Theme.of(context).textSelectionColor,
+                    color: Theme.of(context).textSelectionTheme.selectionColor,
                     fontFamily: "Gotik",
                     fontWeight: FontWeight.w600,
                     fontSize: 18.5),
@@ -81,7 +81,8 @@ class Trading extends StatelessWidget {
             )
           ]),
         ),
-        iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
+        iconTheme: IconThemeData(
+            color: Theme.of(context).textSelectionTheme.selectionColor),
         elevation: 0,
       ),
       drawer: Drawer(
@@ -183,7 +184,7 @@ class Trading extends StatelessWidget {
                         labelPadding: EdgeInsets.only(left: 0, right: 16),
                         labelColor: Theme.of(context).primaryColor,
                         unselectedLabelColor:
-                            Theme.of(context).textSelectionColor,
+                            Theme.of(context).textSelectionTheme.selectionColor,
                         indicatorSize: TabBarIndicatorSize.label,
                         tabs: [
                           new Tab(

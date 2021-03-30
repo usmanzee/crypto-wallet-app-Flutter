@@ -52,6 +52,7 @@ dependencies:
   pin_code_fields: ^6.1.0
   sentry_flutter: ^4.0.6
   get_storage: ^1.4.0
+  overlay_container: ^0.0.5+1
 
 
 
@@ -103,18 +104,6 @@ flutter:
     - assets/image/b4u_wallet_logo.png
     - assets/image/gainers.png
     - assets/image/losers.png
-    - assets/image/News_Image/Asia.jpg
-    - assets/image/News_Image/BlockStream.jpg
-    - assets/image/News_Image/BNB.jpg
-    - assets/image/News_Image/CBOE.jpg
-    - assets/image/News_Image/CryptoBroker.jpg
-    - assets/image/News_Image/EOSget.jpg
-    - assets/image/News_Image/MarketSentiment.jpg
-    - assets/image/News_Image/Mt.Gox.jpg
-    - assets/image/News_Image/NewCripto.jpg
-    - assets/image/News_Image/Twitter.jpg
-    - assets/image/News_Image/YouCan.jpg
-    - assets/image/News_Image/Ziliqa.jpg
     - assets/image/google_authenticator.png
     - assets/depth.json
     - assets/graph_type.json

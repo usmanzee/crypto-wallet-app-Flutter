@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 class AppException implements Exception {
-  final dynamic response;
+  final errorResponse;
 
-  AppException([this.response]);
+  AppException([this.errorResponse]);
 
   // dynamic errorResponse() {
   //   var errorResponseObject = {};
@@ -15,29 +15,24 @@ class AppException implements Exception {
   //   };
   //   return errorResponseObject;
   // }
+
   String toString() {
-    return json.encode(response);
+    return json.encode(errorResponse);
   }
 }
 
-class APIException extends AppException {}
-
 class FetchDataException extends AppException {
-  dynamic response;
-  FetchDataException([this.response]);
+  FetchDataException([dynamic errorResponse]) : super(errorResponse);
 }
 
 class BadRequestException extends AppException {
-  dynamic response;
-  BadRequestException([this.response]);
+  BadRequestException([errorResponse]) : super(errorResponse);
 }
 
 class UnauthorisedException extends AppException {
-  dynamic response;
-  UnauthorisedException([this.response]);
+  UnauthorisedException([errorResponse]) : super(errorResponse);
 }
 
 class InvalidInputException extends AppException {
-  dynamic response;
-  InvalidInputException([this.response]);
+  InvalidInputException([String errorResponse]) : super(errorResponse);
 }

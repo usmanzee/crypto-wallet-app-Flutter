@@ -10,10 +10,10 @@ import 'package:get/get.dart';
 class WalletController extends GetxController {
   var isLoading = false.obs;
   var isAddressLoading = false.obs;
-  var balancesList = List<Balance>().obs;
-  var currenciesList = List<Currency>().obs;
-  var walletsList = List<Wallet>().obs;
-  var searchWalletsList = List<Wallet>().obs;
+  var balancesList = <Balance>[].obs;
+  var currenciesList = <Currency>[].obs;
+  var walletsList = <Wallet>[].obs;
+  var searchWalletsList = <Wallet>[].obs;
   // var depositAddress = <DepositAddress>[].obs;
   var depositAddress = ''.obs;
   ErrorController errorController = new ErrorController();
@@ -55,7 +55,7 @@ class WalletController extends GetxController {
 
   Future<List<Wallet>> formateWallets(
       List<Balance> balances, List<Currency> currencies) async {
-    var wallets = new List<Wallet>();
+    var wallets = <Wallet>[];
 
     for (Currency currency in currencies) {
       var walletInfo =

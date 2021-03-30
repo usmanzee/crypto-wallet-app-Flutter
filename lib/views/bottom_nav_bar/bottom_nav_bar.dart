@@ -16,7 +16,6 @@ import 'package:b4u_wallet/controllers/SnackbarController.dart';
 class BottomNavBar extends GetView<HomeController> {
   final MarketController marketController = Get.put(MarketController());
   final WebSocketController webSocketController = Get.find();
-  DateTime currentBackPressTime;
   Widget callPage(int current, bool hasConnection) {
     if (hasConnection) {
       switch (current) {
@@ -135,9 +134,10 @@ class BottomNavBar extends GetView<HomeController> {
 
   Future<bool> onWillPop() {
     DateTime now = DateTime.now();
-    if (currentBackPressTime == null ||
-        now.difference(currentBackPressTime) > Duration(seconds: 2)) {
-      currentBackPressTime = now;
+    if (controller.currentBackPressTime.value == null ||
+        now.difference(controller.currentBackPressTime.value) >
+            Duration(seconds: 2)) {
+      controller.currentBackPressTime.value = now;
       displayBackWarning();
       return Future.value(false);
     }

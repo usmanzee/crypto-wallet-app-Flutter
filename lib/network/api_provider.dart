@@ -4,22 +4,11 @@ import 'package:b4u_wallet/utils/Helpers/environment.dart';
 import 'package:http/http.dart' as http;
 import 'package:b4u_wallet/network/app_exception.dart';
 import 'dart:async';
-import 'dart:convert';
-import 'package:get/get.dart';
 
 class ApiProvider {
   final String _baseUrl = Environment.getApiBaseUrl();
   final String _appVersion = Environment.getApiAppVersion();
-  @override
-  Map<String, String> _headers;
-
-  Map<String, String> get headers {
-    return _headers;
-  }
-
-  set headers(Map<String, String> headers) {
-    _headers = headers;
-  }
+  Map<String, String> headers;
 
   Future<dynamic> get(String url) async {
     var responseJson;
@@ -30,12 +19,20 @@ class ApiProvider {
           await http.get(_baseUrl + _appVersion + url, headers: headers);
       responseJson = _returnResponse(response);
     } on SocketException {
-      throw FetchDataException({'statusCode': 1, 'message': 'no.internet'});
+      throw FetchDataException({
+        'statusCode': 1,
+        'errors': ['server.not.available']
+      });
     } on HttpException {
-      throw FetchDataException(
-          {'statusCode': 2, 'message': 'server.not.available'});
+      throw FetchDataException({
+        'statusCode': 2,
+        'errors': ['no.internet']
+      });
     } on FormatException {
-      throw FetchDataException({'statusCode': 3, 'message': 'server.error'});
+      throw FetchDataException({
+        'statusCode': 3,
+        'errors': ['server.error']
+      });
     }
     return responseJson;
   }
@@ -48,12 +45,20 @@ class ApiProvider {
           body: body, headers: headers);
       responseJson = _returnResponse(response);
     } on SocketException {
-      throw FetchDataException({'statusCode': 1, 'message': 'no.internet'});
+      throw FetchDataException({
+        'statusCode': 1,
+        'errors': ['server.not.available']
+      });
     } on HttpException {
-      throw FetchDataException(
-          {'statusCode': 2, 'message': 'server.not.available'});
+      throw FetchDataException({
+        'statusCode': 2,
+        'errors': ['no.internet']
+      });
     } on FormatException {
-      throw FetchDataException({'statusCode': 3, 'message': 'server.error'});
+      throw FetchDataException({
+        'statusCode': 3,
+        'errors': ['server.error']
+      });
     }
     return responseJson;
   }
@@ -65,12 +70,20 @@ class ApiProvider {
           body: body, headers: headers);
       responseJson = _returnResponse(response);
     } on SocketException {
-      throw FetchDataException({'statusCode': 1, 'message': 'no.internet'});
+      throw FetchDataException({
+        'statusCode': 1,
+        'errors': ['server.not.available']
+      });
     } on HttpException {
-      throw FetchDataException(
-          {'statusCode': 2, 'message': 'server.not.available'});
+      throw FetchDataException({
+        'statusCode': 2,
+        'errors': ['no.internet']
+      });
     } on FormatException {
-      throw FetchDataException({'statusCode': 3, 'message': 'server.error'});
+      throw FetchDataException({
+        'statusCode': 3,
+        'errors': ['server.error']
+      });
     }
     return responseJson;
   }
@@ -82,12 +95,20 @@ class ApiProvider {
           await http.delete(_baseUrl + _appVersion + url, headers: headers);
       responseJson = _returnResponse(response);
     } on SocketException {
-      throw FetchDataException({'statusCode': 1, 'message': 'no.internet'});
+      throw FetchDataException({
+        'statusCode': 1,
+        'errors': ['server.not.available']
+      });
     } on HttpException {
-      throw FetchDataException(
-          {'statusCode': 2, 'message': 'server.not.available'});
+      throw FetchDataException({
+        'statusCode': 2,
+        'errors': ['no.internet']
+      });
     } on FormatException {
-      throw FetchDataException({'statusCode': 3, 'message': 'server.error'});
+      throw FetchDataException({
+        'statusCode': 3,
+        'errors': ['server.error']
+      });
     }
     return responseJson;
   }
@@ -99,12 +120,20 @@ class ApiProvider {
       final res = await http.Response.fromStream(response);
       responseJson = _returnResponse(res);
     } on SocketException {
-      throw FetchDataException({'statusCode': 1, 'message': 'no.internet'});
+      throw FetchDataException({
+        'statusCode': 1,
+        'errors': ['server.not.available']
+      });
     } on HttpException {
-      throw FetchDataException(
-          {'statusCode': 2, 'message': 'server.not.available'});
+      throw FetchDataException({
+        'statusCode': 2,
+        'errors': ['no.internet']
+      });
     } on FormatException {
-      throw FetchDataException({'statusCode': 3, 'message': 'server.error'});
+      throw FetchDataException({
+        'statusCode': 3,
+        'errors': ['server.error']
+      });
     }
     return responseJson;
   }

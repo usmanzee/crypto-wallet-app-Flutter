@@ -21,12 +21,13 @@ class ReferralProgram extends StatelessWidget {
         title: Text(
           'referral.screen.title'.tr,
           style: TextStyle(
-              color: Theme.of(context).textSelectionColor,
+              color: Theme.of(context).textSelectionTheme.selectionColor,
               fontFamily: "Gotik",
               fontWeight: FontWeight.w600,
               fontSize: 18.5),
         ),
-        iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
+        iconTheme: IconThemeData(
+            color: Theme.of(context).textSelectionTheme.selectionColor),
         elevation: 1,
         // bottom: PreferredSize(
         //   preferredSize: Size.fromHeight(120.0),
@@ -86,7 +87,8 @@ class ReferralProgram extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
               child: Text('referral.screen.referral_instruction.title'.tr,
                   style: TextStyle(
-                      color: Theme.of(context).textSelectionColor,
+                      color:
+                          Theme.of(context).textSelectionTheme.selectionColor,
                       fontFamily: "Gotik",
                       fontWeight: FontWeight.w600,
                       fontSize: 22)),
@@ -95,7 +97,8 @@ class ReferralProgram extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
               child: Text('referral.screen.referral_instruction.description'.tr,
                   style: TextStyle(
-                      color: Theme.of(context).textSelectionColor,
+                      color:
+                          Theme.of(context).textSelectionTheme.selectionColor,
                       fontSize: 12)),
             ),
             Obx(() {
@@ -137,11 +140,11 @@ Widget _showReferralId(context, User user) {
           children: <Widget>[
             Text('referral.screen.referral_id'.tr),
             Spacer(flex: 1),
-            FlatButton(
+            MaterialButton(
               height: 30.0,
               minWidth: 40.0,
               color: Theme.of(context).canvasColor.withOpacity(0.9),
-              textColor: Theme.of(context).textSelectionColor,
+              textColor: Theme.of(context).textSelectionTheme.selectionColor,
               child: Text(
                 "referral.screen.referral_copy_id".tr,
                 style: TextStyle(fontSize: 10),
@@ -182,11 +185,11 @@ Widget _showReferralLink(context, String link) {
           children: <Widget>[
             Text('referral.screen.referral_link'.tr),
             Spacer(flex: 1),
-            FlatButton(
+            MaterialButton(
               height: 30.0,
               minWidth: 40.0,
               color: Theme.of(context).canvasColor,
-              textColor: Theme.of(context).textSelectionColor,
+              textColor: Theme.of(context).textSelectionTheme.selectionColor,
               child: Text(
                 "referral.screen.referral_copy_link".tr,
                 style: TextStyle(fontSize: 10),
@@ -211,11 +214,11 @@ Widget _showReferralLink(context, String link) {
           height: 8.0,
         ),
         Center(
-          child: FlatButton(
+          child: MaterialButton(
             height: 40.0,
             minWidth: 150.0,
             color: Theme.of(context).canvasColor,
-            textColor: Theme.of(context).textSelectionColor,
+            textColor: Theme.of(context).textSelectionTheme.selectionColor,
             child: new Text("referral.screen.share".tr),
             onPressed: () {
               shareLink(context, link);

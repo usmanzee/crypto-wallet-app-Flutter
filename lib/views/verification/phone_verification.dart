@@ -116,7 +116,9 @@ class PhoneVerification extends StatelessWidget {
                   Text(verificationController.phoneNumberText.value,
                       // verificationController.phoneTextController.text,
                       style: TextStyle(
-                          color: Theme.of(context).textSelectionColor,
+                          color: Theme.of(context)
+                              .textSelectionTheme
+                              .selectionColor,
                           fontWeight: FontWeight.bold,
                           fontFamily: "Popins",
                           fontSize: 20.0)),
@@ -151,7 +153,9 @@ class PhoneVerification extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                         textStyle: TextStyle(
-                          color: Theme.of(context).textSelectionColor,
+                          color: Theme.of(context)
+                              .textSelectionTheme
+                              .selectionColor,
                           fontWeight: FontWeight.w600,
                         ),
                         length: 5,
@@ -166,9 +170,12 @@ class PhoneVerification extends StatelessWidget {
                           fieldHeight: 50,
                           fieldWidth: 40,
                           selectedColor: Theme.of(context).primaryColor,
-                          activeColor: Theme.of(context).textSelectionColor,
+                          activeColor: Theme.of(context)
+                              .textSelectionTheme
+                              .selectionColor,
                         ),
-                        cursorColor: Theme.of(context).textSelectionColor,
+                        cursorColor:
+                            Theme.of(context).textSelectionTheme.selectionColor,
                         animationDuration: Duration(milliseconds: 300),
                         backgroundColor:
                             Theme.of(context).scaffoldBackgroundColor,
@@ -205,7 +212,7 @@ class PhoneVerification extends StatelessWidget {
                                 fontFamily: "Popins",
                                 letterSpacing: 1.3,
                                 fontSize: 16.0)),
-                        FlatButton(
+                        MaterialButton(
                           height: 32.0,
                           minWidth: 120.0,
                           textColor: Theme.of(context).accentColor,

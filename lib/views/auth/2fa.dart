@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:b4u_wallet/views/setting/themes.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:b4u_wallet/controllers/login_controller.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class TwoFA extends StatelessWidget {
-  final ThemeBloc themeBloc;
-  TwoFA({this.themeBloc});
-
   final LoginController _loginController = Get.put(LoginController());
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -31,7 +27,8 @@ class TwoFA extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
-        iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
+        iconTheme: IconThemeData(
+            color: Theme.of(context).textSelectionTheme.selectionColor),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         automaticallyImplyLeading: true,
@@ -51,7 +48,8 @@ class TwoFA extends StatelessWidget {
                       style: TextStyle(
                         fontFamily: 'Popins',
                         fontSize: 24.0,
-                        color: Theme.of(context).textSelectionColor,
+                        color:
+                            Theme.of(context).textSelectionTheme.selectionColor,
                         fontWeight: FontWeight.w600,
                       ),
                     )),
@@ -85,9 +83,13 @@ class TwoFA extends StatelessWidget {
                         borderRadius: BorderRadius.circular(5),
                         fieldHeight: 50,
                         fieldWidth: 40,
-                        selectedColor: Theme.of(context).textSelectionColor,
-                        activeColor: Theme.of(context).textSelectionColor),
-                    cursorColor: Theme.of(context).textSelectionColor,
+                        selectedColor:
+                            Theme.of(context).textSelectionTheme.selectionColor,
+                        activeColor: Theme.of(context)
+                            .textSelectionTheme
+                            .selectionColor),
+                    cursorColor:
+                        Theme.of(context).textSelectionTheme.selectionColor,
                     animationDuration: Duration(milliseconds: 300),
                     controller: _loginController.twoFATextController,
                     autoDisposeControllers: false,

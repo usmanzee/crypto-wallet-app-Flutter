@@ -14,12 +14,13 @@ class NoInternet extends StatelessWidget {
         title: Text(
           '',
           style: TextStyle(
-              color: Theme.of(context).textSelectionColor,
+              color: Theme.of(context).textSelectionTheme.selectionColor,
               fontFamily: "Popins",
               fontWeight: FontWeight.w600,
               fontSize: 18.5),
         ),
-        iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
+        iconTheme: IconThemeData(
+            color: Theme.of(context).textSelectionTheme.selectionColor),
         elevation: 0.8,
       ),
       body: Center(
@@ -33,7 +34,7 @@ class NoInternet extends StatelessWidget {
               'no_internet.title'.tr,
               style: TextStyle(
                   fontFamily: "Popins",
-                  color: Theme.of(context).textSelectionColor,
+                  color: Theme.of(context).textSelectionTheme.selectionColor,
                   fontSize: 20),
             ),
             Text(

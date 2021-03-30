@@ -14,18 +14,19 @@ class WalletDetail extends StatelessWidget {
   final WalletClass.Wallet wallet = Get.arguments['wallet'];
 
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(
           wallet.name,
           style: TextStyle(
-              color: Theme.of(context).textSelectionColor,
+              color: Theme.of(context).textSelectionTheme.selectionColor,
               fontFamily: "Gotik",
               fontWeight: FontWeight.w600,
               fontSize: 18.5),
         ),
-        iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
+        iconTheme: IconThemeData(
+            color: Theme.of(context).textSelectionTheme.selectionColor),
         elevation: 1.0,
         brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
         backgroundColor: Theme.of(context).canvasColor,
@@ -75,8 +76,9 @@ class WalletDetail extends StatelessWidget {
                                           EdgeInsets.only(left: 0, right: 16),
                                       labelColor:
                                           Theme.of(context).primaryColor,
-                                      unselectedLabelColor:
-                                          Theme.of(context).textSelectionColor,
+                                      unselectedLabelColor: Theme.of(context)
+                                          .textSelectionTheme
+                                          .selectionColor,
                                       indicatorSize: TabBarIndicatorSize.label,
                                       tabs: [
                                         new Tab(
@@ -112,7 +114,9 @@ class WalletDetail extends StatelessWidget {
                                   },
                                   child: Icon(
                                     Icons.history_edu,
-                                    color: Theme.of(context).textSelectionColor,
+                                    color: Theme.of(context)
+                                        .textSelectionTheme
+                                        .selectionColor,
                                     size: 30.0,
                                   ),
                                 ),

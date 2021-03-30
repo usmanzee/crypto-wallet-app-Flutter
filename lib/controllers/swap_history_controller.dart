@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 class SwapHistoryController extends GetxController {
   var isLoading = false.obs;
-  var swapHistoryList = List<SwapHistoryResponse>().obs;
+  var swapHistoryList = <SwapHistoryResponse>[].obs;
   SnackbarController snackbarController;
   ErrorController errorController = new ErrorController();
 

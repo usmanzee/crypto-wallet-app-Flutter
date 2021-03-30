@@ -22,7 +22,7 @@ class _MarketDetailGraphState extends State<MarketDetailGraph> {
   final selectedGraph;
   _MarketDetailGraphState(this.selectedGraph);
 
-  List<KLineEntity> newData = new List<KLineEntity>();
+  List<KLineEntity> newData = <KLineEntity>[];
   List<KLineEntity> datas;
   bool showLoading = true;
   MainState _mainState = MainState.MA;
@@ -54,8 +54,8 @@ class _MarketDetailGraphState extends State<MarketDetailGraph> {
 
   void initDepth(List<DepthEntity> bids, List<DepthEntity> asks) {
     if (bids == null || asks == null || bids.isEmpty || asks.isEmpty) return;
-    _bids = List();
-    _asks = List();
+    _bids = [];
+    _asks = [];
     double amount = 0.0;
     bids?.sort((left, right) => left.price.compareTo(right.price));
     //累加买入委托量
@@ -140,7 +140,7 @@ class _MarketDetailGraphState extends State<MarketDetailGraph> {
   }
 
   Widget button(String text, {VoidCallback onPressed}) {
-    return FlatButton(
+    return MaterialButton(
         onPressed: () {
           if (onPressed != null) {
             onPressed();

@@ -4,7 +4,6 @@ import 'package:b4u_wallet/bindings/market_detail_binding.dart';
 import 'package:b4u_wallet/bindings/notification_screen_binding.dart';
 import 'package:b4u_wallet/bindings/otp_binding.dart';
 import 'package:b4u_wallet/bindings/security_binding.dart';
-import 'package:b4u_wallet/bindings/swap_binding.dart';
 import 'package:b4u_wallet/bindings/swap_history_binding.dart';
 import 'package:b4u_wallet/bindings/verification_binding.dart';
 import 'package:b4u_wallet/bindings/wallet_search_binding.dart';

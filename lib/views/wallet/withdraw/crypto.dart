@@ -61,13 +61,14 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
           title: Text(
             'crypto_withdraw.screen.title'.tr,
             style: TextStyle(
-                color: Theme.of(context).textSelectionColor,
+                color: Theme.of(context).textSelectionTheme.selectionColor,
                 fontFamily: "Gotik",
                 fontWeight: FontWeight.w600,
                 fontSize: 18.5),
           ),
           centerTitle: true,
-          iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
+          iconTheme: IconThemeData(
+              color: Theme.of(context).textSelectionTheme.selectionColor),
           elevation: 1.0,
           brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
           backgroundColor: Theme.of(context).canvasColor,
@@ -244,7 +245,7 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
                     fontWeight: FontWeight.bold,
                   ),
                   textStyle: TextStyle(
-                    color: Theme.of(context).textSelectionColor,
+                    color: Theme.of(context).textSelectionTheme.selectionColor,
                     fontWeight: FontWeight.w600,
                   ),
                   length: 6,
@@ -259,8 +260,10 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
                       fieldHeight: 50,
                       fieldWidth: 40,
                       selectedColor: Theme.of(context).primaryColor,
-                      activeColor: Theme.of(context).textSelectionColor),
-                  cursorColor: Theme.of(context).textSelectionColor,
+                      activeColor:
+                          Theme.of(context).textSelectionTheme.selectionColor),
+                  cursorColor:
+                      Theme.of(context).textSelectionTheme.selectionColor,
                   animationDuration: Duration(milliseconds: 300),
                   backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                   controller: withdrawController.withdrawOtpController,
@@ -301,7 +304,8 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
                     Text(
                       wallet.fee + ' ' + wallet.currency.toUpperCase(),
                       style: TextStyle(
-                        color: Theme.of(context).textSelectionColor,
+                        color:
+                            Theme.of(context).textSelectionTheme.selectionColor,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         fontFamily: "Popins",
@@ -327,7 +331,8 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
                       (withdrawController.totalWithdrawlAmount.value)
                           .toString(),
                       style: TextStyle(
-                        color: Theme.of(context).textSelectionColor,
+                        color:
+                            Theme.of(context).textSelectionTheme.selectionColor,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         fontFamily: "Popins",
@@ -353,7 +358,9 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
                       Text(
                         '* ' + 'crypto_withdraw.screen.instruction1'.tr,
                         style: TextStyle(
-                          color: Theme.of(context).textSelectionColor,
+                          color: Theme.of(context)
+                              .textSelectionTheme
+                              .selectionColor,
                           fontSize: 12,
                           fontFamily: "Popins",
                         ),
@@ -362,7 +369,9 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
                       Text(
                         '* ' + 'crypto_withdraw.screen.instruction2'.tr,
                         style: TextStyle(
-                          color: Theme.of(context).textSelectionColor,
+                          color: Theme.of(context)
+                              .textSelectionTheme
+                              .selectionColor,
                           fontSize: 12,
                           fontFamily: "Popins",
                         ),

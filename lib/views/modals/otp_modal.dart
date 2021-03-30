@@ -76,9 +76,12 @@ class OTPModal extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5),
                     fieldHeight: 50,
                     fieldWidth: 40,
-                    selectedColor: Theme.of(context).textSelectionColor,
-                    activeColor: Theme.of(context).textSelectionColor),
-                cursorColor: Theme.of(context).textSelectionColor,
+                    selectedColor:
+                        Theme.of(context).textSelectionTheme.selectionColor,
+                    activeColor:
+                        Theme.of(context).textSelectionTheme.selectionColor),
+                cursorColor:
+                    Theme.of(context).textSelectionTheme.selectionColor,
                 animationDuration: Duration(milliseconds: 300),
                 controller: otpController.otpTextController,
                 autoDisposeControllers: false,
@@ -134,7 +137,7 @@ class OTPModal extends StatelessWidget {
           //       style: TextStyle(
           //           fontFamily: 'Popins',
           //           fontSize: 14.5,
-          //           color: Theme.of(context).textSelectionColor,
+          //           color: Theme.of(context).textSelectionTheme.selectionColor,
           //           fontWeight: FontWeight.w500),
           //     ),
           //     color: Theme.of(context).canvasColor,
@@ -170,7 +173,7 @@ class OTPModal extends StatelessWidget {
     //     ),
     //   ]),
     //   actions: <Widget>[
-    //     FlatButton(
+    //     MaterialButton(
     //       onPressed: () {
     //         disableOTP();
     //       },
@@ -186,7 +189,7 @@ class OTPModal extends StatelessWidget {
     //         ),
     //       ),
     //     ),
-    //     FlatButton(
+    //     MaterialButton(
     //       onPressed: () {
     //         Navigator.pop(context);
     //       },
@@ -196,7 +199,7 @@ class OTPModal extends StatelessWidget {
     //       child: Text(
     //         "Cancel",
     //         style: TextStyle(
-    //           color: Theme.of(context).textSelectionColor,
+    //           color: Theme.of(context).textSelectionTheme.selectionColor,
     //           fontSize: 10,
     //           fontFamily: "Popins",
     //         ),

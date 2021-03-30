@@ -33,12 +33,13 @@ class Security extends GetView<HomeController> {
         title: Text(
           'security.screen.title'.tr,
           style: TextStyle(
-              color: Theme.of(context).textSelectionColor,
+              color: Theme.of(context).textSelectionTheme.selectionColor,
               fontFamily: "Gotik",
               fontWeight: FontWeight.w600,
               fontSize: 18.5),
         ),
-        iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
+        iconTheme: IconThemeData(
+            color: Theme.of(context).textSelectionTheme.selectionColor),
         elevation: 0.8,
       ),
       body: SingleChildScrollView(
@@ -76,7 +77,7 @@ class Security extends GetView<HomeController> {
                       size: 24.0,
                     ),
                     "security.screen.password".tr,
-                    FlatButton(
+                    MaterialButton(
                       onPressed: () {
                         Get.to(ChangePassword());
                       },
@@ -190,7 +191,8 @@ class Security extends GetView<HomeController> {
                         fontWeight: FontWeight.bold,
                       ),
                       textStyle: TextStyle(
-                        color: Theme.of(context).textSelectionColor,
+                        color:
+                            Theme.of(context).textSelectionTheme.selectionColor,
                         fontWeight: FontWeight.w600,
                       ),
                       length: 6,
@@ -205,9 +207,11 @@ class Security extends GetView<HomeController> {
                         fieldHeight: 50,
                         fieldWidth: 40,
                         selectedColor: Theme.of(context).primaryColor,
-                        activeColor: Theme.of(context).textSelectionColor,
+                        activeColor:
+                            Theme.of(context).textSelectionTheme.selectionColor,
                       ),
-                      cursorColor: Theme.of(context).textSelectionColor,
+                      cursorColor:
+                          Theme.of(context).textSelectionTheme.selectionColor,
                       animationDuration: Duration(milliseconds: 300),
                       backgroundColor: Theme.of(context).canvasColor,
                       controller: otpController.otpTextController,

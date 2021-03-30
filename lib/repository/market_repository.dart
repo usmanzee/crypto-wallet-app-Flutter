@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:b4u_wallet/models/KLine.dart';
 import 'package:b4u_wallet/models/sparkline_response.dart';
 import 'package:b4u_wallet/network/api_provider.dart';
@@ -18,7 +17,7 @@ class MarketRepository {
   Future<SparkLineResponse> fetchMarketSparkLineData(String marketId) async {
     apiProvider = new ApiProvider();
     final response =
-        await apiProvider.get('peatio/public/markets/${marketId}/spark-line');
+        await apiProvider.get('peatio/public/markets/$marketId/spark-line');
     // await apiProvider.get('peatio/public/markets/eurusd/spark-line');
     return sparkLineResponseFromJson(response);
   }
@@ -34,9 +33,9 @@ class MarketRepository {
     RequestHeaders requestHeaders = new RequestHeaders();
     apiProvider.headers = requestHeaders.setAuthHeaders();
     final response = await apiProvider
-        .get('peatio/public/markets/${market}/k-line?period=${period}');
+        .get('peatio/public/markets/$market/k-line?period=$period');
     // final response = await apiProvider.get(
-    //     'peatio/public/markets/${market}/k-line?period=${period}&time_from=${from}&time_to=${to}');
+    //     'peatio/public/markets/$market/k-line?period=$period&time_from=$from&time_to=$to');
     return kLineFromJson(response);
   }
 }

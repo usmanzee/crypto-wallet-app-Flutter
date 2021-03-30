@@ -17,12 +17,13 @@ class VerificationLevel extends StatelessWidget {
         title: Text(
           'Verification',
           style: TextStyle(
-              color: Theme.of(context).textSelectionColor,
+              color: Theme.of(context).textSelectionTheme.selectionColor,
               fontFamily: "Gotik",
               fontWeight: FontWeight.w600,
               fontSize: 18.5),
         ),
-        iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
+        iconTheme: IconThemeData(
+            color: Theme.of(context).textSelectionTheme.selectionColor),
         elevation: 0.8,
       ),
       body: Obx(() {
@@ -255,7 +256,7 @@ class VerificationLevel extends StatelessWidget {
   Widget renderTitle(
       BuildContext context, String text, int userLevel, int targetLevel) {
     if (userLevel == (targetLevel - 1)) {
-      return Text("${text}.unverified.title".tr,
+      return Text("$text.unverified.title".tr,
           style: TextStyle(
               fontFamily: 'Popins',
               fontSize: 16.5,
@@ -263,19 +264,19 @@ class VerificationLevel extends StatelessWidget {
               color: Theme.of(context).primaryColor));
     } else {
       if (userLevel < targetLevel) {
-        return Text("${text}.unverified.title".tr,
+        return Text("$text.unverified.title".tr,
             style: TextStyle(
                 fontFamily: 'Popins',
                 fontSize: 16.5,
                 fontWeight: FontWeight.w600,
-                color: Theme.of(context).textSelectionColor));
+                color: Theme.of(context).textSelectionTheme.selectionColor));
       } else {
-        return Text("${text}.title".tr,
+        return Text("$text.title".tr,
             style: TextStyle(
                 fontFamily: 'Popins',
                 fontSize: 16.5,
                 fontWeight: FontWeight.w600,
-                color: Theme.of(context).textSelectionColor));
+                color: Theme.of(context).textSelectionTheme.selectionColor));
       }
     }
   }
@@ -285,14 +286,14 @@ class VerificationLevel extends StatelessWidget {
     if (verificationController.labelsList.length > 0) {
       if (userLevel == (targetLevel - 1)) {
         if (isPendingLabel) {
-          return Text("${text}.unverified.title".tr,
+          return Text("$text.unverified.title".tr,
               style: TextStyle(
                   fontFamily: 'Popins',
                   fontSize: 16.5,
                   fontWeight: FontWeight.w600,
-                  color: Theme.of(context).textSelectionColor));
+                  color: Theme.of(context).textSelectionTheme.selectionColor));
         } else {
-          return Text("${text}.unverified.title".tr,
+          return Text("$text.unverified.title".tr,
               style: TextStyle(
                   fontFamily: 'Popins',
                   fontSize: 16.5,
@@ -301,27 +302,27 @@ class VerificationLevel extends StatelessWidget {
         }
       }
       if (userLevel == targetLevel) {
-        return Text("${text}.title".tr,
+        return Text("$text.title".tr,
             style: TextStyle(
                 fontFamily: 'Popins',
                 fontSize: 16.5,
                 fontWeight: FontWeight.w600,
-                color: Theme.of(context).textSelectionColor));
+                color: Theme.of(context).textSelectionTheme.selectionColor));
       } else {
-        return Text("${text}.unverified.title".tr,
+        return Text("$text.unverified.title".tr,
             style: TextStyle(
                 fontFamily: 'Popins',
                 fontSize: 16.5,
                 fontWeight: FontWeight.w600,
-                color: Theme.of(context).textSelectionColor));
+                color: Theme.of(context).textSelectionTheme.selectionColor));
       }
     } else {
-      return Text("${text}.unverified.title".tr,
+      return Text("$text.unverified.title".tr,
           style: TextStyle(
               fontFamily: 'Popins',
               fontSize: 16.5,
               fontWeight: FontWeight.w600,
-              color: Theme.of(context).textSelectionColor));
+              color: Theme.of(context).textSelectionTheme.selectionColor));
     }
   }
 
@@ -356,7 +357,7 @@ class VerificationLevel extends StatelessWidget {
     return (levelSatisfied)
         ? Icon(
             Icons.done,
-            color: Theme.of(context).textSelectionColor,
+            color: Theme.of(context).textSelectionTheme.selectionColor,
           )
         : Container(
             height: 0,

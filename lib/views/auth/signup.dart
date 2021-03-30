@@ -1,16 +1,12 @@
 import 'package:b4u_wallet/views/webview_container.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:b4u_wallet/views/setting/themes.dart';
 import 'package:b4u_wallet/component/custom_text_field.dart';
 import 'package:b4u_wallet/controllers/RegisterController.dart';
 
 import 'package:form_field_validator/form_field_validator.dart';
 
 class SignUp extends StatelessWidget {
-  final ThemeBloc themeBloc;
-  SignUp({this.themeBloc});
-
   final RegisterController registerController = Get.put(RegisterController());
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -81,7 +77,8 @@ class SignUp extends StatelessWidget {
                       style: TextStyle(
                         fontFamily: 'Popins',
                         fontSize: 32.0,
-                        color: Theme.of(context).textSelectionColor,
+                        color:
+                            Theme.of(context).textSelectionTheme.selectionColor,
                         fontWeight: FontWeight.w600,
                       ),
                     )),
@@ -93,7 +90,8 @@ class SignUp extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'Popins',
                       fontSize: 16.0,
-                      color: Theme.of(context).textSelectionColor,
+                      color:
+                          Theme.of(context).textSelectionTheme.selectionColor,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -125,7 +123,8 @@ class SignUp extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'Popins',
                       fontSize: 16.0,
-                      color: Theme.of(context).textSelectionColor,
+                      color:
+                          Theme.of(context).textSelectionTheme.selectionColor,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -157,7 +156,8 @@ class SignUp extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'Popins',
                       fontSize: 16.0,
-                      color: Theme.of(context).textSelectionColor,
+                      color:
+                          Theme.of(context).textSelectionTheme.selectionColor,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -194,7 +194,8 @@ class SignUp extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'Popins',
                       fontSize: 16.0,
-                      color: Theme.of(context).textSelectionColor,
+                      color:
+                          Theme.of(context).textSelectionTheme.selectionColor,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -235,7 +236,9 @@ class SignUp extends StatelessWidget {
                       child: Text(
                         "register.screen.field.agree".tr,
                         style: TextStyle(
-                            color: Theme.of(context).textSelectionColor,
+                            color: Theme.of(context)
+                                .textSelectionTheme
+                                .selectionColor,
                             fontFamily: "Popins",
                             fontSize: 12.0),
                       ),

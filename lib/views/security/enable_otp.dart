@@ -27,12 +27,13 @@ class EnableOTP extends GetView<OTPController> {
         title: Text(
           'security_enable2fa.screen.title'.tr,
           style: TextStyle(
-              color: Theme.of(context).textSelectionColor,
+              color: Theme.of(context).textSelectionTheme.selectionColor,
               fontFamily: "Gotik",
               fontWeight: FontWeight.w600,
               fontSize: 18.5),
         ),
-        iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
+        iconTheme: IconThemeData(
+            color: Theme.of(context).textSelectionTheme.selectionColor),
         elevation: 0.8,
       ),
       body: Obx(
@@ -81,7 +82,7 @@ class EnableOTP extends GetView<OTPController> {
     return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          FlatButton(
+          MaterialButton(
             onPressed: onStepCancel,
             height: 30.0,
             minWidth: 40.0,
@@ -91,7 +92,7 @@ class EnableOTP extends GetView<OTPController> {
               style: TextStyle(fontSize: 10),
             ),
           ),
-          FlatButton(
+          MaterialButton(
             onPressed: onStepContinue,
             height: 30.0,
             minWidth: 40.0,

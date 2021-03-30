@@ -1,12 +1,8 @@
 import 'package:b4u_wallet/controllers/splash_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:b4u_wallet/views/setting/themes.dart';
 import 'package:get/get.dart';
 
 class SplashScreen extends StatelessWidget {
-  final ThemeBloc themeBloc;
-  SplashScreen({this.themeBloc});
-
   final splashController = Get.put(SplashController());
 
   Widget build(BuildContext context) {

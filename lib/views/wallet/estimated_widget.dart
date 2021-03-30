@@ -45,7 +45,7 @@ class EstimatedWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              FlatButton(
+              MaterialButton(
                 height: 32.0,
                 minWidth: 120.0,
                 textColor: Theme.of(context).accentColor,
@@ -68,7 +68,7 @@ class EstimatedWidget extends StatelessWidget {
               SizedBox(
                 width: 8.0,
               ),
-              FlatButton(
+              MaterialButton(
                 height: 32.0,
                 minWidth: 120.0,
                 textColor: Theme.of(context).accentColor,

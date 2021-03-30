@@ -13,13 +13,14 @@ class WalletCustomAppbar extends StatelessWidget {
       title: Text(
         title,
         style: TextStyle(
-            color: Theme.of(context).textSelectionColor,
+            color: Theme.of(context).textSelectionTheme.selectionColor,
             fontFamily: "Gotik",
             fontWeight: FontWeight.w600,
             fontSize: 18.5),
       ),
       centerTitle: true,
-      iconTheme: IconThemeData(color: Theme.of(context).textSelectionColor),
+      iconTheme: IconThemeData(
+          color: Theme.of(context).textSelectionTheme.selectionColor),
       elevation: 1.0,
       brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
       backgroundColor: Theme.of(context).canvasColor,

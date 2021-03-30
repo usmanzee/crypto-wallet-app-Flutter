@@ -68,7 +68,9 @@ class OpenOrders extends StatelessWidget {
                       child: Text(
                         'open_order.screen.hide_pair'.tr,
                         style: TextStyle(
-                            color: Theme.of(context).textSelectionColor,
+                            color: Theme.of(context)
+                                .textSelectionTheme
+                                .selectionColor,
                             fontWeight: FontWeight.w700,
                             fontFamily: "Popins",
                             fontSize: 15.0),
@@ -76,14 +78,16 @@ class OpenOrders extends StatelessWidget {
                     ),
                   ]),
                 if (openOrdersController.openOrdersSortedList.length > 0)
-                  FlatButton(
+                  MaterialButton(
                     height: 30.0,
                     minWidth: 40.0,
                     color: Theme.of(context).canvasColor,
                     child: Text(
                       "open_order.screen.cancel_all.button".tr,
                       style: TextStyle(
-                          color: Theme.of(context).textSelectionColor,
+                          color: Theme.of(context)
+                              .textSelectionTheme
+                              .selectionColor,
                           fontWeight: FontWeight.w700,
                           fontFamily: "Popins",
                           fontSize: 12.0),
@@ -170,7 +174,8 @@ class OpenOrders extends StatelessWidget {
                 child: Text(
                   openOrder.market.toUpperCase(),
                   style: TextStyle(
-                      color: Theme.of(context).textSelectionColor,
+                      color:
+                          Theme.of(context).textSelectionTheme.selectionColor,
                       fontWeight: FontWeight.w700,
                       fontFamily: "Popins",
                       fontSize: 15.0),
@@ -246,7 +251,9 @@ class OpenOrders extends StatelessWidget {
                         Text(
                           (executedVolume).toStringAsFixed(2),
                           style: TextStyle(
-                              color: Theme.of(context).textSelectionColor,
+                              color: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor,
                               fontWeight: FontWeight.w700,
                               fontFamily: "Popins",
                               fontSize: 13.0),
@@ -256,7 +263,9 @@ class OpenOrders extends StatelessWidget {
                           style: TextStyle(
                               fontFamily: "Popins",
                               fontSize: 13.0,
-                              color: Theme.of(context).textSelectionColor),
+                              color: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor),
                         ),
                         Text(
                           double.parse(openOrder.originVolume)
@@ -275,7 +284,9 @@ class OpenOrders extends StatelessWidget {
                         double.parse(openOrder.price)
                             .toStringAsFixed(priceFixed),
                         style: TextStyle(
-                            color: Theme.of(context).textSelectionColor,
+                            color: Theme.of(context)
+                                .textSelectionTheme
+                                .selectionColor,
                             fontWeight: FontWeight.w700,
                             fontFamily: "Popins",
                             fontSize: 13.0),
@@ -283,7 +294,7 @@ class OpenOrders extends StatelessWidget {
                     ]),
               ),
               Spacer(flex: 1),
-              FlatButton(
+              MaterialButton(
                 height: 30.0,
                 minWidth: 40.0,
                 color: Theme.of(context).canvasColor,
@@ -291,7 +302,8 @@ class OpenOrders extends StatelessWidget {
                 child: Text(
                   "open_order.screen.cancel.button".tr,
                   style: TextStyle(
-                      color: Theme.of(context).textSelectionColor,
+                      color:
+                          Theme.of(context).textSelectionTheme.selectionColor,
                       fontWeight: FontWeight.w700,
                       fontFamily: "Popins",
                       fontSize: 12.0),
@@ -320,14 +332,14 @@ class OpenOrders extends StatelessWidget {
     //   title: Text(cancelAll ? 'Cancel All Orders?' : 'Cancel Order?'),
     //   content: Text('You may not be able to revent this action.'),
     //   actions: [
-    //     FlatButton(
+    //     MaterialButton(
     //       textColor: Theme.of(context).hintColor.withOpacity(0.8),
     //       onPressed: () {
     //         Get.back();
     //       },
     //       child: Text('CANCEL'),
     //     ),
-    //     FlatButton(
+    //     MaterialButton(
     //       textColor: Theme.of(context).primaryColor,
     //       onPressed: () {
     //         Get.back();
