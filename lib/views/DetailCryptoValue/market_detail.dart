@@ -547,7 +547,7 @@ class MarketDetail extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "market_detail.screen.high".tr,
+                            "market_detail.screen.low".tr,
                             style: TextStyle(
                                 color: Theme.of(context).hintColor,
                                 fontFamily: "Popins",
