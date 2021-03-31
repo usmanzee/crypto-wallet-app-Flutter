@@ -142,10 +142,6 @@ class NotificationList extends GetView<NotificationController> {
                       // height: 88.0,
                       child: Column(
                         children: <Widget>[
-                          Divider(
-                            height: 5.0,
-                            color: Theme.of(context).hintColor,
-                          ),
                           ListTile(
                             title: Text(
                               '${notifications[position].subject}',
@@ -193,6 +189,10 @@ class NotificationList extends GetView<NotificationController> {
                             ]),
                             onTap: () =>
                                 _onTapItem(context, notifications[position]),
+                          ),
+                          Divider(
+                            height: 5.0,
+                            color: Theme.of(context).hintColor,
                           ),
                         ],
                       ),

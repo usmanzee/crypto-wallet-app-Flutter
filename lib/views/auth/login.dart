@@ -13,8 +13,9 @@ class Login extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final _passwordValidator = MultiValidator([
-    PatternValidator(r'((?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*\W)\w.{6,18}\w)',
-        errorText: 'login.screen.password.error'.tr)
+    // PatternValidator(r'((?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*\W)\w.{6,18}\w)',
+    //     errorText: 'login.screen.password.error'.tr)
+    RequiredValidator(errorText: 'login.screen.password_required.error'.tr)
   ]);
 
   final _emailValidator = MultiValidator([

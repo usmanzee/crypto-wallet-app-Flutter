@@ -186,15 +186,23 @@ class MarketDetail extends StatelessWidget {
                                               if (slot['name'] == 'show_more')
                                                 if (controller
                                                     .dropdownShown.value)
-                                                  Icon(Icons.keyboard_arrow_up)
+                                                  Icon(Icons.arrow_drop_up)
                                                 else
-                                                  Icon(Icons
-                                                      .keyboard_arrow_down),
+                                                  Icon(Icons.arrow_drop_down),
                                               Text(
                                                 slot['key'],
                                                 style: TextStyle(
                                                     fontFamily: 'Popins',
                                                     fontSize: 12,
+                                                    color: controller
+                                                                    .selectedOption[
+                                                                'key'] ==
+                                                            slot['key']
+                                                        ? Theme.of(context)
+                                                            .primaryColor
+                                                        : Theme.of(context)
+                                                            .textSelectionTheme
+                                                            .selectionColor,
                                                     fontWeight:
                                                         controller.selectedOption[
                                                                     'key'] ==
@@ -217,12 +225,13 @@ class MarketDetail extends StatelessWidget {
                                             MediaQuery.of(context).size.width /
                                                 4 *
                                                 3,
-                                        padding: EdgeInsets.only(left: 16.0),
+                                        padding: EdgeInsets.all(16),
                                         decoration: BoxDecoration(
-                                          color: Colors.white,
+                                          color: Theme.of(context).canvasColor,
                                           boxShadow: <BoxShadow>[
                                             BoxShadow(
-                                              color: Colors.grey[300],
+                                              color:
+                                                  Theme.of(context).hintColor,
                                               blurRadius: 3,
                                               spreadRadius: 2,
                                             )
@@ -235,6 +244,8 @@ class MarketDetail extends StatelessWidget {
                                             mainAxisSpacing: 1,
                                             crossAxisSpacing: 1,
                                           ),
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
                                           itemBuilder: (_, index) =>
                                               GestureDetector(
                                             onTap: () {
@@ -261,20 +272,37 @@ class MarketDetail extends StatelessWidget {
                                               style: TextStyle(
                                                   fontFamily: 'Popins',
                                                   fontSize: 12,
-                                                  fontWeight: controller
-                                                                  .selectedOption[
+                                                  color: controller.selectedOption[
                                                               'key'] ==
-                                                          controller
-                                                                  .lineGraphTimeSlots[
+                                                          controller.lineGraphTimeSlots[
                                                               index]['key']
-                                                      ? FontWeight.w900
-                                                      : FontWeight.w500),
+                                                      ? Theme.of(context)
+                                                          .primaryColor
+                                                      : Theme.of(context)
+                                                          .textSelectionTheme
+                                                          .selectionColor,
+                                                  fontWeight:
+                                                      controller.selectedOption[
+                                                                  'key'] ==
+                                                              controller.lineGraphTimeSlots[
+                                                                  index]['key']
+                                                          ? FontWeight.w900
+                                                          : FontWeight.w500),
                                             ),
                                           ),
                                           itemCount: controller
                                               .lineGraphTimeSlots.length,
                                         ),
                                       ),
+                                    ),
+                                    Container(
+                                      width: double.infinity,
+                                      margin: EdgeInsets.only(top: 8.0),
+                                      height: 2,
+                                      decoration: BoxDecoration(
+                                          color: Theme.of(context)
+                                              .hintColor
+                                              .withOpacity(0.1)),
                                     ),
 
                                     if (controller.isKLineLoading.value)

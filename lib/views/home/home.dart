@@ -454,7 +454,9 @@ class Card extends StatelessWidget {
                 child: Container(
                   height: 30.0,
                   child: new Sparkline(
-                    data: !marketController.isSparkLinesLoading.value
+                    data: !marketController.isSparkLinesLoading.value &&
+                            (formatedMarket.sparkLineData != null &&
+                                formatedMarket.sparkLineData.length > 0)
                         ? formatedMarket.sparkLineData
                         : data,
                     lineWidth: 0.3,

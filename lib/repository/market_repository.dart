@@ -18,7 +18,7 @@ class MarketRepository {
     apiProvider = new ApiProvider();
     final response =
         await apiProvider.get('peatio/public/markets/$marketId/spark-line');
-    // await apiProvider.get('peatio/public/markets/eurusd/spark-line');
+    // await apiProvider.get('peatio/public/markets/ethbtc/spark-line');
     return sparkLineResponseFromJson(response);
   }
 

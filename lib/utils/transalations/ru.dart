@@ -38,6 +38,8 @@ const Map<String, String> ru = {
   'login.screen.field.password_hint': 'Пожалуйста введите пароль',
   'login.screen.email.error':
       'Пожалуйста, введите действующий адрес электронной почты',
+  'login.screen.password_required.error':
+      'Пожалуйста, введите правильный пароль',
   'login.screen.password.error':
       'Пароли должны состоять из 8 символов с прописными и специальными буквами.',
   'login.screen.forget_password': 'Забыть пароль',

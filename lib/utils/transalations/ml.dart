@@ -34,6 +34,7 @@ const Map<String, String> ml = {
   'login.screen.field.email_hint': 'Sila masukkan e-mel',
   'login.screen.field.password_hint': 'Sila masukkan kata laluan',
   'login.screen.email.error': 'Sila taipkan alamat e-mel yang sah',
+  'login.screen.password_required.error': 'Sila masukkan kata laluan yang sah',
   'login.screen.password.error':
       'Kata laluan mestilah 8 aksara dengan huruf besar dan huruf khas',
   'login.screen.forget_password': 'Lupa kata laluan',

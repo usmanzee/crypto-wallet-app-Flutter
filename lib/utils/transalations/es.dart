@@ -35,6 +35,8 @@ const Map<String, String> es = {
   'login.screen.field.password_hint': 'Por favor, ingrese contraseña',
   'login.screen.email.error':
       'Escriba una dirección de correo electrónico válida',
+  'login.screen.password_required.error':
+      'Por favor introduce una contraseña válida',
   'login.screen.password.error':
       'Las contraseñas deben tener 8 caracteres con mayúsculas y letras especiales',
   'login.screen.forget_password': 'Contraseña olvidada',

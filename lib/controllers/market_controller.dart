@@ -153,7 +153,6 @@ class MarketController extends GetxController {
           await _marketRepository.fetchMarketSparkLineData(formatedMarket.id);
       return response.data[0].data;
     } catch (error) {
-      print('error' + error);
       return [];
     }
   }
