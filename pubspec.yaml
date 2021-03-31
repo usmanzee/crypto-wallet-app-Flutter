@@ -39,7 +39,10 @@ dependencies:
   crypto_font_icons: ^0.1.0+1
   share: ^0.6.5+4
   connectivity: ^2.0.2
-  k_chart: ^0.1.2
+  # k_chart: ^0.1.2
+  k_chart:
+    git:
+      url: https://github.com/HafeezRai/k_chart
   intl: ^0.16.1
   web_socket_channel: ^1.2.0
   intl_phone_field: ^1.4.2
@@ -53,7 +56,6 @@ dependencies:
   sentry_flutter: ^4.0.6
   get_storage: ^1.4.0
   overlay_container: ^0.0.5+1
-
 
 
 dev_dependencies: 
