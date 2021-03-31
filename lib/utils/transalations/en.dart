@@ -39,6 +39,7 @@ const Map<String, String> en = {
   'login.screen.password.error':
       'Passwords must be 8 characters with uppercase and special letters',
   'login.screen.forget_password': 'Forget Password',
+  'login.screen.button.login': 'Login',
 
   //App Register Screen
   'register.screen.login': 'Login',
@@ -51,7 +52,7 @@ const Map<String, String> en = {
   'register.screen.field.password_hint': 'Please enter password',
   'register.screen.field.confirm_password_hint': 'Please confirm password',
   'register.screen.field.referral_id_hint': 'Please Enter referral ID',
-  'register.screen.field.agree': "I agree to B4U's",
+  'register.screen.field.agree': "I agree to B4U Wallet's",
   'register.screen.field.terms': "Terms of Use",
   'register.screen.field.terms.error':
       "You need to check the terms of use to proceed.",
@@ -59,6 +60,7 @@ const Map<String, String> en = {
   'register.screen.password.error':
       'Passwords must be 8 characters with uppercase and special letters',
   'register.screen.confirm_password.error': 'Passwords do not match',
+  'register.screen.button.register': 'Register',
 
   //App Forget Password Screen
   'forget_password.screen.login': 'Login',

@@ -41,7 +41,6 @@ const Map<String, String> es = {
       'Las contraseñas deben tener 8 caracteres con mayúsculas y letras especiales',
   'login.screen.forget_password': 'Contraseña olvidada',
   'login.screen.button.login': 'Acceso',
-  'login.screen.button.register': 'Registrarse',
 
   //App Register Screen
   'register.screen.login': 'Acceso',
@@ -54,7 +53,7 @@ const Map<String, String> es = {
   'register.screen.field.password_hint': 'Por favor, ingrese contraseña',
   'register.screen.field.confirm_password_hint': 'Confirme la contraseña',
   'register.screen.field.referral_id_hint': 'Ingrese el ID de referencia',
-  'register.screen.field.agree': "Estoy de acuerdo con B4U's",
+  'register.screen.field.agree': "Estoy de acuerdo con B4U Wallet's",
   'register.screen.field.terms': "Condiciones de uso",
   'register.screen.field.terms.error':
       "Debe consultar los términos de uso para continuar.",
@@ -63,6 +62,7 @@ const Map<String, String> es = {
   'register.screen.password.error':
       'Las contraseñas deben tener 8 caracteres con mayúsculas y letras especiales',
   'register.screen.confirm_password.error': 'Las contraseñas no coinciden',
+  'register.screen.button.register': 'Registrarse',
 
   //App Forget Password Screen
   'forget_password.screen.login': 'Acceso',

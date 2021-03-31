@@ -91,6 +91,7 @@ class TwoFA extends StatelessWidget {
                     cursorColor:
                         Theme.of(context).textSelectionTheme.selectionColor,
                     animationDuration: Duration(milliseconds: 300),
+                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                     controller: _loginController.twoFATextController,
                     autoDisposeControllers: false,
                     keyboardType: TextInputType.number,

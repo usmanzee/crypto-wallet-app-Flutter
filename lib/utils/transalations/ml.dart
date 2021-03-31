@@ -39,7 +39,6 @@ const Map<String, String> ml = {
       'Kata laluan mestilah 8 aksara dengan huruf besar dan huruf khas',
   'login.screen.forget_password': 'Lupa kata laluan',
   'login.screen.button.login': 'Log masuk',
-  'login.screen.button.register': 'Daftar',
 
   //App Register Screen
   'register.screen.login': 'Log masuk',
@@ -52,7 +51,7 @@ const Map<String, String> ml = {
   'register.screen.field.password_hint': 'Sila masukkan kata laluan',
   'register.screen.field.confirm_password_hint': 'Sila sahkan kata laluan',
   'register.screen.field.referral_id_hint': 'Sila masukkan ID rujukan',
-  'register.screen.field.agree': "Saya bersetuju dengan B4U",
+  'register.screen.field.agree': "Saya bersetuju dengan B4U Wallet's",
   'register.screen.field.terms': "Syarat Penggunaan",
   'register.screen.field.terms.error':
       "Anda perlu menyemak syarat penggunaan untuk meneruskan.",
@@ -60,6 +59,7 @@ const Map<String, String> ml = {
   'register.screen.password.error':
       'Kata laluan mestilah 8 aksara dengan huruf besar dan huruf khas',
   'register.screen.confirm_password.error': 'Kata laluan tidak sepadan',
+  'register.screen.button.register': 'Daftar',
 
   //App Forget Password Screen
   'forget_password.screen.login': 'Log masuk',

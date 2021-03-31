@@ -16,9 +16,10 @@ class Setting extends StatelessWidget {
   }
 
   void share(BuildContext context) {
-    final _shareLink = 'Play store link';
+    var shareLink =
+        'B4U Wallet\nFor Android: https://play.google.com/store/apps/details?id=com.b4uwallet.android\nFor IOS: https://apps.apple.com/us/app/b4u-wallet/id1491304459';
     final RenderBox box = context.findRenderObject();
-    Share.share(_shareLink,
+    Share.share(shareLink,
         subject: 'B4U Wallet',
         sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
   }

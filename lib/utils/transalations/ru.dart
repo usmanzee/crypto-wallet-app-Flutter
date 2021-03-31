@@ -44,7 +44,6 @@ const Map<String, String> ru = {
       'Пароли должны состоять из 8 символов с прописными и специальными буквами.',
   'login.screen.forget_password': 'Забыть пароль',
   'login.screen.button.login': 'Авторизоваться',
-  'login.screen.button.register': 'регистр',
 
   //App Register Screen
   'register.screen.login': 'Авторизоваться',
@@ -61,7 +60,7 @@ const Map<String, String> ru = {
       'Пожалуйста, подтвердите пароль',
   'register.screen.field.referral_id_hint':
       'Пожалуйста, введите реферальный ID',
-  'register.screen.field.agree': "Я согласен с B4U's",
+  'register.screen.field.agree': "Я согласен с B4U Wallet's",
   'register.screen.field.terms': "Условия эксплуатации",
   'register.screen.field.terms.error':
       "Чтобы продолжить, вам необходимо ознакомиться с условиями использования.",
@@ -70,6 +69,7 @@ const Map<String, String> ru = {
   'register.screen.password.error':
       'Пароли должны состоять из 8 символов с прописными и специальными буквами.',
   'register.screen.confirm_password.error': 'Пароли не соответствуют',
+  'register.screen.button.register': 'регистр',
 
   //App Forget Password Screen
   'forget_password.screen.login': 'Авторизоваться',

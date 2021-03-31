@@ -31,7 +31,7 @@ class _WalletState extends State<DepositCrypto> {
         wallet.name +
             ' Address: ' +
             _shareAddress +
-            "\n\nhttps://ewallet.b4uwallet.com/",
+            "\n\nhttps://www.b4uwallet.com/",
         subject: 'B4U Wallet',
         sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
   }
