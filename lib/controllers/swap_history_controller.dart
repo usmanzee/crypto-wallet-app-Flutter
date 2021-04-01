@@ -1,3 +1,4 @@
+import 'package:b4u_wallet/controllers/HomeController.dart';
 import 'package:b4u_wallet/controllers/SnackbarController.dart';
 import 'package:b4u_wallet/controllers/error_controller.dart';
 import 'package:b4u_wallet/models/swap_history_response.dart';
@@ -9,10 +10,23 @@ class SwapHistoryController extends GetxController {
   var swapHistoryList = <SwapHistoryResponse>[].obs;
   SnackbarController snackbarController;
   ErrorController errorController = new ErrorController();
+  HomeController homeController = Get.find<HomeController>();
 
   @override
-  void onInit() {
-    fetchHistory();
+  void onInit() async {
+    isLoading(true);
+    await Future.delayed(Duration(seconds: 2));
+    await homeController.fetchMemberLevels();
+    if (!homeController.fetchingMemberLevel.value &&
+        !homeController.publicMemberLevel.value.isBlank) {
+      if (homeController.user.value.level >=
+          homeController.publicMemberLevel.value.trading.minimumLevel) {
+        fetchHistory();
+      } else {
+        isLoading(false);
+      }
+    }
+
     super.onInit();
   }
 
