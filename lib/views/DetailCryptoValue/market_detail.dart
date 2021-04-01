@@ -220,12 +220,13 @@ class MarketDetail extends StatelessWidget {
                                         0,
                                       ),
                                       child: Container(
-                                        height: 60,
+                                        height: 50,
                                         width:
                                             MediaQuery.of(context).size.width /
                                                 4 *
                                                 3,
-                                        padding: EdgeInsets.all(16),
+                                        // padding: EdgeInsets.only(
+                                        //     left: 16.0, right: 16.0),
                                         decoration: BoxDecoration(
                                           color: Theme.of(context).canvasColor,
                                           boxShadow: <BoxShadow>[
@@ -237,64 +238,67 @@ class MarketDetail extends StatelessWidget {
                                             )
                                           ],
                                         ),
-                                        child: GridView.builder(
-                                          gridDelegate:
-                                              SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 7,
-                                            mainAxisSpacing: 1,
-                                            crossAxisSpacing: 1,
-                                          ),
-                                          physics:
-                                              NeverScrollableScrollPhysics(),
-                                          itemBuilder: (_, index) =>
-                                              GestureDetector(
-                                            onTap: () {
-                                              controller.dropdownShown.value =
-                                                  false;
+                                        child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: controller
+                                                .lineGraphTimeSlots
+                                                .map((lineGraphTimeSlot) {
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  controller.dropdownShown
+                                                      .value = false;
 
-                                              var moreOption = controller
-                                                  .initialLineGraphTimeSlots
-                                                  .firstWhere((element) {
-                                                return element['name'] ==
-                                                    'show_more';
-                                              });
-                                              moreOption['key'] = controller
-                                                      .lineGraphTimeSlots[index]
-                                                  ['key'];
-                                              controller.updateKlineTimeOption(
-                                                  controller.lineGraphTimeSlots[
-                                                      index]);
-                                            },
-                                            child: Text(
-                                              controller
-                                                      .lineGraphTimeSlots[index]
-                                                  ['key'],
-                                              style: TextStyle(
-                                                  fontFamily: 'Popins',
-                                                  fontSize: 12,
-                                                  color: controller.selectedOption[
-                                                              'key'] ==
-                                                          controller.lineGraphTimeSlots[
-                                                              index]['key']
-                                                      ? Theme.of(context)
-                                                          .primaryColor
-                                                      : Theme.of(context)
-                                                          .textSelectionTheme
-                                                          .selectionColor,
-                                                  fontWeight:
-                                                      controller.selectedOption[
+                                                  var moreOption = controller
+                                                      .initialLineGraphTimeSlots
+                                                      .firstWhere((element) {
+                                                    return element['name'] ==
+                                                        'show_more';
+                                                  });
+                                                  moreOption['key'] =
+                                                      lineGraphTimeSlot['key'];
+                                                  controller
+                                                      .updateKlineTimeOption(
+                                                          lineGraphTimeSlot);
+                                                },
+                                                child: Text(
+                                                  lineGraphTimeSlot['key'],
+                                                  style: TextStyle(
+                                                      fontFamily: 'Popins',
+                                                      fontSize: 12,
+                                                      color: controller
+                                                                      .selectedOption[
                                                                   'key'] ==
-                                                              controller.lineGraphTimeSlots[
-                                                                  index]['key']
+                                                              lineGraphTimeSlot[
+                                                                  'key']
+                                                          ? Theme.of(context)
+                                                              .primaryColor
+                                                          : Theme.of(context)
+                                                              .textSelectionTheme
+                                                              .selectionColor,
+                                                      fontWeight: controller
+                                                                      .selectedOption[
+                                                                  'key'] ==
+                                                              lineGraphTimeSlot[
+                                                                  'key']
                                                           ? FontWeight.w900
                                                           : FontWeight.w500),
-                                            ),
-                                          ),
-                                          itemCount: controller
-                                              .lineGraphTimeSlots.length,
-                                        ),
+                                                ),
+                                              );
+                                            }).toList()),
+                                        //     Text(
+                                        //   "I render outside the \nwidget hierarchy.",
+                                        //   style: TextStyle(
+                                        //       fontFamily: 'Popins',
+                                        //       fontSize: 12,
+                                        //       color: Theme.of(context)
+                                        //           .textSelectionTheme
+                                        //           .selectionColor,
+                                        //       fontWeight: FontWeight.w500),
+                                        // ),
                                       ),
                                     ),
+
                                     Container(
                                       width: double.infinity,
                                       margin: EdgeInsets.only(top: 8.0),
