@@ -2,7 +2,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Environment {
   static String getApiBaseUrl() {
-    String url = env['DEV_URL'];
+    String url = env['PRODUCTION_URL'];
     if (env['APP_ENV'] == 'dev') {
       url = env['DEV_URL'];
     }
@@ -16,7 +16,7 @@ class Environment {
   }
 
   static String getWSBaseUrl() {
-    String url = env['WS_DEV_URL'];
+    String url = env['WS_PRODUCTION_URL'];
     if (env['APP_ENV'] == 'dev') {
       url = env['WS_DEV_URL'];
     }
