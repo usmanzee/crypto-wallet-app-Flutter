@@ -649,7 +649,7 @@ class LimitOrderForm extends StatelessWidget {
                       child: Center(
                           child: Text(
                         formatedMarket.baseUnit != null
-                            ? "trading.screen.tab.limit.buy.button".trParams({
+                            ? "trading.screen.tab.limit.sell.button".trParams({
                                 'currency':
                                     formatedMarket.baseUnit.toUpperCase()
                               })

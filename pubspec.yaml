@@ -27,7 +27,6 @@ dependencies:
   bmnav: ^0.3.4
   carousel_slider: ^3.0.0
   percent_indicator: ^1.0.15
-  shared_preferences: ^0.5.12+4
   form_field_validator: ^1.0.1
   http: ^0.12.2
   flushbar: ^1.10.4
