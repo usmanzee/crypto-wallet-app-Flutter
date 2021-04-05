@@ -77,6 +77,8 @@ class OTPController extends GetxController {
   void disableOTP() async {
     try {
       disablingOTP(true);
+      Get.dialog(Center(child: CircularProgressIndicator()),
+          barrierDismissible: false);
       var response =
           await _userRepository.disableOTP({'code': otpTextController.text});
       print(response);

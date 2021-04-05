@@ -9,6 +9,7 @@ const Map<String, String> ru = {
   'server.not.available': 'Невозможно связаться с сервером',
   'server.error': 'Ошибка сервера',
   'server_exception': 'Что-то пошло не так на стороне сервера',
+  'request.limit.exceeds': 'Превышен лимит запросов.',
 
   '2fa.paste_code_dialog.title': 'Вставить код',
   '2fa.paste_code_dialog.content': 'Вы хотите вставить ',

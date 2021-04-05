@@ -89,7 +89,11 @@ class EnableOTP extends GetView<OTPController> {
             color: Theme.of(context).hintColor,
             child: Text(
               "security_enable2fa.screen.button.back".tr,
-              style: TextStyle(fontSize: 10),
+              style: TextStyle(
+                fontFamily: "Popins",
+                color: Colors.white,
+                fontSize: 10,
+              ),
             ),
           ),
           MaterialButton(
@@ -100,7 +104,8 @@ class EnableOTP extends GetView<OTPController> {
             textColor: Colors.white,
             child: Text(
               "security_enable2fa.screen.button.next".tr,
-              style: TextStyle(fontSize: 10),
+              style: TextStyle(
+                  fontFamily: "Popins", color: Colors.white, fontSize: 10),
             ),
           ),
         ]);

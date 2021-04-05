@@ -13,6 +13,7 @@ const Map<String, String> es = {
   '2fa.paste_code_dialog.content': 'Quieres pegar ',
   '2fa.paste_code_dialog.button.cancel': 'Cancelar',
   '2fa.paste_code_dialog.button.paste': 'Pegar',
+  'request.limit.exceeds': 'Se supera el límite de solicitudes.',
 
   //App Bottom Navbar
   'bottom.navbar.home': 'Hogar',

@@ -36,22 +36,24 @@ class ErrorController {
           break;
 
         case 403:
-          if (errors.contains('identity.session.invalid_otp') > -1) {
-            showMessage(errors);
-          }
-          if (errors.contains('jwt.decode_and_verify') > -1) {
-            showMessage(errors);
-          }
+          // if (errors.contains('identity.session.invalid_otp') > -1) {
+          //   showMessage(errors);
+          // }
+          // if (errors.contains('jwt.decode_and_verify') > -1) {
+          // }
+          showMessage(errors);
           break;
 
         case 429:
-          showMessage(errors);
+          var errorsArr = ['request.limit.exceeds'];
+          showMessage(errorsArr);
           break;
         case 422:
         default:
           showMessage(errors);
       }
     } catch (error) {
+      print(error);
       snackbarController = new SnackbarController(
           title: 'Error', message: 'server_exception'.tr);
       snackbarController.showSnackbar();
@@ -59,7 +61,9 @@ class ErrorController {
   }
 
   void showMessage(errors) {
+    print('Here');
     for (var error in errors) {
+      print(error);
       snackbarController =
           new SnackbarController(title: 'Error', message: error.toString().tr);
       snackbarController.showSnackbar();

@@ -9,6 +9,7 @@ const Map<String, String> en = {
   'server.not.available': 'Unable to communitate with the server',
   'server.error': 'Server Error',
   'server_exception': 'Something went wrong on the server side',
+  'request.limit.exceeds': 'Request limit exceeds.',
 
   '2fa.paste_code_dialog.title': 'Paste Code',
   '2fa.paste_code_dialog.content': 'Do you want to paste ',

@@ -26,13 +26,15 @@ class SnackbarController extends GetxController {
               //   Icons.check,
               //   color: Colors.white,
               // ),
-              SizedBox(
-                width: 12.0,
-              ),
-              Text(
-                readAbleMessage,
-                style: TextStyle(
-                  color: Get.isDarkMode ? Colors.black : Colors.white,
+              // SizedBox(
+              //   width: 12.0,
+              // ),
+              Flexible(
+                child: Text(
+                  readAbleMessage,
+                  style: TextStyle(
+                    color: Get.isDarkMode ? Colors.black : Colors.white,
+                  ),
                 ),
               ),
             ],

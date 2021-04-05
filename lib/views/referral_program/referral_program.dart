@@ -29,31 +29,6 @@ class ReferralProgram extends StatelessWidget {
         iconTheme: IconThemeData(
             color: Theme.of(context).textSelectionTheme.selectionColor),
         elevation: 1,
-        // bottom: PreferredSize(
-        //   preferredSize: Size.fromHeight(120.0),
-        //   child: Container(
-        //     color: Theme.of(context).primaryColor,
-        //     padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-        //     child: Column(
-        //       children: [
-        //         Padding(
-        //           padding: EdgeInsets.only(bottom: 8.0),
-        //           child: Text('referral.screen.referral_title'.tr,
-        //               style: TextStyle(
-        //                   color: Colors.white,
-        //                   fontFamily: "Gotik",
-        //                   fontWeight: FontWeight.w600,
-        //                   fontSize: 22)),
-        //         ),
-        //         Padding(
-        //           padding: EdgeInsets.only(bottom: 8.0),
-        //           child: Text('referral.screen.referral_description'.tr,
-        //               style: TextStyle(color: Colors.white, fontSize: 12)),
-        //         )
-        //       ],
-        //     ),
-        //   ),
-        // ),
       ),
       body: SingleChildScrollView(
           child: Container(
@@ -63,11 +38,12 @@ class ReferralProgram extends StatelessWidget {
           children: [
             Container(
               color: Theme.of(context).primaryColor,
-              padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+              padding: EdgeInsets.all(8.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(bottom: 8.0),
+                    padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
                     child: Text('referral.screen.referral_title'.tr,
                         style: TextStyle(
                             color: Colors.white,
@@ -84,7 +60,7 @@ class ReferralProgram extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+              padding: EdgeInsets.fromLTRB(8, 16, 8, 0),
               child: Text('referral.screen.referral_instruction.title'.tr,
                   style: TextStyle(
                       color:

@@ -8,6 +8,7 @@ const Map<String, String> ml = {
   'server.not.available': 'Tidak dapat berkomunikasi dengan pelayan',
   'server.error': 'Ralat Pelayan',
   'server_exception': 'Kesalahan berlaku di sisi pelayan',
+  'request.limit.exceeds': 'Had permintaan melebihi.',
 
   '2fa.paste_code_dialog.title': 'Tampal Kod',
   '2fa.paste_code_dialog.content': 'Adakah anda mahu menampal ',

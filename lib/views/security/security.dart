@@ -18,6 +18,7 @@ class Security extends GetView<HomeController> {
   void disableOTP() async {
     final _formState = _otpFormKey.currentState;
     if (_formState.validate()) {
+      Get.back();
       _formState.save();
       otpController.disableOTP();
     }
