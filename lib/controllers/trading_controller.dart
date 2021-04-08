@@ -245,6 +245,7 @@ class TradingController extends GetxController {
       if (data.containsKey('${market.value.id}.ob-inc')) {
         var updatedAsksData = [];
         var updatedBidsData = [];
+        print(data);
         if (marketController.orderBookSequence == -1) {
           // print("OrderBook increment received before snapshot");
           return;
@@ -400,7 +401,7 @@ class TradingController extends GetxController {
       double buyPrice = double.parse(limitOrderBuyPriceTextController.text);
       double buyAmount = double.parse(limitOrderBuyAmountTextController.text);
       double buyTotal = buyPrice * buyAmount;
-      limitOrderBuyTotalTextController.text = buyTotal.toString();
+      limitOrderBuyTotalTextController.text = buyTotal.toStringAsFixed(6);
     } else {
       limitOrderBuyTotalTextController.text = '';
     }
@@ -412,7 +413,7 @@ class TradingController extends GetxController {
       double buyPrice = double.parse(limitOrderBuyPriceTextController.text);
       double buyTotal = double.parse(limitOrderBuyTotalTextController.text);
       double buyAmount = buyTotal / buyPrice;
-      limitOrderBuyAmountTextController.text = buyAmount.toString();
+      limitOrderBuyAmountTextController.text = buyAmount.toStringAsFixed(6);
     } else {
       limitOrderBuyAmountTextController.text = '';
     }
@@ -424,7 +425,7 @@ class TradingController extends GetxController {
       double sellPrice = double.parse(limitOrderSellPriceTextController.text);
       double sellAmount = double.parse(limitOrderSellAmountTextController.text);
       double sellTotal = sellPrice * sellAmount;
-      limitOrderSellTotalTextController.text = sellTotal.toString();
+      limitOrderSellTotalTextController.text = sellTotal.toStringAsFixed(6);
     } else {
       limitOrderSellTotalTextController.text = '';
     }
@@ -436,7 +437,7 @@ class TradingController extends GetxController {
       double sellPrice = double.parse(limitOrderSellPriceTextController.text);
       double sellTotal = double.parse(limitOrderSellTotalTextController.text);
       double sellAmount = sellTotal / sellPrice;
-      limitOrderSellAmountTextController.text = sellAmount.toString();
+      limitOrderSellAmountTextController.text = sellAmount.toStringAsFixed(6);
     } else {
       limitOrderSellAmountTextController.text = '';
     }
@@ -448,7 +449,7 @@ class TradingController extends GetxController {
       double buyPrice = market.value.last;
       double buyAmount = double.parse(marketOrderBuyAmountTextController.text);
       double buyTotal = buyPrice * buyAmount;
-      marketOrderBuyTotalTextController.text = buyTotal.toString();
+      marketOrderBuyTotalTextController.text = buyTotal.toStringAsFixed(6);
     } else {
       marketOrderBuyTotalTextController.text = '';
     }
@@ -459,7 +460,7 @@ class TradingController extends GetxController {
       double buyPrice = market.value.last;
       double buyTotal = double.parse(marketOrderBuyTotalTextController.text);
       double buyAmount = buyTotal / buyPrice;
-      marketOrderBuyAmountTextController.text = buyAmount.toString();
+      marketOrderBuyAmountTextController.text = buyAmount.toStringAsFixed(6);
     } else {
       marketOrderBuyAmountTextController.text = '';
     }
@@ -472,7 +473,7 @@ class TradingController extends GetxController {
       double sellAmount =
           double.parse(marketOrderSellAmountTextController.text);
       double sellTotal = sellPrice * sellAmount;
-      marketOrderSellTotalTextController.text = sellTotal.toString();
+      marketOrderSellTotalTextController.text = sellTotal.toStringAsFixed(6);
     } else {
       marketOrderSellTotalTextController.text = '';
     }
@@ -484,7 +485,7 @@ class TradingController extends GetxController {
       double sellPrice = market.value.last;
       double sellTotal = double.parse(marketOrderSellTotalTextController.text);
       double sellAmount = sellTotal / sellPrice;
-      marketOrderSellAmountTextController.text = sellAmount.toString();
+      marketOrderSellAmountTextController.text = sellAmount.toStringAsFixed(6);
     } else {
       marketOrderSellAmountTextController.text = '';
     }

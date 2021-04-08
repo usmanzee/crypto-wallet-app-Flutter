@@ -175,7 +175,7 @@ Widget walletList(WalletClass.Wallet wallet, BuildContext ctx) {
                       Text(
                         (double.parse(wallet.balance) +
                                 double.parse(wallet.locked))
-                            .toStringAsFixed(2),
+                            .toStringAsFixed(wallet.type == 'fiat' ? 2 : 6),
                         style: TextStyle(
                             fontFamily: "Popins",
                             fontSize: 14.5,

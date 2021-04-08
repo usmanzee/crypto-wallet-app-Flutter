@@ -41,38 +41,31 @@ class Home extends StatelessWidget {
                 ? posts.map((post) {
                     return Builder(
                       builder: (BuildContext context) {
-                        return Container(
-                            width: MediaQuery.of(context).size.width,
-                            margin: EdgeInsets.symmetric(horizontal: 5.0),
-                            decoration: BoxDecoration(color: Colors.amber),
-                            child: GestureDetector(
-                                child: Image.network(
-                                  post['_embedded']['wp:featuredmedia'][0]
-                                          ['media_details']['sizes']
-                                      ['medium_large']['source_url'],
-                                  fit: BoxFit.cover,
-                                  loadingBuilder: (BuildContext context,
-                                      Widget child,
-                                      ImageChunkEvent loadingProgress) {
-                                    if (loadingProgress == null) return child;
-                                    return Center(
-                                      child: CircularProgressIndicator(
-                                        value: loadingProgress
-                                                    .expectedTotalBytes !=
-                                                null
-                                            ? loadingProgress
-                                                    .cumulativeBytesLoaded /
-                                                loadingProgress
-                                                    .expectedTotalBytes
-                                            : null,
-                                      ),
-                                    );
-                                  },
-                                ),
-                                onTap: () {
-                                  Get.to(
-                                      WebViewContainer('Post', post['link']));
-                                }));
+                        return GestureDetector(
+                            child: Image.network(
+                              post['_embedded']['wp:featuredmedia'][0]
+                                      ['media_details']['sizes']['medium_large']
+                                  ['source_url'],
+                              fit: BoxFit.cover,
+                              loadingBuilder: (BuildContext context,
+                                  Widget child,
+                                  ImageChunkEvent loadingProgress) {
+                                if (loadingProgress == null) return child;
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    value: loadingProgress.expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes
+                                        : null,
+                                  ),
+                                );
+                              },
+                            ),
+                            onTap: () {
+                              Get.to(WebViewContainer('Post', post['link']));
+                            });
                       },
                     );
                   }).toList()
@@ -106,7 +99,7 @@ class Home extends StatelessWidget {
                 ).toList()
               : banners.map(
                   (image) {
-                    int index = posts.indexOf(image);
+                    int index = banners.indexOf(image);
                     return Container(
                       width: 8.0,
                       height: 8.0,
@@ -195,68 +188,120 @@ class Home extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
               child: Container(
-                height: 100.0,
-                margin: const EdgeInsets.only(top: 4.0),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme.of(context).hintColor,
-                        offset: Offset(0.0, 0.0), //(x,y)
-                        blurRadius: 6.0,
-                      ),
-                    ],
-                    color: Theme.of(context).scaffoldBackgroundColor),
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: <Widget>[
-                    _linksCard(
-                        context,
-                        Icon(
-                          Icons.vertical_align_bottom,
-                          size: 26.0,
-                          color: Theme.of(context).accentColor,
-                        ), () {
-                      homeController.isLoggedIn.value
-                          ? Get.toNamed('/wallets-search',
-                              arguments: {'searchFrom': 'deposit'})
-                          : Get.toNamed('/login');
-                    }, "home.screen.link.card.deposit".tr),
-                    _linksCard(
-                        context,
-                        Icon(
-                          Icons.vertical_align_top,
-                          size: 26.0,
-                          color: Theme.of(context).accentColor,
-                        ), () {
-                      homeController.isLoggedIn.value
-                          ? Get.toNamed('/wallets-search',
-                              arguments: {'searchFrom': 'withdraw'})
-                          : Get.toNamed('/login');
-                    }, "home.screen.link.card.withdraw".tr),
-                    _linksCard(
-                        context,
-                        Icon(
-                          Icons.swap_horiz,
-                          size: 26.0,
-                          color: Theme.of(context).accentColor,
-                        ), () {
-                      homeController.isLoggedIn.value
-                          ? homeController.selectedNavIndex = 3
-                          : Get.toNamed('/login');
-                    }, "home.screen.link.card.buy_sell".tr),
-                    _linksCard(
-                        context,
-                        Icon(
-                          Icons.insights,
-                          size: 26.0,
-                          color: Theme.of(context).accentColor,
-                        ), () {
-                      homeController.selectedNavIndex = 2;
-                    }, "home.screen.link.card.trading".tr),
-                  ],
-                ),
-              ),
+                  height: 100.0,
+                  margin: const EdgeInsets.only(top: 4.0),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Theme.of(context).hintColor,
+                          offset: Offset(0.0, 0.0), //(x,y)
+                          blurRadius: 6.0,
+                        ),
+                      ],
+                      color: Theme.of(context).scaffoldBackgroundColor),
+                  child:
+                      // ListView(
+                      //   scrollDirection: Axis.horizontal,
+                      //   children: <Widget>[
+                      //     _linksCard(
+                      //         context,
+                      //         Icon(
+                      //           Icons.vertical_align_bottom,
+                      //           size: 26.0,
+                      //           color: Theme.of(context).accentColor,
+                      //         ), () {
+                      //       homeController.isLoggedIn.value
+                      //           ? Get.toNamed('/wallets-search',
+                      //               arguments: {'searchFrom': 'deposit'})
+                      //           : Get.toNamed('/login');
+                      //     }, "home.screen.link.card.deposit".tr),
+                      //     _linksCard(
+                      //         context,
+                      //         Icon(
+                      //           Icons.vertical_align_top,
+                      //           size: 26.0,
+                      //           color: Theme.of(context).accentColor,
+                      //         ), () {
+                      //       homeController.isLoggedIn.value
+                      //           ? Get.toNamed('/wallets-search',
+                      //               arguments: {'searchFrom': 'withdraw'})
+                      //           : Get.toNamed('/login');
+                      //     }, "home.screen.link.card.withdraw".tr),
+                      //     _linksCard(
+                      //         context,
+                      //         Icon(
+                      //           Icons.swap_horiz,
+                      //           size: 26.0,
+                      //           color: Theme.of(context).accentColor,
+                      //         ), () {
+                      //       homeController.isLoggedIn.value
+                      //           ? homeController.selectedNavIndex = 3
+                      //           : Get.toNamed('/login');
+                      //     }, "home.screen.link.card.buy_sell".tr),
+                      //     _linksCard(
+                      //         context,
+                      //         Icon(
+                      //           Icons.insights,
+                      //           size: 26.0,
+                      //           color: Theme.of(context).accentColor,
+                      //         ), () {
+                      //       homeController.selectedNavIndex = 2;
+                      //     }, "home.screen.link.card.trading".tr),
+                      //   ],
+                      // ),
+                      Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _linksCard(
+                            context,
+                            Icon(
+                              Icons.vertical_align_bottom,
+                              size: 26.0,
+                              color: Theme.of(context).accentColor,
+                            ), () {
+                          homeController.isLoggedIn.value
+                              ? Get.toNamed('/wallets-search',
+                                  arguments: {'searchFrom': 'deposit'})
+                              : Get.toNamed('/login');
+                        }, "home.screen.link.card.deposit".tr),
+                        _linksCard(
+                            context,
+                            Icon(
+                              Icons.vertical_align_top,
+                              size: 26.0,
+                              color: Theme.of(context).accentColor,
+                            ), () {
+                          homeController.isLoggedIn.value
+                              ? Get.toNamed('/wallets-search',
+                                  arguments: {'searchFrom': 'withdraw'})
+                              : Get.toNamed('/login');
+                        }, "home.screen.link.card.withdraw".tr),
+                        _linksCard(
+                            context,
+                            Icon(
+                              Icons.swap_horiz,
+                              size: 26.0,
+                              color: Theme.of(context).accentColor,
+                            ), () {
+                          homeController.isLoggedIn.value
+                              ? homeController.selectedNavIndex = 3
+                              : Get.toNamed('/login');
+                        }, "home.screen.link.card.buy_sell".tr),
+                        _linksCard(
+                            context,
+                            Icon(
+                              Icons.insights,
+                              size: 26.0,
+                              color: Theme.of(context).accentColor,
+                            ), () {
+                          homeController.selectedNavIndex = 2;
+                        }, "home.screen.link.card.trading".tr),
+                      ],
+                    ),
+                  )),
             ),
             Obx(() {
               if (marketController.isLoading.value)
@@ -631,45 +676,44 @@ Widget _cardLoaded(
 }
 
 Widget _linksCard(context, Widget icon, VoidCallback onPressed, String name) {
-  return Padding(
-    padding:
-        const EdgeInsets.only(left: 8.0, right: 1.0, bottom: 8.0, top: 8.0),
-    child: InkWell(
-      onTap: onPressed,
-      child: Container(
-        width: 100.0,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-            color: Theme.of(context).scaffoldBackgroundColor,
-            boxShadow: [
-              BoxShadow(
-                  color: Color(0xFF656565).withOpacity(0.15),
-                  blurRadius: 1.0,
-                  spreadRadius: 1.0,
-                  offset: Offset(0.1, 1.0))
-            ]),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                height: 25.0,
-                width: 25.0,
-                child: icon,
-              ),
-              SizedBox(
-                height: 8.0,
-              ),
-              Text(name,
-                  style: TextStyle(
-                      color:
-                          Theme.of(context).textSelectionTheme.selectionColor,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: "Popins"))
-            ],
+  return InkWell(
+    onTap: onPressed,
+    child: Container(
+      // width: 100.0,
+      padding: EdgeInsets.only(left: 14.0, right: 14.0),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          color: Theme.of(context).scaffoldBackgroundColor,
+          boxShadow: [
+            BoxShadow(
+                color: Color(0xFF656565).withOpacity(0.15),
+                blurRadius: 1.0,
+                spreadRadius: 1.0,
+                offset: Offset(0.1, 1.0))
+          ]),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          icon,
+          SizedBox(
+            height: 8.0,
           ),
-        ),
+          Flexible(
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.15,
+              child: new Text(
+                name,
+                style: TextStyle(
+                    fontFamily: "Popins",
+                    color: Theme.of(context).textSelectionTheme.selectionColor,
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.bold),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ),
+        ],
       ),
     ),
   );

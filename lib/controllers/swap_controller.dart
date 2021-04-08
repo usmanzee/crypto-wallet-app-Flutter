@@ -268,7 +268,7 @@ class SwapController extends GetxController {
 
       var receivable = exchangeRateRes -
           (exchangeRateRes * double.parse(toSelectedWallet.value.swapFee));
-      receivableAmount.value = receivable.toString();
+      receivableAmount.value = receivable.toStringAsFixed(6);
 
       isLoadingExchangeRate(false);
     } catch (error) {
@@ -313,7 +313,7 @@ class SwapController extends GetxController {
               orElse: () => null);
         }
         var orderObj = {
-          'volume': fromAmountTextController.text,
+          'volume': receivableAmount.value,
           'market': existingMarket.id,
           'price': existingMarket.last.toString(),
           'side': orderSide,

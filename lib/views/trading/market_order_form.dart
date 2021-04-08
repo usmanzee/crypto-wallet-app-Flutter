@@ -50,8 +50,7 @@ class MarketOrderForm extends StatelessWidget {
                     children: [
                       GestureDetector(
                           onTap: () {
-                            removeValueFromInput(context, 'buy', 'amount',
-                                formatedMarket.amountPrecision);
+                            removeValueFromInput(context, 'buy', 'amount', 6);
                           },
                           child: Icon(Icons.remove)),
                       Flexible(
@@ -84,8 +83,7 @@ class MarketOrderForm extends StatelessWidget {
                       ),
                       GestureDetector(
                           onTap: () {
-                            addValueToInput(context, 'buy', 'amount',
-                                formatedMarket.amountPrecision);
+                            addValueToInput(context, 'buy', 'amount', 6);
                           },
                           child: Icon(Icons.add)),
                     ],
@@ -352,8 +350,7 @@ class MarketOrderForm extends StatelessWidget {
                     children: [
                       GestureDetector(
                           onTap: () {
-                            removeValueFromInput(context, 'sell', 'amount',
-                                formatedMarket.amountPrecision);
+                            removeValueFromInput(context, 'sell', 'amount', 6);
                           },
                           child: Icon(Icons.remove)),
                       Flexible(
@@ -386,8 +383,7 @@ class MarketOrderForm extends StatelessWidget {
                       ),
                       GestureDetector(
                           onTap: () {
-                            addValueToInput(context, 'sell', 'amount',
-                                formatedMarket.amountPrecision);
+                            addValueToInput(context, 'sell', 'amount', 6);
                           },
                           child: Icon(Icons.add)),
                     ],

@@ -206,8 +206,8 @@ class OrderBook extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 0.0),
                   child: Text(
                     bid[1] != ''
-                        ? double.parse(bid[1]).toStringAsFixed(2)
-                        : double.parse('0').toStringAsFixed(2),
+                        ? double.parse(bid[1]).toStringAsFixed(6)
+                        : double.parse('0').toStringAsFixed(6),
                     style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontFamily: "Gotik",
@@ -319,8 +319,8 @@ class OrderBook extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 0.0),
                   child: Text(
                       ask[1] != ''
-                          ? double.parse(ask[1]).toStringAsFixed(2)
-                          : double.parse('0').toStringAsFixed(2),
+                          ? double.parse(ask[1]).toStringAsFixed(6)
+                          : double.parse('0').toStringAsFixed(6),
                       style: TextStyle(
                           fontWeight: FontWeight.w700,
                           fontFamily: "Gotik",

@@ -134,7 +134,10 @@ class HistoryDetail {
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    depositHistoryItem.txid,
+                    depositHistoryItem.txid != '' &&
+                            depositHistoryItem.txid != null
+                        ? depositHistoryItem.txid
+                        : '--',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontFamily: "Popins"),
@@ -325,7 +328,10 @@ class HistoryDetail {
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    withdrawHistoryItem.rid,
+                    withdrawHistoryItem.rid != null &&
+                            withdrawHistoryItem.rid != ''
+                        ? withdrawHistoryItem.rid
+                        : '---',
                     style: TextStyle(fontFamily: "Popins"),
                   ),
                 ),

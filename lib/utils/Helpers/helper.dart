@@ -16,7 +16,7 @@ class Helper {
     List<dynamic> total = [];
     List<dynamic> volArr = [];
     for (var i = 0; i < list.length; i++) {
-      volArr.add(double.parse(list[i][1]));
+      volArr.add(double.parse(list[i][1] != '' ? list[i][1] : '0'));
     }
     for (var i = 0; i < volArr.length; i++) {
       var accumulator = i - 1 > -1 ? total[i - 1] : 0;
@@ -30,7 +30,8 @@ class Helper {
       ...accumulateVolume(bids),
       ...accumulateVolume(asks)
     ];
-    final maxValue = combinedList.cast<num>().reduce(max);
+    final maxValue =
+        combinedList.length > 0 ? combinedList.cast<num>().reduce(max) : 0.0;
     return maxValue;
   }
 

@@ -89,6 +89,7 @@ class DepositHistoryList extends StatelessWidget {
         DateFormat('hh:mm:ss').format(depositHistoryItem.createdAt);
     return InkWell(
       onTap: () {
+        print(depositHistoryItem.txid);
         HistoryDetail.showDepositHistoryDetail(
             context,
             depositHistoryItem,

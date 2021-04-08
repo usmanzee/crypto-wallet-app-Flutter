@@ -31,14 +31,14 @@ class ReferralProgram extends StatelessWidget {
         elevation: 1,
       ),
       body: SingleChildScrollView(
-          child: Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
+              width: double.infinity,
               color: Theme.of(context).primaryColor,
-              padding: EdgeInsets.all(8.0),
+              padding: EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -96,7 +96,7 @@ class ReferralProgram extends StatelessWidget {
             })
           ],
         ),
-      )),
+      ),
     );
   }
 }

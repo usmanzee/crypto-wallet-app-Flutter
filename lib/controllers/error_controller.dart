@@ -61,7 +61,6 @@ class ErrorController {
   }
 
   void showMessage(errors) {
-    print('Here');
     for (var error in errors) {
       print(error);
       snackbarController =

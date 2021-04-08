@@ -145,7 +145,7 @@ class OpenOrders extends StatelessWidget {
     //     double.parse(openOrder.originVolume) * double.parse(openOrder.price);
     var filled =
         ((executedVolume / double.parse(openOrder.originVolume)) * 100);
-    var priceFixed = formatedMarket.pricePrecision;
+    // var priceFixed = formatedMarket.pricePrecision;
     // var amountFixed = formatedMarket.amountPrecision;
     String formattedDate =
         DateFormat('yyyy-MM-dd hh:mm:ss').format(openOrder.createdAt);
@@ -249,7 +249,7 @@ class OpenOrders extends StatelessWidget {
                     children: [
                       Row(children: [
                         Text(
-                          (executedVolume).toStringAsFixed(2),
+                          (executedVolume).toStringAsFixed(6),
                           style: TextStyle(
                               color: Theme.of(context)
                                   .textSelectionTheme
@@ -269,7 +269,7 @@ class OpenOrders extends StatelessWidget {
                         ),
                         Text(
                           double.parse(openOrder.originVolume)
-                              .toStringAsFixed(2),
+                              .toStringAsFixed(6),
                           style: TextStyle(
                             fontFamily: "Popins",
                             fontSize: 13.0,
@@ -281,8 +281,7 @@ class OpenOrders extends StatelessWidget {
                         height: 4,
                       ),
                       Text(
-                        double.parse(openOrder.price)
-                            .toStringAsFixed(priceFixed),
+                        double.parse(openOrder.price).toStringAsFixed(2),
                         style: TextStyle(
                             color: Theme.of(context)
                                 .textSelectionTheme
