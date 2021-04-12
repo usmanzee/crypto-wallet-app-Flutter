@@ -154,16 +154,17 @@ class WithdrawCrypto extends StatelessWidget {
                         filled: true,
                         fillColor: Colors.transparent,
                         suffixIcon: IconButton(
+                          iconSize: 40,
+                          icon: Icon(Icons.qr_code_scanner),
                           onPressed: () async {
+                            FocusScope.of(context).unfocus();
+                            FocusScope.of(context).canRequestFocus = false;
                             var scannedResult =
                                 await Get.to(() => QRViewExample());
                             withdrawController.withdrawAddressController.text =
                                 scannedResult;
-                            print('scannedResult');
-                            print('here');
-                            print(scannedResult);
+                            FocusScope.of(context).canRequestFocus = true;
                           },
-                          icon: Icon(Icons.qr_code_scanner),
                         ),
                         // labelText: 'Address',
                         border: OutlineInputBorder(
@@ -275,7 +276,7 @@ class WithdrawCrypto extends StatelessWidget {
                         errorMaxLines: 3,
                         filled: true,
                         fillColor: Colors.transparent,
-                        labelText: 'Amount',
+                        // labelText: 'Amount',
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5))),
                   ),
