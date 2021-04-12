@@ -92,11 +92,8 @@ class _WalletState extends State<DepositCrypto> {
                                       : Container(),
                                   Column(children: [
                                     _showAddress(context),
-                                    Container(
-                                      width: double.infinity,
-                                      height: 1,
-                                      decoration: BoxDecoration(
-                                          color: Theme.of(context).hintColor),
+                                    Divider(
+                                      color: Theme.of(context).hintColor,
                                     ),
                                     SizedBox(
                                       height: 16.0,
@@ -105,12 +102,8 @@ class _WalletState extends State<DepositCrypto> {
                                   (depositController.depositTag.value != '')
                                       ? Column(children: [
                                           _showTag(context),
-                                          Container(
-                                            width: double.infinity,
-                                            height: 1,
-                                            decoration: BoxDecoration(
-                                                color: Theme.of(context)
-                                                    .hintColor),
+                                          Divider(
+                                            color: Theme.of(context).hintColor,
                                           ),
                                           SizedBox(
                                             height: 16.0,
@@ -118,14 +111,14 @@ class _WalletState extends State<DepositCrypto> {
                                         ])
                                       : Container(),
                                   _showQRCode(context),
+                                  Divider(
+                                    color: Theme.of(context).hintColor,
+                                  ),
                                   SizedBox(
                                     height: 8.0,
                                   ),
-                                  Container(
-                                    width: double.infinity,
-                                    height: 1,
-                                    decoration: BoxDecoration(
-                                        color: Theme.of(context).hintColor),
+                                  Divider(
+                                    color: Theme.of(context).hintColor,
                                   ),
                                   SizedBox(
                                     height: 16.0,
@@ -271,7 +264,6 @@ class _WalletState extends State<DepositCrypto> {
 
   Widget _showAddress(context) {
     return Container(
-      // padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
       width: double.infinity,
       decoration:
           BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10.0))),
@@ -280,19 +272,19 @@ class _WalletState extends State<DepositCrypto> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
                 wallet.currency.toUpperCase() +
                     ' ' +
                     'crypto_deposit.screen.address'.tr,
                 style: TextStyle(
-                  color: Theme.of(context).textSelectionTheme.selectionColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
+                  color: Theme.of(context).hintColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
                   fontFamily: "Popins",
                 ),
               ),
-              Spacer(flex: 1),
               MaterialButton(
                 height: 30.0,
                 minWidth: 40.0,
@@ -300,9 +292,8 @@ class _WalletState extends State<DepositCrypto> {
                 child: Text(
                   "crypto_deposit.screen.button.copy_address".tr,
                   style: TextStyle(
-                    color: Theme.of(context).textSelectionTheme.selectionColor,
+                    color: Theme.of(context).hintColor,
                     fontSize: 10,
-                    // fontWeight: FontWeight.w600,
                     fontFamily: "Popins",
                   ),
                 ),
@@ -318,8 +309,8 @@ class _WalletState extends State<DepositCrypto> {
             depositController.depositAddress.value,
             textAlign: TextAlign.start,
             style: TextStyle(
-              color: Theme.of(context).hintColor.withOpacity(0.6),
-              fontSize: 12,
+              color: Theme.of(context).textSelectionTheme.selectionColor,
+              fontSize: 14,
               fontFamily: "Popins",
             ),
           ),
@@ -345,7 +336,7 @@ class _WalletState extends State<DepositCrypto> {
         child: new Text(
           "crypto_deposit.screen.button.share".tr,
           style: TextStyle(
-            color: Theme.of(context).textSelectionTheme.selectionColor,
+            color: Theme.of(context).hintColor,
             fontSize: 10,
             fontFamily: "Popins",
           ),
@@ -363,8 +354,8 @@ class _WalletState extends State<DepositCrypto> {
       padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Theme.of(context).errorColor.withOpacity(0.3),
-      ),
+          color: Colors.red.withOpacity(0.2),
+          borderRadius: BorderRadius.all(Radius.circular(5.0))),
       child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         Icon(
           Icons.emoji_objects,
@@ -378,8 +369,8 @@ class _WalletState extends State<DepositCrypto> {
               'crypto_deposit.screen.tag.instruction'
                   .trParams({'currency': wallet.currency.toUpperCase()}),
               style: TextStyle(
-                color: Theme.of(context).errorColor,
-                fontSize: 10,
+                color: Colors.red,
+                fontSize: 12,
                 fontFamily: "Popins",
               ),
             ),
@@ -391,27 +382,32 @@ class _WalletState extends State<DepositCrypto> {
 
   Widget _showTag(context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
-      // height: 125.0,
       width: double.infinity,
-      decoration: BoxDecoration(
-          // color: Theme.of(context).canvasColor,
-          borderRadius: BorderRadius.all(Radius.circular(10.0))),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10.0))),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
             children: <Widget>[
-              Text(wallet.currency.toUpperCase() + ' Tag'),
+              Text(
+                wallet.currency.toUpperCase() + ' Tag',
+                style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: 'Popins',
+                    color: Theme.of(context).hintColor),
+              ),
               Spacer(flex: 1),
               MaterialButton(
                 height: 30.0,
                 minWidth: 40.0,
                 color: Theme.of(context).canvasColor,
-                // textColor: Colors.white,
                 child: new Text(
                   "crypto_deposit.screen.button.copy_tag".tr,
-                  style: TextStyle(fontSize: 10),
+                  style: TextStyle(
+                      fontSize: 10,
+                      fontFamily: 'Popins',
+                      color: Theme.of(context).hintColor),
                 ),
                 onPressed: () {
                   Helper.copyToClipBoard(depositController.depositTag.value);
@@ -423,7 +419,8 @@ class _WalletState extends State<DepositCrypto> {
           Text(
             depositController.depositTag.value,
             style: TextStyle(
-              color: Theme.of(context).hintColor.withOpacity(0.7),
+              color: Theme.of(context).textSelectionTheme.selectionColor,
+              fontSize: 14,
               fontFamily: "Popins",
             ),
           ),

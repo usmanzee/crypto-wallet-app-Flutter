@@ -1,6 +1,5 @@
 import 'package:b4u_wallet/views/wallet/search_wallet_header.dart';
 import 'package:b4u_wallet/views/wallet/withdraw/qr_code.dart';
-import 'package:b4u_wallet/views/wallet/withdraw/text_page.dart';
 import 'package:flutter/material.dart';
 import 'package:b4u_wallet/models/wallet.dart' as WalletClass;
 import 'package:get/get.dart';
@@ -185,6 +184,20 @@ class WithdrawCrypto extends StatelessWidget {
                               errorMaxLines: 3,
                               filled: true,
                               fillColor: Colors.transparent,
+                              suffixIcon: IconButton(
+                                iconSize: 40,
+                                icon: Icon(Icons.qr_code_scanner),
+                                onPressed: () async {
+                                  FocusScope.of(context).unfocus();
+                                  FocusScope.of(context).canRequestFocus =
+                                      false;
+                                  var scannedResult =
+                                      await Get.to(() => QRViewExample());
+                                  withdrawController.withdrawAddressController
+                                      .text = scannedResult;
+                                  FocusScope.of(context).canRequestFocus = true;
+                                },
+                              ),
                               // labelText: 'Tag',
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5))),
