@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CryptoWithdrawController extends GetxController {
-  // final WalletClass.Wallet wallet;
-  // CryptoWithdrawController({this.wallet});
-  WalletClass.Wallet wallet = Get.arguments['wallet'];
+  final WalletClass.Wallet wallet;
+  CryptoWithdrawController({this.wallet});
+  // WalletClass.Wallet wallet = Get.arguments['wallet'];
 
   TextEditingController withdrawAddressController;
   TextEditingController withdrawTagController;

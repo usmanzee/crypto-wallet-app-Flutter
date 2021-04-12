@@ -31,10 +31,13 @@ class _QRViewExampleState extends State<QRViewExample> {
       extendBodyBehindAppBar: true,
       extendBody: true,
       appBar: AppBar(
+        brightness: Brightness.dark,
+        iconTheme: IconThemeData(color: Colors.white),
         centerTitle: true,
         title: Text(
           'Scan QR-Code',
           style: TextStyle(
+            color: Colors.white,
             fontFamily: 'Popins',
           ),
         ),
@@ -140,7 +143,7 @@ class _QRViewExampleState extends State<QRViewExample> {
       key: qrKey,
       onQRViewCreated: _onQRViewCreated,
       overlay: QrScannerOverlayShape(
-          borderColor: Theme.of(context).primaryColor,
+          borderColor: Colors.white,
           borderRadius: 10,
           borderLength: 30,
           borderWidth: 5,

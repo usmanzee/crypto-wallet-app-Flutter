@@ -107,80 +107,84 @@ class ExtimatedPriceLoadingAnimation extends StatelessWidget {
       padding: EdgeInsets.all(16),
       decoration:
           BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      child: Column(
-        children: [
-          SizedBox(
-            height: 8,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Theme.of(context).hintColor.withOpacity(0.2),
-                  borderRadius: BorderRadius.all(Radius.circular(10.0))),
-              height: 15.0,
-              width: 200.0,
+      child: Shimmer.fromColors(
+        baseColor: Color(0xFF3B4659),
+        highlightColor: Color(0xFF606B78),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 8,
             ),
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Theme.of(context).hintColor.withOpacity(0.2),
-                  borderRadius: BorderRadius.all(Radius.circular(10.0))),
-              height: 15.0,
-              width: 200.0,
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Theme.of(context).hintColor.withOpacity(0.2),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                height: 15.0,
+                width: 200.0,
+              ),
             ),
-          ),
-          SizedBox(
-            width: 8.0,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 4.0),
-            child: Container(
-              height: 15.0,
-              width: 100.0,
-              decoration: BoxDecoration(
-                  color: Theme.of(context).hintColor.withOpacity(0.2),
-                  borderRadius: BorderRadius.all(Radius.circular(10.0))),
+            SizedBox(
+              height: 8,
             ),
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).hintColor.withOpacity(0.2),
-                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                  height: 15.0,
-                  width: 140.0,
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Theme.of(context).hintColor.withOpacity(0.2),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                height: 15.0,
+                width: 200.0,
+              ),
+            ),
+            SizedBox(
+              width: 8.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 4.0),
+              child: Container(
+                height: 15.0,
+                width: 100.0,
+                decoration: BoxDecoration(
+                    color: Theme.of(context).hintColor.withOpacity(0.2),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0))),
+              ),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).hintColor.withOpacity(0.2),
+                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                    height: 15.0,
+                    width: 140.0,
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: 8.0,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).hintColor.withOpacity(0.2),
-                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                  height: 15.0,
-                  width: 140.0,
+                SizedBox(
+                  width: 8.0,
                 ),
-              ),
-            ],
-          )
-        ],
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).hintColor.withOpacity(0.2),
+                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                    height: 15.0,
+                    width: 140.0,
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

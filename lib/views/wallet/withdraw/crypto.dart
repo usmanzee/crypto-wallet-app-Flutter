@@ -10,25 +10,13 @@ import 'package:b4u_wallet/controllers/HomeController.dart';
 import 'package:b4u_wallet/controllers/crypto_withdraw_controller.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-
-// class WithdrawCrypto extends StatefulWidget {
-//   final WalletClass.Wallet wallet;
-//   WithdrawCrypto({Key key, this.wallet}) : super(key: key);
-
-//   @override
-//   _WithdrawCryptoState createState() => _WithdrawCryptoState(wallet: wallet);
-// }
 
 class WithdrawCrypto extends StatelessWidget {
-  // final WalletClass.Wallet wallet;
-  // final CryptoWithdrawController withdrawController;
-  var wallet = Get.arguments['wallet'];
-  final CryptoWithdrawController withdrawController =
-      Get.put(CryptoWithdrawController());
+  final WalletClass.Wallet wallet;
+  final CryptoWithdrawController withdrawController;
 
-  // WithdrawCrypto()
-  //     : withdrawController = Get.put(CryptoWithdrawController(wallet: wallet));
+  WithdrawCrypto({this.wallet})
+      : withdrawController = Get.put(CryptoWithdrawController(wallet: wallet));
 
   final HomeController homeController = Get.find();
 

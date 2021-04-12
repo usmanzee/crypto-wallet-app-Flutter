@@ -155,9 +155,9 @@ class WalletDetail extends StatelessWidget {
                     color: Color(0xFF2ebd85),
                     onPressed: () {
                       if (wallet.type == 'coin') {
-                        Get.to(DepositCrypto(wallet: wallet));
+                        Get.to(() => DepositCrypto(wallet: wallet));
                       } else {
-                        Get.to(DepositFiat(wallet: wallet));
+                        Get.to(() => DepositFiat(wallet: wallet));
                       }
                     },
                     child: Center(
@@ -182,11 +182,11 @@ class WalletDetail extends StatelessWidget {
                     color: Colors.redAccent.withOpacity(0.8),
                     onPressed: () {
                       if (wallet.type == 'coin') {
-                        // Get.to(WithdrawCrypto(wallet: wallet));
-                        Get.toNamed('/withdrawl-crypto',
-                            arguments: {'wallet': wallet});
+                        Get.to(() => WithdrawCrypto(wallet: wallet));
+                        // Get.toNamed('/withdrawl-crypto',
+                        //     arguments: {'wallet': wallet});
                       } else {
-                        Get.to(WithdrawFiat(wallet: wallet));
+                        Get.to(() => WithdrawFiat(wallet: wallet));
                       }
                     },
                     child: Center(

@@ -115,15 +115,15 @@ Widget walletList(BuildContext ctx, WalletClass.Wallet wallet, searchFrom) {
       onTap: () {
         if (wallet.type == 'coin') {
           if (searchFrom == 'deposit') {
-            Get.off(DepositCrypto(wallet: wallet));
+            Get.off(() => DepositCrypto(wallet: wallet));
           } else {
-            // Get.off(WithdrawCrypto(wallet: wallet));
+            Get.off(() => WithdrawCrypto(wallet: wallet));
           }
         } else {
           if (searchFrom == 'deposit') {
-            Get.off(DepositFiat(wallet: wallet));
+            Get.off(() => DepositFiat(wallet: wallet));
           } else {
-            Get.off(WithdrawFiat(wallet: wallet));
+            Get.off(() => WithdrawFiat(wallet: wallet));
           }
         }
       },
