@@ -9,7 +9,7 @@ class ColorStyle {
   static final cardColorDark = Colors.black;
   static final fontColorLight = Colors.black;
   static final fontColorDark = Colors.white;
-  static final fontSecondaryColorLight = Colors.black26;
+  static final fontSecondaryColorLight = Color(0xFF76787A);
   static final fontSecondaryColorDark = Colors.white24;
   static final iconColorLight = Colors.black;
   static final iconColorDark = Colors.white;

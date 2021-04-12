@@ -1,4 +1,6 @@
 import 'package:b4u_wallet/views/wallet/search_wallet_header.dart';
+import 'package:b4u_wallet/views/wallet/withdraw/qr_code.dart';
+import 'package:b4u_wallet/views/wallet/withdraw/text_page.dart';
 import 'package:flutter/material.dart';
 import 'package:b4u_wallet/models/wallet.dart' as WalletClass;
 import 'package:get/get.dart';
@@ -8,21 +10,27 @@ import 'package:b4u_wallet/controllers/HomeController.dart';
 import 'package:b4u_wallet/controllers/crypto_withdraw_controller.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
-class WithdrawCrypto extends StatefulWidget {
-  final WalletClass.Wallet wallet;
-  WithdrawCrypto({Key key, this.wallet}) : super(key: key);
+// class WithdrawCrypto extends StatefulWidget {
+//   final WalletClass.Wallet wallet;
+//   WithdrawCrypto({Key key, this.wallet}) : super(key: key);
 
-  @override
-  _WithdrawCryptoState createState() => _WithdrawCryptoState(wallet: wallet);
-}
+//   @override
+//   _WithdrawCryptoState createState() => _WithdrawCryptoState(wallet: wallet);
+// }
 
-class _WithdrawCryptoState extends State<WithdrawCrypto> {
-  final WalletClass.Wallet wallet;
-  _WithdrawCryptoState({this.wallet});
+class WithdrawCrypto extends StatelessWidget {
+  // final WalletClass.Wallet wallet;
+  // final CryptoWithdrawController withdrawController;
+  var wallet = Get.arguments['wallet'];
+  final CryptoWithdrawController withdrawController =
+      Get.put(CryptoWithdrawController());
+
+  // WithdrawCrypto()
+  //     : withdrawController = Get.put(CryptoWithdrawController(wallet: wallet));
 
   final HomeController homeController = Get.find();
-  CryptoWithdrawController withdrawController;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -39,20 +47,12 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
         min: 6, max: 6, errorText: 'crypto_withdraw.screen.field.2fa.error'.tr)
   ]);
 
-  void isFormValid() {}
-
   _onWithdrawFormSubmit() async {
     final _formState = _formKey.currentState;
     if (_formState.validate()) {
       _formState.save();
       withdrawController.withdraw(_formKey);
     }
-  }
-
-  @override
-  void initState() {
-    withdrawController = Get.put(CryptoWithdrawController(wallet: wallet));
-    super.initState();
   }
 
   Widget build(BuildContext context) {
@@ -133,7 +133,8 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
                 Text(
                   "crypto_withdraw.screen.field.address".tr,
                   style: TextStyle(
-                    color: Theme.of(context).hintColor.withOpacity(0.7),
+                    color: Theme.of(context).hintColor,
+                    fontWeight: FontWeight.w700,
                     fontFamily: "Popins",
                   ),
                 ),
@@ -152,6 +153,19 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
                         errorMaxLines: 3,
                         filled: true,
                         fillColor: Colors.transparent,
+                        suffixIcon: IconButton(
+                          onPressed: () async {
+                            // var scannedResult =
+                            //     await Get.to(() => QRViewExample());
+                            // withdrawController.withdrawAddressController.text =
+                            //     scannedResult;
+                            // print('scannedResult');
+                            // print('here');
+                            // print(scannedResult);
+                            withdrawController.scanQRCode();
+                          },
+                          icon: Icon(Icons.qr_code_scanner),
+                        ),
                         // labelText: 'Address',
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5))),
@@ -161,7 +175,8 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
                     ? Text(
                         "crypto_withdraw.screen.field.tag".tr,
                         style: TextStyle(
-                          color: Theme.of(context).hintColor.withOpacity(0.7),
+                          color: Theme.of(context).hintColor,
+                          fontWeight: FontWeight.w700,
                           fontFamily: "Popins",
                         ),
                       )
@@ -188,13 +203,49 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
                         ),
                       )
                     : Container(width: 0, height: 0),
-                Text(
-                  "crypto_withdraw.screen.field.amount".tr,
-                  style: TextStyle(
-                    color: Theme.of(context).hintColor.withOpacity(0.7),
-                    fontFamily: "Popins",
-                  ),
-                ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "crypto_withdraw.screen.field.amount".tr,
+                        style: TextStyle(
+                          color: Theme.of(context).hintColor,
+                          fontWeight: FontWeight.w700,
+                          fontFamily: "Popins",
+                        ),
+                      ),
+                      Row(children: [
+                        Text(
+                          "Available".tr,
+                          style: TextStyle(
+                            color: Theme.of(context).hintColor,
+                            fontSize: 12,
+                            fontFamily: "Popins",
+                          ),
+                        ),
+                        Text(
+                          ":" +
+                              double.parse(wallet.balance)
+                                  .toStringAsFixed(wallet.precision),
+                          style: TextStyle(
+                            color: Theme.of(context).hintColor,
+                            fontSize: 12,
+                            fontFamily: "Popins",
+                          ),
+                        ),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Text(
+                          wallet.currency.toUpperCase(),
+                          style: TextStyle(
+                            color: Theme.of(context).hintColor,
+                            fontSize: 12,
+                            fontFamily: "Popins",
+                          ),
+                        ),
+                      ]),
+                    ]),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16.0),
                   child: TextFormField(
@@ -233,7 +284,8 @@ class _WithdrawCryptoState extends State<WithdrawCrypto> {
                 Text(
                   "crypto_withdraw.screen.field.2fa".tr,
                   style: TextStyle(
-                    color: Theme.of(context).hintColor.withOpacity(0.7),
+                    color: Theme.of(context).hintColor,
+                    fontWeight: FontWeight.w700,
                     fontFamily: "Popins",
                   ),
                 ),

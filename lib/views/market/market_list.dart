@@ -68,7 +68,7 @@ class MarketList extends StatelessWidget {
       child: ListView.builder(
         shrinkWrap: true,
         primary: false,
-        itemCount: 10,
+        itemCount: 20,
         itemBuilder: (ctx, i) {
           return loadingCard(ctx);
         },
@@ -76,7 +76,7 @@ class MarketList extends StatelessWidget {
     );
   }
 
-  Widget loadingCard(BuildContext ctx) {
+  Widget loadingCard(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 7.0),
       child: Shimmer.fromColors(
@@ -97,7 +97,8 @@ class MarketList extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 5.0, right: 12.0),
                         child: CircleAvatar(
-                          backgroundColor: Theme.of(ctx).hintColor,
+                          backgroundColor:
+                              Theme.of(context).hintColor.withOpacity(0.2),
                           radius: 13.0,
                         ),
                       ),
@@ -111,7 +112,9 @@ class MarketList extends StatelessWidget {
                                 height: 15.0,
                                 width: 60.0,
                                 decoration: BoxDecoration(
-                                    color: Theme.of(ctx).hintColor,
+                                    color: Theme.of(context)
+                                        .hintColor
+                                        .withOpacity(0.2),
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(20.0))),
                               ),
@@ -123,7 +126,9 @@ class MarketList extends StatelessWidget {
                               height: 12.0,
                               width: 25.0,
                               decoration: BoxDecoration(
-                                  color: Theme.of(ctx).hintColor,
+                                  color: Theme.of(context)
+                                      .hintColor
+                                      .withOpacity(0.2),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20.0))),
                             ),
@@ -144,7 +149,8 @@ class MarketList extends StatelessWidget {
                           height: 15.0,
                           width: 100.0,
                           decoration: BoxDecoration(
-                              color: Theme.of(ctx).hintColor,
+                              color:
+                                  Theme.of(context).hintColor.withOpacity(0.2),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20.0))),
                         ),
@@ -154,7 +160,9 @@ class MarketList extends StatelessWidget {
                             height: 12.0,
                             width: 35.0,
                             decoration: BoxDecoration(
-                                color: Theme.of(ctx).hintColor,
+                                color: Theme.of(context)
+                                    .hintColor
+                                    .withOpacity(0.2),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20.0))),
                           ),
@@ -169,7 +177,7 @@ class MarketList extends StatelessWidget {
                     height: 25.0,
                     width: 55.0,
                     decoration: BoxDecoration(
-                        color: Theme.of(ctx).hintColor,
+                        color: Theme.of(context).hintColor.withOpacity(0.2),
                         borderRadius: BorderRadius.all(Radius.circular(2.0))),
                   ),
                 )

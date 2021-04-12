@@ -117,7 +117,7 @@ Widget walletList(BuildContext ctx, WalletClass.Wallet wallet, searchFrom) {
           if (searchFrom == 'deposit') {
             Get.off(DepositCrypto(wallet: wallet));
           } else {
-            Get.off(WithdrawCrypto(wallet: wallet));
+            // Get.off(WithdrawCrypto(wallet: wallet));
           }
         } else {
           if (searchFrom == 'deposit') {

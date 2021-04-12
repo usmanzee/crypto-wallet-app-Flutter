@@ -182,7 +182,9 @@ class WalletDetail extends StatelessWidget {
                     color: Colors.redAccent.withOpacity(0.8),
                     onPressed: () {
                       if (wallet.type == 'coin') {
-                        Get.to(WithdrawCrypto(wallet: wallet));
+                        // Get.to(WithdrawCrypto(wallet: wallet));
+                        Get.toNamed('/withdrawl-crypto',
+                            arguments: {'wallet': wallet});
                       } else {
                         Get.to(WithdrawFiat(wallet: wallet));
                       }

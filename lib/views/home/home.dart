@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:b4u_wallet/views/home/gainer.dart';
 import 'package:b4u_wallet/views/home/loser.dart';
 import 'package:flutter_sparkline/flutter_sparkline.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:badges/badges.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -567,65 +566,61 @@ class CardLoading extends StatelessWidget {
                   spreadRadius: 1.0,
                   offset: Offset(0.1, 1.0))
             ]),
-        child: Shimmer.fromColors(
-          baseColor: Theme.of(context).hintColor.withOpacity(0.1),
-          highlightColor: Theme.of(context).hintColor.withOpacity(0.1),
-          child: Stack(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 12.0, left: 10.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      color: Theme.of(context).hintColor.withOpacity(0.2),
-                      height: 20.0,
-                      width: 70.0,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 6.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            height: 17.0,
-                            width: 70.0,
-                          ),
-                          Container(
-                            color: Theme.of(context).hintColor.withOpacity(0.2),
-                            height: 17.0,
-                            width: 70.0,
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  height: 30.0,
-                  child: new Sparkline(
-                    data: data,
-                    lineWidth: 0.3,
-                    fillMode: FillMode.below,
-                    lineColor: Theme.of(context).hintColor.withOpacity(0.2),
-                    fillGradient: new LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Theme.of(context).hintColor.withOpacity(0.2),
-                        Theme.of(context).hintColor.withOpacity(0.2)
+        child: Stack(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(top: 12.0, left: 10.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    color: Theme.of(context).hintColor.withOpacity(0.3),
+                    height: 20.0,
+                    width: 70.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 6.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          height: 17.0,
+                          width: 70.0,
+                        ),
+                        Container(
+                          color: Theme.of(context).hintColor.withOpacity(0.2),
+                          height: 17.0,
+                          width: 70.0,
+                        ),
                       ],
                     ),
+                  )
+                ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                height: 30.0,
+                child: new Sparkline(
+                  data: data,
+                  lineWidth: 0.3,
+                  fillMode: FillMode.below,
+                  lineColor: Theme.of(context).hintColor.withOpacity(0.2),
+                  fillGradient: new LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Theme.of(context).hintColor.withOpacity(0.2),
+                      Theme.of(context).hintColor.withOpacity(0.2)
+                    ],
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

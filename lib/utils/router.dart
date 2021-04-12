@@ -24,8 +24,10 @@ import 'package:b4u_wallet/views/swap/swap.dart';
 import 'package:b4u_wallet/views/swap/swap_histroy.dart';
 import 'package:b4u_wallet/views/verification/verification.dart';
 import 'package:b4u_wallet/views/verification/verification_level.dart';
+import 'package:b4u_wallet/views/wallet/deposit/crypto.dart';
 import 'package:b4u_wallet/views/wallet/wallet_detail.dart';
 import 'package:b4u_wallet/views/wallet/wallet_search.dart';
+import 'package:b4u_wallet/views/wallet/withdraw/crypto.dart';
 import 'package:get/get.dart';
 
 class Router {
@@ -84,6 +86,14 @@ class Router {
     GetPage(
       name: '/wallet-detail',
       page: () => WalletDetail(),
+    ),
+    GetPage(
+      name: '/deposit-crypto',
+      page: () => DepositCrypto(),
+    ),
+    GetPage(
+      name: '/withdrawl-crypto',
+      page: () => WithdrawCrypto(),
     ),
     GetPage(
         name: '/wallets-search',
