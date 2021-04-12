@@ -6,17 +6,6 @@ import 'package:b4u_wallet/models/wallet.dart' as WalletClass;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'dart:async';
-import 'dart:io';
-import 'dart:typed_data';
-
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:qrscan/qrscan.dart' as scanner;
-
 class CryptoWithdrawController extends GetxController {
   // final WalletClass.Wallet wallet;
   // CryptoWithdrawController({this.wallet});
@@ -84,16 +73,6 @@ class CryptoWithdrawController extends GetxController {
       withdrawingCrypto(false);
       Get.back();
       errorController.handleError(error);
-    }
-  }
-
-  Future scanQRCode() async {
-    await Permission.camera.request();
-    String barcode = await scanner.scan();
-    if (barcode == null) {
-      print('nothing return.');
-    } else {
-      withdrawAddressController.text = barcode;
     }
   }
 

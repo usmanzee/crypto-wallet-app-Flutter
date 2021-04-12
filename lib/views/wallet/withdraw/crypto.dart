@@ -155,14 +155,13 @@ class WithdrawCrypto extends StatelessWidget {
                         fillColor: Colors.transparent,
                         suffixIcon: IconButton(
                           onPressed: () async {
-                            // var scannedResult =
-                            //     await Get.to(() => QRViewExample());
-                            // withdrawController.withdrawAddressController.text =
-                            //     scannedResult;
-                            // print('scannedResult');
-                            // print('here');
-                            // print(scannedResult);
-                            withdrawController.scanQRCode();
+                            var scannedResult =
+                                await Get.to(() => QRViewExample());
+                            withdrawController.withdrawAddressController.text =
+                                scannedResult;
+                            print('scannedResult');
+                            print('here');
+                            print(scannedResult);
                           },
                           icon: Icon(Icons.qr_code_scanner),
                         ),
