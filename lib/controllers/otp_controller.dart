@@ -44,7 +44,6 @@ class OTPController extends GetxController {
   void fetchOTP() async {
     try {
       var otpData = await _userRepository.fetchOTPCode();
-      print(otpData.data.url);
       var otpUrl = otpData.data.url;
       var uri = Uri.dataFromString(otpUrl);
       Map<String, String> params = uri.queryParameters;

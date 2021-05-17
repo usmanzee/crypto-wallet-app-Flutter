@@ -46,16 +46,17 @@ class LimitOrderForm extends StatelessWidget {
                               .requestFocus(),
                           textAlign: TextAlign.center,
                           decoration: new InputDecoration(
-                              border: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              enabledBorder: InputBorder.none,
-                              errorBorder: InputBorder.none,
-                              disabledBorder: InputBorder.none,
-                              contentPadding: EdgeInsets.only(
-                                  left: 15, bottom: 11, top: 11, right: 15),
-                              hintText:
-                                  "trading.screen.tab.limit.buy.field.price"
-                                      .tr),
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            contentPadding: EdgeInsets.only(
+                                left: 15, bottom: 11, top: 11, right: 15),
+                            hintText:
+                                "trading.screen.tab.limit.buy.field.price".tr,
+                            hintStyle: TextStyle(fontSize: 14),
+                          ),
                         ),
                       ),
                       GestureDetector(
@@ -104,7 +105,8 @@ class LimitOrderForm extends StatelessWidget {
                                   left: 15, bottom: 11, top: 11, right: 15),
                               hintText:
                                   "trading.screen.tab.limit.buy.field.amount"
-                                      .tr),
+                                      .tr,
+                              hintStyle: TextStyle(fontSize: 14)),
                         ),
                       ),
                       GestureDetector(
@@ -188,7 +190,8 @@ class LimitOrderForm extends StatelessWidget {
                                       'currency':
                                           formatedMarket.quoteUnit.toUpperCase()
                                     })
-                                  : ''),
+                                  : '',
+                              hintStyle: TextStyle(fontSize: 14)),
                         ),
                       ),
                     ],
@@ -384,7 +387,8 @@ class LimitOrderForm extends StatelessWidget {
                                   left: 15, bottom: 11, top: 11, right: 15),
                               hintText:
                                   "trading.screen.tab.limit.sell.field.price"
-                                      .tr),
+                                      .tr,
+                              hintStyle: TextStyle(fontSize: 14)),
                         ),
                       ),
                       GestureDetector(
@@ -433,7 +437,8 @@ class LimitOrderForm extends StatelessWidget {
                                   left: 15, bottom: 11, top: 11, right: 15),
                               hintText:
                                   "trading.screen.tab.limit.sell.field.amount"
-                                      .tr),
+                                      .tr,
+                              hintStyle: TextStyle(fontSize: 14)),
                         ),
                       ),
                       GestureDetector(
@@ -517,7 +522,8 @@ class LimitOrderForm extends StatelessWidget {
                                       'currency':
                                           formatedMarket.quoteUnit.toUpperCase()
                                     })
-                                  : ''),
+                                  : '',
+                              hintStyle: TextStyle(fontSize: 14)),
                         ),
                       ),
                     ],

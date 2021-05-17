@@ -382,6 +382,7 @@ class Setting extends StatelessWidget {
         context: context,
         builder: (_) {
           return AlertDialog(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             title: Text(
               'Choose Language',
               style: TextStyle(fontFamily: 'Popins'),

@@ -57,37 +57,34 @@ dependencies:
   overlay_container: ^0.0.5+1
   qr_code_scanner: ^0.4.0
 
-
-dev_dependencies: 
+dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_launcher_icons: "^0.8.1"
 
 flutter_icons:
-  image_path: "assets/image/b4u_logo.png" 
+  image_path: "assets/image/b4u_logo.png"
   android: true
   ios: true
-
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
 
   fonts:
-    - family : Popins
+    - family: Popins
       fonts:
         - asset: assets/font/Poppins-Regular.ttf
           weight: 400
         - asset: assets/font/Poppins-SemiBold.ttf
-          weight : 600
+          weight: 600
     - family: CryptoFont
       fonts:
         - asset: assets/font/cryptofont-webfont.ttf

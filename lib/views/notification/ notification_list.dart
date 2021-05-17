@@ -43,6 +43,7 @@ class NotificationList extends GetView<NotificationController> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           title:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(

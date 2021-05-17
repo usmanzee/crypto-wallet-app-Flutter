@@ -153,6 +153,7 @@ class OTPModal extends StatelessWidget {
       ),
     );
     // AlertDialog(
+    //  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
     //   title: Text('Enter 2FA Code'),
     //   content: Column(children: [
     //     Form(

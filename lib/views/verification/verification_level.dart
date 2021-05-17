@@ -355,9 +355,20 @@ class VerificationLevel extends StatelessWidget {
       BuildContext context, int currentLevel, int targetLevel) {
     var levelSatisfied = currentLevel >= targetLevel;
     return (levelSatisfied)
-        ? Icon(
-            Icons.done,
-            color: Theme.of(context).textSelectionTheme.selectionColor,
+        ? Container(
+            height: 30.0,
+            width: 30.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(70.0)),
+              border: Border.all(color: Color(0xFF00C087)),
+            ),
+            child: Center(
+              child: Icon(
+                Icons.check,
+                size: 16,
+                color: Color(0xFF00C087),
+              ),
+            ),
           )
         : Container(
             height: 0,

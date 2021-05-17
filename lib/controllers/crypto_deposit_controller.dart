@@ -22,7 +22,6 @@ class CryptoDepositController extends GetxController {
 
   @override
   void onReady() {
-    print('currency: $currency');
     super.onReady();
   }
 

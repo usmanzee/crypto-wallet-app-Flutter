@@ -1,3 +1,4 @@
+import 'package:b4u_wallet/component/custom_flat_button.dart';
 import 'package:b4u_wallet/controllers/HomeController.dart';
 import 'package:b4u_wallet/models/user.dart';
 import 'package:flutter/material.dart';
@@ -47,14 +48,17 @@ class ReferralProgram extends StatelessWidget {
                     child: Text('referral.screen.referral_title'.tr,
                         style: TextStyle(
                             color: Colors.white,
-                            fontFamily: "Gotik",
+                            fontFamily: "Popins",
                             fontWeight: FontWeight.w600,
                             fontSize: 22)),
                   ),
                   Padding(
                     padding: EdgeInsets.only(bottom: 8.0),
                     child: Text('referral.screen.referral_description'.tr,
-                        style: TextStyle(color: Colors.white, fontSize: 12)),
+                        style: TextStyle(
+                            fontFamily: "Popins",
+                            color: Colors.white,
+                            fontSize: 12)),
                   )
                 ],
               ),
@@ -65,7 +69,7 @@ class ReferralProgram extends StatelessWidget {
                   style: TextStyle(
                       color:
                           Theme.of(context).textSelectionTheme.selectionColor,
-                      fontFamily: "Gotik",
+                      fontFamily: "Popins",
                       fontWeight: FontWeight.w600,
                       fontSize: 22)),
             ),
@@ -73,6 +77,7 @@ class ReferralProgram extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
               child: Text('referral.screen.referral_instruction.description'.tr,
                   style: TextStyle(
+                      fontFamily: "Popins",
                       color:
                           Theme.of(context).textSelectionTheme.selectionColor,
                       fontSize: 12)),
@@ -114,22 +119,28 @@ Widget _showReferralId(context, User user) {
       children: <Widget>[
         Row(
           children: <Widget>[
-            Text('referral.screen.referral_id'.tr),
+            Text(
+              'referral.screen.referral_id'.tr,
+              style: TextStyle(
+                fontFamily: "Popins",
+              ),
+            ),
             Spacer(flex: 1),
-            MaterialButton(
-              height: 30.0,
-              minWidth: 40.0,
-              color: Theme.of(context).canvasColor.withOpacity(0.9),
-              textColor: Theme.of(context).textSelectionTheme.selectionColor,
-              child: Text(
-                "referral.screen.referral_copy_id".tr,
-                style: TextStyle(fontSize: 10),
+            CustomFlatButton(
+              title: "referral.screen.referral_copy_id".tr,
+              titleStyle: TextStyle(
+                  fontSize: 10,
+                  fontFamily: 'Popins',
+                  color: Theme.of(context).textSelectionTheme.selectionColor),
+              buttonStyle: TextButton.styleFrom(
+                minimumSize: Size(80, 30),
+                backgroundColor: Theme.of(context).canvasColor,
+                padding: EdgeInsets.all(0),
               ),
               onPressed: () {
                 Helper.copyToClipBoard(user.uid);
               },
-              splashColor: Theme.of(context).canvasColor.withOpacity(0.9),
-            )
+            ),
           ],
         ),
         Text(
@@ -159,22 +170,26 @@ Widget _showReferralLink(context, String link) {
       children: <Widget>[
         Row(
           children: <Widget>[
-            Text('referral.screen.referral_link'.tr),
+            Text(
+              'referral.screen.referral_link'.tr,
+              style: TextStyle(fontFamily: 'Popins'),
+            ),
             Spacer(flex: 1),
-            MaterialButton(
-              height: 30.0,
-              minWidth: 40.0,
-              color: Theme.of(context).canvasColor,
-              textColor: Theme.of(context).textSelectionTheme.selectionColor,
-              child: Text(
-                "referral.screen.referral_copy_link".tr,
-                style: TextStyle(fontSize: 10),
+            CustomFlatButton(
+              title: "referral.screen.referral_copy_link".tr,
+              titleStyle: TextStyle(
+                  fontSize: 10,
+                  fontFamily: 'Popins',
+                  color: Theme.of(context).textSelectionTheme.selectionColor),
+              buttonStyle: TextButton.styleFrom(
+                minimumSize: Size(80, 30),
+                backgroundColor: Theme.of(context).canvasColor,
+                padding: EdgeInsets.all(0),
               ),
               onPressed: () {
                 Helper.copyToClipBoard(link);
               },
-              splashColor: Theme.of(context).canvasColor.withOpacity(0.5),
-            )
+            ),
           ],
         ),
         Text(
@@ -190,16 +205,19 @@ Widget _showReferralLink(context, String link) {
           height: 8.0,
         ),
         Center(
-          child: MaterialButton(
-            height: 40.0,
-            minWidth: 150.0,
-            color: Theme.of(context).canvasColor,
-            textColor: Theme.of(context).textSelectionTheme.selectionColor,
-            child: new Text("referral.screen.share".tr),
+          child: CustomFlatButton(
+            title: "referral.screen.share".tr,
+            titleStyle: TextStyle(
+                fontSize: 10,
+                fontFamily: 'Popins',
+                color: Theme.of(context).textSelectionTheme.selectionColor),
+            buttonStyle: TextButton.styleFrom(
+              minimumSize: Size(80, 30),
+              backgroundColor: Theme.of(context).canvasColor,
+            ),
             onPressed: () {
               shareLink(context, link);
             },
-            splashColor: Theme.of(context).canvasColor.withOpacity(0.5),
           ),
         )
       ],

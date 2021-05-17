@@ -209,9 +209,9 @@ class OrderBook extends StatelessWidget {
                         ? double.parse(bid[1]).toStringAsFixed(6)
                         : double.parse('0').toStringAsFixed(6),
                     style: TextStyle(
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.normal,
                         fontFamily: "Gotik",
-                        fontSize: 12.0),
+                        fontSize: 10.0),
                   ),
                 ),
                 Text(
@@ -220,9 +220,9 @@ class OrderBook extends StatelessWidget {
                       : double.parse('0').toStringAsFixed(2),
                   style: TextStyle(
                       color: Color(0xFF00C087),
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.normal,
                       fontFamily: "Gotik",
-                      fontSize: 12.0),
+                      fontSize: 10.0),
                 )
               ],
             ),
@@ -246,18 +246,18 @@ class OrderBook extends StatelessWidget {
               child: Text(
                 '--',
                 style: TextStyle(
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w500,
                     fontFamily: "Gotik",
-                    fontSize: 12.0),
+                    fontSize: 10.0),
               ),
             ),
             Text(
               '--',
               style: TextStyle(
                   color: Color(0xFF00C087),
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w500,
                   fontFamily: "Gotik",
-                  fontSize: 12.0),
+                  fontSize: 10.0),
             )
           ],
         ),
@@ -311,9 +311,9 @@ class OrderBook extends StatelessWidget {
                       : double.parse('0').toStringAsFixed(2),
                   style: TextStyle(
                       color: Colors.red,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w500,
                       fontFamily: "Gotik",
-                      fontSize: 12.0),
+                      fontSize: 10.0),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 0.0),
@@ -322,9 +322,9 @@ class OrderBook extends StatelessWidget {
                           ? double.parse(ask[1]).toStringAsFixed(6)
                           : double.parse('0').toStringAsFixed(6),
                       style: TextStyle(
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w500,
                           fontFamily: "Gotik",
-                          fontSize: 12.0)),
+                          fontSize: 10.0)),
                 ),
               ],
             ),

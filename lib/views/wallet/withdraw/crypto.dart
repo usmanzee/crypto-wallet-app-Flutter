@@ -121,7 +121,7 @@ class WithdrawCrypto extends StatelessWidget {
                   "crypto_withdraw.screen.field.address".tr,
                   style: TextStyle(
                     color: Theme.of(context).hintColor,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w400,
                     fontFamily: "Popins",
                   ),
                 ),
@@ -134,28 +134,45 @@ class WithdrawCrypto extends StatelessWidget {
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
-                        errorStyle: TextStyle(
-                          fontSize: 13.5,
-                        ),
-                        errorMaxLines: 3,
-                        filled: true,
-                        fillColor: Colors.transparent,
-                        suffixIcon: IconButton(
-                          iconSize: 40,
-                          icon: Icon(Icons.qr_code_scanner),
-                          onPressed: () async {
-                            FocusScope.of(context).unfocus();
-                            FocusScope.of(context).canRequestFocus = false;
-                            var scannedResult =
-                                await Get.to(() => QRViewExample());
-                            withdrawController.withdrawAddressController.text =
-                                scannedResult;
-                            FocusScope.of(context).canRequestFocus = true;
-                          },
-                        ),
-                        // labelText: 'Address',
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5))),
+                      errorStyle: TextStyle(
+                        fontSize: 13.5,
+                      ),
+                      errorMaxLines: 3,
+                      filled: true,
+                      fillColor: Colors.transparent,
+                      suffixIcon: IconButton(
+                        iconSize: 40,
+                        icon: Icon(Icons.qr_code_scanner),
+                        onPressed: () async {
+                          FocusScope.of(context).unfocus();
+                          FocusScope.of(context).canRequestFocus = false;
+                          var scannedResult =
+                              await Get.to(() => QRViewExample());
+                          withdrawController.withdrawAddressController.text =
+                              scannedResult;
+                          FocusScope.of(context).canRequestFocus = true;
+                        },
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        borderSide: BorderSide(
+                            color: Theme.of(context).accentColor, width: 1.0),
+                      ),
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 18, vertical: 15),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        borderSide: BorderSide(
+                            color: Theme.of(context).hintColor.withOpacity(0.3),
+                            width: 1.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        borderSide: BorderSide(
+                            color: Theme.of(context).hintColor.withOpacity(0.3),
+                            width: 1.0),
+                      ),
+                    ),
                   ),
                 ),
                 wallet.currency == 'xrp'
@@ -163,7 +180,7 @@ class WithdrawCrypto extends StatelessWidget {
                         "crypto_withdraw.screen.field.tag".tr,
                         style: TextStyle(
                           color: Theme.of(context).hintColor,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w400,
                           fontFamily: "Popins",
                         ),
                       )
@@ -178,29 +195,53 @@ class WithdrawCrypto extends StatelessWidget {
                           keyboardType: TextInputType.text,
                           textInputAction: TextInputAction.next,
                           decoration: InputDecoration(
-                              errorStyle: TextStyle(
-                                fontSize: 13.5,
-                              ),
-                              errorMaxLines: 3,
-                              filled: true,
-                              fillColor: Colors.transparent,
-                              suffixIcon: IconButton(
-                                iconSize: 40,
-                                icon: Icon(Icons.qr_code_scanner),
-                                onPressed: () async {
-                                  FocusScope.of(context).unfocus();
-                                  FocusScope.of(context).canRequestFocus =
-                                      false;
-                                  var scannedResult =
-                                      await Get.to(() => QRViewExample());
-                                  withdrawController.withdrawAddressController
-                                      .text = scannedResult;
-                                  FocusScope.of(context).canRequestFocus = true;
-                                },
-                              ),
-                              // labelText: 'Tag',
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5))),
+                            errorStyle: TextStyle(
+                              fontSize: 13.5,
+                            ),
+                            errorMaxLines: 3,
+                            filled: true,
+                            fillColor: Colors.transparent,
+                            suffixIcon: IconButton(
+                              iconSize: 40,
+                              icon: Icon(Icons.qr_code_scanner),
+                              onPressed: () async {
+                                FocusScope.of(context).unfocus();
+                                FocusScope.of(context).canRequestFocus = false;
+                                var scannedResult =
+                                    await Get.to(() => QRViewExample());
+                                withdrawController.withdrawTagController.text =
+                                    scannedResult;
+                                FocusScope.of(context).canRequestFocus = true;
+                              },
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                              borderSide: BorderSide(
+                                  color: Theme.of(context).accentColor,
+                                  width: 1.0),
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 18, vertical: 15),
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                              borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .hintColor
+                                      .withOpacity(0.3),
+                                  width: 1.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                              borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .hintColor
+                                      .withOpacity(0.3),
+                                  width: 1.0),
+                            ),
+                          ),
                         ),
                       )
                     : Container(width: 0, height: 0),
@@ -211,7 +252,7 @@ class WithdrawCrypto extends StatelessWidget {
                         "crypto_withdraw.screen.field.amount".tr,
                         style: TextStyle(
                           color: Theme.of(context).hintColor,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w400,
                           fontFamily: "Popins",
                         ),
                       ),
@@ -271,22 +312,39 @@ class WithdrawCrypto extends StatelessWidget {
                           double.parse(validAmount) + double.parse(wallet.fee);
                     },
                     decoration: InputDecoration(
-                        errorStyle: TextStyle(
-                          fontSize: 13.5,
-                        ),
-                        errorMaxLines: 3,
-                        filled: true,
-                        fillColor: Colors.transparent,
-                        // labelText: 'Amount',
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5))),
+                      errorStyle: TextStyle(
+                        fontSize: 13.5,
+                      ),
+                      errorMaxLines: 3,
+                      filled: true,
+                      fillColor: Colors.transparent,
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        borderSide: BorderSide(
+                            color: Theme.of(context).accentColor, width: 1.0),
+                      ),
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 18, vertical: 15),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        borderSide: BorderSide(
+                            color: Theme.of(context).hintColor.withOpacity(0.3),
+                            width: 1.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        borderSide: BorderSide(
+                            color: Theme.of(context).hintColor.withOpacity(0.3),
+                            width: 1.0),
+                      ),
+                    ),
                   ),
                 ),
                 Text(
                   "crypto_withdraw.screen.field.2fa".tr,
                   style: TextStyle(
                     color: Theme.of(context).hintColor,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w400,
                     fontFamily: "Popins",
                   ),
                 ),

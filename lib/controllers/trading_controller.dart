@@ -245,7 +245,6 @@ class TradingController extends GetxController {
       if (data.containsKey('${market.value.id}.ob-inc')) {
         var updatedAsksData = [];
         var updatedBidsData = [];
-        print(data);
         if (marketController.orderBookSequence == -1) {
           // print("OrderBook increment received before snapshot");
           return;

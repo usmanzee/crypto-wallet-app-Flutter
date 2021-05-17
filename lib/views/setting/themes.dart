@@ -24,12 +24,12 @@ class Themes {
     primaryColor: ColorStyle.primaryColor,
     buttonColor: ColorStyle.primaryColor,
     cardColor: ColorStyle.cardColorLight,
-    textSelectionTheme: TextSelectionThemeData(
-        selectionColor: ColorStyle.fontColorLight,
-        selectionHandleColor: ColorStyle.fontColorDarkTitle),
     scaffoldBackgroundColor: Colors.white,
     canvasColor: ColorStyle.whiteBacground,
     dividerColor: ColorStyle.iconColorLight,
     hintColor: ColorStyle.fontSecondaryColorLight,
+    textSelectionTheme: TextSelectionThemeData(
+        selectionColor: ColorStyle.fontColorLight,
+        selectionHandleColor: ColorStyle.fontColorDarkTitle),
   );
 }

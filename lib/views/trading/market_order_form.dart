@@ -78,7 +78,8 @@ class MarketOrderForm extends StatelessWidget {
                                   left: 12, bottom: 8, top: 8, right: 16),
                               hintText: formatedMarket.quoteUnit != null
                                   ? formatedMarket.quoteUnit.toUpperCase()
-                                  : ''),
+                                  : '',
+                              hintStyle: TextStyle(fontSize: 14)),
                         ),
                       ),
                       GestureDetector(
@@ -162,7 +163,8 @@ class MarketOrderForm extends StatelessWidget {
                                       'currency':
                                           formatedMarket.quoteUnit.toUpperCase()
                                     })
-                                  : ''),
+                                  : '',
+                              hintStyle: TextStyle(fontSize: 14)),
                         ),
                       ),
                     ],
@@ -378,7 +380,8 @@ class MarketOrderForm extends StatelessWidget {
                                   left: 15, bottom: 11, top: 11, right: 15),
                               hintText: formatedMarket.baseUnit != null
                                   ? formatedMarket.baseUnit.toUpperCase()
-                                  : ''),
+                                  : '',
+                              hintStyle: TextStyle(fontSize: 14)),
                         ),
                       ),
                       GestureDetector(
@@ -463,7 +466,8 @@ class MarketOrderForm extends StatelessWidget {
                                       'currency':
                                           formatedMarket.quoteUnit.toUpperCase()
                                     })
-                                  : ''),
+                                  : '',
+                              hintStyle: TextStyle(fontSize: 14)),
                         ),
                       ),
                     ],

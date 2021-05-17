@@ -328,6 +328,7 @@ class OpenOrders extends StatelessWidget {
   void cancelOrderAlert(bool cancelAll, [int orderId]) {
     openOrdersController.cancelOpenOrders(cancelAll, orderId);
     // Get.dialog(AlertDialog(
+    //  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
     //   title: Text(cancelAll ? 'Cancel All Orders?' : 'Cancel Order?'),
     //   content: Text('You may not be able to revent this action.'),
     //   actions: [

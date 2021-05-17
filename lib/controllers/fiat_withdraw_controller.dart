@@ -60,7 +60,6 @@ class FiatWithdrawController extends GetxController {
         .where((Beneficiary beneficiary) =>
             beneficiary.currency.toLowerCase() == wallet.currency.toLowerCase())
         .toList();
-    print(filteredBeneficiaries);
     if (filteredBeneficiaries.length > 0) {
       selectedWithdrawBeneficiary.value = filteredBeneficiaries[0];
     }
@@ -80,7 +79,6 @@ class FiatWithdrawController extends GetxController {
         'otp': withdrawOtpController.text
       };
 
-      print(requestData);
       var response = await _walletRepository.withdrawCrypto(requestData);
       print(response);
       resetWithdrawForm();

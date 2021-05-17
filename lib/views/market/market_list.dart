@@ -245,14 +245,14 @@ class MarketList extends StatelessWidget {
                                   formatedMarket.baseUnit.toUpperCase(),
                                   style: TextStyle(
                                       fontFamily: "Popins",
-                                      fontSize: 16.5,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.w600),
                                 ),
                                 Text(
                                   " /" + formatedMarket.quoteUnit.toUpperCase(),
                                   style: TextStyle(
                                       fontFamily: "Popins",
-                                      fontSize: 14.5,
+                                      fontSize: 12,
                                       color: Theme.of(ctx).hintColor),
                                 ),
                               ],
@@ -263,7 +263,7 @@ class MarketList extends StatelessWidget {
                                   formatedMarket.volume.toStringAsFixed(2),
                               style: TextStyle(
                                   fontFamily: "Popins",
-                                  fontSize: 12.5,
+                                  fontSize: 10,
                                   color: Theme.of(ctx).hintColor),
                             )
                           ],
@@ -282,14 +282,14 @@ class MarketList extends StatelessWidget {
                         formatedMarket.last.toStringAsFixed(2),
                         style: TextStyle(
                             fontFamily: "Popins",
-                            fontSize: 14.5,
+                            fontSize: 14,
                             fontWeight: FontWeight.w600),
                       ),
                       Text(
                         '\$' + formatedMarket.priceInUsd,
                         style: TextStyle(
                             fontFamily: "Popins",
-                            fontSize: 12.5,
+                            fontSize: 12,
                             color: Theme.of(ctx).hintColor),
                       ),
                     ],
@@ -311,7 +311,7 @@ class MarketList extends StatelessWidget {
                           formatedMarket.priceChangePercent,
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
-                              fontSize: 14.5,
+                              fontSize: 12,
                               color: Colors.white),
                         ),
                       ))),
