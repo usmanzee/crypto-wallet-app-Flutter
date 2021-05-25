@@ -26,8 +26,8 @@ class DocumentVerification extends StatelessWidget {
     final DateTime picked = await showDatePicker(
       context: context,
       initialDate: verificationController.currentDate.value,
-      firstDate: DateTime(1970),
-      lastDate: DateTime(2101),
+      firstDate: DateTime(200),
+      lastDate: DateTime(10000),
       builder: (BuildContext context, Widget child) {
         return Theme(
           data: themeData.copyWith(
