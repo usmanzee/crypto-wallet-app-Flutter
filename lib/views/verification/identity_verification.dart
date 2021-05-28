@@ -130,7 +130,7 @@ class IdentityVerification extends StatelessWidget {
             color: Theme.of(context).primaryColor,
             textColor: Colors.white,
             child: Text(
-              "identification.screen.identity.button.back".tr,
+              "identification.screen.identity.button.next".tr,
               style: TextStyle(fontSize: 10),
             ),
           ),

@@ -109,6 +109,7 @@ class NotificationList extends GetView<NotificationController> {
           children: <Widget>[
             Text(
               "notifications.screen.empty.content1".tr,
+              textAlign: TextAlign.center,
               style: TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 18.5,
@@ -117,6 +118,7 @@ class NotificationList extends GetView<NotificationController> {
             ),
             Text(
               "notifications.screen.empty.content2".tr,
+              textAlign: TextAlign.center,
               style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 14.5,
@@ -146,6 +148,7 @@ class NotificationList extends GetView<NotificationController> {
                           ListTile(
                             title: Text(
                               '${notifications[position].subject}',
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontFamily: 'Popins',
                                   fontSize: 16.5,
@@ -161,6 +164,7 @@ class NotificationList extends GetView<NotificationController> {
                                   width: 440.0,
                                   child: Text(
                                     '${notifications[position].body}',
+                                    textAlign: TextAlign.center,
                                     style: new TextStyle(
                                         fontFamily: 'Popins',
                                         fontSize: 14.0,
