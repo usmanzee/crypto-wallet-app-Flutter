@@ -12,6 +12,7 @@ class RegisterController extends GetxController {
   TextEditingController referralCodeController;
   var termsOfUse = true.obs;
   var termsOfUseError = false.obs;
+  var passwordVisible = false.obs;
   SnackbarController snackbarController;
   ErrorController errorController = new ErrorController();
   var user = new User().obs;

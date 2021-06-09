@@ -148,7 +148,7 @@ class NotificationList extends GetView<NotificationController> {
                           ListTile(
                             title: Text(
                               '${notifications[position].subject}',
-                              textAlign: TextAlign.center,
+                              // textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontFamily: 'Popins',
                                   fontSize: 16.5,
@@ -164,7 +164,7 @@ class NotificationList extends GetView<NotificationController> {
                                   width: 440.0,
                                   child: Text(
                                     '${notifications[position].body}',
-                                    textAlign: TextAlign.center,
+                                    // textAlign: TextAlign.center,
                                     style: new TextStyle(
                                         fontFamily: 'Popins',
                                         fontSize: 14.0,

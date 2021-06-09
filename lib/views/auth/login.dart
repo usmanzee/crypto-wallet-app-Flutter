@@ -9,7 +9,6 @@ import 'package:b4u_wallet/controllers/login_controller.dart';
 class Login extends StatelessWidget {
   final LoginController _loginController = Get.put(LoginController());
   final HomeController homeController = Get.find();
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final _passwordValidator = MultiValidator([
@@ -65,8 +64,8 @@ class Login extends StatelessWidget {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Form(
+      body: SingleChildScrollView(child: Obx(() {
+        return Form(
           autovalidateMode: AutovalidateMode.onUserInteraction,
           key: _formKey,
           child: Column(
@@ -135,14 +134,22 @@ class Login extends StatelessWidget {
                   right: 16.0,
                 ),
                 child: CustomTextField(
-                    widgetIcon: Icon(
-                      Icons.vpn_key,
-                      size: 20,
-                      color: Theme.of(context).primaryColor,
+                    suffix: IconButton(
+                      onPressed: () {
+                        _loginController.passwordVisible.value =
+                            !_loginController.passwordVisible.value;
+                      },
+                      icon: Icon(
+                        _loginController.passwordVisible.value
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Theme.of(context).primaryColor,
+                      ),
                     ),
                     validator: _passwordValidator,
                     controller: _loginController.passwordTextController,
-                    obscure: true,
+                    obscure:
+                        _loginController.passwordVisible.value ? false : true,
                     keyboardType: TextInputType.text,
                     hint: "login.screen.field.password_hint".tr,
                     textInputAction: TextInputAction.done,
@@ -199,8 +206,8 @@ class Login extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
+        );
+      })),
       // floatingActionButton: FloatingActionButton(
       //     elevation: 1.0,
       //     child: Icon(

@@ -63,8 +63,8 @@ class SignUp extends StatelessWidget {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Form(
+      body: SingleChildScrollView(child: Obx(() {
+        return Form(
           autovalidateMode: AutovalidateMode.onUserInteraction,
           key: _formKey,
           child: Column(
@@ -101,11 +101,6 @@ class SignUp extends StatelessWidget {
                   right: 16.0,
                 ),
                 child: CustomTextField(
-                    widgetIcon: Icon(
-                      Icons.email,
-                      color: Theme.of(context).primaryColor,
-                      size: 20,
-                    ),
                     validator: emailValidator,
                     controller: registerController.emailTextController,
                     obscure: false,
@@ -133,14 +128,22 @@ class SignUp extends StatelessWidget {
                   right: 16.0,
                 ),
                 child: CustomTextField(
-                    widgetIcon: Icon(
-                      Icons.vpn_key,
-                      size: 20,
-                      color: Theme.of(context).primaryColor,
+                    suffix: IconButton(
+                      onPressed: () {
+                        registerController.passwordVisible.value =
+                            !registerController.passwordVisible.value;
+                      },
+                      icon: Icon(
+                        registerController.passwordVisible.value
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Theme.of(context).primaryColor,
+                      ),
                     ),
                     validator: _passwordValidator,
                     controller: registerController.passwordTextController,
-                    obscure: true,
+                    obscure:
+                        registerController.passwordVisible.value ? false : true,
                     keyboardType: TextInputType.text,
                     hint: "register.screen.field.password_hint".tr,
                     textInputAction: TextInputAction.next,
@@ -165,10 +168,17 @@ class SignUp extends StatelessWidget {
                   right: 16.0,
                 ),
                 child: CustomTextField(
-                    widgetIcon: Icon(
-                      Icons.vpn_key,
-                      size: 20,
-                      color: Theme.of(context).primaryColor,
+                    suffix: IconButton(
+                      onPressed: () {
+                        registerController.passwordVisible.value =
+                            !registerController.passwordVisible.value;
+                      },
+                      icon: Icon(
+                        registerController.passwordVisible.value
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Theme.of(context).primaryColor,
+                      ),
                     ),
                     controller:
                         registerController.confirmPasswordTextController,
@@ -177,7 +187,8 @@ class SignUp extends StatelessWidget {
                                 'register.screen.confirm_password.error'.tr)
                         .validateMatch(val,
                             registerController.passwordTextController.text),
-                    obscure: true,
+                    obscure:
+                        registerController.passwordVisible.value ? false : true,
                     keyboardType: TextInputType.text,
                     hint: "register.screen.field.confirm_password_hint".tr,
                     textInputAction: TextInputAction.next,
@@ -293,6 +304,7 @@ class SignUp extends StatelessWidget {
                   },
                   child: Container(
                     height: 50.0,
+                    margin: EdgeInsets.only(bottom: 20),
                     width: double.infinity,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(0.0)),
@@ -313,8 +325,8 @@ class SignUp extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
+        );
+      })),
       // floatingActionButton: FloatingActionButton(
       //     elevation: 1.0,
       //     child: Icon(

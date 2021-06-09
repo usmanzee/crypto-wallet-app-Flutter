@@ -28,7 +28,7 @@ class OrderBook extends StatelessWidget {
         Container(
           child: Column(children: [
             Padding(
-              padding: const EdgeInsets.only(right: 0.0, top: 8.0, bottom: 8.0),
+              padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -202,17 +202,14 @@ class OrderBook extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left: 0.0),
-                  child: Text(
-                    bid[1] != ''
-                        ? double.parse(bid[1]).toStringAsFixed(6)
-                        : double.parse('0').toStringAsFixed(6),
-                    style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                        fontFamily: "Gotik",
-                        fontSize: 10.0),
-                  ),
+                Text(
+                  bid[1] != ''
+                      ? double.parse(bid[1]).toStringAsFixed(6)
+                      : double.parse('0').toStringAsFixed(6),
+                  style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontFamily: "Popins",
+                      fontSize: 10.0),
                 ),
                 Text(
                   bid[0] != ''
@@ -221,9 +218,9 @@ class OrderBook extends StatelessWidget {
                   style: TextStyle(
                       color: Color(0xFF00C087),
                       fontWeight: FontWeight.normal,
-                      fontFamily: "Gotik",
+                      fontFamily: "Popins",
                       fontSize: 10.0),
-                )
+                ),
               ],
             ),
           ]),
@@ -241,22 +238,19 @@ class OrderBook extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Text(
-                '--',
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontFamily: "Gotik",
-                    fontSize: 10.0),
-              ),
+            Text(
+              '--',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "Popins",
+                  fontSize: 10.0),
             ),
             Text(
               '--',
               style: TextStyle(
                   color: Color(0xFF00C087),
-                  fontWeight: FontWeight.w500,
-                  fontFamily: "Gotik",
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "Popins",
                   fontSize: 10.0),
             )
           ],
@@ -301,32 +295,32 @@ class OrderBook extends StatelessWidget {
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  ask[0] != ''
-                      ? double.parse(ask[0]).toStringAsFixed(2)
-                      : double.parse('0').toStringAsFixed(2),
-                  style: TextStyle(
-                      color: Colors.red,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: "Gotik",
-                      fontSize: 10.0),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 0.0),
-                  child: Text(
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    ask[0] != ''
+                        ? double.parse(ask[0]).toStringAsFixed(2)
+                        : double.parse('0').toStringAsFixed(2),
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Popins",
+                        fontSize: 10.0),
+                  ),
+                  Text(
                       ask[1] != ''
                           ? double.parse(ask[1]).toStringAsFixed(6)
                           : double.parse('0').toStringAsFixed(6),
                       style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontFamily: "Gotik",
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Popins",
                           fontSize: 10.0)),
-                ),
-              ],
+                ],
+              ),
             ),
           ]),
         ),
@@ -348,18 +342,15 @@ class OrderBook extends StatelessWidget {
               style: TextStyle(
                   color: Colors.red,
                   fontWeight: FontWeight.w700,
-                  fontFamily: "Gotik",
+                  fontFamily: "Popins",
                   fontSize: 12.0),
             ),
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: Text(
-                '--',
-                style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontFamily: "Gotik",
-                    fontSize: 12.0),
-              ),
+            Text(
+              '--',
+              style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Popins",
+                  fontSize: 12.0),
             ),
           ],
         ),

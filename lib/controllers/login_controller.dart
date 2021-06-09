@@ -17,6 +17,8 @@ class LoginController extends GetxController {
   TextEditingController twoFATextController;
   TextEditingController referralCodeController;
   HomeController homeController;
+
+  var passwordVisible = false.obs;
   var user = new User().obs;
 
   @override

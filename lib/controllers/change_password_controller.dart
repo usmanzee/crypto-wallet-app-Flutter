@@ -11,6 +11,7 @@ class ChangePasswordController extends GetxController {
   SnackbarController snackbarController;
   ErrorController errorController = new ErrorController();
   UserRepository _userRepository;
+  var passwordVisible = false.obs;
 
   @override
   void onInit() {

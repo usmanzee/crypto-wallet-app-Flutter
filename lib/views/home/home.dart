@@ -699,6 +699,7 @@ Widget _linksCard(context, Widget icon, VoidCallback onPressed, String name) {
               width: MediaQuery.of(context).size.width * 0.15,
               child: new Text(
                 name,
+                textAlign: TextAlign.center,
                 style: TextStyle(
                     fontFamily: "Popins",
                     color: Theme.of(context).textSelectionTheme.selectionColor,

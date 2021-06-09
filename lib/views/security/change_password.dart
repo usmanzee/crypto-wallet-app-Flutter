@@ -41,8 +41,8 @@ class ChangePassword extends StatelessWidget {
             color: Theme.of(context).textSelectionTheme.selectionColor),
         elevation: 0.8,
       ),
-      body: SingleChildScrollView(
-        child: Form(
+      body: SingleChildScrollView(child: Obx(() {
+        return Form(
           autovalidateMode: AutovalidateMode.onUserInteraction,
           key: _formKey,
           child: Column(
@@ -58,16 +58,26 @@ class ChangePassword extends StatelessWidget {
                     padding: const EdgeInsets.only(
                         left: 16.0, right: 16.0, top: 32.0),
                     child: CustomTextField(
-                        widgetIcon: Icon(
-                          Icons.email,
-                          color: Theme.of(context).primaryColor,
-                          size: 20,
+                        suffix: IconButton(
+                          onPressed: () {
+                            _changePasswordController.passwordVisible.value =
+                                !_changePasswordController
+                                    .passwordVisible.value;
+                          },
+                          icon: Icon(
+                            _changePasswordController.passwordVisible.value
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: Theme.of(context).primaryColor,
+                          ),
                         ),
                         validator: _passwordValidator,
                         controller:
                             _changePasswordController.oldPasswordTextController,
                         label: 'change.password.screen.field.old_password'.tr,
-                        obscure: true,
+                        obscure: _changePasswordController.passwordVisible.value
+                            ? false
+                            : true,
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
                         textAlign: TextAlign.start),
@@ -76,16 +86,26 @@ class ChangePassword extends StatelessWidget {
                     padding: const EdgeInsets.only(
                         left: 16.0, right: 16.0, top: 16.0),
                     child: CustomTextField(
-                        widgetIcon: Icon(
-                          Icons.vpn_key,
-                          size: 20,
-                          color: Theme.of(context).primaryColor,
+                        suffix: IconButton(
+                          onPressed: () {
+                            _changePasswordController.passwordVisible.value =
+                                !_changePasswordController
+                                    .passwordVisible.value;
+                          },
+                          icon: Icon(
+                            _changePasswordController.passwordVisible.value
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: Theme.of(context).primaryColor,
+                          ),
                         ),
                         validator: _passwordValidator,
                         controller:
                             _changePasswordController.passwordTextController,
                         label: 'change.password.screen.field.new_password'.tr,
-                        obscure: true,
+                        obscure: _changePasswordController.passwordVisible.value
+                            ? false
+                            : true,
                         keyboardType: TextInputType.text,
                         textInputAction: TextInputAction.next,
                         textAlign: TextAlign.start),
@@ -94,10 +114,18 @@ class ChangePassword extends StatelessWidget {
                     padding: const EdgeInsets.only(
                         left: 16.0, right: 16.0, top: 16.0),
                     child: CustomTextField(
-                        widgetIcon: Icon(
-                          Icons.vpn_key,
-                          size: 20,
-                          color: Theme.of(context).primaryColor,
+                        suffix: IconButton(
+                          onPressed: () {
+                            _changePasswordController.passwordVisible.value =
+                                !_changePasswordController
+                                    .passwordVisible.value;
+                          },
+                          icon: Icon(
+                            _changePasswordController.passwordVisible.value
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: Theme.of(context).primaryColor,
+                          ),
                         ),
                         controller: _changePasswordController
                             .confirmPasswordTextController,
@@ -112,7 +140,9 @@ class ChangePassword extends StatelessWidget {
                         label:
                             'change.password.screen.field.confirm_new_password'
                                 .tr,
-                        obscure: true,
+                        obscure: _changePasswordController.passwordVisible.value
+                            ? false
+                            : true,
                         keyboardType: TextInputType.text,
                         textInputAction: TextInputAction.done,
                         textAlign: TextAlign.start),
@@ -151,8 +181,8 @@ class ChangePassword extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
+        );
+      })),
     );
   }
 }
