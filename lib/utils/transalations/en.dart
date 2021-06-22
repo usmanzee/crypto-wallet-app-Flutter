@@ -238,6 +238,10 @@ const Map<String, String> en = {
   'home.screen.link.card.trading': 'Trading',
   'home.screen.tabs.losers': 'Losers',
   'home.screen.tabs.gainers': 'Gainers',
+  'home.screen.link.card.launchpad': 'Launchpad',
+  'home.screen.link.card.savings': 'Savings',
+  'home.screen.link.card.liquid_swap': 'Liquid Swap',
+  'home.screen.link.card.more': 'More',
 
   //App Markets Screen
   'markets.screen.title': 'Markets',

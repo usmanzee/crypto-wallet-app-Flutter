@@ -16,12 +16,15 @@ import 'package:b4u_wallet/controllers/SnackbarController.dart';
 class BottomNavBar extends GetView<HomeController> {
   final MarketController marketController = Get.put(MarketController());
   final WebSocketController webSocketController = Get.find();
+
   Widget callPage(int current, bool hasConnection) {
     if (hasConnection) {
       switch (current) {
         case 0:
           return RefreshIndicator(
-              onRefresh: controller.refreshHomePage, child: new Home());
+            onRefresh: controller.refreshHomePage,
+            child: new Home(),
+          );
           break;
         case 1:
           return RefreshIndicator(
@@ -74,58 +77,59 @@ class BottomNavBar extends GetView<HomeController> {
               topRight: Radius.circular(30.0),
             ),
             child: BottomNavigationBar(
-                type: BottomNavigationBarType.fixed,
-                items: [
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.home),
-                    label: "bottom.navbar.home".tr,
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.leaderboard),
-                    label: "bottom.navbar.markets".tr,
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.insights),
-                    label: "bottom.navbar.trading".tr,
-                  ),
-                  BottomNavigationBarItem(
-                    // icon: Icon(Icons.library_books),
-                    icon: Icon(Icons.swap_horiz),
-                    label: "bottom.navbar.buy_sell".tr,
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.account_balance_wallet),
-                    label: "bottom.navbar.wallets".tr,
-                  ),
-                ],
-                currentIndex: controller.selectedNavIndex,
-                onTap: controller.hasConnection
-                    ? (index) {
-                        var isLoggedIn = controller.isLoggedIn;
+              type: BottomNavigationBarType.fixed,
+              items: [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: "bottom.navbar.home".tr,
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.leaderboard),
+                  label: "bottom.navbar.markets".tr,
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.insights),
+                  label: "bottom.navbar.trading".tr,
+                ),
+                BottomNavigationBarItem(
+                  // icon: Icon(Icons.library_books),
+                  icon: Icon(Icons.swap_horiz),
+                  label: "bottom.navbar.buy_sell".tr,
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.account_balance_wallet),
+                  label: "bottom.navbar.wallets".tr,
+                ),
+              ],
+              currentIndex: controller.selectedNavIndex,
+              onTap: controller.hasConnection
+                  ? (index) {
+                      var isLoggedIn = controller.isLoggedIn;
 
-                        if (index == 4 && !isLoggedIn.value) {
-                          Get.toNamed('/login');
-                        } else if (index == 3 && !isLoggedIn.value) {
-                          Get.toNamed('/login');
-                        } else {
-                          controller.selectedNavIndex = index;
-                        }
-                        if (index != 2) {
-                          bool tradingControllerInstance =
-                              Get.isRegistered<TradingController>();
-                          if (tradingControllerInstance) {
-                            Get.delete<TradingController>(force: true);
-                          }
-                        }
-                        if (index != 3) {
-                          bool swapControllerInstance =
-                              Get.isRegistered<SwapController>();
-                          if (swapControllerInstance) {
-                            Get.delete<SwapController>(force: true);
-                          }
+                      if (index == 4 && !isLoggedIn.value) {
+                        Get.toNamed('/login');
+                      } else if (index == 3 && !isLoggedIn.value) {
+                        Get.toNamed('/login');
+                      } else {
+                        controller.selectedNavIndex = index;
+                      }
+                      if (index != 2) {
+                        bool tradingControllerInstance =
+                            Get.isRegistered<TradingController>();
+                        if (tradingControllerInstance) {
+                          Get.delete<TradingController>(force: true);
                         }
                       }
-                    : null),
+                      if (index != 3) {
+                        bool swapControllerInstance =
+                            Get.isRegistered<SwapController>();
+                        if (swapControllerInstance) {
+                          Get.delete<SwapController>(force: true);
+                        }
+                      }
+                    }
+                  : null,
+            ),
           ),
         ),
       ),

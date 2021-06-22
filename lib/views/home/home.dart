@@ -1,5 +1,6 @@
 import 'package:b4u_wallet/controllers/HomeController.dart';
 import 'package:b4u_wallet/models/formated_market.dart';
+import 'package:b4u_wallet/views/home/components/text_with_icon_widget.dart';
 import 'package:b4u_wallet/views/webview_container.dart';
 import 'package:get/get.dart';
 import 'package:b4u_wallet/controllers/market_controller.dart';
@@ -9,6 +10,7 @@ import 'package:b4u_wallet/views/home/loser.dart';
 import 'package:flutter_sparkline/flutter_sparkline.dart';
 import 'package:badges/badges.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:b4u_wallet/views/home/more_options_page.dart';
 
 class Home extends StatelessWidget {
   final MarketController marketController = Get.find();
@@ -24,50 +26,54 @@ class Home extends StatelessWidget {
       children: [
         CarouselSlider(
             options: CarouselOptions(
-                viewportFraction: 1,
-                height: 220.0,
-                enlargeCenterPage: true,
-                autoPlay: true,
-                aspectRatio: 16 / 9,
-                autoPlayCurve: Curves.fastOutSlowIn,
-                enableInfiniteScroll: true,
-                autoPlayAnimationDuration: Duration(milliseconds: 800),
-                scrollDirection: Axis.horizontal,
-                onPageChanged: (index, reason) {
-                  homeController.currentPos.value = index;
-                }),
+              viewportFraction: 1,
+              height: 220.0,
+              enlargeCenterPage: true,
+              autoPlay: true,
+              aspectRatio: 16 / 9,
+              autoPlayCurve: Curves.fastOutSlowIn,
+              enableInfiniteScroll: true,
+              autoPlayAnimationDuration: Duration(milliseconds: 800),
+              scrollDirection: Axis.horizontal,
+              onPageChanged: (index, reason) {
+                homeController.currentPos.value = index;
+              },
+            ),
             items: posts.length > 0
-                ? posts.map((post) {
-                    return Builder(
-                      builder: (BuildContext context) {
-                        return GestureDetector(
-                            child: Image.network(
-                              post['_embedded']['wp:featuredmedia'][0]
-                                      ['media_details']['sizes']['medium_large']
-                                  ['source_url'],
-                              fit: BoxFit.cover,
-                              loadingBuilder: (BuildContext context,
-                                  Widget child,
-                                  ImageChunkEvent loadingProgress) {
-                                if (loadingProgress == null) return child;
-                                return Center(
-                                  child: CircularProgressIndicator(
-                                    value: loadingProgress.expectedTotalBytes !=
-                                            null
-                                        ? loadingProgress
-                                                .cumulativeBytesLoaded /
-                                            loadingProgress.expectedTotalBytes
-                                        : null,
-                                  ),
-                                );
-                              },
-                            ),
-                            onTap: () {
-                              Get.to(WebViewContainer('Post', post['link']));
-                            });
-                      },
-                    );
-                  }).toList()
+                ? posts.map(
+                    (post) {
+                      return Builder(
+                        builder: (BuildContext context) {
+                          return GestureDetector(
+                              child: Image.network(
+                                post['_embedded']['wp:featuredmedia'][0]
+                                        ['media_details']['sizes']
+                                    ['medium_large']['source_url'],
+                                fit: BoxFit.cover,
+                                loadingBuilder: (BuildContext context,
+                                    Widget child,
+                                    ImageChunkEvent loadingProgress) {
+                                  if (loadingProgress == null) return child;
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      value: loadingProgress
+                                                  .expectedTotalBytes !=
+                                              null
+                                          ? loadingProgress
+                                                  .cumulativeBytesLoaded /
+                                              loadingProgress.expectedTotalBytes
+                                          : null,
+                                    ),
+                                  );
+                                },
+                              ),
+                              onTap: () {
+                                Get.to(WebViewContainer('Post', post['link']));
+                              });
+                        },
+                      );
+                    },
+                  ).toList()
                 : banners
                     .map((item) => Container(
                           child: Center(
@@ -168,92 +174,52 @@ class Home extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Container(
+        child: Container(
+          color: Get.theme.canvasColor,
+          child: Column(
+            children: <Widget>[
+              Container(
                 height: 245.0,
                 width: double.infinity,
-                decoration: BoxDecoration(color: Theme.of(context).canvasColor),
-                child: Obx(() {
-                  if (homeController.isLoadingWpPosts.value)
-                    return Container(
-                        width: double.infinity,
-                        height: 200,
-                        alignment: Alignment.center,
-                        child: CircularProgressIndicator());
-                  else
-                    return imageCarousel(context, homeController.wpPosts);
-                })),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10.0),
-              child: Container(
-                  height: 100.0,
-                  margin: const EdgeInsets.only(top: 4.0),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Theme.of(context).hintColor,
-                          offset: Offset(0.0, 0.0), //(x,y)
-                          blurRadius: 6.0,
-                        ),
-                      ],
-                      color: Theme.of(context).scaffoldBackgroundColor),
-                  child:
-                      // ListView(
-                      //   scrollDirection: Axis.horizontal,
-                      //   children: <Widget>[
-                      //     _linksCard(
-                      //         context,
-                      //         Icon(
-                      //           Icons.vertical_align_bottom,
-                      //           size: 26.0,
-                      //           color: Theme.of(context).accentColor,
-                      //         ), () {
-                      //       homeController.isLoggedIn.value
-                      //           ? Get.toNamed('/wallets-search',
-                      //               arguments: {'searchFrom': 'deposit'})
-                      //           : Get.toNamed('/login');
-                      //     }, "home.screen.link.card.deposit".tr),
-                      //     _linksCard(
-                      //         context,
-                      //         Icon(
-                      //           Icons.vertical_align_top,
-                      //           size: 26.0,
-                      //           color: Theme.of(context).accentColor,
-                      //         ), () {
-                      //       homeController.isLoggedIn.value
-                      //           ? Get.toNamed('/wallets-search',
-                      //               arguments: {'searchFrom': 'withdraw'})
-                      //           : Get.toNamed('/login');
-                      //     }, "home.screen.link.card.withdraw".tr),
-                      //     _linksCard(
-                      //         context,
-                      //         Icon(
-                      //           Icons.swap_horiz,
-                      //           size: 26.0,
-                      //           color: Theme.of(context).accentColor,
-                      //         ), () {
-                      //       homeController.isLoggedIn.value
-                      //           ? homeController.selectedNavIndex = 3
-                      //           : Get.toNamed('/login');
-                      //     }, "home.screen.link.card.buy_sell".tr),
-                      //     _linksCard(
-                      //         context,
-                      //         Icon(
-                      //           Icons.insights,
-                      //           size: 26.0,
-                      //           color: Theme.of(context).accentColor,
-                      //         ), () {
-                      //       homeController.selectedNavIndex = 2;
-                      //     }, "home.screen.link.card.trading".tr),
-                      //   ],
-                      // ),
-                      Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                decoration: BoxDecoration(
+                  color: Theme.of(context).canvasColor,
+                ),
+                child: Obx(
+                  () {
+                    if (homeController.isLoadingWpPosts.value)
+                      return Container(
+                          width: double.infinity,
+                          height: 200,
+                          alignment: Alignment.center,
+                          child: CircularProgressIndicator());
+                    else
+                      return imageCarousel(context, homeController.wpPosts);
+                  },
+                ),
+              ),
+              Container(
+                height: 200.0,
+                width: MediaQuery.of(context).size.width,
+                margin: const EdgeInsets.only(top: 4.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(33),
+                    topRight: Radius.circular(33),
+                  ),
+                  // border: Border.all(color: Get.theme.hintColor,width: 0.5,),
+                  /*boxShadow: [
+                      BoxShadow(
+                        color: Theme.of(context).hintColor,
+                        offset: Offset(0.0, 0.0), //(x,y)
+                        blurRadius: 6.0,
+                      ),
+                    ],*/
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                ),
+                child:
+                    /*ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: <Widget>[
                         _linksCard(
                             context,
                             Icon(
@@ -299,52 +265,236 @@ class Home extends StatelessWidget {
                           homeController.selectedNavIndex = 2;
                         }, "home.screen.link.card.trading".tr),
                       ],
+                    ),*/
+                    Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          _linksCard(
+                              context: context,
+                              icon: Icons.vertical_align_bottom,
+                              onPressed: () {
+                                homeController.isLoggedIn.value
+                                    ? Get.toNamed('/wallets-search',
+                                        arguments: {'searchFrom': 'deposit'})
+                                    : Get.toNamed('/login');
+                              },
+                              name: "home.screen.link.card.deposit".tr),
+                          _linksCard(
+                              context: context,
+                              icon: Icons.vertical_align_top,
+                              onPressed: () {
+                                homeController.isLoggedIn.value
+                                    ? Get.toNamed('/wallets-search',
+                                        arguments: {'searchFrom': 'withdraw'})
+                                    : Get.toNamed('/login');
+                              },
+                              name: "home.screen.link.card.withdraw".tr),
+                          _linksCard(
+                              context: context,
+                              icon: Icons.swap_horiz,
+                              onPressed: () {
+                                homeController.isLoggedIn.value
+                                    ? homeController.selectedNavIndex = 3
+                                    : Get.toNamed('/login');
+                              },
+                              name: "home.screen.link.card.buy_sell".tr),
+                          _linksCard(
+                              context: context,
+                              icon: Icons.insights,
+                              onPressed: () {
+                                homeController.selectedNavIndex = 2;
+                              },
+                              name: "home.screen.link.card.trading".tr),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          _linksCard(
+                              context: context,
+                              icon: Icons.adb,
+                              onPressed: () {
+                                homeController.isLoggedIn.value
+                                    ? Get.toNamed('/wallets-search',
+                                        arguments: {'searchFrom': 'deposit'})
+                                    : Get.toNamed('/login');
+                              },
+                              name: "home.screen.link.card.launchpad".tr),
+                          _linksCard(
+                              context: context,
+                              icon: Icons.savings,
+                              onPressed: () {
+                                homeController.isLoggedIn.value
+                                    ? Get.toNamed(
+                                        '/wallets-search',
+                                        arguments: {'searchFrom': 'withdraw'},
+                                      )
+                                    : Get.toNamed('/login');
+                              },
+                              name: "home.screen.link.card.savings".tr),
+                          _linksCard(
+                              context: context,
+                              icon: Icons.swap_horizontal_circle_outlined,
+                              onPressed: () {
+                                homeController.isLoggedIn.value
+                                    ? homeController.selectedNavIndex = 3
+                                    : Get.toNamed('/login');
+                              },
+                              name: "home.screen.link.card.liquid_swap".tr),
+                          _linksCard(
+                              context: context,
+                              icon: Icons.app_registration,
+                              onPressed: () {
+                                Get.to<void>(()=> MoreOptionsPage());
+                              },
+                              name: "home.screen.link.card.more".tr),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.only(bottom: 5.0),
+                decoration: BoxDecoration(
+                  color: Get.theme.scaffoldBackgroundColor,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: textWithIconWidget(
+                        title: 'P2P Trading',
+                        icon: Icons.people,
+                        subtitle1: 'BankTransfer',
+                        subtitle2: 'PayPal, Revoult',
+                      ),
                     ),
-                  )),
-            ),
-            Obx(() {
-              if (marketController.isLoading.value)
-                return _loadingCardAnimation(context);
-              else
-                return _cardLoaded(
-                    context, marketController.formatedMarketsList);
-            }),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                      child: textWithIconWidget(
+                        title: 'Credit/DebitCard',
+                        icon: Icons.credit_card,
+                        subtitle1: 'Visa, MasterCard',
+                        subtitle2: '',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
 
-            ///
-            /// Tab bar custom
-            ///
-            Container(
-              height: 300.0,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Expanded(
-                    child: DefaultTabController(
+              Obx(
+                () {
+                  if (marketController.isLoading.value)
+                    return _loadingCardAnimation(context);
+                  else
+                    return Container(
+                      color: Get.theme.scaffoldBackgroundColor,
+                      child: _cardLoaded(
+                          context, marketController.formatedMarketsList),
+                    );
+                },
+              ),
+              SizedBox(
+                height: 10,
+              ),
+
+              ///
+              /// Tab bar custom
+              ///
+              Container(
+                height: 300.0,
+                color: Colors.white,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    DefaultTabController(
                       length: 2,
-                      child: new Scaffold(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: TabBar(
+                              indicatorColor: Theme.of(context).primaryColor,
+                              labelColor: Theme.of(context).primaryColor,
+                              unselectedLabelColor: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor,
+                              indicatorSize: TabBarIndicatorSize.label,
+                              isScrollable: true,
+                              indicator: BoxDecoration(
+                                color: Get.theme.canvasColor,
+                                borderRadius: BorderRadius.circular(3),
+                              ),
+                              tabs: [
+                                Tab(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    child: Text(
+                                      "home.screen.tabs.gainers".tr,
+                                      style: TextStyle(fontFamily: "Popins"),
+                                    ),
+                                  ),
+                                ),
+                                Tab(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    child: Text(
+                                      "home.screen.tabs.losers".tr,
+                                      style: TextStyle(fontFamily: 'Popins'),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            height: 240.0,
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: TabBarView(
+                              children: [
+                                Gainer(),
+                                Loser(),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      //todo: take the values form here
+                      /*Scaffold(
                         appBar: PreferredSize(
-                          preferredSize:
-                              Size.fromHeight(53.0), // here the desired height
-                          child: new AppBar(
+                          preferredSize: Size.fromHeight(
+                              53.0), // here the desired height
+                          child: AppBar(
                             backgroundColor:
                                 Theme.of(context).scaffoldBackgroundColor,
                             elevation: 0.0,
-                            centerTitle: true,
+                            // centerTitle: true,
                             flexibleSpace: SafeArea(
                               child: Container(
                                 child: Padding(
                                   padding: const EdgeInsets.only(right: 100.0),
-                                  child: new TabBar(
+                                  child:  TabBar(
                                     indicatorColor:
-                                        Theme.of(context).primaryColor,
+                                    Theme.of(context).primaryColor,
                                     labelColor: Theme.of(context).primaryColor,
                                     unselectedLabelColor: Theme.of(context)
                                         .textSelectionTheme
                                         .selectionColor,
                                     indicatorSize: TabBarIndicatorSize.label,
                                     tabs: [
-                                      new Tab(
+                                      Tab(
                                         child: Row(
                                           children: <Widget>[
                                             Padding(
@@ -359,7 +509,7 @@ class Home extends StatelessWidget {
                                           ],
                                         ),
                                       ),
-                                      new Tab(
+                                      Tab(
                                         child: Row(
                                           children: <Widget>[
                                             Padding(
@@ -384,20 +534,20 @@ class Home extends StatelessWidget {
                         ),
                         body: Padding(
                           padding: const EdgeInsets.only(top: 10.0),
-                          child: new TabBarView(
+                          child: TabBarView(
                             children: [
                               Gainer(),
                               Loser(),
                             ],
                           ),
                         ),
-                      ),
+                      ),*/
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -422,12 +572,16 @@ class Card extends StatelessWidget {
     2.0,
     4.0
   ];
-  Card(this.formatedMarket);
+
+  Card({this.formatedMarket});
+
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
     return Padding(
-      padding: const EdgeInsets.only(top: 3.0, bottom: 3.0),
+      padding: const EdgeInsets.symmetric(
+        vertical: 3.0,
+      ),
       child: InkWell(
         onTap: () {
           // MarketController marketController = Get.find();
@@ -435,18 +589,20 @@ class Card extends StatelessWidget {
           Get.toNamed('/market-detail');
         },
         child: Container(
-          height: 70.0,
-          width: _width / 2.2,
+          height: 100.0,
+          width: _width / 3.2,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-              color: Theme.of(context).scaffoldBackgroundColor,
-              boxShadow: [
-                BoxShadow(
-                    color: Color(0xFF656565).withOpacity(0.15),
-                    blurRadius: 1.0,
-                    spreadRadius: 1.0,
-                    offset: Offset(0.1, 1.0))
-              ]),
+            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            color: Theme.of(context).scaffoldBackgroundColor,
+            /*boxShadow: [
+              BoxShadow(
+                color: Color(0xFF656565).withOpacity(0.15),
+                blurRadius: 1.0,
+                spreadRadius: 1.0,
+                offset: Offset(0.1, 1.0),
+              ),
+            ],*/
+          ),
           child: Stack(
             children: <Widget>[
               Padding(
@@ -455,7 +611,7 @@ class Card extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
+                    /* Text(
                       formatedMarket.name.toUpperCase(),
                       style: TextStyle(
                           color: Theme.of(context)
@@ -464,14 +620,25 @@ class Card extends StatelessWidget {
                           fontFamily: "Popins",
                           fontWeight: FontWeight.w500,
                           fontSize: 14.0),
-                    ),
+                    ),*/
                     Padding(
                       padding: const EdgeInsets.only(right: 6.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
+                        children: [
                           Text(
+                            formatedMarket.name.toUpperCase(),
+                            style: TextStyle(
+                              color: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor,
+                              fontFamily: "Popins",
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14.0,
+                            ),
+                          ),
+                          /*Text(
                             formatedMarket.last.toStringAsFixed(2),
                             style: TextStyle(
                                 color: formatedMarket.isPositiveChange
@@ -479,25 +646,39 @@ class Card extends StatelessWidget {
                                     : Colors.redAccent,
                                 fontFamily: "Popins",
                                 fontSize: 13.5),
-                          ),
+                          ),*/
                           Text(
                             formatedMarket.priceChangePercent,
                             style: TextStyle(
-                                color: formatedMarket.isPositiveChange
-                                    ? Colors.greenAccent
-                                    : Colors.redAccent),
+                              color: formatedMarket.isPositiveChange
+                                  ? Colors.greenAccent
+                                  : Colors.redAccent,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14.0,
+                            ),
                           ),
                         ],
                       ),
-                    )
+                    ),
+                    Text(
+                      formatedMarket.last.toStringAsFixed(2),
+                      style: TextStyle(
+                          color: formatedMarket.isPositiveChange
+                              ? Colors.greenAccent
+                              : Colors.redAccent,
+                          fontFamily: "Popins",
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ],
                 ),
               ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
+                  padding: const EdgeInsets.only(right: 30),
                   height: 30.0,
-                  child: new Sparkline(
+                  child: Sparkline(
                     data: !marketController.isSparkLinesLoading.value &&
                             (formatedMarket.sparkLineData != null &&
                                 formatedMarket.sparkLineData.length > 0)
@@ -508,7 +689,7 @@ class Card extends StatelessWidget {
                     lineColor: marketController.isSparkLinesLoading.value
                         ? Theme.of(context).hintColor.withOpacity(0.5)
                         : Theme.of(context).accentColor,
-                    fillGradient: new LinearGradient(
+                    fillGradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
@@ -548,6 +729,7 @@ class CardLoading extends StatelessWidget {
     2.0,
     4.0
   ];
+
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
@@ -557,15 +739,19 @@ class CardLoading extends StatelessWidget {
         height: 70.0,
         width: _width / 2.2,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-            color: Theme.of(context).canvasColor,
-            boxShadow: [
-              BoxShadow(
-                  color: Theme.of(context).hintColor.withOpacity(0.1),
-                  blurRadius: 1.0,
-                  spreadRadius: 1.0,
-                  offset: Offset(0.1, 1.0))
-            ]),
+          borderRadius: BorderRadius.all(
+            Radius.circular(5.0),
+          ),
+          color: Theme.of(context).canvasColor,
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).hintColor.withOpacity(0.1),
+              blurRadius: 1.0,
+              spreadRadius: 1.0,
+              offset: Offset(0.1, 1.0),
+            ),
+          ],
+        ),
         child: Stack(
           children: <Widget>[
             Padding(
@@ -604,17 +790,17 @@ class CardLoading extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: Container(
                 height: 30.0,
-                child: new Sparkline(
+                child: Sparkline(
                   data: data,
                   lineWidth: 0.3,
                   fillMode: FillMode.below,
                   lineColor: Theme.of(context).hintColor.withOpacity(0.2),
-                  fillGradient: new LinearGradient(
+                  fillGradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
                       Theme.of(context).hintColor.withOpacity(0.2),
-                      Theme.of(context).hintColor.withOpacity(0.2)
+                      Theme.of(context).hintColor.withOpacity(0.2),
                     ],
                   ),
                 ),
@@ -656,7 +842,21 @@ Widget _cardLoaded(
     BuildContext context, List<FormatedMarket> formatedMarketList) {
   return formatedMarketList.isEmpty
       ? Container()
-      : GridView.count(
+      : Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Card(
+              formatedMarket: formatedMarketList[0],
+            ),
+            Card(
+              formatedMarket: formatedMarketList[1],
+            ),
+            Card(
+              formatedMarket: formatedMarketList[2],
+            ),
+          ],
+        );
+  /*GridView.count(
           shrinkWrap: true,
           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
           crossAxisSpacing: 12.0,
@@ -666,45 +866,58 @@ Widget _cardLoaded(
           primary: false,
           children: List.generate(
             formatedMarketList.length > 4 ? 4 : formatedMarketList.length,
-            (index) => Card(formatedMarketList[index]),
-          ));
+            (index) => Card(
+              formatedMarket: formatedMarketList[index],
+            ),
+          ),
+        );*/
 }
 
-Widget _linksCard(context, Widget icon, VoidCallback onPressed, String name) {
+Widget _linksCard(
+    {context, IconData icon, VoidCallback onPressed, String name}) {
   return InkWell(
     onTap: onPressed,
     child: Container(
       // width: 100.0,
       padding: EdgeInsets.only(left: 14.0, right: 14.0),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-          color: Theme.of(context).scaffoldBackgroundColor,
-          boxShadow: [
+        borderRadius: BorderRadius.all(
+          Radius.circular(5.0),
+        ),
+        color: Theme.of(context).scaffoldBackgroundColor,
+        /* boxShadow: [
             BoxShadow(
                 color: Color(0xFF656565).withOpacity(0.15),
                 blurRadius: 1.0,
                 spreadRadius: 1.0,
                 offset: Offset(0.1, 1.0))
-          ]),
+          ],*/
+      ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          icon,
+          Icon(
+            icon,
+            size: 26.0,
+            color: Theme.of(context).accentColor,
+          ),
           SizedBox(
             height: 8.0,
           ),
           Flexible(
             child: Container(
               width: MediaQuery.of(context).size.width * 0.15,
-              child: new Text(
+              child: Text(
                 name,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontFamily: "Popins",
-                    color: Theme.of(context).textSelectionTheme.selectionColor,
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.bold),
+                  fontFamily: "Popins",
+                  color: Theme.of(context).textSelectionTheme.selectionColor,
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.bold,
+                ),
                 overflow: TextOverflow.ellipsis,
               ),
             ),

@@ -170,7 +170,7 @@ class Trading extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
+                  children: [
                     Container(
                       child: TabBar(
                         indicator: UnderlineTabIndicator(
@@ -179,7 +179,7 @@ class Trading extends StatelessWidget {
                               color: Theme.of(context).primaryColor,
                             ),
                             insets:
-                                EdgeInsets.only(left: -8, right: 8, bottom: 8)),
+                                EdgeInsets.only(left: -8, right: 8, bottom: 8),),
                         isScrollable: true,
                         labelPadding: EdgeInsets.only(left: 0, right: 16),
                         labelColor: Theme.of(context).primaryColor,
@@ -200,7 +200,7 @@ class Trading extends StatelessWidget {
                               style:
                                   TextStyle(fontFamily: "Popins", fontSize: 14),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
