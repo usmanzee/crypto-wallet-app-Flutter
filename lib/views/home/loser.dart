@@ -17,7 +17,7 @@ class Loser extends StatelessWidget {
     return Column(
       children: <Widget>[
         Container(
-          color: Theme.of(context).canvasColor,
+          color: Theme.of(context).scaffoldBackgroundColor,
           child: Padding(
             padding: const EdgeInsets.only(
                 left: 0.0, right: 0.0, top: 7.0, bottom: 7.0),

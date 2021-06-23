@@ -1,5 +1,6 @@
 import 'package:b4u_wallet/controllers/HomeController.dart';
 import 'package:b4u_wallet/models/formated_market.dart';
+import 'package:b4u_wallet/utils/router.dart';
 import 'package:b4u_wallet/views/home/components/text_with_icon_widget.dart';
 import 'package:b4u_wallet/views/webview_container.dart';
 import 'package:get/get.dart';
@@ -198,8 +199,8 @@ class Home extends StatelessWidget {
                 ),
               ),
               Container(
-                height: 200.0,
-                width: MediaQuery.of(context).size.width,
+                // height: 300.0,
+                // width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.only(top: 4.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
@@ -216,63 +217,16 @@ class Home extends StatelessWidget {
                     ],*/
                   color: Theme.of(context).scaffoldBackgroundColor,
                 ),
-                child:
-                    /*ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: <Widget>[
-                        _linksCard(
-                            context,
-                            Icon(
-                              Icons.vertical_align_bottom,
-                              size: 26.0,
-                              color: Theme.of(context).accentColor,
-                            ), () {
-                          homeController.isLoggedIn.value
-                              ? Get.toNamed('/wallets-search',
-                                  arguments: {'searchFrom': 'deposit'})
-                              : Get.toNamed('/login');
-                        }, "home.screen.link.card.deposit".tr),
-                        _linksCard(
-                            context,
-                            Icon(
-                              Icons.vertical_align_top,
-                              size: 26.0,
-                              color: Theme.of(context).accentColor,
-                            ), () {
-                          homeController.isLoggedIn.value
-                              ? Get.toNamed('/wallets-search',
-                                  arguments: {'searchFrom': 'withdraw'})
-                              : Get.toNamed('/login');
-                        }, "home.screen.link.card.withdraw".tr),
-                        _linksCard(
-                            context,
-                            Icon(
-                              Icons.swap_horiz,
-                              size: 26.0,
-                              color: Theme.of(context).accentColor,
-                            ), () {
-                          homeController.isLoggedIn.value
-                              ? homeController.selectedNavIndex = 3
-                              : Get.toNamed('/login');
-                        }, "home.screen.link.card.buy_sell".tr),
-                        _linksCard(
-                            context,
-                            Icon(
-                              Icons.insights,
-                              size: 26.0,
-                              color: Theme.of(context).accentColor,
-                            ), () {
-                          homeController.selectedNavIndex = 2;
-                        }, "home.screen.link.card.trading".tr),
-                      ],
-                    ),*/
-                    Padding(
+                child: Padding(
                   padding: EdgeInsets.all(8),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      SizedBox(
+                        height: 10,
+                      ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           _linksCard(
                               context: context,
@@ -309,31 +263,22 @@ class Home extends StatelessWidget {
                               onPressed: () {
                                 homeController.selectedNavIndex = 2;
                               },
-                              name: "home.screen.link.card.trading".tr),
+                              name: "home.screen.link.card.trade".tr),
                         ],
                       ),
+                      SizedBox(
+                        height: 40,
+                      ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          _linksCard(
-                              context: context,
-                              icon: Icons.adb,
-                              onPressed: () {
-                                homeController.isLoggedIn.value
-                                    ? Get.toNamed('/wallets-search',
-                                        arguments: {'searchFrom': 'deposit'})
-                                    : Get.toNamed('/login');
-                              },
-                              name: "home.screen.link.card.launchpad".tr),
                           _linksCard(
                               context: context,
                               icon: Icons.savings,
                               onPressed: () {
                                 homeController.isLoggedIn.value
-                                    ? Get.toNamed(
-                                        '/wallets-search',
-                                        arguments: {'searchFrom': 'withdraw'},
-                                      )
+                                    ? Get.toNamed('/savings')
                                     : Get.toNamed('/login');
                               },
                               name: "home.screen.link.card.savings".tr),
@@ -342,18 +287,24 @@ class Home extends StatelessWidget {
                               icon: Icons.swap_horizontal_circle_outlined,
                               onPressed: () {
                                 homeController.isLoggedIn.value
-                                    ? homeController.selectedNavIndex = 3
+                                    ? Get.toNamed('/history')
                                     : Get.toNamed('/login');
                               },
-                              name: "home.screen.link.card.liquid_swap".tr),
+                              name: "home.screen.link.card.history".tr),
                           _linksCard(
                               context: context,
                               icon: Icons.app_registration,
                               onPressed: () {
-                                Get.to<void>(()=> MoreOptionsPage());
+                                Get.to<void>(() => MoreOptionsPage());
                               },
                               name: "home.screen.link.card.more".tr),
+                          Expanded(
+                            child: Text(''),
+                          ),
                         ],
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                     ],
                   ),
@@ -368,28 +319,40 @@ class Home extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      child: textWithIconWidget(
-                        title: 'P2P Trading',
-                        icon: Icons.people,
-                        subtitle1: 'BankTransfer',
-                        subtitle2: 'PayPal, Revoult',
+                      child: GestureDetector(
+                        onTap: () => _showDialog(
+                          context: context,
+                          heading: 'home.screen.link.card.p2p_trading'.tr,
+                        ),
+                        child: textWithIconWidget(
+                          title: 'home.screen.link.card.p2p_trading'.tr,
+                          icon: Icons.people,
+                          subtitle1: 'home.screen.link.card.bank_Transfer'.tr,
+                          subtitle2: 'home.screen.link.card.paypal_revoult'.tr,
+                        ),
                       ),
                     ),
                     SizedBox(
                       width: 8,
                     ),
                     Expanded(
-                      child: textWithIconWidget(
-                        title: 'Credit/DebitCard',
-                        icon: Icons.credit_card,
-                        subtitle1: 'Visa, MasterCard',
-                        subtitle2: '',
+                      child: GestureDetector(
+                        onTap: () => _showDialog(
+                          context: context,
+                          heading: 'home.screen.link.card.credit_debit_card'.tr,
+                        ),
+                        child: textWithIconWidget(
+                          title: 'home.screen.link.card.credit_debit_card'.tr,
+                          icon: Icons.credit_card,
+                          subtitle1:
+                              'home.screen.link.card.visa_master_card'.tr,
+                          subtitle2: '',
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-
               Obx(
                 () {
                   if (marketController.isLoading.value)
@@ -402,16 +365,12 @@ class Home extends StatelessWidget {
                     );
                 },
               ),
-              SizedBox(
-                height: 10,
-              ),
-
               ///
               /// Tab bar custom
               ///
               Container(
-                height: 300.0,
-                color: Colors.white,
+                // height: 300.0,
+                color: Get.theme.scaffoldBackgroundColor,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -440,16 +399,20 @@ class Home extends StatelessWidget {
                               tabs: [
                                 Tab(
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
                                     child: Text(
                                       "home.screen.tabs.gainers".tr,
-                                      style: TextStyle(fontFamily: "Popins"),
+                                      style: TextStyle(
+                                        fontFamily: "Popins",
+                                      ),
                                     ),
                                   ),
                                 ),
                                 Tab(
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
                                     child: Text(
                                       "home.screen.tabs.losers".tr,
                                       style: TextStyle(fontFamily: 'Popins'),
@@ -471,7 +434,6 @@ class Home extends StatelessWidget {
                           ),
                         ],
                       ),
-                      //todo: take the values form here
                       /*Scaffold(
                         appBar: PreferredSize(
                           preferredSize: Size.fromHeight(
@@ -875,55 +837,57 @@ Widget _cardLoaded(
 
 Widget _linksCard(
     {context, IconData icon, VoidCallback onPressed, String name}) {
-  return InkWell(
-    onTap: onPressed,
-    child: Container(
-      // width: 100.0,
-      padding: EdgeInsets.only(left: 14.0, right: 14.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(
-          Radius.circular(5.0),
-        ),
-        color: Theme.of(context).scaffoldBackgroundColor,
-        /* boxShadow: [
-            BoxShadow(
-                color: Color(0xFF656565).withOpacity(0.15),
-                blurRadius: 1.0,
-                spreadRadius: 1.0,
-                offset: Offset(0.1, 1.0))
-          ],*/
-      ),
+  return Expanded(
+    flex: 1,
+    child: InkWell(
+      onTap: onPressed,
       child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
+        // crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisSize: MainAxisSize.max,
+        children: [
           Icon(
             icon,
             size: 26.0,
             color: Theme.of(context).accentColor,
           ),
           SizedBox(
-            height: 8.0,
+            height: 10,
           ),
-          Flexible(
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.15,
-              child: Text(
-                name,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: "Popins",
-                  color: Theme.of(context).textSelectionTheme.selectionColor,
-                  fontSize: 14.0,
-                  fontWeight: FontWeight.bold,
-                ),
-                overflow: TextOverflow.ellipsis,
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Text(
+              name,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: "Popins",
+                color: Theme.of(context).textSelectionTheme.selectionColor,
+                fontSize: 14.0,
+                fontWeight: FontWeight.w500,
               ),
+              // maxLines: 2,
             ),
           ),
         ],
       ),
     ),
+  );
+}
+
+void _showDialog({BuildContext context, String heading}) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        elevation: 0,
+        title: Center(child: Text(heading)),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('This feature is coming soon...'),
+          ],
+        ),
+      );
+    },
   );
 }

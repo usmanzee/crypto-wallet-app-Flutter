@@ -283,7 +283,7 @@ class MoreOptionsPage extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         // width: 100.0,
-        padding: EdgeInsets.only(left: 14.0, right: 14.0),
+        padding: EdgeInsets.symmetric(horizontal: 14.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(
             Radius.circular(5.0),
@@ -320,8 +320,8 @@ class MoreOptionsPage extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: "Popins",
                     color: Theme.of(context).textSelectionTheme.selectionColor,
-                    fontSize: 10.0,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 12.0,
+                    fontWeight: FontWeight.w500,
                   ),
                   // overflow: TextOverflow.ellipsis,
                 ),

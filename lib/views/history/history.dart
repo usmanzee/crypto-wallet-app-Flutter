@@ -14,7 +14,7 @@ class History extends StatefulWidget {
 }
 
 class _HistoryState extends State<History> with TickerProviderStateMixin {
-  final WalletController walletController = Get.find<WalletController>();
+  final WalletController walletController = Get.put(WalletController());
   final HistoryController historyController = Get.put(HistoryController());
   TabController myTabController;
 

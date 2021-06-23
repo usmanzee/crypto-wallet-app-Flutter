@@ -17,6 +17,7 @@ import 'package:b4u_wallet/views/auth/2fa.dart';
 import 'package:b4u_wallet/views/auth/signup.dart';
 import 'package:b4u_wallet/views/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:b4u_wallet/views/notification/%20notification_list.dart';
+import 'package:b4u_wallet/views/savings/savings.dart';
 import 'package:b4u_wallet/views/security/enable_otp.dart';
 import 'package:b4u_wallet/views/security/security.dart';
 import 'package:b4u_wallet/views/setting/setting.dart';
@@ -127,6 +128,10 @@ class Router {
     GetPage(
       name: '/history',
       page: () => History(),
+    ),
+    GetPage(
+      name: '/savings',
+      page: () => Savings(),
     ),
   ];
 }

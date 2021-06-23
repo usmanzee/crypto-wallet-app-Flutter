@@ -106,6 +106,7 @@ flutter:
     - assets/image/losers.png
     - assets/image/google_authenticator.png
     - assets/depth.json
+    - assets/image/
     - assets/graph_type.json
     - .env
 
