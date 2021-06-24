@@ -57,6 +57,9 @@ dependencies:
   overlay_container: ^0.0.5+1
   qr_code_scanner: ^0.4.0
   keyboard_actions: "^3.3.1+1"
+  json_serializable: ^3.5.0
+  json_annotation: ^3.0.1
+  build_runner: 1.10.10
 
 dev_dependencies:
   flutter_test:

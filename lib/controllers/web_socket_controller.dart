@@ -61,7 +61,9 @@ class WebSocketController extends GetxController {
   Future<void> subscribeKline(FormatedMarket market, String timeValue) async {
     channel.value.sink.add(json.encode({
       "event": "subscribe",
-      "streams": ['${market.id}.kline-' + timeValue]
+      //todo: change it before committing
+      // "streams": ['${market.id}.kline-' + timeValue]
+      "streams": ['chat']
     }));
   }
 

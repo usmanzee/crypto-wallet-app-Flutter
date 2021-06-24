@@ -289,6 +289,7 @@ class MarketDetailController extends GetxController {
 
   void getOrderBookDataFromWS() {
     webSocketController.streamController.value.stream.listen((message) {
+      print(message);
       var data = json.decode(message);
       if (data.containsKey('${market.value.id}.ob-snap')) {
         marketController.asks
