@@ -7,6 +7,7 @@ import 'error_controller.dart';
 class SavingsController extends GetxController {
   var isLoading = true.obs;
   var plansList = <Plans>[].obs;
+  var totalPlans = 0.obs;
   ErrorController errorController = ErrorController();
 
   Future<void> fetchPlans() async {

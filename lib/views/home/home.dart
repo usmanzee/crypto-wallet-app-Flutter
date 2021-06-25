@@ -1,4 +1,5 @@
 import 'package:b4u_wallet/controllers/HomeController.dart';
+import 'package:b4u_wallet/controllers/savings_controller.dart';
 import 'package:b4u_wallet/models/formated_market.dart';
 import 'package:b4u_wallet/utils/router.dart';
 import 'package:b4u_wallet/views/home/components/text_with_icon_widget.dart';
@@ -277,6 +278,7 @@ class Home extends StatelessWidget {
                               context: context,
                               icon: Icons.savings,
                               onPressed: () {
+                                final controller = Get.put(SavingsController());
                                 homeController.isLoggedIn.value
                                     ? Get.toNamed('/savings')
                                     : Get.toNamed('/login');

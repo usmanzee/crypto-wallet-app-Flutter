@@ -1,3 +1,4 @@
+import 'package:b4u_wallet/controllers/savings_controller.dart';
 import 'package:b4u_wallet/utils/Helpers/my_imgs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ class FlexibleTab extends StatefulWidget {
 class _FlexibleTabState extends State<FlexibleTab> {
   final date = DateTime.now().subtract(Duration(days: 1));
   bool _switchValue = false;
+  final _savingsController = Get.find<SavingsController>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class _FlexibleTabState extends State<FlexibleTab> {
                 Row(
                   children: [
                     Text(
-                      'Flexible deposit timelie',
+                      'Flexible deposit timeline',
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                       ),
@@ -56,17 +58,22 @@ class _FlexibleTabState extends State<FlexibleTab> {
               padding: const EdgeInsets.only(top: 10),
               child: ListView.builder(
                 shrinkWrap: false,
-                itemCount: 3,
+                itemCount: _savingsController.plansList.length,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding:
                         const EdgeInsets.only(top: 10.0, left: 5.0, right: 5.0),
-                    child: _container(
-                        name: 'BUSD',
-                        annualYield: 2.3,
-                        yesterdayInterest: 23.3,
-                        subscriptionCallBack: () {},
-                        autoSubscriber: true),
+                    child:
+                        _savingsController.plansList[index].type == 'flexible'
+                            ? _container(
+                                name: _savingsController.plansList[index].currencyId.toUpperCase(),
+                                annualYield: double.parse(_savingsController.plansList[index].rate),
+                                yesterdayInterest: 23.3,
+                                subscriptionCallBack: () {},
+                                imageLink: MyImgs.testPhoto,
+                                autoSubscriber: true,
+                              )
+                            : Container(),
                   );
                 },
               ),
@@ -85,6 +92,7 @@ class _FlexibleTabState extends State<FlexibleTab> {
     @required double yesterdayInterest,
     @required Function subscriptionCallBack,
     @required bool autoSubscriber,
+    @required String imageLink,
   }) {
     return Card(
       child: Padding(
@@ -101,7 +109,7 @@ class _FlexibleTabState extends State<FlexibleTab> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Image.asset(
-                    MyImgs.testPhoto,
+                    imageLink,
                     height: 40,
                     width: 40,
                   ),
@@ -276,7 +284,7 @@ class _FlexibleTabState extends State<FlexibleTab> {
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: GestureDetector(
-                  onTap: ()=> Get.back(),
+                  onTap: () => Get.back(),
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     decoration: BoxDecoration(

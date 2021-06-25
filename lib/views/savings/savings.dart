@@ -1,14 +1,19 @@
-import 'package:b4u_wallet/views/savings/flexible.dart';
+import 'package:b4u_wallet/controllers/savings_controller.dart';
+import 'package:b4u_wallet/views/savings/tabs/flexible.dart';
+import 'package:b4u_wallet/views/savings/tabs/locked.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Savings extends StatefulWidget {
+  final controller = Get.put(SavingsController());
+
   @override
   _SavingsState createState() => _SavingsState();
 }
 
 class _SavingsState extends State<Savings> with SingleTickerProviderStateMixin {
   TabController _tabController;
+  final _savingController = Get.find<SavingsController>();
 
   @override
   void initState() {
@@ -24,52 +29,52 @@ class _SavingsState extends State<Savings> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backwardsCompatibility: false,
-        backgroundColor: Get.theme.scaffoldBackgroundColor,
-        foregroundColor: Get.theme.textSelectionTheme.selectionColor,
-        centerTitle: true,
-        elevation: 0,
-        title: TabBar(
-          indicatorColor: Theme.of(context).primaryColor,
-          labelColor: Theme.of(context).primaryColor,
-          unselectedLabelColor:
-              Theme.of(context).textSelectionTheme.selectionColor,
-          indicatorSize: TabBarIndicatorSize.label,
-          isScrollable: true,
-          controller: _tabController,
-          tabs: [
-            Tab(
-              child: Text(
-                'Flexible',
+    return Obx(() {
+      print(_savingController.plansList.length);
+      print(_savingController.totalPlans);
+      return Scaffold(
+        appBar: AppBar(
+          backwardsCompatibility: false,
+          backgroundColor: Get.theme.scaffoldBackgroundColor,
+          foregroundColor: Get.theme.textSelectionTheme.selectionColor,
+          centerTitle: true,
+          elevation: 0,
+          title: TabBar(
+            indicatorColor: Theme.of(context).primaryColor,
+            labelColor: Theme.of(context).primaryColor,
+            unselectedLabelColor:
+                Theme.of(context).textSelectionTheme.selectionColor,
+            indicatorSize: TabBarIndicatorSize.label,
+            isScrollable: true,
+            controller: _tabController,
+            tabs: [
+              Tab(
+                child: Text(
+                  'Flexible',
+                ),
               ),
-            ),
-            Tab(
-              child: Text(
-                'Locked',
+              Tab(
+                child: Text(
+                  'Locked',
+                ),
               ),
+            ],
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: Icon(Icons.note_add),
             ),
           ],
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: Icon(Icons.note_add),
-          ),
-        ],
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          FlexibleTab(),
-          Container(
-            color: Colors.pink,
-            height: 200,
-            width: double.infinity,
-          ),
-        ],
-      ),
-    );
+        body: TabBarView(
+          controller: _tabController,
+          children: [
+            FlexibleTab(),
+            LockedTab(data: _savingController.plansList,),
+          ],
+        ),
+      );
+    });
   }
 }
