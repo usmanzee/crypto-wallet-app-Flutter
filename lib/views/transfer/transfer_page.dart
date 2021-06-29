@@ -16,10 +16,11 @@ class _TransferPageState extends State<TransferPage> {
   void initState() {
     currencyName = walletController.walletsList.length ==0 ? '' : walletController.walletsList[0].currency;
     currencyTotal = walletController.walletsList.length ==0 ? '' : walletController.walletsList[0].balance;
+    print(_transferController.currencyList.length);
     super.initState();
   }
 
-  final _transferController = Get.put(TransferController());
+  final _transferController = Get.find<TransferController>();
   final WalletController walletController = Get.find<WalletController>();
   final _textController = TextEditingController();
   final _focusNode = FocusNode();

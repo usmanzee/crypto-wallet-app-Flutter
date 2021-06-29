@@ -6,6 +6,7 @@ import 'error_controller.dart';
 class TransferController extends GetxController {
   var isLoading = false.obs;
   ErrorController errorController = ErrorController();
+  RxList<TransferResponse> currencyList = [].obs;
 
   void onReady() {
     super.onReady();
@@ -38,6 +39,25 @@ class TransferController extends GetxController {
 
     }
   }
+
+  Future<void> fetchCurrencyList({String category})async{
+    isLoading(true);
+    TransferRepository _transferRepository = TransferRepository();
+    String value = category == null ? 'p2p' : category;
+    try {
+      final List<TransferResponse> response =
+          await _transferRepository.fetchCurrencyList(category:value);
+      if(response.length > 0){
+        isLoading(false);
+        // add the list here.
+        currencyList.value.addAll(response);
+      }
+    } catch (error) {
+      isLoading(false);
+      errorController.handleError(error);
+    }
+  }
+
   @override
   void onClose() {
     super.onClose();

@@ -6,6 +6,7 @@ import 'package:b4u_wallet/bindings/otp_binding.dart';
 import 'package:b4u_wallet/bindings/savings_binding.dart';
 import 'package:b4u_wallet/bindings/security_binding.dart';
 import 'package:b4u_wallet/bindings/swap_history_binding.dart';
+import 'package:b4u_wallet/bindings/transfer_binding.dart';
 import 'package:b4u_wallet/bindings/verification_binding.dart';
 import 'package:b4u_wallet/bindings/wallet_search_binding.dart';
 import 'package:b4u_wallet/views/DetailCryptoValue/market_detail.dart';
@@ -139,7 +140,7 @@ class Router {
     GetPage(
       name: '/transfer_page',
       page: () => TransferPage(),
-      // binding: SavingsBinding(),
+      binding: TransferBinding(),
     ),
   ];
 }
