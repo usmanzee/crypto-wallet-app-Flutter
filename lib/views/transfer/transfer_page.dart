@@ -15,7 +15,7 @@ class _TransferPageState extends State<TransferPage> {
   @override
   void initState() {
     currencyName = walletController.walletsList.length ==0 ? '' : walletController.walletsList[0].currency;
-    currencyTotal = walletController.walletsList.length ==0 ? '' : walletController.walletsList[0].currency;
+    currencyTotal = walletController.walletsList.length ==0 ? '' : walletController.walletsList[0].balance;
     super.initState();
   }
 
@@ -325,7 +325,7 @@ class _TransferPageState extends State<TransferPage> {
                                 'MAX',
                                 style: TextStyle(
                                   fontFamily: "Popins",
-                                  color: Get.theme.accentColor.withOpacity(0.4),
+                                  color: Get.theme.accentColor.withOpacity(0.8),
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -342,7 +342,7 @@ class _TransferPageState extends State<TransferPage> {
                   style: TextStyle(
                     fontFamily: "Popins",
                     color: Get.theme.textSelectionTheme.selectionColor
-                        .withOpacity(0.4),
+                        .withOpacity(0.6),
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
                   ),
