@@ -1,15 +1,20 @@
+import 'package:b4u_wallet/controllers/wallet_controller.dart';
+import 'package:b4u_wallet/views/transfer/transfer_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:b4u_wallet/controllers/HomeController.dart';
 
 class MoreOptionsPage extends StatelessWidget {
   List<Widget> listOfWidgetsCommonFunctions = List.empty(growable: true);
   List<Widget> listOfWidgetsTrade = List.empty(growable: true);
   List<Widget> listOfWidgetsFinance = List.empty(growable: true);
   List<Widget> listOfWidgetsOthers = List.empty(growable: true);
+  final HomeController homeController = Get.find();
+  final con =Get.put(WalletController());
 
   @override
   Widget build(BuildContext context) {
-    listOfWidgetsCommonFunctions.add(_linksCard(
+    /* listOfWidgetsCommonFunctions.add(_linksCard(
         icon: Icons.label,
         name: 'heading head',
         onPressed: () {},
@@ -28,7 +33,7 @@ class MoreOptionsPage extends StatelessWidget {
         icon: Icons.label,
         name: 'heading',
         onPressed: () {},
-        context: context));
+        context: context));*/
     listOfWidgetsTrade.add(_linksCard(
         icon: Icons.credit_card,
         name: 'heading head',
@@ -211,7 +216,42 @@ class MoreOptionsPage extends StatelessWidget {
                 spacing: 20,
                 alignment: WrapAlignment.start,
                 direction: Axis.horizontal,
-                children: listOfWidgetsCommonFunctions,
+                children: [
+                  _linksCard(
+                      context: context,
+                      icon: Icons.vertical_align_bottom,
+                      onPressed: () {
+                        //todo: before coming to this page select the default currency
+                       Get.toNamed('/transfer_page');
+                      },
+                      name: 'Transfer'),
+                  _linksCard(
+                      context: context,
+                      icon: Icons.vertical_align_top,
+                      onPressed: () {
+                        homeController.isLoggedIn.value
+                            ? Get.toNamed('/wallets-search',
+                                arguments: {'searchFrom': 'withdraw'})
+                            : Get.toNamed('/login');
+                      },
+                      name: "home.screen.link.card.withdraw".tr),
+                  _linksCard(
+                      context: context,
+                      icon: Icons.swap_horiz,
+                      onPressed: () {
+                        homeController.isLoggedIn.value
+                            ? homeController.selectedNavIndex = 3
+                            : Get.toNamed('/login');
+                      },
+                      name: "home.screen.link.card.buy_sell".tr),
+                  _linksCard(
+                      context: context,
+                      icon: Icons.insights,
+                      onPressed: () {
+                        homeController.selectedNavIndex = 2;
+                      },
+                      name: "home.screen.link.card.trade".tr),
+                ],
               ),
               SizedBox(
                 height: 26,

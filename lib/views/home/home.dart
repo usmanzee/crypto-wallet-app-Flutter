@@ -3,6 +3,7 @@ import 'package:b4u_wallet/controllers/savings_controller.dart';
 import 'package:b4u_wallet/models/formated_market.dart';
 import 'package:b4u_wallet/utils/router.dart';
 import 'package:b4u_wallet/views/home/components/text_with_icon_widget.dart';
+import 'package:b4u_wallet/views/savings/savings.dart';
 import 'package:b4u_wallet/views/webview_container.dart';
 import 'package:get/get.dart';
 import 'package:b4u_wallet/controllers/market_controller.dart';
@@ -129,6 +130,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get.put(SavingsController());
     return Scaffold(
       appBar: AppBar(
         brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
@@ -205,8 +207,8 @@ class Home extends StatelessWidget {
                 margin: const EdgeInsets.only(top: 4.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(33),
-                    topRight: Radius.circular(33),
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
                   ),
                   // border: Border.all(color: Get.theme.hintColor,width: 0.5,),
                   /*boxShadow: [
@@ -278,7 +280,7 @@ class Home extends StatelessWidget {
                               context: context,
                               icon: Icons.savings,
                               onPressed: () {
-                                final controller = Get.put(SavingsController());
+                                // final controller = Get.put(SavingsController());
                                 homeController.isLoggedIn.value
                                     ? Get.toNamed('/savings')
                                     : Get.toNamed('/login');
@@ -585,44 +587,41 @@ class Card extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                           fontSize: 14.0),
                     ),*/
-                    Padding(
-                      padding: const EdgeInsets.only(right: 4.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            formatedMarket.name.toUpperCase(),
-                            style: TextStyle(
-                              color: Theme.of(context)
-                                  .textSelectionTheme
-                                  .selectionColor,
-                              fontFamily: "Popins",
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14.0,
-                            ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          formatedMarket.name.toUpperCase(),
+                          style: TextStyle(
+                            color: Theme.of(context)
+                                .textSelectionTheme
+                                .selectionColor,
+                            fontFamily: "Popins",
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12.0,
                           ),
-                          /*Text(
-                            formatedMarket.last.toStringAsFixed(2),
-                            style: TextStyle(
-                                color: formatedMarket.isPositiveChange
-                                    ? Colors.greenAccent
-                                    : Colors.redAccent,
-                                fontFamily: "Popins",
-                                fontSize: 13.5),
-                          ),*/
-                          Text(
-                            formatedMarket.priceChangePercent,
-                            style: TextStyle(
+                        ),
+                        /*Text(
+                          formatedMarket.last.toStringAsFixed(2),
+                          style: TextStyle(
                               color: formatedMarket.isPositiveChange
                                   ? Colors.greenAccent
                                   : Colors.redAccent,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14.0,
-                            ),
+                              fontFamily: "Popins",
+                              fontSize: 13.5),
+                        ),*/
+                        Text(
+                          formatedMarket.priceChangePercent,
+                          style: TextStyle(
+                            color: formatedMarket.isPositiveChange
+                                ? Colors.greenAccent
+                                : Colors.redAccent,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 13.0,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                     Text(
                       formatedMarket.last.toStringAsFixed(2),

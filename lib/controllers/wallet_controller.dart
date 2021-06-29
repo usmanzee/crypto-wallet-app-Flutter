@@ -38,11 +38,11 @@ class WalletController extends GetxController {
     WalletRepository _walletRepository = new WalletRepository();
     try {
       isLoading(true);
-      var balances = await _walletRepository.fetchBalances();
-      var currencies = await _walletRepository.fetchCurrencies();
+      List<Balance> balances = await _walletRepository.fetchBalances();
+      List<Currency> currencies = await _walletRepository.fetchCurrencies();
       balancesList.assignAll(balances);
       currenciesList.assignAll(currencies);
-      var wallets = await formateWallets(balances, currencies);
+      List<Wallet> wallets = await formateWallets(balances, currencies);
       walletsList.assignAll(wallets);
       searchWalletsList.assignAll(wallets);
 

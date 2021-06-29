@@ -11,6 +11,7 @@ Widget textWithIconWidget({
     padding: const EdgeInsets.all(12.0),
     decoration: BoxDecoration(
       color: Get.theme.canvasColor,
+      borderRadius: BorderRadius.circular(5),
       // borderRadius: BorderRadius.circular(8.0),
     ),
     child: Column(

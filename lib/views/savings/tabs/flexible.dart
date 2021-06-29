@@ -27,28 +27,44 @@ class _FlexibleTabState extends State<FlexibleTab> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    Text('All'),
-                    Icon(Icons.arrow_drop_down),
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) {},
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      Text('All'),
+                      Icon(Icons.arrow_drop_down),
+                    ],
+                  ),
                 ),
-                Row(
-                  children: [
-                    Text(
-                      'Flexible deposit timeline',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
+                GestureDetector(
+                  onTap: () {
+                    _showDialog(
+                        context: context,
+                        info:
+                            'Flexible Savings product subscriptions and redemptions are closed during 23:50-00:10 (UTC) daily. No interest is accumulated on products purchased on the day of subscription. Interest is calculated the next day.');
+                  },
+                  child: Row(
+                    children: [
+                      Text(
+                        'Flexible deposit timeline',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Icon(
-                      Icons.info_outline,
-                      size: 16,
-                    ),
-                  ],
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Icon(
+                        Icons.info_outline,
+                        size: 16,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -63,17 +79,19 @@ class _FlexibleTabState extends State<FlexibleTab> {
                   return Padding(
                     padding:
                         const EdgeInsets.only(top: 10.0, left: 5.0, right: 5.0),
-                    child:
-                        _savingsController.plansList[index].type == 'flexible'
-                            ? _container(
-                                name: _savingsController.plansList[index].currencyId.toUpperCase(),
-                                annualYield: double.parse(_savingsController.plansList[index].rate),
-                                yesterdayInterest: 23.3,
-                                subscriptionCallBack: () {},
-                                imageLink: MyImgs.testPhoto,
-                                autoSubscriber: true,
-                              )
-                            : Container(),
+                    child: _savingsController.plansList[index].type ==
+                            'flexible'
+                        ? _container(
+                            name: _savingsController.plansList[index].currencyId
+                                .toUpperCase(),
+                            annualYield: double.parse(
+                                _savingsController.plansList[index].rate),
+                            yesterdayInterest: 23.3,
+                            subscriptionCallBack: () {},
+                            imageLink: MyImgs.testPhoto,
+                            autoSubscriber: true,
+                          )
+                        : Container(),
                   );
                 },
               ),
@@ -243,6 +261,8 @@ class _FlexibleTabState extends State<FlexibleTab> {
                     onTap: () {
                       _showDialog(
                         context: context,
+                        info:
+                            'Every day at 02:00 (UTC + 0), we will use the available balance of all Spot Accounts to purchase Flexible Deposits.',
                       );
                     },
                     child: Icon(
@@ -267,9 +287,7 @@ class _FlexibleTabState extends State<FlexibleTab> {
     );
   }
 
-  void _showDialog({
-    BuildContext context,
-  }) {
+  void _showDialog({BuildContext context, String info}) {
     showDialog(
       context: context,
       builder: (context) {
@@ -279,8 +297,10 @@ class _FlexibleTabState extends State<FlexibleTab> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                  'Every day at 02:00 (UTC + 0), we will use the available balance of all Spot Accounts to purchase Flexible Deposits.'),
+              SizedBox(
+                height: 16,
+              ),
+              Text(info),
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: GestureDetector(

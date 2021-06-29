@@ -3,6 +3,7 @@ import 'package:b4u_wallet/bindings/home_binding.dart';
 import 'package:b4u_wallet/bindings/market_detail_binding.dart';
 import 'package:b4u_wallet/bindings/notification_screen_binding.dart';
 import 'package:b4u_wallet/bindings/otp_binding.dart';
+import 'package:b4u_wallet/bindings/savings_binding.dart';
 import 'package:b4u_wallet/bindings/security_binding.dart';
 import 'package:b4u_wallet/bindings/swap_history_binding.dart';
 import 'package:b4u_wallet/bindings/verification_binding.dart';
@@ -23,6 +24,7 @@ import 'package:b4u_wallet/views/security/security.dart';
 import 'package:b4u_wallet/views/setting/setting.dart';
 import 'package:b4u_wallet/views/swap/swap.dart';
 import 'package:b4u_wallet/views/swap/swap_histroy.dart';
+import 'package:b4u_wallet/views/transfer/transfer_page.dart';
 import 'package:b4u_wallet/views/verification/verification.dart';
 import 'package:b4u_wallet/views/verification/verification_level.dart';
 import 'package:b4u_wallet/views/wallet/deposit/crypto.dart';
@@ -132,6 +134,12 @@ class Router {
     GetPage(
       name: '/savings',
       page: () => Savings(),
+      binding: SavingsBinding(),
+    ),
+    GetPage(
+      name: '/transfer_page',
+      page: () => TransferPage(),
+      // binding: SavingsBinding(),
     ),
   ];
 }
