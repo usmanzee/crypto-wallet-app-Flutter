@@ -16,7 +16,7 @@ class _TransferPageState extends State<TransferPage> {
   void initState() {
     currencyName = walletController.walletsList.length ==0 ? '' : walletController.walletsList[0].currency;
     currencyTotal = walletController.walletsList.length ==0 ? '' : walletController.walletsList[0].balance;
-    print(_transferController.currencyList.length);
+    // print(_transferController.currencyList.length);
     super.initState();
   }
 
@@ -27,13 +27,14 @@ class _TransferPageState extends State<TransferPage> {
   bool swap = false;
   final String spotName = 'Spot';
   String walletName = 'p2p';
-  String currencyName = 'btc';
-  String currencyTotal = '0.000000';
+  String currencyName = '';
+  String currencyTotal = '';
   String currencyImage = MyImgs.testPhoto;
   IconData walletIcon = Icons.people;
 
   @override
   Widget build(BuildContext context) {
+    print('from the main ${_transferController.currencyList.length}');
     return Scaffold(
       appBar: AppBar(
         backwardsCompatibility: false,

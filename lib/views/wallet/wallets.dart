@@ -1,108 +1,98 @@
 import 'package:b4u_wallet/controllers/market_controller.dart';
 import 'package:b4u_wallet/controllers/wallet_controller.dart';
+import 'package:b4u_wallet/utils/Helpers/my_imgs.dart';
 import 'package:b4u_wallet/views/wallet/estimated_widget.dart';
+import 'package:b4u_wallet/views/wallet/tabs/overview_tab.dart';
 import 'package:b4u_wallet/views/wallet/wallet_loading_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:b4u_wallet/models/wallet.dart' as WalletClass;
 import 'package:get/get.dart';
 
-class Wallets extends StatelessWidget {
+class Wallets extends StatefulWidget {
+  @override
+  _WalletsState createState() => _WalletsState();
+}
+
+class _WalletsState extends State<Wallets> with SingleTickerProviderStateMixin {
   final walletController = Get.put(WalletController());
+  TabController _tabController;
   final MarketController marketController = Get.find<MarketController>();
+
+  @override
+  void initState() {
+    _tabController = TabController(length: 4, vsync: this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'wallets.screen.title'.tr,
-          style: TextStyle(
-              color: Theme.of(context).textSelectionTheme.selectionColor,
-              fontFamily: "Gotik",
-              fontWeight: FontWeight.w600,
-              fontSize: 18.5),
-        ),
-        iconTheme: IconThemeData(
-            color: Theme.of(context).textSelectionTheme.selectionColor),
-        elevation: 1.0,
-        brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
-        backgroundColor: Theme.of(context).canvasColor,
-      ),
-      resizeToAvoidBottomInset: false,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            width: double.infinity,
-            child: Stack(
-              children: <Widget>[
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Column(
-                    children: <Widget>[
-                      Obx(() {
-                        if (walletController.isLoading.value) {
-                          return ExtimatedPriceLoadingAnimation(
-                            context: context,
-                          );
-                        } else {
-                          return EstimatedWidget();
-                        }
-                      }),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            color: Theme.of(context).canvasColor,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  left: 0.0, right: 0.0, top: 8.0, bottom: 8.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left: 12.0),
-                    child: Text(
-                      "wallets.screen.column.currency".tr,
-                      style: TextStyle(
-                          color: Theme.of(context).hintColor,
-                          fontFamily: "Popins"),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10.0),
-                    child: Text(
-                      "wallets.screen.column.amount".tr,
-                      style: TextStyle(
-                          color: Theme.of(context).hintColor,
-                          fontFamily: "Popins"),
-                    ),
-                  ),
-                ],
+        backwardsCompatibility: false,
+        backgroundColor: Get.theme.scaffoldBackgroundColor,
+        foregroundColor: Get.theme.textSelectionTheme.selectionColor,
+        // centerTitle: true,
+        elevation: 0,
+        titleSpacing: 0,
+        automaticallyImplyLeading: false,
+        title: TabBar(
+          indicatorColor: Theme.of(context).primaryColor,
+          labelColor: Theme.of(context).primaryColor,
+          unselectedLabelColor:
+              Theme.of(context).textSelectionTheme.selectionColor,
+          indicatorSize: TabBarIndicatorSize.label,
+          isScrollable: true,
+          controller: _tabController,
+          tabs: [
+            Tab(
+              child: Text(
+                'Overview',
               ),
             ),
+            Tab(
+              child: Text(
+                'Spot',
+              ),
+            ),
+            Tab(
+              child: Text(
+                'P2P',
+              ),
+            ),
+            Tab(
+              child: Text(
+                'Saving',
+              ),
+            ),
+          ],
+        ),
+      ),
+      resizeToAvoidBottomInset: false,
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          OverviewTab(_tabController),
+          Container(
+            height: 200,
+            width: double.infinity,
+            color: Colors.pink,
           ),
-          Expanded(
-            child: Obx(() {
-              if (walletController.isLoading.value)
-                return WalletLoadingAnimation(context: context);
-              else
-                return Container(
-                  width: double.infinity,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemBuilder: (ctx, i) {
-                      return walletList(walletController.walletsList[i], ctx);
-                    },
-                    itemCount: walletController.walletsList.length,
-                  ),
-                );
-            }),
-          )
+          Container(
+            height: 200,
+            width: double.infinity,
+            color: Colors.grey,
+          ),
+          Container(
+            height: 200,
+            width: double.infinity,
+            color: Colors.orange,
+          ),
         ],
       ),
     );
@@ -138,7 +128,8 @@ Widget walletList(WalletClass.Wallet wallet, BuildContext ctx) {
                               width: 22.0,
                             )
                           : Image.asset(
-                              'assets/image/market/BCH.png',
+                              //todo: get the icons from the server
+                              MyImgs.testPhoto,
                               height: 22.0,
                               fit: BoxFit.contain,
                               width: 22.0,

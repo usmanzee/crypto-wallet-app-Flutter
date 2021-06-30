@@ -13,6 +13,9 @@ class WalletController extends GetxController {
   var balancesList = <Balance>[].obs;
   var currenciesList = <Currency>[].obs;
   var walletsList = <Wallet>[].obs;
+  //todo: add the lists of the p2p and savings.
+  var visibility = true.obs;
+
   var searchWalletsList = <Wallet>[].obs;
   // var depositAddress = <DepositAddress>[].obs;
   var depositAddress = ''.obs;

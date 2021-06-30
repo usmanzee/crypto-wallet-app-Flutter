@@ -1,3 +1,4 @@
+import 'package:b4u_wallet/controllers/transfer_controller.dart';
 import 'package:b4u_wallet/controllers/wallet_controller.dart';
 import 'package:b4u_wallet/views/transfer/transfer_page.dart';
 import 'package:flutter/material.dart';
@@ -11,29 +12,10 @@ class MoreOptionsPage extends StatelessWidget {
   List<Widget> listOfWidgetsOthers = List.empty(growable: true);
   final HomeController homeController = Get.find();
   final con =Get.put(WalletController());
+  final con2 = Get.put(TransferController());
 
   @override
   Widget build(BuildContext context) {
-    /* listOfWidgetsCommonFunctions.add(_linksCard(
-        icon: Icons.label,
-        name: 'heading head',
-        onPressed: () {},
-        context: context));
-    listOfWidgetsCommonFunctions.add(_linksCard(
-        icon: Icons.label,
-        name: 'heading',
-        onPressed: () {},
-        context: context));
-    listOfWidgetsCommonFunctions.add(_linksCard(
-        icon: Icons.label,
-        name: 'heading',
-        onPressed: () {},
-        context: context));
-    listOfWidgetsCommonFunctions.add(_linksCard(
-        icon: Icons.label,
-        name: 'heading',
-        onPressed: () {},
-        context: context));*/
     listOfWidgetsTrade.add(_linksCard(
         icon: Icons.credit_card,
         name: 'heading head',

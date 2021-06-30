@@ -23,6 +23,7 @@ class WebSocketController extends GetxController {
 
   void connectToWebSocket() async {
     final String wsURL = _baseUrl + '?stream=global.tickers';
+    print('here is the url $wsURL');
     channel = IOWebSocketChannel.connect(wsURL).obs;
     // streamController = StreamController.broadcast().obs;
     // streamController.value.addStream(channel.value.stream);

@@ -6,7 +6,7 @@ import 'error_controller.dart';
 class TransferController extends GetxController {
   var isLoading = false.obs;
   ErrorController errorController = ErrorController();
-  RxList<TransferResponse> currencyList = [].obs;
+  RxList<TransferResponse> currencyList = <TransferResponse>[].obs;
 
   void onReady() {
     super.onReady();
@@ -14,6 +14,7 @@ class TransferController extends GetxController {
 
   @override
   void onInit() {
+    fetchCurrencyList();
     super.onInit();
   }
   Future<bool> transferAsset({String amount,String currencyCode,String sourceWallet,String targetWallet }) async {
@@ -50,7 +51,8 @@ class TransferController extends GetxController {
       if(response.length > 0){
         isLoading(false);
         // add the list here.
-        currencyList.value.addAll(response);
+        currencyList.addAll(response);
+        print(currencyList[0].id);
       }
     } catch (error) {
       isLoading(false);

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:get/get.dart';
@@ -17,6 +19,9 @@ class _WebViewContainerState extends State<WebViewContainer> {
   var _appBarTitle;
   var _url;
   final _key = UniqueKey();
+  WebViewController _webViewController;
+  final Completer<WebViewController> _controller =
+  Completer<WebViewController>();
 
   _WebViewContainerState(this._appBarTitle, this._url);
 
@@ -43,14 +48,28 @@ class _WebViewContainerState extends State<WebViewContainer> {
         body: Stack(
           children: [
             WebView(
-                key: _key,
+                // key: _key,
                 javascriptMode: JavascriptMode.unrestricted,
                 onPageFinished: (finish) {
                   setState(() {
                     isLoading = false;
                   });
+                  _webViewController
+                      .evaluateJavascript("javascript:(function() { " +
+                      "var head = document.getElementsByTagName('header')[0];" +
+                      "head.parentNode.removeChild(head);" +
+                      "var footer = document.getElementsByTagName('footer')[0];" +
+                      "footer.parentNode.removeChild(footer);" +
+                      "})()")
+                      .then((value) => debugPrint('Page finished loading Javascript'))
+                      .catchError((onError) => debugPrint('$onError'));
                 },
-                initialUrl: _url),
+                initialUrl: _url,
+              onWebViewCreated: (WebViewController webViewController) {
+                _webViewController = webViewController;
+                _controller.complete(webViewController);
+              },
+            ),
             isLoading
                 ? Center(
                     child: CircularProgressIndicator(),

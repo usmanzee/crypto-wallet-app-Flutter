@@ -6,7 +6,9 @@ import 'package:b4u_wallet/utils/Helpers/estimate_value.dart';
 
 class EstimatedWidget extends StatelessWidget {
   final walletController = Get.put(WalletController());
+
   final MarketController marketController = Get.find<MarketController>();
+
   @override
   Widget build(BuildContext context) {
     var estimatedValue = EstimatedValue.estimateValue(
@@ -22,75 +24,232 @@ class EstimatedWidget extends StatelessWidget {
         walletController.currenciesList,
         marketController.marketList,
         marketController.marketTickerList);
-    return Padding(
-      padding: EdgeInsets.all(8),
-      child: Column(
-        children: [
-          Text('wallets.screen.equity_value'.tr + '(BTC)',
-              style: Theme.of(context).textTheme.bodyText1,
-              textAlign: TextAlign.left),
-          SizedBox(
-            height: 4,
-          ),
-          Text(estimatedValueSecondary,
-              style: Theme.of(context).textTheme.headline4,
-              textAlign: TextAlign.left),
-          Text('≈ \$' + estimatedValue.toString(),
-              style: Theme.of(context).textTheme.bodyText2,
-              textAlign: TextAlign.left),
-          SizedBox(
-            height: 4,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+    return Obx(() {
+      return Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: 8,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Text('wallets.screen.equity_value'.tr + '(BTC)',
+                    style: Theme.of(context).textTheme.bodyText1.copyWith(color: Get.theme.textSelectionTheme.selectionColor.withOpacity(0.6),),
+                    textAlign: TextAlign.left,),
+                SizedBox(width: 5,),
+                GestureDetector(
+                  onTap: () {
+                    walletController.visibility.value =
+                        !walletController.visibility.value;
+                  },
+                  child: Icon(
+                    walletController.visibility.value
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                    size: 20,
+                    color: Get.theme.textSelectionTheme.selectionColor.withOpacity(0.6),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 4,
+            ),
+            Row(
+              children: [
+                Text(
+                  estimatedValueSecondary,
+                  style: Theme.of(context).textTheme.headline5,
+                  textAlign: TextAlign.left,
+                ),
+                SizedBox(
+                  width: 4,
+                ),
+                Text(
+                  '≈ \$' + estimatedValue.toString(),
+                  style: Theme.of(context).textTheme.bodyText2,
+                  textAlign: TextAlign.left,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 4),
+                  child: GestureDetector(
+                    onTap: () {
+                      _showDialog(
+                          context: context,
+                          info:
+                              'Your assets balances may not be up to date due to a system delay. To obtain a more accurate balance, please proceed to the specific asset page to check.');
+                    },
+                    child: Icon(
+                      Icons.info_outline,
+                      color: Get.theme.accentColor,
+                      size: 16,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 4,
+            ),
+            /*Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                MaterialButton(
+                  height: 32.0,
+                  minWidth: 120.0,
+                  textColor: Theme.of(context).accentColor,
+                  child: Text(
+                    "wallets.screen.button.deposit".tr,
+                    style: TextStyle(fontSize: 12),
+                  ),
+                  onPressed: () {
+                    Get.toNamed('/wallets-search',
+                        arguments: {'searchFrom': 'deposit'});
+                  },
+                  shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                          color: Theme.of(context).accentColor,
+                          width: 1,
+                          style: BorderStyle.solid),
+                      borderRadius: BorderRadius.circular(5)),
+                  splashColor: Theme.of(context).accentColor.withOpacity(0.5),
+                ),
+                SizedBox(
+                  width: 8.0,
+                ),
+                MaterialButton(
+                  height: 32.0,
+                  minWidth: 120.0,
+                  textColor: Theme.of(context).accentColor,
+                  child: Text(
+                    "wallets.screen.button.withdraw".tr,
+                    style: TextStyle(fontSize: 12),
+                  ),
+                  onPressed: () {
+                    Get.toNamed('/wallets-search',
+                        arguments: {'searchFrom': 'withdraw'});
+                  },
+                  shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                          color: Theme.of(context).accentColor,
+                          width: 1,
+                          style: BorderStyle.solid),
+                      borderRadius: BorderRadius.circular(5)),
+                  splashColor: Theme.of(context).accentColor.withOpacity(0.5),
+                )
+              ],
+            )*/
+            Row(
+              /*mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,*/
+              children: [
+                button(
+                    main: true,
+                    text: "wallets.screen.button.deposit".tr,
+                    callBack: () {
+                      Get.toNamed('/wallets-search',
+                          arguments: {'searchFrom': 'deposit'});
+                    }),
+                SizedBox(
+                  width: 8.0,
+                ),
+                button(
+                    text: "wallets.screen.button.withdraw".tr,
+                    callBack: () {
+                      Get.toNamed('/wallets-search',
+                          arguments: {'searchFrom': 'withdraw'});
+                    }),
+                SizedBox(
+                  width: 8.0,
+                ),
+                button(
+                    callBack: () {
+                      //todo: add the functionality for going to the transfer screen.
+                    },
+                    text: 'Transfer'),
+              ],
+            ),
+          ],
+        ),
+      );
+    });
+  }
+
+  void _showDialog({BuildContext context, String info}) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          elevation: 0,
+          // title: Center(child: Text(heading)),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              MaterialButton(
-                height: 32.0,
-                minWidth: 120.0,
-                textColor: Theme.of(context).accentColor,
-                child: Text(
-                  "wallets.screen.button.deposit".tr,
-                  style: TextStyle(fontSize: 12),
-                ),
-                onPressed: () {
-                  Get.toNamed('/wallets-search',
-                      arguments: {'searchFrom': 'deposit'});
-                },
-                shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                        color: Theme.of(context).accentColor,
-                        width: 1,
-                        style: BorderStyle.solid),
-                    borderRadius: BorderRadius.circular(5)),
-                splashColor: Theme.of(context).accentColor.withOpacity(0.5),
-              ),
               SizedBox(
-                width: 8.0,
+                height: 16,
               ),
-              MaterialButton(
-                height: 32.0,
-                minWidth: 120.0,
-                textColor: Theme.of(context).accentColor,
-                child: Text(
-                  "wallets.screen.button.withdraw".tr,
-                  style: TextStyle(fontSize: 12),
+              Text(info),
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: GestureDetector(
+                  onTap: () => Get.back(),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                      color: Get.theme.accentColor,
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Ok',
+                        style: TextStyle(
+                          fontFamily: "Popins",
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: Get.theme.scaffoldBackgroundColor,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
                 ),
-                onPressed: () {
-                  Get.toNamed('/wallets-search',
-                      arguments: {'searchFrom': 'withdraw'});
-                },
-                shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                        color: Theme.of(context).accentColor,
-                        width: 1,
-                        style: BorderStyle.solid),
-                    borderRadius: BorderRadius.circular(5)),
-                splashColor: Theme.of(context).accentColor.withOpacity(0.5),
-              )
+              ),
             ],
-          )
-        ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget button({String text, Function callBack, bool main = false}) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: callBack,
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(
+            vertical: 6,
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: main
+                ? Get.theme.accentColor.withOpacity(0.8)
+                : Get.theme.canvasColor,
+          ),
+          child: Center(
+            child: Text(
+              text,
+              style: TextStyle(
+                fontFamily: "Popins",
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: Get.theme.textSelectionTheme.selectionColor,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
