@@ -16,11 +16,30 @@ class WalletRepository {
   HomeController homeController = Get.find();
 
   ApiProvider apiProvider;
+
   Future<List<Balance>> fetchBalances() async {
     apiProvider = new ApiProvider();
     RequestHeaders requestHeaders = new RequestHeaders();
     apiProvider.headers = requestHeaders.setAuthHeaders();
     final response = await apiProvider.get('peatio/account/balances');
+    return balanceFromJson(response);
+  }
+
+  Future<List<Balance>> fetchP2PBalances() async {
+    apiProvider = new ApiProvider();
+    RequestHeaders requestHeaders = new RequestHeaders();
+    apiProvider.headers = requestHeaders.setAuthHeaders();
+    final response =
+        await apiProvider.get('peatio/account/balances?account_type=p2p');
+    return balanceFromJson(response);
+  }
+
+  Future<List<Balance>> fetchSavingBalances() async {
+    apiProvider = new ApiProvider();
+    RequestHeaders requestHeaders = new RequestHeaders();
+    apiProvider.headers = requestHeaders.setAuthHeaders();
+    final response =
+        await apiProvider.get('peatio/account/balances?account_type=saving');
     return balanceFromJson(response);
   }
 

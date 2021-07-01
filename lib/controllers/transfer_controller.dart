@@ -1,20 +1,33 @@
 import 'package:b4u_wallet/models/transfer_response.dart';
+import 'package:b4u_wallet/models/wallet.dart';
+import 'package:b4u_wallet/utils/Helpers/my_imgs.dart';
+import 'package:flutter/material.dart';
 import 'package:b4u_wallet/repository/transfer_repository.dart';
 import 'package:get/get.dart';
 import 'error_controller.dart';
 
 class TransferController extends GetxController {
   var isLoading = false.obs;
+  RxBool swap = false.obs;
+  TextEditingController textController;
   ErrorController errorController = ErrorController();
   RxList<TransferResponse> currencyList = <TransferResponse>[].obs;
-
+  RxList<Wallet> currentWalletList = <Wallet>[].obs;
+  IconData walletIcon = Icons.people;
+  RxString walletName = 'p2p'.obs;
+  FocusNode focusNode;
+  RxString currencyName = ''.obs;
+  RxString currencyTotal = ''.obs;
+  RxString currencyImage = MyImgs.testPhoto.obs;
   void onReady() {
     super.onReady();
   }
 
   @override
   void onInit() {
-    fetchCurrencyList();
+    // fetchCurrencyList();
+    textController = TextEditingController();
+    focusNode = FocusNode();
     super.onInit();
   }
   Future<bool> transferAsset({String amount,String currencyCode,String sourceWallet,String targetWallet }) async {

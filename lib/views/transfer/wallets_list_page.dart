@@ -1,18 +1,20 @@
-import 'package:b4u_wallet/utils/Helpers/my_imgs.dart';
+import 'package:b4u_wallet/controllers/transfer_controller.dart';
+import 'package:b4u_wallet/controllers/wallet_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class WalletsList extends StatelessWidget {
   final Function callback;
-
+  final transferController = Get.find<TransferController>();
+  final walletController = Get.find<WalletController>();
   WalletsList(this.callback);
 
-  List<walletname> walletNames = [
-    walletname(
+  final List<WalletName> walletNames = [
+    WalletName(
       name: 'P2P',
       icon: Icons.people_outline,
     ),
-    walletname(
+    WalletName(
       name: 'Saving',
       icon: Icons.account_balance_wallet_outlined,
     )
@@ -45,6 +47,7 @@ class WalletsList extends StatelessWidget {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap:(){
+                    transferController.currentWalletList.assignAll(index == 0 ? walletController.p2pWalletsList.value : walletController.savingWalletsList.value);
                     callback(name: walletNames[index].name,icon:walletNames[index].icon,);
                     Get.back();
                   },
@@ -108,9 +111,9 @@ class WalletsList extends StatelessWidget {
   }
 }
 
-class walletname {
+class WalletName {
   IconData icon;
   String name;
 
-  walletname({this.icon, this.name});
+  WalletName({this.icon, this.name});
 }

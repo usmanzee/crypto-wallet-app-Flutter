@@ -10,10 +10,13 @@ import 'package:get/get.dart';
 class WalletController extends GetxController {
   var isLoading = false.obs;
   var isAddressLoading = false.obs;
-  var balancesList = <Balance>[].obs;
+  RxList<Balance> balancesList = <Balance>[].obs;
+  RxList<Balance> p2pList = <Balance>[].obs;
+  RxList<Balance> savingList = <Balance>[].obs;
   var currenciesList = <Currency>[].obs;
   var walletsList = <Wallet>[].obs;
-  //todo: add the lists of the p2p and savings.
+  var savingWalletsList = <Wallet>[].obs;
+  var p2pWalletsList = <Wallet>[].obs;
   var visibility = true.obs;
 
   var searchWalletsList = <Wallet>[].obs;
@@ -25,8 +28,8 @@ class WalletController extends GetxController {
   var iconC = 'BTC'.obs;
 
   @override
-  void onInit() {
-    if (homeController.isLoggedIn.value) {
+  void onInit() async{
+    if (homeController.isLoggedIn.value){
       fetchWallets();
     }
     ever(homeController.isLoggedIn, fetchWalletsValues);
@@ -41,14 +44,28 @@ class WalletController extends GetxController {
     WalletRepository _walletRepository = new WalletRepository();
     try {
       isLoading(true);
-      List<Balance> balances = await _walletRepository.fetchBalances();
-      List<Currency> currencies = await _walletRepository.fetchCurrencies();
-      balancesList.assignAll(balances);
-      currenciesList.assignAll(currencies);
-      List<Wallet> wallets = await formateWallets(balances, currencies);
-      walletsList.assignAll(wallets);
-      searchWalletsList.assignAll(wallets);
+      //fetching balances from the all three lists.
+      List<Balance> spotBalances = await _walletRepository.fetchBalances();
+      List<Balance> p2pBalances = await _walletRepository.fetchP2PBalances();
+      List<Balance> savingBalances = await _walletRepository.fetchSavingBalances();
 
+      List<Currency> currencies = await _walletRepository.fetchCurrencies();
+      // adding balances into the required lists
+      balancesList.assignAll(spotBalances);
+      p2pList.assignAll(p2pBalances);
+      savingList.assignAll(savingBalances);
+
+      currenciesList.assignAll(currencies);
+      //combining the balances and the currencies together
+      List<Wallet> spotWallets = await formateWallets(spotBalances, currencies);
+      List<Wallet> p2pWallets = await formateWallets(p2pBalances, currencies);
+      List<Wallet> savingWallets = await formateWallets(savingBalances, currencies);
+      //adding them to the variables
+      walletsList.assignAll(spotWallets);
+      p2pWalletsList.assignAll(p2pWallets);
+      savingWalletsList.assignAll(savingWallets);
+      //todo: discuss with the team...
+      searchWalletsList.assignAll(spotWallets);
       isLoading(false);
     } catch (error) {
       isLoading(false);

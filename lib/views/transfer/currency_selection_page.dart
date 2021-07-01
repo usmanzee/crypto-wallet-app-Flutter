@@ -1,4 +1,6 @@
+import 'package:b4u_wallet/controllers/transfer_controller.dart';
 import 'package:b4u_wallet/controllers/wallet_controller.dart';
+import 'package:b4u_wallet/models/wallet.dart';
 import 'package:b4u_wallet/utils/Helpers/my_imgs.dart';
 import 'package:b4u_wallet/views/wallet/wallet_loading_animation.dart';
 import 'package:flutter/material.dart';
@@ -7,9 +9,9 @@ import 'package:b4u_wallet/models/wallet.dart' as WalletClass;
 
 class CurrencySelection extends StatelessWidget {
   final walletController = Get.find<WalletController>();
-  Function callback;
-
-  CurrencySelection(this.callback);
+  final List<Wallet> walletData;
+  final _transferController = Get.find<TransferController>();
+  CurrencySelection({this.walletData,});
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +45,13 @@ class CurrencySelection extends StatelessWidget {
                     child: ListView.builder(
                       shrinkWrap: true,
                       itemBuilder: (ctx, i) {
+                        print('The id of the currencies are ${walletData[i].name}');
                         return walletList(
-                          walletController.walletsList[i],
+                          walletData[i],
+                          // walletController.p2pWalletsList[i],
                         );
                       },
-                      itemCount: walletController.walletsList.length,
+                      itemCount: walletController.p2pWalletsList.length,
                     ),
                   );
               },
@@ -68,9 +72,11 @@ class CurrencySelection extends StatelessWidget {
           InkWell(
             onTap: () {
               //todo: add the callback here and update the value in the previous widget
-              callback(name: wallet.currency,icon: wallet.iconUrl,total: (double.parse(wallet.balance) +
+              _transferController.currencyName.value = wallet.currency;
+              // _transferController.currencyImage.value = wallet.iconUrl;
+              _transferController.currencyTotal.value = (double.parse(wallet.balance) +
                   double.parse(wallet.locked))
-                  .toStringAsFixed(wallet.type == 'fiat' ? 2 : 6),);
+                  .toStringAsFixed(wallet.type == 'fiat' ? 2 : 6);
               print(wallet.currency);
               Get.back();
             },

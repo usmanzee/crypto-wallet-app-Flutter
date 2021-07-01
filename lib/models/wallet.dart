@@ -16,6 +16,7 @@ class Wallet {
   dynamic swapFee;
   dynamic minSwapAmount;
   dynamic maxSwapAmount;
+  String accountType;
 
   Wallet({
     this.balance,
@@ -35,5 +36,6 @@ class Wallet {
     this.swapFee,
     this.minSwapAmount,
     this.maxSwapAmount,
+    this.accountType
   });
 }
