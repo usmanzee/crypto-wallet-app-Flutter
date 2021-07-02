@@ -35,7 +35,7 @@ class EstimatedWidget extends StatelessWidget {
             Row(
               children: [
                 Text('wallets.screen.equity_value'.tr + '(BTC)',
-                    style: Theme.of(context).textTheme.bodyText1.copyWith(color: Get.theme.textSelectionTheme.selectionColor.withOpacity(0.6),),
+                    style: Get.theme.textTheme.bodyText1.copyWith(color: Get.theme.textSelectionTheme.selectionColor.withOpacity(0.6),),
                     textAlign: TextAlign.left,),
                 SizedBox(width: 5,),
                 GestureDetector(
@@ -92,58 +92,7 @@ class EstimatedWidget extends StatelessWidget {
             SizedBox(
               height: 4,
             ),
-            /*Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                MaterialButton(
-                  height: 32.0,
-                  minWidth: 120.0,
-                  textColor: Theme.of(context).accentColor,
-                  child: Text(
-                    "wallets.screen.button.deposit".tr,
-                    style: TextStyle(fontSize: 12),
-                  ),
-                  onPressed: () {
-                    Get.toNamed('/wallets-search',
-                        arguments: {'searchFrom': 'deposit'});
-                  },
-                  shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                          color: Theme.of(context).accentColor,
-                          width: 1,
-                          style: BorderStyle.solid),
-                      borderRadius: BorderRadius.circular(5)),
-                  splashColor: Theme.of(context).accentColor.withOpacity(0.5),
-                ),
-                SizedBox(
-                  width: 8.0,
-                ),
-                MaterialButton(
-                  height: 32.0,
-                  minWidth: 120.0,
-                  textColor: Theme.of(context).accentColor,
-                  child: Text(
-                    "wallets.screen.button.withdraw".tr,
-                    style: TextStyle(fontSize: 12),
-                  ),
-                  onPressed: () {
-                    Get.toNamed('/wallets-search',
-                        arguments: {'searchFrom': 'withdraw'});
-                  },
-                  shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                          color: Theme.of(context).accentColor,
-                          width: 1,
-                          style: BorderStyle.solid),
-                      borderRadius: BorderRadius.circular(5)),
-                  splashColor: Theme.of(context).accentColor.withOpacity(0.5),
-                )
-              ],
-            )*/
             Row(
-              /*mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,*/
               children: [
                 button(
                     main: true,
@@ -245,7 +194,7 @@ class EstimatedWidget extends StatelessWidget {
                 fontFamily: "Popins",
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
-                color: Get.theme.textSelectionTheme.selectionColor,
+                color: main ? Get.theme.scaffoldBackgroundColor : Get.theme.textSelectionTheme.selectionColor,
               ),
             ),
           ),

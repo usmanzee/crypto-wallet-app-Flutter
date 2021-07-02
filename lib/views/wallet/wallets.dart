@@ -3,6 +3,7 @@ import 'package:b4u_wallet/controllers/wallet_controller.dart';
 import 'package:b4u_wallet/utils/Helpers/my_imgs.dart';
 import 'package:b4u_wallet/views/wallet/estimated_widget.dart';
 import 'package:b4u_wallet/views/wallet/tabs/overview_tab.dart';
+import 'package:b4u_wallet/views/wallet/tabs/spot_tab.dart';
 import 'package:b4u_wallet/views/wallet/wallet_loading_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:b4u_wallet/models/wallet.dart' as WalletClass;
@@ -78,16 +79,8 @@ class _WalletsState extends State<Wallets> with SingleTickerProviderStateMixin {
         controller: _tabController,
         children: [
           OverviewTab(_tabController),
-          Container(
-            height: 200,
-            width: double.infinity,
-            color: Colors.pink,
-          ),
-          Container(
-            height: 200,
-            width: double.infinity,
-            color: Colors.grey,
-          ),
+          SpotTab(),
+          // P2PTab(),
           Container(
             height: 200,
             width: double.infinity,
