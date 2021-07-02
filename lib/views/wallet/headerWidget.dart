@@ -1,91 +1,102 @@
+import 'dart:ui';
+import 'package:b4u_wallet/controllers/wallet_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-Widget headerWidget({String firstValue,String secondValue}) {
-  return Padding(
-    padding: const EdgeInsets.only(top: 16,bottom: 8,),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              //todo: add theme in the text and the icons.
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+final walletController = Get.find<WalletController>();
+
+Widget headerWidget({String firstValue, String secondValue}) {
+  return Obx((){
+    return Padding(
+      padding: const EdgeInsets.only(
+        top: 16,
+        bottom: 8,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Equity Value (BTC) ',
+                          style: TextStyle(
+                            fontFamily: "Popins",
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: Get.theme.textSelectionTheme.selectionColor
+                                .withOpacity(0.7),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            walletController.visibility.value =
+                            !walletController.visibility.value;
+                          },
+                          child: Icon(
+                            walletController.visibility.value
+                                ? Icons.visibility_outlined
+                                : Icons.visibility_off_outlined,
+                            size: 20,
+                            color: Get.theme.textSelectionTheme.selectionColor.withOpacity(0.6),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Icon(
+                      Icons.insert_drive_file_outlined,
+                      color: Get.theme.textSelectionTheme.selectionColor
+                          .withOpacity(0.7),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8,
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+//daa the variables here...
                       Text(
-                        'Equity Value (BTC) ',
+                        firstValue,
+                        style: Get.theme.textTheme.headline5,
+                      ),
+                      Text(
+                        ' ≈ ',
                         style: TextStyle(
                           fontFamily: "Popins",
-                          fontSize: 12,
+                          fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: Get.theme.textSelectionTheme.selectionColor
                               .withOpacity(0.7),
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {},
-                        child: Icon(
-                          Icons.remove_red_eye_outlined,
+                      Text(
+                        '\$$secondValue',
+                        style: TextStyle(
+                          fontFamily: "Popins",
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
                           color: Get.theme.textSelectionTheme.selectionColor
                               .withOpacity(0.7),
-                          size: 20,
                         ),
                       ),
                     ],
                   ),
-                  Icon(
-                    Icons.insert_drive_file_outlined,
-                    color: Get.theme.textSelectionTheme.selectionColor
-                        .withOpacity(0.7),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8,
                 ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    //daa the variables here...
-                    Text(
-                      firstValue,
-                      style: Get.theme.textTheme.headline5,
-                    ),
-                    Text(
-                      ' ≈ ',
-                      style: TextStyle(
-                        fontFamily: "Popins",
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Get.theme.textSelectionTheme.selectionColor
-                            .withOpacity(0.7),
-                      ),
-                    ),
-                    Text(
-                      '\$$secondValue',
-                      style: TextStyle(
-                        fontFamily: "Popins",
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Get.theme.textSelectionTheme.selectionColor
-                            .withOpacity(0.7),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              // can be added later on.
-             /* Row(
+// can be added later on.
+/* Row(
                 children: [
                   Text(
                     'Yesterday\'s PNL ',
@@ -124,42 +135,42 @@ Widget headerWidget({String firstValue,String secondValue}) {
                   ],
                 ),
               ),*/
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  button(
-                    text: 'Deposit',
-                    main: true,
-                    callBack: () {},
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  button(
-                    text: 'Withdraw',
-                    callBack: () {},
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  button(
-                    text: 'Transfer',
-                    callBack: () {},
-                  ),
-                ],
-              ),
-            ],
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    button(
+                      text: 'Deposit',
+                      main: true,
+                      callBack: () {},
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    button(
+                      text: 'Withdraw',
+                      callBack: () {},
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    button(
+                      text: 'Transfer',
+                      callBack: () {},
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Container(
-            height: 3,
-            width: double.infinity,
-            color: Get.theme.canvasColor,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Container(
+              height: 3,
+              width: double.infinity,
+              color: Get.theme.canvasColor,
+            ),
           ),
-        ),
-        /*Padding(
+/*Padding(
           padding:
               const EdgeInsets.only(left: 16, top: 16, right: 16, bottom: 8),
           child: Row(
@@ -183,9 +194,10 @@ Widget headerWidget({String firstValue,String secondValue}) {
             ],
           ),
         ),*/
-      ],
-    ),
-  );
+        ],
+      ),
+    );
+  });
 }
 
 Widget button({String text, Function callBack, bool main = false}) {
