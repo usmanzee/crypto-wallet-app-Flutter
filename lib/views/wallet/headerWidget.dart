@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 final walletController = Get.find<WalletController>();
 
-Widget headerWidget({String firstValue, String secondValue}) {
+Widget headerWidget({String firstValue, String secondValue,bool p2p = false}) {
   return Obx((){
     return Padding(
       padding: const EdgeInsets.only(
@@ -69,7 +69,7 @@ Widget headerWidget({String firstValue, String secondValue}) {
                     children: [
 //daa the variables here...
                       Text(
-                        firstValue,
+                        walletController.visibility.value ? firstValue : '*****',
                         style: Get.theme.textTheme.headline5,
                       ),
                       Text(
@@ -83,7 +83,7 @@ Widget headerWidget({String firstValue, String secondValue}) {
                         ),
                       ),
                       Text(
-                        '\$$secondValue',
+                        walletController.visibility.value ? '\$$secondValue' : '*****',
                         style: TextStyle(
                           fontFamily: "Popins",
                           fontSize: 16,
@@ -141,21 +141,32 @@ Widget headerWidget({String firstValue, String secondValue}) {
                     button(
                       text: 'Deposit',
                       main: true,
-                      callBack: () {},
+                      callBack: () {
+                        // todo : add the p2p buy page
+                         p2p ? 'Get.' : Get.toNamed('/wallets-search',
+                            arguments: {'searchFrom': 'deposit'});
+                      },
                     ),
                     SizedBox(
                       width: 8,
                     ),
                     button(
                       text: 'Withdraw',
-                      callBack: () {},
+                      callBack: () {
+                        // todo : add the p2p buy page
+                        p2p ? 'Get.' :
+                        Get.toNamed('/wallets-search',
+                            arguments: {'searchFrom': 'withdraw'});
+                      },
                     ),
                     SizedBox(
                       width: 8,
                     ),
                     button(
                       text: 'Transfer',
-                      callBack: () {},
+                      callBack: () {
+                        Get.toNamed('/transfer_page');
+                      },
                     ),
                   ],
                 ),

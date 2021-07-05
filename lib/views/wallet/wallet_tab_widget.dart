@@ -12,7 +12,7 @@ Widget walletTabWidget({String estimatedValueSecondary, String estimatedValue, L
         SliverList(
           delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
-              return headerWidget(firstValue: estimatedValueSecondary,secondValue: estimatedValue);
+              return headerWidget(firstValue: estimatedValueSecondary,secondValue: estimatedValue,p2p: p2plist);
             },
             childCount: 1,
           ),
@@ -168,9 +168,9 @@ Widget walletList(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        (double.parse(wallet.balance) +
+                        walletController.visibility.value ? (double.parse(wallet.balance) +
                             double.parse(wallet.locked))
-                            .toStringAsFixed(wallet.type == 'fiat' ? 2 : 6),
+                            .toStringAsFixed(wallet.type == 'fiat' ? 2 : 6) : '*****',
                         style: TextStyle(
                             fontFamily: "Popins",
                             fontSize: 14.5,

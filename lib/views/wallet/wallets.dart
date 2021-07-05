@@ -19,7 +19,7 @@ class Wallets extends StatefulWidget {
 class _WalletsState extends State<Wallets> with SingleTickerProviderStateMixin {
   final walletController = Get.put(WalletController());
   TabController _tabController;
-  final MarketController marketController = Get.find<MarketController>();
+  final marketController = Get.put(MarketController());
 
   @override
   void initState() {
@@ -90,7 +90,7 @@ class _WalletsState extends State<Wallets> with SingleTickerProviderStateMixin {
   }
 }
 
-Widget walletList(WalletClass.Wallet wallet, BuildContext ctx) {
+/*Widget walletList(WalletClass.Wallet wallet, BuildContext ctx) {
   return Padding(
     padding: const EdgeInsets.only(top: 7.0),
     child: Column(
@@ -186,4 +186,4 @@ Widget walletList(WalletClass.Wallet wallet, BuildContext ctx) {
       ],
     ),
   );
-}
+}*/

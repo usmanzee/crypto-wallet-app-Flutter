@@ -4,7 +4,7 @@ import 'package:b4u_wallet/models/market_ticker.dart';
 import 'package:b4u_wallet/models/wallet.dart';
 
 class EstimatedValue {
-  static final defaultCCYPercision = 5;
+  static final defaultCCYPrecision = 5;
   static Market findMarket(
       String askUnit, String bidUnit, List<Market> markets) {
     for (Market market in markets) {
@@ -52,7 +52,7 @@ class EstimatedValue {
     var marketTicker = findMarketTicker(
         (market != null && market.id != '') ? market.id : '', marketTickers);
     var targetCurrencyPrecision = handleCCYPrecision(
-        currencies, formattedTargetCurrency, defaultCCYPercision);
+        currencies, formattedTargetCurrency, defaultCCYPrecision);
 
     if (formattedTargetCurrency == formattedWalletCurrency) {
       return double.parse(walletTotal.toStringAsFixed(targetCurrencyPrecision));
@@ -170,7 +170,7 @@ class EstimatedValue {
     }
 
     var targetCurrencyPrecision = handleCCYPrecision(
-        currencies, formattedTargetCurrency, defaultCCYPercision);
+        currencies, formattedTargetCurrency, defaultCCYPrecision);
     var precisedEstimatedValue =
         double.parse(estimatedValue.toStringAsFixed(targetCurrencyPrecision));
     return precisedEstimatedValue;
@@ -193,7 +193,7 @@ class EstimatedValue {
     estimated = estimatedWithoutMarket > 0 ? estimatedWithoutMarket : 0;
     var formattedTargetCurrency = targetCurrency.toLowerCase();
     var targetCurrencyPrecision = handleCCYPrecision(
-        currencies, formattedTargetCurrency, defaultCCYPercision);
+        currencies, formattedTargetCurrency, defaultCCYPrecision);
 
     return estimated.toStringAsFixed(targetCurrencyPrecision);
   }

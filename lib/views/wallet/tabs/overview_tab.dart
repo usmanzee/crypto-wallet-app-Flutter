@@ -1,3 +1,4 @@
+import 'package:b4u_wallet/controllers/market_controller.dart';
 import 'package:b4u_wallet/controllers/wallet_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,9 +8,10 @@ import '../wallet_loading_animation.dart';
 
 class OverviewTab extends StatelessWidget {
   TabController tabController;
-
   OverviewTab(this.tabController);
 
+
+  final marketController = Get.find<MarketController>();
   final walletController = Get.find<WalletController>();
   final List<CategoriesWidgetData> dataList = [
     CategoriesWidgetData(icon: Icons.scatter_plot_outlined, name: 'Spot'),
@@ -20,37 +22,39 @@ class OverviewTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: double.infinity,
-            child: Stack(
-              children: [
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Column(
-                    children: [
-                      Obx(
-                        () {
-                          if (walletController.isLoading.value) {
-                            return ExtimatedPriceLoadingAnimation(
-                              context: context,
-                            );
-                          } else {
-                            return EstimatedWidget();
-                          }
-                        },
-                      ),
-                    ],
+    walletController.fetchP2pTotalEstimate();
+    return Obx((){
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: double.infinity,
+              child: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Column(
+                      children: [
+                        Obx(
+                              () {
+                            if (walletController.isLoading.value) {
+                              return ExtimatedPriceLoadingAnimation(
+                                context: context,
+                              );
+                            } else {
+                              return EstimatedWidget();
+                            }
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          /* Container(
+            /* Container(
               color: Theme.of(context).canvasColor,
               child: Padding(
                 padding: const EdgeInsets.only(
@@ -98,46 +102,60 @@ class OverviewTab extends StatelessWidget {
                   );
               }),
             ),*/
-          Container(
-            height: 5,
-            width: double.infinity,
-            color: Get.theme.canvasColor,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: Text(
-              'Portfolio',
-              style: TextStyle(
-                fontFamily: "Popins",
-                fontSize: 18,
-                color: Get.theme.textSelectionTheme.selectionColor,
-                fontWeight: FontWeight.w700,
+            Container(
+              height: 5,
+              width: double.infinity,
+              color: Get.theme.canvasColor,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Text(
+                'Portfolio',
+                style: TextStyle(
+                  fontFamily: "Popins",
+                  fontSize: 18,
+                  color: Get.theme.textSelectionTheme.selectionColor,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: 3,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: (){
-                    tabController.animateTo(tabController.index+index+1);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    child: categoriesTabs(
-                      name: dataList[index].name,
-                      icon: dataList[index].icon,
-                      value: '0.00',
-                    ),
-                  ),
-                );
+            GestureDetector(
+              onTap: (){
+                tabController.animateTo(1);
               },
+              child: categoriesTabs(
+                name: dataList[0].name,
+                icon: dataList[0].icon,
+                value: walletController.estimatedValueSpot.value,
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+            GestureDetector(
+              onTap: (){
+                tabController.animateTo(2);
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16,),
+                child: categoriesTabs(
+                  name: dataList[1].name,
+                  icon: dataList[1].icon,
+                  value: walletController.estimatedValueP2p.value,
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: (){
+                tabController.animateTo(3);
+              },
+              child: categoriesTabs(
+                name: dataList[2].name,
+                icon: dataList[2].icon,
+                value: walletController.estimatedValueSaving.value,
+              ),
+            ),
+          ],
+        ),
+      );
+    });
   }
 
   Widget categoriesTabs({
@@ -165,7 +183,7 @@ class OverviewTab extends StatelessWidget {
         ),
         //todo: add the values here from the server
         Text(
-          '$value BTC',
+          walletController.visibility.value ? '$value BTC' : '*****',
           style: TextStyle(
             fontFamily: "Popins",
             fontSize: 14,

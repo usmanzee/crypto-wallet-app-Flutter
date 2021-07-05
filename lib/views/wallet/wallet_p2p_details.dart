@@ -10,6 +10,21 @@ class WalletP2PDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final total = (double.parse(wallet.balance) + double.parse(wallet.locked)).toStringAsFixed(6);
+    /*print(wallet.balance);
+    print(wallet.name);
+    print(wallet.currency);
+    print(wallet.accountType);
+    print(wallet.type);
+    print(wallet.iconUrl);
+    print(wallet.address);
+    print(wallet.depositEnabled);
+    print(wallet.explorerAddress);
+    print(wallet.explorerTransaction);
+    print(wallet.fee);
+    print(wallet.fixed);
+    print(wallet.locked);
+    print(wallet.precision);*/
     return Scaffold(
       appBar: AppBar(
         backwardsCompatibility: false,
@@ -44,7 +59,7 @@ class WalletP2PDetails extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          wallet.currency,
+                          wallet.currency.toUpperCase(),
                           style: TextStyle(
                             color: Get.theme.textSelectionTheme.selectionColor,
                             fontFamily: "Popins",
@@ -66,16 +81,18 @@ class WalletP2PDetails extends StatelessWidget {
                 ),
                 rowText(
                   name: 'Total',
-                  value: wallet.balance,
+                  value: total,
                 ),
                 rowText(
                   name: 'Available',
-                  value: '0.000000000',
+                  value: (double.parse(wallet.balance) -
+                      double.parse(wallet.locked)).toString(),
                 ),
                 rowText(
                   name: 'In Order',
-                  value: '0.000000000',
+                  value: wallet.locked,
                 ),
+                rowText(name: '', value: ''),
                 rowText(
                   name: 'Estimated Value (BTC)',
                   value: '0.000000000',
@@ -164,7 +181,8 @@ Widget button({
         child: Text(
           name,
           style: TextStyle(
-            color: color ? Get.theme.scaffoldBackgroundColor : Get.theme.textSelectionTheme.selectionColor,
+            color: color ? Get.theme.scaffoldBackgroundColor : Get.theme
+                .textSelectionTheme.selectionColor,
             fontFamily: "Popins",
             fontSize: 14,
             fontWeight: FontWeight.w700,

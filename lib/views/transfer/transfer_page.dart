@@ -42,10 +42,10 @@ class TransferPage extends StatelessWidget {
               .addAll(walletController.p2pWalletsList.value)
               : '';
           if(_transferController.currencyName.value == ''){
-            _transferController.currencyName.value =_transferController.currentWalletList[0].currency;
+            _transferController.currencyName.value =_transferController.currentWalletList.length == 0 ? '' : _transferController.currentWalletList[0].currency;
           }
           if(_transferController.currencyTotal.value == ''){
-            _transferController.currencyTotal.value =_transferController.currentWalletList[0].balance;
+            _transferController.currencyTotal.value =_transferController.currentWalletList.length == 0 ? '' : _transferController.currentWalletList[0].balance;
           }
           return Padding(
             padding: const EdgeInsets.all(16),

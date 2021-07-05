@@ -11,7 +11,7 @@ class EstimatedWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double estimatedValueUSD = EstimatedValue.estimateValue(
+    /*double estimatedValueUSD = EstimatedValue.estimateValue(
         'USD',
         walletController.currenciesList,
         walletController.walletsList,
@@ -23,7 +23,7 @@ class EstimatedWidget extends StatelessWidget {
         estimatedValueUSD,
         walletController.currenciesList,
         marketController.marketList,
-        marketController.marketTickerList);
+        marketController.marketTickerList);*/
     return Obx(() {
       return Padding(
         padding: EdgeInsets.symmetric(
@@ -42,6 +42,7 @@ class EstimatedWidget extends StatelessWidget {
                   onTap: () {
                     walletController.visibility.value =
                         !walletController.visibility.value;
+                    print('from tabs');
                   },
                   child: Icon(
                     walletController.visibility.value
@@ -59,7 +60,7 @@ class EstimatedWidget extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  estimatedValueSecondary,
+                  walletController.visibility.value ? walletController.estimatedValueAll.value : '*****',
                   style: Theme.of(context).textTheme.headline5,
                   textAlign: TextAlign.left,
                 ),
@@ -67,7 +68,7 @@ class EstimatedWidget extends StatelessWidget {
                   width: 4,
                 ),
                 Text(
-                  '≈ \$' + estimatedValueUSD.toStringAsFixed(4),
+                walletController.visibility.value ? '≈ \$' + walletController.estimatedValueUSDAll.value.toStringAsFixed(4) : '*****',
                   style: Theme.of(context).textTheme.bodyText2,
                   textAlign: TextAlign.left,
                 ),
@@ -115,7 +116,7 @@ class EstimatedWidget extends StatelessWidget {
                 ),
                 button(
                     callBack: () {
-                      //todo: add the functionality for going to the transfer screen.
+                      Get.toNamed('/transfer_page');
                     },
                     text: 'Transfer'),
               ],

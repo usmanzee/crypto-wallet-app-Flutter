@@ -30,22 +30,22 @@ class BottomNavBar extends GetView<HomeController> {
           break;
         case 1:
           return RefreshIndicator(
-              onRefresh: controller.refreshMarketsPage, child: new Market());
+              onRefresh: controller.refreshMarketsPage, child: Market());
           break;
         case 2:
           return RefreshIndicator(
-              onRefresh: controller.refreshTradingPage, child: new Trading());
+              onRefresh: controller.refreshTradingPage, child: Trading());
           break;
         case 3:
           return new Swap();
           break;
         case 4:
           return RefreshIndicator(
-              onRefresh: controller.refreshWalletsPage, child: new Wallets());
+              onRefresh: controller.refreshWalletsPage, child: Wallets());
           break;
         default:
           return RefreshIndicator(
-              onRefresh: controller.refreshHomePage, child: new Home());
+              onRefresh: controller.refreshHomePage, child: Home());
       }
     } else {
       return NoInternet();
