@@ -11,17 +11,17 @@ class P2PTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var estimatedValue = EstimatedValue.estimateValue(
+    double estimatedValueUSD = EstimatedValue.estimateValue(
       'USD',
       walletController.currenciesList,
       walletController.p2pWalletsList,
       marketController.marketList,
       marketController.marketTickerList,
     );
-    var estimatedValueSecondary = EstimatedValue.estimateUnitValue(
+    String estimatedValueSecondary = EstimatedValue.estimateUnitValue(
       'BTC',
       'USD',
-      estimatedValue,
+      estimatedValueUSD,
       walletController.currenciesList,
       marketController.marketList,
       marketController.marketTickerList,
@@ -29,10 +29,12 @@ class P2PTab extends StatelessWidget {
     return Scaffold(
       body: Obx(
         () {
-          return WalletTabWidget(
-              walletsList: walletController.p2pWalletsList,
-              estimatedValueSecondary: estimatedValueSecondary,
-              estimatedValue: estimatedValue.toString());
+          return walletTabWidget(
+            walletsList: walletController.p2pWalletsList,
+            estimatedValueSecondary: estimatedValueSecondary,
+            estimatedValue: estimatedValueUSD.toStringAsFixed(4),
+            p2plist: true,
+          );
         },
       ),
     );

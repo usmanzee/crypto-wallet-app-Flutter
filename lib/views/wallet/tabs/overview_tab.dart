@@ -128,7 +128,7 @@ class OverviewTab extends StatelessWidget {
                     child: categoriesTabs(
                       name: dataList[index].name,
                       icon: dataList[index].icon,
-                      value: '0.00 BTC',
+                      value: '0.00',
                     ),
                   ),
                 );

@@ -1,14 +1,15 @@
+import 'package:b4u_wallet/models/wallet.dart' as WalletClass;
+import 'package:b4u_wallet/utils/Helpers/my_imgs.dart';
 import 'package:b4u_wallet/views/wallet/deposit/crypto.dart';
 import 'package:b4u_wallet/views/wallet/deposit/fiat.dart';
 import 'package:b4u_wallet/views/wallet/history/deposit_history_list.dart';
 import 'package:b4u_wallet/views/wallet/history/withdraw_history_list.dart';
+import 'package:b4u_wallet/views/wallet/wallet_amount_header.dart';
 import 'package:b4u_wallet/views/wallet/withdraw/crypto.dart';
 import 'package:b4u_wallet/views/wallet/withdraw/fiat.dart';
 import 'package:flutter/material.dart';
-import 'package:b4u_wallet/models/wallet.dart' as WalletClass;
-import 'package:get/get.dart';
-import 'package:b4u_wallet/views/wallet/wallet_amount_header.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 class WalletDetail extends StatelessWidget {
   final WalletClass.Wallet wallet = Get.arguments['wallet'];
@@ -20,10 +21,11 @@ class WalletDetail extends StatelessWidget {
         title: Text(
           wallet.name,
           style: TextStyle(
-              color: Theme.of(context).textSelectionTheme.selectionColor,
-              fontFamily: "Gotik",
-              fontWeight: FontWeight.w600,
-              fontSize: 18.5),
+            color: Theme.of(context).textSelectionTheme.selectionColor,
+            fontFamily: "Gotik",
+            fontWeight: FontWeight.w600,
+            fontSize: 18.5,
+          ),
         ),
         iconTheme: IconThemeData(
             color: Theme.of(context).textSelectionTheme.selectionColor),
@@ -236,7 +238,7 @@ class WalletDetail extends StatelessWidget {
                                 width: 35.0,
                               )
                             : Image.asset(
-                                'assets/image/market/BCH.png',
+                                MyImgs.testPhoto,
                                 height: 35.0,
                                 fit: BoxFit.contain,
                                 width: 35.0,

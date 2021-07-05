@@ -11,7 +11,7 @@ class SpotTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var estimatedValue = EstimatedValue.estimateValue(
+    var estimatedValueUSD = EstimatedValue.estimateValue(
       'USD',
       walletController.currenciesList,
       walletController.walletsList,
@@ -21,15 +21,15 @@ class SpotTab extends StatelessWidget {
     var estimatedValueSecondary = EstimatedValue.estimateUnitValue(
       'BTC',
       'USD',
-      estimatedValue,
+      estimatedValueUSD,
       walletController.currenciesList,
       marketController.marketList,
       marketController.marketTickerList,
     );
     return Scaffold(
       body: Obx(() {
-        return WalletTabWidget(
-            estimatedValue: estimatedValue.toString(),
+        return walletTabWidget(
+            estimatedValue: estimatedValueUSD.toStringAsFixed(4),
             estimatedValueSecondary: estimatedValueSecondary,
             walletsList: walletController.walletsList);
       }),

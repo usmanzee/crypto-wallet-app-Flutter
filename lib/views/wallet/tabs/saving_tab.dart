@@ -12,7 +12,7 @@ class SavingTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var estimatedValue = EstimatedValue.estimateValue(
+    var estimatedValueUSD = EstimatedValue.estimateValue(
       'USD',
       walletController.currenciesList,
       walletController.savingWalletsList,
@@ -22,7 +22,7 @@ class SavingTab extends StatelessWidget {
     var estimatedValueSecondary = EstimatedValue.estimateUnitValue(
       'BTC',
       'USD',
-      estimatedValue,
+      estimatedValueUSD,
       walletController.currenciesList,
       marketController.marketList,
       marketController.marketTickerList,
@@ -30,10 +30,10 @@ class SavingTab extends StatelessWidget {
     return Scaffold(
       body: Obx(
         () {
-          return WalletTabWidget(
+          return walletTabWidget(
               walletsList: walletController.savingWalletsList,
               estimatedValueSecondary: estimatedValueSecondary,
-              estimatedValue: estimatedValue.toString());
+              estimatedValue: estimatedValueUSD.toStringAsFixed(4));
         },
       ),
     );

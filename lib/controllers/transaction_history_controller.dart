@@ -29,7 +29,7 @@ class TransactionHistoryController extends GetxController {
     if (!homeController.fetchingMemberLevel.value &&
         !homeController.publicMemberLevel.value.isBlank) {
       if (homeController.user.value.level >=
-          homeController.publicMemberLevel.value.deposit.minimumLevel) {
+          homeController.publicMemberLevel.value.deposit. minimumLevel) {
         fetchDepositHistory(currency);
       } else {
         fetchingDepositHistory(false);

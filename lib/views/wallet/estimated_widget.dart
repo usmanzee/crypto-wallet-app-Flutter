@@ -11,16 +11,16 @@ class EstimatedWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var estimatedValue = EstimatedValue.estimateValue(
+    double estimatedValueUSD = EstimatedValue.estimateValue(
         'USD',
         walletController.currenciesList,
         walletController.walletsList,
         marketController.marketList,
         marketController.marketTickerList);
-    var estimatedValueSecondary = EstimatedValue.estimateUnitValue(
+    String estimatedValueSecondary = EstimatedValue.estimateUnitValue(
         'BTC',
         'USD',
-        estimatedValue,
+        estimatedValueUSD,
         walletController.currenciesList,
         marketController.marketList,
         marketController.marketTickerList);
@@ -67,7 +67,7 @@ class EstimatedWidget extends StatelessWidget {
                   width: 4,
                 ),
                 Text(
-                  '≈ \$' + estimatedValue.toString(),
+                  '≈ \$' + estimatedValueUSD.toStringAsFixed(4),
                   style: Theme.of(context).textTheme.bodyText2,
                   textAlign: TextAlign.left,
                 ),

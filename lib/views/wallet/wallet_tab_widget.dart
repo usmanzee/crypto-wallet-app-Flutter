@@ -1,11 +1,11 @@
 import 'package:b4u_wallet/models/wallet.dart';
 import 'package:b4u_wallet/utils/Helpers/my_imgs.dart';
+import 'package:b4u_wallet/views/wallet/wallet_p2p_details.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'headerWidget.dart';
 
-Widget WalletTabWidget({String estimatedValueSecondary, String estimatedValue, List<Wallet> walletsList}){
+Widget walletTabWidget({String estimatedValueSecondary, String estimatedValue, List<Wallet> walletsList,bool p2plist = false}){
   return SafeArea(
     child: CustomScrollView(
       slivers: [
@@ -25,7 +25,7 @@ Widget WalletTabWidget({String estimatedValueSecondary, String estimatedValue, L
         SliverList(
           delegate: SliverChildBuilderDelegate(
                 (context, index) {
-              return walletList(walletsList[index]);
+              return walletList(walletsList[index],p2plist);
             },
             childCount: walletsList.length,
           ),
@@ -103,6 +103,7 @@ class Delegate extends SliverPersistentHeaderDelegate {
 //list variables
 Widget walletList(
     Wallet wallet,
+    bool p2plist,
     ) {
   return Padding(
     padding: const EdgeInsets.only(top: 7.0),
@@ -110,7 +111,7 @@ Widget walletList(
       children: <Widget>[
         InkWell(
           onTap: () {
-            // todo: take to the new screen for that currency
+            p2plist ? Get.to(WalletP2PDetails(wallet)) : Get.toNamed('/wallet-detail', arguments: {'wallet': wallet});
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

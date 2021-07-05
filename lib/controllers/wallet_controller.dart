@@ -64,7 +64,6 @@ class WalletController extends GetxController {
       walletsList.assignAll(spotWallets);
       p2pWalletsList.assignAll(p2pWallets);
       savingWalletsList.assignAll(savingWallets);
-      //todo: discuss with the team...
       searchWalletsList.assignAll(spotWallets);
       isLoading(false);
     } catch (error) {
