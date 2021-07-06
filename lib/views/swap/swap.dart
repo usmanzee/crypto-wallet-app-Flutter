@@ -2,15 +2,16 @@ import 'package:b4u_wallet/component/no_data.dart';
 import 'package:b4u_wallet/controllers/HomeController.dart';
 import 'package:b4u_wallet/controllers/swap_controller.dart';
 import 'package:b4u_wallet/controllers/wallet_controller.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:flutter/services.dart';
 import 'package:b4u_wallet/models/wallet.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class Swap extends StatelessWidget {
   final SwapController swapController = Get.put(SwapController());
+
   // final SwapController swapController = Get.find();
   final WalletController walletController = Get.find();
   final HomeController homeController = Get.find();
@@ -60,37 +61,38 @@ class Swap extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).canvasColor,
-          brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
-          centerTitle: true,
-          title: Text(
-            'swap.screen.title'.tr,
-            style: TextStyle(
-                color: Theme.of(context).textSelectionTheme.selectionColor,
-                fontFamily: "Gotik",
-                fontWeight: FontWeight.w600,
-                fontSize: 18.5),
-          ),
-          iconTheme: IconThemeData(
-              color: Theme.of(context).textSelectionTheme.selectionColor),
-          elevation: 0.8,
-          actions: <Widget>[
-            Padding(
-                padding: EdgeInsets.only(right: 20.0),
-                child: GestureDetector(
-                  onTap: () {
-                    Get.toNamed('/swap-history');
-                  },
-                  child: Icon(
-                    Icons.history,
-                    size: 26.0,
-                  ),
-                )),
-          ],
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).canvasColor,
+        brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
+        centerTitle: true,
+        title: Text(
+          'swap.screen.title'.tr,
+          style: TextStyle(
+              color: Theme.of(context).textSelectionTheme.selectionColor,
+              fontFamily: "Gotik",
+              fontWeight: FontWeight.w600,
+              fontSize: 18.5),
         ),
-        body: Obx(() {
+        iconTheme: IconThemeData(
+            color: Theme.of(context).textSelectionTheme.selectionColor),
+        elevation: 0.8,
+        actions: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  Get.toNamed('/swap-history');
+                },
+                child: Icon(
+                  Icons.history,
+                  size: 26.0,
+                ),
+              )),
+        ],
+      ),
+      body: Obx(
+        () {
           return Container(
             child: homeController.fetchingUser.value ||
                     homeController.fetchingMemberLevel.value
@@ -108,7 +110,9 @@ class Swap extends StatelessWidget {
                         : _accountNotConfirmed(context))
                     : _otpDisabled(context),
           );
-        }));
+        },
+      ),
+    );
   }
 
   Widget _otpDisabled(context) {

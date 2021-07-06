@@ -93,14 +93,14 @@ class WalletP2PDetails extends StatelessWidget {
                   value: wallet.locked,
                 ),
                 rowText(name: '', value: ''),
-                rowText(
+                /*rowText(
                   name: 'Estimated Value (BTC)',
                   value: '0.000000000',
                 ),
                 rowText(
                   name: 'Estimated Value (\$)',
                   value: '\$0.000000000',
-                ),
+                ),*/
               ],
             ),
             Row(

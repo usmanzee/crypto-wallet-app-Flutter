@@ -25,7 +25,7 @@ class HomeController extends GetxController {
   var _selectedNavIndex = 0.obs;
   var marketList = <Market>[].obs;
   var fetchingUser = false.obs;
-  var user = new User().obs;
+  var user = User().obs;
   var deviceMacAddress = 'unknown'.obs;
   var authApiKey = 'unknown'.obs;
   var authSecret = 'unknown'.obs;
@@ -227,7 +227,7 @@ class HomeController extends GetxController {
   Future<void> fetchMemberLevels() async {
     try {
       fetchingMemberLevel(true);
-      PublicRepository _publicRepository = new PublicRepository();
+      PublicRepository _publicRepository = PublicRepository();
       var response = await _publicRepository.fetchMemberLevels();
       publicMemberLevel.value = response;
       fetchingMemberLevel(false);

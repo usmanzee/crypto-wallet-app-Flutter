@@ -6,14 +6,15 @@ class P2pBuySellPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: CustomScrollView(
-          scrollDirection: Axis.vertical,
-          slivers: [
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                  return Container(
+      body: CustomScrollView(
+        scrollDirection: Axis.vertical,
+        slivers: [
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                return SafeArea(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 16,horizontal: 16,),
                     decoration: BoxDecoration(
                       color: Get.theme.accentColor,
                     ),
@@ -24,8 +25,11 @@ class P2pBuySellPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Icon(Icons.arrow_back_ios,size: 20,color: Get.theme.scaffoldBackgroundColor,),
-                            Text('P2P'),
-                            Icon(Icons.arrow_drop_down,size: 15,),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8,),
+                              child: Text('P2P'),
+                            ),
+                            Icon(Icons.arrow_drop_down,size: 20,),
                           ],
                         ),
                         Row(
@@ -37,13 +41,13 @@ class P2pBuySellPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                  );
-                },
-                childCount: 1,
-              ),
+                  ),
+                );
+              },
+              childCount: 1,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

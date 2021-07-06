@@ -1,3 +1,4 @@
+import 'package:b4u_wallet/controllers/HomeController.dart';
 import 'package:b4u_wallet/controllers/transfer_controller.dart';
 import 'package:b4u_wallet/controllers/wallet_controller.dart';
 import 'package:b4u_wallet/utils/Helpers/my_imgs.dart';
@@ -10,6 +11,7 @@ class TransferPage extends StatelessWidget {
   final _transferController = Get.find<TransferController>();
   final WalletController walletController = Get.find<WalletController>();
   final String spotName = 'Spot';
+  final HomeController homeController = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +41,19 @@ class TransferPage extends StatelessWidget {
         } else {
           _transferController.currentWalletList.length == 0
               ? _transferController.currentWalletList
-              .addAll(walletController.p2pWalletsList.value)
+                  .addAll(walletController.p2pWalletsList.value)
               : '';
-          if(_transferController.currencyName.value == ''){
-            _transferController.currencyName.value =_transferController.currentWalletList.length == 0 ? '' : _transferController.currentWalletList[0].currency;
+          if (_transferController.currencyName.value == '') {
+            _transferController.currencyName.value =
+                _transferController.currentWalletList.length == 0
+                    ? ''
+                    : _transferController.currentWalletList[0].currency;
           }
-          if(_transferController.currencyTotal.value == ''){
-            _transferController.currencyTotal.value =_transferController.currentWalletList.length == 0 ? '' : _transferController.currentWalletList[0].balance;
+          if (_transferController.currencyTotal.value == '') {
+            _transferController.currencyTotal.value =
+                _transferController.currentWalletList.length == 0
+                    ? ''
+                    : _transferController.currentWalletList[0].balance;
           }
           return Padding(
             padding: const EdgeInsets.all(16),
@@ -254,7 +262,8 @@ class TransferPage extends StatelessWidget {
                             flex: 3,
                             child: TextFormField(
                               onChanged: (string) {
-                                _transferController.textController.value = TextEditingValue(
+                                _transferController.textController.value =
+                                    TextEditingValue(
                                   text: string,
                                   selection: TextSelection.fromPosition(
                                     TextPosition(offset: string.length),
@@ -369,36 +378,62 @@ class TransferPage extends StatelessWidget {
                 GestureDetector(
                   onTap: walletController.walletsList.length == 0
                       ? null
-                      : () async {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            },
-                          );
-                          final res = await _transferController.transferAsset(
-                            amount:
-                                _transferController.textController.value.text,
-                            currencyCode:
-                                _transferController.currencyName.value,
-                            sourceWallet: _transferController.swap.value
-                                ? spotName.toLowerCase()
-                                : _transferController.walletName.toLowerCase(),
-                            targetWallet: _transferController.swap.value
-                                ? _transferController.walletName.toLowerCase()
-                                : spotName.toLowerCase(),
-                          );
-                          if (res) {
-                            Get.back();
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text('Amount Transferred'),
-                            ));
-                          } else {
-                            Get.back();
-                          }
-                        },
+                      : _transferController.transferButtonText.value ==
+                              'Verify your account'
+                          ? () => Get.toNamed('/profile-verification')
+                          : (_transferController.transferButtonText.value ==
+                                  'Transfer'
+                              ? () async {
+                            //todo: get a varibale here from the server to replace the hardcoded 3 here
+                                  if (homeController.user.value.level ==  homeController
+                                      .publicMemberLevel.value.withdraw.minimumLevel) {
+                                    if (homeController.user.value.otp) {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return Center(
+                                            child: CircularProgressIndicator(),
+                                          );
+                                        },
+                                      );
+                                      final res = await _transferController
+                                          .transferAsset(
+                                        amount: _transferController
+                                            .textController.value.text,
+                                        currencyCode: _transferController
+                                            .currencyName.value,
+                                        sourceWallet:
+                                            _transferController.swap.value
+                                                ? spotName.toLowerCase()
+                                                : _transferController.walletName
+                                                    .toLowerCase(),
+                                        targetWallet:
+                                            _transferController.swap.value
+                                                ? _transferController.walletName
+                                                    .toLowerCase()
+                                                : spotName.toLowerCase(),
+                                      );
+                                      if (res) {
+                                        Get.back();
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                          content: Text('Amount Transferred'),
+                                        ));
+                                      } else {
+                                        Get.back();
+                                      }
+                                    } else {
+                                      // here is the text which will change to the 2fa.
+                                      _transferController.transferButtonText
+                                          .value = 'Enable 2FA';
+                                    }
+                                  } else {
+                                    // here is the text which will change to the account verification.
+                                    _transferController.transferButtonText
+                                        .value = 'Verify your account';
+                                  }
+                                }
+                              : () => Get.toNamed('/enable-otp')),
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(8.0),
@@ -410,7 +445,7 @@ class TransferPage extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        'Transfer',
+                        _transferController.transferButtonText.value,
                         style: TextStyle(
                           fontFamily: "Popins",
                           color: walletController.walletsList.length == 0
