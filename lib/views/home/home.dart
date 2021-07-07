@@ -324,10 +324,7 @@ class Home extends StatelessWidget {
                   children: [
                     Expanded(
                       child: GestureDetector(
-                        onTap: () => _showDialog(
-                          context: context,
-                          heading: 'home.screen.link.card.p2p_trading'.tr,
-                        ),
+                        onTap: () => Get.toNamed('/p2p_page'),
                         child: textWithIconWidget(
                           title: 'home.screen.link.card.p2p_trading'.tr,
                           icon: Icons.people,

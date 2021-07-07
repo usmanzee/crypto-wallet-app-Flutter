@@ -3,6 +3,7 @@ import 'package:b4u_wallet/bindings/home_binding.dart';
 import 'package:b4u_wallet/bindings/market_detail_binding.dart';
 import 'package:b4u_wallet/bindings/notification_screen_binding.dart';
 import 'package:b4u_wallet/bindings/otp_binding.dart';
+import 'package:b4u_wallet/bindings/p2p_binding.dart';
 import 'package:b4u_wallet/bindings/savings_binding.dart';
 import 'package:b4u_wallet/bindings/security_binding.dart';
 import 'package:b4u_wallet/bindings/swap_history_binding.dart';
@@ -19,6 +20,7 @@ import 'package:b4u_wallet/views/auth/2fa.dart';
 import 'package:b4u_wallet/views/auth/signup.dart';
 import 'package:b4u_wallet/views/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:b4u_wallet/views/notification/%20notification_list.dart';
+import 'package:b4u_wallet/views/p2p_buy_sell_page/p2p_buy_sell_page.dart';
 import 'package:b4u_wallet/views/savings/savings.dart';
 import 'package:b4u_wallet/views/security/enable_otp.dart';
 import 'package:b4u_wallet/views/security/security.dart';
@@ -141,6 +143,11 @@ class Router {
       name: '/transfer_page',
       page: () => TransferPage(),
       binding: TransferBinding(),
+    ),
+    GetPage(
+      name: '/p2p_page',
+      page: () => P2pBuySellPage(),
+      binding: P2pBinding(),
     ),
   ];
 }

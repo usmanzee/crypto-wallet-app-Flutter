@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:b4u_wallet/controllers/p2p_controller.dart';
 import 'package:b4u_wallet/controllers/wallet_controller.dart';
 import 'package:b4u_wallet/views/p2p_buy_sell_page/p2p_buy_sell_page.dart';
 import 'package:flutter/material.dart';
@@ -143,8 +144,8 @@ Widget headerWidget({String firstValue, String secondValue,bool p2p = false}) {
                       text: p2p ? 'Buy' : 'Deposit',
                       main: true,
                       callBack: () {
-                        // todo : add the p2p buy page
-                         p2p ? Get.to(P2pBuySellPage()) : Get.toNamed('/wallets-search',
+                        p2p ? Get.put(P2pController()) : '';
+                         p2p ? Get.toNamed('/p2p_page') : Get.toNamed('/wallets-search',
                             arguments: {'searchFrom': 'deposit'});
                       },
                     ),
@@ -154,8 +155,8 @@ Widget headerWidget({String firstValue, String secondValue,bool p2p = false}) {
                     button(
                       text: p2p ? 'Sell' : 'Withdraw',
                       callBack: () {
-                        // todo : add the p2p buy page
-                        p2p ? 'Get.' :
+                        p2p ? Get.put(P2pController()) : '';
+                        p2p ? Get.toNamed('/p2p_page') :
                         Get.toNamed('/wallets-search',
                             arguments: {'searchFrom': 'withdraw'});
                       },
