@@ -44,11 +44,14 @@ class P2pHistoryPage extends StatelessWidget {
                             Text(
                               'Order History Filter',
                             ),
-                            Icon(
-                              Icons.close_rounded,
-                              size: 25,
-                              color: Get.theme.textSelectionTheme.selectionColor
-                                  .withOpacity(0.6),
+                            GestureDetector(
+                              onTap: () => Get.back(),
+                              child: Icon(
+                                Icons.close_rounded,
+                                size: 25,
+                                color: Get.theme.textSelectionTheme.selectionColor
+                                    .withOpacity(0.6),
+                              ),
                             ),
                           ],
                         ),

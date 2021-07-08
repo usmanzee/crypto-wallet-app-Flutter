@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 Widget containerTrade({
   String name,
-  double price,
+  String price,
   String currency,
   String lowerLimit,
   String upperLimit,
@@ -110,7 +110,7 @@ Widget containerTrade({
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    price.toString(),
+                    price,
                     style: TextStyle(
                         fontFamily: "Popins",
                         color: Get.theme.textSelectionTheme.selectionColor,

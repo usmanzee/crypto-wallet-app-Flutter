@@ -584,7 +584,7 @@ const Map<String, String> es = {
 
   'record.not_found': 'Registro no encontrado',
   'jwt.decode_and_verify': 'Error al decodificar y verificar JWT',
-  'authz.invalid_session': 'Error al decodificar cookies',
+  'authz.invalid_session': 'Sesión no autorizada',
   'authz.user_not_active': 'Usuario no activo',
   'authz.invalid_signature': 'API Key cabecera \'firma\' no válido',
   'authz.apikey_not_active': 'El estado de API Key es \'inactive',

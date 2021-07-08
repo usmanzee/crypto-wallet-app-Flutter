@@ -568,7 +568,7 @@ const Map<String, String> ml = {
 
   'record.not_found': 'Rekod tidak dijumpai',
   'jwt.decode_and_verify': 'Gagal menyahkod dan mengesahkan JWT',
-  'authz.invalid_session': 'Gagal menyahkod kuki',
+  'authz.invalid_session': 'Sesi tanpa kebenaran',
   'authz.user_not_active': 'Pengguna tidak aktif',
   'authz.invalid_signature': 'Header Kunci API \' tandatangan \' tidak sah',
   'authz.apikey_not_active': 'Keadaan Kunci API tidak aktif',

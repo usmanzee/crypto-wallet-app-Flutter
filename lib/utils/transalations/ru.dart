@@ -588,7 +588,7 @@ const Map<String, String> ru = {
 
   'record.not_found': 'Запись не найдена',
   'jwt.decode_and_verify': 'Не удалось декодировать и проверить JWT',
-  'authz.invalid_session': 'Не удалось расшифровать куки',
+  'authz.invalid_session': 'Несанкционированный сеанс',
   'authz.user_not_active': 'Пользователь не активен',
   'authz.invalid_signature': 'Заголовок API-ключа \'signature\' недействителен',
   'authz.apikey_not_active': 'Состояние ключа API «неактивно»',

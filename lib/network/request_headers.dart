@@ -8,7 +8,7 @@ class RequestHeaders {
 
   Map<String, String> setAuthHeaders() {
     var nonce = new DateTime.now()
-        // .add(new Duration(seconds: 10))
+        .add(new Duration(seconds: 20))
         .millisecondsSinceEpoch;
     var message = utf8
         .encode(nonce.toString() + homeController.authApiKey.value.toString());
