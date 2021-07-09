@@ -182,7 +182,7 @@ Widget containerTrade({
                       padding:
                           const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
                       decoration: BoxDecoration(
-                        color: Colors.green,
+                        color: functionText == 'Sell' ? Colors.red : Colors.green,
                         borderRadius: BorderRadius.circular(
                           4,
                         ),

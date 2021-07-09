@@ -9,10 +9,10 @@ class P2pRepository{
 
   Future<List<P2POffer>> fetchP2pOffers({String category})async{
     apiProvider =  ApiProvider();
-    // final response = await apiProvider.get('peatio/account/offers/?base_unit=$category',);
     RequestHeaders requestHeaders = RequestHeaders();
     apiProvider.headers = requestHeaders.setAuthHeaders();
-    final response = await apiProvider.get('peatio/account/offers/',);
+    // final response = await apiProvider.get('peatio/account/offers/',);
+    final response = await apiProvider.get('peatio/account/offers/?base_unit=$category',);
     Iterable l = json.decode(response);
     List<P2POffer> a = List<P2POffer>.from(l.map((model)=> P2POffer.fromJson(model)));
     return a;
