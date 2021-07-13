@@ -1,13 +1,14 @@
 import 'package:b4u_wallet/controllers/p2p_controller.dart';
 import 'package:b4u_wallet/models/p2p_offer/p2p_offer.dart';
 import 'package:b4u_wallet/utils/Helpers/my_imgs.dart';
-import 'package:b4u_wallet/views/p2p_buy_sell_page/container_trade_widget.dart';
+import 'package:b4u_wallet/views/p2p/container_trade_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 final p2pController = Get.find<P2pController>();
 
-Widget currencyTabWidget({
+//todo: add the all of the missing required variables
+Widget p2pCurrencyTabWidget({
   String name,
   RxList<P2POffer> buyList,
   RxList<P2POffer> sellList,
@@ -48,7 +49,7 @@ Widget currencyTabWidget({
                         itemExtent: 210,
                         delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {
-                            return p2pController.buyOrSell.value
+                            return p2pController.buyOrSellP2p.value
                                 ? containerTrade(
                                     name: buyList[index].member.email,
                                     price: buyList[index].price,
@@ -86,7 +87,7 @@ Widget currencyTabWidget({
                                     currencySymbol: '\$',
                                   );
                           },
-                          childCount: p2pController.buyOrSell.value
+                          childCount: p2pController.buyOrSellP2p.value
                               ? buyList.length
                               : sellList.length,
                         ),

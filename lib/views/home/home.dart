@@ -324,7 +324,7 @@ class Home extends StatelessWidget {
                   children: [
                     Expanded(
                       child: GestureDetector(
-                        onTap: () => Get.toNamed('/p2p_page'),
+                        onTap: () => Get.toNamed('/p2p_initial_page'),
                         child: textWithIconWidget(
                           title: 'home.screen.link.card.p2p_trading'.tr,
                           icon: Icons.people,

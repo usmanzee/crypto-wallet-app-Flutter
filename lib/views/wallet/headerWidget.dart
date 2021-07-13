@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:b4u_wallet/controllers/p2p_controller.dart';
 import 'package:b4u_wallet/controllers/wallet_controller.dart';
-import 'package:b4u_wallet/views/p2p_buy_sell_page/p2p_buy_sell_page.dart';
+import 'package:b4u_wallet/views/p2p/p2p_buy_sell_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
