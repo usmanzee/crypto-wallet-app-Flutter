@@ -3,6 +3,8 @@ import 'package:b4u_wallet/views/p2p/tabs/express_buy_sell_tab_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'components/dialog_widget.dart';
+
 class P2pExpressPage extends StatelessWidget {
   final p2pController = Get.find<P2pController>();
 
@@ -16,10 +18,10 @@ class P2pExpressPage extends StatelessWidget {
           Container(),
         ],
         titleSpacing: 0,
-        toolbarHeight: 94,
+        toolbarHeight: 96,
         automaticallyImplyLeading: false,
         backwardsCompatibility: false,
-        backgroundColor: Get.theme.accentColor,
+        backgroundColor: Get.theme.scaffoldBackgroundColor,
         foregroundColor: Get.theme.textSelectionTheme.selectionColor,
         title: Padding(
           padding: const EdgeInsets.only(
@@ -42,25 +44,41 @@ class P2pExpressPage extends StatelessWidget {
                           child: Icon(
                             Icons.arrow_back_ios,
                             size: 20,
-                            color: Get.theme.scaffoldBackgroundColor,
+                            color: Get.theme.textSelectionTheme.selectionColor,
                           ),
                         ),
                         SizedBox(
                           width: 8.0,
                         ),
-                        Text(
-                          'P2P  ',
-                          style: TextStyle(
-                            fontFamily: "Popins",
-                            color: Get.theme.scaffoldBackgroundColor,
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.w600,
+                        GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              barrierDismissible: true,
+                              context: context,
+                              builder: (context) {
+                                return dialogWidget();
+                              },
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              Text(
+                                'Express',
+                                style: TextStyle(
+                                  fontFamily: "Popins",
+                                  // color: Get.theme.scaffoldBackgroundColor,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              SizedBox(width: 12,),
+                              Icon(
+                                Icons.arrow_drop_down,
+                                size: 20,
+                                color: Get.theme.textSelectionTheme.selectionColor,
+                              ),
+                            ],
                           ),
-                        ),
-                        Icon(
-                          Icons.arrow_drop_down,
-                          size: 20,
-                          color: Get.theme.scaffoldBackgroundColor,
                         ),
                       ],
                     ),
@@ -71,7 +89,7 @@ class P2pExpressPage extends StatelessWidget {
                             'UAH',
                             style: TextStyle(
                               fontFamily: "Popins",
-                              color: Get.theme.scaffoldBackgroundColor,
+                              // color: Get.theme.scaffoldBackgroundColor,
                               fontSize: 18.0,
                               fontWeight: FontWeight.w600,
                             ),
@@ -83,13 +101,13 @@ class P2pExpressPage extends StatelessWidget {
                           child: Icon(
                             Icons.swap_horiz,
                             size: 20,
-                            color: Get.theme.scaffoldBackgroundColor,
+                            color: Get.theme.textSelectionTheme.selectionColor,
                           ),
                         ),
                         PopupMenuButton(
                             icon: Icon(
                               Icons.more_horiz,
-                              color: Get.theme.scaffoldBackgroundColor,
+                              color: Get.theme.textSelectionTheme.selectionColor,
                             ),
                             onSelected: (int value) {
                               switch (value) {

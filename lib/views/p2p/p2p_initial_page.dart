@@ -9,6 +9,6 @@ class P2pInitialPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return p2pController.buySellOrExpress.value ? P2pBuySellPage(): P2pExpressPage();
+    return Obx(() => p2pController.buySellOrExpress.value ? P2pBuySellPage(): P2pExpressPage());
   }
 }

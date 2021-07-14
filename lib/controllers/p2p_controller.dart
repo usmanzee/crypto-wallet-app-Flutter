@@ -9,8 +9,8 @@ class P2pController extends GetxController {
   ErrorController errorController = ErrorController();
   RxBool isLoading = true.obs;
 
-  //buy or sell page or express page
-  RxBool buySellOrExpress = false.obs;
+  //buy sell page or express page
+  RxBool buySellOrExpress = true.obs;
 
   // true means buy and false means sell
   RxBool buyOrSellP2p = true.obs;

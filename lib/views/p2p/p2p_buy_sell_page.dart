@@ -1,4 +1,5 @@
 import 'package:b4u_wallet/controllers/p2p_controller.dart';
+import 'package:b4u_wallet/views/p2p/components/dialog_widget.dart';
 import 'package:b4u_wallet/views/p2p/components/drawer_widget.dart';
 import 'package:b4u_wallet/views/p2p/p2p_history_page.dart';
 import 'package:b4u_wallet/views/p2p/tabs/p2p_currency_tab_widget.dart';
@@ -41,17 +42,17 @@ class P2pBuySellPage extends StatelessWidget {
                 handle:
                     NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                 sliver: SliverAppBar(
-                  brightness:
-                      Get.isDarkMode ? Brightness.dark : Brightness.light,
+                  brightness: Brightness.dark,
                   actions: [
                     Container(),
                   ],
                   titleSpacing: 0,
-                  toolbarHeight: 94,
+                  toolbarHeight: 96,
                   automaticallyImplyLeading: false,
                   title: Padding(
                     padding: const EdgeInsets.only(
                       top: 12,
+                      bottom: 12,
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -74,19 +75,39 @@ class P2pBuySellPage extends StatelessWidget {
                                   SizedBox(
                                     width: 8.0,
                                   ),
-                                  Text(
-                                    'P2P  ',
-                                    style: TextStyle(
-                                      fontFamily: "Popins",
-                                      color: Get.theme.scaffoldBackgroundColor,
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.w600,
+                                  GestureDetector(
+                                    onTap: () {
+                                      showDialog(
+                                        barrierDismissible: true,
+                                        context: context,
+                                        builder: (context) {
+                                          return dialogWidget();
+                                        },
+                                      );
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          'P2P',
+                                          style: TextStyle(
+                                            fontFamily: "Popins",
+                                            color: Get
+                                                .theme.scaffoldBackgroundColor,
+                                            fontSize: 18.0,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 12,
+                                        ),
+                                        Icon(
+                                          Icons.arrow_drop_down,
+                                          size: 20,
+                                          color:
+                                              Get.theme.scaffoldBackgroundColor,
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                  Icon(
-                                    Icons.arrow_drop_down,
-                                    size: 20,
-                                    color: Get.theme.scaffoldBackgroundColor,
                                   ),
                                 ],
                               ),
@@ -190,12 +211,13 @@ class P2pBuySellPage extends StatelessWidget {
                                         'Buy',
                                         style: TextStyle(
                                           fontFamily: "Popins",
-                                          color: p2pController.buyOrSellP2p.value
-                                              ? Get.theme.textSelectionTheme
-                                                  .selectionColor
-                                              : Get.theme.textSelectionTheme
-                                                  .selectionColor
-                                                  .withOpacity(0.5),
+                                          color:
+                                              p2pController.buyOrSellP2p.value
+                                                  ? Get.theme.textSelectionTheme
+                                                      .selectionColor
+                                                  : Get.theme.textSelectionTheme
+                                                      .selectionColor
+                                                      .withOpacity(0.5),
                                           fontSize: 18.0,
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -215,12 +237,13 @@ class P2pBuySellPage extends StatelessWidget {
                                         'Sell',
                                         style: TextStyle(
                                           fontFamily: "Popins",
-                                          color: p2pController.buyOrSellP2p.value
-                                              ? Get.theme.textSelectionTheme
-                                                  .selectionColor
-                                                  .withOpacity(0.5)
-                                              : Get.theme.textSelectionTheme
-                                                  .selectionColor,
+                                          color:
+                                              p2pController.buyOrSellP2p.value
+                                                  ? Get.theme.textSelectionTheme
+                                                      .selectionColor
+                                                      .withOpacity(0.5)
+                                                  : Get.theme.textSelectionTheme
+                                                      .selectionColor,
                                           fontSize: 18.0,
                                           fontWeight: FontWeight.w600,
                                         ),
