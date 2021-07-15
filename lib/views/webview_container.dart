@@ -17,7 +17,7 @@ class _WebViewContainerState extends State<WebViewContainer> {
   bool isLoading = true;
   var _appBarTitle;
   var _url;
-  final _key = UniqueKey();
+  // final _key = UniqueKey();
   WebViewController _webViewController;
   final Completer<WebViewController> _controller =
   Completer<WebViewController>();

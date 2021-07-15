@@ -5,53 +5,28 @@ class P2pFeedbackPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
-        physics: ClampingScrollPhysics(),
         slivers: [
           SliverAppBar(
-            backwardsCompatibility: false,
-            automaticallyImplyLeading: false,
+            title: Text('Qwqwqwqwqw'),
+            // primary: true,
             pinned: true,
-            expandedHeight: 220.0,
-            floating: true,
-            titleSpacing: 0,
-            actions: [
-              Container(),
-            ],
-            title: Padding(
-              padding: const EdgeInsets.only(left: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(
-                    Icons.arrow_back_ios,
-                    size: 15,
-                  ),
-                  Row(
-                    children: [
-                      Text('asasasasasas'),
-                    ],
-                  ),
-                ],
+            // floating: true,
+            expandedHeight: 200,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Container(
+                color: Colors.purple,
               ),
-            ),
-            flexibleSpace: FlexibleSpaceBar(collapseMode: CollapseMode.none,
-              titlePadding: EdgeInsets.only(
-                top: 100,
-              ),
-              title: Text('123'),
+              title: Text('jijhii'),
             ),
           ),
           SliverList(
-            delegate: SliverChildListDelegate(
-              List.generate(
-                200,
-                (index) => Card(
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Text('text $index'),
-                  ),
-                ),
-              ),
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return ListTile(
+                  title: Text("List tile $index"),
+                );
+              },
+              childCount: 30,
             ),
           ),
         ],

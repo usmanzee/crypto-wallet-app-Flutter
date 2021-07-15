@@ -156,6 +156,7 @@ Widget dialogWidget({bool iconShow = false}) {
                   GestureDetector(
                     onTap: () {
                       p2pController.buySellOrExpress.value = true;
+                      p2pController.buySellOrExpress.refresh();
                       // print(p2pController.buySellOrExpress.value);
                       Get.back();
                     },
@@ -178,6 +179,7 @@ Widget dialogWidget({bool iconShow = false}) {
                   GestureDetector(
                     onTap: () {
                       p2pController.buySellOrExpress.value = false;
+                      p2pController.buySellOrExpress.refresh();
                       // print(p2pController.buySellOrExpress.value);
                       Get.back();
                     },

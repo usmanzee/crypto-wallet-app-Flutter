@@ -1,14 +1,10 @@
 import 'package:b4u_wallet/controllers/market_controller.dart';
 import 'package:b4u_wallet/controllers/wallet_controller.dart';
-import 'package:b4u_wallet/utils/Helpers/my_imgs.dart';
-import 'package:b4u_wallet/views/wallet/estimated_widget.dart';
 import 'package:b4u_wallet/views/wallet/tabs/overview_tab.dart';
 import 'package:b4u_wallet/views/wallet/tabs/p2p_tab.dart';
 import 'package:b4u_wallet/views/wallet/tabs/saving_tab.dart';
 import 'package:b4u_wallet/views/wallet/tabs/spot_tab.dart';
-import 'package:b4u_wallet/views/wallet/wallet_loading_animation.dart';
 import 'package:flutter/material.dart';
-import 'package:b4u_wallet/models/wallet.dart' as WalletClass;
 import 'package:get/get.dart';
 
 class Wallets extends StatefulWidget {
