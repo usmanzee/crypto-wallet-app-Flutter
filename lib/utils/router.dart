@@ -23,6 +23,7 @@ import 'package:b4u_wallet/views/notification/%20notification_list.dart';
 import 'package:b4u_wallet/views/p2p/p2p_buy_sell_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_feedback_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_initial_page.dart';
+import 'package:b4u_wallet/views/p2p/p2p_payment_method_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_user_profile.dart';
 import 'package:b4u_wallet/views/savings/savings.dart';
 import 'package:b4u_wallet/views/security/enable_otp.dart';
@@ -166,6 +167,11 @@ class Router {
       name: '/p2p_initial_page',
       page: () => P2pInitialPage(),
       binding: P2pBinding(),
+    ),
+    GetPage(
+      name: '/p2p_payment_method',
+      page: () => P2pPaymentMethodPage(),
+      // binding: P2pBinding(),
     ),
   ];
 }

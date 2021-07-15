@@ -295,6 +295,7 @@ class P2pUserProfile extends StatelessWidget {
                           name: 'Payment Methods',
                           extra: 'Not added',
                           frontIcon: Icons.payment,
+                          function: () => Get.toNamed('/p2p_payment_method'),
                         ),
                         btnRow(
                           name: 'P2P Notifications',
@@ -380,6 +381,7 @@ class P2pUserProfile extends StatelessWidget {
                 Text(
                   name,
                   style: TextStyle(
+                    fontFamily: "Popins",
                     color: Get.theme.textSelectionTheme.selectionColor,
                     fontSize: 15.0,
                     fontWeight: FontWeight.w500,
@@ -392,6 +394,7 @@ class P2pUserProfile extends StatelessWidget {
                 Text(
                   extra,
                   style: TextStyle(
+                    fontFamily: "Popins",
                     color: Get.theme.textSelectionTheme.selectionColor
                         .withOpacity(0.6),
                     fontSize: 15.0,

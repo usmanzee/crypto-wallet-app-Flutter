@@ -1,7 +1,5 @@
 import 'package:b4u_wallet/controllers/transfer_controller.dart';
 import 'package:b4u_wallet/controllers/wallet_controller.dart';
-import 'package:b4u_wallet/views/transfer/transfer_page.dart';
-import 'package:b4u_wallet/views/wallet/wallet_p2p_details.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:b4u_wallet/controllers/HomeController.dart';

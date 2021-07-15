@@ -47,7 +47,8 @@ class P2pController extends GetxController {
   //express transaction by crypto or cash, true means by crypto and false means by cash
   RxBool cryptoOrCash = true.obs;
 
-  //controllers for the
+  //for the feedback reviews changing
+  RxString reviewChosen = 'All'.obs;
 
   @override
   void onClose() {
