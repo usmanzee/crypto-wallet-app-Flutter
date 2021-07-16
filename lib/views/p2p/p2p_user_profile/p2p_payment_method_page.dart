@@ -11,13 +11,21 @@ class P2pPaymentMethodPage extends StatelessWidget {
         elevation: 0,
         backwardsCompatibility: false,
         backgroundColor: Get.theme.scaffoldBackgroundColor,
-        leading: Icon(
-          Icons.arrow_back,
-          color: Get.theme.textSelectionTheme.selectionColor,
+        leading: GestureDetector(
+          onTap: () => Get.back(),
+          child: Icon(
+            Icons.arrow_back,
+            color: Get.theme.textSelectionTheme.selectionColor,
+          ),
         ),
         title: Text(
           'P2P Payment Method(s)',
-          style: TextStyle(),
+          style: TextStyle(
+            fontFamily: "Popins",
+            color: Get.theme.hintColor,
+            fontSize: 14.0,
+            fontWeight: FontWeight.w400,
+          ),
         ),
       ),
       body: Padding(

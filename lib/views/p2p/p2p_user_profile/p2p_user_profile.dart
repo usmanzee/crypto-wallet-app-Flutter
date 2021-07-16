@@ -300,6 +300,7 @@ class P2pUserProfile extends StatelessWidget {
                         btnRow(
                           name: 'P2P Notifications',
                           frontIcon: Icons.notifications_none_outlined,
+                          function: () => Get.toNamed('/p2p_notification_setting_page'),
                         ),
                         btnRow(
                           name: 'P2P Help Center',

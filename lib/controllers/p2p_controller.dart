@@ -50,6 +50,17 @@ class P2pController extends GetxController {
   //for the feedback reviews changing
   RxString reviewChosen = 'All'.obs;
 
+  // notifications page
+  RxBool ordersEmailEnable = true.obs;
+  RxBool ordersSmsEnable = true.obs;
+  RxBool ordersAppNotificationsEnable = true.obs;
+  RxBool appealsEmailEnable = true.obs;
+  RxBool appealsSmsEnable = true.obs;
+  RxBool appealsAppNotificationsEnable = true.obs;
+  RxBool securityEmailEnable = true.obs;
+  RxBool securitySmsEnable = true.obs;
+  RxBool securityAppNotificationsEnable = true.obs;
+
   @override
   void onClose() {
     super.onClose();
