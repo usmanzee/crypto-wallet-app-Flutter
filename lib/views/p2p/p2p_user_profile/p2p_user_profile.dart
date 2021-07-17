@@ -305,6 +305,7 @@ class P2pUserProfile extends StatelessWidget {
                         btnRow(
                           name: 'P2P Help Center',
                           frontIcon: Icons.widgets_outlined,
+                          function: () => Get.toNamed('/p2p_help_center_page'),
                         ),
                       ],
                     ),
