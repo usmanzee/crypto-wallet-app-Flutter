@@ -1,5 +1,4 @@
 import 'package:b4u_wallet/controllers/p2p_controller.dart';
-import 'package:b4u_wallet/views/p2p/components/dialog_widget.dart';
 import 'package:b4u_wallet/views/p2p/p2p_user_profile/help_center_tabs/advanced_tab.dart';
 import 'package:b4u_wallet/views/p2p/p2p_user_profile/help_center_tabs/advertiser_tab.dart';
 import 'package:b4u_wallet/views/p2p/p2p_user_profile/help_center_tabs/beginner_tab.dart';
@@ -40,16 +39,18 @@ class P2pHelpCanterPage extends StatelessWidget {
                 handle:
                     NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                 sliver: SliverAppBar(
+                  elevation: 0,
                   brightness: Brightness.dark,
                   actions: [
                     Container(),
                   ],
                   titleSpacing: 0,
-                  toolbarHeight: 96,
+                  toolbarHeight: 100,
+                  expandedHeight: 150,
                   automaticallyImplyLeading: false,
                   title: Padding(
                     padding: const EdgeInsets.only(
-                      // top: 12,
+                      top: 12,
                       // bottom: 12,
                       left: 16,
                       right: 16,
@@ -58,7 +59,25 @@ class P2pHelpCanterPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(Icons.arrow_back_ios,size: 20,color: Get.theme.scaffoldBackgroundColor,)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: GestureDetector(
+                            onTap:  () => Get.back(),
+                            child: Icon(
+                              Icons.arrow_back_ios,
+                              size: 20,
+                              color: Get.theme.scaffoldBackgroundColor,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          'P2P Help Center',
+                          style: TextStyle(),
+                        ),
+                        Text(
+                          '24/7 online customer Support',
+                          style: TextStyle(),
+                        ),
                       ],
                     ),
                   ),
