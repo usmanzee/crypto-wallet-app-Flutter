@@ -107,8 +107,8 @@ class P2pHelpCanterPage extends StatelessWidget {
             // These are the contents of the tab views, below the tabs.
             children: [
               BeginnerTab(),
-              AdvertiserTab(),
               AdvancedTab(),
+              AdvertiserTab(),
             ],
           ),
         ),
