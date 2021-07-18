@@ -247,7 +247,7 @@ class P2pFeedbackPage extends StatelessWidget {
           ),
           Icon(
             positive ? Icons.thumb_up : Icons.thumb_down,
-            color: positive ? Colors.green : Colors.red,
+            color: positive ? Colors.greenAccent : Colors.redAccent,
             size: 20,
           ),
         ],

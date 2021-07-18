@@ -251,8 +251,8 @@ Widget expressBuySellTabWidget(
                           ),
                           decoration: BoxDecoration(
                             color: p2pController.buyOrSellExpress.value
-                                ? Colors.green
-                                : Colors.red,
+                                ? Colors.greenAccent
+                                : Colors.redAccent,
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Center(

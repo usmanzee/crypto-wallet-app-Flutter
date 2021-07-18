@@ -9,7 +9,7 @@ class P2pHelpCanterPage extends StatelessWidget {
   final List<String> _tabs = <String>[
     'Beginner',
     'Advanced',
-    'Advertiser',
+    // 'Advertiser',
   ];
   final p2pController = Get.find<P2pController>();
 
@@ -108,7 +108,7 @@ class P2pHelpCanterPage extends StatelessWidget {
             children: [
               BeginnerTab(),
               AdvancedTab(),
-              AdvertiserTab(),
+              // AdvertiserTab(),
             ],
           ),
         ),

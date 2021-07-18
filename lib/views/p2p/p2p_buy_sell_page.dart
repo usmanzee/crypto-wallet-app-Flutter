@@ -146,12 +146,12 @@ class P2pBuySellPage extends StatelessWidget {
                                             break;
                                           case 1:
                                             {
-                                              print('from 1');
+                                              Get.toNamed('/p2p_payment_method');
                                             }
                                             break;
                                           case 2:
                                             {
-                                              print('from 2');
+                                              Get.toNamed('/p2p_help_center_page');
                                             }
                                             break;
                                           default:

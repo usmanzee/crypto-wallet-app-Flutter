@@ -71,11 +71,14 @@ class P2pExpressPage extends StatelessWidget {
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
-                              SizedBox(width: 12,),
+                              SizedBox(
+                                width: 12,
+                              ),
                               Icon(
                                 Icons.arrow_drop_down,
                                 size: 20,
-                                color: Get.theme.textSelectionTheme.selectionColor,
+                                color:
+                                    Get.theme.textSelectionTheme.selectionColor,
                               ),
                             ],
                           ),
@@ -107,7 +110,8 @@ class P2pExpressPage extends StatelessWidget {
                         PopupMenuButton(
                             icon: Icon(
                               Icons.more_horiz,
-                              color: Get.theme.textSelectionTheme.selectionColor,
+                              color:
+                                  Get.theme.textSelectionTheme.selectionColor,
                             ),
                             onSelected: (int value) {
                               switch (value) {
@@ -118,12 +122,12 @@ class P2pExpressPage extends StatelessWidget {
                                   break;
                                 case 1:
                                   {
-                                    print('from 1');
+                                    Get.toNamed('/p2p_payment_method');
                                   }
                                   break;
                                 case 2:
                                   {
-                                    print('from 2');
+                                    Get.toNamed('/p2p_help_center_page');
                                   }
                                   break;
                                 default:
@@ -359,7 +363,9 @@ class P2pExpressPage extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            SizedBox(height: 8,),
+            SizedBox(
+              height: 8,
+            ),
             Text(
               currencyFullName,
               style: TextStyle(
