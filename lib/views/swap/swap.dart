@@ -3,6 +3,7 @@ import 'package:b4u_wallet/controllers/HomeController.dart';
 import 'package:b4u_wallet/controllers/swap_controller.dart';
 import 'package:b4u_wallet/controllers/wallet_controller.dart';
 import 'package:b4u_wallet/models/wallet.dart';
+import 'package:b4u_wallet/utils/Helpers/my_imgs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -281,7 +282,7 @@ class Swap extends StatelessWidget {
                           },
                           child: Row(
                             children: [
-                              swapController.fromSelectedWallet.value.iconUrl !=
+                              /*swapController.fromSelectedWallet.value.iconUrl !=
                                       null
                                   ? Image.network(
                                       swapController
@@ -290,8 +291,8 @@ class Swap extends StatelessWidget {
                                       fit: BoxFit.contain,
                                       width: 22.0,
                                     )
-                                  : Image.asset(
-                                      'assets/image/market/BCH.png',
+                                  :*/ Image.asset(
+                                      MyImgs.testPhoto,
                                       height: 22.0,
                                       fit: BoxFit.contain,
                                       width: 22.0,
@@ -411,15 +412,14 @@ class Swap extends StatelessWidget {
                           child: Row(
                             children: [
                               swapController.toSelectedWallet.value != null
-                                  ? Image.network(
-                                      swapController
-                                          .toSelectedWallet.value.iconUrl,
+                                  ? Image.asset(
+                                      MyImgs.testPhoto,
                                       height: 25.0,
                                       fit: BoxFit.contain,
                                       width: 22.0,
                                     )
                                   : Image.asset(
-                                      'assets/image/market/BCH.png',
+                                      MyImgs.testPhoto,
                                       height: 22.0,
                                       fit: BoxFit.contain,
                                       width: 22.0,
@@ -601,7 +601,7 @@ class Swap extends StatelessWidget {
                                               width: 22.0,
                                             )
                                           : Image.asset(
-                                              'assets/image/market/BCH.png',
+                                              MyImgs.testPhoto,
                                               height: 22.0,
                                               fit: BoxFit.contain,
                                               width: 22.0,
@@ -666,7 +666,7 @@ class Swap extends StatelessWidget {
                                               width: 22.0,
                                             )
                                           : Image.asset(
-                                              'assets/image/market/BCH.png',
+                                              MyImgs.testPhoto,
                                               height: 22.0,
                                               fit: BoxFit.contain,
                                               width: 22.0,
@@ -791,7 +791,7 @@ class Swap extends StatelessWidget {
               width: 25.0,
             )
           : Image.asset(
-              'assets/image/market/BCH.png',
+              MyImgs.testPhoto,
               fit: BoxFit.contain,
               width: 25.0,
             ),

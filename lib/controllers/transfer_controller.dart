@@ -20,7 +20,7 @@ class TransferController extends GetxController {
   FocusNode focusNode;
   RxString currencyName = ''.obs;
   RxString currencyTotal = ''.obs;
-  RxString currencyImage = MyImgs.testPhoto.obs;
+  RxString currencyImage = ''.obs;
   RxString transferButtonText = 'Transfer'.obs;
 
   void onReady() {

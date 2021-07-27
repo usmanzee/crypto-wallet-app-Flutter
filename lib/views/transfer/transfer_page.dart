@@ -4,6 +4,7 @@ import 'package:b4u_wallet/controllers/wallet_controller.dart';
 import 'package:b4u_wallet/utils/Helpers/my_imgs.dart';
 import 'package:b4u_wallet/views/transfer/currency_selection_page.dart';
 import 'package:b4u_wallet/views/transfer/wallets_list_page.dart';
+import 'package:b4u_wallet/views/widgets/icon_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -54,6 +55,12 @@ class TransferPage extends StatelessWidget {
                 _transferController.currentWalletList.length == 0
                     ? ''
                     : _transferController.currentWalletList[0].balance;
+          }
+          if (_transferController.currencyImage.value == '') {
+            _transferController.currencyImage.value =
+            _transferController.currentWalletList.length == 0
+                ? ''
+                : _transferController.currentWalletList[0].iconUrl;
           }
           return Padding(
             padding: const EdgeInsets.all(16),
@@ -207,12 +214,7 @@ class TransferPage extends StatelessWidget {
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Image.asset(
-                                    _transferController.currencyImage.value,
-                                    width: 20,
-                                    height: 20,
-                                    fit: BoxFit.fill,
-                                  ),
+                                 Obx(() => IconWidget(name: _transferController.currencyName.value, url: _transferController.currencyImage.value),),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 10),
                                     child: Text(

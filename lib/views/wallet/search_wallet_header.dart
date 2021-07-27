@@ -1,3 +1,4 @@
+import 'package:b4u_wallet/views/widgets/icon_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:b4u_wallet/models/wallet.dart' as WalletClass;
@@ -24,19 +25,7 @@ class SearchHeader extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(right: 4.0),
-                    child: wallet.iconUrl != null
-                        ? Image.network(
-                            wallet.iconUrl,
-                            height: 25.0,
-                            fit: BoxFit.contain,
-                            width: 25.0,
-                          )
-                        : Image.asset(
-                            'assets/image/market/BCH.png',
-                            height: 25.0,
-                            fit: BoxFit.contain,
-                            width: 25.0,
-                          ),
+                    child:  IconWidget(name: wallet.name,url: wallet.iconUrl),
                   ),
                   Text(
                     wallet.currency.toUpperCase(),

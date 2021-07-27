@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class NestedTabBar extends StatefulWidget {
   @override
@@ -23,39 +24,45 @@ class _NestedTabBarState extends State<NestedTabBar>
 
   @override
   Widget build(BuildContext context) {
-    // double screenHeight = MediaQuery.of(context).size.height;
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: <Widget>[
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
         TabBar(
           controller: _nestedTabController,
-          indicatorColor: Colors.orange,
-          labelColor: Colors.orange,
-          unselectedLabelColor: Colors.black54,
+          // indicatorColor: Get.theme.hintColor.withOpacity(0.5),
+          labelColor: Get.theme.textSelectionTheme.selectionColor,
+          unselectedLabelColor: Get.theme.hintColor,
           isScrollable: true,
-          tabs: <Widget>[
+          indicator: BoxDecoration(
+            color: Get.theme.canvasColor,
+            borderRadius: BorderRadius.circular(3),
+          ),
+          labelStyle: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+          tabs: [
             Tab(
-              text: "Inside Pokhara",
+              text: "Crypto",
             ),
             Tab(
-              text: "Outside Pokhara",
+              text: "Cash",
             ),
           ],
         ),
         Expanded(
           child: TabBarView(
             controller: _nestedTabController,
-            children: <Widget>[
+            children: [
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
-                  color: Colors.blueGrey[300],
+                  color: Colors.white,
                 ),
               ),
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
-                  color: Colors.blueGrey[300],
+                  color: Colors.white,
                 ),
               ),
             ],

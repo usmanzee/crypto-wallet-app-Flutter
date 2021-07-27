@@ -1,5 +1,4 @@
 import 'package:b4u_wallet/models/wallet.dart' as WalletClass;
-import 'package:b4u_wallet/utils/Helpers/my_imgs.dart';
 import 'package:b4u_wallet/views/wallet/deposit/crypto.dart';
 import 'package:b4u_wallet/views/wallet/deposit/fiat.dart';
 import 'package:b4u_wallet/views/wallet/history/deposit_history_list.dart';
@@ -7,6 +6,7 @@ import 'package:b4u_wallet/views/wallet/history/withdraw_history_list.dart';
 import 'package:b4u_wallet/views/wallet/wallet_amount_header.dart';
 import 'package:b4u_wallet/views/wallet/withdraw/crypto.dart';
 import 'package:b4u_wallet/views/wallet/withdraw/fiat.dart';
+import 'package:b4u_wallet/views/widgets/icon_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -39,7 +39,7 @@ class WalletDetail extends StatelessWidget {
             child: Container(
                 padding: EdgeInsets.all(8.0),
                 child: Column(
-                  children: <Widget>[
+                  children: [
                     Padding(
                         padding: EdgeInsets.only(bottom: 8.0),
                         child: _cardHeader(context, wallet)),
@@ -217,30 +217,19 @@ class WalletDetail extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
+            children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
+                children: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(right: 4.0),
-                        child: wallet.iconUrl != null
-                            ? Image.network(
-                                wallet.iconUrl,
-                                height: 35.0,
-                                fit: BoxFit.contain,
-                                width: 35.0,
-                              )
-                            : Image.asset(
-                                MyImgs.testPhoto,
-                                height: 35.0,
-                                fit: BoxFit.contain,
-                                width: 35.0,
-                              ),
+                        child:
+                            IconWidget(name: wallet.name, url: wallet.iconUrl),
                       ),
                       Text(
                         wallet.currency.toUpperCase(),
