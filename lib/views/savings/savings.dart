@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Savings extends StatefulWidget {
-  final controller = Get.put(SavingsController());
-
   @override
   _SavingsState createState() => _SavingsState();
 }
@@ -40,10 +38,10 @@ class _SavingsState extends State<Savings> with SingleTickerProviderStateMixin {
           centerTitle: true,
           elevation: 0,
           title: TabBar(
-            indicatorColor: Theme.of(context).primaryColor,
-            labelColor: Theme.of(context).primaryColor,
+            indicatorColor: Get.theme.primaryColor,
+            labelColor: Get.theme.primaryColor,
             unselectedLabelColor:
-                Theme.of(context).textSelectionTheme.selectionColor,
+            Get.theme.textSelectionTheme.selectionColor,
             indicatorSize: TabBarIndicatorSize.label,
             isScrollable: true,
             controller: _tabController,
@@ -71,7 +69,9 @@ class _SavingsState extends State<Savings> with SingleTickerProviderStateMixin {
           controller: _tabController,
           children: [
             FlexibleTab(),
-            LockedTab(data: _savingController.plansList,),
+            LockedTab(
+              data: _savingController.plansList,
+            ),
           ],
         ),
       );

@@ -12,6 +12,7 @@ import 'package:b4u_wallet/bindings/verification_binding.dart';
 import 'package:b4u_wallet/bindings/wallet_search_binding.dart';
 import 'package:b4u_wallet/views/DetailCryptoValue/market_detail.dart';
 import 'package:b4u_wallet/views/history/history.dart';
+import 'package:b4u_wallet/views/history/spot_history/spot_hisotry_page.dart';
 import 'package:b4u_wallet/views/home/splash.dart';
 import 'package:b4u_wallet/views/home/on_boarding.dart';
 import 'package:b4u_wallet/views/auth/email_verification.dart';
@@ -183,6 +184,11 @@ class Router {
     GetPage(
       name: '/p2p_help_center_page',
       page: () => P2pHelpCanterPage(),
+      // binding: P2pBinding(),
+    ),
+    GetPage(
+      name: '/spot_history_page',
+      page: () => SpotHistoryPage(),
       // binding: P2pBinding(),
     ),
   ];

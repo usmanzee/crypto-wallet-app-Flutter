@@ -8,6 +8,8 @@ class SavingsController extends GetxController {
   var isLoading = true.obs;
   var plansList = <Plans>[].obs;
   var totalPlans = 0.obs;
+  RxList<int> values = List.from([7,7,7,7,7,7,7],growable: true).obs;
+  RxBool switchValue = true.obs;
   ErrorController errorController = ErrorController();
 
   Future<void> fetchPlans() async {
@@ -30,6 +32,7 @@ class SavingsController extends GetxController {
   @override
   void onInit() async {
     await fetchPlans();
+    print('hi');
     super.onInit();
   }
 

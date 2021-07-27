@@ -4,14 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class FlexibleTab extends StatefulWidget {
-  @override
-  _FlexibleTabState createState() => _FlexibleTabState();
-}
-
-class _FlexibleTabState extends State<FlexibleTab> {
+class FlexibleTab extends StatelessWidget {
   final date = DateTime.now().subtract(Duration(days: 1));
-  bool _switchValue = false;
   final _savingsController = Get.find<SavingsController>();
 
   @override
@@ -31,7 +25,9 @@ class _FlexibleTabState extends State<FlexibleTab> {
                   onTap: () {
                     showModalBottomSheet(
                       context: context,
-                      builder: (context) {},
+                      builder: (context) {
+                        return Container();
+                      },
                     );
                   },
                   child: Row(
@@ -74,12 +70,14 @@ class _FlexibleTabState extends State<FlexibleTab> {
               padding: const EdgeInsets.only(top: 10),
               child: ListView.builder(
                 shrinkWrap: false,
-                itemCount: _savingsController.plansList.length,
+                // itemCount: _savingsController.plansList.length,
+                itemCount: 3,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding:
                         const EdgeInsets.only(top: 10.0, left: 5.0, right: 5.0),
-                    child: _savingsController.plansList[index].type ==
+                    child:
+                        /* _savingsController.plansList[index].type ==
                             'flexible'
                         ? _container(
                             name: _savingsController.plansList[index].currencyId
@@ -90,8 +88,20 @@ class _FlexibleTabState extends State<FlexibleTab> {
                             subscriptionCallBack: () {},
                             imageLink: MyImgs.testPhoto,
                             autoSubscriber: true,
+                            context: context,
                           )
                         : Container(),
+                  );*/
+
+                        _container(
+                      name: 'namer'.toUpperCase(),
+                      annualYield: 23,
+                      yesterdayInterest: 23.3,
+                      subscriptionCallBack: () {},
+                      imageLink: MyImgs.testPhoto,
+                      autoSubscriber: true,
+                      context: context,
+                    ),
                   );
                 },
               ),
@@ -102,8 +112,6 @@ class _FlexibleTabState extends State<FlexibleTab> {
     );
   }
 
-  int a = 1;
-
   Widget _container({
     @required String name,
     @required double annualYield,
@@ -111,8 +119,9 @@ class _FlexibleTabState extends State<FlexibleTab> {
     @required Function subscriptionCallBack,
     @required bool autoSubscriber,
     @required String imageLink,
+    @required BuildContext context,
   }) {
-    return Card(
+    return Obx(() => Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -262,7 +271,7 @@ class _FlexibleTabState extends State<FlexibleTab> {
                       _showDialog(
                         context: context,
                         info:
-                            'Every day at 02:00 (UTC + 0), we will use the available balance of all Spot Accounts to purchase Flexible Deposits.',
+                        'Every day at 02:00 (UTC + 0), we will use the available balance of all Spot Accounts to purchase Flexible Deposits.',
                       );
                     },
                     child: Icon(
@@ -272,11 +281,9 @@ class _FlexibleTabState extends State<FlexibleTab> {
                   ),
                 ),
                 CupertinoSwitch(
-                  value: _switchValue,
+                  value: _savingsController.switchValue.value,
                   onChanged: (value) {
-                    setState(() {
-                      _switchValue = value;
-                    });
+                    _savingsController.switchValue.value = value;
                   },
                 ),
               ],
@@ -284,7 +291,7 @@ class _FlexibleTabState extends State<FlexibleTab> {
           ],
         ),
       ),
-    );
+    ));
   }
 
   void _showDialog({BuildContext context, String info}) {

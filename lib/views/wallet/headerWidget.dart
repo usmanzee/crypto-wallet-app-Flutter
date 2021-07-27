@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:b4u_wallet/controllers/p2p_controller.dart';
 import 'package:b4u_wallet/controllers/wallet_controller.dart';
 import 'package:flutter/material.dart';
@@ -6,8 +7,13 @@ import 'package:get/get.dart';
 
 final walletController = Get.find<WalletController>();
 
-Widget headerWidget({String firstValue, String secondValue,bool p2p = false}) {
-  return Obx((){
+Widget headerWidget({
+  String firstValue,
+  String secondValue,
+  bool p2p = false,
+  void Function() historyFunc,
+}) {
+  return Obx(() {
     return Padding(
       padding: const EdgeInsets.only(
         top: 16,
@@ -42,22 +48,26 @@ Widget headerWidget({String firstValue, String secondValue,bool p2p = false}) {
                         GestureDetector(
                           onTap: () {
                             walletController.visibility.value =
-                            !walletController.visibility.value;
+                                !walletController.visibility.value;
                           },
                           child: Icon(
                             walletController.visibility.value
                                 ? Icons.visibility_outlined
                                 : Icons.visibility_off_outlined,
                             size: 20,
-                            color: Get.theme.textSelectionTheme.selectionColor.withOpacity(0.6),
+                            color: Get.theme.textSelectionTheme.selectionColor
+                                .withOpacity(0.6),
                           ),
                         ),
                       ],
                     ),
-                    Icon(
-                      Icons.insert_drive_file_outlined,
-                      color: Get.theme.textSelectionTheme.selectionColor
-                          .withOpacity(0.7),
+                    GestureDetector(
+                      onTap: historyFunc,
+                      child: Icon(
+                        Icons.insert_drive_file_outlined,
+                        color: Get.theme.textSelectionTheme.selectionColor
+                            .withOpacity(0.7),
+                      ),
                     ),
                   ],
                 ),
@@ -70,7 +80,9 @@ Widget headerWidget({String firstValue, String secondValue,bool p2p = false}) {
                     children: [
 //daa the variables here...
                       Text(
-                        walletController.visibility.value ? firstValue : '*****',
+                        walletController.visibility.value
+                            ? firstValue
+                            : '*****',
                         style: Get.theme.textTheme.headline5,
                       ),
                       Text(
@@ -84,7 +96,9 @@ Widget headerWidget({String firstValue, String secondValue,bool p2p = false}) {
                         ),
                       ),
                       Text(
-                        walletController.visibility.value ? '\$$secondValue' : '*****',
+                        walletController.visibility.value
+                            ? '\$$secondValue'
+                            : '*****',
                         style: TextStyle(
                           fontFamily: "Popins",
                           fontSize: 16,
@@ -144,8 +158,10 @@ Widget headerWidget({String firstValue, String secondValue,bool p2p = false}) {
                       main: true,
                       callBack: () {
                         p2p ? Get.put(P2pController()) : '';
-                         p2p ? Get.toNamed('/p2p_page') : Get.toNamed('/wallets-search',
-                            arguments: {'searchFrom': 'deposit'});
+                        p2p
+                            ? Get.toNamed('/p2p_page')
+                            : Get.toNamed('/wallets-search',
+                                arguments: {'searchFrom': 'deposit'});
                       },
                     ),
                     SizedBox(
@@ -155,9 +171,10 @@ Widget headerWidget({String firstValue, String secondValue,bool p2p = false}) {
                       text: p2p ? 'Sell' : 'Withdraw',
                       callBack: () {
                         p2p ? Get.put(P2pController()) : '';
-                        p2p ? Get.toNamed('/p2p_page') :
-                        Get.toNamed('/wallets-search',
-                            arguments: {'searchFrom': 'withdraw'});
+                        p2p
+                            ? Get.toNamed('/p2p_page')
+                            : Get.toNamed('/wallets-search',
+                                arguments: {'searchFrom': 'withdraw'});
                       },
                     ),
                     SizedBox(

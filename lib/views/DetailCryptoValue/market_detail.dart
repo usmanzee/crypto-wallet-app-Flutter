@@ -128,14 +128,14 @@ class MarketDetail extends StatelessWidget {
                                     .selectionColor,
                                 indicatorSize: TabBarIndicatorSize.label,
                                 tabs: [
-                                  new Tab(
+                                   Tab(
                                     child: Text(
                                       "market_detail.tabs.line".tr,
                                       style: TextStyle(
                                           fontFamily: "Popins", fontSize: 14),
                                     ),
                                   ),
-                                  new Tab(
+                                   Tab(
                                     child: Text(
                                       "market_detail.tabs.depth".tr,
                                       style: TextStyle(

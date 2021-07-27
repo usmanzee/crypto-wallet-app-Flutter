@@ -3,16 +3,28 @@ import 'package:b4u_wallet/utils/Helpers/my_imgs.dart';
 import 'package:b4u_wallet/views/wallet/wallet_p2p_details.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'headerWidget.dart';
 
-Widget walletTabWidget({String estimatedValueSecondary, String estimatedValue, List<Wallet> walletsList,bool p2plist = false}){
+Widget walletTabWidget({
+  String estimatedValueSecondary,
+  String estimatedValue,
+  List<Wallet> walletsList,
+  bool p2plist = false,
+  void Function() historyFunc,
+}) {
   return SafeArea(
     child: CustomScrollView(
       slivers: [
         SliverList(
           delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-              return headerWidget(firstValue: estimatedValueSecondary,secondValue: estimatedValue,p2p: p2plist);
+            (BuildContext context, int index) {
+              return headerWidget(
+                firstValue: estimatedValueSecondary,
+                secondValue: estimatedValue,
+                p2p: p2plist,
+                historyFunc: historyFunc,
+              );
             },
             childCount: 1,
           ),
@@ -24,8 +36,8 @@ Widget walletTabWidget({String estimatedValueSecondary, String estimatedValue, L
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
-                (context, index) {
-              return walletList(walletsList[index],p2plist);
+            (context, index) {
+              return walletList(walletsList[index], p2plist);
             },
             childCount: walletsList.length,
           ),
@@ -102,16 +114,18 @@ class Delegate extends SliverPersistentHeaderDelegate {
 
 //list variables
 Widget walletList(
-    Wallet wallet,
-    bool p2plist,
-    ) {
+  Wallet wallet,
+  bool p2plist,
+) {
   return Padding(
     padding: const EdgeInsets.only(top: 7.0),
     child: Column(
       children: <Widget>[
         InkWell(
           onTap: () {
-            p2plist ? Get.to(WalletP2PDetails(wallet)) : Get.toNamed('/wallet-detail', arguments: {'wallet': wallet});
+            p2plist
+                ? Get.to(WalletP2PDetails(wallet))
+                : Get.toNamed('/wallet-detail', arguments: {'wallet': wallet});
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -127,17 +141,17 @@ Widget walletList(
                       padding: const EdgeInsets.only(left: 5.0, right: 12.0),
                       child: wallet.iconUrl != null
                           ? Image.network(
-                        wallet.iconUrl,
-                        height: 25.0,
-                        fit: BoxFit.contain,
-                        width: 22.0,
-                      )
+                              wallet.iconUrl,
+                              height: 25.0,
+                              fit: BoxFit.contain,
+                              width: 22.0,
+                            )
                           : Image.asset(
-                        MyImgs.testPhoto,
-                        height: 22.0,
-                        fit: BoxFit.contain,
-                        width: 22.0,
-                      ),
+                              MyImgs.testPhoto,
+                              height: 22.0,
+                              fit: BoxFit.contain,
+                              width: 22.0,
+                            ),
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,7 +160,7 @@ Widget walletList(
                         Text(
                           wallet.currency.toUpperCase(),
                           style:
-                          TextStyle(fontFamily: "Popins", fontSize: 16.5),
+                              TextStyle(fontFamily: "Popins", fontSize: 16.5),
                         ),
                         Text(
                           wallet.name,
@@ -160,7 +174,7 @@ Widget walletList(
                   ],
                 ),
               ),
-              Padding(
+              Obx(() => Padding(
                 padding: const EdgeInsets.only(right: 15.0),
                 child: Container(
                   child: Row(
@@ -168,9 +182,11 @@ Widget walletList(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        walletController.visibility.value ? (double.parse(wallet.balance) +
+                        walletController.visibility.value
+                            ? (double.parse(wallet.balance) +
                             double.parse(wallet.locked))
-                            .toStringAsFixed(wallet.type == 'fiat' ? 2 : 6) : '*****',
+                            .toStringAsFixed(wallet.type == 'fiat' ? 2 : 6)
+                            : '*****',
                         style: TextStyle(
                             fontFamily: "Popins",
                             fontSize: 14.5,
@@ -179,7 +195,7 @@ Widget walletList(
                     ],
                   ),
                 ),
-              ),
+              )),
             ],
           ),
         ),
@@ -189,7 +205,7 @@ Widget walletList(
             width: double.infinity,
             height: 0.5,
             decoration:
-            BoxDecoration(color: Get.theme.hintColor.withOpacity(0.1)),
+                BoxDecoration(color: Get.theme.hintColor.withOpacity(0.1)),
           ),
         ),
       ],

@@ -16,7 +16,7 @@ import 'package:b4u_wallet/controllers/SnackbarController.dart';
 
 class BottomNavBar extends GetView<HomeController> {
   final MarketController marketController = Get.put(MarketController());
-  final _savingsController = Get.put(SavingsController());
+  // final _savingsController = Get.put(SavingsController());
   final WebSocketController webSocketController = Get.find();
 
   Widget callPage(int current, bool hasConnection) {
