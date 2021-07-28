@@ -285,6 +285,8 @@ class FlexibleTab extends StatelessWidget {
                   onChanged: (value) {
                     _savingsController.switchValue.value = value;
                   },
+                  activeColor: Get.theme.accentColor,
+                  trackColor: Get.theme.hintColor,
                 ),
               ],
             ),

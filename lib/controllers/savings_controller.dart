@@ -8,7 +8,7 @@ class SavingsController extends GetxController {
   var isLoading = true.obs;
   var plansList = <Plans>[].obs;
   var totalPlans = 0.obs;
-  RxList<int> values = List.from([7,7,7,7,7,7,7],growable: true).obs;
+  RxList<int> values = [7,7,7,7,7,7,7,7,7,7,7,7].obs;
   RxBool switchValue = true.obs;
   ErrorController errorController = ErrorController();
 

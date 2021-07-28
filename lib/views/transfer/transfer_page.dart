@@ -58,9 +58,10 @@ class TransferPage extends StatelessWidget {
           }
           if (_transferController.currencyImage.value == '') {
             _transferController.currencyImage.value =
-            _transferController.currentWalletList.length == 0
-                ? ''
-                : _transferController.currentWalletList[0].iconUrl;
+                _transferController.currentWalletList.length == 0
+                    ? ''
+                    : _transferController.currentWalletList[0].iconUrl;
+            print(_transferController.currencyImage.value);
           }
           return Padding(
             padding: const EdgeInsets.all(16),
@@ -214,7 +215,11 @@ class TransferPage extends StatelessWidget {
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                 Obx(() => IconWidget(name: _transferController.currencyName.value, url: _transferController.currencyImage.value),),
+                                  iconWidget(
+                                      name: _transferController
+                                          .currencyName.value,
+                                      url: _transferController
+                                          .currencyImage.value),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 10),
                                     child: Text(
@@ -386,9 +391,10 @@ class TransferPage extends StatelessWidget {
                           : (_transferController.transferButtonText.value ==
                                   'Transfer'
                               ? () async {
-                            //todo: get a varibale here from the server to replace the hardcoded 3 here
-                                  if (homeController.user.value.level ==  homeController
-                                      .publicMemberLevel.value.withdraw.minimumLevel) {
+                                  //todo: get a varibale here from the server to replace the hardcoded 3 here
+                                  if (homeController.user.value.level ==
+                                      homeController.publicMemberLevel.value
+                                          .withdraw.minimumLevel) {
                                     if (homeController.user.value.otp) {
                                       showDialog(
                                         context: context,

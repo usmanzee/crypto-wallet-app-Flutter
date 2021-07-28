@@ -68,12 +68,12 @@ class P2pController extends GetxController {
 
   @override
   void onReady() {
+    fetchAllLists();
     super.onReady();
   }
 
   @override
   void onInit() {
-    fetchAllLists();
     // fetchP2pOffers();
     super.onInit();
   }

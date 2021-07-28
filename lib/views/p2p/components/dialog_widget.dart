@@ -2,12 +2,12 @@ import 'package:b4u_wallet/controllers/p2p_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-final p2pController = Get.find<P2pController>();
+final P2pController p2pController = Get.find();
 
 Widget dialogWidget({bool iconShow = false}) {
   return Obx(
     () => Material(
-      color: Colors.transparent,
+      color: Colors.grey.withOpacity(0.3),
       child: Container(
         // padding: const EdgeInsets.only(top: 3),
         child: Column(
@@ -155,9 +155,10 @@ Widget dialogWidget({bool iconShow = false}) {
                 children: [
                   GestureDetector(
                     onTap: () {
+                      print(p2pController.buySellOrExpress.value);
                       p2pController.buySellOrExpress.value = true;
-                      p2pController.buySellOrExpress.refresh();
-                      // print(p2pController.buySellOrExpress.value);
+                      // p2pController.buySellOrExpress.refresh();
+                      print(p2pController.buySellOrExpress.value);
                       Get.back();
                     },
                     child: click(
@@ -168,9 +169,11 @@ Widget dialogWidget({bool iconShow = false}) {
                             : false),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4,),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 4,
+                    ),
                     child: Container(
-                      height: 1,
+                      height: 0.2,
                       color: p2pController.buySellOrExpress.value
                           ? Get.theme.scaffoldBackgroundColor
                           : Get.theme.accentColor,
@@ -178,9 +181,10 @@ Widget dialogWidget({bool iconShow = false}) {
                   ),
                   GestureDetector(
                     onTap: () {
+                      print(p2pController.buySellOrExpress.value);
                       p2pController.buySellOrExpress.value = false;
-                      p2pController.buySellOrExpress.refresh();
-                      // print(p2pController.buySellOrExpress.value);
+                      // p2pController.buySellOrExpress.refresh();
+                      print(p2pController.buySellOrExpress.value);
                       Get.back();
                     },
                     child: click(
@@ -213,46 +217,48 @@ Widget click({
   String subtitle,
   bool iconShow,
 }) {
-  return Row(
-    crossAxisAlignment: CrossAxisAlignment.center,
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            name,
-            style: TextStyle(
-              fontFamily: "Popins",
-              color: p2pController.buySellOrExpress.value
-                  ? Get.theme.scaffoldBackgroundColor
-                  : Get.theme.textSelectionTheme.selectionColor,
-              fontSize: 18.0,
-              fontWeight: FontWeight.bold,
+  return Obx(
+    () => Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              name,
+              style: TextStyle(
+                fontFamily: "Popins",
+                color: p2pController.buySellOrExpress.value
+                    ? Get.theme.scaffoldBackgroundColor
+                    : Get.theme.textSelectionTheme.selectionColor,
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          Text(
-            subtitle,
-            style: TextStyle(
-              fontFamily: "Popins",
-              color: p2pController.buySellOrExpress.value
-                  ? Get.theme.scaffoldBackgroundColor
-                  : Get.theme.textSelectionTheme.selectionColor,
-              fontSize: 12.0,
-              // fontWeight: FontWeight.w600,
+            Text(
+              subtitle,
+              style: TextStyle(
+                fontFamily: "Popins",
+                color: p2pController.buySellOrExpress.value
+                    ? Get.theme.scaffoldBackgroundColor
+                    : Get.theme.textSelectionTheme.selectionColor,
+                fontSize: 12.0,
+                // fontWeight: FontWeight.w600,
+              ),
             ),
-          ),
-        ],
-      ),
-      iconShow
-          ? Icon(
-              Icons.check,
-              size: 20,
-              color: p2pController.buySellOrExpress.value
-                  ? Get.theme.scaffoldBackgroundColor
-                  : Get.theme.textSelectionTheme.selectionColor,
-            )
-          : Container(),
-    ],
+          ],
+        ),
+        iconShow
+            ? Icon(
+                Icons.check,
+                size: 20,
+                color: p2pController.buySellOrExpress.value
+                    ? Get.theme.scaffoldBackgroundColor
+                    : Get.theme.textSelectionTheme.selectionColor,
+              )
+            : Container(),
+      ],
+    ),
   );
 }

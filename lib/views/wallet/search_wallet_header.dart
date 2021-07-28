@@ -25,7 +25,7 @@ class SearchHeader extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(right: 4.0),
-                    child:  IconWidget(name: wallet.name,url: wallet.iconUrl),
+                    child:  iconWidget(name: wallet.name,url: wallet.iconUrl),
                   ),
                   Text(
                     wallet.currency.toUpperCase(),

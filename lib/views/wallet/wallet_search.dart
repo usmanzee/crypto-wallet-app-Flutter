@@ -1,13 +1,14 @@
 import 'package:b4u_wallet/component/no_data.dart';
 import 'package:b4u_wallet/controllers/wallet_controller.dart';
 import 'package:b4u_wallet/controllers/wallet_search_controller.dart';
+import 'package:b4u_wallet/models/wallet.dart' as WalletClass;
 import 'package:b4u_wallet/views/wallet/deposit/crypto.dart';
 import 'package:b4u_wallet/views/wallet/deposit/fiat.dart';
 import 'package:b4u_wallet/views/wallet/withdraw/crypto.dart';
 import 'package:b4u_wallet/views/wallet/withdraw/fiat.dart';
+import 'package:b4u_wallet/views/widgets/icon_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:b4u_wallet/models/wallet.dart' as WalletClass;
 
 class WalletSearch extends GetView<WalletController> {
   final searchFrom = Get.arguments['searchFrom'];
@@ -19,19 +20,19 @@ class WalletSearch extends GetView<WalletController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).canvasColor,
+          backgroundColor: Get.theme.canvasColor,
           centerTitle: true,
           title: Text(
             'Search Wallet',
             style: TextStyle(
-                color: Theme.of(context).textSelectionTheme.selectionColor,
+                color: Get.theme.textSelectionTheme.selectionColor,
                 fontFamily: "Gotik",
                 fontWeight: FontWeight.w600,
                 fontSize: 18.5),
           ),
           brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
           iconTheme: IconThemeData(
-              color: Theme.of(context).textSelectionTheme.selectionColor),
+              color: Get.theme.textSelectionTheme.selectionColor),
           elevation: 0.8,
         ),
         body: Obx(() {
@@ -46,9 +47,9 @@ class WalletSearch extends GetView<WalletController> {
               children: <Widget>[
                 Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).canvasColor,
+                    color: Get.theme.canvasColor,
                     border: Border.all(
-                      color: Theme.of(context).canvasColor,
+                      color: Get.theme.canvasColor,
                       width: 3.0,
                     ),
                     borderRadius: BorderRadius.circular(4.0),
@@ -67,7 +68,7 @@ class WalletSearch extends GetView<WalletController> {
                         child: TextField(
                           controller: _textController,
                           onChanged: controller.handleSearchInputChangeEvent,
-                          cursorColor: Theme.of(context)
+                          cursorColor: Get.theme
                               .textSelectionTheme
                               .selectionColor,
                           keyboardType: TextInputType.text,
@@ -75,7 +76,7 @@ class WalletSearch extends GetView<WalletController> {
                             border: InputBorder.none,
                             hintText: "Search...",
                             hintStyle: TextStyle(
-                                color: Theme.of(context)
+                                color: Get.theme
                                     .textSelectionTheme
                                     .selectionColor),
                             contentPadding: EdgeInsets.symmetric(
@@ -128,17 +129,7 @@ Widget walletList(BuildContext ctx, WalletClass.Wallet wallet, searchFrom) {
         }
       },
       child: ListTile(
-        leading: wallet.iconUrl != null
-            ? Image.network(
-                wallet.iconUrl,
-                fit: BoxFit.contain,
-                width: 35.0,
-              )
-            : Image.asset(
-                'assets/image/market/BCH.png',
-                fit: BoxFit.contain,
-                width: 35.0,
-              ),
+        leading: iconWidget(name: wallet.name, url: wallet.iconUrl),
         title: Text(wallet.currency.toUpperCase()),
         subtitle: Text(wallet.name),
         trailing: Icon(Icons.keyboard_arrow_right),

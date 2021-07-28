@@ -229,7 +229,7 @@ class WalletDetail extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(right: 4.0),
                         child:
-                            IconWidget(name: wallet.name, url: wallet.iconUrl),
+                            iconWidget(name: wallet.name, url: wallet.iconUrl),
                       ),
                       Text(
                         wallet.currency.toUpperCase(),
