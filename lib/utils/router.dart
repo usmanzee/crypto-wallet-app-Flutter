@@ -21,6 +21,7 @@ import 'package:b4u_wallet/views/auth/2fa.dart';
 import 'package:b4u_wallet/views/auth/signup.dart';
 import 'package:b4u_wallet/views/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:b4u_wallet/views/notification/%20notification_list.dart';
+import 'package:b4u_wallet/views/p2p/components/select_currency_p2p_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_buy_sell_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_user_profile/p2p_feedback_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_initial_page.dart';
@@ -189,6 +190,11 @@ class Router {
     GetPage(
       name: '/spot_history_page',
       page: () => SpotHistoryPage(),
+      // binding: P2pBinding(),
+    ),
+    GetPage(
+      name: '/select_currency_p2p_page',
+      page: () => SelectCurrencyP2pScreen(),
       // binding: P2pBinding(),
     ),
   ];

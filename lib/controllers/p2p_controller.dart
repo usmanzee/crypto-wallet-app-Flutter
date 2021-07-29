@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:b4u_wallet/controllers/error_controller.dart';
 import 'package:b4u_wallet/models/p2p_offer/p2p_offer.dart';
 import 'package:b4u_wallet/repository/p2p_repository.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class P2pController extends GetxController {
   ErrorController errorController = ErrorController();
   RxBool isLoading = true.obs;
+  RxString selectedCurrency = 'UAH'.obs;
 
   //buy sell page or express page
   RxBool buySellOrExpress = true.obs;
@@ -61,14 +63,29 @@ class P2pController extends GetxController {
   RxBool securitySmsEnable = true.obs;
   RxBool securityAppNotificationsEnable = true.obs;
 
+  //select currency page listview scrollController
+  ScrollController scrollController;
+  RxBool showTopButton = true.obs;
+
   @override
   void onClose() {
+    scrollController.dispose();
     super.onClose();
   }
 
   @override
   void onReady() {
     fetchAllLists();
+    scrollController = ScrollController();
+    scrollController.addListener(() {
+      if(scrollController.offset>= 300){
+        // print(scrollController.offset);
+        showTopButton.value = true;
+      }else{
+        // print(scrollController.offset);
+        showTopButton.value = false;
+      }
+    });
     super.onReady();
   }
 

@@ -69,28 +69,35 @@ Widget dialogWidget({bool iconShow = false}) {
                     ),
                     Row(
                       children: [
-                        Align(
-                          child: Text(
-                            'UAH',
-                            style: TextStyle(
-                              fontFamily: "Popins",
-                              color: p2pController.buySellOrExpress.value
-                                  ? Get.theme.scaffoldBackgroundColor
-                                  : Get.theme.textSelectionTheme.selectionColor,
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          alignment: Alignment.center,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 5, right: 10),
-                          child: Icon(
-                            Icons.swap_horiz,
-                            size: 20,
-                            color: p2pController.buySellOrExpress.value
-                                ? Get.theme.scaffoldBackgroundColor
-                                : Get.theme.textSelectionTheme.selectionColor,
+                        GestureDetector(
+                          onTap: () => Get.toNamed('/select_currency_p2p_page'),
+                          child: Row(
+                            children: [
+                              Align(
+                                child: Text(
+                                  'UAH',
+                                  style: TextStyle(
+                                    fontFamily: "Popins",
+                                    color: p2pController.buySellOrExpress.value
+                                        ? Get.theme.scaffoldBackgroundColor
+                                        : Get.theme.textSelectionTheme.selectionColor,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                alignment: Alignment.center,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 5, right: 10),
+                                child: Icon(
+                                  Icons.swap_horiz,
+                                  size: 20,
+                                  color: p2pController.buySellOrExpress.value
+                                      ? Get.theme.scaffoldBackgroundColor
+                                      : Get.theme.textSelectionTheme.selectionColor,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         PopupMenuButton(
