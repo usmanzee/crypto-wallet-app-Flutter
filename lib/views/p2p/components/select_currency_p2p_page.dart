@@ -31,28 +31,31 @@ class SelectCurrencyP2pScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Get.theme.canvasColor,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.search,
-                    size: 20,
-                    color: Get.theme.hintColor,
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    'Please enter currency here',
-                    style: TextStyle(color: Get.theme.hintColor),
-                  ),
-                ],
+            GestureDetector(
+              onTap: () => Get.offNamed('/search_currency_p2p_dialog'),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Get.theme.canvasColor,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.search,
+                      size: 20,
+                      color: Get.theme.hintColor,
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      'Please enter currency here',
+                      style: TextStyle(color: Get.theme.hintColor),
+                    ),
+                  ],
+                ),
               ),
             ),
             Expanded(
@@ -82,13 +85,20 @@ class SelectCurrencyP2pScreen extends StatelessWidget {
                             bottom: 32,
                             right: 16,
                             child: GestureDetector(
-                              onTap: ()=> _p2pController.scrollController.animateTo(00, duration: Duration(milliseconds: 300), curve: Curves.easeIn),
+                              onTap: () => _p2pController.scrollController
+                                  .animateTo(00,
+                                      duration: Duration(milliseconds: 300),
+                                      curve: Curves.easeIn),
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: Get.theme.hintColor,
                                   borderRadius: BorderRadius.circular(6),
                                 ),
-                                child: Icon(Icons.arrow_upward,size: 35,color: Get.theme.scaffoldBackgroundColor,),
+                                child: Icon(
+                                  Icons.arrow_upward,
+                                  size: 35,
+                                  color: Get.theme.scaffoldBackgroundColor,
+                                ),
                               ),
                             ),
                           )

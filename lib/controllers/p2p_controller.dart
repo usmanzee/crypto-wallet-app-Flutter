@@ -65,7 +65,7 @@ class P2pController extends GetxController {
 
   //select currency page listview scrollController
   ScrollController scrollController;
-  RxBool showTopButton = true.obs;
+  RxBool showTopButton = false.obs;
 
   @override
   void onClose() {
