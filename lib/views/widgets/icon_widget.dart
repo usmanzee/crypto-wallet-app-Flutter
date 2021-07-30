@@ -22,7 +22,7 @@ Widget iconWidget({
               ),
               child: Center(
                 child: Text(
-                  '${name[0]}${name[1]}'.toUpperCase(),
+                  name.length >0 ? '${name[0]}${name[1]}'.toUpperCase() : ''.toUpperCase(),
                   style: TextStyle(
                     fontFamily: "Popins",
                     fontWeight: FontWeight.w600,

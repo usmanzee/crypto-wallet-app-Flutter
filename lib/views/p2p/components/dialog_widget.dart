@@ -1,4 +1,5 @@
 import 'package:b4u_wallet/controllers/p2p_controller.dart';
+import 'package:b4u_wallet/views/p2p/components/drop_down_menu_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -100,52 +101,7 @@ Widget dialogWidget({bool iconShow = false}) {
                             ],
                           ),
                         ),
-                        PopupMenuButton(
-                          icon: Icon(
-                            Icons.more_horiz,
-                            color: p2pController.buySellOrExpress.value
-                                ? Get.theme.scaffoldBackgroundColor
-                                : Get.theme.textSelectionTheme.selectionColor,
-                          ),
-                          onSelected: (int value) {
-                            switch (value) {
-                              case 3:
-                                {
-                                  Get.toNamed('/p2p_user_profile');
-                                }
-                                break;
-                              case 1:
-                                {
-                                  print('from 1');
-                                }
-                                break;
-                              case 2:
-                                {
-                                  print('from 2');
-                                }
-                                break;
-                              default:
-                                {
-                                  print('from default');
-                                }
-                                break;
-                            }
-                          },
-                          itemBuilder: (context) => [
-                            PopupMenuItem(
-                              child: Text('Payment Methods'),
-                              value: 1,
-                            ),
-                            PopupMenuItem(
-                              child: Text('P2P Help Center'),
-                              value: 2,
-                            ),
-                            PopupMenuItem(
-                              child: Text('P2P User Center'),
-                              value: 3,
-                            ),
-                          ],
-                        ),
+                        dropDownMenuWidget(),
                       ],
                     ),
                   ],

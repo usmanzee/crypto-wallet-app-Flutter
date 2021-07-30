@@ -1,7 +1,7 @@
 import 'package:b4u_wallet/controllers/p2p_controller.dart';
 import 'package:b4u_wallet/views/p2p/components/dialog_widget.dart';
 import 'package:b4u_wallet/views/p2p/components/drawer_widget.dart';
-import 'package:b4u_wallet/views/p2p/p2p_history_page.dart';
+import 'package:b4u_wallet/views/p2p/components/drop_down_menu_widget.dart';
 import 'package:b4u_wallet/views/p2p/tabs/p2p_currency_tab_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -114,7 +114,8 @@ class P2pBuySellPage extends StatelessWidget {
                               Row(
                                 children: [
                                   GestureDetector(
-                                    onTap: () => Get.toNamed('/select_currency_p2p_page'),
+                                    onTap: () => Get.toNamed(
+                                        '/select_currency_p2p_page'),
                                     child: Row(
                                       children: [
                                         Align(
@@ -122,9 +123,12 @@ class P2pBuySellPage extends StatelessWidget {
                                             'UAH',
                                             style: TextStyle(
                                               fontFamily: "Popins",
-                                              color: p2pController.buySellOrExpress.value
-                                                  ? Get.theme.scaffoldBackgroundColor
-                                                  : Get.theme.textSelectionTheme.selectionColor,
+                                              color: p2pController
+                                                      .buySellOrExpress.value
+                                                  ? Get.theme
+                                                      .scaffoldBackgroundColor
+                                                  : Get.theme.textSelectionTheme
+                                                      .selectionColor,
                                               fontSize: 18.0,
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -132,58 +136,23 @@ class P2pBuySellPage extends StatelessWidget {
                                           alignment: Alignment.center,
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.only(left: 5, right: 10),
+                                          padding: const EdgeInsets.only(
+                                              left: 5, right: 10),
                                           child: Icon(
                                             Icons.swap_horiz,
                                             size: 20,
-                                            color: p2pController.buySellOrExpress.value
-                                                ? Get.theme.scaffoldBackgroundColor
-                                                : Get.theme.textSelectionTheme.selectionColor,
+                                            color: p2pController
+                                                    .buySellOrExpress.value
+                                                ? Get.theme
+                                                    .scaffoldBackgroundColor
+                                                : Get.theme.textSelectionTheme
+                                                    .selectionColor,
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
-                                  PopupMenuButton(
-                                      icon: Icon(Icons.more_horiz),
-                                      onSelected: (int value) {
-                                        switch (value) {
-                                          case 3:
-                                            {
-                                              Get.toNamed('/p2p_user_profile');
-                                            }
-                                            break;
-                                          case 1:
-                                            {
-                                              Get.toNamed('/p2p_payment_method');
-                                            }
-                                            break;
-                                          case 2:
-                                            {
-                                              Get.toNamed('/p2p_help_center_page');
-                                            }
-                                            break;
-                                          default:
-                                            {
-                                              print('from default');
-                                            }
-                                            break;
-                                        }
-                                      },
-                                      itemBuilder: (context) => [
-                                            PopupMenuItem(
-                                              child: Text('Payment Methods'),
-                                              value: 1,
-                                            ),
-                                            PopupMenuItem(
-                                              child: Text('P2P Help Center'),
-                                              value: 2,
-                                            ),
-                                            PopupMenuItem(
-                                              child: Text('P2P User Center'),
-                                              value: 3,
-                                            ),
-                                          ]),
+                                  dropDownMenuWidget(),
                                 ],
                               ),
                             ],
@@ -264,7 +233,7 @@ class P2pBuySellPage extends StatelessWidget {
                                   children: [
                                     GestureDetector(
                                       onTap: () {
-                                        Get.to<void>(() => P2pHistoryPage());
+                                        Get.toNamed('/p2p_history_page');
                                       },
                                       child: Icon(
                                         Icons.insert_drive_file_outlined,
