@@ -68,14 +68,17 @@ class SearchCurrencyP2pDialog extends StatelessWidget {
                   ),
                   Expanded(
                     flex: 2,
-                    child: Center(
-                      child: Text(
-                        'Cancel',
-                        style: TextStyle(
-                          fontFamily: "Popins",
-                          color: Get.theme.accentColor,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w600,
+                    child: GestureDetector(
+                      onTap: () => Get.offNamed('/select_currency_p2p_page'),
+                      child: Center(
+                        child: Text(
+                          'Cancel',
+                          style: TextStyle(
+                            fontFamily: "Popins",
+                            color: Get.theme.accentColor,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),

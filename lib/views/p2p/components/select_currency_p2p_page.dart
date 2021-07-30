@@ -11,7 +11,12 @@ class SelectCurrencyP2pScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Select Currency',
-          style: TextStyle(color: Get.theme.hintColor),
+          style: TextStyle(
+            fontFamily: "Popins",
+            color: Get.theme.hintColor,
+            fontSize: 16.0,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         centerTitle: true,
         backwardsCompatibility: false,
@@ -52,7 +57,12 @@ class SelectCurrencyP2pScreen extends StatelessWidget {
                     ),
                     Text(
                       'Please enter currency here',
-                      style: TextStyle(color: Get.theme.hintColor),
+                      style: TextStyle(
+                        fontFamily: "Popins",
+                        color: Get.theme.hintColor,
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ],
                 ),
