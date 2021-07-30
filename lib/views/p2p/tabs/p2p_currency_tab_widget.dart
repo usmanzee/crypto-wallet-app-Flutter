@@ -1,6 +1,7 @@
 import 'package:b4u_wallet/controllers/p2p_controller.dart';
 import 'package:b4u_wallet/models/p2p_offer/p2p_offer.dart';
 import 'package:b4u_wallet/utils/Helpers/my_imgs.dart';
+import 'package:b4u_wallet/views/p2p/components/p2p_level_check_dialog.dart';
 import 'package:b4u_wallet/views/p2p/container_trade_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -56,8 +57,9 @@ Widget p2pCurrencyTabWidget({
                                     currency: buyList[index].baseUnit,
                                     bankName: 'MonoBank',
                                     cryptoAmount: '815.98',
-                                    functionCallback: () =>
-                                        print('function Callback'),
+                                    functionCallback: () {
+                                      p2pLevelCheckDialog(context: context);
+                                    },
                                     functionText: 'Buy',
                                     lowerLimit: buyList[index].minOrderAmount,
                                     upperLimit: buyList[index].maxOrderAmount,
@@ -74,8 +76,9 @@ Widget p2pCurrencyTabWidget({
                                     currency: sellList[index].baseUnit,
                                     bankName: 'MonoBank',
                                     cryptoAmount: '815.98',
-                                    functionCallback: () =>
-                                        print('function Callback'),
+                                    functionCallback: () {
+                                      p2pLevelCheckDialog(context: context);
+                                    },
                                     functionText: 'Sell',
                                     lowerLimit: sellList[index].minOrderAmount,
                                     upperLimit: sellList[index].maxOrderAmount,
@@ -90,6 +93,7 @@ Widget p2pCurrencyTabWidget({
                           childCount: p2pController.buyOrSellP2p.value
                               ? buyList.length
                               : sellList.length,
+                          // 1,
                         ),
                       ),
                     ),
