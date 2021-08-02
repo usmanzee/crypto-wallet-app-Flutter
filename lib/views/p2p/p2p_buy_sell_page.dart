@@ -172,97 +172,108 @@ class P2pBuySellPage extends StatelessWidget {
                               topRight: Radius.circular(10),
                             ),
                           ),
-                          child: Obx(() {
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: p2pController.buyOrSellP2p.value
-                                          ? null
-                                          : () {
-                                              p2pController.buyOrSellP2p.value =
-                                                  true;
-                                            },
-                                      child: Text(
-                                        'Buy',
-                                        style: TextStyle(
-                                          fontFamily: "Popins",
-                                          color:
-                                              p2pController.buyOrSellP2p.value
-                                                  ? Get.theme.textSelectionTheme
-                                                      .selectionColor
-                                                  : Get.theme.textSelectionTheme
-                                                      .selectionColor
-                                                      .withOpacity(0.5),
-                                          fontSize: 18.0,
-                                          fontWeight: FontWeight.w600,
+                          child: Obx(
+                            () {
+                              return Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: p2pController.buyOrSellP2p.value
+                                            ? null
+                                            : () {
+                                                p2pController
+                                                    .buyOrSellP2p.value = true;
+                                              },
+                                        child: Text(
+                                          'Buy',
+                                          style: TextStyle(
+                                            fontFamily: "Popins",
+                                            color:
+                                                p2pController.buyOrSellP2p.value
+                                                    ? Get
+                                                        .theme
+                                                        .textSelectionTheme
+                                                        .selectionColor
+                                                    : Get
+                                                        .theme
+                                                        .textSelectionTheme
+                                                        .selectionColor
+                                                        .withOpacity(0.5),
+                                            fontSize: 18.0,
+                                            fontWeight: FontWeight.w600,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 12.0,
-                                    ),
-                                    GestureDetector(
-                                      onTap: p2pController.buyOrSellP2p.value
-                                          ? () {
-                                              p2pController.buyOrSellP2p.value =
-                                                  false;
-                                            }
-                                          : null,
-                                      child: Text(
-                                        'Sell',
-                                        style: TextStyle(
-                                          fontFamily: "Popins",
-                                          color:
-                                              p2pController.buyOrSellP2p.value
-                                                  ? Get.theme.textSelectionTheme
-                                                      .selectionColor
-                                                      .withOpacity(0.5)
-                                                  : Get.theme.textSelectionTheme
-                                                      .selectionColor,
-                                          fontSize: 18.0,
-                                          fontWeight: FontWeight.w600,
+                                      SizedBox(
+                                        width: 12.0,
+                                      ),
+                                      GestureDetector(
+                                        onTap: p2pController.buyOrSellP2p.value
+                                            ? () {
+                                                p2pController
+                                                    .buyOrSellP2p.value = false;
+                                              }
+                                            : null,
+                                        child: Text(
+                                          'Sell',
+                                          style: TextStyle(
+                                            fontFamily: "Popins",
+                                            color:
+                                                p2pController.buyOrSellP2p.value
+                                                    ? Get
+                                                        .theme
+                                                        .textSelectionTheme
+                                                        .selectionColor
+                                                        .withOpacity(0.5)
+                                                    : Get
+                                                        .theme
+                                                        .textSelectionTheme
+                                                        .selectionColor,
+                                            fontSize: 18.0,
+                                            fontWeight: FontWeight.w600,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        Get.toNamed('/p2p_history_page');
-                                      },
-                                      child: Icon(
-                                        Icons.insert_drive_file_outlined,
-                                        size: 25,
-                                        color: Get.theme.textSelectionTheme
-                                            .selectionColor
-                                            .withOpacity(0.7),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          Get.toNamed('/p2p_history_page');
+                                        },
+                                        child: Icon(
+                                          Icons.insert_drive_file_outlined,
+                                          size: 25,
+                                          color: Get.theme.textSelectionTheme
+                                              .selectionColor
+                                              .withOpacity(0.7),
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 8.0,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Scaffold.of(context).openEndDrawer();
-                                      },
-                                      child: Icon(
-                                        Icons.filter_alt_outlined,
-                                        color: Get.theme.textSelectionTheme
-                                            .selectionColor
-                                            .withOpacity(0.7),
-                                        size: 25,
+                                      SizedBox(
+                                        width: 8.0,
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            );
-                          }),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Scaffold.of(context).openEndDrawer();
+                                        },
+                                        child: Icon(
+                                          Icons.filter_alt_outlined,
+                                          color: Get.theme.textSelectionTheme
+                                              .selectionColor
+                                              .withOpacity(0.7),
+                                          size: 25,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
                         ),
                       ],
                     ),
@@ -315,21 +326,25 @@ class P2pBuySellPage extends StatelessWidget {
               // These are the contents of the tab views, below the tabs.
               children: [
                 p2pCurrencyTabWidget(
-                    sellList: p2pController.usdSell,
-                    buyList: p2pController.usdBuy,
-                    name: 'USD'),
+                  sellList: p2pController.usdSell,
+                  buyList: p2pController.usdBuy,
+                  name: 'USD',
+                ),
                 p2pCurrencyTabWidget(
-                    sellList: p2pController.btcSell,
-                    buyList: p2pController.btcBuy,
-                    name: 'BTC'),
+                  sellList: p2pController.btcSell,
+                  buyList: p2pController.btcBuy,
+                  name: 'BTC',
+                ),
                 p2pCurrencyTabWidget(
-                    sellList: p2pController.trstSell,
-                    buyList: p2pController.trstBuy,
-                    name: 'TRST'),
+                  sellList: p2pController.trstSell,
+                  buyList: p2pController.trstBuy,
+                  name: 'TRST',
+                ),
                 p2pCurrencyTabWidget(
-                    sellList: p2pController.ethSell,
-                    buyList: p2pController.ethBuy,
-                    name: 'ETH'),
+                  sellList: p2pController.ethSell,
+                  buyList: p2pController.ethBuy,
+                  name: 'ETH',
+                ),
               ],
             ),
           ),
