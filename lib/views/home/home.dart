@@ -16,7 +16,8 @@ import 'package:get/get.dart';
 class Home extends StatelessWidget {
   final MarketController marketController = Get.find();
   final HomeController homeController = Get.find();
-
+  //todo: remove this one from here
+  final p2p = Get.put(P2pController());
   final banners = [
     "assets/image/banner/banner2.png",
     "assets/image/banner/banner3.jpg",
@@ -333,10 +334,12 @@ class Home extends StatelessWidget {
                     ),
                     Expanded(
                       child: GestureDetector(
-                        onTap: () => _showDialog(
+                        onTap: () =>
+                            /*_showDialog(
                           context: context,
                           heading: 'home.screen.link.card.credit_debit_card'.tr,
-                        ),
+                        ),*/
+                            Get.toNamed('/P2p_buy_sell_selected_offer_page'),
                         child: textWithIconWidget(
                           title: 'home.screen.link.card.credit_debit_card'.tr,
                           icon: Icons.credit_card,

@@ -1,13 +1,8 @@
-import 'package:b4u_wallet/models/p2p_offer/p2p_offer.dart';
+import 'package:b4u_wallet/views/p2p/components/p2p_buy_sell_selected_offer_page_tab_layout/p2p_buy_sell_selected_offer_page_tab_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class P2pBuySellSelectedOfferPage extends StatelessWidget {
-  P2pBuySellSelectedOfferPage({
-    @required this.p2pOffer,
-  });
-
-  final P2POffer p2pOffer;
   final currencySymbol = '\$';
 
   @override
@@ -38,81 +33,17 @@ class P2pBuySellSelectedOfferPage extends StatelessWidget {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Text(
-                  'Price',
-                  style: TextStyle(
-                    fontFamily: "Popins",
-                    color: Get.theme.hintColor,
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                //todo: replace it with the real value
-                Text(
-                  '3.68',
-                  style: TextStyle(
-                    fontFamily: "Popins",
-                    color: Get.theme.hintColor,
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                SizedBox(
-                  width: 4,
-                ),
-                //todo add the currency symbol here
-                Text(
-                  currencySymbol,
-                  style: TextStyle(
-                    fontFamily: "Popins",
-                    color: Colors.greenAccent,
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SizedBox(
-                  width: 6,
-                ),
-                //todo : add the value here of the refresh
-                Text(
-                  '24s',
-                  style: TextStyle(
-                    fontFamily: "Popins",
-                    color: Get.theme.hintColor,
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                SizedBox(
-                  width: 6,
-                ),
-                InkWell(
-                  onTap: () {},
-                  child: Icon(
-                    Icons.refresh,
-                    size: 15,
-                    color: Get.theme.hintColor,
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 4, bottom: 8),
-              child: Row(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
                 children: [
                   Text(
-                    'Limit ',
+                    'Price',
                     style: TextStyle(
                       fontFamily: "Popins",
                       color: Get.theme.hintColor,
@@ -120,129 +51,231 @@ class P2pBuySellSelectedOfferPage extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  //todo: add the upper and lower limit from the data here
+                  SizedBox(
+                    width: 8,
+                  ),
+                  //todo: replace it with the real value
                   Text(
-                    '730.00$currencySymbol - 100.00$currencySymbol',
+                    '3.68',
                     style: TextStyle(
                       fontFamily: "Popins",
-                      color: Get.theme.textSelectionTheme.selectionColor,
+                      color: Get.theme.hintColor,
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 4,
+                  ),
+                  //todo add the currency symbol here
+                  Text(
+                    currencySymbol,
+                    style: TextStyle(
+                      fontFamily: "Popins",
+                      color: Colors.greenAccent,
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 6,
+                  ),
+                  //todo : add the value here of the refresh
+                  Text(
+                    '24s',
+                    style: TextStyle(
+                      fontFamily: "Popins",
+                      color: Get.theme.hintColor,
                       fontSize: 14.0,
                       fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 6,
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: Icon(
+                      Icons.refresh,
+                      size: 15,
+                      color: Get.theme.hintColor,
                     ),
                   ),
                 ],
               ),
-            ),
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              elevation: 10,
-              child: Container(
-                height: 300,
-                width: double.infinity,
-              ),
-            ),
-            //todo: add the callbacks here in necessary
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 16,
-              ),
-              child: Container(
-                // width: Get.size.width,
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Get.theme.accentColor.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(4),
-                ),
+              Padding(
+                padding: const EdgeInsets.only(top: 4, bottom: 8),
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 2, horizontal: 8),
-                      decoration: BoxDecoration(
-                        color: Get.theme.accentColor,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Text(
-                        '!',
-                        style: TextStyle(
-                          color: Get.theme.scaffoldBackgroundColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
+                    Text(
+                      'Limit ',
+                      style: TextStyle(
+                        fontFamily: "Popins",
+                        color: Get.theme.hintColor,
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Expanded(
-                      child: Text(
-                        'For the safety of your asset, a 24 hr withdrawal restriction will be imposed on the crypto purchased.',
-                        maxLines: 4,
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          color: Get.theme.accentColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        softWrap: true,
-                        // overflow: TextOverflow.ellipsis,
+                    //todo: add the upper and lower limit from the data here
+                    Text(
+                      '730.00$currencySymbol - 100.00$currencySymbol',
+                      style: TextStyle(
+                        fontFamily: "Popins",
+                        color: Get.theme.textSelectionTheme.selectionColor,
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w400,
                       ),
-                    ),
-                    Icon(
-                      Icons.keyboard_arrow_down,
-                      size: 15,
-                      color: Get.theme.hintColor,
                     ),
                   ],
                 ),
               ),
-            ),
-            Text(
-              'Trade Info',
-              style: TextStyle(
-                fontFamily: "Popins",
-                color: Get.theme.textSelectionTheme.selectionColor,
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                elevation: 10,
+                child: Container(
+                  height: Get.height * 0.4,
+                  child: P2pBuySellSelectedOfferPageTabLayout(),
+                ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Payment Window',
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    decorationStyle: TextDecorationStyle.dashed,
-                    fontFamily: "Popins",
-                    color: Get.theme.hintColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
+              //todo: add the callbacks here in necessary
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 16,
+                ),
+                child: Container(
+                  // width: Get.size.width,
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Get.theme.accentColor.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 2, horizontal: 8),
+                        decoration: BoxDecoration(
+                          color: Get.theme.accentColor,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          '!',
+                          style: TextStyle(
+                            color: Get.theme.scaffoldBackgroundColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Expanded(
+                        child: Text(
+                          'For the safety of your asset, a 24 hr withdrawal restriction will be imposed on the crypto purchased.',
+                          maxLines: 4,
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            color: Get.theme.accentColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          softWrap: true,
+                          // overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      Icon(
+                        Icons.keyboard_arrow_down,
+                        size: 15,
+                        color: Get.theme.hintColor,
+                      ),
+                    ],
                   ),
                 ),
-                //todo: add value from the wallet here
-                Text(
-                  '15 Minutes',
-                  style: TextStyle(
-                    fontFamily: "Popins",
-                    color: Get.theme.textSelectionTheme.selectionColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                  ),
+              ),
+              Text(
+                'Trade Info',
+                style: TextStyle(
+                  fontFamily: "Popins",
+                  color: Get.theme.textSelectionTheme.selectionColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
                 ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Row(
+              ),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Buyer\'s Nickname',
+                    'Payment Window',
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      decorationStyle: TextDecorationStyle.dashed,
+                      fontFamily: "Popins",
+                      color: Get.theme.hintColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  //todo: add value from the wallet here
+                  Text(
+                    '15 Minutes',
+                    style: TextStyle(
+                      fontFamily: "Popins",
+                      color: Get.theme.textSelectionTheme.selectionColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Buyer\'s Nickname',
+                      style: TextStyle(
+                        fontFamily: "Popins",
+                        color: Get.theme.hintColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'Boost',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            fontFamily: "Popins",
+                            color: Get.theme.textSelectionTheme.selectionColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 6,
+                        ),
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15,
+                          color: Get.theme.hintColor,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Seller Payment Method',
                     style: TextStyle(
                       fontFamily: "Popins",
                       color: Get.theme.hintColor,
@@ -250,54 +283,18 @@ class P2pBuySellSelectedOfferPage extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  Row(
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(
-                        'Boost',
-                        style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          fontFamily: "Popins",
-                          color: Get.theme.textSelectionTheme.selectionColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 6,
-                      ),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        size: 15,
-                        color: Get.theme.hintColor,
-                      ),
+                      //todo: add the checks for the bank names and color randomization
+                      _bankNameWidget(bankName: 'Bank Transfer'),
+                      _bankNameWidget(bankName: 'Bank Transfer'),
                     ],
                   ),
                 ],
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Seller Payment Method',
-                  style: TextStyle(
-                    fontFamily: "Popins",
-                    color: Get.theme.hintColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    //todo: add the checks for the bank names and color randomization
-                    _bankNameWidget(bankName: 'Bank Transfer'),
-                    _bankNameWidget(bankName: 'Bank Transfer'),
-                  ],
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

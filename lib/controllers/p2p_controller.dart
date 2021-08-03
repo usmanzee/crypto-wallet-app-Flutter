@@ -67,6 +67,11 @@ class P2pController extends GetxController {
   ScrollController scrollController;
   RxBool showTopButton = false.obs;
 
+  //selected current offer variables
+
+  //change the limit and other variables on tab swipe
+  RxBool fiatOrCrypto = true.obs;
+
   @override
   void onClose() {
     scrollController.dispose();
