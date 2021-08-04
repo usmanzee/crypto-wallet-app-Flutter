@@ -1,9 +1,11 @@
+import 'package:b4u_wallet/controllers/p2p_controller.dart';
 import 'package:b4u_wallet/views/p2p/components/p2p_buy_sell_selected_offer_page_tab_layout/p2p_buy_sell_selected_offer_page_tab_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class P2pBuySellSelectedOfferPage extends StatelessWidget {
   final currencySymbol = '\$';
+  final _p2pController = Get.find<P2pController>();
 
   @override
   Widget build(BuildContext context) {
@@ -117,13 +119,17 @@ class P2pBuySellSelectedOfferPage extends StatelessWidget {
                       ),
                     ),
                     //todo: add the upper and lower limit from the data here
-                    Text(
-                      '730.00$currencySymbol - 100.00$currencySymbol',
-                      style: TextStyle(
-                        fontFamily: "Popins",
-                        color: Get.theme.textSelectionTheme.selectionColor,
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w400,
+                    Obx(
+                      () => Text(
+                        _p2pController.fiatOrCrypto.value
+                            ? '730.00$currencySymbol - 100.00$currencySymbol'
+                            : 'Crypto value here',
+                        style: TextStyle(
+                          fontFamily: "Popins",
+                          color: Get.theme.textSelectionTheme.selectionColor,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
                     ),
                   ],
