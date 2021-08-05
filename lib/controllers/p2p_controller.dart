@@ -80,7 +80,7 @@ class P2pController extends GetxController {
 
   @override
   void onReady() {
-    fetchAllLists();
+    fetchAllLists(true);
     scrollController = ScrollController();
     scrollController.addListener(() {
       if(scrollController.offset>= 300){
@@ -91,6 +91,7 @@ class P2pController extends GetxController {
         showTopButton.value = false;
       }
     });
+    ever(isLoading, fetchAllLists);
     super.onReady();
   }
 
@@ -100,8 +101,8 @@ class P2pController extends GetxController {
     super.onInit();
   }
 
-  void fetchAllLists() async {
-    isLoading(true);
+  void fetchAllLists(bool val) async {
+    isLoading(val);
     await fetchP2pOffers(
         category: 'usd', buyList: usdBuy, sellList: usdSell);
    await fetchP2pOffers(

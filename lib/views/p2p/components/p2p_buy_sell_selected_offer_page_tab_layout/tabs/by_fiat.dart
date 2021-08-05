@@ -76,26 +76,29 @@ class ByFiat extends StatelessWidget {
               _row(first: 'first', second: 'second'),
             ],
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(
-              vertical: 12.0,
-            ),
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Get.theme.accentColor,
-              borderRadius: BorderRadius.circular(
-                4,
+          GestureDetector(
+            onTap: () => Get.toNamed('/p2p_buy_payment_pending_page'),
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                vertical: 12.0,
               ),
-            ),
-            child: Center(
-              //todo: replace with the currency name buying
-              child: Text(
-                'Buy USDT',
-                style: TextStyle(
-                  color: Get.theme.scaffoldBackgroundColor,
-                  fontSize: 16,
-                  fontFamily: 'Popins',
-                  fontWeight: FontWeight.w600,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Get.theme.accentColor,
+                borderRadius: BorderRadius.circular(
+                  4,
+                ),
+              ),
+              child: Center(
+                //todo: replace with the currency name buying
+                child: Text(
+                  'Buy USDT',
+                  style: TextStyle(
+                    color: Get.theme.scaffoldBackgroundColor,
+                    fontSize: 16,
+                    fontFamily: 'Popins',
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ),

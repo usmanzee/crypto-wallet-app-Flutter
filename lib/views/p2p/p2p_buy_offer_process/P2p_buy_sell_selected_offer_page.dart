@@ -279,6 +279,7 @@ class P2pBuySellSelectedOfferPage extends StatelessWidget {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Seller Payment Method',
@@ -298,6 +299,37 @@ class P2pBuySellSelectedOfferPage extends StatelessWidget {
                     ],
                   ),
                 ],
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 20,
+                ),
+                child: Container(
+                  height: 0.3,
+                  width: double.infinity,
+                  color: Get.theme.hintColor,
+                ),
+              ),
+              Text(
+                'Terms',
+                style: TextStyle(
+                  color: Get.theme.textSelectionTheme.selectionColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              //todo: add the user p[hone number here if any is present
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Text(
+                  'The advertise is only for cash deal for bulk quantity in Deira +92312345678 quantity whatsapp',
+                  style: TextStyle(
+                    fontFamily: "Popins",
+                    color: Get.theme.hintColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
             ],
           ),

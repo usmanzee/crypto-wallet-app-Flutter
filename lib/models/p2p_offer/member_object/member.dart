@@ -32,9 +32,9 @@ class Member {
   @JsonKey(name: 'state')
   String state;
   @JsonKey(name: 'created_at')
-  DateTime createdAt;
+  String createdAt;
   @JsonKey(name: 'updated_at')
-  DateTime updatedAt;
+  String updatedAt;
   @JsonKey(name: 'notification_token')
   String notificationToken;
 

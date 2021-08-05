@@ -11,23 +11,24 @@ import 'package:b4u_wallet/bindings/transfer_binding.dart';
 import 'package:b4u_wallet/bindings/verification_binding.dart';
 import 'package:b4u_wallet/bindings/wallet_search_binding.dart';
 import 'package:b4u_wallet/views/DetailCryptoValue/market_detail.dart';
-import 'package:b4u_wallet/views/history/history.dart';
-import 'package:b4u_wallet/views/history/spot_history/spot_hisotry_page.dart';
-import 'package:b4u_wallet/views/home/splash.dart';
-import 'package:b4u_wallet/views/home/on_boarding.dart';
+import 'package:b4u_wallet/views/auth/2fa.dart';
 import 'package:b4u_wallet/views/auth/email_verification.dart';
 import 'package:b4u_wallet/views/auth/login.dart';
-import 'package:b4u_wallet/views/auth/2fa.dart';
 import 'package:b4u_wallet/views/auth/signup.dart';
 import 'package:b4u_wallet/views/bottom_nav_bar/bottom_nav_bar.dart';
+import 'package:b4u_wallet/views/history/history.dart';
+import 'package:b4u_wallet/views/history/spot_history/spot_hisotry_page.dart';
+import 'package:b4u_wallet/views/home/on_boarding.dart';
+import 'package:b4u_wallet/views/home/splash.dart';
 import 'package:b4u_wallet/views/notification/%20notification_list.dart';
-import 'package:b4u_wallet/views/p2p/P2p_buy_sell_selected_offer_page.dart';
 import 'package:b4u_wallet/views/p2p/components/search_currency_p2p_dialog.dart';
 import 'package:b4u_wallet/views/p2p/components/select_currency_p2p_page.dart';
+import 'package:b4u_wallet/views/p2p/p2p_buy_offer_process/P2p_buy_sell_selected_offer_page.dart';
+import 'package:b4u_wallet/views/p2p/p2p_buy_offer_process/p2p_buy_payment_pending_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_buy_sell_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_history_page.dart';
-import 'package:b4u_wallet/views/p2p/p2p_user_profile/p2p_feedback_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_initial_page.dart';
+import 'package:b4u_wallet/views/p2p/p2p_user_profile/p2p_feedback_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_user_profile/p2p_help_center_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_user_profile/p2p_notifications_setting_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_user_profile/p2p_payment_method_page.dart';
@@ -211,8 +212,13 @@ class Router {
       // binding: P2pBinding(),
     ),
     GetPage(
-      name: '/P2p_buy_sell_selected_offer_page',
+      name: '/p2p_buy_sell_selected_offer_page',
       page: () => P2pBuySellSelectedOfferPage(),
+      // binding: P2pBinding(),
+    ),
+    GetPage(
+      name: '/p2p_buy_payment_pending_page',
+      page: () => P2pBuyPaymentPendingPage(),
       // binding: P2pBinding(),
     ),
   ];

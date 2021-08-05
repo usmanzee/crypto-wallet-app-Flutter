@@ -53,9 +53,9 @@ class P2POffer {
   @JsonKey(name: 'member')
   Member member;
   @JsonKey(name: 'created_at')
-  DateTime createdAt;
+  String createdAt;
   @JsonKey(name: 'updated_at')
-  DateTime updatedAt;
+  String updatedAt;
 
   factory P2POffer.fromJson(Map<String, dynamic> json) => _$P2POfferFromJson(json);
   Map<String, dynamic> toJson() => _$P2POfferToJson(this);
