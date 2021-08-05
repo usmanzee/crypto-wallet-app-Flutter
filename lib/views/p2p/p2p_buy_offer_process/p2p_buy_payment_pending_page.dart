@@ -72,138 +72,184 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 16,
-              ),
-              child: Text(
-                'Pending Payment',
-                style: TextStyle(
-                  fontFamily: "Popins",
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.0,
-                  color: Get.theme.textSelectionTheme.selectionColor,
-                ),
-              ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
             ),
-            Row(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(
-                  'Time Remaining',
-                  style: TextStyle(
-                    fontFamily: "Popins",
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14.0,
-                    color: Get.theme.textSelectionTheme.selectionColor,
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 16,
+                  ),
+                  child: Text(
+                    'Pending Payment',
+                    style: TextStyle(
+                      fontFamily: "Popins",
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20.0,
+                      color: Get.theme.textSelectionTheme.selectionColor,
+                    ),
                   ),
                 ),
-                SizedBox(
-                  width: 16,
-                ),
-                //todo: add the realtime timer here for the offer
-                Text(
-                  '14:05',
-                  style: TextStyle(
-                    fontFamily: "Popins",
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14.0,
-                    color: Get.theme.accentColor,
-                  ),
+                Row(
+                  children: [
+                    Text(
+                      'Time Remaining',
+                      style: TextStyle(
+                        fontFamily: "Popins",
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14.0,
+                        color: Get.theme.textSelectionTheme.selectionColor,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 16,
+                    ),
+                    //todo: add the realtime timer here for the offer
+                    Text(
+                      '14:05',
+                      style: TextStyle(
+                        fontFamily: "Popins",
+                        fontWeight: FontWeight.w700,
+                        fontSize: 14.0,
+                        color: Get.theme.accentColor,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-            SizedBox(
-              height: 12,
+          ),
+          SizedBox(
+            height: 12,
+          ),
+          Card(
+            elevation: 3,
+            child: Container(
+              height: 0.3,
+              width: double.infinity,
+              color: Get.theme.hintColor.withOpacity(0.4),
             ),
-            Card(
-              elevation: 3,
-              child: Container(
-                height: 0.3,
-                width: double.infinity,
-                color: Get.theme.hintColor.withOpacity(0.4),
-              ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              child: Row(
-                children: [
-                  //todo: add the check here for the buy or sell
-                  Text(
-                    'Buy',
-                    style: TextStyle(
-                      color: Colors.greenAccent,
-                      fontFamily: "Popins",
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18.0,
-                    ),
-                  ),
-                  //todo: add the name for the currency from the controller
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 8,
-                      right: 4,
-                    ),
-                    child: Text(
-                      'USDT',
-                      style: TextStyle(
-                        color: Get.theme.textSelectionTheme.selectionColor,
-                        fontFamily: "Popins",
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18.0,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: Row(
+                    children: [
+                      //todo: add the check here for the buy or sell
+                      Text(
+                        'BUY',
+                        style: TextStyle(
+                          color: Colors.greenAccent,
+                          fontFamily: "Popins",
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18.0,
+                        ),
                       ),
-                    ),
+                      //todo: add the name for the currency from the controller
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 8,
+                          right: 4,
+                        ),
+                        child: Text(
+                          'USDT',
+                          style: TextStyle(
+                            color: Get.theme.textSelectionTheme.selectionColor,
+                            fontFamily: "Popins",
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18.0,
+                          ),
+                        ),
+                      ),
+                      //todo: get the link for the icon from the controller or the post
+                      iconWidget(name: 'USDT', url: 'url'),
+                    ],
                   ),
-                  //todo: get the link for the icon from the controller or the post
-                  iconWidget(name: 'USDT', url: 'url'),
+                ),
+                //todo: add teh currency and the currency unit here in the second text
+                _row(
+                  first: 'Fiat Amount',
+                  second: 'RS 11,651.50',
+                  biggerText: true,
+                ),
+                //todo: add the per unit price here and the currency symbol
+                _row(
+                  first: 'Price',
+                  second: 'RS 166.45',
+                ),
+                _row(
+                  first: 'Crypto Amount',
+                  second: 'RS 166.45',
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8,
+                  ),
+                  child: Container(
+                    height: 0.3,
+                    width: double.infinity,
+                    color: Get.theme.hintColor,
+                  ),
+                ),
+                //todo: add the order number here from the order
+                _row(
+                  first: 'Order Number',
+                  second: '20256173861735276544',
+                  logo: true,
+                  icon: Icons.copy,
+                  logoCallback: () {
+                    //todo: add the order number here from the order to be copied
+                    Clipboard.setData(ClipboardData(text: "your text"));
+                  },
+                ),
+                _row(
+                  first: 'Created Time',
+                  second: '2021-08-04 14:50:12',
+                ),
+                //todo: add the required variables and the function here
+                _row(
+                  first: 'Seller\'s Nickname',
+                  second: 'Rana Traders',
+                  textUnderline: true,
+                  logoCallback: () {},
+                  logo: true,
+                ),
+              ],
+            ),
+          ),
+          Container(
+            height: 16,
+            width: double.infinity,
+            color: Get.theme.canvasColor,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text('Payment method',style: TextStyle(),),
+              Row(
+                children: [
+                  Text('Bank'),
                 ],
               ),
-            ),
-            //todo: add teh currency and the currency unit here in the second text
-            _row(
-              first: 'Fiat Amount',
-              second: 'RS 11,651.50',
-              biggerText: true,
-            ),
-            //todo: add the per unit price here and the currency symbol
-            _row(
-              first: 'Price',
-              second: 'RS 166.45',
-            ),
-            _row(
-              first: 'Crypto Amount',
-              second: 'RS 166.45',
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 8,
-              ),
-              child: Container(
-                height: 0.3,
-                width: double.infinity,
-                color: Get.theme.hintColor,
-              ),
-            ),
-            //todo: add the order number here from the order
-            _row(
-              first: 'Order Number',
-              second: '20256173861735276544',
-              logo: true,
-              icon: Icons.copy,
-              logoCallback: () {
-                //todo: add the order number here from the order to be copied
-                Clipboard.setData(ClipboardData(text: "your text"));
-              },
-            ),
-          ],
-        ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -213,7 +259,8 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
     @required String second,
     bool biggerText = false,
     bool logo = false,
-    Function logoCallback,
+    bool textUnderline = false,
+    void Function() logoCallback,
     IconData icon = Icons.arrow_forward_ios,
   }) {
     return Padding(
@@ -233,6 +280,7 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
             ),
           ),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 second,
@@ -241,9 +289,21 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
                   fontFamily: "Popins",
                   fontWeight: FontWeight.w500,
                   fontSize: biggerText ? 18.0 : 14,
+                  decoration: textUnderline
+                      ? TextDecoration.underline
+                      : TextDecoration.none,
                 ),
               ),
-              logo ? Icon(icon) : Container(),
+              logo
+                  ? InkWell(
+                      onTap: logoCallback,
+                      child: Icon(
+                        icon,
+                        size: 15,
+                        color: Get.theme.hintColor,
+                      ),
+                    )
+                  : Container(),
             ],
           ),
         ],
