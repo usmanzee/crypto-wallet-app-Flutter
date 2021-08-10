@@ -72,6 +72,12 @@ class P2pController extends GetxController {
   //change the limit and other variables on tab swipe
   RxBool fiatOrCrypto = true.obs;
 
+  //pending transaction page
+  RxBool clientContainer = true.obs;
+  RxBool paymentContainer = true.obs;
+
+  // payment method page
+  RxBool termsContainer = true.obs;
   @override
   void onClose() {
     scrollController.dispose();
@@ -83,10 +89,10 @@ class P2pController extends GetxController {
     fetchAllLists(true);
     scrollController = ScrollController();
     scrollController.addListener(() {
-      if(scrollController.offset>= 300){
+      if (scrollController.offset >= 300) {
         // print(scrollController.offset);
         showTopButton.value = true;
-      }else{
+      } else {
         // print(scrollController.offset);
         showTopButton.value = false;
       }
@@ -103,14 +109,11 @@ class P2pController extends GetxController {
 
   void fetchAllLists(bool val) async {
     isLoading(val);
-    await fetchP2pOffers(
-        category: 'usd', buyList: usdBuy, sellList: usdSell);
-   await fetchP2pOffers(
-        category: 'eth', buyList: ethBuy, sellList: ethSell);
+    await fetchP2pOffers(category: 'usd', buyList: usdBuy, sellList: usdSell);
+    await fetchP2pOffers(category: 'eth', buyList: ethBuy, sellList: ethSell);
     await fetchP2pOffers(
         category: 'trst', buyList: trstBuy, sellList: trstSell);
-    await fetchP2pOffers(
-        category: 'btc', buyList: btcBuy, sellList: btcSell);
+    await fetchP2pOffers(category: 'btc', buyList: btcBuy, sellList: btcSell);
     isLoading(false);
   }
 
