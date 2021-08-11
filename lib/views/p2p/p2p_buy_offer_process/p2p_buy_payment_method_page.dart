@@ -440,23 +440,33 @@ class P2pBuyPaymentMethodPage extends StatelessWidget {
                     children: [
                       Expanded(
                         flex: 3,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 8,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Get.theme.canvasColor,
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Help',
-                              style: TextStyle(
-                                color:
-                                    Get.theme.textSelectionTheme.selectionColor,
-                                fontFamily: "Popins",
-                                fontWeight: FontWeight.w700,
-                                fontSize: 16.0,
+                        child: GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return _dialog();
+                              },
+                            );
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Get.theme.canvasColor,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Help',
+                                style: TextStyle(
+                                  color: Get
+                                      .theme.textSelectionTheme.selectionColor,
+                                  fontFamily: "Popins",
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16.0,
+                                ),
                               ),
                             ),
                           ),
@@ -618,6 +628,158 @@ class P2pBuyPaymentMethodPage extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _dialog() {
+    return AlertDialog(
+      insetPadding: const EdgeInsets.symmetric(horizontal: 18),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'Confirm Successful Payment',
+            style: TextStyle(
+              color: Get.theme.textSelectionTheme.selectionColor,
+              fontFamily: "Popins",
+              fontWeight: FontWeight.w600,
+              fontSize: 16.0,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Text(
+              'please confirm that you have successfully transferred the money to the seller.',
+              style: TextStyle(
+                color: Get.theme.hintColor,
+                fontFamily: "Popins",
+                fontWeight: FontWeight.w600,
+                fontSize: 13.0,
+              ),
+            ),
+          ),
+          Text(
+            'WARNING! If you click on "Mark as paid" without making the payment (you need to transfer the money with the payment account, not on Binance). Your account will potentially be suspended. The platform reserve the rights to claim any damage caused.',
+            style: TextStyle(
+              color: Get.theme.hintColor,
+              fontFamily: "Popins",
+              fontWeight: FontWeight.w600,
+              fontSize: 13.0,
+            ),
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Obx(
+            () => Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        _p2pController.dialogConfirm.value =
+                            !_p2pController.dialogConfirm.value;
+                      },
+                      child: Icon(
+                        Icons.check_circle,
+                        size: 20,
+                        color: _p2pController.dialogConfirm.value
+                            ? Get.theme.accentColor
+                            : Get.theme.hintColor,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                          right: 16,
+                        ),
+                        child: Text(
+                          'I understand the payment has to be made manually myself, Platform will not automatically transfer the money for me.',
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontFamily: "Popins",
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8,
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          decoration: BoxDecoration(
+                            color: Get.theme.canvasColor,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Cancel',
+                              style: TextStyle(
+                                color:
+                                    Get.theme.textSelectionTheme.selectionColor,
+                                fontFamily: "Popins",
+                                fontWeight: FontWeight.w600,
+                                fontSize: 15.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Expanded(
+                        child: GestureDetector(
+                          //todo: add the logic here for the check button
+                          onTap: _p2pController.dialogConfirm.value
+                              ? () {}
+                              : () {},
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            decoration: BoxDecoration(
+                              color: _p2pController.dialogConfirm.value
+                                  ? Get.theme.canvasColor
+                                  : Get.theme.hintColor.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Confirm',
+                                style: TextStyle(
+                                  color: _p2pController.dialogConfirm.value
+                                      ? Get.theme.textSelectionTheme
+                                          .selectionColor
+                                      : Get.theme.canvasColor,
+                                  fontFamily: "Popins",
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 15.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

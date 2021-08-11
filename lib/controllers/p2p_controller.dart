@@ -78,6 +78,7 @@ class P2pController extends GetxController {
 
   // payment method page
   RxBool termsContainer = true.obs;
+  RxBool dialogConfirm = false.obs;
 
   //p2p paymeny release page
   RxBool pContainer = true.obs;

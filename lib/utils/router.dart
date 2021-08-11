@@ -24,6 +24,7 @@ import 'package:b4u_wallet/views/notification/%20notification_list.dart';
 import 'package:b4u_wallet/views/p2p/components/search_currency_p2p_dialog.dart';
 import 'package:b4u_wallet/views/p2p/components/select_currency_p2p_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_buy_offer_process/P2p_buy_sell_selected_offer_page.dart';
+import 'package:b4u_wallet/views/p2p/p2p_buy_offer_process/p2p_buy_order_complete_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_buy_offer_process/p2p_buy_payment_method_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_buy_offer_process/p2p_buy_payment_pending_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_buy_offer_process/p2p_buy_payment_release_page.dart';
@@ -231,6 +232,11 @@ class Router {
     GetPage(
       name: '/p2p_buy_payment_release_page',
       page: () => P2pBuyPaymentReleasePage(),
+      // binding: P2pBinding(),
+    ),
+    GetPage(
+      name: '/p2p_buy_order_complete_page',
+      page: () => P2pBuyOrderCompletePage(),
       // binding: P2pBinding(),
     ),
   ];

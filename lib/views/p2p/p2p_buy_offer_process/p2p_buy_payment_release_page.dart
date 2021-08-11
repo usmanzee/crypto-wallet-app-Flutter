@@ -369,7 +369,8 @@ class P2pBuyPaymentReleasePage extends StatelessWidget {
                                         fontFamily: "Popins",
                                         fontWeight: FontWeight.w500,
                                         fontSize: 14.0,
-                                        color: Get.theme.textSelectionTheme.selectionColor,
+                                        color: Get.theme.textSelectionTheme
+                                            .selectionColor,
                                       ),
                                     ),
                                   ),
@@ -446,23 +447,27 @@ class P2pBuyPaymentReleasePage extends StatelessWidget {
                     children: [
                       Expanded(
                         // flex: 3,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 8,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Get.theme.canvasColor,
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Cancel',
-                              style: TextStyle(
-                                color:
-                                    Get.theme.textSelectionTheme.selectionColor,
-                                fontFamily: "Popins",
-                                fontWeight: FontWeight.w700,
-                                fontSize: 16.0,
+                        child: GestureDetector(
+                          onTap: () =>
+                              Get.toNamed('/p2p_buy_order_complete_page'),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Get.theme.canvasColor,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Cancel',
+                                style: TextStyle(
+                                  color: Get
+                                      .theme.textSelectionTheme.selectionColor,
+                                  fontFamily: "Popins",
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16.0,
+                                ),
                               ),
                             ),
                           ),
