@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-class P2pBuyPaymentPendingPage extends StatelessWidget {
+class P2pBuyPaymentReleasePage extends StatelessWidget {
   final _p2pController = Get.find<P2pController>();
 
   @override
@@ -76,7 +76,7 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
         ],
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
             flex: 9,
@@ -85,7 +85,6 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
                 SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(
@@ -100,7 +99,7 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
                                 vertical: 16,
                               ),
                               child: Text(
-                                'Pending Payment',
+                                'Releasing',
                                 style: TextStyle(
                                   fontFamily: "Popins",
                                   fontWeight: FontWeight.bold,
@@ -110,32 +109,15 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            Row(
-                              children: [
-                                Text(
-                                  'Time Remaining',
-                                  style: TextStyle(
-                                    fontFamily: "Popins",
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14.0,
-                                    color: Get.theme.textSelectionTheme
-                                        .selectionColor,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 16,
-                                ),
-                                //todo: add the realtime timer here for the offer
-                                Text(
-                                  '14:05',
-                                  style: TextStyle(
-                                    fontFamily: "Popins",
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 14.0,
-                                    color: Get.theme.accentColor,
-                                  ),
-                                ),
-                              ],
+                            Text(
+                              'If you have paid, contact the counterparty',
+                              style: TextStyle(
+                                fontFamily: "Popins",
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12.0,
+                                color:
+                                    Get.theme.textSelectionTheme.selectionColor,
+                              ),
                             ),
                           ],
                         ),
@@ -191,7 +173,7 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
                                     ),
                                   ),
                                   //todo: get the link for the icon from the controller or the post
-                                  iconWidget(name: 'USDT', url: 'url'),
+                                  iconWidget(name: 'USDT', url: 'file.url.com'),
                                 ],
                               ),
                             ),
@@ -210,51 +192,7 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
                               first: 'Crypto Amount',
                               second: '70.00 USDT',
                             ),
-                            //todo: added animation here data is hardcoded in the widget for now
-                            Obx(
-                              () => Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  _p2pController.clientContainer.value
-                                      ? GestureDetector(
-                                          onTap: () {
-                                            _p2pController
-                                                    .clientContainer.value =
-                                                !_p2pController
-                                                    .clientContainer.value;
-                                          },
-                                          child: Center(
-                                            child: Icon(
-                                              Icons.keyboard_arrow_down,
-                                              size: 25,
-                                              color: Get.theme.hintColor,
-                                            ),
-                                          ),
-                                        )
-                                      : Container(),
-                                  AnimatedSwitcher(
-                                    duration: const Duration(milliseconds: 300),
-                                    transitionBuilder: (widget, animation) {
-                                      final offsetAnimation = Tween<Offset>(
-                                              begin: Offset(0.0, -1),
-                                              end: Offset(0.0, 0.0))
-                                          .animate(animation);
-                                      return ClipRect(
-                                        child: SlideTransition(
-                                          position: offsetAnimation,
-                                          child: widget,
-                                        ),
-                                      );
-                                    },
-                                    child: _p2pController.clientContainer.value
-                                        ? Container(
-                                            key: UniqueKey(),
-                                          )
-                                        : _container(),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            _container(),
                           ],
                         ),
                       ),
@@ -264,51 +202,109 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
                         color: Get.theme.canvasColor,
                       ),
                       //todo: add the respective callback here...
-                      GestureDetector(
-                        onTap: () =>
-                            Get.toNamed('/p2p_buy_payment_method_page'),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 12,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Payment method',
-                                style: TextStyle(),
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    color: Colors.yellow,
-                                    child: Text(' '),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 8.0, right: 32),
-                                    child: Text(
-                                      'Bank',
-                                      style: TextStyle(
-                                        color: Get.theme.textSelectionTheme
-                                            .selectionColor,
-                                        fontFamily: "Popins",
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14.0,
-                                      ),
+                      Obx(
+                        () => Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                _p2pController.pContainer.value =
+                                    !_p2pController.pContainer.value;
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 12,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Payment method',
+                                      style: TextStyle(),
                                     ),
-                                  ),
-                                  Icon(
-                                    Icons.arrow_forward_ios,
-                                    size: 15,
-                                    color: Get.theme.hintColor,
-                                  ),
-                                ],
+                                    Icon(
+                                      _p2pController.pContainer.value
+                                          ? Icons.keyboard_arrow_up
+                                          : Icons.keyboard_arrow_down,
+                                      size: 25,
+                                      color: Get.theme.hintColor,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ],
-                          ),
+                            ),
+                            AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 300),
+                              transitionBuilder: (widget, animation) {
+                                final offsetAnimation = Tween<Offset>(
+                                        begin: Offset(0.0, -1),
+                                        end: Offset(0.0, 0.0))
+                                    .animate(animation);
+                                return ClipRect(
+                                  child: SlideTransition(
+                                    position: offsetAnimation,
+                                    child: widget,
+                                  ),
+                                );
+                              },
+                              child: _p2pController.pContainer.value
+                                  ? Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 4),
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                  color: Colors.yellow,
+                                                  child: Text(' '),
+                                                ),
+                                                SizedBox(
+                                                  width: 8,
+                                                ),
+                                                Text(
+                                                  'Bank Transfer',
+                                                  style: TextStyle(
+                                                    fontFamily: "Popins",
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 16.0,
+                                                    color: Get.theme.hintColor,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          _row(
+                                            first: 'Name',
+                                            second: 'MUHAMMAD ISMAIL',
+                                          ),
+                                          _row(
+                                              first: 'Bank account Number',
+                                              second: '02180105485107'),
+                                          _row(
+                                            first: 'Bank name',
+                                            second: 'Mezan Bank Limited',
+                                          ),
+                                          _row(
+                                            first: 'Account opening branch',
+                                            second:
+                                                'Bank Account Name: RANA TRADERS AND COMMISSION AGENT IBAN: PK26MEZN0002180105485107',
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  : Container(),
+                            ),
+                          ],
                         ),
                       ),
                       Container(
@@ -316,80 +312,74 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
                         width: double.infinity,
                         color: Get.theme.canvasColor,
                       ),
-                      Container(
+                      Padding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 16,
-                          vertical: 12,
+                          vertical: 8,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
                               'Terms',
-                              style: TextStyle(
-                                color:
-                                    Get.theme.textSelectionTheme.selectionColor,
-                                fontFamily: "Popins",
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14.0,
-                              ),
+                              style: TextStyle(),
                             ),
-                            //todo: set the required callback here and if necessary add the animated container here for the terms
                             Icon(
-                              Icons.keyboard_arrow_down_outlined,
+                              Icons.keyboard_arrow_down,
                               size: 25,
                               color: Get.theme.hintColor,
                             ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                //todo: add values and callbacks here according to the requirements
-                Positioned(
-                  right: 0,
-                  bottom: 0,
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: Get.theme.canvasColor,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(8),
-                        topLeft: Radius.circular(8),
-                      ),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 3, horizontal: 3.5),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            color: Get.theme.accentColor,
-                          ),
-                          child: Center(
-                            child: Icon(
-                              Icons.play_arrow,
-                              color: Get.theme.scaffoldBackgroundColor,
-                              size: 15,
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 32, horizontal: 16),
+                        width: double.infinity,
+                        color: Get.theme.canvasColor,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            //todo: add the icon or photo here
+                            Icon(Icons.keyboard),
+                            SizedBox(
+                              width: 8,
                             ),
-                          ),
+                            Expanded(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Binance Class',
+                                    style: TextStyle(
+                                      fontFamily: "Popins",
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14.0,
+                                      color: Get.theme.hintColor,
+                                    ),
+                                  ),
+                                  Container(
+                                    color: Colors.white,
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8, horizontal: 12),
+                                    child: Text(
+                                      'When buying crypto, Company holds the advertiser\'s crypto in custody until the order is completed.',
+                                      style: TextStyle(
+                                        fontFamily: "Popins",
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14.0,
+                                        color: Get.theme.textSelectionTheme.selectionColor,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          'Tutorial',
-                          style: TextStyle(
-                            color: Get.theme.textSelectionTheme.selectionColor,
-                            fontFamily: "Popins",
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14.0,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
                 //todo: add values and callbacks here according to the requirements
@@ -400,7 +390,7 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                     decoration: BoxDecoration(
-                      color: Get.theme.canvasColor,
+                      color: Get.theme.accentColor.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Row(
@@ -455,7 +445,7 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(
-                        flex: 3,
+                        // flex: 3,
                         child: Container(
                           padding: const EdgeInsets.symmetric(
                             vertical: 8,
@@ -482,7 +472,7 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
                         width: 16,
                       ),
                       Expanded(
-                        flex: 7,
+                        // flex: 7,
                         child: GestureDetector(
                           onTap: () =>
                               Get.toNamed('/p2p_buy_payment_release_page'),
@@ -491,14 +481,15 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
                               vertical: 8,
                             ),
                             decoration: BoxDecoration(
-                              color: Get.theme.accentColor,
+                              color: Get.theme.canvasColor,
                               borderRadius: BorderRadius.circular(4),
                             ),
                             child: Center(
                               child: Text(
-                                'Transfer the fund',
+                                'Appeal',
                                 style: TextStyle(
-                                  color: Get.theme.scaffoldBackgroundColor,
+                                  color: Get
+                                      .theme.textSelectionTheme.selectionColor,
                                   fontFamily: "Popins",
                                   fontWeight: FontWeight.w700,
                                   fontSize: 16.0,
@@ -509,6 +500,60 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
                         ),
                       ),
                     ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _row({
+    @required String first,
+    @required String second,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            flex: 4,
+            child: Container(
+              child: Text(
+                first,
+                style: TextStyle(
+                  fontFamily: "Popins",
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16.0,
+                  color: Get.theme.hintColor,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 7,
+            child: Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: Container(
+                      child: Align(
+                        alignment: Alignment.bottomRight,
+                        child: Text(
+                          second,
+                          style: TextStyle(
+                            fontFamily: "Popins",
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16.0,
+                            color: Get.theme.textSelectionTheme.selectionColor,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),

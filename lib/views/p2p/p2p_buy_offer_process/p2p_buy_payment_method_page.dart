@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class P2pBuyPaymentMethodPage extends StatelessWidget {
-
   final _p2pController = Get.find<P2pController>();
 
   @override
@@ -256,70 +255,79 @@ class P2pBuyPaymentMethodPage extends StatelessWidget {
                         width: double.infinity,
                         color: Get.theme.canvasColor,
                       ),
-                      Obx(() => Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 16),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Terms',
-                                  style: TextStyle(),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    _p2pController.termsContainer.value = ! _p2pController.termsContainer.value;
-                                  },
-                                  child: Icon(
-                                    _p2pController.termsContainer.value ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_up,
-                                    size: 25,
-                                    color: Get.theme.hintColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 300),
-                            transitionBuilder: (widget, animation) {
-                              final offsetAnimation = Tween<Offset>(
-                                  begin: Offset(0.0, -1), end: Offset(0.0, 0.0))
-                                  .animate(animation);
-                              return ClipRect(
-                                child: SlideTransition(
-                                  position: offsetAnimation,
-                                  child: widget,
-                                ),
-                              );
-                            },
-                            child: _p2pController.termsContainer.value ? Container(
+                      Obx(
+                        () => Column(
+                          children: [
+                            Padding(
                               padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 8,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Get.theme.canvasColor,
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
+                                  horizontal: 16, vertical: 16),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  _container(
-                                    heading:
-                                    'For a successful transaction, do not enter any crypto-related terms (BTC,etc.) in your payment message.',
+                                  Text(
+                                    'Terms',
+                                    style: TextStyle(),
                                   ),
-                                  _container(
-                                    heading:
-                                    'ATTENTION! After making the fiat transfer, please click the button below to inform the seller to receive payment, fail to do so will result in automatically cancellation of order and potentially loss of all your asset!',
-                                    second: true,
+                                  InkWell(
+                                    onTap: () {
+                                      _p2pController.termsContainer.value =
+                                          !_p2pController.termsContainer.value;
+                                    },
+                                    child: Icon(
+                                      _p2pController.termsContainer.value
+                                          ? Icons.keyboard_arrow_down
+                                          : Icons.keyboard_arrow_up,
+                                      size: 25,
+                                      color: Get.theme.hintColor,
+                                    ),
                                   ),
                                 ],
                               ),
-                            ) : Container(),
-                          ),
-                        ],
-                      ),),
+                            ),
+                            AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 300),
+                              transitionBuilder: (widget, animation) {
+                                final offsetAnimation = Tween<Offset>(
+                                        begin: Offset(0.0, -1),
+                                        end: Offset(0.0, 0.0))
+                                    .animate(animation);
+                                return ClipRect(
+                                  child: SlideTransition(
+                                    position: offsetAnimation,
+                                    child: widget,
+                                  ),
+                                );
+                              },
+                              child: _p2pController.termsContainer.value
+                                  ? Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                        vertical: 8,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: Get.theme.canvasColor,
+                                      ),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          _container(
+                                            heading:
+                                                'For a successful transaction, do not enter any crypto-related terms (BTC,etc.) in your payment message.',
+                                          ),
+                                          _container(
+                                            heading:
+                                                'ATTENTION! After making the fiat transfer, please click the button below to inform the seller to receive payment, fail to do so will result in automatically cancellation of order and potentially loss of all your asset!',
+                                            second: true,
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  : Container(),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -459,22 +467,26 @@ class P2pBuyPaymentMethodPage extends StatelessWidget {
                       ),
                       Expanded(
                         flex: 7,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 8,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Get.theme.accentColor,
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Transferred , next',
-                              style: TextStyle(
-                                color: Get.theme.scaffoldBackgroundColor,
-                                fontFamily: "Popins",
-                                fontWeight: FontWeight.w700,
-                                fontSize: 16.0,
+                        child: GestureDetector(
+                          onTap: () =>
+                              Get.toNamed('/p2p_buy_payment_release_page'),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Get.theme.accentColor,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Transferred , next',
+                                style: TextStyle(
+                                  color: Get.theme.scaffoldBackgroundColor,
+                                  fontFamily: "Popins",
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16.0,
+                                ),
                               ),
                             ),
                           ),
