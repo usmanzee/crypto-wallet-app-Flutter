@@ -265,8 +265,22 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
                       ),
                       //todo: add the respective callback here...
                       GestureDetector(
-                        onTap: () =>
-                            Get.toNamed('/p2p_buy_payment_method_page'),
+                        onTap: () {
+                          //todo: add the callback here for the check if there is one or more payment methods
+                          showModalBottomSheet(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(20),
+                              ),
+                            ),
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            context: context,
+                            builder: (context) {
+                              return _bottomSheet();
+                            },
+                          );
+                          // return Get.toNamed('/p2p_buy_payment_method_page');
+                        },
                         child: Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 16,
@@ -613,6 +627,146 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
           textUnderline: true,
           logoCallback: () {},
           logo: true,
+        ),
+      ],
+    );
+  }
+
+  Widget _bottomSheet() {
+    return Container(
+      color: Get.theme.scaffoldBackgroundColor,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(),
+                  Text(
+                    'Select payment method',
+                    style: TextStyle(
+                      fontFamily: "Popins",
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16.0,
+                      color: Get.theme.textSelectionTheme.selectionColor,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => Get.back(),
+                    child: Icon(
+                      Icons.close,
+                      size: 25,
+                      color: Get.theme.hintColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Container(
+                height: 0.5,
+                width: double.infinity,
+                color: Get.theme.hintColor,
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: 6,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    //todo: add the callback here for the payment method page
+                    onTap: () {},
+                    child: _listWidget(
+                        title: 'Bank Transfer',
+                        name: 'name',
+                        accountNumber: 'accountNumber'),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _listWidget(
+      {@required String title,
+      @required String name,
+      @required String accountNumber}) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                color: Colors.yellow,
+                child: Text(
+                  ' ',
+                  style: TextStyle(
+                      // height: 1,
+                      // fontFamily: "Popins",
+                      // fontWeight: FontWeight.w600,
+                      // fontSize: 16.0,
+                      // color: Get.theme.textSelectionTheme.selectionColor,
+                      ),
+                ),
+              ),
+              SizedBox(
+                width: 8,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      height: 1.4,
+                      fontFamily: "Popins",
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16.0,
+                      color: Get.theme.textSelectionTheme.selectionColor,
+                    ),
+                  ),
+                  Text(
+                    name,
+                    style: TextStyle(
+                      fontFamily: "Popins",
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14.0,
+                      color: Get.theme.textSelectionTheme.selectionColor,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: Text(
+                      accountNumber,
+                      style: TextStyle(
+                        fontFamily: "Popins",
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18.0,
+                        color: Get.theme.textSelectionTheme.selectionColor,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        Container(
+          height: 0.5,
+          width: double.infinity,
+          color: Get.theme.hintColor,
         ),
       ],
     );

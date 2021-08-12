@@ -75,10 +75,10 @@ class ByCrypto extends StatelessWidget {
                 padding: const EdgeInsets.only(
                   top: 24,
                   bottom: 8,
-                ),
-                child: _row(first: 'first', second: 'second'),
+                ), //todo: add the required names of the currencies here
+                child: _row(first: 'Quality', second: 'USDT'),
               ),
-              _row(first: 'first', second: 'second'),
+              _row(first: 'Amount', second: 'AED'),
             ],
           ),
           GestureDetector(
