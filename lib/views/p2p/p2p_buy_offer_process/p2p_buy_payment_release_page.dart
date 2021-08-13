@@ -479,8 +479,7 @@ class P2pBuyPaymentReleasePage extends StatelessWidget {
                       Expanded(
                         // flex: 7,
                         child: GestureDetector(
-                          onTap: () =>
-                              Get.toNamed('/p2p_buy_payment_release_page'),
+                          onTap: () => Get.toNamed('/p2p_buy_sell_appeal_page'),
                           child: Container(
                             padding: const EdgeInsets.symmetric(
                               vertical: 8,

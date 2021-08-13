@@ -267,7 +267,7 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           //todo: add the callback here for the check if there is one or more payment methods
-                          showModalBottomSheet(
+                          /*showModalBottomSheet(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.vertical(
                                 top: Radius.circular(20),
@@ -278,8 +278,8 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
                             builder: (context) {
                               return _bottomSheet();
                             },
-                          );
-                          // return Get.toNamed('/p2p_buy_payment_method_page');
+                          );*/
+                          return Get.toNamed('/p2p_buy_payment_method_page');
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(
@@ -365,44 +365,61 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
                 Positioned(
                   right: 0,
                   bottom: 0,
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: Get.theme.canvasColor,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(8),
-                        topLeft: Radius.circular(8),
-                      ),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 3, horizontal: 3.5),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            color: Get.theme.accentColor,
+                  child: GestureDetector(
+                    onTap: () {
+                      showModalBottomSheet(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(20),
                           ),
-                          child: Center(
-                            child: Icon(
-                              Icons.play_arrow,
-                              color: Get.theme.scaffoldBackgroundColor,
-                              size: 15,
+                        ),
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        context: context,
+                        builder: (context) {
+                          return _bottomSheet();
+                        },
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: Get.theme.canvasColor,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(8),
+                          topLeft: Radius.circular(8),
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 3, horizontal: 3.5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              color: Get.theme.accentColor,
+                            ),
+                            child: Center(
+                              child: Icon(
+                                Icons.play_arrow,
+                                color: Get.theme.scaffoldBackgroundColor,
+                                size: 15,
+                              ),
                             ),
                           ),
-                        ),
-                        Text(
-                          'Tutorial',
-                          style: TextStyle(
-                            color: Get.theme.textSelectionTheme.selectionColor,
-                            fontFamily: "Popins",
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14.0,
+                          Text(
+                            'Tutorial',
+                            style: TextStyle(
+                              color:
+                                  Get.theme.textSelectionTheme.selectionColor,
+                              fontFamily: "Popins",
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14.0,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

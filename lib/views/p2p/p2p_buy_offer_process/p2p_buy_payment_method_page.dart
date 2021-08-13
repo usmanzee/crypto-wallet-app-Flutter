@@ -325,6 +325,10 @@ class P2pBuyPaymentMethodPage extends StatelessWidget {
                                     )
                                   : Container(),
                             ),
+                            Container(
+                              height: Get.size.height * 0.1,
+                              color: Get.theme.canvasColor,
+                            ),
                           ],
                         ),
                       ),
@@ -339,7 +343,7 @@ class P2pBuyPaymentMethodPage extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                     decoration: BoxDecoration(
-                      color: Get.theme.canvasColor,
+                      color: Get.theme.scaffoldBackgroundColor,
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(8),
                         topLeft: Radius.circular(8),
@@ -384,7 +388,7 @@ class P2pBuyPaymentMethodPage extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                     decoration: BoxDecoration(
-                      color: Get.theme.canvasColor,
+                      color: Get.theme.scaffoldBackgroundColor,
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Row(

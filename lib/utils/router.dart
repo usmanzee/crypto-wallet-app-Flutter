@@ -21,6 +21,7 @@ import 'package:b4u_wallet/views/history/spot_history/spot_hisotry_page.dart';
 import 'package:b4u_wallet/views/home/on_boarding.dart';
 import 'package:b4u_wallet/views/home/splash.dart';
 import 'package:b4u_wallet/views/notification/%20notification_list.dart';
+import 'package:b4u_wallet/views/p2p/appeal_page/p2p_buy_sell_appeal_page.dart';
 import 'package:b4u_wallet/views/p2p/components/search_currency_p2p_dialog.dart';
 import 'package:b4u_wallet/views/p2p/components/select_currency_p2p_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_buy_offer_process/P2p_buy_sell_selected_offer_page.dart';
@@ -237,6 +238,11 @@ class Router {
     GetPage(
       name: '/p2p_buy_order_complete_page',
       page: () => P2pBuyOrderCompletePage(),
+      // binding: P2pBinding(),
+    ),
+    GetPage(
+      name: '/p2p_buy_sell_appeal_page',
+      page: () => P2pBuySellAppealPage()  ,
       // binding: P2pBinding(),
     ),
   ];
