@@ -24,54 +24,57 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
           ),
         ),
         actions: [
-          Row(
-            children: [
-              Stack(
-                children: [
-                  Icon(
-                    Icons.chat,
-                    size: 25,
-                    color: Get.theme.accentColor,
-                  ),
-                  Positioned(
-                    right: 0,
-                    top: 0,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
-                      decoration: BoxDecoration(
-                        color: Colors.redAccent,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      //todo: add the number here for the chat
-                      child: Text(
-                        '6',
-                        style: TextStyle(
-                          fontFamily: "Popins",
-                          fontWeight: FontWeight.bold,
-                          fontSize: 8.0,
-                          color: Get.theme.scaffoldBackgroundColor,
+          InkWell(
+            onTap: () => Get.toNamed('/p2p_chat_page'),
+            child: Row(
+              children: [
+                Stack(
+                  children: [
+                    Icon(
+                      Icons.chat,
+                      size: 25,
+                      color: Get.theme.accentColor,
+                    ),
+                    Positioned(
+                      right: 0,
+                      top: 0,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        decoration: BoxDecoration(
+                          color: Colors.redAccent,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        //todo: add the number here for the chat
+                        child: Text(
+                          '6',
+                          style: TextStyle(
+                            fontFamily: "Popins",
+                            fontWeight: FontWeight.bold,
+                            fontSize: 8.0,
+                            color: Get.theme.scaffoldBackgroundColor,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  right: 16,
-                  left: 4,
+                  ],
                 ),
-                child: Text(
-                  'Chat',
-                  style: TextStyle(
-                    fontFamily: "Popins",
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14.0,
-                    color: Get.theme.textSelectionTheme.selectionColor,
+                Padding(
+                  padding: const EdgeInsets.only(
+                    right: 16,
+                    left: 4,
+                  ),
+                  child: Text(
+                    'Chat',
+                    style: TextStyle(
+                      fontFamily: "Popins",
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14.0,
+                      color: Get.theme.textSelectionTheme.selectionColor,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),

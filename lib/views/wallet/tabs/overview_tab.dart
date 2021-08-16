@@ -7,9 +7,9 @@ import '../estimated_widget.dart';
 import '../wallet_loading_animation.dart';
 
 class OverviewTab extends StatelessWidget {
-  TabController tabController;
-  OverviewTab(this.tabController);
+  final TabController tabController;
 
+  OverviewTab(this.tabController);
 
   final marketController = Get.find<MarketController>();
   final walletController = Get.find<WalletController>();
@@ -23,7 +23,7 @@ class OverviewTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     walletController.fetchP2pTotalEstimate();
-    return Obx((){
+    return Obx(() {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
@@ -38,7 +38,7 @@ class OverviewTab extends StatelessWidget {
                     child: Column(
                       children: [
                         Obx(
-                              () {
+                          () {
                             if (walletController.isLoading.value) {
                               return ExtimatedPriceLoadingAnimation(
                                 context: context,
@@ -120,7 +120,7 @@ class OverviewTab extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 tabController.animateTo(1);
               },
               child: categoriesTabs(
@@ -130,11 +130,13 @@ class OverviewTab extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 tabController.animateTo(2);
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16,),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 16,
+                ),
                 child: categoriesTabs(
                   name: dataList[1].name,
                   icon: dataList[1].icon,
@@ -143,7 +145,7 @@ class OverviewTab extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 tabController.animateTo(3);
               },
               child: categoriesTabs(
@@ -168,14 +170,21 @@ class OverviewTab extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(icon,color: Get.theme.textSelectionTheme.selectionColor.withOpacity(0.6),),
-            SizedBox(width: 6,),
+            Icon(
+              icon,
+              color:
+                  Get.theme.textSelectionTheme.selectionColor.withOpacity(0.6),
+            ),
+            SizedBox(
+              width: 6,
+            ),
             Text(
               name,
               style: TextStyle(
                 fontFamily: "Popins",
                 fontSize: 14,
-                color: Get.theme.textSelectionTheme.selectionColor.withOpacity(0.6),
+                color: Get.theme.textSelectionTheme.selectionColor
+                    .withOpacity(0.6),
                 fontWeight: FontWeight.w600,
               ),
             ),

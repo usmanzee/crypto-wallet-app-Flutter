@@ -1,10 +1,7 @@
-import 'package:b4u_wallet/controllers/p2p_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class P2pBuySellAppealPage extends StatelessWidget {
-  final _p2pController = Get.find<P2pController>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +57,7 @@ class P2pBuySellAppealPage extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               child: Text(
-                                'If there is an issue with the transaction, the most effective solution is to contact the couterparty directly. You can upload the payment receipt and account information in the chat window for both parties to verify and negotiate.',
+                                'If there is an issue with the transaction, the most effective solution is to contact the counterparty directly. You can upload the payment receipt and account information in the chat window for both parties to verify and negotiate.',
                                 style: TextStyle(
                                   fontFamily: "Popins",
                                   fontWeight: FontWeight.w500,
@@ -163,43 +160,17 @@ class P2pBuySellAppealPage extends StatelessWidget {
     @required String number,
     @required String txt,
   }) {
-    return /*Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          '$number.',
-          style: TextStyle(
-            fontFamily: "Popins",
-            fontWeight: FontWeight.w600,
-            fontSize: 14.0,
-            color: Get.theme.textSelectionTheme.selectionColor,
-          ),
-        ),
-        SizedBox(
-          width: 4,
-        ),
-        Expanded(
-          child: Text(
-            txt,
+    return Text.rich(
+      TextSpan(
+        children: [
+          TextSpan(
+            text: '$number. ',
             style: TextStyle(
               fontFamily: "Popins",
               fontWeight: FontWeight.w600,
               fontSize: 14.0,
               color: Get.theme.textSelectionTheme.selectionColor,
             ),
-          ),
-        ),
-      ],
-    );*/
-        Text.rich(
-      TextSpan(
-        children: [
-          TextSpan(
-            text: '$number. ',
-            style: TextStyle(fontFamily: "Popins",
-              fontWeight: FontWeight.w600,
-              fontSize: 14.0,
-              color: Get.theme.textSelectionTheme.selectionColor,),
           ),
           TextSpan(
             text: txt,

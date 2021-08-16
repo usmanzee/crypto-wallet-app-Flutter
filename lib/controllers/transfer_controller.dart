@@ -1,11 +1,9 @@
 import 'package:b4u_wallet/models/transfer_response.dart';
 import 'package:b4u_wallet/models/wallet.dart';
 import 'package:b4u_wallet/repository/transfer_repository.dart';
-import 'package:b4u_wallet/utils/Helpers/my_imgs.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'HomeController.dart';
 import 'error_controller.dart';
 
 class TransferController extends GetxController {

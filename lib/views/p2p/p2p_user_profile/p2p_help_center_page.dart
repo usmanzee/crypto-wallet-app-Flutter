@@ -1,6 +1,5 @@
 import 'package:b4u_wallet/controllers/p2p_controller.dart';
 import 'package:b4u_wallet/views/p2p/p2p_user_profile/help_center_tabs/advanced_tab.dart';
-import 'package:b4u_wallet/views/p2p/p2p_user_profile/help_center_tabs/advertiser_tab.dart';
 import 'package:b4u_wallet/views/p2p/p2p_user_profile/help_center_tabs/beginner_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

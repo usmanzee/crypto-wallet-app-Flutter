@@ -391,7 +391,7 @@ class TransferPage extends StatelessWidget {
                           : (_transferController.transferButtonText.value ==
                                   'Transfer'
                               ? () async {
-                                  //todo: get a varibale here from the server to replace the hardcoded 3 here
+                                  //todo: get a variable here from the server to replace the hardcoded 3 here
                                   if (homeController.user.value.level ==
                                       homeController.publicMemberLevel.value
                                           .withdraw.minimumLevel) {
