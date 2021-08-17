@@ -99,9 +99,10 @@ class P2pUserProfile extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                       color: Get.theme.scaffoldBackgroundColor,
-                      borderRadius: BorderRadius.circular(
-                        20,
-                      )),
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(20),
+                        topLeft: Radius.circular(20),
+                      ),),
                   child: Padding(
                     padding: const EdgeInsets.only(
                       top: 16,

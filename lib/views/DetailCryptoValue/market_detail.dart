@@ -130,14 +130,14 @@ class MarketDetail extends StatelessWidget {
                                 tabs: [
                                    Tab(
                                     child: Text(
-                                      "market_detail.tabs.line".tr,
+                                      "market_detail.p2p_buy_sell_tabs.line".tr,
                                       style: TextStyle(
                                           fontFamily: "Popins", fontSize: 14),
                                     ),
                                   ),
                                    Tab(
                                     child: Text(
-                                      "market_detail.tabs.depth".tr,
+                                      "market_detail.p2p_buy_sell_tabs.depth".tr,
                                       style: TextStyle(
                                           fontFamily: "Popins", fontSize: 14),
                                     ),

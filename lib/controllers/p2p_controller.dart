@@ -10,6 +10,8 @@ class P2pController extends GetxController {
   ErrorController errorController = ErrorController();
   RxBool isLoading = true.obs;
   RxString selectedCurrency = 'UAH'.obs;
+  //p2p bottomNav Index
+  RxInt initialIndex = 0.obs;
 
   //buy sell page or express page
   RxBool buySellOrExpress = true.obs;

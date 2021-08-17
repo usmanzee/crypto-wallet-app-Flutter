@@ -16,7 +16,8 @@ import 'package:get/get.dart';
 class Home extends StatelessWidget {
   final MarketController marketController = Get.find();
   final HomeController homeController = Get.find();
-  final _p2pController = Get.put(P2pController());
+
+  // final _p2pController = Get.put(P2pController());
 
   final banners = [
     "assets/image/banner/banner2.png",
@@ -318,8 +319,8 @@ class Home extends StatelessWidget {
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
-                          Get.put(P2pController());
-                          Get.toNamed('/p2p_initial_page');
+                          Get.put(P2pController(),permanent: false,);
+                          Get.toNamed('/p2p_bottom_nav_page');
                         },
                         child: textWithIconWidget(
                           title: 'home.screen.link.card.p2p_trading'.tr,
@@ -334,11 +335,12 @@ class Home extends StatelessWidget {
                     ),
                     Expanded(
                       child: GestureDetector(
-                        onTap: () => /*_showDialog(
+                        onTap: () =>
+                            /*_showDialog(
                           context: context,
                           heading: 'home.screen.link.card.credit_debit_card'.tr,
                         ),*/
-                        Get.toNamed('/p2p_buy_payment_pending_page'),
+                            Get.toNamed('/p2p_buy_payment_pending_page'),
                         child: textWithIconWidget(
                           title: 'home.screen.link.card.credit_debit_card'.tr,
                           icon: Icons.credit_card,
@@ -400,7 +402,8 @@ class Home extends StatelessWidget {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 10),
                                     child: Text(
-                                      "home.screen.tabs.gainers".tr,
+                                      "home.screen.p2p_buy_sell_tabs.gainers"
+                                          .tr,
                                       style: TextStyle(
                                         fontFamily: "Popins",
                                       ),
@@ -412,7 +415,7 @@ class Home extends StatelessWidget {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 10),
                                     child: Text(
-                                      "home.screen.tabs.losers".tr,
+                                      "home.screen.p2p_buy_sell_tabs.losers".tr,
                                       style: TextStyle(fontFamily: 'Popins'),
                                     ),
                                   ),

@@ -2,7 +2,7 @@ import 'package:b4u_wallet/controllers/p2p_controller.dart';
 import 'package:b4u_wallet/views/p2p/components/dialog_widget.dart';
 import 'package:b4u_wallet/views/p2p/components/drawer_widget.dart';
 import 'package:b4u_wallet/views/p2p/components/drop_down_menu_widget.dart';
-import 'package:b4u_wallet/views/p2p/tabs/p2p_currency_tab_widget.dart';
+import 'package:b4u_wallet/views/p2p/p2p_buy_sell_tabs/p2p_currency_tab_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -323,7 +323,7 @@ class P2pBuySellPage extends StatelessWidget {
           },
           body: Obx(
             () => TabBarView(
-              // These are the contents of the tab views, below the tabs.
+              // These are the contents of the tab views, below the p2p_buy_sell_tabs.
               children: [
                 p2pCurrencyTabWidget(
                   sellList: p2pController.usdSell,

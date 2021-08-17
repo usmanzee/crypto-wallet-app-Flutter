@@ -27,7 +27,7 @@ class WalletController extends GetxController {
   MarketController marketController = Get.find<MarketController>();
   HomeController homeController = Get.find<HomeController>();
   var iconC = 'BTC'.obs;
-  // estimated values for the wallets tabs
+  // estimated values for the wallets p2p_buy_sell_tabs
   RxDouble estimatedValueUSDAll = 0.00.obs;
   RxString estimatedValueAll = '0.0000'.obs;
   RxDouble estimatedValueUsdP2p = 0.00.obs;

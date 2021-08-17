@@ -48,8 +48,8 @@ Map<String, String> serverMessages = {
   'page.body.trade.header.markets.content.volume': 'Volume',
 
   'page.body.trade.header.newOrder': 'Order Form',
-  'page.body.trade.header.newOrder.content.tabs.buy': 'Buy',
-  'page.body.trade.header.newOrder.content.tabs.sell': 'Sell',
+  'page.body.trade.header.newOrder.content.p2p_buy_sell_tabs.buy': 'Buy',
+  'page.body.trade.header.newOrder.content.p2p_buy_sell_tabs.sell': 'Sell',
   'page.body.trade.header.newOrder.content.orderType': 'Order Type',
   'page.body.trade.header.newOrder.content.orderType.limit': 'Limit',
   'page.body.trade.header.newOrder.content.orderType.market': 'Market',
@@ -201,54 +201,54 @@ Map<String, String> serverMessages = {
 
   'page.body.wallets.locked': 'Locked',
   'page.body.wallets.balance': 'Balance',
-  'page.body.wallets.tabs.deposit': 'Deposit',
-  'page.body.wallets.tabs.deposit.disabled.message':
+  'page.body.wallets.p2p_buy_sell_tabs.deposit': 'Deposit',
+  'page.body.wallets.p2p_buy_sell_tabs.deposit.disabled.message':
       'Deposit was disabled by administration',
-  'page.body.wallets.tabs.deposit.ccy.message.submit':
+  'page.body.wallets.p2p_buy_sell_tabs.deposit.ccy.message.submit':
       'Submit a deposit using the following address or QR code. Your deposit will be reflected in your account after {confirmations} confirmations',
-  'page.body.wallets.tabs.deposit.ccy.message.address': 'Deposit Address',
-  'page.body.wallets.tabs.deposit.ccy.message.button': 'Copy',
-  'page.body.wallets.tabs.deposit.ccy.message.success': 'Address copied',
-  'page.body.wallets.tabs.deposit.ccy.message.error':
+  'page.body.wallets.p2p_buy_sell_tabs.deposit.ccy.message.address': 'Deposit Address',
+  'page.body.wallets.p2p_buy_sell_tabs.deposit.ccy.message.button': 'Copy',
+  'page.body.wallets.p2p_buy_sell_tabs.deposit.ccy.message.success': 'Address copied',
+  'page.body.wallets.p2p_buy_sell_tabs.deposit.ccy.message.error':
       'Generating deposit address',
-  'page.body.wallets.tabs.deposit.ccy.button.generate': 'Generate',
-  'page.body.wallets.tabs.deposit.ccy.button.address': 'address',
+  'page.body.wallets.p2p_buy_sell_tabs.deposit.ccy.button.generate': 'Generate',
+  'page.body.wallets.p2p_buy_sell_tabs.deposit.ccy.button.address': 'address',
 
-  'page.body.wallets.tabs.deposit.fiat.message1': 'Deposit using bank transfer',
-  'page.body.wallets.tabs.deposit.fiat.message2':
+  'page.body.wallets.p2p_buy_sell_tabs.deposit.fiat.message1': 'Deposit using bank transfer',
+  'page.body.wallets.p2p_buy_sell_tabs.deposit.fiat.message2':
       'Please use the following credentials to initiate your bank transfer. Your deposit will be reflected in your account in minimum 2 hours.',
-  'page.body.wallets.tabs.deposit.fiat.message3':
+  'page.body.wallets.p2p_buy_sell_tabs.deposit.fiat.message3':
       'Please Use the below reference code in your payment reference.',
-  'page.body.wallets.tabs.deposit.fiat.bankName': 'Bank Name',
-  'page.body.wallets.tabs.deposit.fiat.accountNumber': 'Account number',
-  'page.body.wallets.tabs.deposit.fiat.accountName': 'Account name',
-  'page.body.wallets.tabs.deposit.fiat.phoneNumber': 'Phone Number',
-  'page.body.wallets.tabs.deposit.fiat.referenceCode': 'Your reference code',
+  'page.body.wallets.p2p_buy_sell_tabs.deposit.fiat.bankName': 'Bank Name',
+  'page.body.wallets.p2p_buy_sell_tabs.deposit.fiat.accountNumber': 'Account number',
+  'page.body.wallets.p2p_buy_sell_tabs.deposit.fiat.accountName': 'Account name',
+  'page.body.wallets.p2p_buy_sell_tabs.deposit.fiat.phoneNumber': 'Phone Number',
+  'page.body.wallets.p2p_buy_sell_tabs.deposit.fiat.referenceCode': 'Your reference code',
   'page.body.wallets.table.pending': 'Pending',
   'page.body.wallets.table.rejected': 'Rejected',
-  'page.body.wallets.tabs.deposit.fiat.admin':
+  'page.body.wallets.p2p_buy_sell_tabs.deposit.fiat.admin':
       ' To initiate a fiat withdrawal, please contact administrator!',
 
-  'page.body.wallets.tabs.withdraw': 'Withdraw',
-  'page.body.wallets.tabs.convert': 'Buy & Sell',
-  'page.body.wallets.tabs.withdraw.content.address': 'Withdrawal Address',
-  'page.body.wallets.tabs.withdraw.content.amount': 'Withdrawal Amount',
-  'page.body.wallets.tabs.withdraw.content.code2fa': '2FA code',
-  'page.body.wallets.tabs.withdraw.content.fee': 'Fee',
-  'page.body.wallets.tabs.withdraw.content.total': 'Total Withdrawal Amount',
-  'page.body.wallets.tabs.withdraw.content.button': 'WITHDRAW',
-  'page.body.wallets.tabs.withdraw.disabled.message':
+  'page.body.wallets.p2p_buy_sell_tabs.withdraw': 'Withdraw',
+  'page.body.wallets.p2p_buy_sell_tabs.convert': 'Buy & Sell',
+  'page.body.wallets.p2p_buy_sell_tabs.withdraw.content.address': 'Withdrawal Address',
+  'page.body.wallets.p2p_buy_sell_tabs.withdraw.content.amount': 'Withdrawal Amount',
+  'page.body.wallets.p2p_buy_sell_tabs.withdraw.content.code2fa': '2FA code',
+  'page.body.wallets.p2p_buy_sell_tabs.withdraw.content.fee': 'Fee',
+  'page.body.wallets.p2p_buy_sell_tabs.withdraw.content.total': 'Total Withdrawal Amount',
+  'page.body.wallets.p2p_buy_sell_tabs.withdraw.content.button': 'WITHDRAW',
+  'page.body.wallets.p2p_buy_sell_tabs.withdraw.disabled.message':
       'Withdraw was disabled by administration',
 
-  'page.body.wallets.tabs.withdraw.modal.confirmation': 'Confirmation',
-  'page.body.wallets.tabs.withdraw.modal.message1': 'You will receive ',
-  'page.body.wallets.tabs.withdraw.modal.message2': ' on address',
-  'page.body.wallets.tabs.withdraw.modal.button.cancel': 'Cancel',
-  'page.body.wallets.tabs.withdraw.modal.button.withdraw': 'Withdraw',
+  'page.body.wallets.p2p_buy_sell_tabs.withdraw.modal.confirmation': 'Confirmation',
+  'page.body.wallets.p2p_buy_sell_tabs.withdraw.modal.message1': 'You will receive ',
+  'page.body.wallets.p2p_buy_sell_tabs.withdraw.modal.message2': ' on address',
+  'page.body.wallets.p2p_buy_sell_tabs.withdraw.modal.button.cancel': 'Cancel',
+  'page.body.wallets.p2p_buy_sell_tabs.withdraw.modal.button.withdraw': 'Withdraw',
 
-  'page.body.wallets.tabs.withdraw.content.enable2fa':
+  'page.body.wallets.p2p_buy_sell_tabs.withdraw.content.enable2fa':
       'To withdraw you have to enable 2FA',
-  'page.body.wallets.tabs.withdraw.content.enable2faButton': 'Enable 2FA',
+  'page.body.wallets.p2p_buy_sell_tabs.withdraw.content.enable2faButton': 'Enable 2FA',
 
   'success.beneficiaries.created': 'Beficiaries successfully created',
   'success.beneficiaries.activated': 'Beficiaries successfully activated',
@@ -424,8 +424,8 @@ Map<String, String> serverMessages = {
 
   // Deposit Screen
   'page.body.deposit.header.title': 'Deposit',
-  'page.body.deposit.tabs.crypto': 'Crypto',
-  'page.body.deposit.tabs.fiat': 'Fiat',
+  'page.body.deposit.p2p_buy_sell_tabs.crypto': 'Crypto',
+  'page.body.deposit.p2p_buy_sell_tabs.fiat': 'Fiat',
   'page.body.deposit.select.title': 'Search Currency',
   'page.body.deposit.total_balance': 'Total Balance',
   'page.body.deposit.tips.title': 'Tips',
@@ -446,8 +446,8 @@ Map<String, String> serverMessages = {
       'Sending coin or token other than {currency} to this address may result in the loss of your deposit.',
 
   'page.body.withdraw.header.title': 'Withdraw',
-  'page.body.withdraw.tabs.crypto': 'Crypto',
-  'page.body.withdraw.tabs.fiat': 'Fiat',
+  'page.body.withdraw.p2p_buy_sell_tabs.crypto': 'Crypto',
+  'page.body.withdraw.p2p_buy_sell_tabs.fiat': 'Fiat',
   'page.body.withdraw.select.title': 'Search Currency',
   'page.body.withdraw.total_balance': 'Total Balance',
   'page.body.withdraw.tips.title': 'Tips',
@@ -459,22 +459,22 @@ Map<String, String> serverMessages = {
   'page.body.profile.header.account': 'Profile',
 
   'page.body.profile.title': 'Profile Management',
-  'page.body.profile.tabs.security': 'Profile / Security',
-  'page.body.profile.tabs.identification': 'Identification',
-  'page.body.profile.tabs.referral': 'Referral',
-  'page.body.profile.tabs.api_management': 'API Management',
-  'page.body.profile.tabs.activity': 'Activity',
+  'page.body.profile.p2p_buy_sell_tabs.security': 'Profile / Security',
+  'page.body.profile.p2p_buy_sell_tabs.identification': 'Identification',
+  'page.body.profile.p2p_buy_sell_tabs.referral': 'Referral',
+  'page.body.profile.p2p_buy_sell_tabs.api_management': 'API Management',
+  'page.body.profile.p2p_buy_sell_tabs.activity': 'Activity',
 
-  'page.body.profile.tabs.referral.title':
+  'page.body.profile.p2p_buy_sell_tabs.referral.title':
       'Invite Friends & Earn Crypto Together',
-  'page.body.profile.tabs.referral.description':
+  'page.body.profile.p2p_buy_sell_tabs.referral.description':
       'EARN UP TO 40% COMMISSION EVERY TIME YOUR FRIENDS MAKE A TRADE ON B4U.',
-  'page.body.profile.tabs.referral.instruction.title': 'Invite Now',
-  'page.body.profile.tabs.referral.instruction.description':
+  'page.body.profile.p2p_buy_sell_tabs.referral.instruction.title': 'Invite Now',
+  'page.body.profile.p2p_buy_sell_tabs.referral.instruction.description':
       'Use your unique link to invite your friends over message or email. Your default invitation code can also be shared in real life or as a screenshot.',
 
-  'page.body.profile.tabs.referral.id': 'Referral ID',
-  'page.body.profile.tabs.referral.link': 'Referral Link',
+  'page.body.profile.p2p_buy_sell_tabs.referral.id': 'Referral ID',
+  'page.body.profile.p2p_buy_sell_tabs.referral.link': 'Referral Link',
 
   'page.body.profile.header.account.content.password': 'Password',
   'page.body.profile.header.account.content.password.button.change': 'Change',
@@ -694,10 +694,10 @@ Map<String, String> serverMessages = {
   'page.modal.expired.submit': 'Log in again',
 
   /* Customization */
-  'page.body.customization.tabs.themes': 'Colors',
-  'page.body.customization.tabs.fonts': 'Fonts',
-  'page.body.customization.tabs.spacing': 'Spacing',
-  'page.body.customization.tabs.images': 'Images',
+  'page.body.customization.p2p_buy_sell_tabs.themes': 'Colors',
+  'page.body.customization.p2p_buy_sell_tabs.fonts': 'Fonts',
+  'page.body.customization.p2p_buy_sell_tabs.spacing': 'Spacing',
+  'page.body.customization.p2p_buy_sell_tabs.images': 'Images',
   'page.body.customization.comingSoon': 'Coming Soon',
   'page.body.customization.actionButtons.reset': 'Reset',
   'page.body.customization.actionButtons.save': 'Save',

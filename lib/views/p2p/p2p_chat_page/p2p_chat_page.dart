@@ -136,7 +136,9 @@ class P2pChatPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 8,)
+                SizedBox(
+                  height: 8,
+                ),
               ],
             ),
           ),

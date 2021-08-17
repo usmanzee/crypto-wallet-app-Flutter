@@ -103,7 +103,7 @@ class P2pHelpCanterPage extends StatelessWidget {
             ];
           },
           body: TabBarView(
-            // These are the contents of the tab views, below the tabs.
+            // These are the contents of the tab views, below the p2p_buy_sell_tabs.
             children: [
               BeginnerTab(),
               AdvancedTab(),
