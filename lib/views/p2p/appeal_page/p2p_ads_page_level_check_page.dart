@@ -211,7 +211,7 @@ class P2pAdsPageLevelCheckPage extends StatelessWidget {
                     color: Get.theme.canvasColor,
                   ),
                   child: Text(
-                    'P2P Trading is not available in the following countries. United States, Republic of Belarus, The Democratic Republic of the Congo, Cuba, Iraq, North Korea, Sudan, Syria, and Zimbawe.',
+                    'P2P Trading is not available in the following countries. United States, Republic of Belarus, The Democratic Republic of the Congo, Cuba, Iraq, North Korea, Sudan, Syria, and Zimbabwe.',
                     style: TextStyle(
                       fontFamily: "Popins",
                       fontWeight: FontWeight.w400,

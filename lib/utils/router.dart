@@ -29,7 +29,7 @@ import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_ads_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_ads_page_history_page/p2p_ads_page_history_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_initial_page.dart';
-import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_orders_history_page.dart';
+import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_order_history_page/p2p_orders_history_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_buy_offer_process/P2p_buy_sell_selected_offer_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_buy_offer_process/p2p_buy_order_complete_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_buy_offer_process/p2p_buy_payment_method_page.dart';
