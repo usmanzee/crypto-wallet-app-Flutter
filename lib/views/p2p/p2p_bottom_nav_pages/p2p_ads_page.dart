@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 class P2pAdsPage extends StatelessWidget {
   final _p2pController = Get.find<P2pController>();
-  RxString _selectedElement = ''.obs;
+  final RxString _selectedElement = ''.obs;
 
   @override
   Widget build(BuildContext context) {
