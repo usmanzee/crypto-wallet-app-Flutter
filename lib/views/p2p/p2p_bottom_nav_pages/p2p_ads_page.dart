@@ -34,6 +34,7 @@ class P2pAdsPage extends StatelessWidget {
         ),
         actions: [
           GestureDetector(
+            onTap: () => Get.toNamed('/p2p_ads_page_level_check_page'),
             child: Icon(
               Icons.add,
               size: 25,
@@ -44,6 +45,7 @@ class P2pAdsPage extends StatelessWidget {
             width: 16,
           ),
           GestureDetector(
+            onTap: () => Get.toNamed('/p2p_ads_page_history_page'),
             child: Icon(
               Icons.history,
               size: 25,
@@ -116,22 +118,25 @@ class P2pAdsPage extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              color: Get.theme.accentColor,
-              borderRadius: BorderRadius.circular(5),
-            ),
-            padding: const EdgeInsets.symmetric(
-              vertical: 8,
-              horizontal: 16,
-            ),
-            child: Text(
-              'Post Ad',
-              style: TextStyle(
-                fontFamily: "Popins",
-                fontWeight: FontWeight.bold,
-                fontSize: 16.0,
-                color: Get.theme.scaffoldBackgroundColor,
+          GestureDetector(
+            onTap: () => Get.toNamed('/p2p_ads_page_level_check_page'),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Get.theme.accentColor,
+                borderRadius: BorderRadius.circular(5),
+              ),
+              padding: const EdgeInsets.symmetric(
+                vertical: 8,
+                horizontal: 16,
+              ),
+              child: Text(
+                'Post Ad',
+                style: TextStyle(
+                  fontFamily: "Popins",
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16.0,
+                  color: Get.theme.scaffoldBackgroundColor,
+                ),
               ),
             ),
           ),
