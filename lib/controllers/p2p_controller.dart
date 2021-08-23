@@ -10,6 +10,7 @@ class P2pController extends GetxController {
   ErrorController errorController = ErrorController();
   RxBool isLoading = true.obs;
   RxString selectedCurrency = 'UAH'.obs;
+
   //p2p bottomNav Index
   RxInt initialIndex = 0.obs;
 
@@ -84,6 +85,9 @@ class P2pController extends GetxController {
 
   //p2p paymeny release page
   RxBool pContainer = true.obs;
+
+  RxList<Widget> a = <Widget>[].obs;
+
   @override
   void onClose() {
     scrollController.dispose();
