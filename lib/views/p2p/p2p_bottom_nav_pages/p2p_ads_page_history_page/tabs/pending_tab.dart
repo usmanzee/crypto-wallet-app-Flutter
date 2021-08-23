@@ -1,3 +1,4 @@
+import 'package:b4u_wallet/views/widgets/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -45,26 +46,10 @@ class PendingTab extends StatelessWidget {
             Expanded(
               child: TabBarView(
                 children: [
-                  Container(
-                    height: 500,
-                    width: double.infinity,
-                    color: Colors.white,
-                  ),
-                  Container(
-                    height: 500,
-                    width: double.infinity,
-                    color: Colors.greenAccent,
-                  ),
-                  Container(
-                    height: 500,
-                    width: double.infinity,
-                    color: Colors.greenAccent,
-                  ),
-                  Container(
-                    height: 500,
-                    width: double.infinity,
-                    color: Colors.brown,
-                  ),
+                  EmptyWidget(),
+                  EmptyWidget(),
+                  EmptyWidget(),
+                  EmptyWidget(),
                 ],
               ),
             ),

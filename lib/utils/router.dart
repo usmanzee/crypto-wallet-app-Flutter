@@ -21,8 +21,9 @@ import 'package:b4u_wallet/views/history/spot_history/spot_hisotry_page.dart';
 import 'package:b4u_wallet/views/home/on_boarding.dart';
 import 'package:b4u_wallet/views/home/splash.dart';
 import 'package:b4u_wallet/views/notification/%20notification_list.dart';
-import 'package:b4u_wallet/views/p2p/appeal_page/p2p_ads_page_level_check_page.dart';
 import 'package:b4u_wallet/views/p2p/appeal_page/p2p_buy_sell_appeal_page.dart';
+import 'package:b4u_wallet/views/p2p/components/p2p_ads_page_level_check_page.dart';
+import 'package:b4u_wallet/views/p2p/appeal_page/p2p_buy_sell_initia_appeal_page.dart';
 import 'package:b4u_wallet/views/p2p/components/search_currency_p2p_dialog.dart';
 import 'package:b4u_wallet/views/p2p/components/select_currency_p2p_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_page.dart';
@@ -247,8 +248,8 @@ class Router {
       // binding: P2pBinding(),
     ),
     GetPage(
-      name: '/p2p_buy_sell_appeal_page',
-      page: () => P2pBuySellAppealPage(),
+      name: '/p2p_buy_sell_initial_appeal_page',
+      page: () => P2pBuySellInitialAppealPage(),
       // binding: P2pBinding(),
     ),
     GetPage(
@@ -279,6 +280,11 @@ class Router {
     GetPage(
       name: '/p2p_ads_page_level_check_page',
       page: () => P2pAdsPageLevelCheckPage(),
+      // binding: P2pBinding(),
+    ),
+    GetPage(
+      name: '/p2p_buy_sell_appeal_page',
+      page: () => P2pBuySellAppealPage(),
       // binding: P2pBinding(),
     ),
   ];

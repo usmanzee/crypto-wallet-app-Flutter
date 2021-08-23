@@ -36,6 +36,7 @@ class P2pOrdersHistoryPage extends StatelessWidget {
                         bottom: 8,
                       ),
                       child: Container(
+                        height: 35,
                         decoration: BoxDecoration(
                           border: Border.all(
                               color: Get.theme.hintColor, width: 0.3),
