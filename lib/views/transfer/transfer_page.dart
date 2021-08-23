@@ -42,8 +42,8 @@ class TransferPage extends StatelessWidget {
         } else {
           _transferController.currentWalletList.length == 0
               ? _transferController.currentWalletList
-                  .addAll(walletController.p2pWalletsList.value)
-              : '';
+                  .addAll(walletController.p2pWalletsList)
+              : print('a');
           if (_transferController.currencyName.value == '') {
             _transferController.currencyName.value =
                 _transferController.currentWalletList.length == 0
@@ -197,8 +197,8 @@ class TransferPage extends StatelessWidget {
                           Get.to(CurrencySelection(
                             // callback: currencyCallback,
                             walletData: _transferController.swap.value
-                                ? walletController.walletsList.value
-                                : _transferController.currentWalletList.value,
+                                ? walletController.walletsList
+                                : _transferController.currentWalletList,
                           ));
                         },
                         child: Container(

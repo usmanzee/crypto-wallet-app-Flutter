@@ -1,9 +1,8 @@
-import 'package:b4u_wallet/controllers/p2p_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class P2pAdsPage extends StatelessWidget {
-  final _p2pController = Get.find<P2pController>();
+  // final _p2pController = Get.find<P2pController>();
   final RxString _selectedElement = ''.obs;
 
   @override

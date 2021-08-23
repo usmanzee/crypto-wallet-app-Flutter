@@ -275,9 +275,7 @@ class P2pBuySellAppealPage extends StatelessWidget {
                 bottom: 16,
               ),
               child: GestureDetector(
-                onTap: () {
-                  //todo: add the required callback here.
-                },
+                onTap: () => Get.toNamed('/p2p_buy_sell_appeal_pending_page'),
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(

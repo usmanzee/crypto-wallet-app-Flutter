@@ -5,10 +5,10 @@ import 'package:get/get.dart';
 import 'package:b4u_wallet/controllers/HomeController.dart';
 
 class MoreOptionsPage extends StatelessWidget {
-  List<Widget> listOfWidgetsCommonFunctions = List.empty(growable: true);
-  List<Widget> listOfWidgetsTrade = List.empty(growable: true);
-  List<Widget> listOfWidgetsFinance = List.empty(growable: true);
-  List<Widget> listOfWidgetsOthers = List.empty(growable: true);
+  final List<Widget> listOfWidgetsCommonFunctions = List.empty(growable: true);
+  final List<Widget> listOfWidgetsTrade = List.empty(growable: true);
+  final List<Widget> listOfWidgetsFinance = List.empty(growable: true);
+  final List<Widget> listOfWidgetsOthers = List.empty(growable: true);
   final HomeController homeController = Get.find();
   final con =Get.put(WalletController());
   final con2 = Get.put(TransferController());

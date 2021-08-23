@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AdvancedTab extends StatelessWidget {
-  PageController mPageController = PageController(initialPage: 0);
+  final PageController mPageController = PageController(initialPage: 0);
 
   @override
   Widget build(BuildContext context) {

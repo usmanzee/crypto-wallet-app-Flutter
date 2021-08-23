@@ -1,11 +1,11 @@
-import 'package:b4u_wallet/controllers/p2p_controller.dart';
+// import 'package:b4u_wallet/controllers/p2p_controller.dart';
 import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_ads_page_history_page/tabs/completed_tab.dart';
 import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_ads_page_history_page/tabs/pending_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class P2pOrdersHistoryPage extends StatelessWidget {
-  final _p2pController = Get.find<P2pController>();
+  // final _p2pController = Get.find<P2pController>();
 
   @override
   Widget build(BuildContext context) {
