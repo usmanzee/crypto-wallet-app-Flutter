@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 class P2pBuySellAppealPage extends StatelessWidget {
   final _p2pController = Get.find<P2pController>();
-
+  int a = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -174,7 +174,10 @@ class P2pBuySellAppealPage extends StatelessWidget {
                               onTap: () {
                                 print(_p2pController.a.length);
                                 _p2pController.a.add(
-                                  _photoWidget(photoPath: 'nothing'),
+                                  _photoWidget(
+                                    photoPath: 'nothing',
+                                    index: a++,
+                                  ),
                                 );
                               },
                               child: Container(
@@ -209,9 +212,12 @@ class P2pBuySellAppealPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              'Name',
-                              style: TextStyle(),
+                            GestureDetector(
+                              onTap: () => _p2pController.a.clear(),
+                              child: Text(
+                                'Name',
+                                style: TextStyle(),
+                              ),
                             ),
                             Text(
                               'Name of the person',
@@ -326,8 +332,9 @@ class P2pBuySellAppealPage extends StatelessWidget {
     );
   }
 
-  Widget _photoWidget({@required String photoPath}) {
+  Widget _photoWidget({@required String photoPath, @required int index}) {
     return Padding(
+      key: ValueKey(index),
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: Container(
         height: 70,
@@ -341,12 +348,22 @@ class P2pBuySellAppealPage extends StatelessWidget {
             Placeholder(
               color: Get.theme.accentColor,
             ),
+            Center(
+              child: Text(
+                '$index',
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 24,
+                ),
+              ),
+            ),
             Positioned(
               right: 4,
               top: 4,
               child: GestureDetector(
                 onTap: () {
-                  _p2pController.a.removeAt(_p2pController.a.length - 1);
+                  _p2pController.a.removeWhere(
+                      (element) => element.key.toString() == '[<$index>]');
                 },
                 child: Icon(
                   Icons.close,

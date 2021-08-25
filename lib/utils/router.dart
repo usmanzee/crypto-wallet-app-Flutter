@@ -23,6 +23,7 @@ import 'package:b4u_wallet/views/home/splash.dart';
 import 'package:b4u_wallet/views/notification/%20notification_list.dart';
 import 'package:b4u_wallet/views/p2p/appeal_page/p2p_buy_sell_appeal_page.dart';
 import 'package:b4u_wallet/views/p2p/appeal_page/p2p_buy_sell_appeal_pending_page.dart';
+import 'package:b4u_wallet/views/p2p/appeal_page/p2p_buy_sell_appeal_progress_page.dart';
 import 'package:b4u_wallet/views/p2p/appeal_page/p2p_buy_sell_initia_appeal_page.dart';
 import 'package:b4u_wallet/views/p2p/components/p2p_ads_page_level_check_page.dart';
 import 'package:b4u_wallet/views/p2p/components/search_currency_p2p_dialog.dart';
@@ -291,6 +292,11 @@ class Router {
     GetPage(
       name: '/p2p_buy_sell_appeal_pending_page',
       page: () => P2pBuySellAppealPendingPage(),
+      // binding: P2pBinding(),
+    ),
+    GetPage(
+      name: '/p2p_buy_sell_appeal_progress_page',
+      page: () => P2pBuySellAppealProgressPage(),
       // binding: P2pBinding(),
     ),
   ];
