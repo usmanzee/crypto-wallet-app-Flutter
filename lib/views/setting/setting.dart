@@ -4,8 +4,8 @@ import 'package:b4u_wallet/views/setting/themes.dart';
 import 'package:b4u_wallet/views/webview_container.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:share/share.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:share/share.dart';
 
 class Setting extends StatelessWidget {
   final HomeController homeController = Get.find();
@@ -27,19 +27,19 @@ class Setting extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).canvasColor,
+        backgroundColor: Get.theme.canvasColor,
         brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
         centerTitle: true,
         title: Text(
           'account.screen.title'.tr,
           style: TextStyle(
-              color: Theme.of(context).textSelectionTheme.selectionColor,
+              color: Get.theme.textSelectionTheme.selectionColor,
               fontFamily: "Gotik",
               fontWeight: FontWeight.w600,
               fontSize: 18.5),
         ),
-        iconTheme: IconThemeData(
-            color: Theme.of(context).textSelectionTheme.selectionColor),
+        iconTheme:
+            IconThemeData(color: Get.theme.textSelectionTheme.selectionColor),
         elevation: 0.8,
         actions: <Widget>[
           Padding(
@@ -73,22 +73,24 @@ class Setting extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Obx(() {
-              if (homeController.isLoggedIn.value) {
-                return Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(16),
-                  child: Column(
+            Obx(
+              () {
+                if (homeController.isLoggedIn.value) {
+                  return Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.all(16),
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(children: [
-                          Icon(
-                            Icons.account_circle,
-                            size: 24.0,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 4.0),
-                            child: Column(
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.account_circle,
+                              size: 24.0,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 4.0),
+                              child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
@@ -107,114 +109,135 @@ class Setting extends StatelessWidget {
                                         ? 'ID: ' + homeController.user.value.uid
                                         : '---',
                                     style: TextStyle(
-                                      color: Theme.of(context)
-                                          .hintColor
-                                          .withOpacity(0.5),
+                                      color:
+                                          Get.theme.hintColor.withOpacity(0.5),
                                       fontSize: 10,
                                       fontWeight: FontWeight.w100,
                                       fontFamily: "Popins",
                                       letterSpacing: 1.5,
                                     ),
                                   ),
-                                ]),
-                          ),
-                        ]),
-                      ]),
-                );
-              } else {
-                return InkWell(
-                  onTap: () {
-                    Get.toNamed('/login');
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.all(16),
-                    child: Column(
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                } else {
+                  return InkWell(
+                    onTap: () {
+                      Get.toNamed('/login');
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.all(16),
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Flexible(
-                                  child: Container(
-                                    padding:
-                                        EdgeInsets.only(left: 4.0, right: 16),
-                                    child: Text(
-                                      'account.screen.login_register'.tr,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: "Popins",
-                                        letterSpacing: 1.5,
-                                      ),
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Flexible(
+                                child: Container(
+                                  padding:
+                                      EdgeInsets.only(left: 4.0, right: 16),
+                                  child: Text(
+                                    'account.screen.login_register'.tr,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily: "Popins",
+                                      letterSpacing: 1.5,
                                     ),
                                   ),
                                 ),
-                                Icon(
-                                  Icons.keyboard_arrow_right,
-                                ),
-                              ]),
-                        ]),
-                  ),
-                );
-              }
-            }),
+                              ),
+                              Icon(
+                                Icons.keyboard_arrow_right,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+              },
+            ),
             InkWell(
                 onTap: () {
                   Get.to(WebViewContainer(
                       'Fee', 'https://ewallet.b4uwallet.com/fee'));
                 },
                 child: listSetting(
-                    context,
                     Icon(
                       Icons.event_note,
                       size: 24.0,
                     ),
                     "account.screen.fee_schedule".tr)),
+            Obx(
+              () {
+                return (homeController.isLoggedIn.value)
+                    ? InkWell(
+                        onTap: () {
+                          Get.to(ReferralProgram());
+                        },
+                        child: listSetting(
+                            Icon(
+                              Icons.group_add,
+                              size: 24.0,
+                            ),
+                            "account.screen.referral_id".tr))
+                    : Container();
+              },
+            ),
+            Obx(
+              () {
+                return (homeController.isLoggedIn.value)
+                    ? InkWell(
+                        onTap: () {
+                          Get.toNamed('/verification-level');
+                        },
+                        child: listSetting(
+                            Icon(
+                              Icons.perm_identity,
+                              size: 24.0,
+                            ),
+                            "account.screen.identification".tr))
+                    : Container();
+              },
+            ),
+            Obx(
+              () {
+                return (homeController.isLoggedIn.value)
+                    ? InkWell(
+                        onTap: () {
+                          Get.toNamed('/notifications');
+                        },
+                        child: listSetting(
+                            Icon(
+                              Icons.notifications_active,
+                              size: 24.0,
+                            ),
+                            "account.screen.notifications".tr),
+                      )
+                    : Container();
+              },
+            ),
             Obx(() {
               return (homeController.isLoggedIn.value)
                   ? InkWell(
-                      onTap: () {
-                        Get.to(ReferralProgram());
-                      },
+                      onTap: () => Get.toNamed('/payment_methods_page'),
                       child: listSetting(
-                          context,
                           Icon(
-                            Icons.group_add,
+                            Icons.attach_money,
                             size: 24.0,
                           ),
-                          "account.screen.referral_id".tr))
-                  : Container();
-            }),
-            Obx(() {
-              return (homeController.isLoggedIn.value)
-                  ? InkWell(
-                      onTap: () {
-                        Get.toNamed('/verification-level');
-                      },
-                      child: listSetting(
-                          context,
-                          Icon(
-                            Icons.perm_identity,
-                            size: 24.0,
-                          ),
-                          "account.screen.identification".tr))
-                  : Container();
-            }),
-            Obx(() {
-              return (homeController.isLoggedIn.value)
-                  ? InkWell(
-                      onTap: () {
-                        Get.toNamed('/notifications');
-                      },
-                      child: listSetting(
-                          context,
-                          Icon(
-                            Icons.notifications_active,
-                            size: 24.0,
-                          ),
-                          "account.screen.notifications".tr))
+                          'Payment Methods'),
+                    )
                   : Container();
             }),
             Obx(() {
@@ -224,7 +247,6 @@ class Setting extends StatelessWidget {
                         Get.toNamed('/security');
                       },
                       child: listSetting(
-                          context,
                           Icon(
                             Icons.security,
                             size: 24.0,
@@ -237,7 +259,6 @@ class Setting extends StatelessWidget {
                   showLanguages(context);
                 },
                 child: listSetting(
-                    context,
                     Icon(
                       Icons.language,
                       size: 24.0,
@@ -249,7 +270,6 @@ class Setting extends StatelessWidget {
                       'https://support.b4uwallet.com/lhc/lhc_web/index.php/chat/start'));
                 },
                 child: listSetting(
-                    context,
                     Icon(
                       Icons.live_help,
                       size: 24.0,
@@ -260,7 +280,6 @@ class Setting extends StatelessWidget {
                   share(context);
                 },
                 child: listSetting(
-                    context,
                     Icon(
                       Icons.share,
                       size: 24.0,
@@ -269,52 +288,56 @@ class Setting extends StatelessWidget {
             SizedBox(
               height: 16.0,
             ),
-            Obx(() {
-              if (homeController.isLoggedIn.value)
-                return Padding(
-                  padding:
-                      const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0),
-                  child: InkWell(
-                    onTap: () {
-                      _handleLogoutClick();
-                    },
-                    child: Container(
-                      height: 50.0,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(0.0)),
-                        border: Border.all(
-                          color: Theme.of(context).primaryColor,
-                          width: 1,
+            Obx(
+              () {
+                if (homeController.isLoggedIn.value)
+                  return Padding(
+                    padding: const EdgeInsets.only(
+                        left: 16.0, right: 16.0, top: 8.0),
+                    child: InkWell(
+                      onTap: () {
+                        _handleLogoutClick();
+                      },
+                      child: Container(
+                        height: 50.0,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(0.0)),
+                          border: Border.all(
+                            color: Get.theme.primaryColor,
+                            width: 1,
+                          ),
                         ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          "account.screen.logout".tr,
-                          style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 16.5,
-                              letterSpacing: 1.2),
+                        child: Center(
+                          child: Text(
+                            "account.screen.logout".tr,
+                            style: TextStyle(
+                                color: Get.theme.primaryColor,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16.5,
+                                letterSpacing: 1.2),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                );
-              else
-                return Container();
-            }),
+                  );
+                else
+                  return Container();
+              },
+            ),
             SizedBox(
               height: 24.0,
             ),
             Padding(
               padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 0.0),
-              child: Text('account.screen.instructions'.tr,
-                  style: TextStyle(
-                    fontFamily: "Popins",
-                    fontSize: 12,
-                    color: Theme.of(context).hintColor,
-                  )),
+              child: Text(
+                'account.screen.instructions'.tr,
+                style: TextStyle(
+                  fontFamily: "Popins",
+                  fontSize: 12,
+                  color: Get.theme.hintColor,
+                ),
+              ),
             ),
             SizedBox(
               height: 24.0,
@@ -325,7 +348,7 @@ class Setting extends StatelessWidget {
     );
   }
 
-  Widget listSetting(context, Widget icon, String title) {
+  Widget listSetting(Widget icon, String title) {
     return Padding(
       padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 0.0),
       child: Column(
@@ -356,24 +379,24 @@ class Setting extends StatelessWidget {
               Icon(
                 Icons.keyboard_arrow_right,
                 size: 24.0,
-                color: Theme.of(context).hintColor,
+                color: Get.theme.hintColor,
               ),
             ],
           ),
           SizedBox(
             height: 16.0,
           ),
-          line(context)
+          line()
         ],
       ),
     );
   }
 
-  Widget line(context) {
+  Widget line() {
     return Container(
       width: double.infinity,
       height: 0.5,
-      decoration: BoxDecoration(color: Theme.of(context).canvasColor),
+      decoration: BoxDecoration(color: Get.theme.canvasColor),
     );
   }
 
@@ -382,7 +405,7 @@ class Setting extends StatelessWidget {
         context: context,
         builder: (_) {
           return AlertDialog(
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            backgroundColor: Get.theme.scaffoldBackgroundColor,
             title: Text(
               'Choose Language',
               style: TextStyle(fontFamily: 'Popins'),
@@ -419,7 +442,7 @@ class Setting extends StatelessWidget {
                             Icon(
                               Icons.done,
                               size: 24.0,
-                              color: Theme.of(context).accentColor,
+                              color: Get.theme.accentColor,
                             ),
                         ]),
                   ),

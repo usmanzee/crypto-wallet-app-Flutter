@@ -49,6 +49,7 @@ import 'package:b4u_wallet/views/p2p/p2p_user_profile/p2p_user_profile.dart';
 import 'package:b4u_wallet/views/savings/savings.dart';
 import 'package:b4u_wallet/views/security/enable_otp.dart';
 import 'package:b4u_wallet/views/security/security.dart';
+import 'package:b4u_wallet/views/setting/payment_methods_page.dart';
 import 'package:b4u_wallet/views/setting/setting.dart';
 import 'package:b4u_wallet/views/swap/swap.dart';
 import 'package:b4u_wallet/views/swap/swap_histroy.dart';
@@ -297,6 +298,11 @@ class Router {
     GetPage(
       name: '/p2p_buy_sell_appeal_progress_page',
       page: () => P2pBuySellAppealProgressPage(),
+      // binding: P2pBinding(),
+    ),
+    GetPage(
+      name: '/payment_methods_page',
+      page: () => PaymentMethodsPage(),
       // binding: P2pBinding(),
     ),
   ];
