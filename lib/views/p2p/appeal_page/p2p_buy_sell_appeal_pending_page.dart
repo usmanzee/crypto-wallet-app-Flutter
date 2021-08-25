@@ -168,10 +168,25 @@ class P2pBuySellAppealPendingPage extends StatelessWidget {
                           color: Get.theme.textSelectionTheme.selectionColor,
                         ),
                       ),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        size: 20,
-                        color: Get.theme.hintColor,
+                      Row(
+                        children: [
+                          Container(
+                            height: 10,
+                            width: 10,
+                            decoration: BoxDecoration(
+                              color: Get.theme.accentColor,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 16,
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            size: 20,
+                            color: Get.theme.hintColor,
+                          ),
+                        ],
                       ),
                     ],
                   ),

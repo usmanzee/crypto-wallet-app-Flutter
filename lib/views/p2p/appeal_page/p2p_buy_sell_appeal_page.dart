@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 class P2pBuySellAppealPage extends StatelessWidget {
   final _p2pController = Get.find<P2pController>();
   int a = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,20 +79,112 @@ class P2pBuySellAppealPage extends StatelessWidget {
                   //todo: add the reason menu here after discussion
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Container(
-                      height: 40,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        // color: Colors.black,
-                        border: Border.all(
-                          color: Get.theme.hintColor,
-                          width: 0.3,
+                    child: GestureDetector(
+                      onTap: () => showModalBottomSheet(
+                        isDismissible: true,
+                        context: context,
+                        builder: (context) => Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(),
+                                  Text(
+                                    'Reason for appeal',
+                                    style: TextStyle(
+                                      color: Get.theme.textSelectionTheme
+                                          .selectionColor,
+                                      fontFamily: "Popins",
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16.0,
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.close,
+                                    size: 20,
+                                    color: Get.theme.textSelectionTheme
+                                        .selectionColor,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              height: 0.3,
+                              width: double.infinity,
+                              color: Get.theme.hintColor,
+                            ),
+                            ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: 3,
+                              itemBuilder: (context, index) {
+                                return Obx(
+                                  () => ListTile(
+                                    onTap: () {
+                                      _p2pController.radioValue.value = index;
+                                      _p2pController.selectedReason.value =
+                                          'Something random';
+                                      print(_p2pController.radioValue.value);
+                                      // _p2pController.selectedReason.refresh();
+                                    },
+                                    leading: Radio(
+                                      value: index,
+                                      groupValue:
+                                          _p2pController.radioValue.value,
+                                      onChanged: (value) {
+                                        _p2pController.radioValue.value = value;
+                                        _p2pController.selectedReason.value =
+                                            'Something random';
+                                        // _p2pController.selectedReason.refresh();
+                                      },
+                                    ),
+                                    title: Text('This will be the reason'),
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
                         ),
                       ),
-                      child: Center(
-                        child: Text(
-                          'Things will be added here after discussion',
-                          style: TextStyle(),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 8,
+                          horizontal: 16,
+                        ),
+                        // height: 40,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          // color: Colors.black,
+                          border: Border.all(
+                            color: Get.theme.hintColor,
+                            width: 0.3,
+                          ),
+                        ),
+                        child: Obx(
+                          () => Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                _p2pController.selectedReason.value,
+                                style: TextStyle(
+                                  color: Get
+                                      .theme.textSelectionTheme.selectionColor,
+                                  fontFamily: "Popins",
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 13.0,
+                                ),
+                              ),
+                              Icon(
+                                Icons.arrow_forward_ios,
+                                size: 20,
+                                color: Get.theme.hintColor,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

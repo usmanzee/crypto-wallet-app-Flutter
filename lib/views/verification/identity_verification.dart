@@ -1,9 +1,9 @@
 import 'package:b4u_wallet/component/no_data.dart';
 import 'package:b4u_wallet/controllers/verification_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class IdentityVerification extends StatelessWidget {
@@ -108,33 +108,34 @@ class IdentityVerification extends StatelessWidget {
   Widget _createEventControlBuilder(BuildContext context,
       {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
     return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          if (verificationController.currentStep != 0)
-            MaterialButton(
-              onPressed: onStepCancel,
-              height: 30.0,
-              minWidth: 40.0,
-              color: Theme.of(context).hintColor,
-              child: Text(
-                "identification.screen.identity.button.back".tr,
-                style: TextStyle(fontSize: 10),
-              ),
-            )
-          else
-            Container(),
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        if (verificationController.currentStep != 0)
           MaterialButton(
-            onPressed: onStepContinue,
+            onPressed: onStepCancel,
             height: 30.0,
             minWidth: 40.0,
-            color: Theme.of(context).primaryColor,
-            textColor: Colors.white,
+            color: Theme.of(context).hintColor,
             child: Text(
-              "identification.screen.identity.button.next".tr,
+              "identification.screen.identity.button.back".tr,
               style: TextStyle(fontSize: 10),
             ),
+          )
+        else
+          Container(),
+        MaterialButton(
+          onPressed: onStepContinue,
+          height: 30.0,
+          minWidth: 40.0,
+          color: Theme.of(context).primaryColor,
+          textColor: Colors.white,
+          child: Text(
+            "identification.screen.identity.button.next".tr,
+            style: TextStyle(fontSize: 10),
           ),
-        ]);
+        ),
+      ],
+    );
   }
 
   List<Step> _myStep(context) {
@@ -194,7 +195,7 @@ class IdentityVerification extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
           isActive: verificationController.currentStep >= 0,
@@ -210,15 +211,16 @@ class IdentityVerification extends StatelessWidget {
                 child: Container(
                   height: 50,
                   decoration: BoxDecoration(
-                      border: Border(
-                    bottom: BorderSide(
-                      color: Theme.of(context)
-                          .textSelectionTheme
-                          .selectionColor
-                          .withOpacity(0.7),
-                      width: 1.0,
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Theme.of(context)
+                            .textSelectionTheme
+                            .selectionColor
+                            .withOpacity(0.7),
+                        width: 1.0,
+                      ),
                     ),
-                  )),
+                  ),
                   child: Center(
                       child:
                           Text(verificationController.selectedCountry.value)),
@@ -234,15 +236,16 @@ class IdentityVerification extends StatelessWidget {
                 child: Container(
                   height: 50,
                   decoration: BoxDecoration(
-                      border: Border(
-                    bottom: BorderSide(
-                      color: Theme.of(context)
-                          .textSelectionTheme
-                          .selectionColor
-                          .withOpacity(0.7),
-                      width: 1.0,
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Theme.of(context)
+                            .textSelectionTheme
+                            .selectionColor
+                            .withOpacity(0.7),
+                        width: 1.0,
+                      ),
                     ),
-                  )),
+                  ),
                   child: Center(
                       child: Text(
                           verificationController.selectedNationality.value)),
@@ -297,7 +300,7 @@ class IdentityVerification extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
           isActive: verificationController.currentStep >= 2,
@@ -308,10 +311,11 @@ class IdentityVerification extends StatelessWidget {
 
   void showCountriesList(BuildContext context) {
     showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        builder: (ctx) {
-          return Obx(() {
+      context: context,
+      isScrollControlled: true,
+      builder: (ctx) {
+        return Obx(
+          () {
             return FractionallySizedBox(
               heightFactor: 0.9,
               child: Padding(
@@ -320,35 +324,39 @@ class IdentityVerification extends StatelessWidget {
                   color: Theme.of(context).scaffoldBackgroundColor,
                   padding: EdgeInsets.fromLTRB(8, 24, 8, 16),
                   child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: verificationController.countries.isEmpty
-                              ? NoData()
-                              : ListView.builder(
-                                  shrinkWrap: true,
-                                  itemBuilder: (ctx, i) {
-                                    return countriesList(ctx,
-                                        verificationController.countries[i]);
-                                  },
-                                  itemCount:
-                                      verificationController.countries.length,
-                                ),
-                        ),
-                      ]),
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: verificationController.countries.isEmpty
+                            ? NoData()
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                itemBuilder: (ctx, i) {
+                                  return countriesList(
+                                      ctx, verificationController.countries[i]);
+                                },
+                                itemCount:
+                                    verificationController.countries.length,
+                              ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
-          });
-        });
+          },
+        );
+      },
+    );
   }
 
   void showNationalitiesList(BuildContext context) {
     showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        builder: (ctx) {
-          return Obx(() {
+      context: context,
+      isScrollControlled: true,
+      builder: (ctx) {
+        return Obx(
+          () {
             return FractionallySizedBox(
               heightFactor: 0.9,
               child: Padding(
@@ -357,55 +365,58 @@ class IdentityVerification extends StatelessWidget {
                   color: Theme.of(context).scaffoldBackgroundColor,
                   padding: EdgeInsets.fromLTRB(8, 24, 8, 16),
                   child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: verificationController.nationalities.isEmpty
-                              ? NoData()
-                              : ListView.builder(
-                                  shrinkWrap: true,
-                                  itemBuilder: (ctx, i) {
-                                    return nationalitiesList(
-                                        ctx,
-                                        verificationController
-                                            .nationalities[i]);
-                                  },
-                                  itemCount: verificationController
-                                      .nationalities.length,
-                                ),
-                        ),
-                      ]),
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: verificationController.nationalities.isEmpty
+                            ? NoData()
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                itemBuilder: (ctx, i) {
+                                  return nationalitiesList(ctx,
+                                      verificationController.nationalities[i]);
+                                },
+                                itemCount:
+                                    verificationController.nationalities.length,
+                              ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
-          });
-        });
+          },
+        );
+      },
+    );
   }
 
   Widget countriesList(BuildContext ctx, country) {
-    return Obx(() {
-      return Card(
-        color: verificationController.selectedCountry.value == country
-            ? Theme.of(ctx).canvasColor
-            : Theme.of(ctx).scaffoldBackgroundColor,
-        child: ListTile(
-          leading: Radio(
-            value: country,
-            groupValue: verificationController.selectedCountry.value,
-            onChanged: (var value) {
-              verificationController.selectedCountry.value = value;
+    return Obx(
+      () {
+        return Card(
+          color: verificationController.selectedCountry.value == country
+              ? Theme.of(ctx).canvasColor
+              : Theme.of(ctx).scaffoldBackgroundColor,
+          child: ListTile(
+            leading: Radio(
+              value: country,
+              groupValue: verificationController.selectedCountry.value,
+              onChanged: (var value) {
+                verificationController.selectedCountry.value = value;
+              },
+            ),
+            title: Text(country),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            onTap: () {
+              verificationController.selectedCountry.value = country;
+              verificationController.residencyTextController.text = country;
+              Get.back();
             },
           ),
-          title: Text(country),
-          trailing: Icon(Icons.keyboard_arrow_right),
-          onTap: () {
-            verificationController.selectedCountry.value = country;
-            verificationController.residencyTextController.text = country;
-            Get.back();
-          },
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 
   Widget nationalitiesList(BuildContext ctx, nationality) {

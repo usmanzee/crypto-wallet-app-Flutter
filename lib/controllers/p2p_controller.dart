@@ -86,7 +86,10 @@ class P2pController extends GetxController {
   //p2p paymeny release page
   RxBool pContainer = true.obs;
 
+  //extra for just view will be deleted
   RxList<Widget> a = <Widget>[].obs;
+  RxInt radioValue = 0.obs;
+  RxString selectedReason = 'Tap here to select a reason...'.obs;
 
   @override
   void onClose() {
