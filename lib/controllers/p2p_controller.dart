@@ -21,7 +21,7 @@ class P2pController extends GetxController {
   RxBool buyOrSellP2p = true.obs;
   RxBool buyOrSellExpress = true.obs;
 
-  // history filets
+  // history filters
   RxString typeSelected = 'All'.obs;
   RxString statusSelected = 'All'.obs;
 
@@ -83,13 +83,14 @@ class P2pController extends GetxController {
   RxBool termsContainer = true.obs;
   RxBool dialogConfirm = false.obs;
 
-  //p2p paymeny release page
+  //p2p payment release page
   RxBool pContainer = true.obs;
 
   //extra for just view will be deleted
   RxList<Widget> a = <Widget>[].obs;
   RxInt radioValue = 0.obs;
   RxString selectedReason = 'Tap here to select a reason...'.obs;
+  RxBool buyerOrSeller = true.obs;
 
   @override
   void onClose() {
@@ -152,5 +153,6 @@ class P2pController extends GetxController {
 
       return false;
     }
+    return false;
   }
 }

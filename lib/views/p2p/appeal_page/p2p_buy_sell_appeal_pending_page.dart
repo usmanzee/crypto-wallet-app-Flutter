@@ -1,3 +1,4 @@
+import 'package:b4u_wallet/controllers/p2p_controller.dart';
 import 'package:b4u_wallet/views/widgets/icon_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -8,6 +9,7 @@ import 'package:get/get.dart';
 class P2pBuySellAppealPendingPage extends StatelessWidget {
   final orderType = 'Sell';
   final currencyType = 'USDT';
+  final _p2pController = Get.find<P2pController>();
 
   @override
   Widget build(BuildContext context) {
@@ -126,32 +128,118 @@ class P2pBuySellAppealPendingPage extends StatelessWidget {
                     'Info provided by both users and CS can be found in \"appeal progress\".',
                 callback: () {},
               ),
-              //todo: add the callback here
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return _dialog();
-                        },
-                      );
-                    },
-                    child: Text(
-                      'Cancel the appeal',
-                      style: TextStyle(
-                        fontFamily: "Popins",
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14.0,
-                        color: Get.theme.textSelectionTheme.selectionColor,
+              _p2pController.buyerOrSeller.value
+                  ?
+                  //todo: add the callback here
+                  Align(
+                      alignment: Alignment.bottomRight,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        child: GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return _dialog();
+                              },
+                            );
+                          },
+                          child: Text(
+                            'Cancel the appeal',
+                            style: TextStyle(
+                              fontFamily: "Popins",
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14.0,
+                              color:
+                                  Get.theme.textSelectionTheme.selectionColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Container(
+                        decoration: BoxDecoration(),
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 4,
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Negotiation result',
+                              style: TextStyle(
+                                fontFamily: "Popins",
+                                fontWeight: FontWeight.w400,
+                                fontSize: 12.0,
+                                color: Get.theme.hintColor,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 4),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(
+                                          color: Get.theme.hintColor,
+                                          width: 0.3,
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          'Negotiation failed',
+                                          style: TextStyle(
+                                            fontFamily: "Popins",
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 16.0,
+                                            color: Colors.redAccent,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 4),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(
+                                          color: Get.theme.hintColor,
+                                          width: 0.3,
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          'Consensus reached',
+                                          style: TextStyle(
+                                            fontFamily: "Popins",
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 16.0,
+                                            color: Colors.greenAccent,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
               GestureDetector(
                 onTap: () => Get.toNamed('/p2p_buy_sell_appeal_progress_page'),
                 child: Padding(
