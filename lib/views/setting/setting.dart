@@ -227,19 +227,22 @@ class Setting extends StatelessWidget {
                     : Container();
               },
             ),
-            Obx(() {
-              return (homeController.isLoggedIn.value)
-                  ? InkWell(
-                      onTap: () => Get.toNamed('/payment_methods_page'),
-                      child: listSetting(
+            Obx(
+              () {
+                return (homeController.isLoggedIn.value)
+                    ? InkWell(
+                        onTap: () => Get.toNamed('/payment_methods_page'),
+                        child: listSetting(
                           Icon(
                             Icons.attach_money,
                             size: 24.0,
                           ),
-                          'Payment Methods'),
-                    )
-                  : Container();
-            }),
+                          'Payment Methods',
+                        ),
+                      )
+                    : Container();
+              },
+            ),
             Obx(() {
               return (homeController.isLoggedIn.value)
                   ? InkWell(
@@ -247,11 +250,13 @@ class Setting extends StatelessWidget {
                         Get.toNamed('/security');
                       },
                       child: listSetting(
-                          Icon(
-                            Icons.security,
-                            size: 24.0,
-                          ),
-                          "account.screen.security".tr))
+                        Icon(
+                          Icons.security,
+                          size: 24.0,
+                        ),
+                        "account.screen.security".tr,
+                      ),
+                    )
                   : Container();
             }),
             InkWell(

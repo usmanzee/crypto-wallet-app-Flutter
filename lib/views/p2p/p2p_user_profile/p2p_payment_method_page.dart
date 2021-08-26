@@ -57,20 +57,23 @@ class P2pPaymentMethodPage extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                decoration: BoxDecoration(
-                    color: Get.theme.accentColor,
-                    borderRadius: BorderRadius.circular(5)),
-                width: double.infinity,
-                child: Center(
-                  child: Text(
-                    'Add a payment method',
-                    style: TextStyle(
-                      fontFamily: "Popins",
-                      color: Get.theme.scaffoldBackgroundColor,
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w700,
+              child: GestureDetector(
+                onTap: () => Get.toNamed(page),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  decoration: BoxDecoration(
+                      color: Get.theme.accentColor,
+                      borderRadius: BorderRadius.circular(5)),
+                  width: double.infinity,
+                  child: Center(
+                    child: Text(
+                      'Add a payment method',
+                      style: TextStyle(
+                        fontFamily: "Popins",
+                        color: Get.theme.scaffoldBackgroundColor,
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
                 ),
