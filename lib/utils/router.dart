@@ -28,6 +28,7 @@ import 'package:b4u_wallet/views/p2p/appeal_page/p2p_buy_sell_initia_appeal_page
 import 'package:b4u_wallet/views/p2p/components/p2p_ads_page_level_check_page.dart';
 import 'package:b4u_wallet/views/p2p/components/search_currency_p2p_dialog.dart';
 import 'package:b4u_wallet/views/p2p/components/select_currency_p2p_page.dart';
+import 'package:b4u_wallet/views/p2p/p2p_ad_sharing_code_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_ads_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_ads_page_history_page/p2p_ads_page_history_page.dart';
@@ -44,7 +45,8 @@ import 'package:b4u_wallet/views/p2p/p2p_history_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_user_profile/p2p_feedback_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_user_profile/p2p_help_center_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_user_profile/p2p_notifications_setting_page.dart';
-import 'package:b4u_wallet/views/p2p/p2p_user_profile/p2p_payment_method_page.dart';
+import 'package:b4u_wallet/views/p2p/p2p_user_profile/p2p_payment/p2p_payment_method_page.dart';
+import 'package:b4u_wallet/views/p2p/p2p_user_profile/p2p_payment/p2p_select_payment_method_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_user_profile/p2p_user_profile.dart';
 import 'package:b4u_wallet/views/savings/savings.dart';
 import 'package:b4u_wallet/views/security/enable_otp.dart';
@@ -303,6 +305,16 @@ class Router {
     GetPage(
       name: '/payment_methods_page',
       page: () => PaymentMethodsPage(),
+      // binding: P2pBinding(),
+    ),
+    GetPage(
+      name: '/p2p_ad_sharing_code_page',
+      page: () => P2pAdSharingCodePage(),
+      // binding: P2pBinding(),
+    ),
+    GetPage(
+      name: '/p2p_select_payment_method_page',
+      page: () => P2pSelectPaymentMethodPage(),
       // binding: P2pBinding(),
     ),
   ];

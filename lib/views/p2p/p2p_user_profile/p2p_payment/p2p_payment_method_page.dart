@@ -58,7 +58,7 @@ class P2pPaymentMethodPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: GestureDetector(
-                onTap: () => Get.toNamed(page),
+                onTap: () => Get.toNamed('/p2p_select_payment_method_page'),
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   decoration: BoxDecoration(
