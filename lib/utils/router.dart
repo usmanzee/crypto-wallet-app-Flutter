@@ -45,6 +45,7 @@ import 'package:b4u_wallet/views/p2p/p2p_history_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_user_profile/p2p_feedback_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_user_profile/p2p_help_center_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_user_profile/p2p_notifications_setting_page.dart';
+import 'package:b4u_wallet/views/p2p/p2p_user_profile/p2p_payment/p2p_payment_method_add_bank_details_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_user_profile/p2p_payment/p2p_payment_method_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_user_profile/p2p_payment/p2p_select_all_payment_method_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_user_profile/p2p_payment/p2p_select_payment_method_page.dart';
@@ -321,6 +322,11 @@ class Router {
     GetPage(
       name: '/p2p_select_all_payment_method_page',
       page: () => P2pSelectAllPaymentMethodPage(),
+      // binding: P2pBinding(),
+    ),
+    GetPage(
+      name: '/p2p_payment_method_add_bank_details_page',
+      page: () => P2pPaymentMethodAddBankDetailsPage(),
       // binding: P2pBinding(),
     ),
   ];

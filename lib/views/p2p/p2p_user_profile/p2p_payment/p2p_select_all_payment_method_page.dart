@@ -38,7 +38,7 @@ class P2pSelectAllPaymentMethodPage extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(25),
                 color: Get.theme.canvasColor,
               ),
               child: Row(
@@ -52,7 +52,13 @@ class P2pSelectAllPaymentMethodPage extends StatelessWidget {
                     width: 16,
                   ),
                   Expanded(
-                    child: TextFormField(),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        hintText: 'Enter a payment method.',
+                        border: InputBorder.none,
+                        contentPadding: const EdgeInsets.all(0),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -83,7 +89,7 @@ class ListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       //todo: add the callback here for the required data
-      onTap: () => Get.toNamed('page'),
+      onTap: () => Get.toNamed('/p2p_payment_method_add_bank_details_page'),
       child: Padding(
         padding: const EdgeInsets.only(top: 16),
         child: Row(
@@ -91,7 +97,8 @@ class ListItem extends StatelessWidget {
           children: [
             Container(
               decoration: BoxDecoration(
-                color: Colors.primaries[_random.nextInt(Colors.primaries.length)],
+                color:
+                    Colors.primaries[_random.nextInt(Colors.primaries.length)],
                 borderRadius: BorderRadius.circular(1),
               ),
               child: Text(' '),
