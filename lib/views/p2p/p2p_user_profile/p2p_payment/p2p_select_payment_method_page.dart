@@ -77,7 +77,7 @@ class P2pSelectPaymentMethodPage extends StatelessWidget {
             ),
             Center(
               child: GestureDetector(
-                onTap: () => Get.toNamed('page'),
+                onTap: () => Get.toNamed('/p2p_select_all_payment_method_page'),
                 child: Text(
                   'All Payment Methods',
                   style: TextStyle(

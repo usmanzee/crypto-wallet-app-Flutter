@@ -5,10 +5,10 @@ import 'package:get/get.dart';
 import 'error_controller.dart';
 
 class SavingsController extends GetxController {
-  var isLoading = true.obs;
-  var plansList = <Plans>[].obs;
-  var totalPlans = 0.obs;
-  RxList<int> values = [7,7,7,7,7,7,7,7,7,7,7,7].obs;
+  RxBool isLoading = true.obs;
+  RxList<Plans> plansList = <Plans>[].obs;
+  RxInt totalPlans = 0.obs;
+  RxList<int> flexibleValues = [7,7,7,7,7,7,7,7,7,7,7,7].obs;
   RxBool switchValue = true.obs;
   ErrorController errorController = ErrorController();
 

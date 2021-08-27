@@ -70,15 +70,15 @@ class FlexibleTab extends StatelessWidget {
               padding: const EdgeInsets.only(top: 10),
               child: ListView.builder(
                 shrinkWrap: false,
-                // itemCount: _savingsController.plansList.length,
-                itemCount: 3,
+                itemCount: _savingsController.plansList.length,
+                // itemCount: 3,
                 itemBuilder: (context, index) {
+                  // print('yeah');
                   return Padding(
                     padding:
                         const EdgeInsets.only(top: 10.0, left: 5.0, right: 5.0),
-                    child:
-                        /* _savingsController.plansList[index].type ==
-                            'flexible'
+                    child: _savingsController.plansList[index].type.toUpperCase() ==
+                            'Flexible'.toUpperCase()
                         ? _container(
                             name: _savingsController.plansList[index].currencyId
                                 .toUpperCase(),
@@ -91,9 +91,9 @@ class FlexibleTab extends StatelessWidget {
                             context: context,
                           )
                         : Container(),
-                  );*/
+                  );
 
-                        _container(
+                  /*_container(
                       name: 'namer'.toUpperCase(),
                       annualYield: 23,
                       yesterdayInterest: 23.3,
@@ -102,7 +102,7 @@ class FlexibleTab extends StatelessWidget {
                       autoSubscriber: true,
                       context: context,
                     ),
-                  );
+                  );*/
                 },
               ),
             ),
@@ -122,178 +122,178 @@ class FlexibleTab extends StatelessWidget {
     @required BuildContext context,
   }) {
     return Obx(() => Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Container(
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Image.asset(
-                    imageLink,
-                    height: 40,
-                    width: 40,
-                  ),
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Text(
-                  name,
-                  style: TextStyle(
-                    fontFamily: "Popins",
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Estimated Annual Yield',
-                    style: TextStyle(
-                      fontFamily: "Popins",
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Text(
-                    'Yesterday\'s Interest (${date.month}-${date.day})',
-                    style: TextStyle(
-                      fontFamily: "Popins",
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(
-                      '$annualYield',
-                      style: TextStyle(
-                        fontFamily: "Popins",
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
+                    Container(
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Image.asset(
+                        imageLink,
+                        height: 40,
+                        width: 40,
                       ),
                     ),
                     SizedBox(
-                      width: 2,
+                      width: 8,
                     ),
                     Text(
-                      '%',
+                      name,
                       style: TextStyle(
                         fontFamily: "Popins",
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ],
-                ),
-                Row(
-                  children: [
-                    Text(
-                      '$yesterdayInterest',
-                      style: TextStyle(
-                        fontFamily: "Popins",
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 2,
-                    ),
-                    Text(
-                      '%',
-                      style: TextStyle(
-                        fontFamily: "Popins",
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15),
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 10,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Get.theme.accentColor,
-                ),
-                width: double.infinity,
-                child: Center(
-                  child: Text(
-                    'Subscribe',
-                    style: TextStyle(
-                      fontFamily: "Popins",
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: Get.theme.scaffoldBackgroundColor,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Auto-Subscribe',
-                  style: TextStyle(
-                    fontFamily: "Popins",
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                  ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 20),
-                  child: GestureDetector(
-                    onTap: () {
-                      _showDialog(
-                        context: context,
-                        info:
-                        'Every day at 02:00 (UTC + 0), we will use the available balance of all Spot Accounts to purchase Flexible Deposits.',
-                      );
-                    },
-                    child: Icon(
-                      Icons.info_outline,
-                      size: 20,
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Estimated Annual Yield',
+                        style: TextStyle(
+                          fontFamily: "Popins",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        'Yesterday\'s Interest (${date.month}-${date.day})',
+                        style: TextStyle(
+                          fontFamily: "Popins",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          '$annualYield',
+                          style: TextStyle(
+                            fontFamily: "Popins",
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
+                        Text(
+                          '%',
+                          style: TextStyle(
+                            fontFamily: "Popins",
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          '$yesterdayInterest',
+                          style: TextStyle(
+                            fontFamily: "Popins",
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
+                        Text(
+                          '%',
+                          style: TextStyle(
+                            fontFamily: "Popins",
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 10,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Get.theme.accentColor,
+                    ),
+                    width: double.infinity,
+                    child: Center(
+                      child: Text(
+                        'Subscribe',
+                        style: TextStyle(
+                          fontFamily: "Popins",
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: Get.theme.scaffoldBackgroundColor,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-                CupertinoSwitch(
-                  value: _savingsController.switchValue.value,
-                  onChanged: (value) {
-                    _savingsController.switchValue.value = value;
-                  },
-                  activeColor: Get.theme.accentColor,
-                  trackColor: Get.theme.hintColor,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Auto-Subscribe',
+                      style: TextStyle(
+                        fontFamily: "Popins",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 20),
+                      child: GestureDetector(
+                        onTap: () {
+                          _showDialog(
+                            context: context,
+                            info:
+                                'Every day at 02:00 (UTC + 0), we will use the available balance of all Spot Accounts to purchase Flexible Deposits.',
+                          );
+                        },
+                        child: Icon(
+                          Icons.info_outline,
+                          size: 20,
+                        ),
+                      ),
+                    ),
+                    CupertinoSwitch(
+                      value: _savingsController.switchValue.value,
+                      onChanged: (value) {
+                        _savingsController.switchValue.value = value;
+                      },
+                      activeColor: Get.theme.accentColor,
+                      trackColor: Get.theme.hintColor,
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
-        ),
-      ),
-    ));
+          ),
+        ));
   }
 
   void _showDialog({BuildContext context, String info}) {

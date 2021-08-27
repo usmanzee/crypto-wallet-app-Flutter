@@ -28,8 +28,8 @@ class _SavingsState extends State<Savings> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      print(_savingController.plansList.length);
-      print(_savingController.totalPlans);
+    /*  print(_savingController.plansList.length);
+      print(_savingController.totalPlans);*/
       return Scaffold(
         appBar: AppBar(
           backwardsCompatibility: false,
