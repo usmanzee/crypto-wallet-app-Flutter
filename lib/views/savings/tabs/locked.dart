@@ -1,50 +1,51 @@
 import 'package:b4u_wallet/controllers/savings_controller.dart';
-import 'package:b4u_wallet/models/plans_model.dart';
 import 'package:b4u_wallet/utils/Helpers/my_imgs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LockedTab extends StatelessWidget {
-  final List<Plans> data;
   final _savingsController = Get.find<SavingsController>();
-
-  LockedTab({@required this.data});
 
   final singular = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Get.theme.canvasColor,
-      body: Column(
-        children: [
-          Flexible(
-            child: ListView.builder(
-              itemCount: data.length,
-              // itemCount: 4,
-              itemBuilder: (context, index) {
-                return data[index].type.toUpperCase() == 'locked'.toUpperCase()
-                    ? _container(
-                        imageUrl: '',
-                        index: index,
-                        name: data[index].name,
-                        rate: data[index].rate)
-                    : Container();
-                // return _container(imageUrl: '',index: index,name: 'name',rate: '23.3');
-              },
+    return Obx(
+      () => Scaffold(
+        backgroundColor: Get.theme.canvasColor,
+        body: Column(
+          children: [
+            Flexible(
+              child: ListView.builder(
+                itemCount: _savingsController.plansList.length,
+                // itemCount: 4,
+                itemBuilder: (context, index) {
+                  return _savingsController.plansList[index].type
+                              .toUpperCase() ==
+                          'locked'.toUpperCase()
+                      ? _container(
+                          imageUrl: '',
+                          index: index,
+                          name: _savingsController.plansList[index].name,
+                          rate: _savingsController.plansList[index].rate)
+                      : Container();
+                  // return _container(imageUrl: '',index: index,name: 'name',rate: '23.3');
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-  Widget _container(
-      {@required String imageUrl,
-      @required int index,
-      @required String name,
-      @required String rate}) {
+  Widget _container({
+    @required String imageUrl,
+    @required int index,
+    @required String name,
+    @required String rate,
+  }) {
     return Obx(() => Card(
           child: Padding(
             padding: const EdgeInsets.all(8.0),

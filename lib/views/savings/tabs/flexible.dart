@@ -10,90 +10,93 @@ class FlexibleTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Get.theme.canvasColor,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            decoration: BoxDecoration(color: Get.theme.canvasColor),
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return Container();
-                      },
-                    );
-                  },
-                  child: Row(
-                    children: [
-                      Text('All'),
-                      Icon(Icons.arrow_drop_down),
-                    ],
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    _showDialog(
+    return Obx(
+      () => Scaffold(
+        backgroundColor: Get.theme.canvasColor,
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              decoration: BoxDecoration(color: Get.theme.canvasColor),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      showModalBottomSheet(
                         context: context,
-                        info:
-                            'Flexible Savings product subscriptions and redemptions are closed during 23:50-00:10 (UTC) daily. No interest is accumulated on products purchased on the day of subscription. Interest is calculated the next day.');
-                  },
-                  child: Row(
-                    children: [
-                      Text(
-                        'Flexible deposit timeline',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Icon(
-                        Icons.info_outline,
-                        size: 16,
-                      ),
-                    ],
+                        builder: (context) {
+                          return Container();
+                        },
+                      );
+                    },
+                    child: Row(
+                      children: [
+                        Text('All'),
+                        Icon(Icons.arrow_drop_down),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                  GestureDetector(
+                    onTap: () {
+                      _showDialog(
+                          context: context,
+                          info:
+                              'Flexible Savings product subscriptions and redemptions are closed during 23:50-00:10 (UTC) daily. No interest is accumulated on products purchased on the day of subscription. Interest is calculated the next day.');
+                    },
+                    child: Row(
+                      children: [
+                        Text(
+                          'Flexible deposit timeline',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(
+                          Icons.info_outline,
+                          size: 16,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Flexible(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: ListView.builder(
-                shrinkWrap: false,
-                itemCount: _savingsController.plansList.length,
-                // itemCount: 3,
-                itemBuilder: (context, index) {
-                  // print('yeah');
-                  return Padding(
-                    padding:
-                        const EdgeInsets.only(top: 10.0, left: 5.0, right: 5.0),
-                    child: _savingsController.plansList[index].type.toUpperCase() ==
-                            'Flexible'.toUpperCase()
-                        ? _container(
-                            name: _savingsController.plansList[index].currencyId
-                                .toUpperCase(),
-                            annualYield: double.parse(
-                                _savingsController.plansList[index].rate),
-                            yesterdayInterest: 23.3,
-                            subscriptionCallBack: () {},
-                            imageLink: MyImgs.testPhoto,
-                            autoSubscriber: true,
-                            context: context,
-                          )
-                        : Container(),
-                  );
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: ListView.builder(
+                  shrinkWrap: false,
+                  itemCount: _savingsController.plansList.length,
+                  // itemCount: 3,
+                  itemBuilder: (context, index) {
+                    // print('yeah');
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                          top: 10.0, left: 5.0, right: 5.0),
+                      child: _savingsController.plansList[index].type
+                                  .toUpperCase() ==
+                              'Flexible'.toUpperCase()
+                          ? _container(
+                              name: _savingsController
+                                  .plansList[index].currencyId
+                                  .toUpperCase(),
+                              annualYield: double.parse(
+                                  _savingsController.plansList[index].rate),
+                              yesterdayInterest: 23.3,
+                              subscriptionCallBack: () {},
+                              imageLink: MyImgs.testPhoto,
+                              autoSubscriber: true,
+                              context: context,
+                            )
+                          : Container(),
+                    );
 
-                  /*_container(
+                    /*_container(
                       name: 'namer'.toUpperCase(),
                       annualYield: 23,
                       yesterdayInterest: 23.3,
@@ -103,11 +106,12 @@ class FlexibleTab extends StatelessWidget {
                       context: context,
                     ),
                   );*/
-                },
+                  },
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

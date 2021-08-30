@@ -27,54 +27,49 @@ class _SavingsState extends State<Savings> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
     /*  print(_savingController.plansList.length);
       print(_savingController.totalPlans);*/
-      return Scaffold(
-        appBar: AppBar(
-          backwardsCompatibility: false,
-          backgroundColor: Get.theme.scaffoldBackgroundColor,
-          foregroundColor: Get.theme.textSelectionTheme.selectionColor,
-          centerTitle: true,
-          elevation: 0,
-          title: TabBar(
-            indicatorColor: Get.theme.primaryColor,
-            labelColor: Get.theme.primaryColor,
-            unselectedLabelColor:
-            Get.theme.textSelectionTheme.selectionColor,
-            indicatorSize: TabBarIndicatorSize.label,
-            isScrollable: true,
-            controller: _tabController,
-            tabs: [
-              Tab(
-                child: Text(
-                  'Flexible',
-                ),
-              ),
-              Tab(
-                child: Text(
-                  'Locked',
-                ),
-              ),
-            ],
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Icon(Icons.note_add),
-            ),
-          ],
-        ),
-        body: TabBarView(
+    return Scaffold(
+      appBar: AppBar(
+        backwardsCompatibility: false,
+        backgroundColor: Get.theme.scaffoldBackgroundColor,
+        foregroundColor: Get.theme.textSelectionTheme.selectionColor,
+        centerTitle: true,
+        elevation: 0,
+        title: TabBar(
+          indicatorColor: Get.theme.primaryColor,
+          labelColor: Get.theme.primaryColor,
+          unselectedLabelColor: Get.theme.textSelectionTheme.selectionColor,
+          indicatorSize: TabBarIndicatorSize.label,
+          isScrollable: true,
           controller: _tabController,
-          children: [
-            FlexibleTab(),
-            LockedTab(
-              data: _savingController.plansList,
+          tabs: [
+            Tab(
+              child: Text(
+                'Flexible',
+              ),
+            ),
+            Tab(
+              child: Text(
+                'Locked',
+              ),
             ),
           ],
         ),
-      );
-    });
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: Icon(Icons.note_add),
+          ),
+        ],
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          FlexibleTab(),
+          LockedTab(),
+        ],
+      ),
+    );
   }
 }

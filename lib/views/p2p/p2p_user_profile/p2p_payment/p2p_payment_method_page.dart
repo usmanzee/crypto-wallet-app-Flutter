@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class P2pPaymentMethodPage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,8 +111,8 @@ class P2pPaymentMethodPage extends StatelessWidget {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color:
-                        Colors.primaries[_random.nextInt(Colors.primaries.length)],
+                    color: Colors
+                        .primaries[_random.nextInt(Colors.primaries.length)],
                     borderRadius: BorderRadius.circular(1),
                   ),
                   child: Text(' '),
