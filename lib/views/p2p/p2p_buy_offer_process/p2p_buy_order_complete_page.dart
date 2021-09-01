@@ -1,4 +1,5 @@
 import 'package:b4u_wallet/views/widgets/icon_widget.dart';
+import 'package:b4u_wallet/views/widgets/review_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -293,104 +294,20 @@ class P2pBuyOrderCompletePage extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 4,
-                              horizontal: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Get.theme.canvasColor,
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 4,
-                                    horizontal: 4,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Get.theme.scaffoldBackgroundColor,
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  child: Icon(
-                                    Icons.thumb_up_outlined,
-                                    size: 25,
-                                    color: Get.theme.textSelectionTheme
-                                        .selectionColor,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 16,
-                                ),
-                                Text(
-                                  'Positive',
-                                  style: TextStyle(
-                                    color: Get.theme.textSelectionTheme
-                                        .selectionColor,
-                                    fontFamily: "Popins",
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14.0,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                        reviewWidget(
+                          icon: Icons.thumb_up_outlined,
+                          callBack: () {},
+                          name: 'Positive',
+                          green: true,
                         ),
                         SizedBox(
                           width: 16,
                         ),
-                        Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 4,
-                              horizontal: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Get.theme.canvasColor,
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 4,
-                                    horizontal: 4,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Get.theme.scaffoldBackgroundColor,
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  child: Icon(
-                                    Icons.thumb_down_outlined,
-                                    size: 25,
-                                    color: Get.theme.textSelectionTheme
-                                        .selectionColor,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 16,
-                                ),
-                                Text(
-                                  'Negative',
-                                  style: TextStyle(
-                                    color: Get.theme.textSelectionTheme
-                                        .selectionColor,
-                                    fontFamily: "Popins",
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14.0,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                        reviewWidget(
+                          name: 'Negative',
+                          callBack: () {},
+                          icon: Icons.thumb_down_outlined,
+                          green: false,
                         ),
                       ],
                     ),
@@ -408,19 +325,22 @@ class P2pBuyOrderCompletePage extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8,
-                    ),
-                    color: Get.theme.canvasColor,
-                    child: Center(
-                      child: Text(
-                        'Appeal',
-                        style: TextStyle(
-                          fontFamily: "Popins",
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16.0,
-                          color: Get.theme.textSelectionTheme.selectionColor,
+                  GestureDetector(
+                    onTap: () => Get.toNamed('/p2p_seller_offer_complete_page'),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8,
+                      ),
+                      color: Get.theme.canvasColor,
+                      child: Center(
+                        child: Text(
+                          'Appeal',
+                          style: TextStyle(
+                            fontFamily: "Popins",
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.0,
+                            color: Get.theme.textSelectionTheme.selectionColor,
+                          ),
                         ),
                       ),
                     ),

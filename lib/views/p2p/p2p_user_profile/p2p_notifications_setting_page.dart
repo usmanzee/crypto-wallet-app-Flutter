@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class P2pNotificationsSettingPage extends StatelessWidget {
-  final p2pController = Get.find<P2pController>();
+  final _p2pController = Get.find<P2pController>();
 
   @override
   Widget build(BuildContext context) {
@@ -38,25 +38,25 @@ class P2pNotificationsSettingPage extends StatelessWidget {
               subtitle:
                   'To receive news about new orders and order status changes, please enable at least 1 notification',
               heading: 'Orders',
-              appNotification: p2pController.ordersAppNotificationsEnable,
-              email: p2pController.ordersEmailEnable,
-              sms: p2pController.ordersSmsEnable,
+              appNotification: _p2pController.ordersAppNotificationsEnable,
+              email: _p2pController.ordersEmailEnable,
+              sms: _p2pController.ordersSmsEnable,
             ),
             categories(
               subtitle:
               'To receive news about new appeals and appeal status changes, please enable at least 1 notification',
               heading: 'Appeals',
-              appNotification: p2pController.appealsAppNotificationsEnable,
-              email: p2pController.appealsEmailEnable,
-              sms: p2pController.appealsSmsEnable,
+              appNotification: _p2pController.appealsAppNotificationsEnable,
+              email: _p2pController.appealsEmailEnable,
+              sms: _p2pController.appealsSmsEnable,
             ),
             categories(
               subtitle:
               'Receive security and privacy reminders and other messages, emails and text messages cannot be closed manually',
               heading: 'Security',
-              appNotification: p2pController.securityAppNotificationsEnable,
-              email: p2pController.securityEmailEnable,
-              sms: p2pController.securitySmsEnable,
+              appNotification: _p2pController.securityAppNotificationsEnable,
+              email: _p2pController.securityEmailEnable,
+              sms: _p2pController.securitySmsEnable,
             ),
           ],
         ),

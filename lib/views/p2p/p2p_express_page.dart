@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'components/dialog_widget.dart';
 
 class P2pExpressPage extends StatelessWidget {
-  final p2pController = Get.find<P2pController>();
+  final _p2pController = Get.find<P2pController>();
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +97,7 @@ class P2pExpressPage extends StatelessWidget {
                                   'UAH',
                                   style: TextStyle(
                                     fontFamily: "Popins",
-                                    color: p2pController.buySellOrExpress.value
+                                    color: _p2pController.buySellOrExpress.value
                                         ? Get.theme.scaffoldBackgroundColor
                                         : Get.theme.textSelectionTheme
                                             .selectionColor,
@@ -113,7 +113,7 @@ class P2pExpressPage extends StatelessWidget {
                                 child: Icon(
                                   Icons.swap_horiz,
                                   size: 20,
-                                  color: p2pController.buySellOrExpress.value
+                                  color: _p2pController.buySellOrExpress.value
                                       ? Get.theme.scaffoldBackgroundColor
                                       : Get.theme.textSelectionTheme
                                           .selectionColor,
@@ -149,16 +149,16 @@ class P2pExpressPage extends StatelessWidget {
                       Row(
                         children: [
                           GestureDetector(
-                            onTap: p2pController.buyOrSellExpress.value
+                            onTap: _p2pController.buyOrSellExpress.value
                                 ? null
                                 : () {
-                                    p2pController.buyOrSellExpress.value = true;
+                                    _p2pController.buyOrSellExpress.value = true;
                                   },
                             child: Text(
                               'Buy',
                               style: TextStyle(
                                 fontFamily: "Popins",
-                                color: p2pController.buyOrSellExpress.value
+                                color: _p2pController.buyOrSellExpress.value
                                     ? Get
                                         .theme.textSelectionTheme.selectionColor
                                     : Get
@@ -173,9 +173,9 @@ class P2pExpressPage extends StatelessWidget {
                             width: 12.0,
                           ),
                           GestureDetector(
-                            onTap: p2pController.buyOrSellExpress.value
+                            onTap: _p2pController.buyOrSellExpress.value
                                 ? () {
-                                    p2pController.buyOrSellExpress.value =
+                                    _p2pController.buyOrSellExpress.value =
                                         false;
                                   }
                                 : null,
@@ -183,7 +183,7 @@ class P2pExpressPage extends StatelessWidget {
                               'Sell',
                               style: TextStyle(
                                 fontFamily: "Popins",
-                                color: p2pController.buyOrSellExpress.value
+                                color: _p2pController.buyOrSellExpress.value
                                     ? Get
                                         .theme.textSelectionTheme.selectionColor
                                         .withOpacity(0.5)
@@ -260,48 +260,48 @@ class P2pExpressPage extends StatelessWidget {
                     children: [
                       expressBuySellTabWidget(
                         currencyName: 'USDT',
-                        transfer: p2pController.buyOrSellExpress.value,
+                        transfer: _p2pController.buyOrSellExpress.value,
                         buyingCurrency: 'Rs',
-                        hintFirstText: p2pController.buyOrSellExpress.value
+                        hintFirstText: _p2pController.buyOrSellExpress.value
                             ? 'Above'
                             : 'Available',
-                        hintSecondText: p2pController.buyOrSellExpress.value
+                        hintSecondText: _p2pController.buyOrSellExpress.value
                             ? '20'
                             : '200000',
                         referencePrice: 159.00.toString(),
                       ),
                       expressBuySellTabWidget(
                         currencyName: 'BTC',
-                        transfer: p2pController.buyOrSellExpress.value,
+                        transfer: _p2pController.buyOrSellExpress.value,
                         buyingCurrency: 'Rs',
-                        hintFirstText: p2pController.buyOrSellExpress.value
+                        hintFirstText: _p2pController.buyOrSellExpress.value
                             ? 'Above'
                             : 'Available',
-                        hintSecondText: p2pController.buyOrSellExpress.value
+                        hintSecondText: _p2pController.buyOrSellExpress.value
                             ? '20'
                             : '200000',
                         referencePrice: 159.00.toString(),
                       ),
                       expressBuySellTabWidget(
                         currencyName: 'ETH',
-                        transfer: p2pController.buyOrSellExpress.value,
+                        transfer: _p2pController.buyOrSellExpress.value,
                         buyingCurrency: 'Rs',
-                        hintFirstText: p2pController.buyOrSellExpress.value
+                        hintFirstText: _p2pController.buyOrSellExpress.value
                             ? 'Above'
                             : 'Available',
-                        hintSecondText: p2pController.buyOrSellExpress.value
+                        hintSecondText: _p2pController.buyOrSellExpress.value
                             ? '20'
                             : '200000',
                         referencePrice: 159.00.toString(),
                       ),
                       expressBuySellTabWidget(
                         currencyName: 'TRST',
-                        transfer: p2pController.buyOrSellExpress.value,
+                        transfer: _p2pController.buyOrSellExpress.value,
                         buyingCurrency: 'Rs',
-                        hintFirstText: p2pController.buyOrSellExpress.value
+                        hintFirstText: _p2pController.buyOrSellExpress.value
                             ? 'Above'
                             : 'Available',
-                        hintSecondText: p2pController.buyOrSellExpress.value
+                        hintSecondText: _p2pController.buyOrSellExpress.value
                             ? '20'
                             : '200000',
                         referencePrice: 159.00.toString(),

@@ -25,7 +25,7 @@ class BottomNavBar extends GetView<HomeController> {
         case 0:
           return RefreshIndicator(
             onRefresh: controller.refreshHomePage,
-            child: new Home(),
+            child: Home(),
           );
           break;
         case 1:

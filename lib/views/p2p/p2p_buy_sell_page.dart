@@ -13,7 +13,7 @@ class P2pBuySellPage extends StatelessWidget {
     'TRST',
     'ETH',
   ];
-  final p2pController = Get.find<P2pController>();
+  final _p2pController = Get.find<P2pController>();
 
   TabBar get _tabBar => TabBar(
         indicatorColor: Get.theme.primaryColor,
@@ -123,7 +123,7 @@ class P2pBuySellPage extends StatelessWidget {
                                             'UAH',
                                             style: TextStyle(
                                               fontFamily: "Popins",
-                                              color: p2pController
+                                              color: _p2pController
                                                       .buySellOrExpress.value
                                                   ? Get.theme
                                                       .scaffoldBackgroundColor
@@ -141,7 +141,7 @@ class P2pBuySellPage extends StatelessWidget {
                                           child: Icon(
                                             Icons.swap_horiz,
                                             size: 20,
-                                            color: p2pController
+                                            color: _p2pController
                                                     .buySellOrExpress.value
                                                 ? Get.theme
                                                     .scaffoldBackgroundColor
@@ -181,10 +181,10 @@ class P2pBuySellPage extends StatelessWidget {
                                   Row(
                                     children: [
                                       GestureDetector(
-                                        onTap: p2pController.buyOrSellP2p.value
+                                        onTap: _p2pController.buyOrSellP2p.value
                                             ? null
                                             : () {
-                                                p2pController
+                                                _p2pController
                                                     .buyOrSellP2p.value = true;
                                               },
                                         child: Text(
@@ -192,7 +192,7 @@ class P2pBuySellPage extends StatelessWidget {
                                           style: TextStyle(
                                             fontFamily: "Popins",
                                             color:
-                                                p2pController.buyOrSellP2p.value
+                                                _p2pController.buyOrSellP2p.value
                                                     ? Get
                                                         .theme
                                                         .textSelectionTheme
@@ -211,9 +211,9 @@ class P2pBuySellPage extends StatelessWidget {
                                         width: 12.0,
                                       ),
                                       GestureDetector(
-                                        onTap: p2pController.buyOrSellP2p.value
+                                        onTap: _p2pController.buyOrSellP2p.value
                                             ? () {
-                                                p2pController
+                                                _p2pController
                                                     .buyOrSellP2p.value = false;
                                               }
                                             : null,
@@ -222,7 +222,7 @@ class P2pBuySellPage extends StatelessWidget {
                                           style: TextStyle(
                                             fontFamily: "Popins",
                                             color:
-                                                p2pController.buyOrSellP2p.value
+                                                _p2pController.buyOrSellP2p.value
                                                     ? Get
                                                         .theme
                                                         .textSelectionTheme
@@ -326,23 +326,23 @@ class P2pBuySellPage extends StatelessWidget {
               // These are the contents of the tab views, below the p2p_buy_sell_tabs.
               children: [
                 p2pCurrencyTabWidget(
-                  sellList: p2pController.usdSell,
-                  buyList: p2pController.usdBuy,
+                  sellList: _p2pController.usdSell,
+                  buyList: _p2pController.usdBuy,
                   name: 'USD',
                 ),
                 p2pCurrencyTabWidget(
-                  sellList: p2pController.btcSell,
-                  buyList: p2pController.btcBuy,
+                  sellList: _p2pController.btcSell,
+                  buyList: _p2pController.btcBuy,
                   name: 'BTC',
                 ),
                 p2pCurrencyTabWidget(
-                  sellList: p2pController.trstSell,
-                  buyList: p2pController.trstBuy,
+                  sellList: _p2pController.trstSell,
+                  buyList: _p2pController.trstBuy,
                   name: 'TRST',
                 ),
                 p2pCurrencyTabWidget(
-                  sellList: p2pController.ethSell,
-                  buyList: p2pController.ethBuy,
+                  sellList: _p2pController.ethSell,
+                  buyList: _p2pController.ethBuy,
                   name: 'ETH',
                 ),
               ],

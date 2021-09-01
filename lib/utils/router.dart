@@ -39,6 +39,7 @@ import 'package:b4u_wallet/views/p2p/p2p_buy_offer_process/p2p_buy_order_complet
 import 'package:b4u_wallet/views/p2p/p2p_buy_offer_process/p2p_buy_payment_method_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_buy_offer_process/p2p_buy_payment_pending_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_buy_offer_process/p2p_buy_payment_release_page.dart';
+import 'package:b4u_wallet/views/p2p/p2p_buy_offer_process/seller_offer_side_pages/p2p_seller_offer_complete_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_buy_sell_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_chat_page/p2p_chat_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_history_page.dart';
@@ -177,157 +178,131 @@ class Router {
     GetPage(
       name: '/p2p_page',
       page: () => P2pBuySellPage(),
-      binding: P2pBinding(),
     ),
     GetPage(
       name: '/p2p_user_profile',
       page: () => P2pUserProfile(),
-      binding: P2pBinding(),
     ),
     GetPage(
       name: '/p2p_feedback_page',
       page: () => P2pFeedbackPage(),
-      binding: P2pBinding(),
     ),
     GetPage(
       name: '/p2p_initial_page',
       page: () => P2pInitialPage(),
-      binding: P2pBinding(),
     ),
     GetPage(
       name: '/p2p_payment_method',
       page: () => P2pPaymentMethodPage(),
-      // binding: P2pBinding(),
     ),
     GetPage(
       name: '/p2p_notification_setting_page',
       page: () => P2pNotificationsSettingPage(),
-      // binding: P2pBinding(),
     ),
     GetPage(
       name: '/p2p_help_center_page',
       page: () => P2pHelpCanterPage(),
-      // binding: P2pBinding(),
     ),
     GetPage(
       name: '/spot_history_page',
       page: () => SpotHistoryPage(),
-      // binding: P2pBinding(),
     ),
     GetPage(
       name: '/select_currency_p2p_page',
       page: () => SelectCurrencyP2pScreen(),
-      // binding: P2pBinding(),
     ),
     GetPage(
       name: '/search_currency_p2p_dialog',
       page: () => SearchCurrencyP2pDialog(),
-      // binding: P2pBinding(),
     ),
     GetPage(
       name: '/p2p_history_page',
       page: () => P2pHistoryPage(),
-      // binding: P2pBinding(),
     ),
     GetPage(
       name: '/p2p_buy_sell_selected_offer_page',
       page: () => P2pBuySellSelectedOfferPage(),
-      // binding: P2pBinding(),
     ),
     GetPage(
       name: '/p2p_buy_payment_pending_page',
       page: () => P2pBuyPaymentPendingPage(),
-      // binding: P2pBinding(),
     ),
     GetPage(
       name: '/p2p_buy_payment_method_page',
       page: () => P2pBuyPaymentMethodPage(),
-      // binding: P2pBinding(),
     ),
     GetPage(
       name: '/p2p_buy_payment_release_page',
       page: () => P2pBuyPaymentReleasePage(),
-      // binding: P2pBinding(),
     ),
     GetPage(
       name: '/p2p_buy_order_complete_page',
       page: () => P2pBuyOrderCompletePage(),
-      // binding: P2pBinding(),
     ),
     GetPage(
       name: '/p2p_buy_sell_initial_appeal_page',
       page: () => P2pBuySellInitialAppealPage(),
-      // binding: P2pBinding(),
     ),
     GetPage(
       name: '/p2p_chat_page',
       page: () => P2pChatPage(),
-      // binding: P2pBinding(),
     ),
     GetPage(
       name: '/p2p_bottom_nav_page',
       page: () => P2pBottomNavPage(),
-      // binding: P2pBinding(),
+      binding: P2pBinding(),
     ),
     GetPage(
       name: '/p2p_orders_history_page',
       page: () => P2pOrdersHistoryPage(),
-      // binding: P2pBinding(),
     ),
     GetPage(
       name: '/p2p_ads_page',
       page: () => P2pAdsPage(),
-      // binding: P2pBinding(),
     ),
     GetPage(
       name: '/p2p_ads_page_history_page',
       page: () => P2pAdsPageHistoryPage(),
-      // binding: P2pBinding(),
     ),
     GetPage(
       name: '/p2p_ads_page_level_check_page',
       page: () => P2pAdsPageLevelCheckPage(),
-      // binding: P2pBinding(),
     ),
     GetPage(
       name: '/p2p_buy_sell_appeal_page',
       page: () => P2pBuySellAppealPage(),
-      // binding: P2pBinding(),
     ),
     GetPage(
       name: '/p2p_buy_sell_appeal_pending_page',
       page: () => P2pBuySellAppealPendingPage(),
-      // binding: P2pBinding(),
     ),
     GetPage(
       name: '/p2p_buy_sell_appeal_progress_page',
       page: () => P2pBuySellAppealProgressPage(),
-      // binding: P2pBinding(),
     ),
     GetPage(
       name: '/payment_methods_page',
       page: () => PaymentMethodsPage(),
-      // binding: P2pBinding(),
     ),
     GetPage(
       name: '/p2p_ad_sharing_code_page',
       page: () => P2pAdSharingCodePage(),
-      // binding: P2pBinding(),
     ),
     GetPage(
       name: '/p2p_select_payment_method_page',
       page: () => P2pSelectPaymentMethodPage(),
-      // binding: P2pBinding(),
     ),
     GetPage(
       name: '/p2p_select_all_payment_method_page',
       page: () => P2pSelectAllPaymentMethodPage(),
-      // binding: P2pBinding(),
     ),
     GetPage(
       name: '/p2p_payment_method_add_bank_details_page',
       page: () => P2pPaymentMethodAddBankDetailsPage(),
-      // binding: P2pBinding(),
+    ),
+    GetPage(
+      name: '/p2p_seller_offer_complete_page',
+      page: () => P2pSellerOfferCompletePage(),
     ),
   ];
 }

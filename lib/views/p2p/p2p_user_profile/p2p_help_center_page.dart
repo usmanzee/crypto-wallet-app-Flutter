@@ -10,8 +10,6 @@ class P2pHelpCanterPage extends StatelessWidget {
     'Advanced',
     // 'Advertiser',
   ];
-  final p2pController = Get.find<P2pController>();
-
   TabBar get _tabBar => TabBar(
         indicatorColor: Get.theme.primaryColor,
         labelColor: Get.theme.primaryColor,

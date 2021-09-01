@@ -88,7 +88,7 @@ class PaymentMethodsPage extends StatelessWidget {
                 ),
                 _row(
                   first: 'Ad sharing Code',
-                  callback: () {},
+                  callback: () => Get.toNamed('/p2p_ad_sharing_code_page'),
                 ),
                 //todo: add the required callbacks here for changing the mode of the p2p
                 Padding(

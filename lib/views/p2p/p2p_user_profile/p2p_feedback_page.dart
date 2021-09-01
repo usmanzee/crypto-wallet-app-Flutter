@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class P2pFeedbackPage extends StatelessWidget {
-  final p2pController = Get.find<P2pController>();
+  final _p2pController = Get.find<P2pController>();
 
   @override
   Widget build(BuildContext context) {
@@ -130,12 +130,12 @@ class P2pFeedbackPage extends StatelessWidget {
   Widget _container({String name, String number = ''}) {
     return GestureDetector(
       onTap: () {
-        p2pController.reviewChosen.value = name;
+        _p2pController.reviewChosen.value = name;
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
         decoration: BoxDecoration(
-          color: p2pController.reviewChosen.value == name
+          color: _p2pController.reviewChosen.value == name
               ? Get.theme.accentColor
               : Get.theme.hintColor,
           borderRadius: BorderRadius.circular(16),

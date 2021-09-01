@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class P2pUserProfile extends StatelessWidget {
-  final p2pController = Get.find<P2pController>();
+  final _p2pController = Get.find<P2pController>();
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +126,7 @@ class P2pUserProfile extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        p2pController.user30DaysTrades.value
+                                        _p2pController.user30DaysTrades.value
                                             .toString(),
                                         style: TextStyle(
                                           fontFamily: "Popins",
@@ -158,7 +158,7 @@ class P2pUserProfile extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          '${p2pController.user30DaysCompletionRate.value}%',
+                                          '${_p2pController.user30DaysCompletionRate.value}%',
                                           style: TextStyle(
                                             fontFamily: "Popins",
                                             color: Get.theme.textSelectionTheme
@@ -207,7 +207,7 @@ class P2pUserProfile extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      '${p2pController.averageReleaseTime.value} Minutes[s]',
+                                      '${_p2pController.averageReleaseTime.value} Minutes[s]',
                                       style: TextStyle(
                                         fontFamily: "Popins",
                                         color: Get.theme.textSelectionTheme
@@ -238,7 +238,7 @@ class P2pUserProfile extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    '${p2pController.averagePayTime.value} Minutes[s]',
+                                    '${_p2pController.averagePayTime.value} Minutes[s]',
                                     style: TextStyle(
                                       fontFamily: "Popins",
                                       color: Get.theme.textSelectionTheme

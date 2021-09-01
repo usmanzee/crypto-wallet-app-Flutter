@@ -3,7 +3,7 @@ import 'package:b4u_wallet/controllers/wallet_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-final p2pController = Get.find<P2pController>();
+final _p2pController = Get.find<P2pController>();
 
 Widget expressBuySellTabWidget(
     {String currencyName,
@@ -83,7 +83,7 @@ Widget expressBuySellTabWidget(
                       ),
                       child: Row(
                         children: [
-                          p2pController.cryptoOrCash.value
+                          _p2pController.cryptoOrCash.value
                               ? Padding(
                                   padding: const EdgeInsets.only(
                                     left: 6,
@@ -119,7 +119,7 @@ Widget expressBuySellTabWidget(
                               ),
                             ),
                           ),
-                          p2pController.cryptoOrCash.value
+                          _p2pController.cryptoOrCash.value
                               ? Container()
                               : Padding(
                                   padding: const EdgeInsets.symmetric(
@@ -206,14 +206,14 @@ Widget expressBuySellTabWidget(
                           ),
                           GestureDetector(
                             onTap: () {
-                              p2pController.cryptoOrCash.value =
-                                  !p2pController.cryptoOrCash.value;
+                              _p2pController.cryptoOrCash.value =
+                                  !_p2pController.cryptoOrCash.value;
                             },
                             child: Row(
                               children: [
                                 Text(
                                   //todo: add the values here after translation
-                                  p2pController.cryptoOrCash.value
+                                  _p2pController.cryptoOrCash.value
                                       ? 'By crypto'
                                       : 'By cash',
                                   style: TextStyle(
@@ -243,14 +243,14 @@ Widget expressBuySellTabWidget(
                       ),
                       child: GestureDetector(
                         onTap: () {
-                          print(p2pController.buyOrSellExpress.value);
+                          print(_p2pController.buyOrSellExpress.value);
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(
                             vertical: 8,
                           ),
                           decoration: BoxDecoration(
-                            color: p2pController.buyOrSellExpress.value
+                            color: _p2pController.buyOrSellExpress.value
                                 ? Colors.greenAccent
                                 : Colors.redAccent,
                             borderRadius: BorderRadius.circular(4),

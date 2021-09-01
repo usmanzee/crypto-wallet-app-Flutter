@@ -111,7 +111,7 @@ class P2pController extends GetxController {
         showTopButton.value = false;
       }
     });
-    ever(isLoading, fetchAllLists);
+    // ever(isLoading, fetchAllLists);
     super.onReady();
   }
 
