@@ -63,22 +63,23 @@ Widget p2pCurrencyTabWidget({
                                       //todo: remove the link to the next page and add the check for the level
                                       p2pLevelCheckDialog(context: context);
                                     },
-                                    functionText: 'Buy',
+                                    functionText: buyList[index].side,
                                     lowerLimit: buyList[index].minOrderAmount,
                                     upperLimit: buyList[index].maxOrderAmount,
                                     nameCallback: () =>
-                                        print('from name callback'),
-                                    reviewPercentage: '98.09',
+                                        Get.toNamed('/p2p_user_profile'),
+                                    reviewPercentage: 'none',
                                     tabCurrencyName: 'usdt',
-                                    trades: '216',
-                                    currencySymbol: '\$',
+                                    trades: 'none',
+                                    currencySymbol: '',
                                   )
                                 : containerTrade(
                                     name: sellList[index].member.email,
                                     price: sellList[index].price,
                                     currency: sellList[index].baseUnit,
                                     bankName: 'MonoBank',
-                                    cryptoAmount: '815.98',
+                                    cryptoAmount:
+                                        sellList[index].availableAmount,
                                     functionCallback: () {
                                       p2pLevelCheckDialog(context: context);
                                     },

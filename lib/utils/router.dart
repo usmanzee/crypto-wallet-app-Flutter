@@ -30,7 +30,8 @@ import 'package:b4u_wallet/views/p2p/components/search_currency_p2p_dialog.dart'
 import 'package:b4u_wallet/views/p2p/components/select_currency_p2p_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_ad_sharing_code_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_page.dart';
-import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_ads_page.dart';
+import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_ads_page/p2p_ad_posted_page.dart';
+import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_ads_page/p2p_ads_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_ads_page_history_page/p2p_ads_page_history_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_initial_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_order_history_page/p2p_orders_history_page.dart';
@@ -303,6 +304,10 @@ class Router {
     GetPage(
       name: '/p2p_seller_offer_complete_page',
       page: () => P2pSellerOfferCompletePage(),
+    ),
+    GetPage(
+      name: '/p2p_ad_posted_page',
+      page: () => P2pAdPostedPage(),
     ),
   ];
 }

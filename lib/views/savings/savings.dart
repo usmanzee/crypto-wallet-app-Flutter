@@ -1,4 +1,3 @@
-import 'package:b4u_wallet/controllers/savings_controller.dart';
 import 'package:b4u_wallet/views/savings/tabs/flexible.dart';
 import 'package:b4u_wallet/views/savings/tabs/locked.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,7 @@ class Savings extends StatefulWidget {
 
 class _SavingsState extends State<Savings> with SingleTickerProviderStateMixin {
   TabController _tabController;
-  final _savingController = Get.find<SavingsController>();
+  // final _savingController = Get.find<SavingsController>();
 
   @override
   void initState() {

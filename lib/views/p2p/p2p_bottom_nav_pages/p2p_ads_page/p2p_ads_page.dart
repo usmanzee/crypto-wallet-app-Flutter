@@ -139,6 +139,7 @@ class P2pAdsPage extends StatelessWidget {
               ),
             ),
           ),
+          ElevatedButton(onPressed: () => Get.toNamed('/p2p_ad_posted_page'),child: Text('hi'),),
         ],
       ),
     );
@@ -284,7 +285,10 @@ class P2pAdsPage extends StatelessWidget {
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           //todo: add the variables here and also add the other functionality
-                          return _listWidget();
+                          return _listWidget(
+                            name: 'hi',
+                            callback: () {},
+                          );
                         },
                       ),
                     ),
@@ -300,9 +304,7 @@ class P2pAdsPage extends StatelessWidget {
 
   Widget _listWidget({String name, Function callback}) {
     return GestureDetector(
-      onTap: () {
-        print('from items');
-      },
+      onTap: callback,
       child: Container(
         color: Get.theme.scaffoldBackgroundColor,
         child: Padding(
@@ -318,7 +320,7 @@ class P2pAdsPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Hi',
+                      name,
                       style: TextStyle(
                         fontFamily: "Popins",
                         fontWeight: FontWeight.bold,
