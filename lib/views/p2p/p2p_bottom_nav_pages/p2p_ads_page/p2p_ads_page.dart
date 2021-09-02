@@ -118,7 +118,7 @@ class P2pAdsPage extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () => Get.toNamed('/p2p_ads_page_level_check_page'),
+            onTap: () => Get.toNamed('/p2p_ad_post_first_page'),
             child: Container(
               decoration: BoxDecoration(
                 color: Get.theme.accentColor,
@@ -139,7 +139,129 @@ class P2pAdsPage extends StatelessWidget {
               ),
             ),
           ),
-          ElevatedButton(onPressed: () => Get.toNamed('/p2p_ad_posted_page'),child: Text('hi'),),
+          ElevatedButton(
+            onPressed: () => Get.toNamed('/p2p_ad_posted_page'),
+            child: Text('hi'),
+          ),
+          //todo: the confirm payment received dialog
+          ElevatedButton(
+            onPressed: () => showDialog(
+              barrierDismissible: true,
+              context: context,
+              builder: (context) => AlertDialog(
+                insetPadding: const EdgeInsets.symmetric(horizontal: 16),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Confirm Payment Received',
+                      style: TextStyle(
+                        fontFamily: "Popins",
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                        color: Get.theme.textSelectionTheme.selectionColor,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: Text(
+                        'ATTENTION! Please be sure to LOG IN THE RECEIVING (e.g. Banks/ eWallet) ACCOUNT to confirm that the money has arrived in the \"Available Balance\"',
+                        style: TextStyle(
+                          fontFamily: "Popins",
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14.0,
+                          color: Get.theme.textSelectionTheme.selectionColor,
+                        ),
+                      ),
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.check_circle,
+                          size: 20,
+                          color: Get.theme.hintColor,
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Expanded(
+                          child: Text(
+                            'I confirm that the payment is successfully received with the correct amount and sender information',
+                            style: TextStyle(
+                              fontFamily: "Popins",
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12.0,
+                              color:
+                                  Get.theme.textSelectionTheme.selectionColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            decoration: BoxDecoration(
+                              color: Get.theme.canvasColor,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Cancel',
+                                style: TextStyle(
+                                  fontFamily: "Popins",
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.0,
+                                  color: Get
+                                      .theme.textSelectionTheme.selectionColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 16,
+                        ),
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            decoration: BoxDecoration(
+                              color: Get.theme.canvasColor,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Confirm',
+                                style: TextStyle(
+                                  fontFamily: "Popins",
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.0,
+                                  color: Get
+                                      .theme.textSelectionTheme.selectionColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            child: Text('dialog'),
+          ),
+          //todo: the requirements screen
+          ElevatedButton(
+            onPressed: () => Get.toNamed('/p2p_ads_page_level_check_page'),
+            child: Text('level check'),
+          ),
         ],
       ),
     );
