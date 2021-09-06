@@ -44,9 +44,20 @@ class P2pAdPostInitialPage extends StatelessWidget {
       body: Column(
         children: [
           Container(
-            height: 150,
-            width: double.infinity,
-            color: Colors.blueGrey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '1/3. Set Type & Price',
+                  style: TextStyle(
+                    fontFamily: "Popins",
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14.0,
+                    color: Get.theme.textSelectionTheme.selectionColor,
+                  ),
+                ),
+              ],
+            ),
           ),
           Expanded(
             child: PageView.builder(
@@ -64,6 +75,7 @@ class P2pAdPostInitialPage extends StatelessWidget {
               },
             ),
           ),
+          //todo: the button for moving forward and backwards
           Padding(
             padding: const EdgeInsets.only(
               bottom: 16,

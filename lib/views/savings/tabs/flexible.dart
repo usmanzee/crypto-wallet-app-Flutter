@@ -1,4 +1,5 @@
 import 'package:b4u_wallet/controllers/savings_controller.dart';
+import 'package:b4u_wallet/controllers/wallet_controller.dart';
 import 'package:b4u_wallet/utils/Helpers/my_imgs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:get/get.dart';
 class FlexibleTab extends StatelessWidget {
   final date = DateTime.now().subtract(Duration(days: 1));
   final _savingsController = Get.find<SavingsController>();
+  final _walletController = Get.find<WalletController>();
 
   @override
   Widget build(BuildContext context) {
@@ -87,17 +89,46 @@ class FlexibleTab extends StatelessWidget {
                                   .toUpperCase(),
                               annualYield: double.parse(
                                   _savingsController.plansList[index].rate),
-                              yesterdayInterest: 23.3,
-                              subscriptionCallBack: () {},
+                              yesterdayInterest: double.parse(
+                                  _savingsController.plansList[index].rate),
                               imageLink: MyImgs.testPhoto,
-                              autoSubscriber: true,
                               context: context,
+                              index: index,
+                              subscriptionCallBack: () {
+                                _savingsController
+                                        .flexibleSelectedOfferCurrencyName
+                                        .value =
+                                    _savingsController
+                                        .plansList[index].currencyId
+                                        .toUpperCase();
+                                _savingsController.flexibleSevenDayApy.value =
+                                    _savingsController.plansList[index].rate;
+                                _savingsController.flexibleYesterdayApy.value =
+                                    _savingsController.plansList[index].rate;
+                                _savingsController.flexiblePlanId.value =
+                                    _savingsController.plansList[index].id;
+                                // for fetching the value from the wallet controller and use it in the locked amount
+                                _walletController.savingWalletsList.forEach(
+                                  (element) {
+                                    if (element.currency.toUpperCase() ==
+                                        _savingsController
+                                            .plansList[index].currencyId
+                                            .toUpperCase()) {
+                                      _savingsController
+                                          .flexibleSelectedOfferCurrencyAmount
+                                          .value = element.balance;
+                                    }
+                                  },
+                                );
+                                // _savingsController.flexibleSelectedOfferCurrencyAmount.value = _walletController.savingWalletsList;
+                                Get.toNamed('/flexible_package_detail_page');
+                              },
                             )
                           : Container(),
                     );
 
                     /*_container(
-                      name: 'namer'.toUpperCase(),
+                      name: 'name'.toUpperCase(),
                       annualYield: 23,
                       yesterdayInterest: 23.3,
                       subscriptionCallBack: () {},
@@ -121,9 +152,9 @@ class FlexibleTab extends StatelessWidget {
     @required double annualYield,
     @required double yesterdayInterest,
     @required Function subscriptionCallBack,
-    @required bool autoSubscriber,
     @required String imageLink,
     @required BuildContext context,
+    @required int index,
   }) {
     return Obx(() => Card(
           child: Padding(
@@ -235,23 +266,26 @@ class FlexibleTab extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 15),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 10,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Get.theme.accentColor,
-                    ),
-                    width: double.infinity,
-                    child: Center(
-                      child: Text(
-                        'Subscribe',
-                        style: TextStyle(
-                          fontFamily: "Popins",
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          color: Get.theme.scaffoldBackgroundColor,
+                  child: GestureDetector(
+                    onTap: subscriptionCallBack,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 10,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Get.theme.accentColor,
+                      ),
+                      width: double.infinity,
+                      child: Center(
+                        child: Text(
+                          'Subscribe',
+                          style: TextStyle(
+                            fontFamily: "Popins",
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: Get.theme.scaffoldBackgroundColor,
+                          ),
                         ),
                       ),
                     ),
@@ -285,9 +319,18 @@ class FlexibleTab extends StatelessWidget {
                       ),
                     ),
                     CupertinoSwitch(
-                      value: _savingsController.switchValue.value,
+                      value: _savingsController.switchValue[index],
                       onChanged: (value) {
-                        _savingsController.switchValue.value = value;
+                        // final val = _savingsController.switchValue.value[index];
+                        _savingsController.switchValue[index] = value;
+                        if (_savingsController.switchValue[index]) {
+                          _showDialog(
+                            context: context,
+                            info:
+                                'Turning Auto-Subscribe means your corresponding asset (including your interests, new token purchase) in  the spot wallet will be transferred to the Earn wallet every 24 hours; you can find teh auto-subscribe history under history',
+                          );
+                        }
+                        // print(_savingsController.switchValue.toJson());
                       },
                       activeColor: Get.theme.accentColor,
                       trackColor: Get.theme.hintColor,

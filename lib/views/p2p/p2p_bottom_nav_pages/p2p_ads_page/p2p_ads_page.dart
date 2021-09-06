@@ -118,7 +118,7 @@ class P2pAdsPage extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () => Get.toNamed('/p2p_ad_post_first_page'),
+            onTap: () => Get.toNamed('/p2p_ad_post_initial_page'),
             child: Container(
               decoration: BoxDecoration(
                 color: Get.theme.accentColor,

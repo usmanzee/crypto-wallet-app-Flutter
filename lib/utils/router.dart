@@ -53,6 +53,8 @@ import 'package:b4u_wallet/views/p2p/p2p_user_profile/p2p_payment/p2p_payment_me
 import 'package:b4u_wallet/views/p2p/p2p_user_profile/p2p_payment/p2p_select_all_payment_method_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_user_profile/p2p_payment/p2p_select_payment_method_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_user_profile/p2p_user_profile.dart';
+import 'package:b4u_wallet/views/savings/flexible_package_detail_page.dart';
+import 'package:b4u_wallet/views/savings/saving_history_page.dart';
 import 'package:b4u_wallet/views/savings/savings.dart';
 import 'package:b4u_wallet/views/security/enable_otp.dart';
 import 'package:b4u_wallet/views/security/security.dart';
@@ -310,10 +312,17 @@ class Router {
       name: '/p2p_ad_posted_page',
       page: () => P2pAdPostedPage(),
     ),
-
     GetPage(
       name: '/p2p_ad_post_initial_page',
       page: () => P2pAdPostInitialPage(),
+    ),
+    GetPage(
+      name: '/saving_history_page',
+      page: () => SavingHistoryPage(),
+    ),
+    GetPage(
+      name: '/flexible_package_detail_page',
+      page: () => FlexiblePackageDetailPage(),
     ),
   ];
 }

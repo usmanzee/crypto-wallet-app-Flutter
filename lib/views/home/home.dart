@@ -273,12 +273,7 @@ class Home extends StatelessWidget {
                           _linksCard(
                               context: context,
                               icon: Icons.savings,
-                              onPressed: () {
-                                // final controller = Get.put(SavingsController());
-                                homeController.isLoggedIn.value
-                                    ? Get.toNamed('/savings')
-                                    : Get.toNamed('/login');
-                              },
+                              onPressed: () => Get.toNamed('/savings'),
                               name: "home.screen.link.card.savings".tr),
                           _linksCard(
                               context: context,
@@ -319,7 +314,10 @@ class Home extends StatelessWidget {
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
-                          Get.put(P2pController(),permanent: false,);
+                          Get.put(
+                            P2pController(),
+                            permanent: false,
+                          );
                           Get.toNamed('/p2p_bottom_nav_page');
                         },
                         child: textWithIconWidget(

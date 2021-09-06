@@ -107,7 +107,7 @@ class ApiProvider {
     } on FormatException {
       throw FetchDataException({
         'statusCode': 3,
-        'errors': ['server.error']
+        'errors': ['server.error'],
       });
     }
     return responseJson;
@@ -145,6 +145,9 @@ dynamic _returnResponse(http.Response response) {
       var responseJson = response.body;
       return responseJson;
     case 201:
+      var responseJson = response.body;
+      return responseJson;
+    case 204:
       var responseJson = response.body;
       return responseJson;
     case 302:

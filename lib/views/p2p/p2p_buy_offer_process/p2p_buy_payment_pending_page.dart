@@ -82,7 +82,7 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-            flex: 9,
+            flex: 8,
             child: Stack(
               children: [
                 SingleChildScrollView(
@@ -479,7 +479,7 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
               padding: const EdgeInsets.only(
                 left: 16,
                 right: 16,
-                top: 8,
+                top: 6,
                 bottom: 16,
               ),
               color: Colors.white,
@@ -492,7 +492,7 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
                         flex: 3,
                         child: Container(
                           padding: const EdgeInsets.symmetric(
-                            vertical: 8,
+                            vertical: 6,
                           ),
                           decoration: BoxDecoration(
                             color: Get.theme.canvasColor,
@@ -522,7 +522,7 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
                               Get.toNamed('/p2p_buy_payment_release_page'),
                           child: Container(
                             padding: const EdgeInsets.symmetric(
-                              vertical: 8,
+                              vertical: 6,
                             ),
                             decoration: BoxDecoration(
                               color: Get.theme.accentColor,

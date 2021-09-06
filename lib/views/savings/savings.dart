@@ -10,6 +10,7 @@ class Savings extends StatefulWidget {
 
 class _SavingsState extends State<Savings> with SingleTickerProviderStateMixin {
   TabController _tabController;
+
   // final _savingController = Get.find<SavingsController>();
 
   @override
@@ -55,10 +56,25 @@ class _SavingsState extends State<Savings> with SingleTickerProviderStateMixin {
             ),
           ],
         ),
+        leading: GestureDetector(
+          onTap: () => Get.back(),
+          child: Icon(
+            Icons.arrow_back_ios_rounded,
+            size: 20,
+            color: Get.theme.hintColor,
+          ),
+        ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 10),
-            child: Icon(Icons.note_add),
+            child: GestureDetector(
+              onTap: () => Get.toNamed('/saving_history_page'),
+              child: Icon(
+                Icons.note_add,
+                size: 25,
+                color: Get.theme.hintColor,
+              ),
+            ),
           ),
         ],
       ),
