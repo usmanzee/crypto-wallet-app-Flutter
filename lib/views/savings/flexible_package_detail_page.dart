@@ -182,11 +182,13 @@ class FlexiblePackageDetailPage extends StatelessWidget {
                               context: context,
                               builder: (context) {
                                 return Container(
-                                  child: Center(child: CircularProgressIndicator(),),
+                                  child: Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
                                 );
                               },
                             );
-                            _trysending();
+                            _createSavingsInvestment();
                           }
                         : null,
                     child: Container(
@@ -251,7 +253,7 @@ class FlexiblePackageDetailPage extends StatelessWidget {
     );
   }
 
-  void _trysending() async {
+  void _createSavingsInvestment() async {
     if (double.parse(
                 _savingsController.flexibleOfferController.text.toString()) >
             0.00 &&

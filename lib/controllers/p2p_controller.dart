@@ -92,6 +92,19 @@ class P2pController extends GetxController {
   RxString selectedReason = 'Tap here to select a reason...'.obs;
   RxBool buyerOrSeller = true.obs;
 
+  //post normal ad page variables
+
+  RxBool secondPage = false.obs;
+  RxBool thirdPage = false.obs;
+
+  //post normal add first page
+  RxString firstBuySell = 'Buy'.obs;
+  RxString firstFixedFloating = 'Fixed'.obs;
+  RxString firstSelectedAsset = 'btc'.obs;
+  RxString firstSelectedFiat = 'btc'.obs;
+  RxString firstYourPrice = ''.obs;
+  RxString firstHighestOrderPrice = ''.obs;
+
   @override
   void onClose() {
     scrollController.dispose();

@@ -1,8 +1,16 @@
+import 'package:b4u_wallet/controllers/p2p_controller.dart';
+import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_ads_page/post_add_pages/pages/post_add_first_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class P2pAdPostInitialPage extends StatelessWidget {
-  final mPageController = PageController(initialPage: 0);
+  final _pageController = PageController(initialPage: 0);
+  final _p2pController = Get.find<P2pController>();
+
+  final _pages = [
+    PostAddFirstPage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -41,76 +49,217 @@ class P2pAdPostInitialPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '1/3. Set Type & Price',
-                  style: TextStyle(
-                    fontFamily: "Popins",
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14.0,
-                    color: Get.theme.textSelectionTheme.selectionColor,
-                  ),
-                ),
-              ],
+      body: Obx(
+        () => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: 16,
             ),
-          ),
-          Expanded(
-            child: PageView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              controller: mPageController,
-              scrollDirection: Axis.horizontal,
-              onPageChanged: (value) {},
-              itemCount: 3,
-              itemBuilder: (context, index) {
-                return Container(
-                  child: Center(
-                    child: Text('$index'),
-                  ),
-                );
-              },
-            ),
-          ),
-          //todo: the button for moving forward and backwards
-          Padding(
-            padding: const EdgeInsets.only(
-              bottom: 16,
-              left: 16,
-              right: 16,
-            ),
-            child: GestureDetector(
-              onTap: () {
-                return mPageController.nextPage(
-                  duration: Duration(milliseconds: 300),
-                  curve: Curves.linear,
-                );
-              },
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Get.theme.accentColor,
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Center(
-                  child: Text(
-                    'Next',
-                    style: TextStyle(
-                      fontFamily: "Popins",
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.0,
-                      color: Get.theme.scaffoldBackgroundColor,
-                    ),
-                  ),
+            Padding(
+              padding: const EdgeInsets.only(left: 16),
+              child: Text(
+                '1/3. Set Type & Price',
+                style: TextStyle(
+                  fontFamily: "Popins",
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14.0,
+                  color: Get.theme.textSelectionTheme.selectionColor,
                 ),
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                children: [
+                  _pageIndicator(
+                    enabled: true,
+                    number: 1,
+                  ),
+                  _indicatorBar(enabled: _p2pController.secondPage.value),
+                  _pageIndicator(
+                    enabled: _p2pController.secondPage.value,
+                    number: 2,
+                  ),
+                  _indicatorBar(enabled: _p2pController.thirdPage.value),
+                  _pageIndicator(
+                    enabled: _p2pController.thirdPage.value,
+                    number: 3,
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Container(
+                // padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                decoration: BoxDecoration(
+                  color: Get.theme.canvasColor,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
+                  ),
+                ),
+                child: PageView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  controller: _pageController,
+                  scrollDirection: Axis.horizontal,
+                  onPageChanged: (value) {},
+                  itemCount: 3,
+                  itemBuilder: (context, index) {
+                    return _pages[index];
+                  },
+                ),
+              ),
+            ),
+            //todo: the button for moving forward and backwards
+          ],
+        ),
+      ),
+      bottomSheet: Obx(
+        () => Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _p2pController.secondPage.value
+                      ? Expanded(
+                          flex: 4,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    if (_pageController.page == 1) {
+                                      _pageController.previousPage(
+                                        duration: Duration(milliseconds: 300),
+                                        curve: Curves.linear,
+                                      );
+                                      _p2pController.secondPage.value = false;
+                                    }
+                                    if (_pageController.page == 2) {
+                                      _pageController.previousPage(
+                                        duration: Duration(milliseconds: 300),
+                                        curve: Curves.linear,
+                                      );
+                                      _p2pController.thirdPage.value = false;
+                                    }
+                                  },
+                                  child: Container(
+                                    // width: Get.width,
+                                    decoration: BoxDecoration(
+                                      color: Get.theme.accentColor,
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 8),
+                                    child: Center(
+                                      child: Text(
+                                        'Previous',
+                                        style: TextStyle(
+                                          fontFamily: "Popins",
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16.0,
+                                          color:
+                                              Get.theme.scaffoldBackgroundColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                            ],
+                          ),
+                        )
+                      : Container(),
+                  Expanded(
+                    flex: 7,
+                    child: GestureDetector(
+                      onTap: () {
+                        if (_pageController.page == 0) {
+                          _pageController.nextPage(
+                            duration: Duration(milliseconds: 300),
+                            curve: Curves.linear,
+                          );
+                          _p2pController.secondPage.value = true;
+                        }
+                        if (_pageController.page == 1) {
+                          _pageController.nextPage(
+                            duration: Duration(milliseconds: 300),
+                            curve: Curves.linear,
+                          );
+                          _p2pController.thirdPage.value = true;
+                        }
+                        if(_pageController.page == 2){
+                          //todo: add here the method for the post
+
+                        }
+                      },
+                      child: Container(
+                        // width: Get.width,
+                        decoration: BoxDecoration(
+                          color: Get.theme.accentColor,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: Center(
+                          child: Text(
+                            _p2pController.thirdPage.value ? 'Post' : 'Next',
+                            style: TextStyle(
+                              fontFamily: "Popins",
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.0,
+                              color: Get.theme.scaffoldBackgroundColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _pageIndicator({@required bool enabled, @required int number}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 3),
+      decoration: BoxDecoration(
+        color: enabled ? Get.theme.accentColor : Get.theme.canvasColor,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Center(
+        child: Text(
+          '$number',
+          style: TextStyle(
+            fontFamily: "Popins",
+            fontWeight: FontWeight.w500,
+            fontSize: 14.0,
+            color: enabled
+                ? Get.theme.scaffoldBackgroundColor
+                : Get.theme.textSelectionTheme.selectionColor,
           ),
-        ],
+        ),
+      ),
+    );
+  }
+
+  Widget _indicatorBar({@required bool enabled}) {
+    return Expanded(
+      child: Container(
+        height: 8,
+        color: enabled
+            ? Get.theme.accentColor.withOpacity(0.5)
+            : Get.theme.canvasColor,
       ),
     );
   }

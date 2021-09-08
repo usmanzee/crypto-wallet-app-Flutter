@@ -31,6 +31,7 @@ class SavingsController extends GetxController {
   // RxBool switchValue = true.obs;
   ErrorController errorController = ErrorController();
   RxString flexibleSelectedOfferCurrencyName = ''.obs;
+  RxString lockedSelectedOfferCurrencyName = ''.obs;
   TextEditingController flexibleOfferController = TextEditingController();
   RxString flexibleSelectedOfferCurrencyAmount = '0'.obs;
   RxString flexibleInterestCalculationTime = '09-07 05:00'.obs;
