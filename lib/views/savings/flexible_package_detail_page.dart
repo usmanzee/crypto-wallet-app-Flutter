@@ -8,6 +8,7 @@ class FlexiblePackageDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(_savingsController.flexibleAutoSubscribe.value);
     return Obx(
       () => Scaffold(
         appBar: AppBar(
@@ -73,8 +74,8 @@ class FlexiblePackageDetailPage extends StatelessWidget {
                       ),
                     ),
                     cursorColor: Get.theme.accentColor,
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
+                    keyboardType: TextInputType.numberWithOptions(
+                        decimal: true, signed: false),
                   ),
                   const SizedBox(
                     height: 8,

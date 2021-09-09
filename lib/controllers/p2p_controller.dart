@@ -105,6 +105,16 @@ class P2pController extends GetxController {
   RxString firstYourPrice = ''.obs;
   RxString firstHighestOrderPrice = ''.obs;
 
+  //post normal add second page
+  RxString secondSelectedAsset = ''.obs;
+  RxString secondAddedAmountInFiat = ''.obs;
+  RxString secondAddedAmountInAsset = ''.obs;
+  RxString secondSelectedFiat = ''.obs;
+  RxInt secondTimeLimitInt = 15.obs;
+  RxString secondTimeLimitString = ''.obs;
+  RxDouble secondReservedFee = 0.07.obs;
+  RxBool secondShowReservedFee = false.obs;
+
   @override
   void onClose() {
     scrollController.dispose();

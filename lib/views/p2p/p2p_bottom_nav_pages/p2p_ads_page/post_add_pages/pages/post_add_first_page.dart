@@ -225,7 +225,7 @@ class PostAddFirstPage extends StatelessWidget {
           ),
           Container(
             decoration: BoxDecoration(
-              color: Get.theme.hintColor,
+              color: Get.theme.hintColor.withOpacity(0.6),
               borderRadius: BorderRadius.circular(4),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
@@ -298,7 +298,7 @@ class PostAddFirstPage extends StatelessWidget {
               flex: 7,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Get.theme.hintColor,
+                  color: Get.theme.hintColor.withOpacity(0.6),
                   borderRadius: BorderRadius.circular(4),
                 ),
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),

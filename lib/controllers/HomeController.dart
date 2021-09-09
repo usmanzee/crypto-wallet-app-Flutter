@@ -1,22 +1,24 @@
 import 'dart:async';
+import 'dart:convert';
+
 import 'package:b4u_wallet/controllers/SnackbarController.dart';
 import 'package:b4u_wallet/controllers/error_controller.dart';
+import 'package:b4u_wallet/controllers/market_controller.dart';
 import 'package:b4u_wallet/controllers/open_orders_controller.dart';
 import 'package:b4u_wallet/controllers/trading_controller.dart';
+import 'package:b4u_wallet/controllers/wallet_controller.dart';
 import 'package:b4u_wallet/models/MemberLevel.dart';
 import 'package:b4u_wallet/models/market.dart';
 import 'package:b4u_wallet/models/user.dart';
 import 'package:b4u_wallet/repository/public_repository.dart';
 import 'package:b4u_wallet/repository/user_repository.dart';
-import 'package:get/get.dart';
-import 'package:b4u_wallet/controllers/market_controller.dart';
-import 'package:b4u_wallet/controllers/wallet_controller.dart';
+
 // import 'package:get_mac/get_mac.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:http/http.dart';
-import 'dart:convert';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:http/http.dart';
 
 class HomeController extends GetxController {
   final _hasConnection = true.obs;
@@ -46,12 +48,15 @@ class HomeController extends GetxController {
   StreamSubscription<ConnectivityResult> subscription;
 
   get selectedNavIndex => this._selectedNavIndex.value;
+
   set selectedNavIndex(index) => this._selectedNavIndex.value = index;
 
   get hasConnection => this._hasConnection.value;
+
   set hasConnection(value) => this._hasConnection.value = value;
 
   get previousConnection => this._previousConnection.value;
+
   set previousConnection(value) => this._previousConnection.value = value;
 
   var languages = [
@@ -70,6 +75,7 @@ class HomeController extends GetxController {
     await isUserLoggedIn();
     if (isLoggedIn.value) {
       fetchUser();
+      fetchMemberLevels();
     }
     connectivity = Connectivity();
     subscription = connectivity.onConnectivityChanged.listen(_connectionChange);
@@ -229,6 +235,8 @@ class HomeController extends GetxController {
       fetchingMemberLevel(true);
       PublicRepository _publicRepository = PublicRepository();
       var response = await _publicRepository.fetchMemberLevels();
+      // print('here are the levels');
+      // print(response.toJson());
       publicMemberLevel.value = response;
       fetchingMemberLevel(false);
     } catch (error) {

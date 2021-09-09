@@ -1,5 +1,7 @@
 import 'package:b4u_wallet/controllers/p2p_controller.dart';
 import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_ads_page/post_add_pages/pages/post_add_first_page.dart';
+import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_ads_page/post_add_pages/pages/post_add_second_page.dart';
+import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_ads_page/post_add_pages/pages/post_add_third_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,9 +10,7 @@ class P2pAdPostInitialPage extends StatelessWidget {
   final _pageController = PageController(initialPage: 0);
   final _p2pController = Get.find<P2pController>();
 
-  final _pages = [
-    PostAddFirstPage(),
-  ];
+  final _pages = [PostAddFirstPage(), PostAddSecondPage(), PostAddThirdPage()];
 
   @override
   Widget build(BuildContext context) {
@@ -112,13 +112,207 @@ class P2pAdPostInitialPage extends StatelessWidget {
               ),
             ),
             //todo: the button for moving forward and backwards
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _p2pController.secondShowReservedFee.value
+                    ? Container(
+                  padding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: Get.theme.accentColor.withOpacity(0.3),
+                  ),
+                  child: Row(
+                    children: [
+                      Text(
+                        'Reserved Fee:',
+                        style: TextStyle(
+                          fontFamily: "Popins",
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14.0,
+                          color: Get.theme.hintColor,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Icon(
+                          Icons.info_outline,
+                          size: 20,
+                          color: Get.theme.hintColor,
+                        ),
+                      ),
+                      Text(
+                        '${_p2pController.secondReservedFee.value} ${_p2pController.firstSelectedAsset.value}',
+                        style: TextStyle(
+                          fontFamily: "Popins",
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14.0,
+                          color: Get.theme.textSelectionTheme.selectionColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+                    : Container(),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _p2pController.secondPage.value
+                          ? Expanded(
+                        flex: 4,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  if (_pageController.page == 1) {
+                                    _pageController.previousPage(
+                                      duration: Duration(milliseconds: 300),
+                                      curve: Curves.linear,
+                                    );
+                                    _p2pController.secondPage.value = false;
+                                    _p2pController
+                                        .secondShowReservedFee.value = false;
+                                  }
+                                  if (_pageController.page == 2) {
+                                    _pageController.previousPage(
+                                      duration: Duration(milliseconds: 300),
+                                      curve: Curves.linear,
+                                    );
+                                    _p2pController.thirdPage.value = false;
+                                    _p2pController
+                                        .secondShowReservedFee.value = true;
+                                  }
+                                },
+                                child: Container(
+                                  // width: Get.width,
+                                  decoration: BoxDecoration(
+                                    color: Get.theme.accentColor,
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  padding:
+                                  const EdgeInsets.symmetric(vertical: 8),
+                                  child: Center(
+                                    child: Text(
+                                      'Previous',
+                                      style: TextStyle(
+                                        fontFamily: "Popins",
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.0,
+                                        color:
+                                        Get.theme.scaffoldBackgroundColor,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                          ],
+                        ),
+                      )
+                          : Container(),
+                      Expanded(
+                        flex: 7,
+                        child: GestureDetector(
+                          onTap: () {
+                            if (_pageController.page == 0) {
+                              _pageController.nextPage(
+                                duration: Duration(milliseconds: 300),
+                                curve: Curves.linear,
+                              );
+                              _p2pController.secondPage.value = true;
+                              _p2pController.secondShowReservedFee.value = true;
+                            }
+                            if (_pageController.page == 1) {
+                              _pageController.nextPage(
+                                duration: Duration(milliseconds: 300),
+                                curve: Curves.linear,
+                              );
+                              _p2pController.thirdPage.value = true;
+                              _p2pController.secondShowReservedFee.value = false;
+                            }
+                            if (_pageController.page == 2) {
+                              //todo: add here the method for the post
+
+                            }
+                          },
+                          child: Container(
+                            // width: Get.width,
+                            decoration: BoxDecoration(
+                              color: Get.theme.accentColor,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: Center(
+                              child: Text(
+                                _p2pController.thirdPage.value ? 'Post' : 'Next',
+                                style: TextStyle(
+                                  fontFamily: "Popins",
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.0,
+                                  color: Get.theme.scaffoldBackgroundColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
-      bottomSheet: Obx(
+      /*bottomSheet: Obx(
         () => Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            _p2pController.secondShowReservedFee.value
+                ? Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: Get.theme.accentColor.withOpacity(0.3),
+                    ),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Reserved Fee:',
+                          style: TextStyle(
+                            fontFamily: "Popins",
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14.0,
+                            color: Get.theme.hintColor,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Icon(
+                            Icons.info_outline,
+                            size: 20,
+                            color: Get.theme.hintColor,
+                          ),
+                        ),
+                        Text(
+                          '${_p2pController.secondReservedFee.value} ${_p2pController.firstSelectedAsset.value}',
+                          style: TextStyle(
+                            fontFamily: "Popins",
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14.0,
+                            color: Get.theme.textSelectionTheme.selectionColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : Container(),
             Padding(
               padding: const EdgeInsets.all(16),
               child: Row(
@@ -138,6 +332,8 @@ class P2pAdPostInitialPage extends StatelessWidget {
                                         curve: Curves.linear,
                                       );
                                       _p2pController.secondPage.value = false;
+                                      _p2pController
+                                          .secondShowReservedFee.value = false;
                                     }
                                     if (_pageController.page == 2) {
                                       _pageController.previousPage(
@@ -145,6 +341,8 @@ class P2pAdPostInitialPage extends StatelessWidget {
                                         curve: Curves.linear,
                                       );
                                       _p2pController.thirdPage.value = false;
+                                      _p2pController
+                                          .secondShowReservedFee.value = true;
                                     }
                                   },
                                   child: Container(
@@ -187,6 +385,7 @@ class P2pAdPostInitialPage extends StatelessWidget {
                             curve: Curves.linear,
                           );
                           _p2pController.secondPage.value = true;
+                          _p2pController.secondShowReservedFee.value = true;
                         }
                         if (_pageController.page == 1) {
                           _pageController.nextPage(
@@ -194,8 +393,9 @@ class P2pAdPostInitialPage extends StatelessWidget {
                             curve: Curves.linear,
                           );
                           _p2pController.thirdPage.value = true;
+                          _p2pController.secondShowReservedFee.value = false;
                         }
-                        if(_pageController.page == 2){
+                        if (_pageController.page == 2) {
                           //todo: add here the method for the post
 
                         }
@@ -226,7 +426,7 @@ class P2pAdPostInitialPage extends StatelessWidget {
             ),
           ],
         ),
-      ),
+      ),*/
     );
   }
 
