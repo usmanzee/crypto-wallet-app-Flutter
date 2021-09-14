@@ -115,6 +115,12 @@ class P2pController extends GetxController {
   RxDouble secondReservedFee = 0.07.obs;
   RxBool secondShowReservedFee = false.obs;
 
+  //post normal add third page
+  RxBool thirdKyc = true.obs;
+  RxBool thirdRegisteredDays = false.obs;
+  RxBool thirdBtc = false.obs;
+  RxInt thirdOnlineOffline = 1.obs;
+
   @override
   void onClose() {
     scrollController.dispose();
@@ -177,5 +183,9 @@ class P2pController extends GetxController {
       return false;
     }
     return false;
+  }
+
+  Future<void> addP2pOffer() async {
+
   }
 }

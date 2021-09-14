@@ -17,4 +17,12 @@ class P2pRepository{
     List<P2POffer> a = List<P2POffer>.from(l.map((model)=> P2POffer.fromJson(model)));
     return a;
   }
+
+  Future<void> addP2pOffer(Map<String,dynamic> body)async{
+    apiProvider = ApiProvider();
+    RequestHeaders requestHeaders = RequestHeaders();
+    apiProvider.headers = requestHeaders.setAuthHeaders();
+    final response = await apiProvider.post('peatio/account/offers', body);
+
+  }
 }

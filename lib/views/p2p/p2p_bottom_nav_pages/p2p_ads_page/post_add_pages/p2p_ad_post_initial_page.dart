@@ -120,7 +120,7 @@ class P2pAdPostInitialPage extends StatelessWidget {
                   padding:
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
-                    color: Get.theme.accentColor.withOpacity(0.3),
+                    color: Get.theme.colorScheme.secondary.withOpacity(0.3),
                   ),
                   child: Row(
                     children: [
@@ -238,7 +238,7 @@ class P2pAdPostInitialPage extends StatelessWidget {
                             }
                             if (_pageController.page == 2) {
                               //todo: add here the method for the post
-
+                              Get.toNamed('/p2p_ad_posted_page');
                             }
                           },
                           child: Container(
