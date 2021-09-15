@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -183,7 +182,7 @@ Widget containerTrade({
                           vertical: 8.0, horizontal: 20.0),
                       decoration: BoxDecoration(
                         color:
-                            functionText == 'Sell' ? Colors.red : Colors.green,
+                            functionText == 'sell' ? Colors.red : Colors.green,
                         borderRadius: BorderRadius.circular(
                           4,
                         ),

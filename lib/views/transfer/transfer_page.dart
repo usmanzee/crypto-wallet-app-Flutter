@@ -208,12 +208,14 @@ class TransferPage extends StatelessWidget {
                           child: GestureDetector(
                             onTap: () {
                               // walletController.walletsList = spot wallet list
-                              Get.to(CurrencySelection(
-                                // callback: currencyCallback,
-                                walletData: _transferController.swap.value
-                                    ? walletController.walletsList
-                                    : _transferController.currentWalletList,
-                              ));
+                              Get.to(
+                                CurrencySelection(
+                                  // callback: currencyCallback,
+                                  walletData: _transferController.swap.value
+                                      ? walletController.walletsList
+                                      : _transferController.currentWalletList,
+                                ),
+                              );
                             },
                             child: Container(
                               padding: const EdgeInsets.all(10),
@@ -232,10 +234,11 @@ class TransferPage extends StatelessWidget {
                                         CrossAxisAlignment.center,
                                     children: [
                                       iconWidget(
-                                          name: _transferController
-                                              .currencyName.value,
-                                          url: _transferController
-                                              .currencyImage.value),
+                                        name: _transferController
+                                            .currencyName.value,
+                                        url: _transferController
+                                            .currencyImage.value,
+                                      ),
                                       Padding(
                                         padding:
                                             const EdgeInsets.only(left: 10),
@@ -250,7 +253,7 @@ class TransferPage extends StatelessWidget {
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),
-                                      )
+                                      ),
                                     ],
                                   ),
                                   Icon(
@@ -421,12 +424,13 @@ class TransferPage extends StatelessWidget {
                   : _transferController.transferButtonText.value ==
                           'Verify your account'
                       ? () => Get.toNamed('/profile-verification')
-                      : (_transferController.transferButtonText.value == 'Transfer'
+                      : (_transferController.transferButtonText.value ==
+                              'Transfer'
                           ? () async {
                               //todo: get a variable here from the server to replace the hardcoded 3 here
                               if (homeController.user.value.level ==
-                                  homeController.publicMemberLevel.value.withdraw
-                                      .minimumLevel) {
+                                  homeController.publicMemberLevel.value
+                                      .withdraw.minimumLevel) {
                                 if (homeController.user.value.otp) {
                                   showDialog(
                                     context: context,

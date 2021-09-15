@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 
 class P2pController extends GetxController {
   ErrorController errorController = ErrorController();
+  P2pRepository _p2pRepository = P2pRepository();
   RxBool isLoading = true.obs;
   RxString selectedCurrency = 'UAH'.obs;
 
@@ -166,7 +167,6 @@ class P2pController extends GetxController {
     RxList<P2POffer> sellList,
   }) async {
     // isLoading(true);
-    P2pRepository _p2pRepository = P2pRepository();
     try {
       final response = await _p2pRepository.fetchP2pOffers(category: category);
       if (response.length > 0) {
@@ -185,7 +185,20 @@ class P2pController extends GetxController {
     return false;
   }
 
-  Future<void> addP2pOffer() async {
+  Future<bool> addP2pOffer() async {
+    //todo: pass the required variables
+    Map<String, dynamic> body = {};
+    try {
+      final response = await _p2pRepository.addP2pOffer(body);
+      if (response.id != null) {
+        return true;
+      }
+    } catch (error) {
+      errorController.handleError(error);
+      // isLoading(false);
 
+      return false;
+    }
+    return false;
   }
 }

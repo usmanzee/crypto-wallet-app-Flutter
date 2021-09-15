@@ -1,12 +1,17 @@
 import 'dart:math';
 
+import 'package:b4u_wallet/controllers/HomeController.dart';
+import 'package:b4u_wallet/utils/Helpers/my_imgs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class P2pAdsPage extends StatelessWidget {
   // final _p2pController = Get.find<P2pController>();
+  final _homeController = Get.find<HomeController>();
   final RxString _selectedElement = ''.obs;
+
+  //todo: replace it with the data from the server to change it from teh listview
   RxBool online = false.obs;
   final _random = Random();
 
@@ -38,7 +43,7 @@ class P2pAdsPage extends StatelessWidget {
         ),
         actions: [
           GestureDetector(
-            onTap: () => Get.toNamed('/p2p_ads_page_level_check_page'),
+            onTap: checkAndTake,
             child: Icon(
               Icons.add,
               size: 25,
@@ -97,7 +102,7 @@ class P2pAdsPage extends StatelessWidget {
             width: double.infinity,
             color: Get.theme.canvasColor,
           ),
-          //todo: remove it when there will be some proper data
+          //todo: listview with the values
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -118,7 +123,7 @@ class P2pAdsPage extends StatelessWidget {
               ),
             ),
           ),
-          /*Column(
+          Column(
             children: [
               SizedBox(
                 height: 100,
@@ -126,10 +131,10 @@ class P2pAdsPage extends StatelessWidget {
               //todo: add the picture here
               Container(
                 width: 100,
-                child: Placeholder(
-                  fallbackHeight: 100,
-                  fallbackWidth: 50,
-                  strokeWidth: 2,
+                child: Image.asset(
+                  MyImgs.testPhoto,
+                  height: 100,
+                  width: 50,
                 ),
               ),
               Padding(
@@ -144,31 +149,31 @@ class P2pAdsPage extends StatelessWidget {
                   ),
                 ),
               ),
-            ],
-          ),*/
-          GestureDetector(
-            onTap: () => Get.toNamed('/p2p_ad_post_initial_page'),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Get.theme.accentColor,
-                borderRadius: BorderRadius.circular(5),
-              ),
-              padding: const EdgeInsets.symmetric(
-                vertical: 8,
-                horizontal: 16,
-              ),
-              child: Text(
-                'Post Ad',
-                style: TextStyle(
-                  fontFamily: "Popins",
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
-                  color: Get.theme.scaffoldBackgroundColor,
+              GestureDetector(
+                onTap: checkAndTake,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Get.theme.accentColor,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 16,
+                  ),
+                  child: Text(
+                    'Post Ad',
+                    style: TextStyle(
+                      fontFamily: "Popins",
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
+                      color: Get.theme.scaffoldBackgroundColor,
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
-          //todo: the confirm payment received dialog
+          /*//todo: the confirm payment received dialog
           ElevatedButton(
             onPressed: () => showDialog(
               barrierDismissible: true,
@@ -286,7 +291,7 @@ class P2pAdsPage extends StatelessWidget {
           ElevatedButton(
             onPressed: () => Get.toNamed('/p2p_ads_page_level_check_page'),
             child: Text('level check'),
-          ),
+          ),*/
         ],
       ),
     );
@@ -720,5 +725,13 @@ class P2pAdsPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void checkAndTake() {
+    if (_homeController.user.value.level ==
+        _homeController.publicMemberLevel.value.withdraw.minimumLevel) {
+      Get.toNamed('/p2p_ad_post_initial_page');
+    } else
+      Get.toNamed('/p2p_ads_page_level_check_page');
   }
 }

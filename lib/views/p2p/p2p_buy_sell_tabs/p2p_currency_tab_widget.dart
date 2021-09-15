@@ -14,21 +14,11 @@ Widget p2pCurrencyTabWidget({
   RxList<P2POffer> buyList,
   RxList<P2POffer> sellList,
 }) {
+  print(sellList.length);
   return _p2pController.isLoading.value
       ? Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.asset(
-                MyImgs.testPhoto,
-                height: 100,
-                width: 100,
-                fit: BoxFit.fill,
-              ),
-              Text(
-                'No Data',
-              ),
-            ],
+          child: Center(
+            child: CircularProgressIndicator(),
           ),
         )
       : SafeArea(
@@ -51,52 +41,60 @@ Widget p2pCurrencyTabWidget({
                         delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {
                             return _p2pController.buyOrSellP2p.value
-                                ? containerTrade(
-                                    name: buyList[index].member.email,
-                                    price: buyList[index].price,
-                                    currency: buyList[index].baseUnit,
-                                    bankName: 'MonoBank',
-                                    cryptoAmount: '815.98',
-                                    functionCallback: () {
-                                      // Get.toNamed(
-                                      //     '/P2p_buy_sell_selected_offer_page');
-                                      //todo: remove the link to the next page and add the check for the level
-                                      p2pLevelCheckDialog(context: context);
-                                    },
-                                    functionText: buyList[index].side,
-                                    lowerLimit: buyList[index].minOrderAmount,
-                                    upperLimit: buyList[index].maxOrderAmount,
-                                    nameCallback: () =>
-                                        Get.toNamed('/p2p_user_profile'),
-                                    reviewPercentage: 'none',
-                                    tabCurrencyName: 'usdt',
-                                    trades: 'none',
-                                    currencySymbol: '',
-                                  )
-                                : containerTrade(
-                                    name: sellList[index].member.email,
-                                    price: sellList[index].price,
-                                    currency: sellList[index].baseUnit,
-                                    bankName: 'MonoBank',
-                                    cryptoAmount:
-                                        sellList[index].availableAmount,
-                                    functionCallback: () {
-                                      p2pLevelCheckDialog(context: context);
-                                    },
-                                    functionText: 'Sell',
-                                    lowerLimit: sellList[index].minOrderAmount,
-                                    upperLimit: sellList[index].maxOrderAmount,
-                                    nameCallback: () =>
-                                        print('from name callback'),
-                                    reviewPercentage: '98.09',
-                                    tabCurrencyName: 'usdt',
-                                    trades: '216',
-                                    currencySymbol: '\$',
-                                  );
+                                ? buyList.length == 0
+                                    ? _emptyWidget()
+                                    : containerTrade(
+                                        name: 'buyList[index]',
+                                        price: buyList[index].price,
+                                        currency: buyList[index].baseUnit,
+                                        bankName: 'MonoBank',
+                                        cryptoAmount: '815.98',
+                                        functionCallback: () {
+                                          // Get.toNamed(
+                                          //     '/P2p_buy_sell_selected_offer_page');
+                                          //todo: remove the link to the next page and add the check for the level
+                                          p2pLevelCheckDialog(context: context);
+                                        },
+                                        functionText: buyList[index].side,
+                                        lowerLimit:
+                                            buyList[index].minOrderAmount,
+                                        upperLimit:
+                                            buyList[index].maxOrderAmount,
+                                        nameCallback: () =>
+                                            Get.toNamed('/p2p_user_profile'),
+                                        reviewPercentage: 'none',
+                                        tabCurrencyName: 'usdt',
+                                        trades: 'none',
+                                        currencySymbol: '',
+                                      )
+                                : sellList.length == 0
+                                    ? _emptyWidget()
+                                    : containerTrade(
+                                        name: 'sellList[index]',
+                                        price: sellList[index].price,
+                                        currency: sellList[index].baseUnit,
+                                        bankName: 'MonoBank',
+                                        cryptoAmount:
+                                            sellList[index].availableAmount,
+                                        functionCallback: () {
+                                          p2pLevelCheckDialog(context: context);
+                                        },
+                                        functionText: sellList[index].side,
+                                        lowerLimit:
+                                            sellList[index].minOrderAmount,
+                                        upperLimit:
+                                            sellList[index].maxOrderAmount,
+                                        nameCallback: () =>
+                                            print('from name callback'),
+                                        reviewPercentage: '98.09',
+                                        tabCurrencyName: 'usdt',
+                                        trades: '216',
+                                        currencySymbol: '\$',
+                                      );
                           },
                           childCount: _p2pController.buyOrSellP2p.value
-                              ? buyList.length
-                              : sellList.length,
+                              ? buyList.length == 0 ? 1 : buyList.length
+                              : sellList.length == 0 ? 1 : sellList.length,
                         ),
                       ),
                     ),
@@ -106,4 +104,21 @@ Widget p2pCurrencyTabWidget({
             },
           ),
         );
+}
+
+Widget _emptyWidget() {
+  return Column(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Image.asset(
+        MyImgs.testPhoto,
+        height: 100,
+        width: 100,
+        fit: BoxFit.fill,
+      ),
+      Text(
+        'No Data',
+      ),
+    ],
+  );
 }

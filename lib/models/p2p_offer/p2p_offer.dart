@@ -1,5 +1,6 @@
-import 'member_object/member.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import 'member_object/member.dart';
 
 part 'p2p_offer.g.dart';
 
@@ -19,9 +20,10 @@ class P2POffer {
     this.timeLimit,
     this.note,
     this.paymentMethodId,
-    this.member,
+    // this.member,
     this.createdAt,
     this.updatedAt,
+    this.autoReply,
   });
 
   @JsonKey(name: 'id')
@@ -50,14 +52,17 @@ class P2POffer {
   String note;
   @JsonKey(name: 'payment_method_id')
   int paymentMethodId;
-  @JsonKey(name: 'member')
-  Member member;
+  // @JsonKey(name: 'member')
+  // Member member;
   @JsonKey(name: 'created_at')
   DateTime createdAt;
   @JsonKey(name: 'updated_at')
   DateTime updatedAt;
+  @JsonKey(name: 'auto_reply')
+  String autoReply;
 
-  factory P2POffer.fromJson(Map<String, dynamic> json) => _$P2POfferFromJson(json);
+  factory P2POffer.fromJson(Map<String, dynamic> json) =>
+      _$P2POfferFromJson(json);
+
   Map<String, dynamic> toJson() => _$P2POfferToJson(this);
 }
-

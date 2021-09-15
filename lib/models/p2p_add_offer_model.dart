@@ -21,9 +21,13 @@ class P2pAddOfferModel {
   @JsonKey(name: 'payment_method')
   String paymentMethod;
   @JsonKey(name: 'time_limit')
-  int timeLimit;
+  String timeLimit;
   @JsonKey(name: 'note')
   String note;
+  @JsonKey(name: 'margin')
+  String margin;
+  @JsonKey(name: 'auto_reply')
+  String autoReply;
 
   P2pAddOfferModel(
     this.originAmount,
@@ -36,6 +40,8 @@ class P2pAddOfferModel {
     this.paymentMethod,
     this.timeLimit,
     this.note,
+    this.autoReply,
+    this.margin,
   );
 
   factory P2pAddOfferModel.fromJson(Map<String, dynamic> json) =>
