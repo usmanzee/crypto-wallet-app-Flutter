@@ -14,7 +14,6 @@ Widget p2pCurrencyTabWidget({
   RxList<P2POffer> buyList,
   RxList<P2POffer> sellList,
 }) {
-  print(sellList.length);
   return _p2pController.isLoading.value
       ? Center(
           child: Center(

@@ -31,4 +31,18 @@ class P2pRepository {
     final P2POffer _p2pOffer = P2POffer.fromJson(response);
     return _p2pOffer;
   }
+
+  Future<List<P2POffer>> fetchUserP2pAddedOffers() async {
+    apiProvider = ApiProvider();
+    RequestHeaders requestHeaders = RequestHeaders();
+    apiProvider.headers = requestHeaders.setAuthHeaders();
+    // final response = await apiProvider.get('peatio/account/offers/',);
+    final response = await apiProvider.get(
+      'peatio/account/offers'
+    );
+    Iterable l = json.decode(response);
+    List<P2POffer> a =
+    List<P2POffer>.from(l.map((model) => P2POffer.fromJson(model)));
+    return a;
+  }
 }

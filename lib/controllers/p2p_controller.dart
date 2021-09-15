@@ -94,7 +94,7 @@ class P2pController extends GetxController {
   RxBool buyerOrSeller = true.obs;
 
   //post normal ad page variables
-
+  RxList<P2POffer> userAddedP2pOffers = <P2POffer>[].obs;
   RxBool secondPage = false.obs;
   RxBool thirdPage = false.obs;
 
@@ -131,6 +131,7 @@ class P2pController extends GetxController {
   @override
   void onReady() {
     fetchAllLists(true);
+    fetchUserP2pAddedOffers();
     scrollController = ScrollController();
     scrollController.addListener(() {
       if (scrollController.offset >= 300) {
@@ -183,6 +184,21 @@ class P2pController extends GetxController {
       return false;
     }
     return false;
+  }
+
+  void fetchUserP2pAddedOffers() async {
+    try {
+      final response = await _p2pRepository.fetchUserP2pAddedOffers();
+      if (response.length > 0) {
+        response.forEach((e) {
+          userAddedP2pOffers.add(e);
+        });
+        // isLoading(false);
+      }
+    } catch (error) {
+      errorController.handleError(error);
+      // isLoading(false);
+    }
   }
 
   Future<bool> addP2pOffer() async {
