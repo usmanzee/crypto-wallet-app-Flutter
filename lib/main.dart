@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       locale: langCode == null && countryCode == null
           ? Locale('en', 'US')
           : Locale(langCode, countryCode),
-      defaultTransition: Transition.downToUp,
+      defaultTransition: Transition.leftToRight,
       getPages: RouterFile.Router.route,
       initialRoute: '/splash',
       routingCallback: (routing) {},

@@ -5,9 +5,6 @@ import 'package:get/get.dart';
 
 class PostAddFirstPage extends StatelessWidget {
   final _p2pController = Get.find<P2pController>();
-  final _assetItems = ['btc', 'eth', 'trst', 'usd'];
-  final _fixedTextController = TextEditingController();
-  final _floatingTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +26,7 @@ class PostAddFirstPage extends StatelessWidget {
                         children: [
                           dropDownWidget(
                             title: 'Asset',
-                            items: _assetItems,
+                            items: _p2pController.firstAssetList.value,
                             selectedValue: _p2pController.firstSelectedAsset,
                           ),
                           const SizedBox(
@@ -37,7 +34,7 @@ class PostAddFirstPage extends StatelessWidget {
                           ),
                           dropDownWidget(
                             title: 'With Fiat',
-                            items: _assetItems,
+                            items: _p2pController.firstAssetList.value,
                             selectedValue: _p2pController.firstSelectedFiat,
                           ),
                         ],
@@ -266,6 +263,7 @@ class PostAddFirstPage extends StatelessWidget {
               }).toList(),
               onChanged: (value) {
                 selectedValue.value = value;
+                _p2pController.fetchExchangeRateForSingleAsset();
               },
             ),
           ),
@@ -275,116 +273,158 @@ class PostAddFirstPage extends StatelessWidget {
   }
 
   Widget _fixedWidget() {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Fixed',
-          style: TextStyle(
-            fontFamily: "Popins",
-            fontWeight: FontWeight.w500,
-            fontSize: 14.0,
-            color: Get.theme.hintColor,
+    return Obx(
+      () => Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Fixed',
+            style: TextStyle(
+              fontFamily: "Popins",
+              fontWeight: FontWeight.w500,
+              fontSize: 14.0,
+              color: Get.theme.hintColor,
+            ),
           ),
-        ),
-        const SizedBox(
-          height: 4,
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              flex: 7,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Get.theme.hintColor.withOpacity(0.6),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                child: Row(
-                  children: [
-                    //todo: add code for decreasing by one
-                    Icon(
-                      Icons.remove,
-                      size: 20,
-                      color: Get.theme.canvasColor,
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Expanded(
-                      child: TextFormField(
-                        controller: _fixedTextController,
-                        keyboardType: TextInputType.number,
-                        style: TextStyle(
-                          fontFamily: "Popins",
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16.0,
-                          color: Get.theme.scaffoldBackgroundColor,
-                        ),
-                        textAlign: TextAlign.center,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          isCollapsed: true,
+          const SizedBox(
+            height: 4,
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                flex: 7,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Get.theme.hintColor.withOpacity(0.6),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                  child: Row(
+                    children: [
+                      //todo: add code for decreasing by one
+                      InkWell(
+                        onTap: () {
+                          if (double.parse(
+                                  _p2pController.firstFixedPrice.value) ==
+                              double.parse(
+                                  _p2pController.firstLowestPrize.value)) {
+                            return;
+                          } else {
+                            final val = _p2pController.firstFixedPrice.value =
+                                (double.parse(_p2pController
+                                            .fixedTextController.text) -
+                                        1)
+                                    .toString();
+                            _p2pController.fixedTextController.text =
+                                val.toString();
+                          }
+                        },
+                        child: Icon(
+                          Icons.remove,
+                          size: 20,
+                          color: Get.theme.canvasColor,
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    //todo: add code for increasing by one
-                    Icon(
-                      Icons.add,
-                      size: 20,
-                      color: Get.theme.canvasColor,
-                    ),
-                  ],
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      Expanded(
+                        child: TextFormField(
+                          controller: _p2pController.fixedTextController,
+                          keyboardType: TextInputType.number,
+                          style: TextStyle(
+                            fontFamily: "Popins",
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16.0,
+                            color: Get.theme.scaffoldBackgroundColor,
+                          ),
+                          textAlign: TextAlign.center,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            isCollapsed: true,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      //todo: add code for increasing by one
+                      InkWell(
+                        onTap: () {
+                          final val = _p2pController
+                              .firstFixedPrice.value = (double.parse(
+                                      _p2pController.fixedTextController.text) +
+                                  1)
+                              .toString();
+                          _p2pController.fixedTextController.text = val;
+                        },
+                        child: Icon(
+                          Icons.add,
+                          size: 20,
+                          color: Get.theme.canvasColor,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              flex: 3,
-              child: Container(),
-            ),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Row(
-            children: [
-              Text(
-                'Lowest Order Prize',
-                style: TextStyle(
-                  fontFamily: "Popins",
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14.0,
-                  color: Get.theme.hintColor,
-                ),
-              ),
-              const SizedBox(
-                width: 8,
-              ),
-              //todo: add the callbaxk here for the dialog and the values
-              Icon(
-                Icons.info_outline,
-                size: 20,
-                color: Get.theme.hintColor,
+              Expanded(
+                flex: 3,
+                child: Container(),
               ),
             ],
           ),
-        ),
-        //todo: change the currency name with respect to the currency selected
-        Text(
-          '${_p2pController.firstSelectedFiat} ${_fixedTextController.text.toString()}.00',
-          style: TextStyle(
-            fontFamily: "Popins",
-            fontWeight: FontWeight.w500,
-            fontSize: 20.0,
-            color: Get.theme.textSelectionTheme.selectionColor,
+          _p2pController.firstShowWarning.value
+              ? Text(
+                  'Please add a valid value',
+                  style: TextStyle(
+                    fontFamily: "Popins",
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14.0,
+                    color: Colors.redAccent,
+                  ),
+                )
+              : Container(),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Row(
+              children: [
+                Text(
+                  'Lowest Order Prize',
+                  style: TextStyle(
+                    fontFamily: "Popins",
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14.0,
+                    color: Get.theme.hintColor,
+                  ),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                //todo: add the callback here for the dialog and the values
+                Icon(
+                  Icons.info_outline,
+                  size: 20,
+                  color: Get.theme.hintColor,
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+          //todo: change the currency name with respect to the currency selected
+          Text(
+            '${_p2pController.firstSelectedFiat} ${_p2pController.firstLowestPrize}',
+            style: TextStyle(
+              fontFamily: "Popins",
+              fontWeight: FontWeight.w500,
+              fontSize: 20.0,
+              color: Get.theme.textSelectionTheme.selectionColor,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -488,24 +528,45 @@ class PostAddFirstPage extends StatelessWidget {
                 child: Row(
                   children: [
                     //todo: add code for decreasing by one
-                    Icon(
-                      Icons.remove,
-                      size: 20,
-                      color: Get.theme.canvasColor,
+                    GestureDetector(
+                      onTap: () {
+                        if (double.parse(
+                                _p2pController.firstFloatingPrice.value) ==
+                            80.0) {
+                          return;
+                        } else {
+                          final val = _p2pController.firstFloatingPrice.value =
+                              (double.parse(_p2pController
+                                          .floatingTextController.text) -
+                                      1)
+                                  .toString();
+                          _p2pController.floatingTextController.text = val;
+                        }
+                      },
+                      child: Icon(
+                        Icons.remove,
+                        size: 20,
+                        color: Get.theme.canvasColor,
+                      ),
                     ),
                     const SizedBox(
                       width: 16,
                     ),
                     Expanded(
                       child: TextFormField(
-                        controller: _floatingTextController,
-                        keyboardType: TextInputType.number,
+                        controller: _p2pController.floatingTextController,
+                        keyboardType: TextInputType.numberWithOptions(
+                            signed: false, decimal: true),
                         style: TextStyle(
                           fontFamily: "Popins",
                           fontWeight: FontWeight.w500,
                           fontSize: 16.0,
                           color: Get.theme.scaffoldBackgroundColor,
                         ),
+                        onChanged: (value) {
+                          _p2pController.firstFloatingPrice.value = value;
+                          // print(_p2pController.firstFloatingPrice.value);
+                        },
                         textAlign: TextAlign.center,
                         decoration: InputDecoration(
                           hintText: '80.0-120.0',
@@ -533,10 +594,26 @@ class PostAddFirstPage extends StatelessWidget {
                       width: 16,
                     ),
                     //todo: add code for increasing by one
-                    Icon(
-                      Icons.add,
-                      size: 20,
-                      color: Get.theme.canvasColor,
+                    GestureDetector(
+                      onTap: () {
+                        if (double.parse(
+                                _p2pController.firstFloatingPrice.value) ==
+                            120.0) {
+                          return;
+                        } else {
+                          final val = _p2pController.firstFloatingPrice.value =
+                              (double.parse(_p2pController
+                                          .floatingTextController.text) +
+                                      1)
+                                  .toString();
+                          _p2pController.floatingTextController.text = val;
+                        }
+                      },
+                      child: Icon(
+                        Icons.add,
+                        size: 20,
+                        color: Get.theme.canvasColor,
+                      ),
                     ),
                   ],
                 ),
@@ -565,18 +642,20 @@ class PostAddFirstPage extends StatelessWidget {
                       color: Get.theme.hintColor,
                     ),
                   ),
+                  //vales are being multiplied here
                   Text(
-                    '${_p2pController.firstSelectedFiat.value}${_p2pController.firstYourPrice.value}',
+                    '${(_p2pController.firstLowestOnePercent.value * double.parse(_p2pController.firstFloatingPrice.value)).toPrecision(8)} ${_p2pController.firstSelectedFiat.value}',
                     style: TextStyle(
                       fontFamily: "Popins",
                       fontWeight: FontWeight.w500,
-                      fontSize: 20.0,
+                      fontSize: 14.0,
                       color: Get.theme.textSelectionTheme.selectionColor,
                     ),
                   ),
                 ],
               ),
-              Column(
+              //maybe for later use in the app
+              /*Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Row(
@@ -598,16 +677,16 @@ class PostAddFirstPage extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    '${_p2pController.firstSelectedFiat.value}${_p2pController.firstHighestOrderPrice.value}',
+                    '${_p2pController.firstSelectedFiat.value}${_p2pController.firstLowestOnePercent.value}',
                     style: TextStyle(
                       fontFamily: "Popins",
                       fontWeight: FontWeight.w500,
-                      fontSize: 20.0,
+                      fontSize: 14.0,
                       color: Get.theme.textSelectionTheme.selectionColor,
                     ),
                   ),
                 ],
-              ),
+              ),*/
             ],
           ),
         ),

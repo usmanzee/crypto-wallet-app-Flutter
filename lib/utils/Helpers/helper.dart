@@ -7,7 +7,7 @@ class Helper {
   static copyToClipBoard(String text) {
     Clipboard.setData(ClipboardData(text: text)).then((value) {
       SnackbarController snackbarController =
-          new SnackbarController(title: '', message: 'copy.to.clipboard'.tr);
+      SnackbarController(title: '', message: 'copy.to.clipboard'.tr);
       snackbarController.showSnackbar();
     });
   }

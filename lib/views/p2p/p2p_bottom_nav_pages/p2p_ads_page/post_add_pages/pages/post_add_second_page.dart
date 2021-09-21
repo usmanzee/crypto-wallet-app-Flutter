@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 
 class PostAddSecondPage extends StatelessWidget {
   final _p2pController = Get.find<P2pController>();
+
+  // final _walletController = Get.find<WalletController>();
   final _orderLimitFirstController = TextEditingController();
   final _orderLimitSecondController = TextEditingController();
   final _random = Random();
@@ -59,9 +61,15 @@ class PostAddSecondPage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: TextFormField(
+                            controller:
+                                _p2pController.secondTotalAmountTextController,
                             decoration: InputDecoration(
                               border: InputBorder.none,
                             ),
+                            onChanged: (value) {
+                              _p2pController.secondAddedAmountInFiat.value =
+                                  value;
+                            },
                             keyboardType: TextInputType.numberWithOptions(
                               decimal: true,
                               signed: false,
@@ -70,19 +78,24 @@ class PostAddSecondPage extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: Text(
-                            'All',
-                            style: TextStyle(
-                              fontFamily: "Popins",
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16.0,
-                              color: Get.theme.accentColor,
+                          child: GestureDetector(
+                            onTap: () {
+                              //todo:add the variable here to input the all data in the textField
+                            },
+                            child: Text(
+                              'All',
+                              style: TextStyle(
+                                fontFamily: "Popins",
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16.0,
+                                color: Get.theme.accentColor,
+                              ),
                             ),
                           ),
                         ),
                         //todo: selected currency name will be shown here
                         Text(
-                          'USDT',
+                          _p2pController.firstSelectedAsset.value,
                           style: TextStyle(
                             fontFamily: "Popins",
                             fontWeight: FontWeight.w500,
@@ -97,7 +110,9 @@ class PostAddSecondPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        '= ${_p2pController.secondAddedAmountInFiat} ',
+                        //todo: add the value with the selected value
+                        // '= ${int.parse(_p2pController.firstLowestPrize.value) * int.parse(_p2pController.secondAddedAmountInFiat.value)} ',
+                        '= value here',
                         style: TextStyle(
                           fontFamily: "Popins",
                           fontWeight: FontWeight.w500,
@@ -106,7 +121,7 @@ class PostAddSecondPage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '${_p2pController.secondSelectedFiat}',
+                        '${_p2pController.firstSelectedFiat}',
                         style: TextStyle(
                           fontFamily: "Popins",
                           fontWeight: FontWeight.w500,
@@ -120,6 +135,7 @@ class PostAddSecondPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
+                        //todo: add the values here after fetching from the wallet controller
                         'Available: ',
                         style: TextStyle(
                           fontFamily: "Popins",
@@ -226,7 +242,7 @@ class PostAddSecondPage extends StatelessWidget {
                         ],
                       ),
                       GestureDetector(
-                        //todo: add the page here for getting teh value of the payment methd to be selected for the add
+                        //todo: add the page here for getting teh value of the payment method to be selected for the add
                         onTap: () {},
                         child: Container(
                           padding: const EdgeInsets.symmetric(

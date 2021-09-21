@@ -1,9 +1,11 @@
+import 'package:b4u_wallet/controllers/p2p_controller.dart';
 import 'package:b4u_wallet/views/widgets/dot_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class P2pAdPostedPage extends StatelessWidget {
+  final _p2pController = Get.find<P2pController>();
   //todo: add the variables here for the values of the variables
   @override
   Widget build(BuildContext context) {
@@ -220,7 +222,13 @@ class P2pAdPostedPage extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Get.back();
+                  Get.back();
+                  _p2pController.secondPage.value = false;
+                  _p2pController.secondShowReservedFee.value = false;
+                  _p2pController.thirdPage.value= false;
+                },
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   width: double.infinity,

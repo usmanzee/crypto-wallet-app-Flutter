@@ -11,9 +11,6 @@ class P2pAdsPage extends StatelessWidget {
   final _homeController = Get.find<HomeController>();
   final RxString _selectedElement = ''.obs;
 
-  //todo: replace it with the data from the server to change it from the listview
-  RxBool online = false.obs;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,7 +112,8 @@ class P2pAdsPage extends StatelessWidget {
                           asset:
                               _p2pController.userAddedP2pOffers[index].baseUnit,
                           fiat: 'PKR',
-                          status: _p2pController.userAddedP2pOffers[index].state,
+                          status:
+                              _p2pController.userAddedP2pOffers[index].state,
                           fiatCurrency: 'Rs',
                           priceInFiat: '198.00',
                           totalAmount: _p2pController
@@ -459,15 +457,17 @@ class P2pAdsPage extends StatelessWidget {
   }
 
   void checkAndTake() {
-    if (_homeController.user.value.level ==
+    /*if (_homeController.user.value.level ==
         _homeController.publicMemberLevel.value.withdraw.minimumLevel) {
       Get.toNamed('/p2p_ad_post_initial_page');
     } else
-      Get.toNamed('/p2p_ads_page_level_check_page');
+      Get.toNamed('/p2p_ads_page_level_check_page');*/
+    Get.toNamed('/p2p_ad_post_initial_page');
   }
 
   Widget _emptyWidget() {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
           height: 100,

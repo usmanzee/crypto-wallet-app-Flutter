@@ -1,7 +1,10 @@
+import 'package:b4u_wallet/controllers/p2p_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class P2pSelectPaymentMethodPage extends StatelessWidget {
+  final _p2pController = Get.find<P2pController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +24,11 @@ class P2pSelectPaymentMethodPage extends StatelessWidget {
           ),
         ),
         leading: GestureDetector(
-          onTap: () => Get.back(),
+          onTap: () {
+            _p2pController.addedPaymentMethodsList.refresh();
+            // _p2pController.refresh();
+            Get.back();
+          },
           child: Icon(
             Icons.arrow_back_ios_rounded,
             size: 20,

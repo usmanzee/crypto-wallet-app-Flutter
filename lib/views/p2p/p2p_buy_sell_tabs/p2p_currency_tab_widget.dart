@@ -107,7 +107,8 @@ Widget p2pCurrencyTabWidget({
 
 Widget _emptyWidget() {
   return Column(
-    mainAxisSize: MainAxisSize.min,
+    mainAxisAlignment: MainAxisAlignment.center,
+    // mainAxisSize: MainAxisSize.min,
     children: [
       Image.asset(
         MyImgs.testPhoto,

@@ -1,7 +1,12 @@
 import 'dart:async';
 
 import 'package:b4u_wallet/controllers/error_controller.dart';
+import 'package:b4u_wallet/models/p2p_add_offer_model.dart';
+import 'package:b4u_wallet/models/p2p_currency.dart';
 import 'package:b4u_wallet/models/p2p_offer/p2p_offer.dart';
+import 'package:b4u_wallet/models/payment_method/payment_method.dart';
+import 'package:b4u_wallet/models/payment_method/payment_method_data.dart';
+import 'package:b4u_wallet/models/payment_method/payment_method_detail.dart';
 import 'package:b4u_wallet/repository/p2p_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -98,6 +103,9 @@ class P2pController extends GetxController {
   RxBool secondPage = false.obs;
   RxBool thirdPage = false.obs;
 
+  //offer to be added
+  P2pAddOfferModel p2pAddOfferModel;
+
   //post normal add first page
   RxString firstBuySell = 'Buy'.obs;
   RxString firstFixedFloating = 'Fixed'.obs;
@@ -105,14 +113,24 @@ class P2pController extends GetxController {
   RxString firstSelectedFiat = 'btc'.obs;
   RxString firstYourPrice = ''.obs;
   RxString firstHighestOrderPrice = ''.obs;
+  RxString firstFixedPrice = '0'.obs;
+  RxDouble firstLowestOnePercent = 0.00000000.obs;
+  RxString firstFloatingPrice = '100'.obs;
+  RxBool firstShowWarning = false.obs;
+  RxString firstLowestPrize = '0'.obs;
+  RxList<P2PCurrency> firstAssetListWithInfo = <P2PCurrency>[].obs;
+  RxList<String> firstAssetList = <String>[].obs;
+  final fixedTextController = TextEditingController(text: '0');
+  final floatingTextController = TextEditingController(text: '100');
 
   //post normal add second page
   RxString secondSelectedAsset = ''.obs;
-  RxString secondAddedAmountInFiat = ''.obs;
+  final secondTotalAmountTextController = TextEditingController(text: '1');
+  RxString secondAddedAmountInFiat = '1'.obs;
   RxString secondAddedAmountInAsset = ''.obs;
   RxString secondSelectedFiat = ''.obs;
   RxInt secondTimeLimitInt = 15.obs;
-  RxString secondTimeLimitString = ''.obs;
+  RxString secondTimeLimitString = '15'.obs;
   RxDouble secondReservedFee = 0.07.obs;
   RxBool secondShowReservedFee = false.obs;
 
@@ -121,6 +139,15 @@ class P2pController extends GetxController {
   RxBool thirdRegisteredDays = false.obs;
   RxBool thirdBtc = false.obs;
   RxInt thirdOnlineOffline = 1.obs;
+
+  // add payment method process variables
+  RxList<PaymentMethod> publicPaymentMethodList = <PaymentMethod>[].obs;
+  RxList<PaymentMethodData> addedPaymentMethodsList = <PaymentMethodData>[].obs;
+  // RxBool paymentMethodsAdded = false.obs;
+  RxString selectedMethodName = ''.obs;
+  RxString selectedMethodSlug = ''.obs;
+  RxList<PaymentMethodDetail> selectedPaymentMethodDetails =
+      <PaymentMethodDetail>[].obs;
 
   @override
   void onClose() {
@@ -132,6 +159,9 @@ class P2pController extends GetxController {
   void onReady() {
     fetchAllLists(true);
     fetchUserP2pAddedOffers();
+    fetchCurrencies();
+    fetchPublicPaymentMethodList();
+    fetchAllAddedPaymentMethods();
     scrollController = ScrollController();
     scrollController.addListener(() {
       if (scrollController.offset >= 300) {
@@ -216,5 +246,119 @@ class P2pController extends GetxController {
       return false;
     }
     return false;
+  }
+
+  //fetch the current rate of the asset in the fiat
+  void fetchExchangeRateForSingleAsset() async {
+    final Map<String, dynamic> body = {
+      'qoute_currency': firstSelectedAsset.value,
+      'base_currency': firstSelectedFiat.value,
+      // 'qoute_currency': 'usd',
+      'qoute_amount': '1',
+    };
+    try {
+      final res = await _p2pRepository.fetchExchangeRate(body: body);
+      if (res != null) {
+        firstLowestPrize.value = res.trim();
+        fixedTextController.text = res.trim();
+        firstFixedPrice.value = res.trim();
+        firstLowestOnePercent.value = double.parse(firstFixedPrice.value) / 100;
+      }
+    } catch (error) {
+      errorController.handleError(error);
+      // isLoading(false);
+    }
+  }
+
+  //fetch all p2p asset currencies
+  void fetchCurrencies() async {
+    try {
+      final res = await _p2pRepository.fetchCurrencies();
+      if (res != null) {
+        res.forEach((e) {
+          firstAssetListWithInfo.add(e);
+          if (e.type == 'coin') {
+            firstAssetList.add(e.id);
+          }
+        });
+        print('currencies are fetched');
+      }
+    } catch (error) {
+      errorController.handleError(error);
+      // isLoading(false);
+    }
+  }
+
+  //fetch the all of the payment methods list
+  void fetchPublicPaymentMethodList() async {
+    try {
+      final res = await _p2pRepository.fetchPaymentMethodList();
+      if (res.length > 0) {
+        res.forEach((e) {
+          publicPaymentMethodList.add(e);
+        });
+      }
+    } catch (error) {
+      errorController.handleError(error);
+    }
+  }
+
+  //fetch the selected public payment method details
+  Future<bool> selectedPublicMethodDetails(
+      {@required String selectedMethod}) async {
+    selectedPaymentMethodDetails = <PaymentMethodDetail>[].obs;
+    try {
+      final res = await _p2pRepository.selectedPublicMethodDetails(
+          selectedMethod: selectedMethod);
+      if (res.length > 0) {
+        res.forEach((e) {
+          selectedPaymentMethodDetails.add(e);
+        });
+        return true;
+      }
+      return false;
+    } catch (error) {
+      errorController.handleError(error);
+      return false;
+    }
+  }
+
+  // fetch the all of the added payment methods added by the user
+  void fetchAllAddedPaymentMethods() async {
+    try {
+      final res = await _p2pRepository.fetchAllAddedPaymentMethods();
+      if (res.length > 0) {
+        res.forEach((e) {
+          addedPaymentMethodsList.add(e);
+          // addedPaymentMethodsList.refresh();
+        });
+        // paymentMethodsAdded.value = true;
+      }
+    } catch (error) {
+      errorController.handleError(error);
+    }
+  }
+
+  //refresh all of the added payment methods
+  void refreshAllAddedPaymentMethods() {
+    addedPaymentMethodsList = <PaymentMethodData>[].obs;
+    fetchAllAddedPaymentMethods();
+    // addedPaymentMethodsList.refresh();
+    update();
+    print('done');
+  }
+
+  //add a payment method to the account
+  Future<bool> addPaymentMethod(dynamic body) async {
+    try {
+      final res = await _p2pRepository.addPaymentMethod(body);
+      if (res) {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      errorController.handleError(error);
+      return false;
+    }
   }
 }

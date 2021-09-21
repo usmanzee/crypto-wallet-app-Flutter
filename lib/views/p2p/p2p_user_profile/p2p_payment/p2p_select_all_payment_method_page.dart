@@ -1,9 +1,13 @@
 import 'dart:math';
 
+import 'package:b4u_wallet/controllers/p2p_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class P2pSelectAllPaymentMethodPage extends StatelessWidget {
+  final Random random = Random();
+  final _p2pController = Get.find<P2pController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,10 +72,42 @@ class P2pSelectAllPaymentMethodPage extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: ListView.builder(
-                itemCount: 10,
+                itemCount: _p2pController.publicPaymentMethodList.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  return ListItem();
+                  return GestureDetector(
+                    onTap: () async {
+                      showDialog(
+                        context: context,
+                        builder: (context) => Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                      final res =
+                          await _p2pController.selectedPublicMethodDetails(
+                              selectedMethod: _p2pController
+                                  .publicPaymentMethodList[index].slug);
+                      Get.back();
+                      if (res) {
+                        _p2pController.selectedMethodName.value = _p2pController
+                            .publicPaymentMethodList[index].name;
+                        _p2pController.selectedMethodSlug.value = _p2pController
+                            .publicPaymentMethodList[index].slug;
+                        Get.toNamed(
+                            '/p2p_payment_method_add_bank_details_page');
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('please try again'),
+                          ),
+                        );
+                      }
+                    },
+                    child: ListItem(
+                      name: _p2pController.publicPaymentMethodList[index].name,
+                      random: random,
+                    ),
+                  );
                 },
               ),
             ),
@@ -83,51 +119,49 @@ class P2pSelectAllPaymentMethodPage extends StatelessWidget {
 }
 
 class ListItem extends StatelessWidget {
-  final _random = Random();
+  final String name;
+  final Random random;
+
+  ListItem({@required this.name, @required this.random});
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      //todo: add the callback here for the required data
-      onTap: () => Get.toNamed('/p2p_payment_method_add_bank_details_page'),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 16),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                color:
-                    Colors.primaries[_random.nextInt(Colors.primaries.length)],
-                borderRadius: BorderRadius.circular(1),
-              ),
-              child: Text(' '),
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.primaries[random.nextInt(Colors.primaries.length)],
+              borderRadius: BorderRadius.circular(1),
             ),
-            const SizedBox(
-              width: 8,
+            child: Text(' '),
+          ),
+          const SizedBox(
+            width: 8,
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  name,
+                  style: TextStyle(),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Container(
+                  height: 0.3,
+                  width: double.infinity,
+                  color: Get.theme.hintColor,
+                ),
+              ],
             ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'ABN AMRO',
-                    style: TextStyle(),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Container(
-                    height: 0.3,
-                    width: double.infinity,
-                    color: Get.theme.hintColor,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -31,7 +31,12 @@ class P2pAdPostInitialPage extends StatelessWidget {
           ),
         ),
         leading: GestureDetector(
-          onTap: () => Get.back(),
+          onTap: () {
+            Get.back();
+            _p2pController.secondPage.value = false;
+            _p2pController.secondShowReservedFee.value = false;
+            _p2pController.thirdPage.value = false;
+          },
           child: Icon(
             Icons.arrow_back_ios_rounded,
             size: 20,
@@ -117,42 +122,45 @@ class P2pAdPostInitialPage extends StatelessWidget {
               children: [
                 _p2pController.secondShowReservedFee.value
                     ? Container(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: Get.theme.colorScheme.secondary.withOpacity(0.3),
-                  ),
-                  child: Row(
-                    children: [
-                      Text(
-                        'Reserved Fee:',
-                        style: TextStyle(
-                          fontFamily: "Popins",
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.0,
-                          color: Get.theme.hintColor,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
+                        decoration: BoxDecoration(
+                          color:
+                              Get.theme.colorScheme.secondary.withOpacity(0.3),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Icon(
-                          Icons.info_outline,
-                          size: 20,
-                          color: Get.theme.hintColor,
+                        child: Row(
+                          children: [
+                            Text(
+                              'Reserved Fee:',
+                              style: TextStyle(
+                                fontFamily: "Popins",
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14.0,
+                                color: Get.theme.hintColor,
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Icon(
+                                Icons.info_outline,
+                                size: 20,
+                                color: Get.theme.hintColor,
+                              ),
+                            ),
+                            Text(
+                              '${_p2pController.secondReservedFee.value} ${_p2pController.firstSelectedAsset.value}',
+                              style: TextStyle(
+                                fontFamily: "Popins",
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14.0,
+                                color:
+                                    Get.theme.textSelectionTheme.selectionColor,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      Text(
-                        '${_p2pController.secondReservedFee.value} ${_p2pController.firstSelectedAsset.value}',
-                        style: TextStyle(
-                          fontFamily: "Popins",
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.0,
-                          color: Get.theme.textSelectionTheme.selectionColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
+                      )
                     : Container(),
                 Padding(
                   padding: const EdgeInsets.all(16),
@@ -161,72 +169,85 @@ class P2pAdPostInitialPage extends StatelessWidget {
                     children: [
                       _p2pController.secondPage.value
                           ? Expanded(
-                        flex: 4,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  if (_pageController.page == 1) {
-                                    _pageController.previousPage(
-                                      duration: Duration(milliseconds: 300),
-                                      curve: Curves.linear,
-                                    );
-                                    _p2pController.secondPage.value = false;
-                                    _p2pController
-                                        .secondShowReservedFee.value = false;
-                                  }
-                                  if (_pageController.page == 2) {
-                                    _pageController.previousPage(
-                                      duration: Duration(milliseconds: 300),
-                                      curve: Curves.linear,
-                                    );
-                                    _p2pController.thirdPage.value = false;
-                                    _p2pController
-                                        .secondShowReservedFee.value = true;
-                                  }
-                                },
-                                child: Container(
-                                  // width: Get.width,
-                                  decoration: BoxDecoration(
-                                    color: Get.theme.accentColor,
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                  padding:
-                                  const EdgeInsets.symmetric(vertical: 8),
-                                  child: Center(
-                                    child: Text(
-                                      'Previous',
-                                      style: TextStyle(
-                                        fontFamily: "Popins",
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16.0,
-                                        color:
-                                        Get.theme.scaffoldBackgroundColor,
+                              flex: 4,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        if (_pageController.page == 1) {
+                                          _pageController.previousPage(
+                                            duration:
+                                                Duration(milliseconds: 300),
+                                            curve: Curves.linear,
+                                          );
+                                          _p2pController.secondPage.value =
+                                              false;
+                                          _p2pController.secondShowReservedFee
+                                              .value = false;
+                                        }
+                                        if (_pageController.page == 2) {
+                                          _pageController.previousPage(
+                                            duration:
+                                                Duration(milliseconds: 300),
+                                            curve: Curves.linear,
+                                          );
+                                          _p2pController.thirdPage.value =
+                                              false;
+                                          // _p2pController.secondShowReservedFee
+                                          //     .value = true;
+                                        }
+                                      },
+                                      child: Container(
+                                        // width: Get.width,
+                                        decoration: BoxDecoration(
+                                          color: Get.theme.accentColor,
+                                          borderRadius:
+                                              BorderRadius.circular(4),
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 8),
+                                        child: Center(
+                                          child: Text(
+                                            'Previous',
+                                            style: TextStyle(
+                                              fontFamily: "Popins",
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16.0,
+                                              color: Get.theme
+                                                  .scaffoldBackgroundColor,
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                ],
                               ),
-                            ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                          ],
-                        ),
-                      )
+                            )
                           : Container(),
                       Expanded(
                         flex: 7,
                         child: GestureDetector(
                           onTap: () {
                             if (_pageController.page == 0) {
-                              _pageController.nextPage(
-                                duration: Duration(milliseconds: 300),
-                                curve: Curves.linear,
-                              );
-                              _p2pController.secondPage.value = true;
-                              _p2pController.secondShowReservedFee.value = true;
+                              if (double.parse(
+                                      _p2pController.firstFixedPrice.value) >=
+                                  double.parse(_p2pController.firstLowestPrize.value)) {
+                                _pageController.nextPage(
+                                  duration: Duration(milliseconds: 300),
+                                  curve: Curves.linear,
+                                );
+                                _p2pController.secondPage.value = true;
+                                // _p2pController.secondShowReservedFee.value =
+                                //     true;
+                                _p2pController.firstShowWarning.value = false;
+                              } else {
+                                _p2pController.firstShowWarning.value = true;
+                              }
                             }
                             if (_pageController.page == 1) {
                               _pageController.nextPage(
@@ -234,7 +255,8 @@ class P2pAdPostInitialPage extends StatelessWidget {
                                 curve: Curves.linear,
                               );
                               _p2pController.thirdPage.value = true;
-                              _p2pController.secondShowReservedFee.value = false;
+                              _p2pController.secondShowReservedFee.value =
+                                  false;
                             }
                             if (_pageController.page == 2) {
                               //todo: add here the method for the post
@@ -250,7 +272,9 @@ class P2pAdPostInitialPage extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(vertical: 8),
                             child: Center(
                               child: Text(
-                                _p2pController.thirdPage.value ? 'Post' : 'Next',
+                                _p2pController.thirdPage.value
+                                    ? 'Post'
+                                    : 'Next',
                                 style: TextStyle(
                                   fontFamily: "Popins",
                                   fontWeight: FontWeight.bold,
