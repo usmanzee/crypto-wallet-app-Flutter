@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:b4u_wallet/controllers/error_controller.dart';
+import 'package:b4u_wallet/models/balance.dart';
 import 'package:b4u_wallet/models/p2p_add_offer_model.dart';
 import 'package:b4u_wallet/models/p2p_currency.dart';
 import 'package:b4u_wallet/models/p2p_offer/p2p_offer.dart';
 import 'package:b4u_wallet/models/payment_method/payment_method.dart';
 import 'package:b4u_wallet/models/payment_method/payment_method_data.dart';
 import 'package:b4u_wallet/models/payment_method/payment_method_detail.dart';
+import 'package:b4u_wallet/models/payment_method/selected_method_for_offer_model.dart';
 import 'package:b4u_wallet/repository/p2p_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -133,6 +135,10 @@ class P2pController extends GetxController {
   RxString secondTimeLimitString = '15'.obs;
   RxDouble secondReservedFee = 0.07.obs;
   RxBool secondShowReservedFee = false.obs;
+  RxList<Balance> fetchedBalances = <Balance>[].obs;
+  RxString secondAvailableAmount = ''.obs;
+  RxList<SelectedMethodForOfferModel> selectedMethodForOffer =
+      <SelectedMethodForOfferModel>[].obs;
 
   //post normal add third page
   RxBool thirdKyc = true.obs;
@@ -143,6 +149,7 @@ class P2pController extends GetxController {
   // add payment method process variables
   RxList<PaymentMethod> publicPaymentMethodList = <PaymentMethod>[].obs;
   RxList<PaymentMethodData> addedPaymentMethodsList = <PaymentMethodData>[].obs;
+
   // RxBool paymentMethodsAdded = false.obs;
   RxString selectedMethodName = ''.obs;
   RxString selectedMethodSlug = ''.obs;
@@ -156,11 +163,12 @@ class P2pController extends GetxController {
   }
 
   @override
-  void onReady() {
-    fetchAllLists(true);
+  void onReady() async {
+    await fetchAllLists(true);
     fetchUserP2pAddedOffers();
     fetchCurrencies();
     fetchPublicPaymentMethodList();
+    fetchP2pBalances();
     fetchAllAddedPaymentMethods();
     scrollController = ScrollController();
     scrollController.addListener(() {
@@ -182,7 +190,7 @@ class P2pController extends GetxController {
     super.onInit();
   }
 
-  void fetchAllLists(bool val) async {
+  Future<void> fetchAllLists(bool val) async {
     isLoading(val);
     await fetchP2pOffers(category: 'usd', buyList: usdBuy, sellList: usdSell);
     await fetchP2pOffers(category: 'eth', buyList: ethBuy, sellList: ethSell);
@@ -263,6 +271,12 @@ class P2pController extends GetxController {
         fixedTextController.text = res.trim();
         firstFixedPrice.value = res.trim();
         firstLowestOnePercent.value = double.parse(firstFixedPrice.value) / 100;
+        // availableAmount.value = fetchedBalances[index].balance;
+        fetchedBalances.forEach((element) {
+          if (firstSelectedAsset.value == element.currency) {
+            secondAvailableAmount.value = element.balance;
+          }
+        });
       }
     } catch (error) {
       errorController.handleError(error);
@@ -277,11 +291,8 @@ class P2pController extends GetxController {
       if (res != null) {
         res.forEach((e) {
           firstAssetListWithInfo.add(e);
-          if (e.type == 'coin') {
-            firstAssetList.add(e.id);
-          }
         });
-        print('currencies are fetched');
+        // print('currencies are fetched');
       }
     } catch (error) {
       errorController.handleError(error);
@@ -359,6 +370,20 @@ class P2pController extends GetxController {
     } catch (error) {
       errorController.handleError(error);
       return false;
+    }
+  }
+
+  void fetchP2pBalances() async {
+    try {
+      final res = await _p2pRepository.fetchP2PBalances();
+      if (res.length > 0) {
+        res.forEach((element) {
+          fetchedBalances.add(element);
+          firstAssetList.add(element.currency);
+        });
+      }
+    } catch (error) {
+      errorController.handleError(error);
     }
   }
 }

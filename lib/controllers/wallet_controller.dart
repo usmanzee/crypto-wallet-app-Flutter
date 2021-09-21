@@ -51,7 +51,7 @@ class WalletController extends GetxController {
   }
 
   void fetchWallets() async {
-    WalletRepository _walletRepository = new WalletRepository();
+    WalletRepository _walletRepository = WalletRepository();
     try {
       isLoading(true);
       //fetching balances from the all three lists.

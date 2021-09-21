@@ -33,6 +33,7 @@ import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_ads_page/p2p_ad_posted_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_ads_page/p2p_ads_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_ads_page/post_add_pages/p2p_ad_post_initial_page.dart';
+import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_ads_page/post_add_pages/select_payment_method_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_ads_page_history_page/p2p_ads_page_history_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_initial_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_order_history_page/p2p_orders_history_page.dart';
@@ -328,6 +329,10 @@ class Router {
     GetPage(
       name: '/locked_package_details_page',
       page: () => LockedPackageDetailsPage(),
+    ),
+    GetPage(
+      name: '/select_payment_method_page',
+      page: () => SelectPaymentMethodPage(),
     ),
   ];
 }
