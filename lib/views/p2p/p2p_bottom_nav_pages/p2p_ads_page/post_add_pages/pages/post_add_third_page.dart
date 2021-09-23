@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PostAddThirdPage extends StatelessWidget {
-  final _termsController = TextEditingController();
-  final _autoReplyController = TextEditingController();
   final _registeredDaysController = TextEditingController(text: '0');
   final _btcHoldingController = TextEditingController(text: '0.01');
   final _p2pController = Get.find<P2pController>();
@@ -25,11 +23,11 @@ class PostAddThirdPage extends StatelessWidget {
                   children: [
                     _container(
                       heading: 'Terms (Optional)',
-                      controller: _termsController,
+                      controller: _p2pController.thirdTermsController,
                     ),
                     _container(
                       heading: 'Auto-replay (Optional)',
-                      controller: _autoReplyController,
+                      controller: _p2pController.thirdAutoReplyController,
                     ),
                   ],
                 ),

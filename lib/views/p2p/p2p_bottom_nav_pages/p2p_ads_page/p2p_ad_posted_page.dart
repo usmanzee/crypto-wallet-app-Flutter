@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 class P2pAdPostedPage extends StatelessWidget {
   final _p2pController = Get.find<P2pController>();
+
   //todo: add the variables here for the values of the variables
   @override
   Widget build(BuildContext context) {
@@ -111,7 +112,7 @@ class P2pAdPostedPage extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                'Sell',
+                                _p2pController.p2pOfferAddResponse.side,
                                 style: TextStyle(
                                   fontFamily: "Popins",
                                   fontWeight: FontWeight.w400,
@@ -123,7 +124,7 @@ class P2pAdPostedPage extends StatelessWidget {
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 4),
                                 child: Text(
-                                  'USDT',
+                                  _p2pController.p2pOfferAddResponse.quoteUnit,
                                   style: TextStyle(
                                     fontFamily: "Popins",
                                     fontWeight: FontWeight.w400,
@@ -146,7 +147,7 @@ class P2pAdPostedPage extends StatelessWidget {
                                 width: 4,
                               ),
                               Text(
-                                'PKR',
+                                _p2pController.p2pOfferAddResponse.baseUnit,
                                 style: TextStyle(
                                   fontFamily: "Popins",
                                   fontWeight: FontWeight.w400,
@@ -168,7 +169,7 @@ class P2pAdPostedPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            'Rs',
+                            _p2pController.p2pOfferAddResponse.baseUnit,
                             style: TextStyle(
                               fontFamily: "Popins",
                               fontWeight: FontWeight.w400,
@@ -178,7 +179,7 @@ class P2pAdPostedPage extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            '198.00',
+                            _p2pController.p2pOfferAddResponse.price,
                             style: TextStyle(
                               fontFamily: "Popins",
                               fontWeight: FontWeight.w400,
@@ -194,16 +195,19 @@ class P2pAdPostedPage extends StatelessWidget {
                       ),
                       _textRow(
                         first: 'Total',
-                        second: '170.00 USDT',
+                        second:
+                            '${_p2pController.p2pOfferAddResponse.availableAmount} ${_p2pController.p2pOfferAddResponse.quoteUnit}',
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4),
                         child: _textRow(
                           first: 'Limit',
-                          second: '1500.000 - 150000.00 PKR',
+                          second:
+                              '${_p2pController.p2pOfferAddResponse.minOrderAmount} - ${_p2pController.p2pOfferAddResponse.maxOrderAmount} ${_p2pController.p2pOfferAddResponse.baseUnit}',
                         ),
                       ),
-                      Row(
+                      //todo: maybe after discussion we can add here the variables
+                      /*Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -216,7 +220,7 @@ class P2pAdPostedPage extends StatelessWidget {
                             ),
                           ),
                         ],
-                      ),
+                      ),*/
                     ],
                   ),
                 ),
@@ -227,7 +231,7 @@ class P2pAdPostedPage extends StatelessWidget {
                   Get.back();
                   _p2pController.secondPage.value = false;
                   _p2pController.secondShowReservedFee.value = false;
-                  _p2pController.thirdPage.value= false;
+                  _p2pController.thirdPage.value = false;
                 },
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 8),

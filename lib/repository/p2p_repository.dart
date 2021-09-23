@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:b4u_wallet/models/balance.dart';
 import 'package:b4u_wallet/models/p2p_currency.dart';
 import 'package:b4u_wallet/models/p2p_offer/p2p_offer.dart';
+import 'package:b4u_wallet/models/p2p_offer/p2p_offer_add_response.dart';
 import 'package:b4u_wallet/models/payment_method/payment_method.dart';
 import 'package:b4u_wallet/models/payment_method/payment_method_data.dart';
 import 'package:b4u_wallet/models/payment_method/payment_method_detail.dart';
@@ -28,13 +29,22 @@ class P2pRepository {
     return a;
   }
 
-  Future<P2POffer> addP2pOffer(Map<String, dynamic> body) async {
+  Future<P2POfferAddResponse> addP2pOffer({var body}) async {
     apiProvider = ApiProvider();
     RequestHeaders requestHeaders = RequestHeaders();
     apiProvider.headers = requestHeaders.setAuthHeaders();
-    final response = await apiProvider.post('peatio/account/offers', body);
+    apiProvider.headers['Content-Type'] = 'application/json; charset=UTF-8';
+    // Map<String, String> headers = Map();
+    // headers.addAll(requestHeaders.setAuthHeaders());
+    // headers.putIfAbsent("Content-Type", () => 'application/json');
+    // headers.putIfAbsent("accept", () => 'application/json');
+    // apiProvider.headers = headers;
+    final body1 = json.encode(body);
+    print(body1);
+    final response = await apiProvider.post('peatio/account/offers', body1);
     print(response.toString());
-    final P2POffer _p2pOffer = P2POffer.fromJson(response);
+    final P2POfferAddResponse _p2pOffer =
+        P2POfferAddResponse.fromJson(json.decode(response));
     return _p2pOffer;
   }
 
@@ -95,7 +105,7 @@ class P2pRepository {
         .get('peatio/account/p2p/payment_methods/details/$selectedMethod');
     final re = json.decode(response);
     //there is a json inside a json :v)
-    final r = json.decode(re[0]['options']);
+    final r = json.decode(re['options']);
     Iterable l = r;
     List<PaymentMethodDetail> a = List<PaymentMethodDetail>.from(
         l.map((model) => PaymentMethodDetail.fromJson(model)));
@@ -142,6 +152,13 @@ class P2pRepository {
     return balanceFromJson(response);
   }
 
-  //add the offer to the server
+/*//add the offer to the server
+  Future<P2POfferAddResponse> addP2pOffer() async {
+    apiProvider = ApiProvider();
+    RequestHeaders requestHeaders = RequestHeaders();
+    apiProvider.headers = requestHeaders.setAuthHeaders();
+    final response =
+    await apiProvider.get('peatio/account/balances?account_type=p2p');
+  }*/
 
 }

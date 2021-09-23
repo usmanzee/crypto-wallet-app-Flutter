@@ -1,7 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'member_object/member.dart';
-
 part 'p2p_offer.g.dart';
 
 @JsonSerializable()
@@ -52,6 +50,7 @@ class P2POffer {
   String note;
   @JsonKey(name: 'payment_method_id')
   int paymentMethodId;
+
   // @JsonKey(name: 'member')
   // Member member;
   @JsonKey(name: 'created_at')

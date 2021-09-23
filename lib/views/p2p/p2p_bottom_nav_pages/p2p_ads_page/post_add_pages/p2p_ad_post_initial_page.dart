@@ -1,4 +1,5 @@
 import 'package:b4u_wallet/controllers/p2p_controller.dart';
+import 'package:b4u_wallet/models/p2p_add_offer_model.dart';
 import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_ads_page/post_add_pages/pages/post_add_first_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_ads_page/post_add_pages/pages/post_add_second_page.dart';
 import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_ads_page/post_add_pages/pages/post_add_third_page.dart';
@@ -233,9 +234,54 @@ class P2pAdPostInitialPage extends StatelessWidget {
                         flex: 7,
                         child: GestureDetector(
                           onTap: _p2pController.thirdPage.value
-                              ? () {
-                                  //todo: add the api here for the offer to be done
-
+                              ? () async {
+                                  // int i = 0;
+                                  List<Map<String, String>> map =
+                                      <Map<String, String>>[];
+                                  _p2pController.selectedMethodForOffer
+                                      .forEach((element) {
+                                    map.add({"name": "${element.slug}"});
+                                  });
+                                  // final ma = json.encode(mapq);
+                                  // final map = json.encode(map);
+                                  print(map.toString());
+                                  // final a = map.toString();
+                                  // final payments = json.encode(_p2pController.addedPaymentMethodsList);
+                                  // print(payments.toString());
+                                  final model = P2pAddOfferModel(
+                                    originAmount: double.parse(_p2pController
+                                        .secondTotalAmountTextController.text),
+                                    price: double.parse(_p2pController
+                                        .firstFixedPrice.value),
+                                    baseUnit:
+                                        _p2pController.firstSelectedFiat.value,
+                                    quoteUnit:
+                                        _p2pController.firstSelectedAsset.value,
+                                    minOrderAmount: double.parse(_p2pController
+                                        .secondOrderLimitFirstController.text),
+                                    maxOrderAmount: double.parse(_p2pController
+                                        .secondOrderLimitSecondController.text),
+                                    side: _p2pController.firstBuySell.value.toLowerCase(),
+                                    // paymentMethods: map.toString(),
+                                    timeLimit:
+                                        _p2pController.secondTimeLimitInt.value,
+                                    note: _p2pController
+                                        .thirdTermsController.text,
+                                    autoReply: _p2pController
+                                        .thirdAutoReplyController.text,
+                                    //todo: ask about the margin
+                                    margin: 100,
+                                  );
+                                  var body = model.toJson();
+                                  // adding the array of maps a as a variable in the field
+                                  body['payment_methods'] = map;
+                                  final res = await _p2pController.addP2pOffer(
+                                      body: body);
+                                  if (res) {
+                                    Get.toNamed('/p2p_ad_posted_page');
+                                  } else {
+                                    print('not added');
+                                  }
                                 }
                               : () {
                                   if (_pageController.page == 0) {

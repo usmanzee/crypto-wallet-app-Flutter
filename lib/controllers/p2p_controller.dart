@@ -5,6 +5,7 @@ import 'package:b4u_wallet/models/balance.dart';
 import 'package:b4u_wallet/models/p2p_add_offer_model.dart';
 import 'package:b4u_wallet/models/p2p_currency.dart';
 import 'package:b4u_wallet/models/p2p_offer/p2p_offer.dart';
+import 'package:b4u_wallet/models/p2p_offer/p2p_offer_add_response.dart';
 import 'package:b4u_wallet/models/payment_method/payment_method.dart';
 import 'package:b4u_wallet/models/payment_method/payment_method_data.dart';
 import 'package:b4u_wallet/models/payment_method/payment_method_detail.dart';
@@ -139,12 +140,19 @@ class P2pController extends GetxController {
   RxString secondAvailableAmount = ''.obs;
   RxList<SelectedMethodForOfferModel> selectedMethodForOffer =
       <SelectedMethodForOfferModel>[].obs;
+  final secondOrderLimitFirstController = TextEditingController();
+  final secondOrderLimitSecondController = TextEditingController();
 
   //post normal add third page
   RxBool thirdKyc = true.obs;
   RxBool thirdRegisteredDays = false.obs;
   RxBool thirdBtc = false.obs;
   RxInt thirdOnlineOffline = 1.obs;
+  final thirdTermsController = TextEditingController();
+  final thirdAutoReplyController = TextEditingController();
+
+  //added offer response
+  P2POfferAddResponse p2pOfferAddResponse;
 
   // add payment method process variables
   RxList<PaymentMethod> publicPaymentMethodList = <PaymentMethod>[].obs;
@@ -239,12 +247,12 @@ class P2pController extends GetxController {
     }
   }
 
-  Future<bool> addP2pOffer() async {
-    //todo: pass the required variables
-    Map<String, dynamic> body = {};
+  Future<bool> addP2pOffer({var body}) async {
     try {
-      final response = await _p2pRepository.addP2pOffer(body);
+      final response = await _p2pRepository.addP2pOffer(body: body);
       if (response.id != null) {
+        p2pOfferAddResponse = response;
+        print(p2pOfferAddResponse.side);
         return true;
       }
     } catch (error) {

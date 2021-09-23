@@ -8,10 +8,6 @@ import 'package:get/get.dart';
 
 class PostAddSecondPage extends StatelessWidget {
   final _p2pController = Get.find<P2pController>();
-
-  // final _walletController = Get.find<WalletController>();
-  final _orderLimitFirstController = TextEditingController();
-  final _orderLimitSecondController = TextEditingController();
   final _random = Random();
   final List<TimeValues> _timeValues = [
     TimeValues('15 Min', 15),
@@ -189,7 +185,9 @@ class PostAddSecondPage extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      _textWidget(controller: _orderLimitFirstController),
+                      _textWidget(
+                          controller:
+                              _p2pController.secondOrderLimitFirstController),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: Text(
@@ -202,7 +200,9 @@ class PostAddSecondPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      _textWidget(controller: _orderLimitSecondController),
+                      _textWidget(
+                          controller:
+                              _p2pController.secondOrderLimitSecondController),
                     ],
                   ),
                 ],

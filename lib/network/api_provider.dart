@@ -13,8 +13,8 @@ class ApiProvider {
   Future<dynamic> get(String url) async {
     var responseJson;
     try {
-      print(_baseUrl + _appVersion + url);
-      print('headers :' + headers.toString());
+      // print(_baseUrl + _appVersion + url);
+      // print('headers :' + headers.toString());
       final response =
           await http.get(_baseUrl + _appVersion + url, headers: headers);
       responseJson = _returnResponse(response);
@@ -40,7 +40,7 @@ class ApiProvider {
   Future<dynamic> post(String url, dynamic body) async {
     var responseJson;
     try {
-      print(_baseUrl + url);
+      // print(_baseUrl + url);
       final response = await http.post(_baseUrl + _appVersion + url,
           body: body, headers: headers);
       responseJson = _returnResponse(response);

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'p2p_add_offer_model.g.dart';
@@ -18,31 +19,32 @@ class P2pAddOfferModel {
   double maxOrderAmount;
   @JsonKey(name: 'side')
   String side;
-  @JsonKey(name: 'payment_method')
-  String paymentMethod;
+
+  // @JsonKey(name: 'payment_methods')
+  // String paymentMethods;
   @JsonKey(name: 'time_limit')
-  String timeLimit;
+  int timeLimit;
   @JsonKey(name: 'note')
   String note;
   @JsonKey(name: 'margin')
-  String margin;
+  double margin;
   @JsonKey(name: 'auto_reply')
   String autoReply;
 
-  P2pAddOfferModel(
-    this.originAmount,
-    this.price,
-    this.baseUnit,
-    this.quoteUnit,
-    this.minOrderAmount,
-    this.maxOrderAmount,
-    this.side,
-    this.paymentMethod,
-    this.timeLimit,
-    this.note,
-    this.autoReply,
-    this.margin,
-  );
+  P2pAddOfferModel({
+    @required this.originAmount,
+    @required this.price,
+    @required this.baseUnit,
+    @required this.quoteUnit,
+    @required this.minOrderAmount,
+    @required this.maxOrderAmount,
+    @required this.side,
+    // this.paymentMethods,
+    @required this.timeLimit,
+    @required this.note,
+    @required this.autoReply,
+    @required this.margin,
+  });
 
   factory P2pAddOfferModel.fromJson(Map<String, dynamic> json) =>
       _$P2pAddOfferModelFromJson(json);
