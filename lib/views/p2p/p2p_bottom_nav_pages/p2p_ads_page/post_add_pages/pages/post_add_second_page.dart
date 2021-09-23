@@ -25,243 +25,93 @@ class PostAddSecondPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Obx(
-        () => Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 16,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Total amount',
-                    style: TextStyle(
-                      fontFamily: "Popins",
-                      fontWeight: FontWeight.w500,
-                      fontSize: 12.0,
-                      color: Get.theme.hintColor,
+        () => Form(
+          key: _p2pController.secondFormKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 16,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Total amount',
+                      style: TextStyle(
+                        fontFamily: "Popins",
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12.0,
+                        color: Get.theme.hintColor,
+                      ),
                     ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Get.theme.hintColor.withOpacity(0.6),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller:
-                                _p2pController.secondTotalAmountTextController,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                            ),
-                            onChanged: (value) {
-                              if (double.parse(value) == 0) {
-                                return;
-                              } else {
-                                _p2pController.secondAddedAmountInFiat.value =
-                                    value;
-                              }
-                            },
-                            keyboardType: TextInputType.numberWithOptions(
-                              decimal: true,
-                              signed: false,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: GestureDetector(
-                            onTap: () {
-                              _p2pController
-                                      .secondTotalAmountTextController.text =
-                                  _p2pController.secondAvailableAmount.value;
-                              _p2pController.secondAddedAmountInAsset.value =
-                                  _p2pController.secondAvailableAmount.value;
-                            },
-                            child: Text(
-                              'All',
-                              style: TextStyle(
-                                fontFamily: "Popins",
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16.0,
-                                color: Get.theme.accentColor,
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Get.theme.hintColor.withOpacity(0.6),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              controller: _p2pController
+                                  .secondTotalAmountTextController,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                              ),
+                              onChanged: (value) {
+                                _p2pController.secondFormKey.currentState
+                                    .validate();
+                                if (double.parse(value) == 0) {
+                                  return;
+                                } else {
+                                  _p2pController.secondAddedAmountInFiat.value =
+                                      value;
+                                }
+                              },
+                              validator: (value) {
+                                if (double.parse(value) >
+                                    double.parse(_p2pController
+                                        .secondAvailableAmount.value)) {
+                                  return 'Please enter an amount below the available';
+                                }
+                                return null;
+                              },
+                              keyboardType: TextInputType.numberWithOptions(
+                                decimal: true,
+                                signed: false,
                               ),
                             ),
                           ),
-                        ),
-                        //todo: selected currency name will be shown here
-                        Text(
-                          _p2pController.firstSelectedAsset.value,
-                          style: TextStyle(
-                            fontFamily: "Popins",
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16.0,
-                            color: Get.theme.textSelectionTheme.selectionColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        //todo: add the value with the selected value
-                        '≈ ${double.parse(_p2pController.firstLowestPrize.value) * double.parse(_p2pController.secondAddedAmountInFiat.value)} ',
-                        // '≈ value here',
-                        style: TextStyle(
-                          fontFamily: "Popins",
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16.0,
-                          color: Get.theme.textSelectionTheme.selectionColor,
-                        ),
-                      ),
-                      Text(
-                        '${_p2pController.firstSelectedFiat}',
-                        style: TextStyle(
-                          fontFamily: "Popins",
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16.0,
-                          color: Get.theme.hintColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        'Available: ',
-                        style: TextStyle(
-                          fontFamily: "Popins",
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16.0,
-                          color: Get.theme.hintColor,
-                        ),
-                      ),
-                      Text(
-                        '${_p2pController.secondAddedAmountInAsset} ${_p2pController.firstSelectedAsset}',
-                        style: TextStyle(
-                          fontFamily: "Popins",
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16.0,
-                          color: Get.theme.textSelectionTheme.selectionColor,
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Order Limit',
-                        style: TextStyle(
-                          fontFamily: "Popins",
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12.0,
-                          color: Get.theme.hintColor,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Icon(
-                        Icons.info_outline,
-                        size: 20,
-                        color: Get.theme.hintColor,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 4,
-                  ),
-                  Row(
-                    children: [
-                      _textWidget(
-                          controller:
-                              _p2pController.secondOrderLimitFirstController),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Text(
-                          '~',
-                          style: TextStyle(
-                            fontFamily: "Popins",
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16.0,
-                            color: Get.theme.hintColor,
-                          ),
-                        ),
-                      ),
-                      _textWidget(
-                          controller:
-                              _p2pController.secondOrderLimitSecondController),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              child: Container(
-                height: 4,
-                width: double.infinity,
-                color: Get.theme.hintColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Payment Method',
-                            style: TextStyle(
-                              fontFamily: "Popins",
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14.0,
-                              color: Get.theme.hintColor,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: GestureDetector(
+                              onTap: () {
+                                _p2pController
+                                        .secondTotalAmountTextController.text =
+                                    _p2pController.secondAvailableAmount.value;
+                                _p2pController.secondAddedAmountInAsset.value =
+                                    _p2pController.secondAvailableAmount.value;
+                              },
+                              child: Text(
+                                'All',
+                                style: TextStyle(
+                                  fontFamily: "Popins",
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16.0,
+                                  color: Get.theme.accentColor,
+                                ),
+                              ),
                             ),
                           ),
+                          //todo: selected currency name will be shown here
                           Text(
-                            'Select up to 5 methods.',
-                            style: TextStyle(
-                              fontFamily: "Popins",
-                              fontWeight: FontWeight.w500,
-                              fontSize: 12.0,
-                              color: Get.theme.hintColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      GestureDetector(
-                        //todo: add the page here for getting teh value of the payment method to be selected for the add
-                        onTap: () => Get.toNamed('/select_payment_method_page'),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 4,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Get.theme.hintColor.withOpacity(0.6),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: Text(
-                            '+ Add',
+                            _p2pController.firstSelectedAsset.value,
                             style: TextStyle(
                               fontFamily: "Popins",
                               fontWeight: FontWeight.w500,
@@ -270,98 +120,263 @@ class PostAddSecondPage extends StatelessWidget {
                                   Get.theme.textSelectionTheme.selectionColor,
                             ),
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  //todo:then add those payment methods here to be shown to the user for the selection...
-                  ListView.builder(
-                    itemCount: _p2pController.selectedMethodForOffer.length,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return _paymentMethodWidget(
-                        bankName: _p2pController
-                            .selectedMethodForOffer[index].bankName,
-                        ownerName:
-                            _p2pController.selectedMethodForOffer[index].name,
-                        accountNumber:
-                            _p2pController.selectedMethodForOffer[index].number,
-                      );
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: GestureDetector(
-                      onTap: () {
-                        showBottomSheet(
-                          context: context,
-                          builder: (context) => _timeWidget(),
-                        );
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Payment Time Limit',
-                                style: TextStyle(
-                                  fontFamily: "Popins",
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16.0,
-                                  color: Get.theme.hintColor,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 4,
-                              ),
-                              Icon(
-                                Icons.info_outline,
-                                size: 20,
-                                color: Get.theme.hintColor,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                '${_p2pController.secondTimeLimitString.value}',
-                                style: TextStyle(
-                                  fontFamily: "Popins",
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16.0,
-                                  color: Get
-                                      .theme.textSelectionTheme.selectionColor,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              Icon(
-                                Icons.arrow_forward_ios,
-                                size: 15,
-                                color: Get.theme.hintColor,
-                              ),
-                            ],
-                          ),
                         ],
                       ),
                     ),
-                  ),
-                ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          //todo: add the value with the selected value
+                          '≈ ${(double.parse(_p2pController.firstLowestPrize.value) * double.parse(_p2pController.secondAddedAmountInFiat.value)).toStringAsFixed(2)} ',
+                          // '≈ value here',
+                          style: TextStyle(
+                            fontFamily: "Popins",
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16.0,
+                            color: Get.theme.textSelectionTheme.selectionColor,
+                          ),
+                        ),
+                        Text(
+                          '${_p2pController.firstSelectedFiat}',
+                          style: TextStyle(
+                            fontFamily: "Popins",
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16.0,
+                            color: Get.theme.hintColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Available: ',
+                          style: TextStyle(
+                            fontFamily: "Popins",
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16.0,
+                            color: Get.theme.hintColor,
+                          ),
+                        ),
+                        Text(
+                          '${_p2pController.secondAddedAmountInAsset} ${_p2pController.firstSelectedAsset}',
+                          style: TextStyle(
+                            fontFamily: "Popins",
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16.0,
+                            color: Get.theme.textSelectionTheme.selectionColor,
+                          ),
+                        )
+                      ],
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Order Limit',
+                          style: TextStyle(
+                            fontFamily: "Popins",
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12.0,
+                            color: Get.theme.hintColor,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Icon(
+                          Icons.info_outline,
+                          size: 20,
+                          color: Get.theme.hintColor,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 4,
+                    ),
+                    Row(
+                      children: [
+                        _textWidget(
+                            controller:
+                                _p2pController.secondOrderLimitFirstController),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Text(
+                            '~',
+                            style: TextStyle(
+                              fontFamily: "Popins",
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16.0,
+                              color: Get.theme.hintColor,
+                            ),
+                          ),
+                        ),
+                        _textWidget(
+                            controller: _p2pController
+                                .secondOrderLimitSecondController),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Container(
-              height: 4,
-              width: double.infinity,
-              color: Get.theme.hintColor,
-            ),
-            const SizedBox(
-              height: 32,
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Container(
+                  height: 4,
+                  width: double.infinity,
+                  color: Get.theme.hintColor,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Payment Method',
+                              style: TextStyle(
+                                fontFamily: "Popins",
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14.0,
+                                color: Get.theme.hintColor,
+                              ),
+                            ),
+                            Text(
+                              'Select up to 5 methods.',
+                              style: TextStyle(
+                                fontFamily: "Popins",
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12.0,
+                                color: Get.theme.hintColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                        GestureDetector(
+                          //todo: add the page here for getting teh value of the payment method to be selected for the add
+                          onTap: () =>
+                              Get.toNamed('/select_payment_method_page'),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Get.theme.hintColor.withOpacity(0.6),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Text(
+                              '+ Add',
+                              style: TextStyle(
+                                fontFamily: "Popins",
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16.0,
+                                color:
+                                    Get.theme.textSelectionTheme.selectionColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    //todo:then add those payment methods here to be shown to the user for the selection...
+                    ListView.builder(
+                      itemCount: _p2pController.selectedMethodForOffer.length,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return _paymentMethodWidget(
+                          bankName: _p2pController
+                              .selectedMethodForOffer[index].bankName,
+                          ownerName:
+                              _p2pController.selectedMethodForOffer[index].name,
+                          accountNumber: _p2pController
+                              .selectedMethodForOffer[index].number,
+                        );
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: GestureDetector(
+                        onTap: () {
+                          showBottomSheet(
+                            context: context,
+                            builder: (context) => _timeWidget(),
+                          );
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Payment Time Limit',
+                                  style: TextStyle(
+                                    fontFamily: "Popins",
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16.0,
+                                    color: Get.theme.hintColor,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 4,
+                                ),
+                                Icon(
+                                  Icons.info_outline,
+                                  size: 20,
+                                  color: Get.theme.hintColor,
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  '${_p2pController.secondTimeLimitString.value}',
+                                  style: TextStyle(
+                                    fontFamily: "Popins",
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16.0,
+                                    color: Get.theme.textSelectionTheme
+                                        .selectionColor,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 8,
+                                ),
+                                Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 15,
+                                  color: Get.theme.hintColor,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                height: 4,
+                width: double.infinity,
+                color: Get.theme.hintColor,
+              ),
+              const SizedBox(
+                height: 32,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -379,6 +394,17 @@ class PostAddSecondPage extends StatelessWidget {
           children: [
             Expanded(
               child: TextFormField(
+                onChanged: (value) {
+                  _p2pController.secondFormKey.currentState.validate();
+                },
+                validator: (value) {
+                  if (double.parse(value) >
+                      double.parse(_p2pController
+                          .secondTotalAmountTextController.text)) {
+                    return 'Please enter a value lower than the total amount';
+                  }
+                  return null;
+                },
                 controller: controller,
                 keyboardType: TextInputType.numberWithOptions(
                   signed: false,

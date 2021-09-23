@@ -27,7 +27,10 @@ class P2pSelectAllPaymentMethodPage extends StatelessWidget {
           ),
         ),
         leading: GestureDetector(
-          onTap: () => Get.back(),
+          onTap: () {
+            final a = _p2pController.addedPaymentMethodsList[0].paymentMethod.slug;
+            Get.back();
+          },
           child: Icon(
             Icons.arrow_back_ios_rounded,
             size: 20,

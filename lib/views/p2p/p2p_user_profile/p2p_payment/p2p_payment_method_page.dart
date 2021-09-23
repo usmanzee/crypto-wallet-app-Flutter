@@ -13,6 +13,7 @@ class P2pPaymentMethodPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // _p2pController.paymentMethodsAdded.value = true;
+    _p2pController.addedPaymentMethodsList.refresh();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

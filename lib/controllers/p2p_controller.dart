@@ -116,17 +116,18 @@ class P2pController extends GetxController {
   RxString firstSelectedFiat = 'btc'.obs;
   RxString firstYourPrice = ''.obs;
   RxString firstHighestOrderPrice = ''.obs;
-  RxString firstFixedPrice = '0'.obs;
-  RxDouble firstLowestOnePercent = 0.00000000.obs;
-  RxString firstFloatingPrice = '100'.obs;
+  RxString firstFixedPrice = '0.00'.obs;
+  RxDouble firstLowestOnePercent = 0.00.obs;
+  RxString firstFloatingPrice = '100.00'.obs;
   RxBool firstShowWarning = false.obs;
-  RxString firstLowestPrize = '0'.obs;
+  RxString firstLowestPrize = '0.00'.obs;
   RxList<P2PCurrency> firstAssetListWithInfo = <P2PCurrency>[].obs;
   RxList<String> firstAssetList = <String>[].obs;
-  final fixedTextController = TextEditingController(text: '0');
-  final floatingTextController = TextEditingController(text: '100');
+  final fixedTextController = TextEditingController(text: '0.00');
+  final floatingTextController = TextEditingController(text: '100.00');
 
   //post normal add second page
+  final secondFormKey = GlobalKey<FormState>();
   RxString secondSelectedAsset = ''.obs;
   final secondTotalAmountTextController = TextEditingController(text: '1');
   RxString secondAddedAmountInFiat = '1'.obs;
@@ -252,7 +253,6 @@ class P2pController extends GetxController {
       final response = await _p2pRepository.addP2pOffer(body: body);
       if (response.id != null) {
         p2pOfferAddResponse = response;
-        print(p2pOfferAddResponse.side);
         return true;
       }
     } catch (error) {
@@ -275,19 +275,23 @@ class P2pController extends GetxController {
     try {
       final res = await _p2pRepository.fetchExchangeRate(body: body);
       if (res != null) {
-        firstLowestPrize.value = res.trim();
-        fixedTextController.text = res.trim();
-        firstFixedPrice.value = res.trim();
-        firstLowestOnePercent.value = double.parse(firstFixedPrice.value) / 100;
+        final val = double.parse(res).toStringAsFixed(2);
+        firstLowestPrize.value = val;
+        fixedTextController.text = val;
+        firstFixedPrice.value = val;
+        firstLowestOnePercent.value =
+            double.parse((double.parse(val) / 100.00).toStringAsFixed(2));
         // availableAmount.value = fetchedBalances[index].balance;
         fetchedBalances.forEach((element) {
           if (firstSelectedAsset.value == element.currency) {
-            secondAvailableAmount.value = element.balance;
+            secondAddedAmountInAsset.value = secondAvailableAmount.value = element.balance;
+            Get.back();
           }
         });
       }
     } catch (error) {
       errorController.handleError(error);
+      Get.back();
       // isLoading(false);
     }
   }
@@ -393,5 +397,21 @@ class P2pController extends GetxController {
     } catch (error) {
       errorController.handleError(error);
     }
+  }
+
+  void resetOfferAddVariables() {
+    secondTotalAmountTextController.text = '1';
+    firstFixedPrice.value = '0';
+    firstSelectedFiat.value = 'btc';
+    firstSelectedAsset.value = 'btc';
+    secondOrderLimitFirstController.text = '';
+    secondOrderLimitSecondController.text = '';
+    firstBuySell.value = 'Buy';
+    secondTimeLimitInt.value = 15;
+    thirdTermsController.text = '';
+    thirdAutoReplyController.text = '';
+    secondPage.value = false;
+    secondShowReservedFee.value = false;
+    thirdPage.value = false;
   }
 }

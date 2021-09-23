@@ -40,7 +40,7 @@ class PostAddThirdPage extends StatelessWidget {
                   color: Get.theme.hintColor,
                 ),
               ),
-              Padding(
+             /* Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
                 child: Column(
@@ -239,7 +239,7 @@ class PostAddThirdPage extends StatelessWidget {
               _radioButton(
                   value: 2,
                   title: 'Offline now. Publish manually later.',
-                  groupValue: _p2pController.thirdOnlineOffline.value),
+                  groupValue: _p2pController.thirdOnlineOffline.value),*/
             ],
           ),
         ),
@@ -288,7 +288,7 @@ class PostAddThirdPage extends StatelessWidget {
     );
   }
 
-  Widget _radioButton(
+  /*Widget _radioButton(
       {@required int value, @required int groupValue, @required String title}) {
     return ListTile(
       onTap: (){
@@ -311,5 +311,5 @@ class PostAddThirdPage extends StatelessWidget {
         ),
       ),
     );
-  }
+  }*/
 }

@@ -85,7 +85,7 @@ class P2pAdPostedPage extends StatelessWidget {
                   ),
                   //todo: add the order number here for the user to see
                   Text(
-                    '11265608577223004160',
+                  _p2pController.p2pOfferAddResponse.id.toString(),
                     style: TextStyle(
                       fontFamily: "Popins",
                       fontWeight: FontWeight.w400,
@@ -226,12 +226,10 @@ class P2pAdPostedPage extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: () {
+                onTap: ()async{
+                  _p2pController.resetOfferAddVariables();
                   Get.back();
                   Get.back();
-                  _p2pController.secondPage.value = false;
-                  _p2pController.secondShowReservedFee.value = false;
-                  _p2pController.thirdPage.value = false;
                 },
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 8),

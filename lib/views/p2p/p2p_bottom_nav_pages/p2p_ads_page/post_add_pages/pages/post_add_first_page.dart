@@ -91,7 +91,6 @@ class PostAddFirstPage extends StatelessWidget {
                     const SizedBox(
                       height: 16,
                     ),
-                    //todo: add the widgets here which can be swapped
                     _p2pController.firstFixedFloating.value == 'Fixed'
                         ? _fixedWidget()
                         : _floatingWidget(context: context),
@@ -262,6 +261,11 @@ class PostAddFirstPage extends StatelessWidget {
                 );
               }).toList(),
               onChanged: (value) {
+                Get.dialog(
+                  Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
                 selectedValue.value = value;
                 _p2pController.fetchExchangeRateForSingleAsset();
               },
@@ -307,16 +311,18 @@ class PostAddFirstPage extends StatelessWidget {
                       //todo: add code for decreasing by one
                       InkWell(
                         onTap: () {
-                          if (double.parse(
-                                  _p2pController.firstFixedPrice.value) ==
+                          if (double.parse(_p2pController.firstFixedPrice.value)
+                                  .toStringAsFixed(2) ==
                               double.parse(
-                                  _p2pController.firstLowestPrize.value)) {
+                                      _p2pController.firstLowestPrize.value)
+                                  .toStringAsFixed(2)) {
                             return;
                           } else {
                             final val = _p2pController.firstFixedPrice.value =
-                                (double.parse(_p2pController
-                                            .fixedTextController.text) -
-                                        1)
+                                (double.parse(double.parse(_p2pController
+                                                .fixedTextController.text)
+                                            .toStringAsFixed(2)) -
+                                        0.01)
                                     .toString();
                             _p2pController.fixedTextController.text =
                                 val.toString();
@@ -354,11 +360,12 @@ class PostAddFirstPage extends StatelessWidget {
                       //todo: add code for increasing by one
                       InkWell(
                         onTap: () {
-                          final val = _p2pController
-                              .firstFixedPrice.value = (double.parse(
-                                      _p2pController.fixedTextController.text) +
-                                  1)
-                              .toString();
+                          final val = _p2pController.firstFixedPrice.value =
+                              (double.parse(double.parse(_p2pController
+                                              .fixedTextController.text)
+                                          .toStringAsFixed(2)) +
+                                      0.01)
+                                  .toString();
                           _p2pController.fixedTextController.text = val;
                         },
                         child: Icon(
@@ -530,15 +537,17 @@ class PostAddFirstPage extends StatelessWidget {
                     //todo: add code for decreasing by one
                     GestureDetector(
                       onTap: () {
-                        if (double.parse(
-                                _p2pController.firstFloatingPrice.value) ==
-                            80.0) {
+                        if (double.parse(double.parse(
+                                    _p2pController.firstFloatingPrice.value)
+                                .toStringAsFixed(2)) ==
+                            80.00) {
                           return;
                         } else {
                           final val = _p2pController.firstFloatingPrice.value =
-                              (double.parse(_p2pController
-                                          .floatingTextController.text) -
-                                      1)
+                              (double.parse(double.parse(_p2pController
+                                              .floatingTextController.text)
+                                          .toStringAsFixed(2)) -
+                                      0.01)
                                   .toString();
                           _p2pController.floatingTextController.text = val;
                         }
@@ -596,15 +605,17 @@ class PostAddFirstPage extends StatelessWidget {
                     //todo: add code for increasing by one
                     GestureDetector(
                       onTap: () {
-                        if (double.parse(
-                                _p2pController.firstFloatingPrice.value) ==
-                            120.0) {
+                        if (double.parse(double.parse(
+                                    _p2pController.firstFloatingPrice.value)
+                                .toStringAsFixed(2)) ==
+                            120.00) {
                           return;
                         } else {
                           final val = _p2pController.firstFloatingPrice.value =
-                              (double.parse(_p2pController
-                                          .floatingTextController.text) +
-                                      1)
+                              (double.parse(double.parse(_p2pController
+                                              .floatingTextController.text)
+                                          .toStringAsFixed(2)) +
+                                      0.01)
                                   .toString();
                           _p2pController.floatingTextController.text = val;
                         }

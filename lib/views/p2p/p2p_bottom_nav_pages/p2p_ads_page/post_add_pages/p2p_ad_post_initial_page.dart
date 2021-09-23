@@ -35,7 +35,7 @@ class P2pAdPostInitialPage extends StatelessWidget {
           onTap: () {
             Get.back();
             _p2pController.secondPage.value = false;
-            _p2pController.secondShowReservedFee.value = false;
+            // _p2pController.secondShowReservedFee.value = false;
             _p2pController.thirdPage.value = false;
           },
           child: Icon(
@@ -117,11 +117,10 @@ class P2pAdPostInitialPage extends StatelessWidget {
                 ),
               ),
             ),
-            //todo: the button for moving forward and backwards
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                _p2pController.secondShowReservedFee.value
+                /*_p2pController.secondShowReservedFee.value
                     ? Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 16, vertical: 8),
@@ -162,7 +161,7 @@ class P2pAdPostInitialPage extends StatelessWidget {
                           ],
                         ),
                       )
-                    : Container(),
+                    : Container(),*/
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: Row(
@@ -184,8 +183,8 @@ class P2pAdPostInitialPage extends StatelessWidget {
                                           );
                                           _p2pController.secondPage.value =
                                               false;
-                                          _p2pController.secondShowReservedFee
-                                              .value = false;
+                                          // _p2pController.secondShowReservedFee
+                                          //     .value = false;
                                         }
                                         if (_pageController.page == 2) {
                                           _pageController.previousPage(
@@ -235,24 +234,23 @@ class P2pAdPostInitialPage extends StatelessWidget {
                         child: GestureDetector(
                           onTap: _p2pController.thirdPage.value
                               ? () async {
-                                  // int i = 0;
                                   List<Map<String, String>> map =
                                       <Map<String, String>>[];
                                   _p2pController.selectedMethodForOffer
                                       .forEach((element) {
                                     map.add({"name": "${element.slug}"});
                                   });
-                                  // final ma = json.encode(mapq);
-                                  // final map = json.encode(map);
-                                  print(map.toString());
-                                  // final a = map.toString();
-                                  // final payments = json.encode(_p2pController.addedPaymentMethodsList);
-                                  // print(payments.toString());
                                   final model = P2pAddOfferModel(
                                     originAmount: double.parse(_p2pController
                                         .secondTotalAmountTextController.text),
-                                    price: double.parse(_p2pController
-                                        .firstFixedPrice.value),
+                                    // price handling
+                                    price: _p2pController
+                                                .firstFixedFloating.value
+                                                .toLowerCase() ==
+                                            'fixed'
+                                        ? double.parse(_p2pController
+                                            .firstFixedPrice.value)
+                                        : 0.00,
                                     baseUnit:
                                         _p2pController.firstSelectedFiat.value,
                                     quoteUnit:
@@ -261,16 +259,22 @@ class P2pAdPostInitialPage extends StatelessWidget {
                                         .secondOrderLimitFirstController.text),
                                     maxOrderAmount: double.parse(_p2pController
                                         .secondOrderLimitSecondController.text),
-                                    side: _p2pController.firstBuySell.value.toLowerCase(),
-                                    // paymentMethods: map.toString(),
+                                    side: _p2pController.firstBuySell.value
+                                        .toLowerCase(),
                                     timeLimit:
                                         _p2pController.secondTimeLimitInt.value,
                                     note: _p2pController
                                         .thirdTermsController.text,
                                     autoReply: _p2pController
                                         .thirdAutoReplyController.text,
-                                    //todo: ask about the margin
-                                    margin: 100,
+                                    //margin handling
+                                    margin: _p2pController
+                                                .firstFixedFloating.value
+                                                .toLowerCase() ==
+                                            'fixed'
+                                        ? 0
+                                        : double.parse(_p2pController
+                                            .firstFloatingPrice.value),
                                   );
                                   var body = model.toJson();
                                   // adding the array of maps a as a variable in the field
@@ -304,17 +308,29 @@ class P2pAdPostInitialPage extends StatelessWidget {
                                     }
                                   }
                                   if (_pageController.page == 1) {
-                                    _pageController.nextPage(
-                                      duration: Duration(milliseconds: 300),
-                                      curve: Curves.linear,
-                                    );
-                                    _p2pController.thirdPage.value = true;
-                                    _p2pController.secondShowReservedFee.value =
-                                        false;
-                                  }
-                                  if (_pageController.page == 2) {
-                                    //todo: add here the method for the post
-                                    Get.toNamed('/p2p_ad_posted_page');
+                                    if (_p2pController
+                                        .secondFormKey.currentState
+                                        .validate()) {
+                                      if (_p2pController
+                                              .selectedMethodForOffer.length >
+                                          0) {
+                                        _pageController.nextPage(
+                                          duration: Duration(milliseconds: 300),
+                                          curve: Curves.linear,
+                                        );
+                                        _p2pController.thirdPage.value = true;
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                                'Please select a payment method'),
+                                          ),
+                                        );
+                                      }
+                                    }
+                                    // _p2pController.secondShowReservedFee.value =
+                                    //     false;
                                   }
                                 },
                           child: Container(
