@@ -1,4 +1,4 @@
-import 'package:b4u_wallet/controllers/HomeController.dart';
+// import 'package:b4u_wallet/controllers/HomeController.dart';
 import 'package:b4u_wallet/controllers/p2p_controller.dart';
 import 'package:b4u_wallet/utils/Helpers/my_imgs.dart';
 import 'package:b4u_wallet/views/p2p/p2p_bottom_nav_pages/p2p_ads_page/offer_widget.dart';
@@ -8,7 +8,8 @@ import 'package:get/get.dart';
 
 class P2pAdsPage extends StatelessWidget {
   final _p2pController = Get.find<P2pController>();
-  final _homeController = Get.find<HomeController>();
+
+  // final _homeController = Get.find<HomeController>();
   final RxString _selectedElement = ''.obs;
 
   @override
@@ -109,19 +110,24 @@ class P2pAdsPage extends StatelessWidget {
                         itemBuilder: (context, index) => OfferWidget(
                           index: index,
                           type: _p2pController.userAddedP2pOffers[index].side,
-                          asset:
+                          asset: _p2pController
+                              .userAddedP2pOffers[index].quoteUnit,
+                          fiat:
                               _p2pController.userAddedP2pOffers[index].baseUnit,
-                          fiat: 'PKR',
                           status:
                               _p2pController.userAddedP2pOffers[index].state,
-                          fiatCurrency: 'Rs',
-                          priceInFiat: '198.00',
+                          //todo: add the currency unit here
+                          fiatCurrency:
+                              _p2pController.userAddedP2pOffers[index].baseUnit,
+                          priceInFiat:
+                              _p2pController.userAddedP2pOffers[index].price,
                           totalAmount: _p2pController
                               .userAddedP2pOffers[index].originAmount,
                           lowerLimit: _p2pController
                               .userAddedP2pOffers[index].minOrderAmount,
                           upperLimit: _p2pController
                               .userAddedP2pOffers[index].maxOrderAmount,
+                          //todo: add the banks lis here
                           bankName: 'Easypaisa-PK Only',
                         ),
                       ),

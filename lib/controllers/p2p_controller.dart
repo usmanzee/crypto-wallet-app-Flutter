@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:b4u_wallet/controllers/error_controller.dart';
 import 'package:b4u_wallet/models/balance.dart';
+import 'package:b4u_wallet/models/created_offer_response.dart';
 import 'package:b4u_wallet/models/p2p_add_offer_model.dart';
 import 'package:b4u_wallet/models/p2p_currency.dart';
 import 'package:b4u_wallet/models/p2p_offer/p2p_offer.dart';
@@ -58,8 +59,17 @@ class P2pController extends GetxController {
   RxList<P2POffer> ethBuy = <P2POffer>[].obs;
   RxList<P2POffer> ethSell = <P2POffer>[].obs;
 
+  //selected offer parameters
+  P2POffer selectedOffer;
+  RxString lowerLimitInAsset = ''.obs;
+  RxString upperLimitInAsset = ''.obs;
+
   //express transaction by crypto or cash, true means by crypto and false means by cash
   RxBool cryptoOrCash = true.obs;
+
+  // trade variables
+  RxString allAmountForQuote = ''.obs;
+  CreatedOrderResponse createdOrderResponse;
 
   //for the feedback reviews changing
   RxString reviewChosen = 'All'.obs;
@@ -78,6 +88,7 @@ class P2pController extends GetxController {
   //select currency page listview scrollController
   ScrollController scrollController;
   RxBool showTopButton = false.obs;
+  final byCryptoFormKey = GlobalKey<FormState>();
 
   //selected current offer variables
 
@@ -269,7 +280,6 @@ class P2pController extends GetxController {
     final Map<String, dynamic> body = {
       'qoute_currency': firstSelectedAsset.value,
       'base_currency': firstSelectedFiat.value,
-      // 'qoute_currency': 'usd',
       'qoute_amount': '1',
     };
     try {
@@ -284,7 +294,8 @@ class P2pController extends GetxController {
         // availableAmount.value = fetchedBalances[index].balance;
         fetchedBalances.forEach((element) {
           if (firstSelectedAsset.value == element.currency) {
-            secondAddedAmountInAsset.value = secondAvailableAmount.value = element.balance;
+            secondAddedAmountInAsset.value =
+                secondAvailableAmount.value = element.balance;
             Get.back();
           }
         });
@@ -399,6 +410,7 @@ class P2pController extends GetxController {
     }
   }
 
+  // clear all used variables after posting an offer
   void resetOfferAddVariables() {
     secondTotalAmountTextController.text = '1';
     firstFixedPrice.value = '0';
@@ -413,5 +425,62 @@ class P2pController extends GetxController {
     secondPage.value = false;
     secondShowReservedFee.value = false;
     thirdPage.value = false;
+  }
+
+  //fetch the current selected offer quote currency from wallet
+  void fetchCurrentQuoteBalance({@required String unit}) {
+    fetchedBalances.forEach((element) {
+      if (unit.toLowerCase() == element.currency.toLowerCase()) {
+        allAmountForQuote.value = element.balance;
+        Get.back();
+      }
+    });
+  }
+
+  //fetch the current rate of the limit fiat in the asset
+  void fetchAssetAgainstProvidedFiat({
+    @required RxString lower,
+    @required RxString upper,
+    @required String lowerLimit,
+    @required String upperLimit,
+    @required String quote,
+    @required String base,
+  }) async {
+    final Map<String, dynamic> body = {
+      'qoute_currency': quote,
+      'base_currency': base,
+      'qoute_amount': '1',
+    };
+    try {
+      final res = await _p2pRepository.fetchExchangeRate(body: body);
+      if (res != null) {
+        final val = double.parse(res);
+        lower.value = (double.parse(lowerLimit) / val).toStringAsFixed(6);
+        upper.value = (double.parse(upperLimit) / val).toStringAsFixed(6);
+      }
+    } catch (error) {
+      errorController.handleError(error);
+      // isLoading(false);
+    }
+  }
+
+  //create the order against the selected offer
+  Future<bool> createOrderP2p({@required amount, @required int offerId}) async {
+    final body = {
+      'amount': amount,
+      'offer_id': offerId,
+    };
+    try {
+      final res = await _p2pRepository.createOffer(body: body);
+      if (res.id != null) {
+        createdOrderResponse = res;
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      errorController.handleError(error);
+      return false;
+    }
   }
 }

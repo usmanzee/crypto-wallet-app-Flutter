@@ -277,15 +277,16 @@ class P2pAdPostInitialPage extends StatelessWidget {
                                             .firstFloatingPrice.value),
                                   );
                                   var body = model.toJson();
+                                  print(body.toString());
                                   // adding the array of maps a as a variable in the field
-                                  body['payment_methods'] = map;
+                                  /*body['payment_methods'] = map;
                                   final res = await _p2pController.addP2pOffer(
                                       body: body);
                                   if (res) {
                                     Get.toNamed('/p2p_ad_posted_page');
                                   } else {
                                     print('not added');
-                                  }
+                                  }*/
                                 }
                               : () {
                                   if (_pageController.page == 0) {

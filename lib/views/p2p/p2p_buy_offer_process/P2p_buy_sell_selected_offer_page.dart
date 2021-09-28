@@ -24,9 +24,8 @@ class P2pBuySellSelectedOfferPage extends StatelessWidget {
         ),
         elevation: 0,
         centerTitle: true,
-        //todo: add the name here from the p2pOffer
         title: Text(
-          'Buy USDT',
+          'Buy ${_p2pController.selectedOffer.quoteUnit.toUpperCase()}',
           style: TextStyle(
             fontFamily: "Popins",
             color: Get.theme.hintColor,
@@ -56,9 +55,8 @@ class P2pBuySellSelectedOfferPage extends StatelessWidget {
                   SizedBox(
                     width: 8,
                   ),
-                  //todo: replace it with the real value
                   Text(
-                    '3.68',
+                    _p2pController.selectedOffer.price,
                     style: TextStyle(
                       fontFamily: "Popins",
                       color: Get.theme.hintColor,
@@ -71,7 +69,7 @@ class P2pBuySellSelectedOfferPage extends StatelessWidget {
                   ),
                   //todo add the currency symbol here
                   Text(
-                    currencySymbol,
+                    _p2pController.selectedOffer.baseUnit,
                     style: TextStyle(
                       fontFamily: "Popins",
                       color: Colors.greenAccent,
@@ -79,7 +77,7 @@ class P2pBuySellSelectedOfferPage extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  SizedBox(
+                  /* SizedBox(
                     width: 6,
                   ),
                   //todo : add the value here of the refresh
@@ -102,7 +100,7 @@ class P2pBuySellSelectedOfferPage extends StatelessWidget {
                       size: 15,
                       color: Get.theme.hintColor,
                     ),
-                  ),
+                  ),*/
                 ],
               ),
               Padding(
@@ -118,12 +116,13 @@ class P2pBuySellSelectedOfferPage extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    //todo: add the upper and lower limit from the data here
                     Obx(
                       () => Text(
+                        //todo: add the conversion here after discussion
                         _p2pController.fiatOrCrypto.value
-                            ? '730.00$currencySymbol - 100.00$currencySymbol'
-                            : 'Crypto value here',
+                            ? '${_p2pController.selectedOffer.minOrderAmount} ${_p2pController.selectedOffer.baseUnit} - ${_p2pController.selectedOffer.maxOrderAmount} ${_p2pController.selectedOffer.baseUnit}'
+                            // amount in currency divided by exchange rate for 1 btc
+                            : '${_p2pController.lowerLimitInAsset.value}${_p2pController.selectedOffer.quoteUnit} - ${_p2pController.upperLimitInAsset.value}${_p2pController.selectedOffer.quoteUnit}',
                         style: TextStyle(
                           fontFamily: "Popins",
                           color: Get.theme.textSelectionTheme.selectionColor,
@@ -226,9 +225,8 @@ class P2pBuySellSelectedOfferPage extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  //todo: add value from the wallet here
                   Text(
-                    '15 Minutes',
+                    '${_p2pController.selectedOffer.timeLimit} Min',
                     style: TextStyle(
                       fontFamily: "Popins",
                       color: Get.theme.textSelectionTheme.selectionColor,
@@ -255,7 +253,7 @@ class P2pBuySellSelectedOfferPage extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'Boost',
+                          _p2pController.selectedOffer.name,
                           style: TextStyle(
                             decoration: TextDecoration.underline,
                             fontFamily: "Popins",
@@ -318,11 +316,11 @@ class P2pBuySellSelectedOfferPage extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              //todo: add the user p[hone number here if any is present
+              //todo: add the user phone number here if any is present
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Text(
-                  'The advertise is only for cash deal for bulk quantity in Deira +92312345678 quantity whatsapp',
+                  _p2pController.selectedOffer.note,
                   style: TextStyle(
                     fontFamily: "Popins",
                     color: Get.theme.hintColor,

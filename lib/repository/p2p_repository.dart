@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:b4u_wallet/models/balance.dart';
+import 'package:b4u_wallet/models/created_offer_response.dart';
 import 'package:b4u_wallet/models/p2p_currency.dart';
 import 'package:b4u_wallet/models/p2p_offer/p2p_offer.dart';
 import 'package:b4u_wallet/models/p2p_offer/p2p_offer_add_response.dart';
@@ -152,13 +153,13 @@ class P2pRepository {
     return balanceFromJson(response);
   }
 
-/*//add the offer to the server
-  Future<P2POfferAddResponse> addP2pOffer() async {
+  //create the order against the selected offer
+  Future<CreatedOrderResponse> createOffer({@required var body}) async {
+    final body1 = json.encode(body);
     apiProvider = ApiProvider();
     RequestHeaders requestHeaders = RequestHeaders();
     apiProvider.headers = requestHeaders.setAuthHeaders();
-    final response =
-    await apiProvider.get('peatio/account/balances?account_type=p2p');
-  }*/
-
+    final response = await apiProvider.post('peatio/account/p2p_trade', body1);
+    return CreatedOrderResponse.fromJson(response);
+  }
 }

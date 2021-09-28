@@ -1,7 +1,11 @@
+import 'package:b4u_wallet/controllers/p2p_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ByFiat extends StatelessWidget {
+  final _p2pController = Get.find<P2pController>();
+  final _fiatController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -26,7 +30,7 @@ class ByFiat extends StatelessWidget {
                   children: [
                     //todo: add the icon here after finalizing the json for the icons
                     Text(
-                      '\@',
+                      _p2pController.selectedOffer.baseUnit.toUpperCase(),
                       style: TextStyle(),
                     ),
                     SizedBox(
@@ -34,6 +38,7 @@ class ByFiat extends StatelessWidget {
                     ),
                     Expanded(
                       child: TextFormField(
+                        controller: _fiatController,
                         maxLines: 1,
                         maxLength: 13,
                         keyboardType: TextInputType.numberWithOptions(
@@ -72,9 +77,15 @@ class ByFiat extends StatelessWidget {
                   bottom: 8,
                 ),
                 //todo: add the required names of the currencies here
-                child: _row(first: 'Quality', second: 'USDT'),
+                child: _row(
+                  first: 'Quantity',
+                  second: _p2pController.selectedOffer.quoteUnit,
+                ),
               ),
-              _row(first: 'Amount', second: 'AED'),
+              _row(
+                first: 'Amount',
+                second: _p2pController.selectedOffer.baseUnit,
+              ),
             ],
           ),
           GestureDetector(
@@ -91,9 +102,8 @@ class ByFiat extends StatelessWidget {
                 ),
               ),
               child: Center(
-                //todo: replace with the currency name buying
                 child: Text(
-                  'Buy USDT',
+                  'Buy ${_p2pController.selectedOffer.quoteUnit.toUpperCase()}',
                   style: TextStyle(
                     color: Get.theme.scaffoldBackgroundColor,
                     fontSize: 16,

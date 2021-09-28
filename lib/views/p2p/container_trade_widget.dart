@@ -32,7 +32,7 @@ Widget containerTrade({
                 children: [
                   Container(
                     padding:
-                        const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+                        const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Get.theme.accentColor,

@@ -3,44 +3,43 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PostAddThirdPage extends StatelessWidget {
-  final _registeredDaysController = TextEditingController(text: '0');
-  final _btcHoldingController = TextEditingController(text: '0.01');
+/*  final _registeredDaysController = TextEditingController(text: '0');
+  final _btcHoldingController = TextEditingController(text: '0.01');*/
   final _p2pController = Get.find<P2pController>();
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Obx(
-        () => Container(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _container(
-                      heading: 'Terms (Optional)',
-                      controller: _p2pController.thirdTermsController,
-                    ),
-                    _container(
-                      heading: 'Auto-replay (Optional)',
-                      controller: _p2pController.thirdAutoReplyController,
-                    ),
-                  ],
-                ),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _container(
+                    heading: 'Terms (Optional)',
+                    controller: _p2pController.thirdTermsController,
+                  ),
+                  _container(
+                    heading: 'Auto-replay (Optional)',
+                    controller: _p2pController.thirdAutoReplyController,
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Container(
-                  height: 2,
-                  width: double.infinity,
-                  color: Get.theme.hintColor,
-                ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Container(
+                height: 2,
+                width: double.infinity,
+                color: Get.theme.hintColor,
               ),
-             /* Padding(
+            ),
+            /* Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
                 child: Column(
@@ -240,8 +239,7 @@ class PostAddThirdPage extends StatelessWidget {
                   value: 2,
                   title: 'Offline now. Publish manually later.',
                   groupValue: _p2pController.thirdOnlineOffline.value),*/
-            ],
-          ),
+          ],
         ),
       ),
     );
@@ -288,7 +286,7 @@ class PostAddThirdPage extends StatelessWidget {
     );
   }
 
-  /*Widget _radioButton(
+/*Widget _radioButton(
       {@required int value, @required int groupValue, @required String title}) {
     return ListTile(
       onTap: (){

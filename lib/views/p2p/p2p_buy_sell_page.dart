@@ -191,17 +191,13 @@ class P2pBuySellPage extends StatelessWidget {
                                           'Buy',
                                           style: TextStyle(
                                             fontFamily: "Popins",
-                                            color:
-                                                _p2pController.buyOrSellP2p.value
-                                                    ? Get
-                                                        .theme
-                                                        .textSelectionTheme
-                                                        .selectionColor
-                                                    : Get
-                                                        .theme
-                                                        .textSelectionTheme
-                                                        .selectionColor
-                                                        .withOpacity(0.5),
+                                            color: _p2pController
+                                                    .buyOrSellP2p.value
+                                                ? Get.theme.textSelectionTheme
+                                                    .selectionColor
+                                                : Get.theme.textSelectionTheme
+                                                    .selectionColor
+                                                    .withOpacity(0.5),
                                             fontSize: 18.0,
                                             fontWeight: FontWeight.w600,
                                           ),
@@ -221,17 +217,13 @@ class P2pBuySellPage extends StatelessWidget {
                                           'Sell',
                                           style: TextStyle(
                                             fontFamily: "Popins",
-                                            color:
-                                                _p2pController.buyOrSellP2p.value
-                                                    ? Get
-                                                        .theme
-                                                        .textSelectionTheme
-                                                        .selectionColor
-                                                        .withOpacity(0.5)
-                                                    : Get
-                                                        .theme
-                                                        .textSelectionTheme
-                                                        .selectionColor,
+                                            color: _p2pController
+                                                    .buyOrSellP2p.value
+                                                ? Get.theme.textSelectionTheme
+                                                    .selectionColor
+                                                    .withOpacity(0.5)
+                                                : Get.theme.textSelectionTheme
+                                                    .selectionColor,
                                             fontSize: 18.0,
                                             fontWeight: FontWeight.w600,
                                           ),

@@ -6,21 +6,27 @@ part 'p2p_offer.g.dart';
 class P2POffer {
   P2POffer({
     this.id,
+    this.price,
+    this.availableAmount,
     this.originAmount,
     this.minOrderAmount,
     this.maxOrderAmount,
-    this.availableAmount,
-    this.price,
     this.baseUnit,
     this.quoteUnit,
     this.side,
-    this.state,
     this.timeLimit,
-    this.note,
-    this.paymentMethodId,
-    // this.member,
     this.createdAt,
     this.updatedAt,
+    // this.state,
+    this.note,
+    this.name,
+    this.totalTrades,
+    this.trades30Day,
+    this.tradeCompletion30Day,
+    this.rating,
+    this.profileId,
+    this.paymentMethodId,
+    // this.member,
     this.autoReply,
   });
 
@@ -50,7 +56,6 @@ class P2POffer {
   String note;
   @JsonKey(name: 'payment_method_id')
   int paymentMethodId;
-
   // @JsonKey(name: 'member')
   // Member member;
   @JsonKey(name: 'created_at')
@@ -59,6 +64,18 @@ class P2POffer {
   DateTime updatedAt;
   @JsonKey(name: 'auto_reply')
   String autoReply;
+  @JsonKey(name: 'name')
+  String name;
+  @JsonKey(name: 'total_trades')
+  int totalTrades;
+  @JsonKey(name: 'trades_30_day')
+  int trades30Day;
+  @JsonKey(name: 'tradecompletion_30day')
+  int tradeCompletion30Day;
+  @JsonKey(name: 'rating')
+  String rating;
+  @JsonKey(name: 'profile_id')
+  int profileId;
 
   factory P2POffer.fromJson(Map<String, dynamic> json) =>
       _$P2POfferFromJson(json);
