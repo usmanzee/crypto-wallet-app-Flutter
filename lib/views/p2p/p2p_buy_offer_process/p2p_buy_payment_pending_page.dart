@@ -9,6 +9,8 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(_p2pController.createdOrderResponse.offer.toJson());
+    print(_p2pController.createdOrderResponse.toJson());
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -44,9 +46,8 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
                           color: Colors.redAccent,
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        //todo: add the number here for the chat
                         child: Text(
-                          '6',
+                          ' ',
                           style: TextStyle(
                             fontFamily: "Popins",
                             fontWeight: FontWeight.bold,
@@ -128,14 +129,15 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
                                 SizedBox(
                                   width: 16,
                                 ),
-                                //todo: add the realtime timer here for the offer
-                                Text(
-                                  '14:05',
-                                  style: TextStyle(
-                                    fontFamily: "Popins",
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 14.0,
-                                    color: Get.theme.accentColor,
+                                Obx(
+                                  () => Text(
+                                    '${((_p2pController.offerTime.value / 60) % 60).toInt().toString().padLeft(2, '0')} : ${(_p2pController.offerTime.value % 60).toInt().toString().padLeft(2, '0')}',
+                                    style: TextStyle(
+                                      fontFamily: "Popins",
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14.0,
+                                      color: Get.theme.accentColor,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -166,11 +168,16 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               child: Row(
                                 children: [
-                                  //todo: add the check here for the buy or sell
                                   Text(
-                                    'BUY',
+                                    _p2pController
+                                        .createdOrderResponse.offer.side
+                                        .toUpperCase(),
                                     style: TextStyle(
-                                      color: Colors.greenAccent,
+                                      color: _p2pController.createdOrderResponse
+                                                  .offer.side ==
+                                              'sell'
+                                          ? Colors.redAccent
+                                          : Colors.greenAccent,
                                       fontFamily: "Popins",
                                       fontWeight: FontWeight.w500,
                                       fontSize: 18.0,
@@ -183,7 +190,7 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
                                       right: 4,
                                     ),
                                     child: Text(
-                                      'USDT',
+                                      'missing'.toUpperCase(),
                                       style: TextStyle(
                                         color: Get.theme.textSelectionTheme
                                             .selectionColor,
@@ -198,22 +205,22 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            //todo: add teh currency and the currency unit here in the second text
                             _rowWidget(
                               first: 'Fiat Amount',
-                              second: 'RS 11,651.50',
+                              second:
+                                  '${_p2pController.createdOrderResponse.offer.baseUnit} ${_p2pController.createdOrderResponse.amount}',
                               biggerText: true,
                             ),
-                            //todo: add the per unit price here and the currency symbol
                             _rowWidget(
                               first: 'Price',
-                              second: 'RS 166.45',
+                              second:
+                                  '${_p2pController.createdOrderResponse.offer.baseUnit} ${_p2pController.createdOrderResponse.offer.price}',
                             ),
                             _rowWidget(
                               first: 'Crypto Amount',
-                              second: '70.00 USDT',
+                              second:
+                                  '${double.parse(_p2pController.createdOrderResponse.offer.availableAmount).toStringAsFixed(2)} Missing',
                             ),
-                            //todo: added animation here data is hardcoded in the widget for now
                             Obx(
                               () => Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -625,25 +632,26 @@ class P2pBuyPaymentPendingPage extends StatelessWidget {
             color: Get.theme.hintColor,
           ),
         ),
-        //todo: add the order number here from the order
         _rowWidget(
           first: 'Order Number',
-          second: '20256173861735276544',
+          second: _p2pController.createdOrderResponse.id.toString(),
           logo: true,
           icon: Icons.copy,
           logoCallback: () {
-            //todo: add the order number here from the order to be copied
-            Clipboard.setData(ClipboardData(text: "your text"));
+            Clipboard.setData(
+              ClipboardData(
+                  text: _p2pController.createdOrderResponse.id.toString()),
+            );
           },
         ),
         _rowWidget(
           first: 'Created Time',
-          second: '2021-08-04 14:50:12',
+          second: _p2pController.createdOrderResponse.createdAt.toLocal().toString(),
         ),
         //todo: add the required variables and the function here
         _rowWidget(
           first: 'Seller\'s Nickname',
-          second: 'Rana Traders',
+          second: 'Missing',
           textUnderline: true,
           logoCallback: () {},
           logo: true,

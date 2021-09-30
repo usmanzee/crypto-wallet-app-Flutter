@@ -126,15 +126,17 @@ class PostAddSecondPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text(
-                          //todo: add the value with the selected value
-                          '≈ ${(double.parse(_p2pController.firstLowestPrize.value) * double.parse(_p2pController.secondAddedAmountInFiat.value)).toStringAsFixed(2)} ',
-                          // '≈ value here',
-                          style: TextStyle(
-                            fontFamily: "Popins",
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16.0,
-                            color: Get.theme.textSelectionTheme.selectionColor,
+                        Obx(
+                          () => Text(
+                            '≈ ${(double.parse(_p2pController.firstLowestPrize.value) * double.parse(_p2pController.secondAddedAmountInFiat.value)).toStringAsFixed(2)} ',
+                            // '≈ value here',
+                            style: TextStyle(
+                              fontFamily: "Popins",
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16.0,
+                              color:
+                                  Get.theme.textSelectionTheme.selectionColor,
+                            ),
                           ),
                         ),
                         Text(
@@ -262,7 +264,6 @@ class PostAddSecondPage extends StatelessWidget {
                           ],
                         ),
                         GestureDetector(
-                          //todo: add the page here for getting teh value of the payment method to be selected for the add
                           onTap: () =>
                               Get.toNamed('/select_payment_method_page'),
                           child: Container(
@@ -288,7 +289,6 @@ class PostAddSecondPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    //todo:then add those payment methods here to be shown to the user for the selection...
                     ListView.builder(
                       itemCount: _p2pController.selectedMethodForOffer.length,
                       shrinkWrap: true,

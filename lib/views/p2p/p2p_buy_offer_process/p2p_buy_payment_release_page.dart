@@ -42,9 +42,8 @@ class P2pBuyPaymentReleasePage extends StatelessWidget {
                         color: Colors.redAccent,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      //todo: add the number here for the chat
                       child: Text(
-                        '6',
+                        ' ',
                         style: TextStyle(
                           fontFamily: "Popins",
                           fontWeight: FontWeight.bold,
@@ -145,11 +144,17 @@ class P2pBuyPaymentReleasePage extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               child: Row(
                                 children: [
-                                  //todo: add the check here for the buy or sell
                                   Text(
-                                    'BUY',
+                                    _p2pController
+                                        .createdOrderResponse.offer.side
+                                        .toUpperCase(),
                                     style: TextStyle(
-                                      color: Colors.greenAccent,
+                                      color: _p2pController.createdOrderResponse
+                                                  .offer.side
+                                                  .toLowerCase() ==
+                                              'sell'
+                                          ? Colors.redAccent
+                                          : Colors.greenAccent,
                                       fontFamily: "Popins",
                                       fontWeight: FontWeight.w500,
                                       fontSize: 18.0,
@@ -162,7 +167,7 @@ class P2pBuyPaymentReleasePage extends StatelessWidget {
                                       right: 4,
                                     ),
                                     child: Text(
-                                      'USDT',
+                                      'Missing',
                                       style: TextStyle(
                                         color: Get.theme.textSelectionTheme
                                             .selectionColor,
@@ -177,20 +182,20 @@ class P2pBuyPaymentReleasePage extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            //todo: add teh currency and the currency unit here in the second text
                             _rowWidget(
                               first: 'Fiat Amount',
-                              second: 'RS 11,651.50',
+                              second:
+                                  '${_p2pController.createdOrderResponse.offer.baseUnit.toUpperCase()} ${_p2pController.createdOrderResponse.amount}',
                               biggerText: true,
                             ),
-                            //todo: add the per unit price here and the currency symbol
                             _rowWidget(
                               first: 'Price',
-                              second: 'RS 166.45',
+                              second:
+                                  '${_p2pController.createdOrderResponse.offer.baseUnit.toUpperCase()} ${_p2pController.createdOrderResponse.offer.price}',
                             ),
                             _rowWidget(
                               first: 'Crypto Amount',
-                              second: '70.00 USDT',
+                              second: 'amount in asset Missing',
                             ),
                             _container(),
                           ],
@@ -351,7 +356,7 @@ class P2pBuyPaymentReleasePage extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Binance Class',
+                                    'Orbitex Class',
                                     style: TextStyle(
                                       fontFamily: "Popins",
                                       fontWeight: FontWeight.w500,
@@ -641,25 +646,26 @@ class P2pBuyPaymentReleasePage extends StatelessWidget {
             color: Get.theme.hintColor,
           ),
         ),
-        //todo: add the order number here from the order
         _rowWidget(
           first: 'Order Number',
-          second: '20256173861735276544',
+          second: _p2pController.createdOrderResponse.id.toString(),
           logo: true,
           icon: Icons.copy,
           logoCallback: () {
-            //todo: add the order number here from the order to be copied
-            Clipboard.setData(ClipboardData(text: "your text"));
+            Clipboard.setData(ClipboardData(
+                text: _p2pController.createdOrderResponse.id.toString()));
           },
         ),
         _rowWidget(
           first: 'Created Time',
-          second: '2021-08-04 14:50:12',
+          second: _p2pController.createdOrderResponse.createdAt
+              .toLocal()
+              .toString(),
         ),
         //todo: add the required variables and the function here
         _rowWidget(
           first: 'Seller\'s Nickname',
-          second: 'Rana Traders',
+          second: 'Name Missing',
           textUnderline: true,
           logoCallback: () {},
           logo: true,

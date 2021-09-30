@@ -159,7 +159,9 @@ class P2pRepository {
     apiProvider = ApiProvider();
     RequestHeaders requestHeaders = RequestHeaders();
     apiProvider.headers = requestHeaders.setAuthHeaders();
+    apiProvider.headers['Content-Type'] = 'application/json; charset=UTF-8';
     final response = await apiProvider.post('peatio/account/p2p_trade', body1);
-    return CreatedOrderResponse.fromJson(response);
+    final res = json.decode(response);
+    return CreatedOrderResponse.fromJson(res);
   }
 }

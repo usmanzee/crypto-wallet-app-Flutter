@@ -50,7 +50,6 @@ class P2pBuyPaymentMethodPage extends StatelessWidget {
                                 fontSize: 20.0,
                               ),
                             ),
-                            //todo: add the required variables
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -69,7 +68,7 @@ class P2pBuyPaymentMethodPage extends StatelessWidget {
                                   width: 8,
                                 ),
                                 Text(
-                                  '13:41',
+                                  '${((_p2pController.offerTime.value / 60) % 60).toInt().toString().padLeft(2, '0')} : ${(_p2pController.offerTime.value % 60).toInt().toString().padLeft(2, '0')}',
                                   style: TextStyle(
                                     color: Colors.greenAccent,
                                     fontFamily: "Popins",
@@ -90,7 +89,8 @@ class P2pBuyPaymentMethodPage extends StatelessWidget {
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Text(
-                                        'Rs',
+                                        _p2pController.createdOrderResponse
+                                            .offer.baseUnit.toUpperCase(),
                                         style: TextStyle(
                                           color: Get.theme.textSelectionTheme
                                               .selectionColor,
@@ -104,7 +104,7 @@ class P2pBuyPaymentMethodPage extends StatelessWidget {
                                           horizontal: 4,
                                         ),
                                         child: Text(
-                                          '11,651.50',
+                                          _p2pController.createdOrderResponse.amount,
                                           style: TextStyle(
                                             color: Get.theme.textSelectionTheme
                                                 .selectionColor,
@@ -154,7 +154,7 @@ class P2pBuyPaymentMethodPage extends StatelessWidget {
                                         ),
                                         //todo: add the number here for the chat
                                         child: Text(
-                                          '6',
+                                          ' ',
                                           style: TextStyle(
                                             fontFamily: "Popins",
                                             fontWeight: FontWeight.bold,

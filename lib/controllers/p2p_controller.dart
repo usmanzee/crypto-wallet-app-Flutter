@@ -63,6 +63,28 @@ class P2pController extends GetxController {
   P2POffer selectedOffer;
   RxString lowerLimitInAsset = ''.obs;
   RxString upperLimitInAsset = ''.obs;
+  //asset price in fiat to be used ofr if he orders in the crypto
+  RxString oneAssetInFiat = ''.obs;
+  RxInt offerTime = 0.obs;
+  Timer timer;
+
+  void startTimer({@required int time}) {
+    final st = 60 * time;
+    int _start = st;
+    const oneSec = const Duration(seconds: 1);
+    timer =  Timer.periodic(
+      oneSec,
+          (Timer timer) {
+        if (_start == 0) {
+            timer.cancel();
+        } else {
+          offerTime.value = _start;
+          print(offerTime.value);
+            _start--;
+        }
+      },
+    );
+  }
 
   //express transaction by crypto or cash, true means by crypto and false means by cash
   RxBool cryptoOrCash = true.obs;
@@ -89,6 +111,7 @@ class P2pController extends GetxController {
   ScrollController scrollController;
   RxBool showTopButton = false.obs;
   final byCryptoFormKey = GlobalKey<FormState>();
+  final byFiatFormKey = GlobalKey<FormState>();
 
   //selected current offer variables
 
@@ -179,6 +202,7 @@ class P2pController extends GetxController {
   @override
   void onClose() {
     scrollController.dispose();
+    timer.cancel();
     super.onClose();
   }
 
@@ -454,6 +478,7 @@ class P2pController extends GetxController {
     try {
       final res = await _p2pRepository.fetchExchangeRate(body: body);
       if (res != null) {
+        oneAssetInFiat.value = res;
         final val = double.parse(res);
         lower.value = (double.parse(lowerLimit) / val).toStringAsFixed(6);
         upper.value = (double.parse(upperLimit) / val).toStringAsFixed(6);
@@ -465,7 +490,8 @@ class P2pController extends GetxController {
   }
 
   //create the order against the selected offer
-  Future<bool> createOrderP2p({@required amount, @required int offerId}) async {
+  Future<bool> createOrderP2p(
+      {@required double amount, @required int offerId}) async {
     final body = {
       'amount': amount,
       'offer_id': offerId,
@@ -474,6 +500,7 @@ class P2pController extends GetxController {
       final res = await _p2pRepository.createOffer(body: body);
       if (res.id != null) {
         createdOrderResponse = res;
+        print(createdOrderResponse.toJson());
         return true;
       } else {
         return false;

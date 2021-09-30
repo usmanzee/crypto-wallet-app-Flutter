@@ -33,41 +33,46 @@ class Setting extends StatelessWidget {
         title: Text(
           'account.screen.title'.tr,
           style: TextStyle(
-              color: Get.theme.textSelectionTheme.selectionColor,
-              fontFamily: "Gotik",
-              fontWeight: FontWeight.w600,
-              fontSize: 18.5),
+            color: Get.theme.textSelectionTheme.selectionColor,
+            fontFamily: "Gotik",
+            fontWeight: FontWeight.w600,
+            fontSize: 18.5,
+          ),
         ),
         iconTheme:
             IconThemeData(color: Get.theme.textSelectionTheme.selectionColor),
         elevation: 0.8,
         actions: <Widget>[
           Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () async {
-                  if (Get.isDarkMode) {
-                    Get.changeTheme(Themes.lightTheme);
-                    GetStorage().write('isLightTheme', true);
-                  } else {
-                    GetStorage().write('isLightTheme', false);
-                    Get.changeTheme(Themes.darkTheme);
-                  }
-                },
-                child: Icon(
-                  Get.isDarkMode ? Icons.wb_sunny : Icons.nights_stay,
-                  size: 26.0,
-                ),
-              )),
+            padding: EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () async {
+                if (Get.isDarkMode) {
+                  Get.changeTheme(Themes.lightTheme);
+                  GetStorage().write('isLightTheme', true);
+                } else {
+                  GetStorage().write('isLightTheme', false);
+                  Get.changeTheme(Themes.darkTheme);
+                }
+              },
+              child: Icon(
+                Get.isDarkMode ? Icons.wb_sunny : Icons.nights_stay,
+                size: 26.0,
+              ),
+            ),
+          ),
           Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {
-                  Get.to(WebViewContainer('Help/Support',
-                      'https://support.b4uwallet.com/lhc/lhc_web/index.php/chat/start'));
-                },
-                child: Icon(Icons.support_agent),
-              )),
+            padding: EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () {
+                Get.to(
+                  WebViewContainer('Help/Support',
+                      'https://support.b4uwallet.com/lhc/lhc_web/index.php/chat/start'),
+                );
+              },
+              child: Icon(Icons.support_agent),
+            ),
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -168,16 +173,19 @@ class Setting extends StatelessWidget {
               },
             ),
             InkWell(
-                onTap: () {
-                  Get.to(WebViewContainer(
-                      'Fee', 'https://ewallet.b4uwallet.com/fee'));
-                },
-                child: listSetting(
-                    Icon(
-                      Icons.event_note,
-                      size: 24.0,
-                    ),
-                    "account.screen.fee_schedule".tr)),
+              onTap: () {
+                Get.to(
+                  WebViewContainer('Fee', 'https://ewallet.b4uwallet.com/fee'),
+                );
+              },
+              child: listSetting(
+                Icon(
+                  Icons.event_note,
+                  size: 24.0,
+                ),
+                "account.screen.fee_schedule".tr,
+              ),
+            ),
             Obx(
               () {
                 return (homeController.isLoggedIn.value)

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 class ByCrypto extends StatelessWidget {
   final P2pController _p2pController = Get.find();
+  final _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +32,24 @@ class ByCrypto extends StatelessWidget {
                     children: [
                       Expanded(
                         child: TextFormField(
+                          controller: _controller,
+                          onChanged: (value) {
+                            _p2pController.byCryptoFormKey.currentState
+                                .validate();
+                          },
+                          validator: (value) {
+                            if (double.parse(value) >
+                                double.parse(
+                                    _p2pController.upperLimitInAsset.value)) {
+                              return 'Enter a value lower than max order limit.';
+                            }
+                            if (double.parse(value) <
+                                double.parse(
+                                    _p2pController.lowerLimitInAsset.value)) {
+                              return 'Enter a value higher than minimum order limit.';
+                            }
+                            return null;
+                          },
                           maxLines: 1,
                           maxLength: 13,
                           keyboardType: TextInputType.numberWithOptions(
@@ -91,8 +110,30 @@ class ByCrypto extends StatelessWidget {
               ],
             ),
             GestureDetector(
-              onTap: () {
-                Get.toNamed('/p2p_buy_payment_pending_page');
+              onTap: () async {
+                if (_p2pController.byCryptoFormKey.currentState.validate()) {
+                  final amount = double.parse((double.parse(_controller.text) *
+                          double.parse(_p2pController.oneAssetInFiat.value))
+                      .toStringAsFixed(2));
+                  // print(amount);
+                  showDialog(
+                    context: context,
+                    builder: (context) => CircularProgressIndicator(),
+                  );
+                  final res = await _p2pController.createOrderP2p(
+                    amount: amount,
+                    offerId: _p2pController.selectedOffer.id,
+                  );
+                  if (res) {
+                    Get.back();
+                    _p2pController.startTimer(
+                        time: int.parse(_p2pController
+                            .createdOrderResponse.offer.timeLimit));
+                    Get.toNamed('/p2p_buy_payment_pending_page');
+                  } else {
+                    Get.back();
+                  }
+                }
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(
