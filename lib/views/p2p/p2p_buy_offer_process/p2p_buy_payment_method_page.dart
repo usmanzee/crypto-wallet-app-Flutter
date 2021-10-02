@@ -67,13 +67,15 @@ class P2pBuyPaymentMethodPage extends StatelessWidget {
                                 SizedBox(
                                   width: 8,
                                 ),
-                                Text(
-                                  '${((_p2pController.offerTime.value / 60) % 60).toInt().toString().padLeft(2, '0')} : ${(_p2pController.offerTime.value % 60).toInt().toString().padLeft(2, '0')}',
-                                  style: TextStyle(
-                                    color: Colors.greenAccent,
-                                    fontFamily: "Popins",
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 14.0,
+                                Obx(
+                                  () => Text(
+                                    '${((_p2pController.offerTime.value / 60) % 60).toInt().toString().padLeft(2, '0')} : ${(_p2pController.offerTime.value % 60).toInt().toString().padLeft(2, '0')}',
+                                    style: TextStyle(
+                                      color: Colors.greenAccent,
+                                      fontFamily: "Popins",
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14.0,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -89,8 +91,9 @@ class P2pBuyPaymentMethodPage extends StatelessWidget {
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Text(
-                                        _p2pController.createdOrderResponse
-                                            .offer.baseUnit.toUpperCase(),
+                                        _p2pController
+                                            .createdOrderResponse.offer.baseUnit
+                                            .toUpperCase(),
                                         style: TextStyle(
                                           color: Get.theme.textSelectionTheme
                                               .selectionColor,
@@ -104,7 +107,8 @@ class P2pBuyPaymentMethodPage extends StatelessWidget {
                                           horizontal: 4,
                                         ),
                                         child: Text(
-                                          _p2pController.createdOrderResponse.amount,
+                                          _p2pController
+                                              .createdOrderResponse.amount,
                                           style: TextStyle(
                                             color: Get.theme.textSelectionTheme
                                                 .selectionColor,
@@ -152,7 +156,6 @@ class P2pBuyPaymentMethodPage extends StatelessWidget {
                                           borderRadius:
                                               BorderRadius.circular(8),
                                         ),
-                                        //todo: add the number here for the chat
                                         child: Text(
                                           ' ',
                                           style: TextStyle(
@@ -524,18 +527,17 @@ class P2pBuyPaymentMethodPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             flex: 4,
-            child: Container(
-              child: Text(
-                first,
-                style: TextStyle(
-                  fontFamily: "Popins",
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16.0,
-                  color: Get.theme.hintColor,
-                ),
+            child: Text(
+              first,
+              style: TextStyle(
+                fontFamily: "Popins",
+                fontWeight: FontWeight.w500,
+                fontSize: 16.0,
+                color: Get.theme.hintColor,
               ),
             ),
           ),

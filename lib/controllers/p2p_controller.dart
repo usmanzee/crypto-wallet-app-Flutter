@@ -165,6 +165,7 @@ class P2pController extends GetxController {
   RxString secondSelectedAsset = ''.obs;
   final secondTotalAmountTextController = TextEditingController(text: '1');
   RxString secondAddedAmountInFiat = '1'.obs;
+  RxString secondAddedAmountInFiatCheck = '1'.obs;
   RxString secondAddedAmountInAsset = ''.obs;
   RxString secondSelectedFiat = ''.obs;
   RxInt secondTimeLimitInt = 15.obs;

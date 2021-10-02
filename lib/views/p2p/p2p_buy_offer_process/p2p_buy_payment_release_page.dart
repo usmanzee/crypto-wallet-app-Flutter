@@ -75,7 +75,6 @@ class P2pBuyPaymentReleasePage extends StatelessWidget {
         ],
       ),
       body: Column(
-        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
             flex: 9,
@@ -244,9 +243,9 @@ class P2pBuyPaymentReleasePage extends StatelessWidget {
                               duration: const Duration(milliseconds: 300),
                               transitionBuilder: (widget, animation) {
                                 final offsetAnimation = Tween<Offset>(
-                                        begin: Offset(0.0, -1),
-                                        end: Offset(0.0, 0.0))
-                                    .animate(animation);
+                                  begin: Offset(0.0, -1),
+                                  end: Offset(0.0, 0.0),
+                                ).animate(animation);
                                 return ClipRect(
                                   child: SlideTransition(
                                     position: offsetAnimation,
@@ -393,8 +392,10 @@ class P2pBuyPaymentReleasePage extends StatelessWidget {
                   bottom: 16,
                   left: 32,
                   child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 4,
+                      horizontal: 8,
+                    ),
                     decoration: BoxDecoration(
                       color: Get.theme.accentColor.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(4),

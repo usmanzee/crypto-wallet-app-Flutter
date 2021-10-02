@@ -72,6 +72,9 @@ class PostAddSecondPage extends StatelessWidget {
                                 } else {
                                   _p2pController.secondAddedAmountInFiat.value =
                                       value;
+                                  _p2pController.secondAddedAmountInFiatCheck.value =
+                                  (double.parse(value) * double.parse(_p2pController.firstLowestPrize.value)).toStringAsFixed(2);
+
                                 }
                               },
                               validator: (value) {
@@ -128,7 +131,7 @@ class PostAddSecondPage extends StatelessWidget {
                       children: [
                         Obx(
                           () => Text(
-                            '≈ ${(double.parse(_p2pController.firstLowestPrize.value) * double.parse(_p2pController.secondAddedAmountInFiat.value)).toStringAsFixed(2)} ',
+                            '≈ ${_p2pController.secondAddedAmountInFiatCheck.value} ',
                             // '≈ value here',
                             style: TextStyle(
                               fontFamily: "Popins",
@@ -399,9 +402,17 @@ class PostAddSecondPage extends StatelessWidget {
                 },
                 validator: (value) {
                   if (double.parse(value) >
-                      double.parse(_p2pController
-                          .secondTotalAmountTextController.text)) {
+                      double.parse(_p2pController.secondAddedAmountInFiatCheck.value)) {
                     return 'Please enter a value lower than the total amount';
+                  }
+                  if(value.length == 0){
+                    return 'please enter a valid value';
+                  }
+                  if(value == null){
+                    return 'please enter a valid value';
+                  }
+                  if(double.parse(value) == 0){
+                    return 'please enter a valid value';
                   }
                   return null;
                 },

@@ -44,8 +44,9 @@ class P2pRepository {
     print(body1);
     final response = await apiProvider.post('peatio/account/offers', body1);
     print(response.toString());
+    final res = json.decode(response);
     final P2POfferAddResponse _p2pOffer =
-        P2POfferAddResponse.fromJson(json.decode(response));
+        P2POfferAddResponse.fromJson(res);
     return _p2pOffer;
   }
 
