@@ -5,10 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class P2pInitialPage extends StatelessWidget {
-  final p2pController = Get.find<P2pController>();
+  final P2pController _p2pController = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => p2pController.buySellOrExpress.value ? P2pBuySellPage(): P2pExpressPage());
+    return Obx(
+      () => _p2pController.buySellOrExpress.value
+          ? P2pBuySellPage()
+          : P2pExpressPage(),
+    );
   }
 }

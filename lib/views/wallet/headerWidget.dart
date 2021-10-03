@@ -157,7 +157,7 @@ Widget headerWidget({
                       text: p2p ? 'Buy' : 'Deposit',
                       main: true,
                       callBack: () {
-                        p2p ? Get.put(P2pController()) : '';
+                        p2p ? Get.put(P2pController()) : print('a');
                         p2p
                             ? Get.toNamed('/p2p_page')
                             : Get.toNamed('/wallets-search',
@@ -170,7 +170,7 @@ Widget headerWidget({
                     button(
                       text: p2p ? 'Sell' : 'Withdraw',
                       callBack: () {
-                        p2p ? Get.put(P2pController()) : '';
+                        p2p ? Get.put(P2pController()) : print('a');
                         p2p
                             ? Get.toNamed('/p2p_page')
                             : Get.toNamed('/wallets-search',

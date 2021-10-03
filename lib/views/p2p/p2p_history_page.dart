@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 class P2pHistoryPage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final p2pController = Get.find<P2pController>();
+  final _p2pController = Get.find<P2pController>();
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +75,7 @@ class P2pHistoryPage extends StatelessWidget {
                           children: [
                             category(
                               name: 'All',
-                              selected: p2pController.typeSelected.value,
+                              selected: _p2pController.typeSelected.value,
                               type: true,
                             ),
                             SizedBox(
@@ -83,7 +83,7 @@ class P2pHistoryPage extends StatelessWidget {
                             ),
                             category(
                               name: 'Buy',
-                              selected: p2pController.typeSelected.value,
+                              selected: _p2pController.typeSelected.value,
                               type: true,
                             ),
                             SizedBox(
@@ -91,7 +91,7 @@ class P2pHistoryPage extends StatelessWidget {
                             ),
                             category(
                               name: 'Sell',
-                              selected: p2pController.typeSelected.value,
+                              selected: _p2pController.typeSelected.value,
                               type: true,
                             ),
                           ],
@@ -116,21 +116,21 @@ class P2pHistoryPage extends StatelessWidget {
                           children: [
                             category(
                               name: 'All',
-                              selected: p2pController.statusSelected.value,
+                              selected: _p2pController.statusSelected.value,
                             ),
                             SizedBox(
                               width: 8.0,
                             ),
                             category(
                               name: 'Unpaid',
-                              selected: p2pController.statusSelected.value,
+                              selected: _p2pController.statusSelected.value,
                             ),
                             SizedBox(
                               width: 8.0,
                             ),
                             category(
                               name: 'Paid',
-                              selected: p2pController.statusSelected.value,
+                              selected: _p2pController.statusSelected.value,
                             ),
                           ],
                         ),
@@ -143,21 +143,21 @@ class P2pHistoryPage extends StatelessWidget {
                             children: [
                               category(
                                 name: 'Completed',
-                                selected: p2pController.statusSelected.value,
+                                selected: _p2pController.statusSelected.value,
                               ),
                               SizedBox(
                                 width: 8.0,
                               ),
                               category(
                                 name: 'Canceled',
-                                selected: p2pController.statusSelected.value,
+                                selected: _p2pController.statusSelected.value,
                               ),
                               SizedBox(
                                 width: 8.0,
                               ),
                               category(
                                 name: 'Appeal Pending',
-                                selected: p2pController.statusSelected.value,
+                                selected: _p2pController.statusSelected.value,
                               ),
                             ],
                           ),
@@ -170,8 +170,8 @@ class P2pHistoryPage extends StatelessWidget {
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
-                              p2pController.statusSelected.value = 'All';
-                              p2pController.typeSelected.value = 'All';
+                              _p2pController.statusSelected.value = 'All';
+                              _p2pController.typeSelected.value = 'All';
                             },
                             child: Container(
                               padding: const EdgeInsets.symmetric(
@@ -302,10 +302,10 @@ class P2pHistoryPage extends StatelessWidget {
       child: GestureDetector(
         onTap: type
             ? () {
-                p2pController.typeSelected.value = name;
+                _p2pController.typeSelected.value = name;
               }
             : () {
-                p2pController.statusSelected.value = name;
+                _p2pController.statusSelected.value = name;
               },
         child: Container(
           padding: const EdgeInsets.symmetric(

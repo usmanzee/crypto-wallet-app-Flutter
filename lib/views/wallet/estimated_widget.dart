@@ -41,7 +41,7 @@ class EstimatedWidget extends StatelessWidget {
                   onTap: () {
                     walletController.visibility.value =
                         !walletController.visibility.value;
-                    print('from tabs');
+                    print('from p2p_buy_sell_tabs');
                   },
                   child: Icon(
                     walletController.visibility.value

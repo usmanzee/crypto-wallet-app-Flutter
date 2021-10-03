@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -33,7 +32,7 @@ Widget containerTrade({
                 children: [
                   Container(
                     padding:
-                        const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+                        const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Get.theme.accentColor,
@@ -92,15 +91,13 @@ Widget containerTrade({
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 16.0,
-                ),
+                padding: const EdgeInsets.only(top: 16.0),
                 child: Text(
                   'Price',
                   style: TextStyle(
                     fontFamily: "Popins",
-                    color:
-                        Get.theme.textSelectionTheme.selectionColor.withOpacity(0.6),
+                    color: Get.theme.textSelectionTheme.selectionColor
+                        .withOpacity(0.6),
                     // fontSize: 20.0,
                     // fontWeight: FontWeight.w600,
                   ),
@@ -118,7 +115,7 @@ Widget containerTrade({
                         fontWeight: FontWeight.w600,
                         height: 2),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 6.0,
                   ),
                   Text(
@@ -154,7 +151,8 @@ Widget containerTrade({
                           SizedBox(
                             width: 12.0,
                           ),
-                          Text('$cryptoAmount ${tabCurrencyName.toUpperCase()}'),
+                          Text(
+                              '$cryptoAmount ${tabCurrencyName.toUpperCase()}'),
                         ],
                       ),
                       Row(
@@ -171,7 +169,8 @@ Widget containerTrade({
                           SizedBox(
                             width: 12.0,
                           ),
-                          Text('$currencySymbol $lowerLimit - $currencySymbol $upperLimit'),
+                          Text(
+                              '$currencySymbol $lowerLimit - $currencySymbol $upperLimit'),
                         ],
                       ),
                     ],
@@ -179,10 +178,11 @@ Widget containerTrade({
                   GestureDetector(
                     onTap: functionCallback,
                     child: Container(
-                      padding:
-                          const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8.0, horizontal: 20.0),
                       decoration: BoxDecoration(
-                        color: functionText == 'Sell' ? Colors.red : Colors.green,
+                        color:
+                            functionText == 'sell' ? Colors.red : Colors.green,
                         borderRadius: BorderRadius.circular(
                           4,
                         ),
@@ -210,7 +210,8 @@ Widget containerTrade({
               Container(
                 width: double.infinity,
                 height: 0.3,
-                color: Get.theme.textSelectionTheme.selectionColor.withOpacity(0.6),
+                color: Get.theme.textSelectionTheme.selectionColor
+                    .withOpacity(0.6),
               ),
             ],
           ),

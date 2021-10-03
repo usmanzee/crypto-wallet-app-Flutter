@@ -4,6 +4,6 @@ import 'package:get/get.dart';
 class P2pBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => P2pController());
+    Get.lazyPut(() => P2pController(),fenix: false);
   }
 }

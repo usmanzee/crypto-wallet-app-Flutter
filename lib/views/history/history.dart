@@ -114,7 +114,7 @@ class _HistoryState extends State<History> with TickerProviderStateMixin {
                                       tabs: [
                                         new Tab(
                                           child: Text(
-                                            "history.screen.tabs.deposit_history"
+                                            "history.screen.p2p_buy_sell_tabs.deposit_history"
                                                 .tr,
                                             style: TextStyle(
                                                 fontFamily: "Popins",
@@ -124,7 +124,7 @@ class _HistoryState extends State<History> with TickerProviderStateMixin {
                                         ),
                                         new Tab(
                                           child: Text(
-                                            "history.screen.tabs.withdraw_history"
+                                            "history.screen.p2p_buy_sell_tabs.withdraw_history"
                                                 .tr,
                                             style: TextStyle(
                                                 fontFamily: "Popins",
@@ -134,7 +134,7 @@ class _HistoryState extends State<History> with TickerProviderStateMixin {
                                         ),
                                         new Tab(
                                           child: Text(
-                                            "history.screen.tabs.trade_history"
+                                            "history.screen.p2p_buy_sell_tabs.trade_history"
                                                 .tr,
                                             style: TextStyle(
                                                 fontFamily: "Popins",

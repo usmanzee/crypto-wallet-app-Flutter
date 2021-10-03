@@ -47,7 +47,7 @@ class WalletsList extends StatelessWidget {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap:(){
-                    transferController.currentWalletList.assignAll(index == 0 ? walletController.p2pWalletsList.value : walletController.savingWalletsList.value);
+                    transferController.currentWalletList.assignAll(index == 0 ? walletController.p2pWalletsList : walletController.savingWalletsList);
                     callback(name: walletNames[index].name,icon:walletNames[index].icon,);
                     Get.back();
                   },

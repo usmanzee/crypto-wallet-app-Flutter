@@ -7,14 +7,14 @@ class RequestHeaders {
   HomeController homeController = Get.find();
 
   Map<String, String> setAuthHeaders() {
-    var nonce = new DateTime.now()
-        // .add(new Duration(seconds: 10))
+    int nonce =  DateTime.now()
+        // .add( Duration(seconds: 10),)
         .millisecondsSinceEpoch;
-    var message = utf8
+    List<int> message = utf8
         .encode(nonce.toString() + homeController.authApiKey.value.toString());
-    var secretEncode = utf8.encode(homeController.authSecret.value.toString());
-    var hmacSha256 = Hmac(sha256, secretEncode);
-    Digest sha256Result = hmacSha256.convert(message);
+    List<int> secretEncode = utf8.encode(homeController.authSecret.value.toString());
+    Hmac hMacSha256 = Hmac(sha256, secretEncode);
+    Digest sha256Result = hMacSha256.convert(message);
 
     return {
       "X-Auth-Apikey": homeController.authApiKey.value.toString(),

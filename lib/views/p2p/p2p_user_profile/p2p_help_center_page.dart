@@ -1,6 +1,4 @@
-import 'package:b4u_wallet/controllers/p2p_controller.dart';
 import 'package:b4u_wallet/views/p2p/p2p_user_profile/help_center_tabs/advanced_tab.dart';
-import 'package:b4u_wallet/views/p2p/p2p_user_profile/help_center_tabs/advertiser_tab.dart';
 import 'package:b4u_wallet/views/p2p/p2p_user_profile/help_center_tabs/beginner_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,8 +9,6 @@ class P2pHelpCanterPage extends StatelessWidget {
     'Advanced',
     // 'Advertiser',
   ];
-  final p2pController = Get.find<P2pController>();
-
   TabBar get _tabBar => TabBar(
         indicatorColor: Get.theme.primaryColor,
         labelColor: Get.theme.primaryColor,
@@ -104,7 +100,7 @@ class P2pHelpCanterPage extends StatelessWidget {
             ];
           },
           body: TabBarView(
-            // These are the contents of the tab views, below the tabs.
+            // These are the contents of the tab views, below the p2p_buy_sell_tabs.
             children: [
               BeginnerTab(),
               AdvancedTab(),

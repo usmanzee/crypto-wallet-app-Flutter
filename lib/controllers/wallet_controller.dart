@@ -27,7 +27,7 @@ class WalletController extends GetxController {
   MarketController marketController = Get.find<MarketController>();
   HomeController homeController = Get.find<HomeController>();
   var iconC = 'BTC'.obs;
-  // estimated values for the wallets tabs
+  // estimated values for the wallets p2p_buy_sell_tabs
   RxDouble estimatedValueUSDAll = 0.00.obs;
   RxString estimatedValueAll = '0.0000'.obs;
   RxDouble estimatedValueUsdP2p = 0.00.obs;
@@ -51,7 +51,7 @@ class WalletController extends GetxController {
   }
 
   void fetchWallets() async {
-    WalletRepository _walletRepository = new WalletRepository();
+    WalletRepository _walletRepository = WalletRepository();
     try {
       isLoading(true);
       //fetching balances from the all three lists.

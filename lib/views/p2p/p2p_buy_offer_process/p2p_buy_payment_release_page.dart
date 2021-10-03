@@ -1,0 +1,677 @@
+import 'package:b4u_wallet/controllers/p2p_controller.dart';
+import 'package:b4u_wallet/views/widgets/icon_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+
+class P2pBuyPaymentReleasePage extends StatelessWidget {
+  final _p2pController = Get.find<P2pController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backwardsCompatibility: false,
+        backgroundColor: Get.theme.scaffoldBackgroundColor,
+        foregroundColor: Get.theme.textSelectionTheme.selectionColor,
+        leading: GestureDetector(
+          onTap: () => Get.back(),
+          child: Icon(
+            Icons.arrow_back_ios_rounded,
+            size: 20,
+            color: Get.theme.hintColor,
+          ),
+        ),
+        actions: [
+          Row(
+            children: [
+              Stack(
+                children: [
+                  Icon(
+                    Icons.chat,
+                    size: 25,
+                    color: Get.theme.accentColor,
+                  ),
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.redAccent,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        ' ',
+                        style: TextStyle(
+                          fontFamily: "Popins",
+                          fontWeight: FontWeight.bold,
+                          fontSize: 8.0,
+                          color: Get.theme.scaffoldBackgroundColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  right: 16,
+                  left: 4,
+                ),
+                child: Text(
+                  'Chat',
+                  style: TextStyle(
+                    fontFamily: "Popins",
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14.0,
+                    color: Get.theme.textSelectionTheme.selectionColor,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            flex: 9,
+            child: Stack(
+              children: [
+                SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 16,
+                              ),
+                              child: Text(
+                                'Releasing',
+                                style: TextStyle(
+                                  fontFamily: "Popins",
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.0,
+                                  color: Get
+                                      .theme.textSelectionTheme.selectionColor,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              'If you have paid, contact the counterparty',
+                              style: TextStyle(
+                                fontFamily: "Popins",
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12.0,
+                                color:
+                                    Get.theme.textSelectionTheme.selectionColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Card(
+                        elevation: 3,
+                        child: Container(
+                          height: 0.3,
+                          width: double.infinity,
+                          color: Get.theme.hintColor.withOpacity(0.4),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    _p2pController
+                                        .createdOrderResponse.offer.side
+                                        .toUpperCase(),
+                                    style: TextStyle(
+                                      color: _p2pController.createdOrderResponse
+                                                  .offer.side
+                                                  .toLowerCase() ==
+                                              'sell'
+                                          ? Colors.redAccent
+                                          : Colors.greenAccent,
+                                      fontFamily: "Popins",
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 18.0,
+                                    ),
+                                  ),
+                                  //todo: add the name for the currency from the controller
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 8,
+                                      right: 4,
+                                    ),
+                                    child: Text(
+                                      'Missing',
+                                      style: TextStyle(
+                                        color: Get.theme.textSelectionTheme
+                                            .selectionColor,
+                                        fontFamily: "Popins",
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 18.0,
+                                      ),
+                                    ),
+                                  ),
+                                  //todo: get the link for the icon from the controller or the post
+                                  iconWidget(name: 'USDT', url: 'file.url.com'),
+                                ],
+                              ),
+                            ),
+                            _rowWidget(
+                              first: 'Fiat Amount',
+                              second:
+                                  '${_p2pController.createdOrderResponse.offer.baseUnit.toUpperCase()} ${_p2pController.createdOrderResponse.amount}',
+                              biggerText: true,
+                            ),
+                            _rowWidget(
+                              first: 'Price',
+                              second:
+                                  '${_p2pController.createdOrderResponse.offer.baseUnit.toUpperCase()} ${_p2pController.createdOrderResponse.offer.price}',
+                            ),
+                            _rowWidget(
+                              first: 'Crypto Amount',
+                              second: 'amount in asset Missing',
+                            ),
+                            _container(),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: 8,
+                        width: double.infinity,
+                        color: Get.theme.canvasColor,
+                      ),
+                      //todo: add the respective callback here...
+                      Obx(
+                        () => Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                _p2pController.pContainer.value =
+                                    !_p2pController.pContainer.value;
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 12,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Payment method',
+                                      style: TextStyle(),
+                                    ),
+                                    Icon(
+                                      _p2pController.pContainer.value
+                                          ? Icons.keyboard_arrow_up
+                                          : Icons.keyboard_arrow_down,
+                                      size: 25,
+                                      color: Get.theme.hintColor,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 300),
+                              transitionBuilder: (widget, animation) {
+                                final offsetAnimation = Tween<Offset>(
+                                  begin: Offset(0.0, -1),
+                                  end: Offset(0.0, 0.0),
+                                ).animate(animation);
+                                return ClipRect(
+                                  child: SlideTransition(
+                                    position: offsetAnimation,
+                                    child: widget,
+                                  ),
+                                );
+                              },
+                              child: _p2pController.pContainer.value
+                                  ? Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 4),
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                  color: Colors.yellow,
+                                                  child: Text(' '),
+                                                ),
+                                                SizedBox(
+                                                  width: 8,
+                                                ),
+                                                Text(
+                                                  'Bank Transfer',
+                                                  style: TextStyle(
+                                                    fontFamily: "Popins",
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 16.0,
+                                                    color: Get.theme.hintColor,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          _row(
+                                            first: 'Name',
+                                            second: 'MUHAMMAD ISMAIL',
+                                          ),
+                                          _row(
+                                              first: 'Bank account Number',
+                                              second: '02180105485107'),
+                                          _row(
+                                            first: 'Bank name',
+                                            second: 'Mezan Bank Limited',
+                                          ),
+                                          _row(
+                                            first: 'Account opening branch',
+                                            second:
+                                                'Bank Account Name: RANA TRADERS AND COMMISSION AGENT IBAN: PK26MEZN0002180105485107',
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  : Container(),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: 8,
+                        width: double.infinity,
+                        color: Get.theme.canvasColor,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Terms',
+                              style: TextStyle(),
+                            ),
+                            Icon(
+                              Icons.keyboard_arrow_down,
+                              size: 25,
+                              color: Get.theme.hintColor,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 32, horizontal: 16),
+                        width: double.infinity,
+                        color: Get.theme.canvasColor,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            //todo: add the icon or photo here
+                            Icon(Icons.keyboard),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Expanded(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Orbitex Class',
+                                    style: TextStyle(
+                                      fontFamily: "Popins",
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14.0,
+                                      color: Get.theme.hintColor,
+                                    ),
+                                  ),
+                                  Container(
+                                    color: Colors.white,
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8, horizontal: 12),
+                                    child: Text(
+                                      'When buying crypto, Company holds the advertiser\'s crypto in custody until the order is completed.',
+                                      style: TextStyle(
+                                        fontFamily: "Popins",
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14.0,
+                                        color: Get.theme.textSelectionTheme
+                                            .selectionColor,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                //todo: add values and callbacks here according to the requirements
+                Positioned(
+                  bottom: 16,
+                  left: 32,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 4,
+                      horizontal: 8,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Get.theme.accentColor.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(
+                          Icons.verified_user,
+                          size: 15,
+                          color: Get.theme.accentColor,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Text(
+                            'Identity Verified',
+                            style: TextStyle(
+                              color:
+                                  Get.theme.textSelectionTheme.selectionColor,
+                              fontFamily: "Popins",
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14.0,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 16,
+                        ),
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15,
+                          color: Get.theme.accentColor,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              padding: const EdgeInsets.only(
+                left: 16,
+                right: 16,
+                top: 8,
+                bottom: 16,
+              ),
+              color: Colors.white,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        // flex: 3,
+                        child: GestureDetector(
+                          onTap: () =>
+                              Get.toNamed('/p2p_buy_order_complete_page'),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Get.theme.canvasColor,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Cancel',
+                                style: TextStyle(
+                                  color: Get
+                                      .theme.textSelectionTheme.selectionColor,
+                                  fontFamily: "Popins",
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 16,
+                      ),
+                      Expanded(
+                        // flex: 7,
+                        child: GestureDetector(
+                          onTap: () =>
+                              Get.toNamed('/p2p_buy_sell_initial_appeal_page'),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Get.theme.canvasColor,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Appeal',
+                                style: TextStyle(
+                                  color: Get
+                                      .theme.textSelectionTheme.selectionColor,
+                                  fontFamily: "Popins",
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _row({
+    @required String first,
+    @required String second,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            flex: 4,
+            child: Container(
+              child: Text(
+                first,
+                style: TextStyle(
+                  fontFamily: "Popins",
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16.0,
+                  color: Get.theme.hintColor,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 7,
+            child: Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: Container(
+                      child: Align(
+                        alignment: Alignment.bottomRight,
+                        child: Text(
+                          second,
+                          style: TextStyle(
+                            fontFamily: "Popins",
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16.0,
+                            color: Get.theme.textSelectionTheme.selectionColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _rowWidget({
+    @required String first,
+    @required String second,
+    bool biggerText = false,
+    bool logo = false,
+    bool textUnderline = false,
+    void Function() logoCallback,
+    IconData icon = Icons.arrow_forward_ios,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: 8,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            first,
+            style: TextStyle(
+              color: Get.theme.hintColor,
+              fontFamily: "Popins",
+              fontWeight: FontWeight.w500,
+              fontSize: 14.0,
+            ),
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                second,
+                style: TextStyle(
+                  color: Get.theme.textSelectionTheme.selectionColor,
+                  fontFamily: "Popins",
+                  fontWeight: FontWeight.w500,
+                  fontSize: biggerText ? 18.0 : 14,
+                  decoration: textUnderline
+                      ? TextDecoration.underline
+                      : TextDecoration.none,
+                ),
+              ),
+              logo
+                  ? InkWell(
+                      onTap: logoCallback,
+                      child: Icon(
+                        icon,
+                        size: 15,
+                        color: Get.theme.hintColor,
+                      ),
+                    )
+                  : Container(),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _container() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 8,
+          ),
+          child: Container(
+            height: 0.3,
+            width: double.infinity,
+            color: Get.theme.hintColor,
+          ),
+        ),
+        _rowWidget(
+          first: 'Order Number',
+          second: _p2pController.createdOrderResponse.id.toString(),
+          logo: true,
+          icon: Icons.copy,
+          logoCallback: () {
+            Clipboard.setData(ClipboardData(
+                text: _p2pController.createdOrderResponse.id.toString()));
+          },
+        ),
+        _rowWidget(
+          first: 'Created Time',
+          second: _p2pController.createdOrderResponse.createdAt
+              .toLocal()
+              .toString(),
+        ),
+        //todo: add the required variables and the function here
+        _rowWidget(
+          first: 'Seller\'s Nickname',
+          second: 'Name Missing',
+          textUnderline: true,
+          logoCallback: () {},
+          logo: true,
+        ),
+      ],
+    );
+  }
+}

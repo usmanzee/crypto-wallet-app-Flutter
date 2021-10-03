@@ -45,7 +45,7 @@ dependencies:
   intl: ^0.16.1
   web_socket_channel: ^1.2.0
   intl_phone_field: ^1.4.2
-  oktoast: ^2.3.2
+  oktoast: ^3.0.0
   image_picker: ^0.6.7+22
   introduction_screen: ^1.0.9
   firebase_messaging: ^7.0.3

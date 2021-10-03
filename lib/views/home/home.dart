@@ -1,21 +1,23 @@
 import 'package:b4u_wallet/controllers/HomeController.dart';
-import 'package:b4u_wallet/controllers/savings_controller.dart';
+import 'package:b4u_wallet/controllers/market_controller.dart';
+import 'package:b4u_wallet/controllers/p2p_controller.dart';
 import 'package:b4u_wallet/models/formated_market.dart';
 import 'package:b4u_wallet/views/home/components/text_with_icon_widget.dart';
-import 'package:b4u_wallet/views/webview_container.dart';
-import 'package:get/get.dart';
-import 'package:b4u_wallet/controllers/market_controller.dart';
-import 'package:flutter/material.dart';
 import 'package:b4u_wallet/views/home/gainer.dart';
 import 'package:b4u_wallet/views/home/loser.dart';
-import 'package:flutter_sparkline/flutter_sparkline.dart';
+import 'package:b4u_wallet/views/home/more_options_page.dart';
+import 'package:b4u_wallet/views/webview_container.dart';
 import 'package:badges/badges.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:b4u_wallet/views/home/more_options_page.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_sparkline/flutter_sparkline.dart';
+import 'package:get/get.dart';
 
 class Home extends StatelessWidget {
   final MarketController marketController = Get.find();
   final HomeController homeController = Get.find();
+
+  // final _p2pController = Get.put(P2pController());
 
   final banners = [
     "assets/image/banner/banner2.png",
@@ -96,10 +98,8 @@ class Home extends StatelessWidget {
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: homeController.currentPos.value == index
-                              ? Theme.of(context)
-                                  .textSelectionTheme
-                                  .selectionColor
-                              : Theme.of(context).hintColor),
+                              ? Get.theme.textSelectionTheme.selectionColor
+                              : Get.theme.hintColor),
                     );
                   },
                 ).toList()
@@ -114,10 +114,8 @@ class Home extends StatelessWidget {
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: homeController.currentPos.value == index
-                              ? Theme.of(context)
-                                  .textSelectionTheme
-                                  .selectionColor
-                              : Theme.of(context).hintColor),
+                              ? Get.theme.textSelectionTheme.selectionColor
+                              : Get.theme.hintColor),
                     );
                   },
                 ).toList(),
@@ -132,13 +130,11 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
-        backgroundColor: Theme.of(context).canvasColor,
+        backgroundColor: Get.theme.canvasColor,
         // elevation: 1.0,
         iconTheme: IconThemeData(
-            color: Theme.of(context)
-                .textSelectionTheme
-                .selectionColor
-                .withOpacity(0.6)),
+            color:
+                Get.theme.textSelectionTheme.selectionColor.withOpacity(0.6)),
         title: Row(
           children: [
             IconButton(
@@ -184,7 +180,7 @@ class Home extends StatelessWidget {
                 height: 245.0,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).canvasColor,
+                  color: Get.theme.canvasColor,
                 ),
                 child: Obx(
                   () {
@@ -211,12 +207,12 @@ class Home extends StatelessWidget {
                   // border: Border.all(color: Get.theme.hintColor,width: 0.5,),
                   /*boxShadow: [
                       BoxShadow(
-                        color: Theme.of(context).hintColor,
+                        color: Get.theme.hintColor,
                         offset: Offset(0.0, 0.0), //(x,y)
                         blurRadius: 6.0,
                       ),
                     ],*/
-                  color: Theme.of(context).scaffoldBackgroundColor,
+                  color: Get.theme.scaffoldBackgroundColor,
                 ),
                 child: Padding(
                   padding: EdgeInsets.all(8),
@@ -277,12 +273,7 @@ class Home extends StatelessWidget {
                           _linksCard(
                               context: context,
                               icon: Icons.savings,
-                              onPressed: () {
-                                // final controller = Get.put(SavingsController());
-                                homeController.isLoggedIn.value
-                                    ? Get.toNamed('/savings')
-                                    : Get.toNamed('/login');
-                              },
+                              onPressed: () => Get.toNamed('/savings'),
                               name: "home.screen.link.card.savings".tr),
                           _linksCard(
                               context: context,
@@ -322,7 +313,13 @@ class Home extends StatelessWidget {
                   children: [
                     Expanded(
                       child: GestureDetector(
-                        onTap: () => Get.toNamed('/p2p_initial_page'),
+                        onTap: () {
+                          Get.put(
+                            P2pController(),
+                            permanent: false,
+                          );
+                          Get.toNamed('/p2p_bottom_nav_page');
+                        },
                         child: textWithIconWidget(
                           title: 'home.screen.link.card.p2p_trading'.tr,
                           icon: Icons.people,
@@ -336,10 +333,12 @@ class Home extends StatelessWidget {
                     ),
                     Expanded(
                       child: GestureDetector(
-                        onTap: () => _showDialog(
+                        onTap: () =>
+                            /*_showDialog(
                           context: context,
                           heading: 'home.screen.link.card.credit_debit_card'.tr,
-                        ),
+                        ),*/
+                            Get.toNamed('/p2p_buy_payment_pending_page'),
                         child: textWithIconWidget(
                           title: 'home.screen.link.card.credit_debit_card'.tr,
                           icon: Icons.credit_card,
@@ -364,6 +363,7 @@ class Home extends StatelessWidget {
                     );
                 },
               ),
+
               ///
               /// Tab bar custom
               ///
@@ -384,11 +384,10 @@ class Home extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.symmetric(vertical: 5),
                             child: TabBar(
-                              indicatorColor: Theme.of(context).primaryColor,
-                              labelColor: Theme.of(context).primaryColor,
-                              unselectedLabelColor: Theme.of(context)
-                                  .textSelectionTheme
-                                  .selectionColor,
+                              indicatorColor: Get.theme.primaryColor,
+                              labelColor: Get.theme.primaryColor,
+                              unselectedLabelColor:
+                                  Get.theme.textSelectionTheme.selectionColor,
                               indicatorSize: TabBarIndicatorSize.label,
                               isScrollable: true,
                               indicator: BoxDecoration(
@@ -401,7 +400,8 @@ class Home extends StatelessWidget {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 10),
                                     child: Text(
-                                      "home.screen.tabs.gainers".tr,
+                                      "home.screen.p2p_buy_sell_tabs.gainers"
+                                          .tr,
                                       style: TextStyle(
                                         fontFamily: "Popins",
                                       ),
@@ -413,7 +413,7 @@ class Home extends StatelessWidget {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 10),
                                     child: Text(
-                                      "home.screen.tabs.losers".tr,
+                                      "home.screen.p2p_buy_sell_tabs.losers".tr,
                                       style: TextStyle(fontFamily: 'Popins'),
                                     ),
                                   ),
@@ -439,7 +439,7 @@ class Home extends StatelessWidget {
                               53.0), // here the desired height
                           child: AppBar(
                             backgroundColor:
-                                Theme.of(context).scaffoldBackgroundColor,
+                                Get.theme.scaffoldBackgroundColor,
                             elevation: 0.0,
                             // centerTitle: true,
                             flexibleSpace: SafeArea(
@@ -448,9 +448,9 @@ class Home extends StatelessWidget {
                                   padding: const EdgeInsets.only(right: 100.0),
                                   child:  TabBar(
                                     indicatorColor:
-                                    Theme.of(context).primaryColor,
-                                    labelColor: Theme.of(context).primaryColor,
-                                    unselectedLabelColor: Theme.of(context)
+                                    Get.theme.primaryColor,
+                                    labelColor: Get.theme.primaryColor,
+                                    unselectedLabelColor: Get.theme
                                         .textSelectionTheme
                                         .selectionColor,
                                     indicatorSize: TabBarIndicatorSize.label,
@@ -554,7 +554,7 @@ class Card extends StatelessWidget {
           width: _width / 3.2,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(5.0)),
-            color: Theme.of(context).scaffoldBackgroundColor,
+            color: Get.theme.scaffoldBackgroundColor,
             /*boxShadow: [
               BoxShadow(
                 color: Color(0xFF656565).withOpacity(0.15),
@@ -575,7 +575,7 @@ class Card extends StatelessWidget {
                     /* Text(
                       formatedMarket.name.toUpperCase(),
                       style: TextStyle(
-                          color: Theme.of(context)
+                          color: Get.theme
                               .textSelectionTheme
                               .selectionColor,
                           fontFamily: "Popins",
@@ -589,9 +589,7 @@ class Card extends StatelessWidget {
                         Text(
                           formatedMarket.name.toUpperCase(),
                           style: TextStyle(
-                            color: Theme.of(context)
-                                .textSelectionTheme
-                                .selectionColor,
+                            color: Get.theme.textSelectionTheme.selectionColor,
                             fontFamily: "Popins",
                             fontWeight: FontWeight.w500,
                             fontSize: 12.0,
@@ -645,19 +643,19 @@ class Card extends StatelessWidget {
                     lineWidth: 0.3,
                     fillMode: FillMode.below,
                     lineColor: marketController.isSparkLinesLoading.value
-                        ? Theme.of(context).hintColor.withOpacity(0.5)
-                        : Theme.of(context).accentColor,
+                        ? Get.theme.hintColor.withOpacity(0.5)
+                        : Get.theme.accentColor,
                     fillGradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
                         marketController.isSparkLinesLoading.value
-                            ? Theme.of(context).hintColor.withOpacity(0.5)
-                            : Theme.of(context).accentColor.withOpacity(0.2),
+                            ? Get.theme.hintColor.withOpacity(0.5)
+                            : Get.theme.accentColor.withOpacity(0.2),
                         marketController.isSparkLinesLoading.value
-                            ? Theme.of(context).hintColor.withOpacity(0.01)
-                            : Theme.of(context).accentColor.withOpacity(0.01),
-                        // Theme.of(context).accentColor.withOpacity(0.01)
+                            ? Get.theme.hintColor.withOpacity(0.01)
+                            : Get.theme.accentColor.withOpacity(0.01),
+                        // Get.theme.accentColor.withOpacity(0.01)
                       ],
                     ),
                   ),
@@ -700,10 +698,10 @@ class CardLoading extends StatelessWidget {
           borderRadius: BorderRadius.all(
             Radius.circular(5.0),
           ),
-          color: Theme.of(context).canvasColor,
+          color: Get.theme.canvasColor,
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).hintColor.withOpacity(0.1),
+              color: Get.theme.hintColor.withOpacity(0.1),
               blurRadius: 1.0,
               spreadRadius: 1.0,
               offset: Offset(0.1, 1.0),
@@ -719,7 +717,7 @@ class CardLoading extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    color: Theme.of(context).hintColor.withOpacity(0.3),
+                    color: Get.theme.hintColor.withOpacity(0.3),
                     height: 20.0,
                     width: 70.0,
                   ),
@@ -734,7 +732,7 @@ class CardLoading extends StatelessWidget {
                           width: 70.0,
                         ),
                         Container(
-                          color: Theme.of(context).hintColor.withOpacity(0.2),
+                          color: Get.theme.hintColor.withOpacity(0.2),
                           height: 17.0,
                           width: 70.0,
                         ),
@@ -752,13 +750,13 @@ class CardLoading extends StatelessWidget {
                   data: data,
                   lineWidth: 0.3,
                   fillMode: FillMode.below,
-                  lineColor: Theme.of(context).hintColor.withOpacity(0.2),
+                  lineColor: Get.theme.hintColor.withOpacity(0.2),
                   fillGradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Theme.of(context).hintColor.withOpacity(0.2),
-                      Theme.of(context).hintColor.withOpacity(0.2),
+                      Get.theme.hintColor.withOpacity(0.2),
+                      Get.theme.hintColor.withOpacity(0.2),
                     ],
                   ),
                 ),
@@ -845,7 +843,7 @@ Widget _linksCard(
           Icon(
             icon,
             size: 26.0,
-            color: Theme.of(context).accentColor,
+            color: Get.theme.accentColor,
           ),
           SizedBox(
             height: 10,
@@ -857,7 +855,7 @@ Widget _linksCard(
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: "Popins",
-                color: Theme.of(context).textSelectionTheme.selectionColor,
+                color: Get.theme.textSelectionTheme.selectionColor,
                 fontSize: 14.0,
                 fontWeight: FontWeight.w500,
               ),

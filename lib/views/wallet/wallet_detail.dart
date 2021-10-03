@@ -82,7 +82,7 @@ class WalletDetail extends StatelessWidget {
                                       tabs: [
                                         new Tab(
                                           child: Text(
-                                            "wallet_detail.screen.tabs.deposit_history"
+                                            "wallet_detail.screen.p2p_buy_sell_tabs.deposit_history"
                                                 .tr,
                                             style: TextStyle(
                                               fontFamily: "Popins",
@@ -93,7 +93,7 @@ class WalletDetail extends StatelessWidget {
                                         ),
                                         new Tab(
                                           child: Text(
-                                            "wallet_detail.screen.tabs.withdraw_history"
+                                            "wallet_detail.screen.p2p_buy_sell_tabs.withdraw_history"
                                                 .tr,
                                             style: TextStyle(
                                                 fontFamily: "Popins",
@@ -229,7 +229,7 @@ class WalletDetail extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(right: 4.0),
                         child:
-                            IconWidget(name: wallet.name, url: wallet.iconUrl),
+                            iconWidget(name: wallet.name, url: wallet.iconUrl),
                       ),
                       Text(
                         wallet.currency.toUpperCase(),

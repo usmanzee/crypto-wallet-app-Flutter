@@ -1,21 +1,21 @@
 import 'package:b4u_wallet/component/no_internet.dart';
 import 'package:b4u_wallet/controllers/HomeController.dart';
+import 'package:b4u_wallet/controllers/SnackbarController.dart';
 import 'package:b4u_wallet/controllers/market_controller.dart';
-import 'package:b4u_wallet/controllers/savings_controller.dart';
 import 'package:b4u_wallet/controllers/swap_controller.dart';
 import 'package:b4u_wallet/controllers/trading_controller.dart';
 import 'package:b4u_wallet/controllers/web_socket_controller.dart';
-import 'package:b4u_wallet/views/swap/swap.dart';
-import 'package:b4u_wallet/views/trading/trading.dart';
-import 'package:get/get.dart';
-import 'package:flutter/material.dart';
 import 'package:b4u_wallet/views/home/home.dart';
 import 'package:b4u_wallet/views/market/markets.dart';
+import 'package:b4u_wallet/views/swap/swap.dart';
+import 'package:b4u_wallet/views/trading/trading.dart';
 import 'package:b4u_wallet/views/wallet/wallets.dart';
-import 'package:b4u_wallet/controllers/SnackbarController.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class BottomNavBar extends GetView<HomeController> {
   final MarketController marketController = Get.put(MarketController());
+
   // final _savingsController = Get.put(SavingsController());
   final WebSocketController webSocketController = Get.find();
 
@@ -25,27 +25,35 @@ class BottomNavBar extends GetView<HomeController> {
         case 0:
           return RefreshIndicator(
             onRefresh: controller.refreshHomePage,
-            child: new Home(),
+            child: Home(),
           );
           break;
         case 1:
           return RefreshIndicator(
-              onRefresh: controller.refreshMarketsPage, child: Market());
+            onRefresh: controller.refreshMarketsPage,
+            child: Market(),
+          );
           break;
         case 2:
           return RefreshIndicator(
-              onRefresh: controller.refreshTradingPage, child: Trading());
+            onRefresh: controller.refreshTradingPage,
+            child: Trading(),
+          );
           break;
         case 3:
-          return new Swap();
+          return Swap();
           break;
         case 4:
           return RefreshIndicator(
-              onRefresh: controller.refreshWalletsPage, child: Wallets());
+            onRefresh: controller.refreshWalletsPage,
+            child: Wallets(),
+          );
           break;
         default:
           return RefreshIndicator(
-              onRefresh: controller.refreshHomePage, child: Home());
+            onRefresh: controller.refreshHomePage,
+            child: Home(),
+          );
       }
     } else {
       return NoInternet();

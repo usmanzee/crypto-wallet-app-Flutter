@@ -13,8 +13,8 @@ class ApiProvider {
   Future<dynamic> get(String url) async {
     var responseJson;
     try {
-      print(_baseUrl + _appVersion + url);
-      print('headers :' + headers.toString());
+      // print(_baseUrl + _appVersion + url);
+      // print('headers :' + headers.toString());
       final response =
           await http.get(_baseUrl + _appVersion + url, headers: headers);
       responseJson = _returnResponse(response);
@@ -40,7 +40,7 @@ class ApiProvider {
   Future<dynamic> post(String url, dynamic body) async {
     var responseJson;
     try {
-      print(_baseUrl + url);
+      // print(_baseUrl + url);
       final response = await http.post(_baseUrl + _appVersion + url,
           body: body, headers: headers);
       responseJson = _returnResponse(response);
@@ -107,7 +107,7 @@ class ApiProvider {
     } on FormatException {
       throw FetchDataException({
         'statusCode': 3,
-        'errors': ['server.error']
+        'errors': ['server.error'],
       });
     }
     return responseJson;
@@ -145,6 +145,9 @@ dynamic _returnResponse(http.Response response) {
       var responseJson = response.body;
       return responseJson;
     case 201:
+      var responseJson = response.body;
+      return responseJson;
+    case 204:
       var responseJson = response.body;
       return responseJson;
     case 302:

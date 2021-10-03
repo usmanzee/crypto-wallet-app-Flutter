@@ -19,4 +19,4 @@ samples, guidance on mobile development, and a full API reference.
 - run `flutter pub get` to get the dependencies.
 - run `flutter pub run build_runner build` to generate the model class code.
 - run `flutter run` to run the project.
-- run 'flutter packages pub run build_runner build --delete-conflicting-outputs' if there are some errors for models building
+- run `flutter packages pub run build_runner build --delete-conflicting-outputs` if there are some errors for models building
